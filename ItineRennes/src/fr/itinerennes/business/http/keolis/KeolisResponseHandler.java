@@ -9,7 +9,7 @@ import org.apache.http.HttpResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeContants;
 import fr.itinerennes.business.http.HttpResponseHandler;
@@ -23,8 +23,8 @@ import fr.itinerennes.exceptions.GenericException;
 public class KeolisResponseHandler extends HttpResponseHandler<JSONObject> {
 
     /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(KeolisResponseHandler.class
-            .getSimpleName());
+    private static final Logger LOGGER = ItinerennesLoggerFactory
+            .getLogger(KeolisResponseHandler.class);
 
     /** The default char reader buffer length. */
     private static final int CHAR_BUF_SIZE = 512;

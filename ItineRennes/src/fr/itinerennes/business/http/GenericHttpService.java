@@ -7,7 +7,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeContants;
 import fr.itinerennes.business.http.keolis.KeolisResponseHandler;
@@ -24,7 +24,8 @@ import fr.itinerennes.exceptions.GenericException;
 public class GenericHttpService {
 
     /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(KeolisResponseHandler.class);
+    private static final Logger LOGGER = ItinerennesLoggerFactory
+            .getLogger(KeolisResponseHandler.class);
 
     /** The HTTP client used to execute the requests. */
     private final DefaultHttpClient httpClient = new DefaultHttpClient();
