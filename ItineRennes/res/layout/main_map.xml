@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:stretchColumns="1">
+	
+	    <TableRow>
+	    
+	        <EditText 
+	            android:layout_column="1"
+	            android:id="@+id/field_search" 
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content" />
+	
+	        <Button
+	            android:layout_column="2" 
+	            android:id="@+id/button_layers" 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" 
+	            android:minWidth="20px"
+	            android:text="OK" />
+	        <Button
+	            android:layout_column="3" 
+	            android:id="@+id/button_myPosition" 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" 
+	            android:minWidth="20px"
+	            android:text="OK" />
+	            
+	    </TableRow>
+    </TableLayout>
+
+	<fr.itinerennes.ui.views.MapView
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_centerInParent="true" 
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" 
+		android:clickable="true"
+		android:id="@+id/map" renderer="Mapnik" />
+
+</LinearLayout>
