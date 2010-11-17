@@ -12,7 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeContants;
 import fr.itinerennes.ItineRennesConstants;
@@ -27,7 +27,8 @@ import fr.itinerennes.exceptions.GenericException;
 public class KeolisJsonService {
 
     /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(KeolisJsonService.class);
+    private static final Logger LOGGER = ItinerennesLoggerFactory
+            .getLogger(KeolisJsonService.class);
 
     /** The HTTP client. */
     private final GenericHttpService httpService = new GenericHttpService();

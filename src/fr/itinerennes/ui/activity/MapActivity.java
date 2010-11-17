@@ -6,7 +6,7 @@ import org.andnav.osm.events.ZoomEvent;
 import org.andnav.osm.util.GeoPoint;
 import org.andnav.osm.views.overlay.MyLocationOverlay;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -28,7 +28,7 @@ import fr.itinerennes.ui.views.MapViewController;
 public class MapActivity extends Activity implements MapListener {
 
     /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MapActivity.class);
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapActivity.class);
 
     /** The map view. */
     private MapView map;
