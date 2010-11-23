@@ -126,7 +126,7 @@ public class KeolisService {
         station.setAvailableBikes(jsonObject.getInt("bikesavailable"));
         station.setAvailableSlots(jsonObject.getInt("slotsavailable"));
         station.setDistrict(jsonObject.getString("district"));
-        station.setId(jsonObject.getInt("number"));
+		station.setId(jsonObject.getString("number"));
         station.setLastUpdate(convertJsonStringToDate(jsonObject.getString("lastupdate")));
         station.setLatitude(jsonObject.getDouble("latitude"));
         station.setLongitude(jsonObject.getDouble("longitude"));
