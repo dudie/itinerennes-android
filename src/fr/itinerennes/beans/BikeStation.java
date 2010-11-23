@@ -2,15 +2,17 @@ package fr.itinerennes.beans;
 
 import java.util.Date;
 
+import org.andnav.osm.util.GeoPoint;
+
 /**
  * Bean representing a bike station.
  * 
  * @author Jérémie Huchet
  */
-public class BikeStation {
+public class BikeStation implements Station {
 
 	/** The identifier of the station. */
-	private int id;
+	private String id;
 
 	/** The name of the station. */
 	private String name;
@@ -47,7 +49,7 @@ public class BikeStation {
 	 * 
 	 * @return the identifier of the station
 	 */
-	public int getId() {
+	public String getId() {
 
 		return id;
 	}
@@ -58,7 +60,7 @@ public class BikeStation {
 	 * @param id
 	 *            the identifier of the station to set
 	 */
-	public void setId(final int id) {
+	public void setId(final String id) {
 
 		this.id = id;
 	}
@@ -271,6 +273,12 @@ public class BikeStation {
 	public void setPos(final int pos) {
 
 		this.pos = pos;
+	}
+
+	@Override
+	public GeoPoint getGeoPoint() {
+
+		return new GeoPoint(this.latitude, this.longitude);
 	}
 
 }
