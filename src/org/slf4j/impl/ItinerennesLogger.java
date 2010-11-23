@@ -40,7 +40,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public void trace(final String msg) {
 
-        Log.v(name, msg);
+        Log.v(name, format(msg));
     }
 
     /* @see org.slf4j.Logger#trace(java.lang.String, java.lang.Object) */
@@ -68,7 +68,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public void trace(final String msg, final Throwable t) {
 
-        Log.v(name, msg, t);
+        Log.v(name, format(msg), t);
     }
 
     /* @see org.slf4j.Logger#isDebugEnabled() */
@@ -82,7 +82,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public void debug(final String msg) {
 
-        Log.d(name, msg);
+        Log.d(name, format(msg));
     }
 
     /* @see org.slf4j.Logger#debug(java.lang.String, java.lang.Object) */
@@ -110,7 +110,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public void debug(final String msg, final Throwable t) {
 
-        Log.d(name, msg, t);
+        Log.d(name, format(msg), t);
     }
 
     /* @see org.slf4j.Logger#isInfoEnabled() */
@@ -124,7 +124,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public void info(final String msg) {
 
-        Log.i(name, msg);
+        Log.i(name, format(msg));
     }
 
     /* @see org.slf4j.Logger#info(java.lang.String, java.lang.Object) */
@@ -152,7 +152,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public void info(final String msg, final Throwable t) {
 
-        Log.i(name, msg, t);
+        Log.i(name, format(msg), t);
     }
 
     /* @see org.slf4j.Logger#isWarnEnabled() */
@@ -166,7 +166,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public void warn(final String msg) {
 
-        Log.w(name, msg);
+        Log.w(name, format(msg));
     }
 
     /* @see org.slf4j.Logger#warn(java.lang.String, java.lang.Object) */
@@ -194,7 +194,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public void warn(final String msg, final Throwable t) {
 
-        Log.w(name, msg, t);
+        Log.w(name, format(msg), t);
     }
 
     /* @see org.slf4j.Logger#isErrorEnabled() */
@@ -208,7 +208,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public void error(final String msg) {
 
-        Log.e(name, msg);
+        Log.e(name, format(msg));
     }
 
     /* @see org.slf4j.Logger#error(java.lang.String, java.lang.Object) */
@@ -236,7 +236,12 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public void error(final String msg, final Throwable t) {
 
-        Log.e(name, msg, t);
+        Log.e(name, format(msg), t);
+    }
+
+    private String format(final String message) {
+
+        return String.format("%-30.30s %s", this.classname, message);
     }
 
     /**
@@ -248,8 +253,7 @@ public class ItinerennesLogger extends AndroidLogger {
      */
     private String format(final String format, final Object arg1, final Object arg2) {
 
-        return String.format("%s-30.30 - %s", this.classname,
-                MessageFormatter.format(format, arg1, arg2).getMessage());
+        return format(MessageFormatter.format(format, arg1, arg2).getMessage());
     }
 
     /**
@@ -260,8 +264,7 @@ public class ItinerennesLogger extends AndroidLogger {
      */
     private String format(final String format, final Object[] args) {
 
-        return String.format("%s-30.30 - %s", this.classname,
-                MessageFormatter.arrayFormat(format, args).getMessage());
+        return format(MessageFormatter.arrayFormat(format, args).getMessage());
     }
 
 }
