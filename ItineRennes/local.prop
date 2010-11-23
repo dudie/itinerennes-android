@@ -1,0 +1,10 @@
+log.tag.business=DEBUG
+log.tag.business.facade=DEBUG
+log.tag.business.http=DEBUG
+log.tag.business.http.keolis=DEBUG
+log.tag.business.http.otp=DEBUG
+log.tag.business.service=DEBUG
+log.tag.ui.activity=DEBUG
+log.tag.ui.tasks=DEBUG
+log.tag.ui.views=DEBUG
+log.tag.ui.views.overlays=DEBUG
