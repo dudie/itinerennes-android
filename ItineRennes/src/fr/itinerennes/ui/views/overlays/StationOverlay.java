@@ -2,10 +2,13 @@ package fr.itinerennes.ui.views.overlays;
 
 import java.util.List;
 
+import org.andnav.osm.views.OpenStreetMapView;
 import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.view.MotionEvent;
+import android.view.ViewGroup;
+import fr.itinerennes.R;
 
 /**
  * Contains a list of items displayed on the map.
@@ -16,61 +19,47 @@ import android.graphics.Bitmap;
 public class StationOverlay<T extends StationOverlayItem> extends
         OpenStreetMapViewItemizedOverlay<T> {
 
-    /** The bitmap used to draw the station on the map. */
-    private Bitmap icon;
+    /** True if the focused item layout is visible */
+    boolean focused;
 
     /**
      * @param ctx
      *            the context
      * @param items
      *            the items
+     * @param onItemGestureListener
      */
-    public StationOverlay(final Context ctx, final List<T> items) {
+    public StationOverlay(final Context ctx, final List<T> items,
+            OnItemGestureListener<T> onItemGestureListener) {
 
-        super(ctx, items, new OnItemGestureListener<T>());
+        super(ctx, items, onItemGestureListener);
     }
 
     /**
-     * The
-     * {@link org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay.OnItemGestureListener}
-     * which displays the tooltip over the selected station.
+     * Sets the focused flag which indicate if the item layout is visible
      * 
-     * @author Jérémie Huchet
-     * @author Olivier Boudet
-     * @param <T>
-     *            the type of {@link StationOverlayItem} handled
+     * @param focused
+     *            focused or not
      */
-    public static class OnItemGestureListener<T> implements
-            OpenStreetMapViewItemizedOverlay.OnItemGestureListener<T> {
+    public void setFocused(boolean focused) {
 
-        /**
-         * Triggered when the user single tap on an item of this overlay.
-         * 
-         * @param index
-         *            the index of the taped item
-         * @param item
-         *            the taped item
-         */
-        @Override
-        public boolean onItemSingleTapUp(final int index, final T item) {
+        this.focused = focused;
+    }
 
-            // TJHU Auto-generated method stub
-            return false;
+    /**
+     * Listener to single tap on the overlay
+     * 
+     * @see OpenStreetMapViewItemizedOverlay#onSingleTapUp(MotionEvent, OpenStreetMapView)
+     */
+    @Override
+    public boolean onSingleTapUp(MotionEvent event, OpenStreetMapView mapView) {
+
+        /* When a single tap if intercepted, the focused layout becomes hidden. */
+        if (focused) {
+            ViewGroup rootLayout = (ViewGroup) mapView.getRootView();
+            (rootLayout.findViewById(R.id.focused_box)).setVisibility(ViewGroup.GONE);
+            this.focused = false;
         }
-
-        /**
-         * Triggered when the user do a long press on an item of this overlay.
-         * 
-         * @param index
-         *            the index of the taped item
-         * @param item
-         *            the taped item
-         */
-        @Override
-        public boolean onItemLongPress(final int index, final T item) {
-
-            // TJHU Auto-generated method stub
-            return false;
-        }
+        return super.onSingleTapUp(event, mapView);
     }
 }
