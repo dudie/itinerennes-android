@@ -14,13 +14,16 @@ import android.util.AttributeSet;
  */
 public class MapView extends OpenStreetMapView {
 
+	/** The map controller. */
+	private MapViewController controller;
+
     /**
      * @param context
      */
     public MapView(final Context context) {
 
         super(context);
-        // TJHU Auto-generated constructor stub
+		this.controller = new MapViewController(this);
     }
 
     /**
@@ -66,4 +69,5 @@ public class MapView extends OpenStreetMapView {
         super(context, aRendererInfo, aMapToShareTheTileProviderWith);
         // TJHU Auto-generated constructor stub
     }
+
 }
