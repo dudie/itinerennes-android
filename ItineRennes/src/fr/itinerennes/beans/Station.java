@@ -2,6 +2,8 @@ package fr.itinerennes.beans;
 
 import org.andnav.osm.util.GeoPoint;
 
+import fr.itinerennes.ItineRennesConstants;
+
 /**
  * Interface implemented by classes describing stations or stops.
  * 
@@ -23,6 +25,16 @@ public interface Station {
      * @return the name of the station
      */
     String getName();
+
+    /**
+     * Gets the type of the station. Can be {@link ItineRennesConstants#STATION_TYPE_BUS},
+     * {@link ItineRennesConstants#STATION_TYPE_VELO} or
+     * {@link ItineRennesConstants#STATION_TYPE_SUBWAY}
+     * 
+     * @see ItineRennesConstants
+     * @return the type of the station
+     */
+    int getType();
 
     /**
      * Gets the geographical localization of the station.

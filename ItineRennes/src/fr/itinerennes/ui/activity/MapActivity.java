@@ -3,9 +3,6 @@ package fr.itinerennes.ui.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andnav.osm.events.MapListener;
-import org.andnav.osm.events.ScrollEvent;
-import org.andnav.osm.events.ZoomEvent;
 import org.andnav.osm.util.GeoPoint;
 import org.andnav.osm.views.overlay.MyLocationOverlay;
 import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay;
@@ -35,7 +32,7 @@ import fr.itinerennes.ui.views.overlays.StationOverlayItem;
  * 
  * @author Jérémie Huchet
  */
-public class MapActivity extends Activity implements MapListener {
+public class MapActivity extends Activity {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapActivity.class);
@@ -48,6 +45,9 @@ public class MapActivity extends Activity implements MapListener {
 
     /** The station overlay */
     private StationOverlay<StationOverlayItem> stationOverlay;
+
+    /** The keolis service */
+    private KeolisService keolisService;
 
     /**
      * Called when activity starts.
@@ -63,8 +63,11 @@ public class MapActivity extends Activity implements MapListener {
 
         setContentView(R.layout.main_map);
 
+        /* Instantiation of various services (keolis, otp, geoserver) */
+        keolisService = new KeolisService();
+
         this.map = (MapView) findViewById(R.id.map);
-        map.setMapListener(this);
+        map.setMapListener(this.map);
         map.setBuiltInZoomControls(true);
         // map.setMultiTouchControls(true);
 
@@ -99,12 +102,40 @@ public class MapActivity extends Activity implements MapListener {
                 @Override
                 public boolean onItemSingleTapUp(int index, StationOverlayItem item) {
 
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("OnItemGestureListener.onItemSingleTapUp");
+                    }
+
                     LinearLayout focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
                     LayoutInflater inflater = LayoutInflater.from(getBaseContext());
 
-                    inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
+                    try {
+                        switch (item.getStation().getType()) {
+                        case ItineRennesConstants.STATION_TYPE_VELO:
+                            inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
 
-                    TextView title = (TextView) focusedBoxLayout.findViewById(R.id.title);
+                            BikeStation bikeStation = KeolisService.getBikeStation(Integer
+                                    .parseInt(item.getStation().getId()));
+
+                            TextView availables_slots = (TextView) focusedBoxLayout
+                                    .findViewById(R.id.available_slots);
+                            availables_slots
+                                    .setText(String.valueOf(bikeStation.getAvailableSlots()));
+
+                            TextView availables_bikes = (TextView) focusedBoxLayout
+                                    .findViewById(R.id.available_bikes);
+                            availables_bikes
+                                    .setText(String.valueOf(bikeStation.getAvailableBikes()));
+
+                            break;
+
+                        default:
+                            break;
+                        }
+                    } catch (GenericException e) {
+                        LOGGER.error("Error while trying to fetch station informations.");
+                    }
+                    TextView title = (TextView) focusedBoxLayout.findViewById(R.id.station_name);
                     title.setText(item.getStation().getName());
 
                     focusedBoxLayout.setVisibility(View.VISIBLE);
@@ -115,7 +146,10 @@ public class MapActivity extends Activity implements MapListener {
                 @Override
                 public boolean onItemLongPress(int index, StationOverlayItem item) {
 
-                    // TOBO Auto-generated method stub
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("OnItemGestureListener.onItemLongPress");
+                    }
+
                     return false;
                 }
 
@@ -149,28 +183,6 @@ public class MapActivity extends Activity implements MapListener {
         }
         return overlayItems;
 
-    }
-
-    /**
-     * Called when the user scrolls the map. Deactivate the location following.
-     * 
-     * @see org.andnav.osm.events.MapListener#onScroll(org.andnav.osm.events.ScrollEvent)
-     */
-    @Override
-    public boolean onScroll(final ScrollEvent event) {
-
-        return false;
-    }
-
-    /**
-     * Called when the user zoom in or out the map.
-     * 
-     * @see org.andnav.osm.events.MapListener#onZoom(org.andnav.osm.events.ZoomEvent)
-     */
-    @Override
-    public boolean onZoom(final ZoomEvent event) {
-
-        return false;
     }
 
     /**

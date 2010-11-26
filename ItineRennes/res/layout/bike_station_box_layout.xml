@@ -2,7 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-
-	<TextView android:id="@+id/title" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" />
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+	    <ImageView
+	        android:src="@drawable/icon_velo"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:paddingRight="10px"/>
+	    
+		<TextView android:id="@+id/station_name"
+	        android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textStyle="bold"/>
+	</LinearLayout>
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+		<TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_available_slots"/>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10px"
+            android:id="@+id/available_slots"/>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_available_bikes"/>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/available_bikes"/>
+    </LinearLayout>
 </LinearLayout>
