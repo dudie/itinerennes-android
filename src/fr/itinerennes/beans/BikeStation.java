@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.andnav.osm.util.GeoPoint;
 
+import fr.itinerennes.ItineRennesConstants;
+
 /**
  * Bean representing a bike station.
  * 
@@ -11,274 +13,280 @@ import org.andnav.osm.util.GeoPoint;
  */
 public class BikeStation implements Station {
 
-	/** The identifier of the station. */
-	private String id;
+    /** The identifier of the station. */
+    private String id;
 
-	/** The name of the station. */
-	private String name;
+    /** The name of the station. */
+    private String name;
 
-	/** The address of the station. */
-	private String address;
+    /** The address of the station. */
+    private String address;
 
-	/** The state of the station. */
-	private boolean active;
+    /** The state of the station. */
+    private boolean active;
 
-	/** The latitude of the station. */
-	private double latitude;
+    /** The latitude of the station. */
+    private double latitude;
 
-	/** The longitude of the station. */
-	private double longitude;
+    /** The longitude of the station. */
+    private double longitude;
 
-	/** The amount of available slots in the station. */
-	private int availableSlots;
+    /** The amount of available slots in the station. */
+    private int availableSlots;
 
-	/** The amount of available bikes in the station. */
-	private int availableBikes;
+    /** The amount of available bikes in the station. */
+    private int availableBikes;
 
-	/** The district of the station. */
-	private String district;
+    /** The district of the station. */
+    private String district;
 
-	/** The last update date of these informations. */
-	private Date lastUpdate;
+    /** The last update date of these informations. */
+    private Date lastUpdate;
 
-	/** The identifier of the point of sale. */
-	private int pos;
+    /** The identifier of the point of sale. */
+    private int pos;
 
-	/**
-	 * Gets the identifier of the station.
-	 * 
-	 * @return the identifier of the station
-	 */
-	public String getId() {
+    /**
+     * Gets the identifier of the station.
+     * 
+     * @return the identifier of the station
+     */
+    public String getId() {
 
-		return id;
-	}
+        return id;
+    }
 
-	/**
-	 * Sets the identifier of the station.
-	 * 
-	 * @param id
-	 *            the identifier of the station to set
-	 */
-	public void setId(final String id) {
+    /**
+     * Sets the identifier of the station.
+     * 
+     * @param id
+     *            the identifier of the station to set
+     */
+    public void setId(final String id) {
 
-		this.id = id;
-	}
+        this.id = id;
+    }
 
-	/**
-	 * Gets the name of the station.
-	 * 
-	 * @return the name of the station
-	 */
-	public String getName() {
+    /**
+     * Gets the name of the station.
+     * 
+     * @return the name of the station
+     */
+    public String getName() {
 
-		return name;
-	}
+        return name;
+    }
 
-	/**
-	 * Sets the name of the station.
-	 * 
-	 * @param name
-	 *            the name of the station to set
-	 */
-	public void setName(final String name) {
+    /**
+     * Sets the name of the station.
+     * 
+     * @param name
+     *            the name of the station to set
+     */
+    public void setName(final String name) {
 
-		this.name = name;
-	}
+        this.name = name;
+    }
 
-	/**
-	 * Gets the address of the station.
-	 * 
-	 * @return the address of the station
-	 */
-	public String getAddress() {
+    /**
+     * Gets the address of the station.
+     * 
+     * @return the address of the station
+     */
+    public String getAddress() {
 
-		return address;
-	}
+        return address;
+    }
 
-	/**
-	 * Sets the address of the station.
-	 * 
-	 * @param address
-	 *            the address of the station to set
-	 */
-	public void setAddress(final String address) {
+    /**
+     * Sets the address of the station.
+     * 
+     * @param address
+     *            the address of the station to set
+     */
+    public void setAddress(final String address) {
 
-		this.address = address;
-	}
+        this.address = address;
+    }
 
-	/**
-	 * Gets the state of the station.
-	 * 
-	 * @return the state of the station
-	 */
-	public boolean isActive() {
+    /**
+     * Gets the state of the station.
+     * 
+     * @return the state of the station
+     */
+    public boolean isActive() {
 
-		return active;
-	}
+        return active;
+    }
 
-	/**
-	 * Sets the state of the station.
-	 * 
-	 * @param active
-	 *            the state of the station to set
-	 */
-	public void setActive(final boolean active) {
+    /**
+     * Sets the state of the station.
+     * 
+     * @param active
+     *            the state of the station to set
+     */
+    public void setActive(final boolean active) {
 
-		this.active = active;
-	}
+        this.active = active;
+    }
 
-	/**
-	 * Gets the latitude of the station.
-	 * 
-	 * @return the latitude of the station
-	 */
-	public double getLatitude() {
+    /**
+     * Gets the latitude of the station.
+     * 
+     * @return the latitude of the station
+     */
+    public double getLatitude() {
 
-		return latitude;
-	}
+        return latitude;
+    }
 
-	/**
-	 * Sets the latitude of the station.
-	 * 
-	 * @param latitude
-	 *            the latitude of the station to set
-	 */
-	public void setLatitude(final double latitude) {
+    /**
+     * Sets the latitude of the station.
+     * 
+     * @param latitude
+     *            the latitude of the station to set
+     */
+    public void setLatitude(final double latitude) {
 
-		this.latitude = latitude;
-	}
+        this.latitude = latitude;
+    }
 
-	/**
-	 * Gets the longitude of the station.
-	 * 
-	 * @return the longitude of the station
-	 */
-	public double getLongitude() {
+    /**
+     * Gets the longitude of the station.
+     * 
+     * @return the longitude of the station
+     */
+    public double getLongitude() {
 
-		return longitude;
-	}
+        return longitude;
+    }
 
-	/**
-	 * Sets the longitude of the station.
-	 * 
-	 * @param longitude
-	 *            the longitude of the station to set
-	 */
-	public void setLongitude(final double longitude) {
+    /**
+     * Sets the longitude of the station.
+     * 
+     * @param longitude
+     *            the longitude of the station to set
+     */
+    public void setLongitude(final double longitude) {
 
-		this.longitude = longitude;
-	}
+        this.longitude = longitude;
+    }
 
-	/**
-	 * Gets the amount of available slots in the station.
-	 * 
-	 * @return the amount of available slots in the station
-	 */
-	public int getAvailableSlots() {
+    /**
+     * Gets the amount of available slots in the station.
+     * 
+     * @return the amount of available slots in the station
+     */
+    public int getAvailableSlots() {
 
-		return availableSlots;
-	}
+        return availableSlots;
+    }
 
-	/**
-	 * Sets the amount of available slots in the station.
-	 * 
-	 * @param availableSlots
-	 *            the amount of available slots in the station to set
-	 */
-	public void setAvailableSlots(final int availableSlots) {
+    /**
+     * Sets the amount of available slots in the station.
+     * 
+     * @param availableSlots
+     *            the amount of available slots in the station to set
+     */
+    public void setAvailableSlots(final int availableSlots) {
 
-		this.availableSlots = availableSlots;
-	}
+        this.availableSlots = availableSlots;
+    }
 
-	/**
-	 * Gets the amount of available bikes in the station.
-	 * 
-	 * @return the amount of available bikes in the station
-	 */
-	public int getAvailableBikes() {
+    /**
+     * Gets the amount of available bikes in the station.
+     * 
+     * @return the amount of available bikes in the station
+     */
+    public int getAvailableBikes() {
 
-		return availableBikes;
-	}
+        return availableBikes;
+    }
 
-	/**
-	 * Sets the amount of available bikes in the station.
-	 * 
-	 * @param availableBikes
-	 *            the amount of available bikes in the station to set
-	 */
-	public void setAvailableBikes(final int availableBikes) {
+    /**
+     * Sets the amount of available bikes in the station.
+     * 
+     * @param availableBikes
+     *            the amount of available bikes in the station to set
+     */
+    public void setAvailableBikes(final int availableBikes) {
 
-		this.availableBikes = availableBikes;
-	}
+        this.availableBikes = availableBikes;
+    }
 
-	/**
-	 * Gets the district of the station.
-	 * 
-	 * @return the district of the station
-	 */
-	public String getDistrict() {
+    /**
+     * Gets the district of the station.
+     * 
+     * @return the district of the station
+     */
+    public String getDistrict() {
 
-		return district;
-	}
+        return district;
+    }
 
-	/**
-	 * Sets the district of the station.
-	 * 
-	 * @param district
-	 *            the district of the station to set
-	 */
-	public void setDistrict(final String district) {
+    /**
+     * Sets the district of the station.
+     * 
+     * @param district
+     *            the district of the station to set
+     */
+    public void setDistrict(final String district) {
 
-		this.district = district;
-	}
+        this.district = district;
+    }
 
-	/**
-	 * Gets the last update date of these informations.
-	 * 
-	 * @return the last update date of these informations
-	 */
-	public Date getLastUpdate() {
+    /**
+     * Gets the last update date of these informations.
+     * 
+     * @return the last update date of these informations
+     */
+    public Date getLastUpdate() {
 
-		return lastUpdate;
-	}
+        return lastUpdate;
+    }
 
-	/**
-	 * Sets the last update date of these informations.
-	 * 
-	 * @param lastUpdate
-	 *            the last update date of these informations to set
-	 */
-	public void setLastUpdate(final Date lastUpdate) {
+    /**
+     * Sets the last update date of these informations.
+     * 
+     * @param lastUpdate
+     *            the last update date of these informations to set
+     */
+    public void setLastUpdate(final Date lastUpdate) {
 
-		this.lastUpdate = lastUpdate;
-	}
+        this.lastUpdate = lastUpdate;
+    }
 
-	/**
-	 * Gets the identifier of the point of sale.
-	 * 
-	 * @return the identifier of the point of sale
-	 */
-	public int getPos() {
+    /**
+     * Gets the identifier of the point of sale.
+     * 
+     * @return the identifier of the point of sale
+     */
+    public int getPos() {
 
-		return pos;
-	}
+        return pos;
+    }
 
-	/**
-	 * Sets the identifier of the point of sale.
-	 * 
-	 * @param pos
-	 *            the identifier of the point of sale to set
-	 */
-	public void setPos(final int pos) {
+    /**
+     * Sets the identifier of the point of sale.
+     * 
+     * @param pos
+     *            the identifier of the point of sale to set
+     */
+    public void setPos(final int pos) {
 
-		this.pos = pos;
-	}
+        this.pos = pos;
+    }
 
-	@Override
-	public GeoPoint getGeoPoint() {
+    @Override
+    public GeoPoint getGeoPoint() {
 
-		return new GeoPoint(this.latitude, this.longitude);
-	}
+        return new GeoPoint(this.latitude, this.longitude);
+    }
+
+    @Override
+    public int getType() {
+
+        return ItineRennesConstants.STATION_TYPE_VELO;
+    }
 
 }

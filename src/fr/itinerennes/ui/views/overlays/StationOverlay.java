@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.andnav.osm.views.OpenStreetMapView;
 import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay;
+import org.slf4j.Logger;
+import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
 import android.view.MotionEvent;
@@ -18,6 +20,9 @@ import fr.itinerennes.R;
  */
 public class StationOverlay<T extends StationOverlayItem> extends
         OpenStreetMapViewItemizedOverlay<T> {
+
+    /** The event logger. */
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(StationOverlay.class);
 
     /** True if the focused item layout is visible */
     boolean focused;
@@ -54,10 +59,19 @@ public class StationOverlay<T extends StationOverlayItem> extends
     @Override
     public boolean onSingleTapUp(MotionEvent event, OpenStreetMapView mapView) {
 
-        /* When a single tap if intercepted, the focused layout becomes hidden. */
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("StationOverlay.onSingleTapUp");
+        }
+
+        /*
+         * When a single tap if intercepted, the focused layout becomes hidden and its content is
+         * removed.
+         */
         if (focused) {
             ViewGroup rootLayout = (ViewGroup) mapView.getRootView();
-            (rootLayout.findViewById(R.id.focused_box)).setVisibility(ViewGroup.GONE);
+            ViewGroup focusedBox = (ViewGroup) rootLayout.findViewById(R.id.focused_box);
+            focusedBox.setVisibility(ViewGroup.GONE);
+            focusedBox.removeAllViews();
             this.focused = false;
         }
         return super.onSingleTapUp(event, mapView);

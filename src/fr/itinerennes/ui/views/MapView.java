@@ -1,8 +1,13 @@
 package fr.itinerennes.ui.views;
 
+import org.andnav.osm.events.MapListener;
+import org.andnav.osm.events.ScrollEvent;
+import org.andnav.osm.events.ZoomEvent;
 import org.andnav.osm.views.OpenStreetMapView;
 import org.andnav.osm.views.util.IOpenStreetMapRendererInfo;
 import org.andnav.osm.views.util.OpenStreetMapTileProvider;
+import org.slf4j.Logger;
+import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,11 +16,15 @@ import android.util.AttributeSet;
  * The map view.
  * 
  * @author Jérémie Huchet
+ * @author Olivier Boudet
  */
-public class MapView extends OpenStreetMapView {
+public class MapView extends OpenStreetMapView implements MapListener {
 
-	/** The map controller. */
-	private MapViewController controller;
+    /** The event logger. */
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapView.class);
+
+    /** The map controller. */
+    private MapViewController controller;
 
     /**
      * @param context
@@ -23,7 +32,7 @@ public class MapView extends OpenStreetMapView {
     public MapView(final Context context) {
 
         super(context);
-		this.controller = new MapViewController(this);
+        this.controller = new MapViewController(this);
     }
 
     /**
@@ -68,6 +77,32 @@ public class MapView extends OpenStreetMapView {
 
         super(context, aRendererInfo, aMapToShareTheTileProviderWith);
         // TJHU Auto-generated constructor stub
+    }
+
+    /**
+     * Called when the user scrolls the map. Deactivate the location following.
+     * 
+     * @see org.andnav.osm.events.MapListener#onScroll(org.andnav.osm.events.ScrollEvent)
+     */
+    @Override
+    public boolean onScroll(final ScrollEvent event) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("MapView.onScroll");
+        }
+
+        return false;
+    }
+
+    /**
+     * Called when the user zoom in or out the map.
+     * 
+     * @see org.andnav.osm.events.MapListener#onZoom(org.andnav.osm.events.ZoomEvent)
+     */
+    @Override
+    public boolean onZoom(final ZoomEvent event) {
+
+        return false;
     }
 
 }
