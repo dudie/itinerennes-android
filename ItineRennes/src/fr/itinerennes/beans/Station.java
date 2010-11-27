@@ -36,9 +36,8 @@ public interface Station {
     String getName();
 
     /**
-     * Gets the type of the station. Can be {@link ItineRennesConstants#TYPE_BUS},
-     * {@link ItineRennesConstants#TYPE_VELO} or
-     * {@link ItineRennesConstants#TYPE_SUBWAY}
+     * Gets the type of the station. Can be {@link #TYPE_BUS}, {@link #TYPE_VELO} or
+     * {@link #TYPE_SUBWAY}
      * 
      * @see ItineRennesConstants
      * @return the type of the station
