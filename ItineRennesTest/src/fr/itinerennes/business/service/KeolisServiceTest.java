@@ -6,6 +6,7 @@ import android.test.AndroidTestCase;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.beans.BikeStation;
+import fr.itinerennes.beans.SubwayStation;
 import fr.itinerennes.exceptions.GenericException;
 
 /**
@@ -62,22 +63,42 @@ public class KeolisServiceTest extends AndroidTestCase {
     }
 
     /**
-     * Test method for {@link KeolisService#getBikeStation(int)} .
+     * Test method for {@link KeolisService#getBikeStation(String)} .
      */
     public void testGetBikeStation() {
 
         BikeStation station = null;
         try {
-            station = keolisService.getBikeStation(53);
+            station = keolisService.getBikeStation(String.valueOf(53));
         } catch (final GenericException e) {
             fail(e.getMessage());
         }
         assertNotNull("no bike station returned by the api", station);
-        assertEquals(53, station.getId());
+        assertEquals(String.valueOf(53), station.getId());
         assertEquals(48.12153, station.getLatitude());
         assertEquals(-1.711088, station.getLongitude());
         assertEquals("JF KENNEDY", station.getName());
         assertEquals("DALLE KENNEDY", station.getAddress());
         assertEquals("Villejean-Beauregard", station.getDistrict());
+    }
+
+    /**
+     * Test method for {@link KeolisService#getSubwayStation(String)} .
+     */
+    public void testGetSubwayStation() {
+
+        SubwayStation station = null;
+        try {
+            station = keolisService.getSubwayStation(53);
+        } catch (final GenericException e) {
+            fail(e.getMessage());
+        }
+        assertNotNull("no subway station returned by the api", station);
+        // assertEquals(53, station.getId());
+        // assertEquals(48.12153, station.getLatitude());
+        // assertEquals(-1.711088, station.getLongitude());
+        // assertEquals("JF KENNEDY", station.getName());
+        // assertEquals("DALLE KENNEDY", station.getAddress());
+        // assertEquals("Villejean-Beauregard", station.getDistrict());
     }
 }
