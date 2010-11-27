@@ -14,6 +14,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeContants;
 import fr.itinerennes.beans.BikeStation;
+import fr.itinerennes.beans.SubwayStation;
 import fr.itinerennes.business.http.keolis.KeolisJsonService;
 import fr.itinerennes.exceptions.GenericException;
 
@@ -34,6 +35,26 @@ public class KeolisService {
     /** The Keolis json service. */
     private static final KeolisJsonService keolisJsonService = new KeolisJsonService();
 
+    /** The unique instance of this service. */
+    private static KeolisService instance = new KeolisService();
+
+    /**
+     * Private constructor to avoid instanciation.
+     */
+    private KeolisService() {
+
+    }
+
+    /**
+     * Gets the unique instance of this service.
+     * 
+     * @return the unique instance of this service
+     */
+    public static KeolisService getInstance() {
+
+        return instance;
+    }
+
     /**
      * Gets all bike stations.
      * 
@@ -41,7 +62,7 @@ public class KeolisService {
      * @throws GenericException
      *             unable to get a result from the server
      */
-    public static List<BikeStation> getAllBikeStations() throws GenericException {
+    public List<BikeStation> getAllBikeStations() throws GenericException {
 
         final List<BikeStation> stations = new ArrayList<BikeStation>();
         try {
@@ -69,8 +90,8 @@ public class KeolisService {
      * @throws GenericException
      *             unable to get a result from the server
      */
-    public static List<BikeStation> getBikeStationsNearFrom(final double latitude,
-            final double longitude) throws GenericException {
+    public List<BikeStation> getBikeStationsNearFrom(final double latitude, final double longitude)
+            throws GenericException {
 
         final List<BikeStation> stations = new ArrayList<BikeStation>();
         try {
@@ -96,7 +117,7 @@ public class KeolisService {
      * @throws GenericException
      *             unable to get a result from the server
      */
-    public static BikeStation getBikeStation(final int id) throws GenericException {
+    public BikeStation getBikeStation(final String id) throws GenericException {
 
         BikeStation station = null;
         try {
@@ -111,22 +132,40 @@ public class KeolisService {
     /**
      * Converts a json object to a bean representing a bike station.
      * 
+     * <pre>
+     * "station":[
+     *    {
+     *       "number":"75",
+     *       "name":"ZAC SAINT SULPICE",
+     *       "address":"RUE DE FOUG\u00c8RES",
+     *       "state":"1",
+     *       "latitude":"48.1321",
+     *       "longitude":"-1.63528",
+     *       "slotsavailable":"29",
+     *       "bikesavailable":"1",
+     *       "pos":"0",
+     *       "district":"Maurepas - Patton",
+     *       "lastupdate":"2010-11-24T00:03:05+01:00"
+     *    }
+     * ]
+     * </pre>
+     * 
      * @param jsonObject
      *            the json object to convert to a bike station
      * @return the bike station bean
      * @throws JSONException
      *             an error occurred while converting the json object to a {@link BikeStation}
      */
-    private static BikeStation convertJsonObjectToBikeStation(final JSONObject jsonObject)
+    private BikeStation convertJsonObjectToBikeStation(final JSONObject jsonObject)
             throws JSONException {
 
         final BikeStation station = new BikeStation();
-        station.setActive(convertJsonStringToBoolean(jsonObject.getInt("state")));
+        station.setActive(convertJsonIntToBoolean(jsonObject.getInt("state")));
         station.setAddress(jsonObject.getString("address"));
         station.setAvailableBikes(jsonObject.getInt("bikesavailable"));
         station.setAvailableSlots(jsonObject.getInt("slotsavailable"));
         station.setDistrict(jsonObject.getString("district"));
-		station.setId(jsonObject.getString("number"));
+        station.setId(jsonObject.getString("number"));
         station.setLastUpdate(convertJsonStringToDate(jsonObject.getString("lastupdate")));
         station.setLatitude(jsonObject.getDouble("latitude"));
         station.setLongitude(jsonObject.getDouble("longitude"));
@@ -145,7 +184,7 @@ public class KeolisService {
      * @throws JSONException
      *             the date is malformed
      */
-    private static Date convertJsonStringToDate(final String stringDate) throws JSONException {
+    private Date convertJsonStringToDate(final String stringDate) throws JSONException {
 
         try {
             return KEOLIS_DATE_FORMAT.parse(stringDate);
@@ -160,9 +199,75 @@ public class KeolisService {
      * @param status
      * @return false if the given integer is equals to 0, else true
      */
-    private static boolean convertJsonStringToBoolean(final int status) {
+    private boolean convertJsonIntToBoolean(final int status) {
 
         return 0 != status;
     }
 
+    /**
+     * Gets a subway station by its identifier.
+     * 
+     * @param id
+     *            the identifier of the subway station
+     * @return the subway station
+     * @throws GenericException
+     *             unable to get a result from the server
+     */
+    public SubwayStation getSubwayStation(final int id) throws GenericException {
+
+        SubwayStation station = null;
+        try {
+            station = convertJsonObjectToSubwayStation(keolisJsonService.getSubwayStation(id));
+        } catch (final JSONException e) {
+            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+                    "unable to parse server response : %s", e.getMessage()));
+        }
+        return station;
+    }
+
+    /**
+     * Converts a json object to a bean representing a subway station.
+     * 
+     * <pre>
+     * "station":[
+     *    {
+     *       "id":"ANF",
+     *       "name":"Anatole France",
+     *       "latitude":"48.11810000",
+     *       "longitude":"-1.687460000",
+     *       "hasPlatformDirection1":"1",
+     *       "hasPlatformDirection2":"1",
+     *       "rankingPlatformDirection1":"12",
+     *       "rankingPlatformDirection2":"18",
+     *       "floors":"-1",
+     *       "lastupdate":"2010-11-23T23:15:58+01:00"
+     *    }
+     * ]
+     * </pre>
+     * 
+     * @param jsonObject
+     *            the json object to convert to a subway station
+     * @return the subway station bean
+     * @throws JSONException
+     *             an error occurred while converting the json object to a {@link SubwayStation}
+     */
+    private SubwayStation convertJsonObjectToSubwayStation(final JSONObject jsonObject)
+            throws JSONException {
+
+        final SubwayStation station = new SubwayStation();
+        station.setId(jsonObject.getString("id"));
+        station.setName(jsonObject.getString("name"));
+        station.setLongitude(jsonObject.getDouble("latitude"));
+        station.setLatitude(jsonObject.getDouble("latitude"));
+        station.setHasPlatformDirection1(convertJsonIntToBoolean(jsonObject
+                .getInt("rankingPlatformDirection1")));
+        station.setHasPlatformDirection2(convertJsonIntToBoolean(jsonObject
+                .getInt("rankingPlatformDirection2")));
+        station.setRankingPlatformDirection1(jsonObject.getInt("rankingPlatformDirection1"));
+        station.setRankingPlatformDirection2(jsonObject.getInt("rankingPlatformDirection2"));
+        station.setFloors(jsonObject.getInt("floors"));
+        station.setLastUpdate(convertJsonStringToDate(jsonObject.getString("lastupdate")));
+
+        return station;
+    }
 }
