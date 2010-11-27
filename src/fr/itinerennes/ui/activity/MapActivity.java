@@ -17,9 +17,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.beans.BikeStation;
+import fr.itinerennes.beans.Station;
+import fr.itinerennes.business.facade.BikeService;
 import fr.itinerennes.business.service.KeolisService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.views.MapView;
@@ -64,7 +67,6 @@ public class MapActivity extends Activity {
         setContentView(R.layout.main_map);
 
         /* Instantiation of various services (keolis, otp, geoserver) */
-        keolisService = new KeolisService();
 
         this.map = (MapView) findViewById(R.id.map);
         map.setMapListener(this.map);
@@ -100,29 +102,29 @@ public class MapActivity extends Activity {
                  * @return
                  */
                 @Override
-                public boolean onItemSingleTapUp(int index, StationOverlayItem item) {
+                public boolean onItemSingleTapUp(final int index, final StationOverlayItem item) {
 
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("OnItemGestureListener.onItemSingleTapUp");
                     }
 
-                    LinearLayout focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
-                    LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+                    final LinearLayout focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
+                    final LayoutInflater inflater = LayoutInflater.from(getBaseContext());
 
                     try {
                         switch (item.getStation().getType()) {
-                        case ItineRennesConstants.STATION_TYPE_VELO:
+                        case Station.TYPE_VELO:
                             inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
 
-                            BikeStation bikeStation = KeolisService.getBikeStation(Integer
-                                    .parseInt(item.getStation().getId()));
+                            final BikeStation bikeStation = BikeService.getStation(item
+                                    .getStation().getId());
 
-                            TextView availables_slots = (TextView) focusedBoxLayout
+                            final TextView availables_slots = (TextView) focusedBoxLayout
                                     .findViewById(R.id.available_slots);
                             availables_slots
                                     .setText(String.valueOf(bikeStation.getAvailableSlots()));
 
-                            TextView availables_bikes = (TextView) focusedBoxLayout
+                            final TextView availables_bikes = (TextView) focusedBoxLayout
                                     .findViewById(R.id.available_bikes);
                             availables_bikes
                                     .setText(String.valueOf(bikeStation.getAvailableBikes()));
@@ -132,10 +134,11 @@ public class MapActivity extends Activity {
                         default:
                             break;
                         }
-                    } catch (GenericException e) {
+                    } catch (final GenericException e) {
                         LOGGER.error("Error while trying to fetch station informations.");
                     }
-                    TextView title = (TextView) focusedBoxLayout.findViewById(R.id.station_name);
+                    final TextView title = (TextView) focusedBoxLayout
+                            .findViewById(R.id.station_name);
                     title.setText(item.getStation().getName());
 
                     focusedBoxLayout.setVisibility(View.VISIBLE);
@@ -144,7 +147,7 @@ public class MapActivity extends Activity {
                 }
 
                 @Override
-                public boolean onItemLongPress(int index, StationOverlayItem item) {
+                public boolean onItemLongPress(final int index, final StationOverlayItem item) {
 
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("OnItemGestureListener.onItemLongPress");
@@ -158,7 +161,7 @@ public class MapActivity extends Activity {
                     getBikeStationOverlayItems(), listener);
             map.getOverlays().add(stationOverlay);
 
-        } catch (GenericException e) {
+        } catch (final GenericException e) {
             // TOBO Auto-generated catch block
             e.printStackTrace();
         }
@@ -172,11 +175,11 @@ public class MapActivity extends Activity {
      */
     private List<StationOverlayItem> getBikeStationOverlayItems() throws GenericException {
 
-        List<BikeStation> bikeStations = KeolisService.getAllBikeStations();
-        List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
+        final List<BikeStation> bikeStations = BikeService.getAllStations();
+        final List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
 
-        for (BikeStation station : bikeStations) {
-            StationOverlayItem item = new StationOverlayItem(station);
+        for (final BikeStation station : bikeStations) {
+            final StationOverlayItem item = new StationOverlayItem(station);
             item.setMarker(getResources().getDrawable(R.drawable.icon_velo));
 
             overlayItems.add(item);

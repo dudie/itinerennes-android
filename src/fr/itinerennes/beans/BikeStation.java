@@ -4,8 +4,6 @@ import java.util.Date;
 
 import org.andnav.osm.util.GeoPoint;
 
-import fr.itinerennes.ItineRennesConstants;
-
 /**
  * Bean representing a bike station.
  * 
@@ -51,6 +49,7 @@ public class BikeStation implements Station {
      * 
      * @return the identifier of the station
      */
+    @Override
     public String getId() {
 
         return id;
@@ -72,6 +71,7 @@ public class BikeStation implements Station {
      * 
      * @return the name of the station
      */
+    @Override
     public String getName() {
 
         return name;
@@ -277,16 +277,28 @@ public class BikeStation implements Station {
         this.pos = pos;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.beans.Station#getGeoPoint()
+     */
     @Override
     public GeoPoint getGeoPoint() {
 
+        // TJHU ne faut-il pas plutot retirer this.latitude et this.longitude pour mettre un
+        // this.geopoint ?
         return new GeoPoint(this.latitude, this.longitude);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.beans.Station#getType()
+     */
     @Override
     public int getType() {
 
-        return ItineRennesConstants.STATION_TYPE_VELO;
+        return Station.TYPE_VELO;
     }
 
 }

@@ -52,9 +52,9 @@ public class KeolisJsonService {
         final HttpPost req = new HttpPost(ItineRennesConstants.KEOLIS_API_URL);
         req.addHeader("Accept", "text/json");
         req.addHeader("Accept", "application/json");
-        parameters.add(new BasicNameValuePair("version", ItineRennesConstants.KEOLIS_API_VERSION));
-        parameters.add(new BasicNameValuePair("key", ItineRennesConstants.KEOLIS_API_KEY));
-        parameters.add(new BasicNameValuePair(Keo.Network.ATT_NAME, Keo.Network.LE_VELO_STAR));
+        parameters.add(new BasicNameValuePair(Keo.API_VERSION,
+                ItineRennesConstants.KEOLIS_API_VERSION));
+        parameters.add(new BasicNameValuePair(Keo.API_KEY, ItineRennesConstants.KEOLIS_API_KEY));
 
         try {
             req.setEntity(new UrlEncodedFormEntity(parameters));
@@ -62,6 +62,17 @@ public class KeolisJsonService {
             throw new GenericException(ErrorCodeContants.API_CALL_FAILED,
                     "unable to encode request parameters", e);
         }
+
+        if (LOGGER.isDebugEnabled()) {
+            final StringBuilder msg = new StringBuilder();
+            msg.append(req.getURI().toString()).append("?");
+            for (final NameValuePair param : parameters) {
+                msg.append(param.getName()).append("=").append(param.getValue()).append("&");
+            }
+            msg.deleteCharAt(msg.length() - 1);
+            LOGGER.debug(msg.toString());
+        }
+
         return req;
     }
 
@@ -76,8 +87,10 @@ public class KeolisJsonService {
     public JSONArray getAllBikeStations() throws GenericException, JSONException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(5);
-        params.add(new BasicNameValuePair(Keo.Command.ATT_NAME, Keo.Command.GET_BIKE_STATIONS));
-        params.add(new BasicNameValuePair(Keo.Station.ATT_NAME, Keo.Station.ALL));
+        params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_LE_VELO_STAR));
+        params.add(new BasicNameValuePair(Keo.Command.PARAM_NAME, Keo.Command.GET_BIKE_STATIONS));
+        params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_STATION,
+                Keo.GetBikeStations.VALUE_STATION_ALL));
 
         JSONObject data = null;
         data = httpService.execute(createKeolisRequest(params), responseHandler);
@@ -97,11 +110,16 @@ public class KeolisJsonService {
             throws GenericException, JSONException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(8);
-        params.add(new BasicNameValuePair(Keo.Command.ATT_NAME, Keo.Command.GET_BIKE_STATIONS));
-        params.add(new BasicNameValuePair(Keo.Station.ATT_NAME, Keo.Station.PROXIMITY));
-        params.add(new BasicNameValuePair(Keo.ProximityMode.ATT_NAME, Keo.ProximityMode.COORD));
-        params.add(new BasicNameValuePair(Keo.Coords.LATITUDE, String.valueOf(latitude)));
-        params.add(new BasicNameValuePair(Keo.Coords.LONGITUDE, String.valueOf(longitude)));
+        params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_LE_VELO_STAR));
+        params.add(new BasicNameValuePair(Keo.Command.PARAM_NAME, Keo.Command.GET_BIKE_STATIONS));
+        params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_STATION,
+                Keo.GetBikeStations.VALUE_STATION_PROXIMITY));
+        params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_MODE,
+                Keo.GetBikeStations.VALUE_MODE_COORDINATES));
+        params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_LATITUDE, String
+                .valueOf(latitude)));
+        params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_LONGITUDE, String
+                .valueOf(longitude)));
 
         JSONObject data = null;
         synchronized (httpService) {
@@ -121,12 +139,40 @@ public class KeolisJsonService {
      * @throws JSONException
      *             unable to parse the json response of the server
      */
-    public JSONObject getBikeStation(final int id) throws GenericException, JSONException {
+    public JSONObject getBikeStation(final String id) throws GenericException, JSONException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(6);
-        params.add(new BasicNameValuePair(Keo.Command.ATT_NAME, Keo.Command.GET_BIKE_STATIONS));
-        params.add(new BasicNameValuePair(Keo.Station.ATT_NAME, Keo.Station.IDENTIFIER));
-        params.add(new BasicNameValuePair(Keo.VALUE, String.valueOf(id)));
+        params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_LE_VELO_STAR));
+        params.add(new BasicNameValuePair(Keo.Command.PARAM_NAME, Keo.Command.GET_BIKE_STATIONS));
+        params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_STATION,
+                Keo.GetBikeStations.VALUE_STATION_IDENTIFIER));
+        params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_VALUE, id));
+
+        JSONObject data = null;
+        synchronized (httpService) {
+            data = httpService.execute(createKeolisRequest(params), responseHandler);
+        }
+
+        return data.getJSONObject("station");
+    }
+
+    /**
+     * Makes a call to the Keolis API to get the subway station related to the given identifier.
+     * 
+     * @param id
+     *            the identifier of the subway station
+     * @throws GenericException
+     *             unable to get a result from the server
+     * @throws JSONException
+     *             unable to parse the json response of the server
+     */
+    public JSONObject getSubwayStation(final int id) throws GenericException, JSONException {
+
+        final List<NameValuePair> params = new ArrayList<NameValuePair>(6);
+        params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
+        params.add(new BasicNameValuePair(Keo.Command.PARAM_NAME, Keo.Command.GET_METRO_STATIONS));
+        // params.add(new BasicNameValuePair(Keo.Mode.ATT_NAME, Keo.Mode.IDENTIFIER));
+        // params.add(new BasicNameValuePair(Keo.VALUE, String.valueOf(id)));
 
         JSONObject data = null;
         synchronized (httpService) {

@@ -7,8 +7,11 @@ package fr.itinerennes.business.http.keolis;
  */
 public final class Keo {
 
-    /** The name of the generic value attribute name. */
-    public static final String VALUE = "param[value]";
+    /** Parameter to set the Keolis API version used. */
+    public static final String API_VERSION = "version";
+
+    /** Parameter to set the Keolis API key. */
+    public static final String API_KEY = "key";
 
     /**
      * Contains constants for keolis commands parameter.
@@ -21,7 +24,7 @@ public final class Keo {
         public static final int RESULT_SUCCESS = 0;
 
         /** The name of the parameter to use to set the method name. */
-        public static final String ATT_NAME = "cmd";
+        public static final String PARAM_NAME = "cmd";
 
         /** Constant for the name of the method to retrieve informations about bike stations. */
         public static final String GET_BIKE_STATIONS = "getbikestations";
@@ -59,60 +62,71 @@ public final class Keo {
     public static final class Network {
 
         /** The name of the network attribute. */
-        public static final String ATT_NAME = "param[network]";
+        public static final String PARAM_NAME = "param[network]";
 
-        /** Constant for the name of the network attribute to set in API calls. */
-        public static final String LE_VELO_STAR = "levelostar";
+        /** Constant for the name of the network attribute to set in API calls for bikes. */
+        public static final String VALUE_LE_VELO_STAR = "levelostar";
+
+        /** Constant for the name of the network attribute to set in API calls for subway and bus. */
+        public static final String VALUE_STAR = "star";
     }
 
     /**
-     * Contains constants for keolis station parameter.
+     * Contains contants for method {@link Command#GET_BIKE_STATIONS}.
      * 
      * @author Jérémie Huchet
      */
-    public static final class Station {
+    public static final class GetBikeStations {
 
-        /** The name of the mode attribute. */
-        public static final String ATT_NAME = "param[station]";
+        /**
+         * Used to set the fetch mode. See its values {@link #VALUE_STATION_ALL},
+         * {@link #VALUE_STATION_PROXIMITY}, {@link #VALUE_STATION_DISTRICT},
+         * {@link #VALUE_STATION_IDENTIFIER}.
+         */
+        public static final String PARAM_STATION = "param[station]";
 
-        /** Constant for the attribute value to get all stations. */
-        public static final String ALL = "all";
+        /** Fetch all station. */
+        public static final String VALUE_STATION_ALL = "all";
 
-        /** Constant for the attribute value to get stations by proximity. */
-        public static final String PROXIMITY = "proximity";
+        /** Fetch 3 stations by proximity. You need to specify {@link #PARAM_MODE}. */
+        public static final String VALUE_STATION_PROXIMITY = "proximity";
 
-        /** Constant for the attribute value to get stations by identifier / number. */
-        public static final String IDENTIFIER = "number";
+        /**
+         * Fetch stations by district. You need to specify {@link #PARAM_VALUE} with a district
+         * name.
+         */
+        public static final String VALUE_STATION_DISTRICT = "district";
+
+        /**
+         * Fetch station by identifier. You need to specify {@link #PARAM_VALUE} with a station
+         * identifier.
+         */
+        public static final String VALUE_STATION_IDENTIFIER = "number";
+
+        /**
+         * Sets the proximity mode. Use with {@link #PARAM_STATION}={@link #VALUE_STATION_PROXIMITY}
+         * . Can take values {@link #VALUE_MODE_COORDINATES} or {@link #VALUE_MODE_IDENTIFIER}.
+         */
+        public static final String PARAM_MODE = "param[mode]";
+
+        /** Fetch the 3 closest stations of the given station id. */
+        public static final String VALUE_MODE_IDENTIFIER = "id";
+
+        /** Fetch the 3 closest stations of the given coordinates. */
+        public static final String VALUE_MODE_COORDINATES = "coord";
+
+        /** Use with {@link #PARAM_MODE}={@link #VALUE_MODE_COORDINATES} to set the latitude value. */
+        public static final String PARAM_LATITUDE = "param[lat]";
+
+        /** Use with {@link #PARAM_MODE}={@link #VALUE_MODE_COORDINATES} to set the longitude value. */
+        public static final String PARAM_LONGITUDE = "param[long]";
+
+        /**
+         * Use with {@link #PARAM_STATION}={@link #VALUE_STATION_DISTRICT} to set the district name
+         * or {@link #PARAM_STATION}={@link #VALUE_STATION_IDENTIFIER} to set the identifier of the
+         * station.
+         */
+        public static final String PARAM_VALUE = "param[value]";
     }
 
-    /**
-     * Contains constants for keolis mode parameter.
-     * 
-     * @author Jérémie Huchet
-     */
-    public static final class ProximityMode {
-
-        /** The name of the mode attribute. */
-        public static final String ATT_NAME = "param[mode]";
-
-        /** Constant for the attribute value to get proximity stations by identifier / number. */
-        public static final String ID = "id";
-
-        /** Constant for the attribute value to get proximity stations coordinates. */
-        public static final String COORD = "coord";
-    }
-
-    /**
-     * Contains constants for keolis coords type parameter.
-     * 
-     * @author Jérémie Huchet
-     */
-    public static final class Coords {
-
-        /** Constant for the attribute name to set a latitude. */
-        public static final String LATITUDE = "param[lat]";
-
-        /** Constant for the attribute name to set a longitude.. */
-        public static final String LONGITUDE = "param[long]";
-    }
 }
