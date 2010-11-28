@@ -47,7 +47,7 @@ public class SubwayStation implements Station {
      * @return the id
      */
     @Override
-    public String getId() {
+    public final String getId() {
 
         return id;
     }
@@ -58,7 +58,7 @@ public class SubwayStation implements Station {
      * @param id
      *            the id to set
      */
-    public void setId(final String id) {
+    public final void setId(final String id) {
 
         this.id = id;
     }
@@ -69,7 +69,7 @@ public class SubwayStation implements Station {
      * @return the name
      */
     @Override
-    public String getName() {
+    public final String getName() {
 
         return name;
     }
@@ -80,7 +80,7 @@ public class SubwayStation implements Station {
      * @param name
      *            the name to set
      */
-    public void setName(final String name) {
+    public final void setName(final String name) {
 
         this.name = name;
     }
@@ -90,7 +90,7 @@ public class SubwayStation implements Station {
      * 
      * @return the latitude
      */
-    public double getLatitude() {
+    public final double getLatitude() {
 
         return latitude;
     }
@@ -101,7 +101,7 @@ public class SubwayStation implements Station {
      * @param latitude
      *            the latitude to set
      */
-    public void setLatitude(final double latitude) {
+    public final void setLatitude(final double latitude) {
 
         this.latitude = latitude;
     }
@@ -111,7 +111,7 @@ public class SubwayStation implements Station {
      * 
      * @return the longitude
      */
-    public double getLongitude() {
+    public final double getLongitude() {
 
         return longitude;
     }
@@ -122,7 +122,7 @@ public class SubwayStation implements Station {
      * @param longitude
      *            the longitude to set
      */
-    public void setLongitude(final double longitude) {
+    public final void setLongitude(final double longitude) {
 
         this.longitude = longitude;
     }
@@ -132,7 +132,7 @@ public class SubwayStation implements Station {
      * 
      * @return the hasPlatformDirection1
      */
-    public boolean isHasPlatformDirection1() {
+    public final boolean isHasPlatformDirection1() {
 
         return hasPlatformDirection1;
     }
@@ -143,7 +143,7 @@ public class SubwayStation implements Station {
      * @param hasPlatformDirection1
      *            the hasPlatformDirection1 to set
      */
-    public void setHasPlatformDirection1(final boolean hasPlatformDirection1) {
+    public final void setHasPlatformDirection1(final boolean hasPlatformDirection1) {
 
         this.hasPlatformDirection1 = hasPlatformDirection1;
     }
@@ -153,7 +153,7 @@ public class SubwayStation implements Station {
      * 
      * @return the hasPlatformDirection2
      */
-    public boolean isHasPlatformDirection2() {
+    public final boolean isHasPlatformDirection2() {
 
         return hasPlatformDirection2;
     }
@@ -164,7 +164,7 @@ public class SubwayStation implements Station {
      * @param hasPlatformDirection2
      *            the hasPlatformDirection2 to set
      */
-    public void setHasPlatformDirection2(final boolean hasPlatformDirection2) {
+    public final void setHasPlatformDirection2(final boolean hasPlatformDirection2) {
 
         this.hasPlatformDirection2 = hasPlatformDirection2;
     }
@@ -174,7 +174,7 @@ public class SubwayStation implements Station {
      * 
      * @return the rankingPlatformDirection1
      */
-    public int getRankingPlatformDirection1() {
+    public final int getRankingPlatformDirection1() {
 
         return rankingPlatformDirection1;
     }
@@ -185,7 +185,7 @@ public class SubwayStation implements Station {
      * @param rankingPlatformDirection1
      *            the rankingPlatformDirection1 to set
      */
-    public void setRankingPlatformDirection1(final int rankingPlatformDirection1) {
+    public final void setRankingPlatformDirection1(final int rankingPlatformDirection1) {
 
         this.rankingPlatformDirection1 = rankingPlatformDirection1;
     }
@@ -195,7 +195,7 @@ public class SubwayStation implements Station {
      * 
      * @return the rankingPlatformDirection2
      */
-    public int getRankingPlatformDirection2() {
+    public final int getRankingPlatformDirection2() {
 
         return rankingPlatformDirection2;
     }
@@ -206,7 +206,7 @@ public class SubwayStation implements Station {
      * @param rankingPlatformDirection2
      *            the rankingPlatformDirection2 to set
      */
-    public void setRankingPlatformDirection2(final int rankingPlatformDirection2) {
+    public final void setRankingPlatformDirection2(final int rankingPlatformDirection2) {
 
         this.rankingPlatformDirection2 = rankingPlatformDirection2;
     }
@@ -216,7 +216,7 @@ public class SubwayStation implements Station {
      * 
      * @return the floors
      */
-    public int getFloors() {
+    public final int getFloors() {
 
         return floors;
     }
@@ -227,7 +227,7 @@ public class SubwayStation implements Station {
      * @param floors
      *            the floors to set
      */
-    public void setFloors(final int floors) {
+    public final void setFloors(final int floors) {
 
         this.floors = floors;
     }
@@ -237,7 +237,7 @@ public class SubwayStation implements Station {
      * 
      * @return the lastUpdate
      */
-    public Date getLastUpdate() {
+    public final Date getLastUpdate() {
 
         return lastUpdate;
     }
@@ -248,7 +248,7 @@ public class SubwayStation implements Station {
      * @param lastUpdate
      *            the lastUpdate to set
      */
-    public void setLastUpdate(final Date lastUpdate) {
+    public final void setLastUpdate(final Date lastUpdate) {
 
         this.lastUpdate = lastUpdate;
     }
@@ -259,7 +259,7 @@ public class SubwayStation implements Station {
      * @see fr.itinerennes.beans.Station#getGeoPoint()
      */
     @Override
-    public GeoPoint getGeoPoint() {
+    public final GeoPoint getGeoPoint() {
 
         return new GeoPoint(latitude, longitude);
     }
@@ -270,9 +270,42 @@ public class SubwayStation implements Station {
      * @see fr.itinerennes.beans.Station#getType()
      */
     @Override
-    public int getType() {
+    public final int getType() {
 
         return Station.TYPE_SUBWAY;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+
+        final StringBuilder builder = new StringBuilder();
+        builder.append("SubwayStation [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", latitude=");
+        builder.append(latitude);
+        builder.append(", longitude=");
+        builder.append(longitude);
+        builder.append(", hasPlatformDirection1=");
+        builder.append(hasPlatformDirection1);
+        builder.append(", hasPlatformDirection2=");
+        builder.append(hasPlatformDirection2);
+        builder.append(", rankingPlatformDirection1=");
+        builder.append(rankingPlatformDirection1);
+        builder.append(", rankingPlatformDirection2=");
+        builder.append(rankingPlatformDirection2);
+        builder.append(", floors=");
+        builder.append(floors);
+        builder.append(", lastUpdate=");
+        builder.append(lastUpdate);
+        builder.append("]");
+        return builder.toString();
     }
 
 }
