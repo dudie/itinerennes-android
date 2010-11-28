@@ -46,7 +46,7 @@ public class BikeServiceTest extends AndroidTestCase {
         totalUncached = endUncached - startUncached;
 
         assertNotNull("no bike station returned by the api", station);
-        assertEquals(53, station.getId());
+        assertEquals(String.valueOf(53), station.getId());
         assertEquals(48.12153, station.getLatitude());
         assertEquals(-1.711088, station.getLongitude());
         assertEquals("JF KENNEDY", station.getName());

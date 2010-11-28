@@ -72,7 +72,7 @@ public final class Keo {
     }
 
     /**
-     * Contains contants for method {@link Command#GET_BIKE_STATIONS}.
+     * Contains constants for method {@link Command#GET_BIKE_STATIONS}.
      * 
      * @author Jérémie Huchet
      */
@@ -85,7 +85,7 @@ public final class Keo {
          */
         public static final String PARAM_STATION = "param[station]";
 
-        /** Fetch all station. */
+        /** Fetch all stations. */
         public static final String VALUE_STATION_ALL = "all";
 
         /** Fetch 3 stations by proximity. You need to specify {@link #PARAM_MODE}. */
@@ -129,4 +129,56 @@ public final class Keo {
         public static final String PARAM_VALUE = "param[value]";
     }
 
+    /**
+     * Contains constants for method {@link Command#GET_METRO_STATIONS}.
+     * 
+     * @author Jérémie Huchet
+     */
+    public static final class GetSubwayStations {
+
+        /**
+         * Used to set the fetch mode. See its values {@link #VALUE_MODE_ALL},
+         * {@link #VALUE_MODE_STATION}, {@link #VALUE_STATION_PROXIMITY}.
+         */
+        public static final String PARAM_MODE = "param[mode]";
+
+        /** Fetch all stations. */
+        public static final String VALUE_MODE_ALL = "all";
+
+        /**
+         * Fetch stations by identifier. You need to specify {@link #PARAM_STATION} with a station
+         * identifier.
+         */
+        public static final String VALUE_MODE_STATION = "station";
+
+        /** Fetch 3 stations by proximity. You need to specify {@link #PARAM_PROXIMITY_TYPE}. */
+        public static final String VALUE_MODE_PROXIMITY = "proximity";
+
+        /**
+         * Use with {@link #PARAM_MODE}={@link #VALUE_MODE_STATION} to set the identifier of the
+         * station to fetch.
+         */
+        public static final String PARAM_STATION_IDENTIFIER = "param[station]";
+
+        /** Used to set the kind of proximity look up. */
+        public static final String PARAM_PROXIMITY_TYPE = "param[type]";
+
+        /** Fetch the 3 closest stations of the given station id. */
+        public static final String VALUE_PROXIMITY_TYPE_IDENTIFIER = "station";
+
+        /** Fetch the 3 closest stations of the given coordinates. */
+        public static final String VALUE_PROXIMITY_TYPE_COORDINATES = "coords";
+
+        /**
+         * Use with {@link #PARAM_PROXIMITY_TYPE}={@link #VALUE_PROXIMITY_TYPE_COORDINATES} to set
+         * the latitude value.
+         */
+        public static final String PARAM_LATITUDE = "param[lat]";
+
+        /**
+         * Use with {@link #PARAM_PROXIMITY_TYPE}={@link #VALUE_PROXIMITY_TYPE_COORDINATES} to set
+         * the longitude value.
+         */
+        public static final String PARAM_LONGITUDE = "param[lng]";
+    }
 }
