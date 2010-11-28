@@ -50,7 +50,7 @@ public class BikeStation implements Station {
      * @return the identifier of the station
      */
     @Override
-    public String getId() {
+    public final String getId() {
 
         return id;
     }
@@ -61,7 +61,7 @@ public class BikeStation implements Station {
      * @param id
      *            the identifier of the station to set
      */
-    public void setId(final String id) {
+    public final void setId(final String id) {
 
         this.id = id;
     }
@@ -72,7 +72,7 @@ public class BikeStation implements Station {
      * @return the name of the station
      */
     @Override
-    public String getName() {
+    public final String getName() {
 
         return name;
     }
@@ -83,7 +83,7 @@ public class BikeStation implements Station {
      * @param name
      *            the name of the station to set
      */
-    public void setName(final String name) {
+    public final void setName(final String name) {
 
         this.name = name;
     }
@@ -93,7 +93,7 @@ public class BikeStation implements Station {
      * 
      * @return the address of the station
      */
-    public String getAddress() {
+    public final String getAddress() {
 
         return address;
     }
@@ -104,7 +104,7 @@ public class BikeStation implements Station {
      * @param address
      *            the address of the station to set
      */
-    public void setAddress(final String address) {
+    public final void setAddress(final String address) {
 
         this.address = address;
     }
@@ -114,7 +114,7 @@ public class BikeStation implements Station {
      * 
      * @return the state of the station
      */
-    public boolean isActive() {
+    public final boolean isActive() {
 
         return active;
     }
@@ -125,7 +125,7 @@ public class BikeStation implements Station {
      * @param active
      *            the state of the station to set
      */
-    public void setActive(final boolean active) {
+    public final void setActive(final boolean active) {
 
         this.active = active;
     }
@@ -135,7 +135,7 @@ public class BikeStation implements Station {
      * 
      * @return the latitude of the station
      */
-    public double getLatitude() {
+    public final double getLatitude() {
 
         return latitude;
     }
@@ -146,7 +146,7 @@ public class BikeStation implements Station {
      * @param latitude
      *            the latitude of the station to set
      */
-    public void setLatitude(final double latitude) {
+    public final void setLatitude(final double latitude) {
 
         this.latitude = latitude;
     }
@@ -156,7 +156,7 @@ public class BikeStation implements Station {
      * 
      * @return the longitude of the station
      */
-    public double getLongitude() {
+    public final double getLongitude() {
 
         return longitude;
     }
@@ -167,7 +167,7 @@ public class BikeStation implements Station {
      * @param longitude
      *            the longitude of the station to set
      */
-    public void setLongitude(final double longitude) {
+    public final void setLongitude(final double longitude) {
 
         this.longitude = longitude;
     }
@@ -177,7 +177,7 @@ public class BikeStation implements Station {
      * 
      * @return the amount of available slots in the station
      */
-    public int getAvailableSlots() {
+    public final int getAvailableSlots() {
 
         return availableSlots;
     }
@@ -188,7 +188,7 @@ public class BikeStation implements Station {
      * @param availableSlots
      *            the amount of available slots in the station to set
      */
-    public void setAvailableSlots(final int availableSlots) {
+    public final void setAvailableSlots(final int availableSlots) {
 
         this.availableSlots = availableSlots;
     }
@@ -198,7 +198,7 @@ public class BikeStation implements Station {
      * 
      * @return the amount of available bikes in the station
      */
-    public int getAvailableBikes() {
+    public final int getAvailableBikes() {
 
         return availableBikes;
     }
@@ -209,7 +209,7 @@ public class BikeStation implements Station {
      * @param availableBikes
      *            the amount of available bikes in the station to set
      */
-    public void setAvailableBikes(final int availableBikes) {
+    public final void setAvailableBikes(final int availableBikes) {
 
         this.availableBikes = availableBikes;
     }
@@ -219,7 +219,7 @@ public class BikeStation implements Station {
      * 
      * @return the district of the station
      */
-    public String getDistrict() {
+    public final String getDistrict() {
 
         return district;
     }
@@ -230,7 +230,7 @@ public class BikeStation implements Station {
      * @param district
      *            the district of the station to set
      */
-    public void setDistrict(final String district) {
+    public final void setDistrict(final String district) {
 
         this.district = district;
     }
@@ -240,7 +240,7 @@ public class BikeStation implements Station {
      * 
      * @return the last update date of these informations
      */
-    public Date getLastUpdate() {
+    public final Date getLastUpdate() {
 
         return lastUpdate;
     }
@@ -251,7 +251,7 @@ public class BikeStation implements Station {
      * @param lastUpdate
      *            the last update date of these informations to set
      */
-    public void setLastUpdate(final Date lastUpdate) {
+    public final void setLastUpdate(final Date lastUpdate) {
 
         this.lastUpdate = lastUpdate;
     }
@@ -261,7 +261,7 @@ public class BikeStation implements Station {
      * 
      * @return the identifier of the point of sale
      */
-    public int getPos() {
+    public final int getPos() {
 
         return pos;
     }
@@ -272,7 +272,7 @@ public class BikeStation implements Station {
      * @param pos
      *            the identifier of the point of sale to set
      */
-    public void setPos(final int pos) {
+    public final void setPos(final int pos) {
 
         this.pos = pos;
     }
@@ -283,7 +283,7 @@ public class BikeStation implements Station {
      * @see fr.itinerennes.beans.Station#getGeoPoint()
      */
     @Override
-    public GeoPoint getGeoPoint() {
+    public final GeoPoint getGeoPoint() {
 
         // TJHU ne faut-il pas plutot retirer this.latitude et this.longitude pour mettre un
         // this.geopoint ?
@@ -296,9 +296,44 @@ public class BikeStation implements Station {
      * @see fr.itinerennes.beans.Station#getType()
      */
     @Override
-    public int getType() {
+    public final int getType() {
 
         return Station.TYPE_VELO;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+
+        final StringBuilder builder = new StringBuilder();
+        builder.append("BikeStation [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", address=");
+        builder.append(address);
+        builder.append(", active=");
+        builder.append(active);
+        builder.append(", latitude=");
+        builder.append(latitude);
+        builder.append(", longitude=");
+        builder.append(longitude);
+        builder.append(", availableSlots=");
+        builder.append(availableSlots);
+        builder.append(", availableBikes=");
+        builder.append(availableBikes);
+        builder.append(", district=");
+        builder.append(district);
+        builder.append(", lastUpdate=");
+        builder.append(lastUpdate);
+        builder.append(", pos=");
+        builder.append(pos);
+        builder.append("]");
+        return builder.toString();
     }
 
 }
