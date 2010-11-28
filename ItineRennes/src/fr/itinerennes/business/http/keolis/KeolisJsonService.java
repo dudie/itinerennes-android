@@ -127,10 +127,7 @@ public class KeolisJsonService {
         params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_LONGITUDE, String
                 .valueOf(longitude)));
 
-        JSONObject data = null;
-        synchronized (httpService) {
-            data = httpService.execute(createKeolisRequest(params), responseHandler);
-        }
+        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
 
         return data.getJSONArray("station");
     }
@@ -155,10 +152,7 @@ public class KeolisJsonService {
                 Keo.GetBikeStations.VALUE_STATION_IDENTIFIER));
         params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_VALUE, id));
 
-        JSONObject data = null;
-        synchronized (httpService) {
-            data = httpService.execute(createKeolisRequest(params), responseHandler);
-        }
+        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
 
         return data.getJSONObject("station");
     }
@@ -180,10 +174,7 @@ public class KeolisJsonService {
         params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_MODE,
                 Keo.GetSubwayStations.VALUE_MODE_ALL));
 
-        JSONObject data = null;
-        synchronized (httpService) {
-            data = httpService.execute(createKeolisRequest(params), responseHandler);
-        }
+        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
 
         return data.getJSONArray("station");
     }
@@ -216,10 +207,7 @@ public class KeolisJsonService {
         params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_LONGITUDE, String
                 .valueOf(longitude)));
 
-        JSONObject data = null;
-        synchronized (httpService) {
-            data = httpService.execute(createKeolisRequest(params), responseHandler);
-        }
+        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
 
         return data.getJSONArray("station");
     }
@@ -243,10 +231,7 @@ public class KeolisJsonService {
                 Keo.GetSubwayStations.VALUE_MODE_STATION));
         params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_STATION_IDENTIFIER, id));
 
-        JSONObject data = null;
-        synchronized (httpService) {
-            data = httpService.execute(createKeolisRequest(params), responseHandler);
-        }
+        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
 
         return data.getJSONObject("station");
     }
