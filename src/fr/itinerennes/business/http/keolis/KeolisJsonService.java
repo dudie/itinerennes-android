@@ -79,6 +79,7 @@ public class KeolisJsonService {
     /**
      * Makes a call to the Keolis API to get all bike stations.
      * 
+     * @return a {@link JSONArray} containing all bike stations as {@link JSONObject}s
      * @throws GenericException
      *             unable to get a result from the server
      * @throws JSONException
@@ -99,8 +100,13 @@ public class KeolisJsonService {
     }
 
     /**
-     * Makes a call to the Keolis API to get the 3 first nearest stations.
+     * Makes a call to the Keolis API to get the 3 first nearest bike stations.
      * 
+     * @param latitude
+     *            the latitude
+     * @param longitude
+     *            the longitude
+     * @return a {@link JSONArray} containing the 3 bike stations as {@link JSONObject}s
      * @throws GenericException
      *             unable to get a result from the server
      * @throws JSONException
@@ -134,6 +140,7 @@ public class KeolisJsonService {
      * 
      * @param id
      *            the identifier of the bike station
+     * @return a {@link JSONObject} containing the bike station
      * @throws GenericException
      *             unable to get a result from the server
      * @throws JSONException
@@ -157,6 +164,67 @@ public class KeolisJsonService {
     }
 
     /**
+     * Makes a call to the Keolis API to get all subway stations.
+     * 
+     * @return a {@link JSONArray} containing all subway stations as {@link JSONObject}s
+     * @throws GenericException
+     *             unable to get a result from the server
+     * @throws JSONException
+     *             unable to parse the json response of the server
+     */
+    public JSONArray getAllSubwayStations() throws GenericException, JSONException {
+
+        final List<NameValuePair> params = new ArrayList<NameValuePair>(5);
+        params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
+        params.add(new BasicNameValuePair(Keo.Command.PARAM_NAME, Keo.Command.GET_METRO_STATIONS));
+        params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_MODE,
+                Keo.GetSubwayStations.VALUE_MODE_ALL));
+
+        JSONObject data = null;
+        synchronized (httpService) {
+            data = httpService.execute(createKeolisRequest(params), responseHandler);
+        }
+
+        return data.getJSONArray("station");
+    }
+
+    /**
+     * Makes a call to the Keolis API to get the 3 first nearest subway stations.
+     * 
+     * @param latitude
+     *            the latitude
+     * @param longitude
+     *            the longitude
+     * @return a {@link JSONArray} containing the 3 subway stations as {@link JSONObject}s
+     * @throws GenericException
+     *             unable to get a result from the server
+     * @throws JSONException
+     *             unable to parse the json response of the server
+     */
+    public JSONArray getSubwayStationsNearFrom(final double latitude, final double longitude)
+            throws GenericException, JSONException {
+
+        final List<NameValuePair> params = new ArrayList<NameValuePair>(8);
+        params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
+        params.add(new BasicNameValuePair(Keo.Command.PARAM_NAME, Keo.Command.GET_METRO_STATIONS));
+        params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_MODE,
+                Keo.GetSubwayStations.VALUE_MODE_PROXIMITY));
+        params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_PROXIMITY_TYPE,
+                Keo.GetSubwayStations.VALUE_PROXIMITY_TYPE_COORDINATES));
+        params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_LATITUDE, String
+                .valueOf(latitude)));
+        params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_LONGITUDE, String
+                .valueOf(longitude)));
+
+        JSONObject data = null;
+        synchronized (httpService) {
+            data = httpService.execute(createKeolisRequest(params), responseHandler);
+        }
+
+        return data.getJSONArray("station");
+    }
+
+    /**
      * Makes a call to the Keolis API to get the subway station related to the given identifier.
      * 
      * @param id
@@ -166,13 +234,14 @@ public class KeolisJsonService {
      * @throws JSONException
      *             unable to parse the json response of the server
      */
-    public JSONObject getSubwayStation(final int id) throws GenericException, JSONException {
+    public JSONObject getSubwayStation(final String id) throws GenericException, JSONException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(6);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
         params.add(new BasicNameValuePair(Keo.Command.PARAM_NAME, Keo.Command.GET_METRO_STATIONS));
-        // params.add(new BasicNameValuePair(Keo.Mode.ATT_NAME, Keo.Mode.IDENTIFIER));
-        // params.add(new BasicNameValuePair(Keo.VALUE, String.valueOf(id)));
+        params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_MODE,
+                Keo.GetSubwayStations.VALUE_MODE_STATION));
+        params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_STATION_IDENTIFIER, id));
 
         JSONObject data = null;
         synchronized (httpService) {

@@ -73,20 +73,20 @@ public class KeolisService {
             }
         } catch (final JSONException e) {
             throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
-                    "unable to parse server response : %s", e.getMessage()));
+                    "unable to parse server response : %s", e.getMessage()), e);
         }
 
         return stations;
     }
 
     /**
-     * Gets the first 3 nearest stations ordered by the nearest to the farest.
+     * Gets the first 3 nearest bike stations ordered by the nearest to the farthest.
      * 
      * @param longitude
      *            the latitude
      * @param latitude
      *            the longitude
-     * @return the first 3 nearest stations
+     * @return the first 3 nearest bike stations
      * @throws GenericException
      *             unable to get a result from the server
      */
@@ -103,7 +103,7 @@ public class KeolisService {
             }
         } catch (final JSONException e) {
             throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
-                    "unable to parse server response : %s", e.getMessage()));
+                    "unable to parse server response : %s", e.getMessage()), e);
         }
         return stations;
     }
@@ -124,7 +124,7 @@ public class KeolisService {
             station = convertJsonObjectToBikeStation(keolisJsonService.getBikeStation(id));
         } catch (final JSONException e) {
             throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
-                    "unable to parse server response : %s", e.getMessage()));
+                    "unable to parse server response : %s", e.getMessage()), e);
         }
         return station;
     }
@@ -197,11 +197,65 @@ public class KeolisService {
      * Converts Keolis int status to a {@link Boolean}.
      * 
      * @param status
+     *            the status to convert
      * @return false if the given integer is equals to 0, else true
      */
     private boolean convertJsonIntToBoolean(final int status) {
 
         return 0 != status;
+    }
+
+    /**
+     * Gets all subway stations.
+     * 
+     * @return all subway stations
+     * @throws GenericException
+     *             unable to get a result from the server
+     */
+    public List<SubwayStation> getAllSubwayStations() throws GenericException {
+
+        final List<SubwayStation> stations = new ArrayList<SubwayStation>();
+        try {
+            final JSONArray jsonStations = keolisJsonService.getAllSubwayStations();
+
+            for (int i = 0; !jsonStations.isNull(i); i++) {
+                stations.add(convertJsonObjectToSubwayStation(jsonStations.getJSONObject(i)));
+            }
+        } catch (final JSONException e) {
+            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+                    "unable to parse server response : %s", e.getMessage()), e);
+        }
+
+        return stations;
+    }
+
+    /**
+     * Gets the first 3 nearest subway stations ordered by the nearest to the farthest.
+     * 
+     * @param longitude
+     *            the latitude
+     * @param latitude
+     *            the longitude
+     * @return the first 3 nearest subway stations
+     * @throws GenericException
+     *             unable to get a result from the server
+     */
+    public List<SubwayStation> getSubwayStationsNearFrom(final double latitude,
+            final double longitude) throws GenericException {
+
+        final List<SubwayStation> stations = new ArrayList<SubwayStation>();
+        try {
+            final JSONArray jsonStations = keolisJsonService.getSubwayStationsNearFrom(latitude,
+                    longitude);
+
+            for (int i = 0; !jsonStations.isNull(i); i++) {
+                stations.add(convertJsonObjectToSubwayStation(jsonStations.getJSONObject(i)));
+            }
+        } catch (final JSONException e) {
+            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+                    "unable to parse server response : %s", e.getMessage()), e);
+        }
+        return stations;
     }
 
     /**
@@ -213,14 +267,14 @@ public class KeolisService {
      * @throws GenericException
      *             unable to get a result from the server
      */
-    public SubwayStation getSubwayStation(final int id) throws GenericException {
+    public SubwayStation getSubwayStation(final String id) throws GenericException {
 
         SubwayStation station = null;
         try {
             station = convertJsonObjectToSubwayStation(keolisJsonService.getSubwayStation(id));
         } catch (final JSONException e) {
             throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
-                    "unable to parse server response : %s", e.getMessage()));
+                    "unable to parse server response : %s", e.getMessage(), e));
         }
         return station;
     }
@@ -257,14 +311,24 @@ public class KeolisService {
         final SubwayStation station = new SubwayStation();
         station.setId(jsonObject.getString("id"));
         station.setName(jsonObject.getString("name"));
-        station.setLongitude(jsonObject.getDouble("latitude"));
+        station.setLongitude(jsonObject.getDouble("longitude"));
         station.setLatitude(jsonObject.getDouble("latitude"));
         station.setHasPlatformDirection1(convertJsonIntToBoolean(jsonObject
-                .getInt("rankingPlatformDirection1")));
+                .getInt("hasPlatformDirection1")));
         station.setHasPlatformDirection2(convertJsonIntToBoolean(jsonObject
-                .getInt("rankingPlatformDirection2")));
-        station.setRankingPlatformDirection1(jsonObject.getInt("rankingPlatformDirection1"));
-        station.setRankingPlatformDirection2(jsonObject.getInt("rankingPlatformDirection2"));
+                .getInt("hasPlatformDirection2")));
+        String rankPlatformDir = jsonObject.getString("rankingPlatformDirection1");
+        if (null != rankPlatformDir && !"".equals(rankPlatformDir)) {
+            station.setRankingPlatformDirection1(Integer.valueOf(rankPlatformDir));
+        } else {
+            station.setRankingPlatformDirection1(0);
+        }
+        rankPlatformDir = jsonObject.getString("rankingPlatformDirection2");
+        if (null != rankPlatformDir && !"".equals(rankPlatformDir)) {
+            station.setRankingPlatformDirection2(Integer.valueOf(rankPlatformDir));
+        } else {
+            station.setRankingPlatformDirection2(0);
+        }
         station.setFloors(jsonObject.getInt("floors"));
         station.setLastUpdate(convertJsonStringToDate(jsonObject.getString("lastupdate")));
 
