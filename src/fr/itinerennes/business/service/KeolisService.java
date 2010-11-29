@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeContants;
+import fr.itinerennes.beans.BikeDistrict;
 import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.beans.SubwayStation;
 import fr.itinerennes.business.http.keolis.KeolisJsonService;
@@ -23,7 +24,7 @@ import fr.itinerennes.exceptions.GenericException;
  * 
  * @author Jérémie Huchet
  */
-public class KeolisService {
+public final class KeolisService {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(KeolisService.class);
@@ -36,7 +37,7 @@ public class KeolisService {
     private static final KeolisJsonService keolisJsonService = new KeolisJsonService();
 
     /** The unique instance of this service. */
-    private static KeolisService instance = new KeolisService();
+    private static final KeolisService instance = new KeolisService();
 
     /**
      * Private constructor to avoid instanciation.
@@ -176,33 +177,54 @@ public class KeolisService {
     }
 
     /**
-     * Converts Keolis date string to a {@link Date}.
+     * Gets the bike districts.
      * 
-     * @param stringDate
-     *            the date as a string ("2010-11-11T20:47:06+01:00")
-     * @return the date
-     * @throws JSONException
-     *             the date is malformed
+     * @return all bike districts
+     * @throws GenericException
+     *             unable to get a result from the server
      */
-    private Date convertJsonStringToDate(final String stringDate) throws JSONException {
+    public List<BikeDistrict> getAllBikeDistricts() throws GenericException {
 
+        final List<BikeDistrict> districts = new ArrayList<BikeDistrict>();
         try {
-            return KEOLIS_DATE_FORMAT.parse(stringDate);
-        } catch (final ParseException e) {
-            throw new JSONException(e.getMessage());
+            final JSONArray jsonDistricts = keolisJsonService.getAllBikeDistricts();
+
+            for (int i = 0; !jsonDistricts.isNull(i); i++) {
+                districts.add(convertJsonObjectToBikeDistrict(jsonDistricts.getJSONObject(i)));
+            }
+        } catch (final JSONException e) {
+            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+                    "unable to parse server response : %s", e.getMessage()), e);
         }
+
+        return districts;
     }
 
     /**
-     * Converts Keolis int status to a {@link Boolean}.
+     * Converts a json object to a bean representing a bike district.
      * 
-     * @param status
-     *            the status to convert
-     * @return false if the given integer is equals to 0, else true
+     * <pre>
+     * "district":[
+     *   {
+     *     "id":"34",
+     *     "name":"Sud-Gare"
+     *   }
+     * ]
+     * </pre>
+     * 
+     * @param jsonObject
+     *            the json object to convert
+     * @return the bean representing the given json object
+     * @throws JSONException
+     *             an error occurred while converting the json object to a {@link BikeDistrict}
      */
-    private boolean convertJsonIntToBoolean(final int status) {
+    private BikeDistrict convertJsonObjectToBikeDistrict(final JSONObject jsonObject)
+            throws JSONException {
 
-        return 0 != status;
+        final BikeDistrict disctrict = new BikeDistrict();
+        disctrict.setId(jsonObject.getString("id"));
+        disctrict.setName(jsonObject.getString("name"));
+        return disctrict;
     }
 
     /**
@@ -333,5 +355,35 @@ public class KeolisService {
         station.setLastUpdate(convertJsonStringToDate(jsonObject.getString("lastupdate")));
 
         return station;
+    }
+
+    /**
+     * Converts Keolis date string to a {@link Date}.
+     * 
+     * @param stringDate
+     *            the date as a string ("2010-11-11T20:47:06+01:00")
+     * @return the date
+     * @throws JSONException
+     *             the date is malformed
+     */
+    private Date convertJsonStringToDate(final String stringDate) throws JSONException {
+
+        try {
+            return KEOLIS_DATE_FORMAT.parse(stringDate);
+        } catch (final ParseException e) {
+            throw new JSONException(e.getMessage());
+        }
+    }
+
+    /**
+     * Converts Keolis int status to a {@link Boolean}.
+     * 
+     * @param status
+     *            the status to convert
+     * @return false if the given integer is equals to 0, else true
+     */
+    private boolean convertJsonIntToBoolean(final int status) {
+
+        return 0 != status;
     }
 }

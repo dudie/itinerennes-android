@@ -7,6 +7,11 @@ package fr.itinerennes.business.http.keolis;
  */
 public final class Keo {
 
+    /** Avoid instantiation. */
+    private Keo() {
+
+    }
+
     /** Parameter to set the Keolis API version used. */
     public static final String API_VERSION = "version";
 
@@ -20,6 +25,11 @@ public final class Keo {
      */
     public static final class Command {
 
+        /** Avoid instantiation. */
+        private Command() {
+
+        }
+
         /** Keolis result code for success. */
         public static final int RESULT_SUCCESS = 0;
 
@@ -28,6 +38,9 @@ public final class Keo {
 
         /** Constant for the name of the method to retrieve informations about bike stations. */
         public static final String GET_BIKE_STATIONS = "getbikestations";
+
+        /** Constant for the name of the method to retrieve all bike districts. */
+        public static final String GET_BIKE_DISTRICTS = "getbikedistricts";
 
         /** Constant for the name of the method to retrieve alert informations about lines. */
         public static final String GET_LINES_ALERT = "getlinesalerts";
@@ -61,6 +74,11 @@ public final class Keo {
      */
     public static final class Network {
 
+        /** Avoid instantiation. */
+        private Network() {
+
+        }
+
         /** The name of the network attribute. */
         public static final String PARAM_NAME = "param[network]";
 
@@ -77,6 +95,11 @@ public final class Keo {
      * @author Jérémie Huchet
      */
     public static final class GetBikeStations {
+
+        /** Avoid instantiation. */
+        private GetBikeStations() {
+
+        }
 
         /**
          * Used to set the fetch mode. See its values {@link #VALUE_STATION_ALL},
@@ -135,6 +158,11 @@ public final class Keo {
      * @author Jérémie Huchet
      */
     public static final class GetSubwayStations {
+
+        /** Avoid instantiation. */
+        private GetSubwayStations() {
+
+        }
 
         /**
          * Used to set the fetch mode. See its values {@link #VALUE_MODE_ALL},
