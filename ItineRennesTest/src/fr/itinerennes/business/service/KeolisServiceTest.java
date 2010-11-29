@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.test.AndroidTestCase;
-
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.beans.BikeDistrict;
 import fr.itinerennes.beans.BikeStation;
@@ -118,7 +117,7 @@ public class KeolisServiceTest extends AndroidTestCase {
         assertEquals("JF KENNEDY", station.getName());
         assertEquals("DALLE KENNEDY", station.getAddress());
         assertEquals("Villejean-Beauregard", station.getDistrict());
-        assertEquals(Station.TYPE_VELO, station.getType());
+        assertEquals(Station.TYPE_BIKE, station.getType());
 
         LOGGER.info("testGetBikeStation.end");
     }
