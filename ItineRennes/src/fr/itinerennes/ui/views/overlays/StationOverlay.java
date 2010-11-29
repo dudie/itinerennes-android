@@ -11,6 +11,7 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import fr.itinerennes.R;
+import fr.itinerennes.ui.views.MapView;
 
 /**
  * Contains a list of items displayed on the map.
@@ -24,8 +25,7 @@ public class StationOverlay<T extends StationOverlayItem> extends
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(StationOverlay.class);
 
-    /** True if the focused item layout is visible */
-    boolean focused;
+    private int type;
 
     /**
      * @param ctx
@@ -35,20 +35,9 @@ public class StationOverlay<T extends StationOverlayItem> extends
      * @param onItemGestureListener
      */
     public StationOverlay(final Context ctx, final List<T> items,
-            OnItemGestureListener<T> onItemGestureListener) {
+            OnItemGestureListener<T> onItemGestureListener, int type) {
 
         super(ctx, items, onItemGestureListener);
-    }
-
-    /**
-     * Sets the focused flag which indicate if the item layout is visible
-     * 
-     * @param focused
-     *            focused or not
-     */
-    public void setFocused(boolean focused) {
-
-        this.focused = focused;
     }
 
     /**
@@ -67,13 +56,18 @@ public class StationOverlay<T extends StationOverlayItem> extends
          * When a single tap if intercepted, the focused layout becomes hidden and its content is
          * removed.
          */
-        if (focused) {
+        if (((MapView) mapView).isItemLayoutFocused()) {
             ViewGroup rootLayout = (ViewGroup) mapView.getRootView();
             ViewGroup focusedBox = (ViewGroup) rootLayout.findViewById(R.id.focused_box);
             focusedBox.setVisibility(ViewGroup.GONE);
             focusedBox.removeAllViews();
-            this.focused = false;
+            ((MapView) mapView).setItemLayoutFocused(false);
         }
         return super.onSingleTapUp(event, mapView);
+    }
+
+    public int getType() {
+
+        return type;
     }
 }

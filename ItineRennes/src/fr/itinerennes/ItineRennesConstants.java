@@ -11,7 +11,7 @@ public class ItineRennesConstants {
      */
 
     /** Default zoom level. */
-    public static final int CONFIG_DEFAULT_ZOOM = 12;
+    public static final int CONFIG_DEFAULT_ZOOM = 16;
 
     /** Latitude of city Rennes. */
     public static final double CONFIG_RENNES_LAT = 48.1096;
@@ -31,4 +31,12 @@ public class ItineRennesConstants {
 
     /** Keolis API version. */
     public static final String KEOLIS_API_VERSION = "2.0";
+
+    /*
+     * Geoserver constants.
+     */
+
+    /** Geoserver API URL. */
+    public static final String GEOSERVER_API_URL = "http://otp.itinerennes.fr/geoserver/ows/";
+
 }

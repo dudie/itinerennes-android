@@ -1,4 +1,4 @@
-package fr.itinerennes.business.http.keolis;
+package fr.itinerennes.business.http.wms;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,15 +16,16 @@ import fr.itinerennes.business.http.HttpResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
 
 /**
- * A handler to recieve Keolis API responses.
+ * A handler to receive Geoserver WMS API responses.
  * 
- * @author Jérémie Huchet
+ * @author Olivier Boudet
  */
-public class KeolisResponseHandler extends HttpResponseHandler<JSONObject> {
+
+public class WFSResponseHandler extends HttpResponseHandler<JSONObject> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
-            .getLogger(KeolisResponseHandler.class);
+            .getLogger(WFSResponseHandler.class);
 
     /** The default char reader buffer length. */
     private static final int CHAR_BUF_SIZE = 512;
@@ -44,31 +45,22 @@ public class KeolisResponseHandler extends HttpResponseHandler<JSONObject> {
         }
         super.handleResponse(response);
 
-        JSONObject data = null;
+        JSONObject jsonResult = null;
         try {
             final String stringResult = toString(response.getEntity().getContent());
 
-            final JSONObject jsonResult = new JSONObject(stringResult);
+            jsonResult = new JSONObject(stringResult);
 
-            final JSONObject opendata = jsonResult.getJSONObject("opendata");
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("checking response for request : {}", opendata.getString("request"));
+                LOGGER.debug("type : {}", jsonResult.getString("type"));
             }
-            final JSONObject answer = opendata.getJSONObject("answer");
-            final JSONObject status = answer.getJSONObject("status");
-            final JSONObject attributes = status.getJSONObject("@attributes");
-            final int code = attributes.getInt("code");
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("status : {}, {}", code, attributes.getString("message"));
-            }
-            if (code != 0) {
+
+            if (!jsonResult.getString("type").equalsIgnoreCase("FeatureCollection")) {
                 final GenericException e = new GenericException(
-                        ErrorCodeConstants.KEOLIS_REQUEST_ERROR, String.format("code=%s, %s ", code,
-                                attributes.getString("message")));
+                        ErrorCodeConstants.WFS_RESPONSE_ERROR,
+                        String.format("No FeatureCollection in response."));
                 throw e;
             }
-
-            data = answer.getJSONObject("data");
 
         } catch (final JSONException e) {
             LOGGER.error(e.getMessage(), e);
@@ -79,9 +71,9 @@ public class KeolisResponseHandler extends HttpResponseHandler<JSONObject> {
             throw new GenericException(ErrorCodeConstants.NETWORK, "i/o exception");
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("handleResponse.end - {}", data == null);
+            LOGGER.debug("handleResponse.end - {}", jsonResult == null);
         }
-        return data;
+        return jsonResult;
     }
 
     /**
@@ -111,5 +103,4 @@ public class KeolisResponseHandler extends HttpResponseHandler<JSONObject> {
         }
         return result.toString();
     }
-
 }

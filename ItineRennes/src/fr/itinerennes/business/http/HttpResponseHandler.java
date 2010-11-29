@@ -2,7 +2,7 @@ package fr.itinerennes.business.http;
 
 import org.apache.http.HttpResponse;
 
-import fr.itinerennes.ErrorCodeContants;
+import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.exceptions.GenericException;
 
 /**
@@ -29,7 +29,7 @@ public class HttpResponseHandler<T> {
 
 		if (response == null || response.getStatusLine() == null
 		        || response.getStatusLine().getStatusCode() != HTTP_SUCCESS) {
-			throw new GenericException(ErrorCodeContants.NETWORK,
+			throw new GenericException(ErrorCodeConstants.NETWORK,
 			        "HTTP response code different from 200");
 		}
 		return null;

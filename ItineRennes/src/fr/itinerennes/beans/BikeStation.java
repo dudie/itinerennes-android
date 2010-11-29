@@ -298,7 +298,7 @@ public class BikeStation implements Station {
     @Override
     public final int getType() {
 
-        return Station.TYPE_VELO;
+        return Station.TYPE_BIKE;
     }
 
     /**

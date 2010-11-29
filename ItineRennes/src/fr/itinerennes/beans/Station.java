@@ -13,7 +13,7 @@ import fr.itinerennes.ItineRennesConstants;
 public interface Station {
 
     /** Station type bike. */
-    public static final int TYPE_VELO = 1;
+    public static final int TYPE_BIKE = 1;
 
     /** Station type bus. */
     public static final int TYPE_BUS = 2;
@@ -36,7 +36,7 @@ public interface Station {
     String getName();
 
     /**
-     * Gets the type of the station. Can be {@link #TYPE_BUS}, {@link #TYPE_VELO} or
+     * Gets the type of the station. Can be {@link #TYPE_BUS}, {@link #TYPE_BIKE} or
      * {@link #TYPE_SUBWAY}
      * 
      * @see ItineRennesConstants

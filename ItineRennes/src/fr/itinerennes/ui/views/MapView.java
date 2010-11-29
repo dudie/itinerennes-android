@@ -26,6 +26,9 @@ public class MapView extends OpenStreetMapView implements MapListener {
     /** The map controller. */
     private MapViewController controller;
 
+    /** True if the focused item layout is visible */
+    boolean focused;
+
     /**
      * @param context
      */
@@ -105,4 +108,25 @@ public class MapView extends OpenStreetMapView implements MapListener {
         return false;
     }
 
+    /**
+     * Sets the focused flag which indicate if the item layout is visible
+     * 
+     * @param focused
+     *            focused or not
+     */
+    public void setItemLayoutFocused(boolean focused) {
+
+        this.focused = focused;
+    }
+
+    /**
+     * Gets the focused flag which indicate if the item layout is visible
+     * 
+     * @param focused
+     *            focused or not
+     */
+    public boolean isItemLayoutFocused() {
+
+        return this.focused;
+    }
 }

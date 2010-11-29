@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import fr.itinerennes.ErrorCodeContants;
+import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.http.GenericHttpService;
 import fr.itinerennes.business.http.keolis.Keo.Network;
@@ -60,7 +60,7 @@ public class KeolisJsonService {
         try {
             req.setEntity(new UrlEncodedFormEntity(parameters));
         } catch (final UnsupportedEncodingException e) {
-            throw new GenericException(ErrorCodeContants.API_CALL_FAILED,
+            throw new GenericException(ErrorCodeConstants.API_CALL_FAILED,
                     "unable to encode request parameters", e);
         }
 
