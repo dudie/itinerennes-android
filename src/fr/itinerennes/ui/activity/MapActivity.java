@@ -1,11 +1,9 @@
 package fr.itinerennes.ui.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.andnav.osm.util.GeoPoint;
 import org.andnav.osm.views.overlay.MyLocationOverlay;
 import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay;
+import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay.OnItemGestureListener;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -17,16 +15,16 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.beans.BikeStation;
+import fr.itinerennes.beans.BoundingBox;
 import fr.itinerennes.beans.Station;
 import fr.itinerennes.business.facade.BikeService;
-import fr.itinerennes.business.service.KeolisService;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.ui.tasks.RefreshBikeOverlayTask;
+import fr.itinerennes.ui.tasks.RefreshBusOverlayTask;
 import fr.itinerennes.ui.views.MapView;
-import fr.itinerennes.ui.views.overlays.StationOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
 /**
@@ -34,6 +32,7 @@ import fr.itinerennes.ui.views.overlays.StationOverlayItem;
  * top and a map view at center of the screen.
  * 
  * @author Jérémie Huchet
+ * @author Olivier Boudet
  */
 public class MapActivity extends Activity {
 
@@ -46,11 +45,8 @@ public class MapActivity extends Activity {
     /** The my location overlay. */
     private MyLocationOverlay myLocation;
 
-    /** The station overlay */
-    private StationOverlay<StationOverlayItem> stationOverlay;
-
-    /** The keolis service */
-    private KeolisService keolisService;
+    /** OnItemGestureListener */
+    private OnItemGestureListener<StationOverlayItem> onItemGestureListener;
 
     /**
      * Called when activity starts.
@@ -65,8 +61,6 @@ public class MapActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_map);
-
-        /* Instantiation of various services (keolis, otp, geoserver) */
 
         this.map = (MapView) findViewById(R.id.map);
         map.setMapListener(this.map);
@@ -85,107 +79,95 @@ public class MapActivity extends Activity {
         final Button myLocation = (Button) findViewById(R.id.button_myPosition);
         myLocation.setOnClickListener(new MyLocationClickListener());
 
-        try {
+        /**
+         * The gesture listener to be used on the station overlay.
+         */
+        onItemGestureListener = new OpenStreetMapViewItemizedOverlay.OnItemGestureListener<StationOverlayItem>() {
+
             /**
-             * The gesture listener to be used on the station overlay.
+             * Called when a single tap is intercepted on the overlay. Inflates the layout
+             * corresponding to the item type and sets the focused layout box visible.
+             * 
+             * @param index
+             *            index of the tapped up item in the overlay
+             * @param item
+             *            item tapped up
+             * @return
              */
-            final OpenStreetMapViewItemizedOverlay.OnItemGestureListener<StationOverlayItem> listener = new OpenStreetMapViewItemizedOverlay.OnItemGestureListener<StationOverlayItem>() {
+            @Override
+            public boolean onItemSingleTapUp(int index, StationOverlayItem item) {
 
-                /**
-                 * Called when a single tap is intercepted on the overlay. Inflates the layout
-                 * corresponding to the item type and sets the focused layout box visible.
-                 * 
-                 * @param index
-                 *            index of the tapped up item in the overlay
-                 * @param item
-                 *            item tapped up
-                 * @return
-                 */
-                @Override
-                public boolean onItemSingleTapUp(final int index, final StationOverlayItem item) {
-
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("OnItemGestureListener.onItemSingleTapUp");
-                    }
-
-                    final LinearLayout focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
-                    final LayoutInflater inflater = LayoutInflater.from(getBaseContext());
-
-                    try {
-                        switch (item.getStation().getType()) {
-                        case Station.TYPE_VELO:
-                            inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
-
-                            final BikeStation bikeStation = BikeService.getStation(item
-                                    .getStation().getId());
-
-                            final TextView availables_slots = (TextView) focusedBoxLayout
-                                    .findViewById(R.id.available_slots);
-                            availables_slots
-                                    .setText(String.valueOf(bikeStation.getAvailableSlots()));
-
-                            final TextView availables_bikes = (TextView) focusedBoxLayout
-                                    .findViewById(R.id.available_bikes);
-                            availables_bikes
-                                    .setText(String.valueOf(bikeStation.getAvailableBikes()));
-
-                            break;
-
-                        default:
-                            break;
-                        }
-                    } catch (final GenericException e) {
-                        LOGGER.error("Error while trying to fetch station informations.");
-                    }
-                    final TextView title = (TextView) focusedBoxLayout
-                            .findViewById(R.id.station_name);
-                    title.setText(item.getStation().getName());
-
-                    focusedBoxLayout.setVisibility(View.VISIBLE);
-                    stationOverlay.setFocused(true);
-                    return true;
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("OnItemGestureListener.onItemSingleTapUp");
                 }
 
-                @Override
-                public boolean onItemLongPress(final int index, final StationOverlayItem item) {
+                LinearLayout focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
+                LayoutInflater inflater = LayoutInflater.from(getBaseContext());
 
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("OnItemGestureListener.onItemLongPress");
+                try {
+                    switch (item.getStation().getType()) {
+                    case Station.TYPE_BIKE:
+                        inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
+
+                        BikeStation bikeStation = BikeService.getStation(item.getStation().getId());
+
+                        TextView availables_slots = (TextView) focusedBoxLayout
+                                .findViewById(R.id.available_slots);
+                        availables_slots.setText(String.valueOf(bikeStation.getAvailableSlots()));
+
+                        TextView availables_bikes = (TextView) focusedBoxLayout
+                                .findViewById(R.id.available_bikes);
+                        availables_bikes.setText(String.valueOf(bikeStation.getAvailableBikes()));
+
+                        break;
+                    case Station.TYPE_BUS:
+                        inflater.inflate(R.layout.bus_station_box_layout, focusedBoxLayout);
+
+                        break;
+
+                    default:
+                        break;
                     }
 
-                    return false;
+                } catch (GenericException e) {
+                    LOGGER.error("Error while trying to fetch station informations.");
+
+                }
+                TextView title = (TextView) focusedBoxLayout.findViewById(R.id.station_name);
+                title.setText(item.getStation().getName());
+
+                focusedBoxLayout.setVisibility(View.VISIBLE);
+                map.setItemLayoutFocused(true);
+
+                return true;
+            }
+
+            @Override
+            public boolean onItemLongPress(int index, StationOverlayItem item) {
+
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("OnItemGestureListener.onItemLongPress");
                 }
 
-            };
-            stationOverlay = new StationOverlay<StationOverlayItem>(this.getBaseContext(),
-                    getBikeStationOverlayItems(), listener);
-            map.getOverlays().add(stationOverlay);
+                return false;
+            }
 
-        } catch (final GenericException e) {
-            // TOBO Auto-generated catch block
-            e.printStackTrace();
-        }
+        };
+
     }
 
-    /**
-     * Gets all bike stations from Keolis API and returns a list of station overlay items.
-     * 
-     * @return list of station overlay items
-     * @throws GenericException
-     */
-    private List<StationOverlayItem> getBikeStationOverlayItems() throws GenericException {
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
 
-        final List<BikeStation> bikeStations = BikeService.getAllStations();
-        final List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
+        super.onResume();
+        if (hasFocus == true) {
+            BoundingBox bbox = new BoundingBox(this.map.getVisibleBoundingBoxE6());
 
-        for (final BikeStation station : bikeStations) {
-            final StationOverlayItem item = new StationOverlayItem(station);
-            item.setMarker(getResources().getDrawable(R.drawable.icon_velo));
-
-            overlayItems.add(item);
+            new RefreshBusOverlayTask(this.getBaseContext(), this.map, onItemGestureListener)
+                    .execute(bbox);
+            new RefreshBikeOverlayTask(this.getBaseContext(), this.map, onItemGestureListener)
+                    .execute(bbox);
         }
-        return overlayItems;
-
     }
 
     /**

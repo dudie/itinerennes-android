@@ -1,6 +1,6 @@
 package fr.itinerennes.exceptions;
 
-import fr.itinerennes.ErrorCodeContants;
+import fr.itinerennes.ErrorCodeConstants;
 
 /**
  * An abstract exception defining the error code describing the problem.
@@ -16,7 +16,7 @@ public class GenericException extends Exception {
      * Creates a new generic exception.
      * 
      * @param code
-     *            the error code (see {@link ErrorCodeContants}
+     *            the error code (see {@link ErrorCodeConstants}
      * @param message
      *            an optional description message of the error
      * @param cause
@@ -32,7 +32,7 @@ public class GenericException extends Exception {
      * Creates a new generic exception.
      * 
      * @param code
-     *            the error code (see {@link ErrorCodeContants}
+     *            the error code (see {@link ErrorCodeConstants}
      * @param message
      *            an optional description message of the error
      */
@@ -45,7 +45,7 @@ public class GenericException extends Exception {
      * Creates a new generic exception.
      * 
      * @param code
-     *            the error code (see {@link ErrorCodeContants}
+     *            the error code (see {@link ErrorCodeConstants}
      */
     public GenericException(final short code) {
 

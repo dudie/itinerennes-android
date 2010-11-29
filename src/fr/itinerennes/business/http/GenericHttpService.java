@@ -9,7 +9,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import fr.itinerennes.ErrorCodeContants;
+import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.business.http.keolis.KeolisResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
 
@@ -53,10 +53,10 @@ public class GenericHttpService {
             }
         } catch (final ClientProtocolException e) {
             LOGGER.debug(e.getMessage(), e);
-            throw new GenericException(ErrorCodeContants.NETWORK, "client protocol exception");
+            throw new GenericException(ErrorCodeConstants.NETWORK, "client protocol exception");
         } catch (final IOException e) {
             LOGGER.debug(e.getMessage(), e);
-            throw new GenericException(ErrorCodeContants.NETWORK, "i/o exception");
+            throw new GenericException(ErrorCodeConstants.NETWORK, "i/o exception");
         }
         return handler.handleResponse(response);
     }

@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import fr.itinerennes.ErrorCodeContants;
+import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.beans.BikeDistrict;
 import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.beans.SubwayStation;
@@ -73,7 +73,7 @@ public final class KeolisService {
                 stations.add(convertJsonObjectToBikeStation(jsonStations.getJSONObject(i)));
             }
         } catch (final JSONException e) {
-            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+            throw new GenericException(ErrorCodeConstants.JSON_MALFORMED, String.format(
                     "unable to parse server response : %s", e.getMessage()), e);
         }
 
@@ -103,7 +103,7 @@ public final class KeolisService {
                 stations.add(convertJsonObjectToBikeStation(jsonStations.getJSONObject(i)));
             }
         } catch (final JSONException e) {
-            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+            throw new GenericException(ErrorCodeConstants.JSON_MALFORMED, String.format(
                     "unable to parse server response : %s", e.getMessage()), e);
         }
         return stations;
@@ -124,7 +124,7 @@ public final class KeolisService {
         try {
             station = convertJsonObjectToBikeStation(keolisJsonService.getBikeStation(id));
         } catch (final JSONException e) {
-            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+            throw new GenericException(ErrorCodeConstants.JSON_MALFORMED, String.format(
                     "unable to parse server response : %s", e.getMessage()), e);
         }
         return station;
@@ -193,7 +193,7 @@ public final class KeolisService {
                 districts.add(convertJsonObjectToBikeDistrict(jsonDistricts.getJSONObject(i)));
             }
         } catch (final JSONException e) {
-            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+            throw new GenericException(ErrorCodeConstants.JSON_MALFORMED, String.format(
                     "unable to parse server response : %s", e.getMessage()), e);
         }
 
@@ -244,7 +244,7 @@ public final class KeolisService {
                 stations.add(convertJsonObjectToSubwayStation(jsonStations.getJSONObject(i)));
             }
         } catch (final JSONException e) {
-            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+            throw new GenericException(ErrorCodeConstants.JSON_MALFORMED, String.format(
                     "unable to parse server response : %s", e.getMessage()), e);
         }
 
@@ -274,7 +274,7 @@ public final class KeolisService {
                 stations.add(convertJsonObjectToSubwayStation(jsonStations.getJSONObject(i)));
             }
         } catch (final JSONException e) {
-            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+            throw new GenericException(ErrorCodeConstants.JSON_MALFORMED, String.format(
                     "unable to parse server response : %s", e.getMessage()), e);
         }
         return stations;
@@ -295,7 +295,7 @@ public final class KeolisService {
         try {
             station = convertJsonObjectToSubwayStation(keolisJsonService.getSubwayStation(id));
         } catch (final JSONException e) {
-            throw new GenericException(ErrorCodeContants.JSON_MALFORMED, String.format(
+            throw new GenericException(ErrorCodeConstants.JSON_MALFORMED, String.format(
                     "unable to parse server response : %s", e.getMessage(), e));
         }
         return station;
