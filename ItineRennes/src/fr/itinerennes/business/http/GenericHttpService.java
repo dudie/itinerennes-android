@@ -28,7 +28,7 @@ public class GenericHttpService {
             .getLogger(KeolisResponseHandler.class);
 
     /** The HTTP client used to execute the requests. */
-    private final DefaultHttpClient httpClient = new DefaultHttpClient();
+    private DefaultHttpClient httpClient;
 
     /**
      * Executes the given request and handle the result with the given handler.
@@ -48,9 +48,8 @@ public class GenericHttpService {
 
         HttpResponse response = null;
         try {
-            synchronized (httpClient) {
-                response = httpClient.execute(request);
-            }
+            httpClient = new DefaultHttpClient();
+            response = httpClient.execute(request);
         } catch (final ClientProtocolException e) {
             LOGGER.debug(e.getMessage(), e);
             throw new GenericException(ErrorCodeConstants.NETWORK, "client protocol exception");

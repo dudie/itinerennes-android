@@ -3,8 +3,6 @@ package fr.itinerennes.ui.tasks;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay.OnItemGestureListener;
-import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -20,24 +18,20 @@ import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.StationOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
-public class RefreshBusOverlayTask extends
-        AsyncTask<BoundingBox, Void, StationOverlay<StationOverlayItem>> {
+public class RefreshBusOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(RefreshBusOverlayTask.class);
 
-    /** The android context */
+    /** The android context. */
     private Context context;
 
-    /** The map view on which update bus overlay */
+    /** The map view on which update bus overlay. */
     private MapView map;
 
-    /** Listener used by the bus overlay to trigger item taps. */
-    private OnItemGestureListener<StationOverlayItem> listener;
-
     /**
-     * Constructor
+     * Constructor.
      * 
      * @param ctx
      *            An android context
@@ -46,41 +40,30 @@ public class RefreshBusOverlayTask extends
      * @param listener
      *            Listener used by the bus overlay to trigger item taps
      */
-    public RefreshBusOverlayTask(Context ctx, MapView map,
-            OnItemGestureListener<StationOverlayItem> listener) {
+    public RefreshBusOverlayTask(Context ctx, MapView map) {
 
         this.context = ctx;
         this.map = map;
-        this.listener = listener;
     }
 
+    /**
+     * Fetch in background the list of bus stations within the bounding box and creates an overlay.
+     */
     @Override
-    protected StationOverlay<StationOverlayItem> doInBackground(BoundingBox... params) {
+    protected Void doInBackground(BoundingBox... params) {
 
         try {
-            List<StationOverlayItem> busStations = getBusStationOverlayItemsFromBbox(params[0]);
+            final List<StationOverlayItem> busStations = getBusStationOverlayItemsFromBbox(params[0]);
 
-            return new StationOverlay<StationOverlayItem>(context, busStations, listener,
-                    Station.TYPE_BUS);
-        } catch (GenericException e) {
-            LOGGER.error("error while trying to fetch bus stations from WFS.");
+            final StationOverlay<StationOverlayItem> busOverlay = new StationOverlay<StationOverlayItem>(
+                    context, busStations, map.getOnItemGestureListener(), Station.TYPE_BUS);
+
+            map.refreshOverlay(busOverlay, Station.TYPE_BUS);
+
+        } catch (final GenericException e) {
+            LOGGER.error("error while trying to fetch bus stations from WFS.", e);
         }
-
         return null;
-    }
-
-    @Override
-    protected void onPostExecute(StationOverlay<StationOverlayItem> result) {
-
-        for (OpenStreetMapViewOverlay overlay : this.map.getOverlays()) {
-            if (overlay instanceof StationOverlay) {
-                if (((StationOverlay<StationOverlayItem>) overlay).getType() == Station.TYPE_BUS) {
-                    this.map.getOverlays().remove(overlay);
-                }
-            }
-        }
-        this.map.getOverlays().add(result);
-        this.map.postInvalidate();
     }
 
     /**
@@ -93,11 +76,11 @@ public class RefreshBusOverlayTask extends
     private List<StationOverlayItem> getBusStationOverlayItemsFromBbox(BoundingBox bbox)
             throws GenericException {
 
-        List<BusStation> busStations = BusService.getBusStationsFromBbox(bbox);
-        List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
+        final List<BusStation> busStations = BusService.getBusStationsFromBbox(bbox);
+        final List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
 
         for (BusStation station : busStations) {
-            StationOverlayItem item = new StationOverlayItem(station);
+            final StationOverlayItem item = new StationOverlayItem(station);
             item.setMarker(context.getResources().getDrawable(R.drawable.icon_bus));
 
             overlayItems.add(item);

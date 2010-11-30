@@ -11,6 +11,7 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import fr.itinerennes.R;
+import fr.itinerennes.beans.Station;
 import fr.itinerennes.ui.views.MapView;
 
 /**
@@ -25,9 +26,12 @@ public class StationOverlay<T extends StationOverlayItem> extends
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(StationOverlay.class);
 
+    /** The type of this overlay. */
     private int type;
 
     /**
+     * Constructor.
+     * 
      * @param ctx
      *            the context
      * @param items
@@ -38,10 +42,11 @@ public class StationOverlay<T extends StationOverlayItem> extends
             OnItemGestureListener<T> onItemGestureListener, int type) {
 
         super(ctx, items, onItemGestureListener);
+        this.type = type;
     }
 
     /**
-     * Listener to single tap on the overlay
+     * Listener to single tap on the overlay.
      * 
      * @see OpenStreetMapViewItemizedOverlay#onSingleTapUp(MotionEvent, OpenStreetMapView)
      */
@@ -49,7 +54,7 @@ public class StationOverlay<T extends StationOverlayItem> extends
     public boolean onSingleTapUp(MotionEvent event, OpenStreetMapView mapView) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("StationOverlay.onSingleTapUp");
+            LOGGER.debug("onSingleTapUp");
         }
 
         /*
@@ -57,8 +62,8 @@ public class StationOverlay<T extends StationOverlayItem> extends
          * removed.
          */
         if (((MapView) mapView).isItemLayoutFocused()) {
-            ViewGroup rootLayout = (ViewGroup) mapView.getRootView();
-            ViewGroup focusedBox = (ViewGroup) rootLayout.findViewById(R.id.focused_box);
+            final ViewGroup rootLayout = (ViewGroup) mapView.getRootView();
+            final ViewGroup focusedBox = (ViewGroup) rootLayout.findViewById(R.id.focused_box);
             focusedBox.setVisibility(ViewGroup.GONE);
             focusedBox.removeAllViews();
             ((MapView) mapView).setItemLayoutFocused(false);
@@ -66,8 +71,15 @@ public class StationOverlay<T extends StationOverlayItem> extends
         return super.onSingleTapUp(event, mapView);
     }
 
+    /**
+     * Returns the type of the overlay. Can be {@link Station#TYPE_BIKE},{@link Station#TYPE_BUS} or
+     * {@link Station#TYPE_SUBWAY}.
+     * 
+     * @return the type of the overlay.
+     */
     public int getType() {
 
         return type;
     }
+
 }
