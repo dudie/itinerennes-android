@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.beans.BikeStation;
@@ -45,7 +46,7 @@ public class MapActivity extends Activity {
     /** The my location overlay. */
     private MyLocationOverlay myLocation;
 
-    /** OnItemGestureListener */
+    /** OnItemGestureListener. */
     private OnItemGestureListener<StationOverlayItem> onItemGestureListener;
 
     /**
@@ -56,7 +57,7 @@ public class MapActivity extends Activity {
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
     @Override
-    public void onCreate(final Bundle savedInstanceState) {
+    public final void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
@@ -95,29 +96,30 @@ public class MapActivity extends Activity {
              * @return
              */
             @Override
-            public boolean onItemSingleTapUp(int index, StationOverlayItem item) {
+            public boolean onItemSingleTapUp(final int index, final StationOverlayItem item) {
 
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("OnItemGestureListener.onItemSingleTapUp");
                 }
 
-                LinearLayout focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
-                LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+                final LinearLayout focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
+                final LayoutInflater inflater = LayoutInflater.from(getBaseContext());
 
                 try {
                     switch (item.getStation().getType()) {
                     case Station.TYPE_BIKE:
                         inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
 
-                        BikeStation bikeStation = BikeService.getStation(item.getStation().getId());
+                        final BikeStation bikeStation = BikeService.getStation(item.getStation()
+                                .getId());
 
-                        TextView availables_slots = (TextView) focusedBoxLayout
+                        final TextView availablesSlots = (TextView) focusedBoxLayout
                                 .findViewById(R.id.available_slots);
-                        availables_slots.setText(String.valueOf(bikeStation.getAvailableSlots()));
+                        availablesSlots.setText(String.valueOf(bikeStation.getAvailableSlots()));
 
-                        TextView availables_bikes = (TextView) focusedBoxLayout
+                        final TextView availablesBikes = (TextView) focusedBoxLayout
                                 .findViewById(R.id.available_bikes);
-                        availables_bikes.setText(String.valueOf(bikeStation.getAvailableBikes()));
+                        availablesBikes.setText(String.valueOf(bikeStation.getAvailableBikes()));
 
                         break;
                     case Station.TYPE_BUS:
@@ -129,11 +131,11 @@ public class MapActivity extends Activity {
                         break;
                     }
 
-                } catch (GenericException e) {
+                } catch (final GenericException e) {
                     LOGGER.error("Error while trying to fetch station informations.");
 
                 }
-                TextView title = (TextView) focusedBoxLayout.findViewById(R.id.station_name);
+                final TextView title = (TextView) focusedBoxLayout.findViewById(R.id.station_name);
                 title.setText(item.getStation().getName());
 
                 focusedBoxLayout.setVisibility(View.VISIBLE);
@@ -143,7 +145,7 @@ public class MapActivity extends Activity {
             }
 
             @Override
-            public boolean onItemLongPress(int index, StationOverlayItem item) {
+            public boolean onItemLongPress(final int index, final StationOverlayItem item) {
 
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("OnItemGestureListener.onItemLongPress");
@@ -157,11 +159,11 @@ public class MapActivity extends Activity {
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
+    public void onWindowFocusChanged(final boolean hasFocus) {
 
         super.onResume();
-        if (hasFocus == true) {
-            BoundingBox bbox = new BoundingBox(this.map.getVisibleBoundingBoxE6());
+        if (hasFocus) {
+            final BoundingBox bbox = new BoundingBox(this.map.getVisibleBoundingBoxE6());
 
             new RefreshBusOverlayTask(this.getBaseContext(), this.map, onItemGestureListener)
                     .execute(bbox);
