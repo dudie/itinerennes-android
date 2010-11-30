@@ -4,6 +4,8 @@ import org.andnav.osm.events.MapListener;
 import org.andnav.osm.events.ScrollEvent;
 import org.andnav.osm.events.ZoomEvent;
 import org.andnav.osm.views.OpenStreetMapView;
+import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay.OnItemGestureListener;
+import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
 import org.andnav.osm.views.util.IOpenStreetMapRendererInfo;
 import org.andnav.osm.views.util.OpenStreetMapTileProvider;
 import org.slf4j.Logger;
@@ -11,6 +13,10 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import fr.itinerennes.beans.BoundingBox;
+import fr.itinerennes.ui.tasks.RefreshBusOverlayTask;
+import fr.itinerennes.ui.views.overlays.StationOverlay;
+import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
 /**
  * The map view.
@@ -26,7 +32,13 @@ public class MapView extends OpenStreetMapView implements MapListener {
     /** The map controller. */
     private MapViewController controller;
 
-    /** True if the focused item layout is visible */
+    /** The android context. */
+    private Context context;
+
+    /** OnItemGestureListener. */
+    private OnItemGestureListener<StationOverlayItem> onItemGestureListener;
+
+    /** Boolean indicating if the focused item layout is visible. */
     boolean focused;
 
     /**
@@ -35,6 +47,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
     public MapView(final Context context) {
 
         super(context);
+        this.context = context;
         this.controller = new MapViewController(this);
     }
 
@@ -45,6 +58,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
     public MapView(final Context context, final AttributeSet attrs) {
 
         super(context, attrs);
+        this.context = context;
         // TJHU Auto-generated constructor stub
     }
 
@@ -55,6 +69,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
     public MapView(final Context context, final IOpenStreetMapRendererInfo aRendererInfo) {
 
         super(context, aRendererInfo);
+        this.context = context;
         // TJHU Auto-generated constructor stub
     }
 
@@ -67,6 +82,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
             final OpenStreetMapTileProvider aTileProvider) {
 
         super(context, aRendererInfo, aTileProvider);
+        this.context = context;
         // TJHU Auto-generated constructor stub
     }
 
@@ -79,6 +95,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
             final OpenStreetMapView aMapToShareTheTileProviderWith) {
 
         super(context, aRendererInfo, aMapToShareTheTileProviderWith);
+        this.context = context;
         // TJHU Auto-generated constructor stub
     }
 
@@ -91,10 +108,14 @@ public class MapView extends OpenStreetMapView implements MapListener {
     public boolean onScroll(final ScrollEvent event) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("MapView.onScroll");
+            LOGGER.debug("onScroll");
         }
 
-        return false;
+        if (this.isShown()) {
+            final BoundingBox bbox = new BoundingBox(this.getVisibleBoundingBoxE6());
+            new RefreshBusOverlayTask(this.context, this).execute(bbox);
+        }
+        return true;
     }
 
     /**
@@ -105,7 +126,15 @@ public class MapView extends OpenStreetMapView implements MapListener {
     @Override
     public boolean onZoom(final ZoomEvent event) {
 
-        return false;
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onZoom");
+        }
+
+        if (this.isShown()) {
+            BoundingBox bbox = new BoundingBox(this.getVisibleBoundingBoxE6());
+            new RefreshBusOverlayTask(this.context, this).execute(bbox);
+        }
+        return true;
     }
 
     /**
@@ -128,5 +157,59 @@ public class MapView extends OpenStreetMapView implements MapListener {
     public boolean isItemLayoutFocused() {
 
         return this.focused;
+    }
+
+    /**
+     * Sets the OnItemGestureListener to use with overlays.
+     * 
+     * @param onItemGestureListener
+     *            the listener to use with overlays.
+     */
+    public void setOnItemGestureListener(
+            OnItemGestureListener<StationOverlayItem> onItemGestureListener) {
+
+        this.onItemGestureListener = onItemGestureListener;
+
+    }
+
+    /**
+     * Gets the OnItemGestureListener to use with overlays.
+     * 
+     * @return the OnItemGestureListener
+     */
+    public OnItemGestureListener<StationOverlayItem> getOnItemGestureListener() {
+
+        return this.onItemGestureListener;
+
+    }
+
+    /**
+     * Synchronized method to refresh an overlay on the map. If an overlay of the same type already
+     * exists on the map, it will be replaced.
+     * 
+     * @param stationOverlay
+     *            Overlay to add on the map
+     * @param type
+     *            The type of the overlay to replace.
+     */
+    public synchronized void refreshOverlay(StationOverlay<StationOverlayItem> stationOverlay,
+            int type) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("refreshOverlay");
+        }
+
+        for (OpenStreetMapViewOverlay overlay : this.getOverlays()) {
+            if (overlay instanceof StationOverlay) {
+                if (((StationOverlay<StationOverlayItem>) overlay).getType() == type) {
+                    this.getOverlays().remove(overlay);
+                }
+            }
+        }
+        if (stationOverlay != null) {
+            this.getOverlays().add(stationOverlay);
+        }
+
+        this.postInvalidate();
     }
 }

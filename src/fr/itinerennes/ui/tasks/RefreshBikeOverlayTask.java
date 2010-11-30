@@ -3,8 +3,6 @@ package fr.itinerennes.ui.tasks;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay.OnItemGestureListener;
-import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -20,24 +18,20 @@ import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.StationOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
-public class RefreshBikeOverlayTask extends
-        AsyncTask<BoundingBox, Void, StationOverlay<StationOverlayItem>> {
+public class RefreshBikeOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(RefreshBikeOverlayTask.class);
 
-    /** The android context */
+    /** The android context. */
     private Context context;
 
-    /** The map view on which update bike overlay */
+    /** The map view on which update bike overlay. */
     private MapView map;
 
-    /** Listener used by the bike overlay to trigger item taps. */
-    private OnItemGestureListener<StationOverlayItem> listener;
-
     /**
-     * Constructor
+     * Constructor.
      * 
      * @param ctx
      *            An android context
@@ -46,41 +40,30 @@ public class RefreshBikeOverlayTask extends
      * @param listener
      *            Listener used by the bus overlay to trigger item taps
      */
-    public RefreshBikeOverlayTask(Context ctx, MapView map,
-            OnItemGestureListener<StationOverlayItem> listener) {
+    public RefreshBikeOverlayTask(Context ctx, MapView map) {
 
         this.context = ctx;
         this.map = map;
-        this.listener = listener;
     }
 
+    /**
+     * Fetch in background the list of bike stations and creates an overlay.
+     */
     @Override
-    protected StationOverlay<StationOverlayItem> doInBackground(BoundingBox... params) {
+    protected Void doInBackground(BoundingBox... params) {
 
         try {
-            List<StationOverlayItem> bikeStations = getBikeStationOverlayItems();
+            final List<StationOverlayItem> bikeStations = getBikeStationOverlayItems();
 
-            return new StationOverlay<StationOverlayItem>(context, bikeStations, listener,
-                    Station.TYPE_BUS);
-        } catch (GenericException e) {
-            LOGGER.error("error while trying to fetch bus stations from WFS.");
+            final StationOverlay<StationOverlayItem> bikeOverlay = new StationOverlay<StationOverlayItem>(
+                    context, bikeStations, map.getOnItemGestureListener(), Station.TYPE_BIKE);
+
+            map.refreshOverlay(bikeOverlay, Station.TYPE_BIKE);
+        } catch (final GenericException e) {
+            LOGGER.error("error while trying to fetch bus stations from WFS.", e);
         }
 
         return null;
-    }
-
-    @Override
-    protected void onPostExecute(StationOverlay<StationOverlayItem> result) {
-
-        for (OpenStreetMapViewOverlay overlay : this.map.getOverlays()) {
-            if (overlay instanceof StationOverlay) {
-                if (((StationOverlay) overlay).getType() == Station.TYPE_BIKE) {
-                    this.map.getOverlays().remove(overlay);
-                }
-            }
-        }
-        this.map.getOverlays().add(result);
-        this.map.postInvalidate();
     }
 
     /**

@@ -15,7 +15,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.beans.BikeStation;
@@ -83,7 +82,7 @@ public class MapActivity extends Activity {
         /**
          * The gesture listener to be used on the station overlay.
          */
-        onItemGestureListener = new OpenStreetMapViewItemizedOverlay.OnItemGestureListener<StationOverlayItem>() {
+        this.map.setOnItemGestureListener(new OpenStreetMapViewItemizedOverlay.OnItemGestureListener<StationOverlayItem>() {
 
             /**
              * Called when a single tap is intercepted on the overlay. Inflates the layout
@@ -154,21 +153,22 @@ public class MapActivity extends Activity {
                 return false;
             }
 
-        };
+        });
 
     }
 
     @Override
     public void onWindowFocusChanged(final boolean hasFocus) {
 
-        super.onResume();
-        if (hasFocus) {
-            final BoundingBox bbox = new BoundingBox(this.map.getVisibleBoundingBoxE6());
+        super.onWindowFocusChanged(hasFocus);
 
-            new RefreshBusOverlayTask(this.getBaseContext(), this.map, onItemGestureListener)
-                    .execute(bbox);
-            new RefreshBikeOverlayTask(this.getBaseContext(), this.map, onItemGestureListener)
-                    .execute(bbox);
+        if (hasFocus) {
+
+            final BoundingBox bbox = new BoundingBox(this.map.getVisibleBoundingBoxE6());
+            new RefreshBusOverlayTask(this.getBaseContext(), this.map).execute(bbox);
+
+            new RefreshBikeOverlayTask(this.getBaseContext(), this.map).execute();
+
         }
     }
 
