@@ -27,7 +27,7 @@ public class StationOverlay<T extends StationOverlayItem> extends
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(StationOverlay.class);
 
     /** The type of this overlay. */
-    private int type;
+    private final int type;
 
     /**
      * Constructor.
@@ -37,9 +37,13 @@ public class StationOverlay<T extends StationOverlayItem> extends
      * @param items
      *            the items
      * @param onItemGestureListener
+     *            The OnItemGestureListener used to trigger actions on items.
+     * @param type
+     *            The type of the overlay. Can be {@link Station#TYPE_BIKE},{@link Station#TYPE_BUS}
+     *            or {@link Station#TYPE_SUBWAY}.
      */
     public StationOverlay(final Context ctx, final List<T> items,
-            OnItemGestureListener<T> onItemGestureListener, int type) {
+            final OnItemGestureListener<T> onItemGestureListener, final int type) {
 
         super(ctx, items, onItemGestureListener);
         this.type = type;
@@ -51,7 +55,7 @@ public class StationOverlay<T extends StationOverlayItem> extends
      * @see OpenStreetMapViewItemizedOverlay#onSingleTapUp(MotionEvent, OpenStreetMapView)
      */
     @Override
-    public boolean onSingleTapUp(MotionEvent event, OpenStreetMapView mapView) {
+    public boolean onSingleTapUp(final MotionEvent event, final OpenStreetMapView mapView) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onSingleTapUp");
@@ -77,7 +81,7 @@ public class StationOverlay<T extends StationOverlayItem> extends
      * 
      * @return the type of the overlay.
      */
-    public int getType() {
+    public final int getType() {
 
         return type;
     }

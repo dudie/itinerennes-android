@@ -10,13 +10,25 @@ import org.andnav.osm.util.BoundingBoxE6;
 
 public class BoundingBox {
 
-    public double minLat;
+    /**
+     * Minimum latitude of the bounding box.
+     */
+    private double minLat;
 
-    public double minLon;
+    /**
+     * Minimum longitude of the bounding box.
+     */
+    private double minLon;
 
-    public double maxLat;
+    /**
+     * Maximum latitude of the bounding box.
+     */
+    private double maxLat;
 
-    public double maxLon;
+    /**
+     * Maximum longitude of the bounding box.
+     */
+    private double maxLon;
 
     /**
      * Creates a BoundingBox from a square determined by latitude and longitude.
@@ -30,7 +42,8 @@ public class BoundingBox {
      * @param maxLat
      *            the maximum latitude
      */
-    public BoundingBox(double minLon, double maxLon, double minLat, double maxLat) {
+    public BoundingBox(final double minLon, final double maxLon, final double minLat,
+            final double maxLat) {
 
         this.minLon = minLon;
         this.maxLon = maxLon;
@@ -41,9 +54,9 @@ public class BoundingBox {
     /**
      * Creates a BoundingBox from an osmdroid BoundingBoxE6 object.
      * 
-     * @param visibleBoundingBoxE6
+     * @param boundingBoxE6
      */
-    public BoundingBox(BoundingBoxE6 boundingBoxE6) {
+    public BoundingBox(final BoundingBoxE6 boundingBoxE6) {
 
         this.minLon = boundingBoxE6.getLonWestE6() / 1E6;
         this.maxLon = boundingBoxE6.getLonEastE6() / 1E6;
@@ -51,7 +64,7 @@ public class BoundingBox {
         this.maxLat = boundingBoxE6.getLatNorthE6() / 1E6;
     }
 
-    public String toString() {
+    public final String toString() {
 
         return String.format("%s,%s,%s,%s", minLon, minLat, maxLon, maxLat);
     }

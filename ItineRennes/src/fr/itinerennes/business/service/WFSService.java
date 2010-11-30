@@ -59,7 +59,7 @@ public class WFSService {
      * @throws GenericException
      *             unable to get a result from the server
      */
-    public List<BusStation> getBusStationsFromBbox(BoundingBox bbox, int max)
+    public List<BusStation> getBusStationsFromBbox(final BoundingBox bbox, final int max)
             throws GenericException {
 
         final List<BusStation> stations = new ArrayList<BusStation>();
@@ -92,7 +92,7 @@ public class WFSService {
      * @throws GenericException
      *             unable to get a result from the server
      */
-    public List<BusStation> getBusStationsFromBbox(BoundingBox bbox) throws GenericException {
+    public List<BusStation> getBusStationsFromBbox(final BoundingBox bbox) throws GenericException {
 
         return getBusStationsFromBbox(bbox, 0);
     }

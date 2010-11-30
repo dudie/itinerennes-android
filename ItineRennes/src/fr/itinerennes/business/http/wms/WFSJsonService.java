@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -44,7 +43,7 @@ public class WFSJsonService {
      * 
      * @param parameters
      *            the request parameters
-     * @return an {@link HttpGet} to send to execute the request
+     * @return an {@link HttpPost} to send to execute the request
      * @throws GenericException
      *             unable to encode request parameters
      */
@@ -87,9 +86,12 @@ public class WFSJsonService {
      *            optional maximum number of results to fetch
      * @throws JSONException
      *             unable to parse the json response of the server
+     * @throws GenericException
+     *             unable to encode request parameters
+     * @return JSONArray a {@link JSONArray} containing all bus stations as {@link JSONObject}s
      */
-    public JSONArray getBusStationsFromBbox(BoundingBox bbox, int max) throws GenericException,
-            JSONException {
+    public final JSONArray getBusStationsFromBbox(final BoundingBox bbox, final int max)
+            throws GenericException, JSONException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(5);
         params.add(new BasicNameValuePair("bbox", String.format("%s,%s", bbox.toString(),
@@ -117,7 +119,7 @@ public class WFSJsonService {
      * @throws JSONException
      *             unable to parse the json response of the server
      */
-    public JSONObject getBusStation(final String id) throws GenericException, JSONException {
+    public final JSONObject getBusStation(final String id) throws GenericException, JSONException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(5);
         params.add(new BasicNameValuePair("request", WFS.VALUE_FEATURE_REQUEST));
@@ -126,9 +128,10 @@ public class WFSJsonService {
 
         final JSONObject data = httpService.execute(createWFSRequest(params), responseHandler);
 
-        if (data.getJSONArray("features").length() > 1)
+        if (data.getJSONArray("features").length() > 1) {
             throw new GenericException(ErrorCodeConstants.WFS_RESPONSE_ERROR,
                     "the request returns more than one result");
+        }
         return data.getJSONArray("features").getJSONObject(0);
     }
 }
