@@ -1,5 +1,8 @@
 package fr.itinerennes.business.service;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +13,7 @@ import android.test.AndroidTestCase;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.beans.BikeDistrict;
 import fr.itinerennes.beans.BikeStation;
+import fr.itinerennes.beans.LineTransportIcon;
 import fr.itinerennes.beans.Station;
 import fr.itinerennes.beans.SubwayStation;
 import fr.itinerennes.exceptions.GenericException;
@@ -60,6 +64,7 @@ public class KeolisServiceTest extends AndroidTestCase {
                 stations.size());
 
         for (final BikeStation station : stations) {
+            LOGGER.debug("checking {}", station);
             assertFalse(String.format("station [%s] has no id", station),
                     StringUtils.isEmpty(station.getId()));
             assertFalse(String.format("station [%s] has no name", station),
@@ -123,6 +128,76 @@ public class KeolisServiceTest extends AndroidTestCase {
     }
 
     /**
+     * Test method for {@link KeolisService#getAllBikeDistricts()}.
+     */
+    public void testGetAllBikeDistricts() {
+
+        LOGGER.info("testGetAllBikeDistricts.start");
+
+        List<BikeDistrict> districts = null;
+        try {
+            districts = keolisService.getAllBikeDistricts();
+        } catch (final GenericException e) {
+            LOGGER.error("GenericException", e);
+            fail(e.getMessage());
+        }
+        assertNotNull("no district returned", districts);
+        assertEquals("on November, 29th 2010, the keolis API returns 12 bike districts", 12,
+                districts.size());
+
+        for (final BikeDistrict district : districts) {
+            LOGGER.debug("checking {}", district);
+            assertFalse(String.format("district [%s] has no id", district),
+                    StringUtils.isEmpty(district.getId()));
+            assertFalse(String.format("district [%s] has no name", district),
+                    StringUtils.isEmpty(district.getName()));
+        }
+
+        LOGGER.info("testGetAllBikeDistricts.end");
+    }
+
+    /**
+     * Test method for {@link KeolisService#getAllLineIcons()}.
+     */
+    public void testGetAllLineIcons() {
+
+        LOGGER.info("testGetAllLineIcons.start");
+
+        List<LineTransportIcon> icons = null;
+        try {
+            icons = keolisService.getAllLineIcons();
+        } catch (final GenericException e) {
+            LOGGER.error("GenericException", e);
+            fail(e.getMessage());
+        }
+        assertNotNull("no district returned", icons);
+        assertEquals("on November, 29th 2010, the keolis API returns 61 bike districts", 61,
+                icons.size());
+
+        for (final LineTransportIcon icon : icons) {
+            LOGGER.debug("checking {}", icon);
+            assertFalse(String.format("icon [%s] is not associated to a line", icon),
+                    StringUtils.isEmpty(icon.getLine()));
+            assertFalse(String.format("icon [%s] has no url", icon),
+                    StringUtils.isEmpty(icon.getIconUrl()));
+            Object iconImage = null;
+            try {
+                final URL iconUrl = new URL(icon.getIconUrl());
+                iconImage = iconUrl.getContent();
+            } catch (final MalformedURLException e) {
+                LOGGER.error("MalformedURLException", e);
+                fail(String.format("url of icon [%s] is invalid", icon));
+            } catch (final IOException e) {
+                LOGGER.error("IOException", e);
+                fail(String.format("unable to retrieve image for icon [%s]", icon));
+            }
+            assertNotNull("image retrieved can't be null", iconImage);
+        }
+
+        LOGGER.info("testGetAllLineIcons.end");
+    }
+
+    /**
      * Test method for {@link KeolisService#getSubwayStationsNearFrom(double, double)} .
      */
     public void testGetSubwayStationsNearFrom() {
@@ -163,6 +238,7 @@ public class KeolisServiceTest extends AndroidTestCase {
                 stations.size());
 
         for (final SubwayStation station : stations) {
+            LOGGER.debug("checking {}", station);
             assertFalse(String.format("station [%s] has no id", station),
                     StringUtils.isEmpty(station.getId()));
             assertFalse(String.format("station [%s] has no name", station),
@@ -205,33 +281,5 @@ public class KeolisServiceTest extends AndroidTestCase {
         assertEquals(Station.TYPE_SUBWAY, station.getType());
 
         LOGGER.info("testGetSubwayStation.end");
-    }
-
-    /**
-     * Test method for {@link KeolisService#getAllBikeDistricts()}.
-     */
-    public void testGetAllBikeDistricts() {
-
-        LOGGER.info("testGetAllBikeDistricts.start");
-
-        List<BikeDistrict> districts = null;
-        try {
-            districts = keolisService.getAllBikeDistricts();
-        } catch (final GenericException e) {
-            LOGGER.error("GenericException", e);
-            fail(e.getMessage());
-        }
-        assertNotNull("no district returned", districts);
-        assertEquals("on November, 27th 2010, the keolis API returns 12 bike districts", 12,
-                districts.size());
-
-        for (final BikeDistrict district : districts) {
-            assertFalse(String.format("district [%s] has no id", district),
-                    StringUtils.isEmpty(district.getId()));
-            assertFalse(String.format("district [%s] has no name", district),
-                    StringUtils.isEmpty(district.getName()));
-        }
-
-        LOGGER.info("testGetAllBikeDistricts.end");
     }
 }

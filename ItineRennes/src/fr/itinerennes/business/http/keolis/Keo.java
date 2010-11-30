@@ -209,4 +209,63 @@ public final class Keo {
          */
         public static final String PARAM_LONGITUDE = "param[lng]";
     }
+
+    /**
+     * Contains constants for method {@link Command#GET_LINES_ALERT}.
+     * 
+     * @author Jérémie Huchet
+     */
+    public static final class GetLinesAlerts {
+
+        /** Avoid instantiation. */
+        private GetLinesAlerts() {
+
+        }
+
+        /**
+         * Used to set the fetch mode.
+         * 
+         * @see #VALUE_MODE_ALL
+         * @see #VALUE_MODE_LINE
+         */
+        public static final String PARAM_MODE = "param[mode]";
+
+        /** Fetch alerts about any line. */
+        public static final String VALUE_MODE_ALL = "all";
+
+        /**
+         * Fetch alerts for a particular line. This value needs additional parameter
+         * {@link #PARAM_LINE}.
+         */
+        public static final String VALUE_MODE_LINE = "line";
+
+        /**
+         * Set the line for which fetch for alerts. Use with {@link #PARAM_MODE}=
+         * {@link #VALUE_MODE_LINE} to set the line name.
+         */
+        public static final String PARAM_LINE = "line";
+    }
+
+    /**
+     * Contains constants for method {@link Command#GET_LINES}.
+     * 
+     * @author Jérémie Huchet
+     */
+    public static final class GetLinesIcons {
+
+        /** Avoid instantiation. */
+        private GetLinesIcons() {
+
+        }
+
+        /**
+         * Used to set the fetch mode.
+         * 
+         * @see #VALUE_MODE_ALL
+         */
+        public static final String PARAM_MODE = "param[mode]";
+
+        /** Fetch alerts about any line. */
+        public static final String VALUE_MODE_ALL = "all";
+    }
 }

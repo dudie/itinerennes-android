@@ -162,7 +162,7 @@ public class KeolisJsonService {
      * Makes a call to the Keolis API to get a list of districts of the network
      * {@link Network#VALUE_LE_VELO_STAR}.
      * 
-     * @return a {@link JSONObject} containing the bike district
+     * @return a {@link JSONArray} containing the bike district
      * @throws GenericException
      *             unable to get a result from the server
      * @throws JSONException
@@ -177,6 +177,29 @@ public class KeolisJsonService {
         final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
 
         return data.getJSONArray("district");
+    }
+
+    /**
+     * Makes a call to the Keolis API to get the list of URLs to fetch the icons of the transport
+     * lines.
+     * 
+     * @return a {@link JSONObject} containing the base URL and the file names
+     * @throws GenericException
+     *             unable to get a result from the server
+     * @throws JSONException
+     *             unable to parse the json response of the server
+     */
+    public final JSONObject getAllLineIcons() throws GenericException, JSONException {
+
+        final List<NameValuePair> params = new ArrayList<NameValuePair>(4);
+        params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
+        params.add(new BasicNameValuePair(Keo.Command.PARAM_NAME, Keo.Command.GET_LINES_ICONS));
+        params.add(new BasicNameValuePair(Keo.GetLinesIcons.PARAM_MODE,
+                Keo.GetLinesIcons.VALUE_MODE_ALL));
+
+        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
+
+        return data;
     }
 
     /**

@@ -15,6 +15,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.beans.BikeDistrict;
 import fr.itinerennes.beans.BikeStation;
+import fr.itinerennes.beans.LineTransportIcon;
 import fr.itinerennes.beans.SubwayStation;
 import fr.itinerennes.business.http.keolis.KeolisJsonService;
 import fr.itinerennes.exceptions.GenericException;
@@ -225,6 +226,62 @@ public final class KeolisService {
         disctrict.setId(jsonObject.getString("id"));
         disctrict.setName(jsonObject.getString("name"));
         return disctrict;
+    }
+
+    /**
+     * Gets the icons urls.
+     * 
+     * @return all bike districts
+     * @throws GenericException
+     *             unable to get a result from the server
+     */
+    public List<LineTransportIcon> getAllLineIcons() throws GenericException {
+
+        final List<LineTransportIcon> districts = new ArrayList<LineTransportIcon>();
+        try {
+            final JSONObject jsonData = keolisJsonService.getAllLineIcons();
+            final String baseUrl = jsonData.getString("baseurl");
+            final JSONArray jsonIcons = jsonData.getJSONArray("line");
+            for (int i = 0; !jsonIcons.isNull(i); i++) {
+                districts.add(convertJsonObjectToLineTransportIcon(baseUrl,
+                        jsonIcons.getJSONObject(i)));
+            }
+        } catch (final JSONException e) {
+            throw new GenericException(ErrorCodeConstants.JSON_MALFORMED, String.format(
+                    "unable to parse server response : %s", e.getMessage()), e);
+        }
+
+        return districts;
+    }
+
+    /**
+     * Converts a json object to a bean representing a line icon.
+     * 
+     * <pre>
+     * "baseurl":"http:\/\/data.keolis-rennes.com\/uploads\/tx_icsinfotrafic\/",
+     * "line":[
+     *   {
+     *     "name":"1",
+     *     "picto":"LM1.png"
+     *   }
+     * ]
+     * </pre>
+     * 
+     * @param baseUrl
+     *            the base url of the icon
+     * @param jsonObject
+     *            the json object to convert
+     * @return the bean representing the given json object
+     * @throws JSONException
+     *             an error occurred while converting the json object to a {@link LineTransportIcon}
+     */
+    private LineTransportIcon convertJsonObjectToLineTransportIcon(final String baseUrl,
+            final JSONObject jsonObject) throws JSONException {
+
+        final LineTransportIcon icon = new LineTransportIcon();
+        icon.setLine(jsonObject.getString("name"));
+        icon.setIconUrl(baseUrl + jsonObject.getString("picto"));
+        return icon;
     }
 
     /**
