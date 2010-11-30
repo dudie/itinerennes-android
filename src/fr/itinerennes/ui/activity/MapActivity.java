@@ -3,7 +3,6 @@ package fr.itinerennes.ui.activity;
 import org.andnav.osm.util.GeoPoint;
 import org.andnav.osm.views.overlay.MyLocationOverlay;
 import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay;
-import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay.OnItemGestureListener;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -44,9 +43,6 @@ public class MapActivity extends Activity {
 
     /** The my location overlay. */
     private MyLocationOverlay myLocation;
-
-    /** OnItemGestureListener. */
-    private OnItemGestureListener<StationOverlayItem> onItemGestureListener;
 
     /**
      * Called when activity starts.
@@ -158,7 +154,7 @@ public class MapActivity extends Activity {
     }
 
     @Override
-    public void onWindowFocusChanged(final boolean hasFocus) {
+    public final void onWindowFocusChanged(final boolean hasFocus) {
 
         super.onWindowFocusChanged(hasFocus);
 

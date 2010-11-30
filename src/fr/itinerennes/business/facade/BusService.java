@@ -15,7 +15,7 @@ import fr.itinerennes.exceptions.GenericException;
 public class BusService {
 
     /** The WFS service. */
-    private final static WFSService wfsService = WFSService.getInstance();
+    private static final WFSService wfsService = WFSService.getInstance();
 
     /**
      * Gets a bus station by its identifier.
@@ -39,11 +39,14 @@ public class BusService {
     /**
      * Gets all bus stations within a bounding box.
      * 
+     * @param bbox
+     *            The bounding box from which request stations.
      * @return the requested stations
      * @throws GenericException
      *             unable to retrieve the stations
      */
-    public static List<BusStation> getBusStationsFromBbox(BoundingBox bbox) throws GenericException {
+    public static List<BusStation> getBusStationsFromBbox(final BoundingBox bbox)
+            throws GenericException {
 
         final List<BusStation> allStations = wfsService.getBusStationsFromBbox(bbox);
         for (final BusStation station : allStations) {

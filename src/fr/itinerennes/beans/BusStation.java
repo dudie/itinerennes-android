@@ -26,7 +26,7 @@ public class BusStation implements Station {
      * 
      * @return the identifier of the station
      */
-    public String getId() {
+    public final String getId() {
 
         return id;
     }
@@ -37,7 +37,7 @@ public class BusStation implements Station {
      * @param id
      *            the identifier of the station to set
      */
-    public void setId(final String id) {
+    public final void setId(final String id) {
 
         this.id = id;
     }
@@ -47,7 +47,7 @@ public class BusStation implements Station {
      * 
      * @return the name of the station
      */
-    public String getName() {
+    public final String getName() {
 
         return name;
     }
@@ -58,7 +58,7 @@ public class BusStation implements Station {
      * @param name
      *            the name of the station to set
      */
-    public void setName(final String name) {
+    public final void setName(final String name) {
 
         this.name = name;
     }
@@ -68,7 +68,7 @@ public class BusStation implements Station {
      * 
      * @return the latitude of the station
      */
-    public double getLatitude() {
+    public final double getLatitude() {
 
         return latitude;
     }
@@ -79,7 +79,7 @@ public class BusStation implements Station {
      * @param latitude
      *            the latitude of the station to set
      */
-    public void setLatitude(final double latitude) {
+    public final void setLatitude(final double latitude) {
 
         this.latitude = latitude;
     }
@@ -89,7 +89,7 @@ public class BusStation implements Station {
      * 
      * @return the longitude of the station
      */
-    public double getLongitude() {
+    public final double getLongitude() {
 
         return longitude;
     }
@@ -100,19 +100,19 @@ public class BusStation implements Station {
      * @param longitude
      *            the longitude of the station to set
      */
-    public void setLongitude(final double longitude) {
+    public final void setLongitude(final double longitude) {
 
         this.longitude = longitude;
     }
 
     @Override
-    public GeoPoint getGeoPoint() {
+    public final GeoPoint getGeoPoint() {
 
         return new GeoPoint(this.latitude, this.longitude);
     }
 
     @Override
-    public int getType() {
+    public final int getType() {
 
         return Station.TYPE_BUS;
     }

@@ -36,9 +36,11 @@ public class WFSResponseHandler extends HttpResponseHandler<JSONObject> {
      * @param response
      *            the http response returned by the server
      * @return the json object containing the expected data
+     * @throws GenericException
+     *             network exception during request
      */
     @Override
-    public JSONObject handleResponse(final HttpResponse response) throws GenericException {
+    public final JSONObject handleResponse(final HttpResponse response) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("handleResponse.start");

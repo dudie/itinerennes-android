@@ -18,6 +18,11 @@ import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.StationOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
+/**
+ * A class derivating from ASyncTask to refresh a bike overlay in background.
+ * 
+ * @author Olivier Boudet
+ */
 public class RefreshBikeOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
 
     /** The event logger. */
@@ -25,10 +30,10 @@ public class RefreshBikeOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
             .getLogger(RefreshBikeOverlayTask.class);
 
     /** The android context. */
-    private Context context;
+    private final Context context;
 
     /** The map view on which update bike overlay. */
-    private MapView map;
+    private final MapView map;
 
     /**
      * Constructor.
@@ -37,10 +42,8 @@ public class RefreshBikeOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
      *            An android context
      * @param map
      *            The map view on which update bike overlay
-     * @param listener
-     *            Listener used by the bus overlay to trigger item taps
      */
-    public RefreshBikeOverlayTask(Context ctx, MapView map) {
+    public RefreshBikeOverlayTask(final Context ctx, final MapView map) {
 
         this.context = ctx;
         this.map = map;
@@ -48,9 +51,13 @@ public class RefreshBikeOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
 
     /**
      * Fetch in background the list of bike stations and creates an overlay.
+     * 
+     * @param params
+     *            Bounding box used to refresh the overlay
+     * @return Void Returns nothing
      */
     @Override
-    protected Void doInBackground(BoundingBox... params) {
+    protected final Void doInBackground(final BoundingBox... params) {
 
         try {
             final List<StationOverlayItem> bikeStations = getBikeStationOverlayItems();
@@ -71,6 +78,7 @@ public class RefreshBikeOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
      * 
      * @return list of station overlay items
      * @throws GenericException
+     *             network exception during request
      */
     private List<StationOverlayItem> getBikeStationOverlayItems() throws GenericException {
 

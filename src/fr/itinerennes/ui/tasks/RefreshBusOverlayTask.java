@@ -18,6 +18,11 @@ import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.StationOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
+/**
+ * A class derivating from ASyncTask to refresh a bus overlay in background.
+ * 
+ * @author Olivier Boudet
+ */
 public class RefreshBusOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
 
     /** The event logger. */
@@ -25,10 +30,10 @@ public class RefreshBusOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
             .getLogger(RefreshBusOverlayTask.class);
 
     /** The android context. */
-    private Context context;
+    private final Context context;
 
     /** The map view on which update bus overlay. */
-    private MapView map;
+    private final MapView map;
 
     /**
      * Constructor.
@@ -37,10 +42,8 @@ public class RefreshBusOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
      *            An android context
      * @param map
      *            The map view on which update bus overlay
-     * @param listener
-     *            Listener used by the bus overlay to trigger item taps
      */
-    public RefreshBusOverlayTask(Context ctx, MapView map) {
+    public RefreshBusOverlayTask(final Context ctx, final MapView map) {
 
         this.context = ctx;
         this.map = map;
@@ -48,9 +51,13 @@ public class RefreshBusOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
 
     /**
      * Fetch in background the list of bus stations within the bounding box and creates an overlay.
+     * 
+     * @param params
+     *            Bounding box used to refresh the overlay
+     * @return Void Returns nothing
      */
     @Override
-    protected Void doInBackground(BoundingBox... params) {
+    protected final Void doInBackground(final BoundingBox... params) {
 
         try {
             final List<StationOverlayItem> busStations = getBusStationOverlayItemsFromBbox(params[0]);
@@ -72,14 +79,17 @@ public class RefreshBusOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
      * 
      * @return list of station overlay items
      * @throws GenericException
+     *             network exception during request
+     * @param bbox
+     *            Bounding Box used to refresh the overlay
      */
-    private List<StationOverlayItem> getBusStationOverlayItemsFromBbox(BoundingBox bbox)
+    private List<StationOverlayItem> getBusStationOverlayItemsFromBbox(final BoundingBox bbox)
             throws GenericException {
 
         final List<BusStation> busStations = BusService.getBusStationsFromBbox(bbox);
         final List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
 
-        for (BusStation station : busStations) {
+        for (final BusStation station : busStations) {
             final StationOverlayItem item = new StationOverlayItem(station);
             item.setMarker(context.getResources().getDrawable(R.drawable.icon_bus));
 
