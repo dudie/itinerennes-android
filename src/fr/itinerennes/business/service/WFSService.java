@@ -67,7 +67,13 @@ public class WFSService {
             final JSONArray jsonStations = wfsJsonService.getBusStationsFromBbox(bbox, max);
 
             for (int i = 0; !jsonStations.isNull(i); i++) {
-                stations.add(convertJsonObjectToBusStation(jsonStations.getJSONObject(i)));
+                // TOBO delete this condition when gtfs data will be fixed
+                final JSONObject properties = jsonStations.getJSONObject(i).getJSONObject(
+                        "properties");
+                if (!properties.getString("stop_lat").equalsIgnoreCase("48.109946150056601")) {
+                    stations.add(convertJsonObjectToBusStation(jsonStations.getJSONObject(i)));
+                }
+
             }
         } catch (final JSONException e) {
             throw new GenericException(ErrorCodeConstants.JSON_MALFORMED, String.format(
