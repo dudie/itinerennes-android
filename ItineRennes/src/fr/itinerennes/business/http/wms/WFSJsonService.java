@@ -65,6 +65,16 @@ public class WFSJsonService {
                     "unable to encode request parameters", e);
         }
 
+        if (LOGGER.isDebugEnabled()) {
+            final StringBuilder msg = new StringBuilder();
+            msg.append(req.getURI().toString()).append("?");
+            for (final NameValuePair param : parameters) {
+                msg.append(param.getName()).append("=").append(param.getValue()).append("&");
+            }
+            msg.deleteCharAt(msg.length() - 1);
+            LOGGER.debug(msg.toString());
+        }
+
         return req;
     }
 
