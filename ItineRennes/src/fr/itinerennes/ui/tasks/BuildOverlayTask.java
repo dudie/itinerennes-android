@@ -9,9 +9,11 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.Context;
 import android.os.AsyncTask;
 import fr.itinerennes.R;
+import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.beans.BoundingBox;
 import fr.itinerennes.beans.BusStation;
 import fr.itinerennes.beans.Station;
+import fr.itinerennes.business.facade.BikeService;
 import fr.itinerennes.business.facade.BusService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.views.MapView;
@@ -23,17 +25,20 @@ import fr.itinerennes.ui.views.overlays.StationOverlayItem;
  * 
  * @author Olivier Boudet
  */
-public class RefreshBusOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
+public class BuildOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
-            .getLogger(RefreshBusOverlayTask.class);
+            .getLogger(BuildOverlayTask.class);
 
     /** The android context. */
     private final Context context;
 
     /** The map view on which update bus overlay. */
     private final MapView map;
+
+    /** The type of the overlay to refresh */
+    private final int type;
 
     /**
      * Constructor.
@@ -43,10 +48,11 @@ public class RefreshBusOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
      * @param map
      *            The map view on which update bus overlay
      */
-    public RefreshBusOverlayTask(final Context ctx, final MapView map) {
+    public BuildOverlayTask(final Context ctx, final MapView map, final int type) {
 
         this.context = ctx;
         this.map = map;
+        this.type = type;
     }
 
     /**
@@ -60,15 +66,25 @@ public class RefreshBusOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
     protected final Void doInBackground(final BoundingBox... params) {
 
         try {
-            final List<StationOverlayItem> busStations = getBusStationOverlayItemsFromBbox(params[0]);
+            List<StationOverlayItem> stations = null;
+            switch (type) {
+            case Station.TYPE_BUS:
+                stations = getBusStationOverlayItemsFromBbox(params[0]);
+                break;
+            case Station.TYPE_BIKE:
+                stations = getBikeStationOverlayItems();
+                break;
+            default:
+                break;
+            }
 
-            final StationOverlay<StationOverlayItem> busOverlay = new StationOverlay<StationOverlayItem>(
-                    context, busStations, map.getOnItemGestureListener(), Station.TYPE_BUS);
+            final StationOverlay<StationOverlayItem> overlay = new StationOverlay<StationOverlayItem>(
+                    context, stations, map.getOnItemGestureListener(), type);
 
-            map.refreshOverlay(busOverlay, Station.TYPE_BUS);
+            map.refreshOverlay(overlay, type);
 
         } catch (final GenericException e) {
-            LOGGER.error("error while trying to fetch bus stations from WFS.", e);
+            LOGGER.error("error while trying to fetch stations.", e);
         }
         return null;
     }
@@ -92,6 +108,28 @@ public class RefreshBusOverlayTask extends AsyncTask<BoundingBox, Void, Void> {
         for (final BusStation station : busStations) {
             final StationOverlayItem item = new StationOverlayItem(station);
             item.setMarker(context.getResources().getDrawable(R.drawable.icon_bus));
+
+            overlayItems.add(item);
+        }
+        return overlayItems;
+
+    }
+
+    /**
+     * Gets all bike stations from Keolis API and returns a list of station overlay items.
+     * 
+     * @return list of station overlay items
+     * @throws GenericException
+     *             network exception during request
+     */
+    private List<StationOverlayItem> getBikeStationOverlayItems() throws GenericException {
+
+        final List<BikeStation> bikeStations = BikeService.getAllStations();
+        final List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
+
+        for (final BikeStation station : bikeStations) {
+            final StationOverlayItem item = new StationOverlayItem(station);
+            item.setMarker(context.getResources().getDrawable(R.drawable.icon_velo));
 
             overlayItems.add(item);
         }

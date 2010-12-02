@@ -1,5 +1,6 @@
 package fr.itinerennes.ui.activity;
 
+import org.andnav.osm.events.DelayedMapListener;
 import org.andnav.osm.util.GeoPoint;
 import org.andnav.osm.views.overlay.MyLocationOverlay;
 import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay;
@@ -21,8 +22,6 @@ import fr.itinerennes.beans.BoundingBox;
 import fr.itinerennes.beans.Station;
 import fr.itinerennes.business.facade.BikeService;
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.ui.tasks.RefreshBikeOverlayTask;
-import fr.itinerennes.ui.tasks.RefreshBusOverlayTask;
 import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
@@ -59,7 +58,7 @@ public class MapActivity extends Activity {
         setContentView(R.layout.main_map);
 
         this.map = (MapView) findViewById(R.id.map);
-        map.setMapListener(this.map);
+        map.setMapListener(new DelayedMapListener(this.map, 1000));
         map.setBuiltInZoomControls(true);
         // map.setMultiTouchControls(true);
 
@@ -161,9 +160,7 @@ public class MapActivity extends Activity {
         if (hasFocus) {
 
             final BoundingBox bbox = new BoundingBox(this.map.getVisibleBoundingBoxE6());
-            new RefreshBusOverlayTask(this.getBaseContext(), this.map).execute(bbox);
-
-            new RefreshBikeOverlayTask(this.getBaseContext(), this.map).execute();
+            map.initOverlays(bbox);
 
         }
     }

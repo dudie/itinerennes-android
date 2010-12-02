@@ -1,5 +1,7 @@
 package fr.itinerennes.ui.views;
 
+import java.util.HashMap;
+
 import org.andnav.osm.events.MapListener;
 import org.andnav.osm.events.ScrollEvent;
 import org.andnav.osm.events.ZoomEvent;
@@ -12,9 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import fr.itinerennes.beans.BoundingBox;
-import fr.itinerennes.ui.tasks.RefreshBusOverlayTask;
+import fr.itinerennes.beans.Station;
+import fr.itinerennes.ui.tasks.BuildOverlayTask;
 import fr.itinerennes.ui.views.overlays.StationOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
@@ -33,13 +37,15 @@ public class MapView extends OpenStreetMapView implements MapListener {
     private MapViewController controller;
 
     /** The android context. */
-    private Context context;
+    private final Context context;
 
     /** OnItemGestureListener. */
     private OnItemGestureListener<StationOverlayItem> onItemGestureListener;
 
     /** Boolean indicating if the focused item layout is visible. */
     boolean focused;
+
+    private final HashMap<Integer, BuildOverlayTask> tasks = new HashMap<Integer, BuildOverlayTask>();
 
     /**
      * @param context
@@ -112,8 +118,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
         }
 
         if (this.isShown()) {
-            final BoundingBox bbox = new BoundingBox(this.getVisibleBoundingBoxE6());
-            new RefreshBusOverlayTask(this.context, this).execute(bbox);
+            executeBuildOverlayTask(Station.TYPE_BUS);
         }
         return true;
     }
@@ -131,8 +136,8 @@ public class MapView extends OpenStreetMapView implements MapListener {
         }
 
         if (this.isShown()) {
-            BoundingBox bbox = new BoundingBox(this.getVisibleBoundingBoxE6());
-            new RefreshBusOverlayTask(this.context, this).execute(bbox);
+            executeBuildOverlayTask(Station.TYPE_BUS);
+
         }
         return true;
     }
@@ -143,7 +148,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
      * @param focused
      *            focused or not
      */
-    public void setItemLayoutFocused(boolean focused) {
+    public void setItemLayoutFocused(final boolean focused) {
 
         this.focused = focused;
     }
@@ -166,7 +171,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
      *            the listener to use with overlays.
      */
     public void setOnItemGestureListener(
-            OnItemGestureListener<StationOverlayItem> onItemGestureListener) {
+            final OnItemGestureListener<StationOverlayItem> onItemGestureListener) {
 
         this.onItemGestureListener = onItemGestureListener;
 
@@ -184,6 +189,25 @@ public class MapView extends OpenStreetMapView implements MapListener {
     }
 
     /**
+     * Verify if the task for the passed overlay type exists and executes a new one. If a previous
+     * task is not finished, it is canceled.
+     * 
+     * @param type
+     */
+    private void executeBuildOverlayTask(final int type) {
+
+        BuildOverlayTask task = tasks.get(type);
+        if (task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
+            task.cancel(true);
+            LOGGER.debug("cancelling previous BuildOverlayTask");
+        }
+        final BoundingBox bbox = new BoundingBox(this.getVisibleBoundingBoxE6());
+        task = new BuildOverlayTask(this.context, this, type);
+        tasks.put(type, task);
+        tasks.get(type).execute(bbox);
+    }
+
+    /**
      * Synchronized method to refresh an overlay on the map. If an overlay of the same type already
      * exists on the map, it will be replaced.
      * 
@@ -192,14 +216,14 @@ public class MapView extends OpenStreetMapView implements MapListener {
      * @param type
      *            The type of the overlay to replace.
      */
-    public synchronized void refreshOverlay(StationOverlay<StationOverlayItem> stationOverlay,
-            int type) {
+    public synchronized void refreshOverlay(
+            final StationOverlay<StationOverlayItem> stationOverlay, final int type) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("refreshOverlay");
         }
 
-        for (OpenStreetMapViewOverlay overlay : this.getOverlays()) {
+        for (final OpenStreetMapViewOverlay overlay : this.getOverlays()) {
             if (overlay instanceof StationOverlay) {
                 if (((StationOverlay<StationOverlayItem>) overlay).getType() == type) {
                     this.getOverlays().remove(overlay);
@@ -212,4 +236,20 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         this.postInvalidate();
     }
+
+    /**
+     * Initialization of overlay. At the moment only the bike overlay is initialized, because it is
+     * loaded only once. As the bus overlay is updated on map scrolling, it is not necessary to load
+     * it at beginning.
+     * 
+     * @see MapView#onScroll(ScrollEvent)
+     * @param bbox
+     *            Visible Bounding Box when overlays are initialized.
+     */
+    public void initOverlays(final BoundingBox bbox) {
+
+        tasks.put(Station.TYPE_BIKE, new BuildOverlayTask(this.context, this, Station.TYPE_BIKE));
+        tasks.get(Station.TYPE_BIKE).execute(bbox);
+    }
+
 }
