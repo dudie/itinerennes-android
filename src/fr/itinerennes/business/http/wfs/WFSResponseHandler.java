@@ -1,4 +1,4 @@
-package fr.itinerennes.business.http.wms;
+package fr.itinerennes.business.http.wfs;
 
 import java.io.BufferedReader;
 import java.io.IOException;
