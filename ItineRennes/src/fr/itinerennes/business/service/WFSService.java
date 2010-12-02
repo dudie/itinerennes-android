@@ -12,7 +12,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.beans.BoundingBox;
 import fr.itinerennes.beans.BusStation;
-import fr.itinerennes.business.http.wms.WFSJsonService;
+import fr.itinerennes.business.http.wfs.WFSJsonService;
 import fr.itinerennes.exceptions.GenericException;
 
 /**

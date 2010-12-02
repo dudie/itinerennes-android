@@ -1,4 +1,4 @@
-package fr.itinerennes.business.http.wms;
+package fr.itinerennes.business.http.wfs;
 
 /**
  * Contains constants Geoserver WMS API.
