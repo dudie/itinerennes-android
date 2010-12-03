@@ -18,7 +18,6 @@ import android.widget.TextView;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.beans.BikeStation;
-import fr.itinerennes.beans.BoundingBox;
 import fr.itinerennes.beans.Station;
 import fr.itinerennes.business.facade.BikeService;
 import fr.itinerennes.exceptions.GenericException;
@@ -150,19 +149,6 @@ public class MapActivity extends Activity {
 
         });
 
-    }
-
-    @Override
-    public final void onWindowFocusChanged(final boolean hasFocus) {
-
-        super.onWindowFocusChanged(hasFocus);
-
-        if (hasFocus) {
-
-            final BoundingBox bbox = new BoundingBox(this.map.getVisibleBoundingBoxE6());
-            map.initOverlays(bbox);
-
-        }
     }
 
     /**

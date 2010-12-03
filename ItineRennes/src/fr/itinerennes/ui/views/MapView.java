@@ -119,6 +119,9 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         if (this.isShown()) {
             executeBuildOverlayTask(Station.TYPE_BUS);
+            if (tasks.get(Station.TYPE_BIKE) == null) {
+                executeBuildOverlayTask(Station.TYPE_BIKE);
+            }
         }
         return true;
     }
@@ -137,7 +140,9 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         if (this.isShown()) {
             executeBuildOverlayTask(Station.TYPE_BUS);
-
+            if (tasks.get(Station.TYPE_BIKE) == null) {
+                executeBuildOverlayTask(Station.TYPE_BIKE);
+            }
         }
         return true;
     }
@@ -236,20 +241,4 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         this.postInvalidate();
     }
-
-    /**
-     * Initialization of overlay. At the moment only the bike overlay is initialized, because it is
-     * loaded only once. As the bus overlay is updated on map scrolling, it is not necessary to load
-     * it at beginning.
-     * 
-     * @see MapView#onScroll(ScrollEvent)
-     * @param bbox
-     *            Visible Bounding Box when overlays are initialized.
-     */
-    public void initOverlays(final BoundingBox bbox) {
-
-        tasks.put(Station.TYPE_BIKE, new BuildOverlayTask(this.context, this, Station.TYPE_BIKE));
-        tasks.get(Station.TYPE_BIKE).execute(bbox);
-    }
-
 }
