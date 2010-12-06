@@ -9,7 +9,6 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
 import fr.itinerennes.R;
 import fr.itinerennes.beans.Station;
 import fr.itinerennes.business.facade.StationProvider;
@@ -23,7 +22,8 @@ import fr.itinerennes.ui.views.overlays.StationOverlayItem;
  * 
  * @author Olivier Boudet
  */
-public class BuildOverlayTask extends AsyncTask<BoundingBoxE6, Void, Void> {
+public class BuildOverlayTask extends
+        AsyncTask<BoundingBoxE6, Void, StationOverlay<StationOverlayItem>> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BuildOverlayTask.class);
@@ -69,7 +69,7 @@ public class BuildOverlayTask extends AsyncTask<BoundingBoxE6, Void, Void> {
      * @return Void Returns nothing
      */
     @Override
-    protected final Void doInBackground(final BoundingBoxE6... params) {
+    protected final StationOverlay<StationOverlayItem> doInBackground(final BoundingBoxE6... params) {
 
         List<Station> stations = null;
         try {
@@ -83,16 +83,31 @@ public class BuildOverlayTask extends AsyncTask<BoundingBoxE6, Void, Void> {
 
             for (final Station station : stations) {
                 final StationOverlayItem item = new StationOverlayItem(station);
-                item.setMarker(context.getResources().getDrawable(R.drawable.icon_bus));
+
+                switch (type) {
+                case Station.TYPE_BUS:
+                    item.setMarker(context.getResources().getDrawable(R.drawable.icon_bus));
+                    break;
+                case Station.TYPE_BIKE:
+                    item.setMarker(context.getResources().getDrawable(R.drawable.icon_velo));
+                    break;
+                }
 
                 overlayItems.add(item);
             }
             final StationOverlay<StationOverlayItem> overlay = new StationOverlay<StationOverlayItem>(
                     context, overlayItems, map.getOnItemGestureListener(), type);
 
-            map.refreshOverlay(overlay, type);
+            return overlay;
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(final StationOverlay<StationOverlayItem> overlay) {
+
+        map.refreshOverlay(overlay, type);
+
     }
 
     /**
