@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.andnav.osm.events.MapListener;
 import org.andnav.osm.events.ScrollEvent;
 import org.andnav.osm.events.ZoomEvent;
+import org.andnav.osm.util.BoundingBoxE6;
 import org.andnav.osm.views.OpenStreetMapView;
 import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay.OnItemGestureListener;
 import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
@@ -16,8 +17,12 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
-import fr.itinerennes.beans.BoundingBox;
+
 import fr.itinerennes.beans.Station;
+import fr.itinerennes.business.facade.BikeService;
+import fr.itinerennes.business.facade.BusService;
+import fr.itinerennes.business.facade.StationProvider;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.ui.tasks.BuildOverlayTask;
 import fr.itinerennes.ui.views.overlays.StationOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
@@ -34,7 +39,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapView.class);
 
     /** The map controller. */
-    private MapViewController controller;
+    private final MapViewController controller;
 
     /** The android context. */
     private final Context context;
@@ -47,6 +52,9 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
     private final HashMap<Integer, BuildOverlayTask> tasks = new HashMap<Integer, BuildOverlayTask>();
 
+    /** The station providers. */
+    private final StationProvider[] stationProviders;
+
     /**
      * @param context
      */
@@ -55,6 +63,10 @@ public class MapView extends OpenStreetMapView implements MapListener {
         super(context);
         this.context = context;
         this.controller = new MapViewController(this);
+        this.stationProviders = new StationProvider[2];
+        final DatabaseHelper dbHelper = new DatabaseHelper(context);
+        stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
+        stationProviders[1] = new BusService();
     }
 
     /**
@@ -65,7 +77,11 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         super(context, attrs);
         this.context = context;
-        // TJHU Auto-generated constructor stub
+        this.controller = new MapViewController(this);
+        this.stationProviders = new StationProvider[2];
+        final DatabaseHelper dbHelper = new DatabaseHelper(context);
+        stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
+        stationProviders[1] = new BusService();
     }
 
     /**
@@ -76,7 +92,11 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         super(context, aRendererInfo);
         this.context = context;
-        // TJHU Auto-generated constructor stub
+        this.controller = new MapViewController(this);
+        this.stationProviders = new StationProvider[2];
+        final DatabaseHelper dbHelper = new DatabaseHelper(context);
+        stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
+        stationProviders[1] = new BusService();
     }
 
     /**
@@ -89,7 +109,11 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         super(context, aRendererInfo, aTileProvider);
         this.context = context;
-        // TJHU Auto-generated constructor stub
+        this.controller = new MapViewController(this);
+        this.stationProviders = new StationProvider[2];
+        final DatabaseHelper dbHelper = new DatabaseHelper(context);
+        stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
+        stationProviders[1] = new BusService();
     }
 
     /**
@@ -102,7 +126,11 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         super(context, aRendererInfo, aMapToShareTheTileProviderWith);
         this.context = context;
-        // TJHU Auto-generated constructor stub
+        this.controller = new MapViewController(this);
+        this.stationProviders = new StationProvider[2];
+        final DatabaseHelper dbHelper = new DatabaseHelper(context);
+        stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
+        stationProviders[1] = new BusService();
     }
 
     /**
@@ -206,8 +234,8 @@ public class MapView extends OpenStreetMapView implements MapListener {
             task.cancel(true);
             LOGGER.debug("cancelling previous BuildOverlayTask");
         }
-        final BoundingBox bbox = new BoundingBox(this.getVisibleBoundingBoxE6());
-        task = new BuildOverlayTask(this.context, this, type);
+        final BoundingBoxE6 bbox = this.getVisibleBoundingBoxE6();
+        task = new BuildOverlayTask(this.context, this, stationProviders[type], type);
         tasks.put(type, task);
         tasks.get(type).execute(bbox);
     }

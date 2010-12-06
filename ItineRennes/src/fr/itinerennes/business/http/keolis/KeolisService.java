@@ -9,15 +9,16 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.beans.BikeStation;
+import fr.itinerennes.beans.LineTransportIcon;
+import fr.itinerennes.beans.SubwayStation;
 import fr.itinerennes.business.http.GenericHttpService;
-import fr.itinerennes.business.http.keolis.Keo.Network;
 import fr.itinerennes.exceptions.GenericException;
 
 /**
@@ -25,17 +26,22 @@ import fr.itinerennes.exceptions.GenericException;
  * 
  * @author Jérémie Huchet
  */
-public class KeolisJsonService {
+public class KeolisService {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
-            .getLogger(KeolisJsonService.class);
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(KeolisService.class);
 
     /** The HTTP client. */
     private final GenericHttpService httpService = new GenericHttpService();
 
-    /** The HTTP response handler. */
-    private final KeolisResponseHandler responseHandler = new KeolisResponseHandler();
+    /** The handler to receive bike stations. */
+    private final BikeStationHttpResponseHandler bikeStationHandler = new BikeStationHttpResponseHandler();
+
+    /** The handler to receive subway stations. */
+    private final SubwayStationHttpResponseHandler subwayStationHandler = new SubwayStationHttpResponseHandler();
+
+    /** The handler to receive line icons. */
+    private final LineIconsHttpResponseHandler iconsHandler = new LineIconsHttpResponseHandler();
 
     /**
      * Creates a generic request to the Keolis API. This method will set the request headers, the
@@ -83,10 +89,8 @@ public class KeolisJsonService {
      * @return a {@link JSONArray} containing all bike stations as {@link JSONObject}s
      * @throws GenericException
      *             unable to get a result from the server
-     * @throws JSONException
-     *             unable to parse the json response of the server
      */
-    public final JSONArray getAllBikeStations() throws GenericException, JSONException {
+    public final List<BikeStation> getAllBikeStations() throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(5);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_LE_VELO_STAR));
@@ -94,10 +98,10 @@ public class KeolisJsonService {
         params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_STATION,
                 Keo.GetBikeStations.VALUE_STATION_ALL));
 
-        JSONObject data = null;
-        data = httpService.execute(createKeolisRequest(params), responseHandler);
+        final List<BikeStation> data = httpService.execute(createKeolisRequest(params),
+                bikeStationHandler);
 
-        return data.getJSONArray("station");
+        return data;
     }
 
     /**
@@ -110,11 +114,9 @@ public class KeolisJsonService {
      * @return a {@link JSONArray} containing the 3 bike stations as {@link JSONObject}s
      * @throws GenericException
      *             unable to get a result from the server
-     * @throws JSONException
-     *             unable to parse the json response of the server
      */
-    public final JSONArray getBikeStationsNearFrom(final double latitude, final double longitude)
-            throws GenericException, JSONException {
+    public final List<BikeStation> getBikeStationsNearFrom(final double latitude,
+            final double longitude) throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(8);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_LE_VELO_STAR));
@@ -128,9 +130,10 @@ public class KeolisJsonService {
         params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_LONGITUDE, String
                 .valueOf(longitude)));
 
-        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
+        final List<BikeStation> data = httpService.execute(createKeolisRequest(params),
+                bikeStationHandler);
 
-        return data.getJSONArray("station");
+        return data;
     }
 
     /**
@@ -138,13 +141,11 @@ public class KeolisJsonService {
      * 
      * @param id
      *            the identifier of the bike station
-     * @return a {@link JSONObject} containing the bike station
+     * @return a bike station
      * @throws GenericException
      *             unable to get a result from the server
-     * @throws JSONException
-     *             unable to parse the json response of the server
      */
-    public final JSONObject getBikeStation(final String id) throws GenericException, JSONException {
+    public final BikeStation getBikeStation(final String id) throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(6);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_LE_VELO_STAR));
@@ -153,43 +154,25 @@ public class KeolisJsonService {
                 Keo.GetBikeStations.VALUE_STATION_IDENTIFIER));
         params.add(new BasicNameValuePair(Keo.GetBikeStations.PARAM_VALUE, id));
 
-        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
+        final List<BikeStation> data = httpService.execute(createKeolisRequest(params),
+                bikeStationHandler);
 
-        return data.getJSONObject("station");
-    }
-
-    /**
-     * Makes a call to the Keolis API to get a list of districts of the network
-     * {@link Network#VALUE_LE_VELO_STAR}.
-     * 
-     * @return a {@link JSONArray} containing the bike district
-     * @throws GenericException
-     *             unable to get a result from the server
-     * @throws JSONException
-     *             unable to parse the json response of the server
-     */
-    public final JSONArray getAllBikeDistricts() throws GenericException, JSONException {
-
-        final List<NameValuePair> params = new ArrayList<NameValuePair>(4);
-        params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_LE_VELO_STAR));
-        params.add(new BasicNameValuePair(Keo.Command.PARAM_NAME, Keo.Command.GET_BIKE_DISTRICTS));
-
-        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
-
-        return data.getJSONArray("district");
+        if (data != null && !data.isEmpty()) {
+            return data.get(0);
+        } else {
+            return null;
+        }
     }
 
     /**
      * Makes a call to the Keolis API to get the list of URLs to fetch the icons of the transport
      * lines.
      * 
-     * @return a {@link JSONObject} containing the base URL and the file names
+     * @return a bean containing the base URL and the file names
      * @throws GenericException
      *             unable to get a result from the server
-     * @throws JSONException
-     *             unable to parse the json response of the server
      */
-    public final JSONObject getAllLineIcons() throws GenericException, JSONException {
+    public final List<LineTransportIcon> getAllLineIcons() throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(4);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
@@ -197,7 +180,8 @@ public class KeolisJsonService {
         params.add(new BasicNameValuePair(Keo.GetLinesIcons.PARAM_MODE,
                 Keo.GetLinesIcons.VALUE_MODE_ALL));
 
-        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
+        final List<LineTransportIcon> data = httpService.execute(createKeolisRequest(params),
+                iconsHandler);
 
         return data;
     }
@@ -205,13 +189,11 @@ public class KeolisJsonService {
     /**
      * Makes a call to the Keolis API to get all subway stations.
      * 
-     * @return a {@link JSONArray} containing all subway stations as {@link JSONObject}s
+     * @return a list of subway stations
      * @throws GenericException
      *             unable to get a result from the server
-     * @throws JSONException
-     *             unable to parse the json response of the server
      */
-    public final JSONArray getAllSubwayStations() throws GenericException, JSONException {
+    public final List<SubwayStation> getAllSubwayStations() throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(5);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
@@ -219,9 +201,10 @@ public class KeolisJsonService {
         params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_MODE,
                 Keo.GetSubwayStations.VALUE_MODE_ALL));
 
-        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
+        final List<SubwayStation> data = httpService.execute(createKeolisRequest(params),
+                subwayStationHandler);
 
-        return data.getJSONArray("station");
+        return data;
     }
 
     /**
@@ -231,14 +214,12 @@ public class KeolisJsonService {
      *            the latitude
      * @param longitude
      *            the longitude
-     * @return a {@link JSONArray} containing the 3 subway stations as {@link JSONObject}s
+     * @return a list containing the 3 subway stations
      * @throws GenericException
      *             unable to get a result from the server
-     * @throws JSONException
-     *             unable to parse the json response of the server
      */
-    public final JSONArray getSubwayStationsNearFrom(final double latitude, final double longitude)
-            throws GenericException, JSONException {
+    public final List<SubwayStation> getSubwayStationsNearFrom(final double latitude,
+            final double longitude) throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(8);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
@@ -252,9 +233,10 @@ public class KeolisJsonService {
         params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_LONGITUDE, String
                 .valueOf(longitude)));
 
-        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
+        final List<SubwayStation> data = httpService.execute(createKeolisRequest(params),
+                subwayStationHandler);
 
-        return data.getJSONArray("station");
+        return data;
     }
 
     /**
@@ -262,14 +244,11 @@ public class KeolisJsonService {
      * 
      * @param id
      *            the identifier of the subway station
-     * @return a {@link JSONObject} containing the subway station
+     * @return a subway station
      * @throws GenericException
      *             unable to get a result from the server
-     * @throws JSONException
-     *             unable to parse the json response of the server
      */
-    public final JSONObject getSubwayStation(final String id) throws GenericException,
-            JSONException {
+    public final SubwayStation getSubwayStation(final String id) throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(6);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
@@ -278,8 +257,13 @@ public class KeolisJsonService {
                 Keo.GetSubwayStations.VALUE_MODE_STATION));
         params.add(new BasicNameValuePair(Keo.GetSubwayStations.PARAM_STATION_IDENTIFIER, id));
 
-        final JSONObject data = httpService.execute(createKeolisRequest(params), responseHandler);
+        final List<SubwayStation> data = httpService.execute(createKeolisRequest(params),
+                subwayStationHandler);
 
-        return data.getJSONObject("station");
+        if (data != null && !data.isEmpty()) {
+            return data.get(0);
+        } else {
+            return null;
+        }
     }
 }

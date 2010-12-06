@@ -2,23 +2,23 @@ package fr.itinerennes.business.service;
 
 import java.util.List;
 
+import org.andnav.osm.util.BoundingBoxE6;
+
 import android.test.AndroidTestCase;
-import fr.itinerennes.beans.BoundingBox;
+
 import fr.itinerennes.beans.BusStation;
-import fr.itinerennes.business.http.wms.WFSJsonService;
+import fr.itinerennes.business.http.wfs.WFSService;
 import fr.itinerennes.exceptions.GenericException;
 
 /**
- * Test class for {@link WFSJsonService}.
+ * Test class for {@link WFSService}.
  * 
  * @author Olivier Boudet
  */
 public class WFSServiceTest extends AndroidTestCase {
 
-    /**
-     * 
-     */
-    private WFSService wfsService = WFSService.getInstance();
+    /** The tested WFS service. */
+    private final WFSService wfsService = new WFSService();
 
     @Override
     protected void setUp() throws Exception {
@@ -35,7 +35,7 @@ public class WFSServiceTest extends AndroidTestCase {
     /**
      * Test method for {@link WFSService#getBusStationsFromBbox(fr.itinerennes.beans.BoundingBox)}.
      */
-    public void testGetBusStationsFromBbox() {
+    public final void testGetBusStationsFromBbox() {
 
         /*
          * Test with a bounding box containing any stations
@@ -43,19 +43,19 @@ public class WFSServiceTest extends AndroidTestCase {
         List<BusStation> stations = null;
 
         try {
-            stations = wfsService.getBusStationsFromBbox(new BoundingBox(-2, 2, 47, 49), 10);
+            stations = wfsService.getBusStationsFromBbox(new BoundingBoxE6(49D, 2D, 47D, -2D), 10);
         } catch (final GenericException e) {
             fail(e.getMessage());
         }
 
         assertNotNull("no bus stations returned by the api", stations);
-        assertTrue("10 stations should be returned by the api", stations.size() == 10);
+        assertEquals("10 stations should be returned by the api", 10, stations.size());
 
         /*
          * Test with a bounding box which does not contain station
          */
         try {
-            stations = wfsService.getBusStationsFromBbox(new BoundingBox(0, 0, 0, 0));
+            stations = wfsService.getBusStationsFromBbox(new BoundingBoxE6(0, 0, 0, 0));
         } catch (final GenericException e) {
             fail(e.getMessage());
         }
@@ -66,12 +66,12 @@ public class WFSServiceTest extends AndroidTestCase {
     /**
      * Test method for {@link WFSService#getBusStation(String)}.
      */
-    public void testGetBusStation() {
+    public final void testGetBusStation() {
 
         BusStation station = null;
         try {
             station = wfsService.getBusStation("stops.avenir1");
-        } catch (GenericException e) {
+        } catch (final GenericException e) {
             fail(e.getMessage());
         }
 

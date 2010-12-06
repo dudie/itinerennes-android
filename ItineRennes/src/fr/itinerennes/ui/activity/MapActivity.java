@@ -15,12 +15,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.beans.Station;
-import fr.itinerennes.business.facade.BikeService;
-import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
@@ -98,36 +97,37 @@ public class MapActivity extends Activity {
                 final LinearLayout focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
                 final LayoutInflater inflater = LayoutInflater.from(getBaseContext());
 
-                try {
-                    switch (item.getStation().getType()) {
-                    case Station.TYPE_BIKE:
-                        inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
+                // try {
+                switch (item.getStation().getType()) {
+                case Station.TYPE_BIKE:
+                    inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
 
-                        final BikeStation bikeStation = BikeService.getStation(item.getStation()
-                                .getId());
+                    // final BikeStation bikeStation =
+                    // BikeStationProvider.getStation(item.getStation()
+                    // .getId());
+                    final BikeStation bikeStation = new BikeStation();
 
-                        final TextView availablesSlots = (TextView) focusedBoxLayout
-                                .findViewById(R.id.available_slots);
-                        availablesSlots.setText(String.valueOf(bikeStation.getAvailableSlots()));
+                    final TextView availablesSlots = (TextView) focusedBoxLayout
+                            .findViewById(R.id.available_slots);
+                    availablesSlots.setText(String.valueOf(bikeStation.getAvailableSlots()));
 
-                        final TextView availablesBikes = (TextView) focusedBoxLayout
-                                .findViewById(R.id.available_bikes);
-                        availablesBikes.setText(String.valueOf(bikeStation.getAvailableBikes()));
+                    final TextView availablesBikes = (TextView) focusedBoxLayout
+                            .findViewById(R.id.available_bikes);
+                    availablesBikes.setText(String.valueOf(bikeStation.getAvailableBikes()));
 
-                        break;
-                    case Station.TYPE_BUS:
-                        inflater.inflate(R.layout.bus_station_box_layout, focusedBoxLayout);
+                    break;
+                case Station.TYPE_BUS:
+                    inflater.inflate(R.layout.bus_station_box_layout, focusedBoxLayout);
 
-                        break;
+                    break;
 
-                    default:
-                        break;
-                    }
-
-                } catch (final GenericException e) {
-                    LOGGER.error("Error while trying to fetch station informations.");
-
+                default:
+                    break;
                 }
+                // // } catch (final GenericException e) {
+                // // LOGGER.error("Error while trying to fetch station informations.");
+                // //
+                // // }
                 final TextView title = (TextView) focusedBoxLayout.findViewById(R.id.station_name);
                 title.setText(item.getStation().getName());
 

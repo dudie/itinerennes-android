@@ -2,20 +2,20 @@ package fr.itinerennes.business.facade;
 
 import java.util.List;
 
-import fr.itinerennes.beans.BoundingBox;
+import org.andnav.osm.util.BoundingBoxE6;
+
 import fr.itinerennes.beans.BusStation;
-import fr.itinerennes.business.RemoteDataCacheProvider;
-import fr.itinerennes.business.service.WFSService;
+import fr.itinerennes.business.http.wfs.WFSService;
 import fr.itinerennes.exceptions.GenericException;
 
 /**
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class BusService {
+public class BusService implements StationProvider {
 
     /** The WFS service. */
-    private static final WFSService wfsService = WFSService.getInstance();
+    private static final WFSService wfsService = new WFSService();
 
     /**
      * Gets a bus station by its identifier.
@@ -26,14 +26,10 @@ public class BusService {
      * @throws GenericException
      *             unable to retrieve the requested station
      */
-    public static BusStation getStation(final String id) throws GenericException {
+    @Override
+    public final BusStation getStation(final String id) throws GenericException {
 
-        BusStation station = RemoteDataCacheProvider.get(BusStation.class, id);
-        if (station == null) {
-            station = wfsService.getBusStation(id);
-            RemoteDataCacheProvider.put(id, station);
-        }
-        return station;
+        return wfsService.getBusStation(id);
     }
 
     /**
@@ -45,13 +41,10 @@ public class BusService {
      * @throws GenericException
      *             unable to retrieve the stations
      */
-    public static List<BusStation> getBusStationsFromBbox(final BoundingBox bbox)
-            throws GenericException {
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<BusStation> getStations(final BoundingBoxE6 bbox) throws GenericException {
 
-        final List<BusStation> allStations = wfsService.getBusStationsFromBbox(bbox);
-        for (final BusStation station : allStations) {
-            RemoteDataCacheProvider.put(station.getId(), station);
-        }
-        return allStations;
+        return wfsService.getBusStationsFromBbox(bbox);
     }
 }

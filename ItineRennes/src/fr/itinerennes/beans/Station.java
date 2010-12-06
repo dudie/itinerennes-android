@@ -10,22 +10,23 @@ import fr.itinerennes.ItineRennesConstants;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public interface Station {
+public interface Station extends Cacheable {
 
     /** Station type bike. */
-    public static final int TYPE_BIKE = 1;
+    int TYPE_BIKE = 0;
 
     /** Station type bus. */
-    public static final int TYPE_BUS = 2;
+    int TYPE_BUS = 1;
 
     /** Station type subway. */
-    public static final int TYPE_SUBWAY = 3;
+    int TYPE_SUBWAY = 2;
 
     /**
      * Gets the identifier of the station.
      * 
      * @return the identifier of the station
      */
+    @Override
     String getId();
 
     /**

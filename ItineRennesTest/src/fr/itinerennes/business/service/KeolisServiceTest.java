@@ -10,12 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.test.AndroidTestCase;
+
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.beans.BikeDistrict;
 import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.beans.LineTransportIcon;
 import fr.itinerennes.beans.Station;
 import fr.itinerennes.beans.SubwayStation;
+import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.exceptions.GenericException;
 
 /**
@@ -29,7 +30,7 @@ public class KeolisServiceTest extends AndroidTestCase {
     private static Logger LOGGER = LoggerFactory.getLogger(KeolisServiceTest.class);
 
     /** The keolis service. */
-    private final KeolisService keolisService = KeolisService.getInstance();
+    private final KeolisService keolisService = new KeolisService();
 
     @Override
     protected void setUp() throws Exception {
@@ -128,35 +129,6 @@ public class KeolisServiceTest extends AndroidTestCase {
     }
 
     /**
-     * Test method for {@link KeolisService#getAllBikeDistricts()}.
-     */
-    public void testGetAllBikeDistricts() {
-
-        LOGGER.info("testGetAllBikeDistricts.start");
-
-        List<BikeDistrict> districts = null;
-        try {
-            districts = keolisService.getAllBikeDistricts();
-        } catch (final GenericException e) {
-            LOGGER.error("GenericException", e);
-            fail(e.getMessage());
-        }
-        assertNotNull("no district returned", districts);
-        assertEquals("on November, 29th 2010, the keolis API returns 12 bike districts", 12,
-                districts.size());
-
-        for (final BikeDistrict district : districts) {
-            LOGGER.debug("checking {}", district);
-            assertFalse(String.format("district [%s] has no id", district),
-                    StringUtils.isEmpty(district.getId()));
-            assertFalse(String.format("district [%s] has no name", district),
-                    StringUtils.isEmpty(district.getName()));
-        }
-
-        LOGGER.info("testGetAllBikeDistricts.end");
-    }
-
-    /**
      * Test method for {@link KeolisService#getAllLineIcons()}.
      */
     public void testGetAllLineIcons() {
@@ -170,7 +142,7 @@ public class KeolisServiceTest extends AndroidTestCase {
             LOGGER.error("GenericException", e);
             fail(e.getMessage());
         }
-        assertNotNull("no district returned", icons);
+        assertNotNull("no icon returned", icons);
         assertEquals("on November, 29th 2010, the keolis API returns 61 bike districts", 61,
                 icons.size());
 

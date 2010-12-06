@@ -11,7 +11,7 @@ import org.slf4j.Logger;
  * 
  * @author Jérémie Huchet
  */
-public class ItinerennesLoggerFactory implements ILoggerFactory {
+public final class ItinerennesLoggerFactory implements ILoggerFactory {
 
     /** The base string to remove from log tags. */
     private static final String PKG_BASE = "fr.itinerennes.";

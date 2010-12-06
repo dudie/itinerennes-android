@@ -1,3 +1,5 @@
-<resources><string name="label_available_slots">Places libres :\u0020</string>
-<string name="label_available_bikes">Vélos disponibles :\u0020</string>
+<resources>
+	<string name="label_available_slots">Places libres :\u0020</string>
+    <string name="label_available_bikes">Vélos disponibles :\u0020</string>
+    <string name="label_lines_dots">Lignes :\u0020</string>
 </resources>

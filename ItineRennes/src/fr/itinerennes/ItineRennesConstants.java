@@ -1,5 +1,7 @@
 package fr.itinerennes;
 
+import fr.itinerennes.beans.BikeStation;
+
 /**
  * @author Jérémie Huchet
  * @author Olivier Boudet
@@ -39,4 +41,27 @@ public class ItineRennesConstants {
     /** Geoserver API URL. */
     public static final String GEOSERVER_API_URL = "http://otp.itinerennes.fr/geoserver/ows/";
 
+    /*
+     * Database constantes.
+     */
+    /** The database schema version. */
+    public static final int DATABASE_VERSION = 5;
+
+    /** The database name. */
+    public static final String DATABASE_NAME = "fr.itinerennes";
+
+    /** The database create script URI. */
+    public static final String DATABASE_CREATE_SCRIPT_URI = "/fr/itinerennes/database/create_database.sql";
+
+    /** The database drop script URI. */
+    public static final String DATABASE_DROP_SCRIPT_URI = "/fr/itinerennes/database/drop_database.sql";
+
+    /** The database update script URI. */
+    public static final String DATABASE_UPDATE_SCRIPT_URI = "/fr/itinerennes/database/update_database.sql";
+
+    /*
+     * Cache life time values.
+     */
+    /** Life time for {@link BikeStation}s : {@value #TTL_BIKE_STATIONS} seconds. */
+    public static final int TTL_BIKE_STATIONS = 3600;
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android" >
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:gravity="center_vertical" android:padding="5px">
+
+		<ImageView android:id="@+station/icon" android:layout_width="24px"
+			android:layout_height="24px">
+		</ImageView>
+
+		<TextView android:id="@+station/name" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textSize="20sp" android:paddingLeft="5px">
+		</TextView>
+
+	</LinearLayout>
+
+<!--	<LinearLayout android:layout_width="fill_parent"-->
+<!--		android:layout_height="wrap_content" android:orientation="horizontal">-->
+<!---->
+<!--		<TextView android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content" -->
+<!--			android:text="@string/label_lines_dots" />-->
+
+		<LinearLayout android:id="@+station/line_icon_list" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" >
+            <!-- the icons of each lines are appended here -->
+		</LinearLayout>
+
+<!--	</LinearLayout>-->
+
+    <LinearLayout android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" android:orientation="horizontal">
+	
+		<ImageButton android:layout_alignParentLeft="true"
+			android:layout_centerHorizontal="true" android:layout_width="fill_parent"
+			android:layout_height="48px" android:layout_weight="1" />
+	
+		<ImageButton android:layout_centerInParent="true"
+			android:layout_centerHorizontal="true" android:layout_width="fill_parent"
+			android:layout_height="48px" android:layout_weight="1" />
+	
+		<ImageButton android:layout_alignParentRight="true"
+			android:layout_centerHorizontal="true" android:layout_width="fill_parent"
+			android:layout_height="48px" android:layout_weight="1" />
+        
+    </LinearLayout>
+	
+	<LinearLayout android:id="@+station/list_bus" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:orientation="vertical">
+	</LinearLayout>
+
+</LinearLayout>
