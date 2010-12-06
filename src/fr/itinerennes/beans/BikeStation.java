@@ -41,8 +41,8 @@ public class BikeStation implements Station {
     /** The last update date of these informations. */
     private Date lastUpdate;
 
-    /** The identifier of the point of sale. */
-    private int pos;
+    /** True if this bike station is a the point of sale. */
+    private boolean pos;
 
     /**
      * Gets the identifier of the station.
@@ -257,22 +257,22 @@ public class BikeStation implements Station {
     }
 
     /**
-     * Gets the identifier of the point of sale.
+     * Returns true if this bike station is a the point of sale.
      * 
-     * @return the identifier of the point of sale
+     * @return true if this bike station is a the point of sale else false
      */
-    public final int getPos() {
+    public final boolean isPos() {
 
         return pos;
     }
 
     /**
-     * Sets the identifier of the point of sale.
+     * Sets if this bike station is a the point of sale.
      * 
      * @param pos
-     *            the identifier of the point of sale to set
+     *            true if this bike station is a the point of sale
      */
-    public final void setPos(final int pos) {
+    public final void setPos(final boolean pos) {
 
         this.pos = pos;
     }

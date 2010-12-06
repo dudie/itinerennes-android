@@ -2,7 +2,6 @@ package fr.itinerennes.business.http;
 
 import java.io.IOException;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -10,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
-import fr.itinerennes.business.http.keolis.KeolisResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
 
 /**
@@ -25,10 +23,10 @@ public class GenericHttpService {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
-            .getLogger(KeolisResponseHandler.class);
+            .getLogger(GenericHttpService.class);
 
     /** The HTTP client used to execute the requests. */
-    private DefaultHttpClient httpClient;
+    private final DefaultHttpClient httpClient = new DefaultHttpClient();
 
     /**
      * Executes the given request and handle the result with the given handler.
@@ -43,13 +41,12 @@ public class GenericHttpService {
      * @throws GenericException
      *             a problem occurred while executing the request or converting the result
      */
-    public <T> T execute(final HttpUriRequest request, final HttpResponseHandler<T> handler)
-            throws GenericException {
+    public final synchronized <T> T execute(final HttpUriRequest request,
+            final HttpResponseHandler<T> handler) throws GenericException {
 
-        HttpResponse response = null;
+        T response = null;
         try {
-            httpClient = new DefaultHttpClient();
-            response = httpClient.execute(request);
+            response = httpClient.execute(request, handler);
         } catch (final ClientProtocolException e) {
             LOGGER.debug(e.getMessage(), e);
             throw new GenericException(ErrorCodeConstants.NETWORK, "client protocol exception");
@@ -57,6 +54,6 @@ public class GenericHttpService {
             LOGGER.debug(e.getMessage(), e);
             throw new GenericException(ErrorCodeConstants.NETWORK, "i/o exception");
         }
-        return handler.handleResponse(response);
+        return response;
     }
 }

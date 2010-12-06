@@ -2,40 +2,80 @@ package fr.itinerennes.business.facade;
 
 import java.util.List;
 
+import org.andnav.osm.util.BoundingBoxE6;
+
+import android.database.sqlite.SQLiteDatabase;
+
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.beans.BikeStation;
-import fr.itinerennes.business.RemoteDataCacheProvider;
-import fr.itinerennes.business.service.KeolisService;
+import fr.itinerennes.business.cache.BikeStationCacheEntryHandler;
+import fr.itinerennes.business.cache.CacheProvider;
+import fr.itinerennes.business.cache.GeoCacheProvider;
+import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.exceptions.GenericException;
 
 /**
  * Service to consult informations about the bike transport service.
  * <p>
- * Every method call is cached using the {@link RemoteDataCacheProvider}.
+ * Every method call is cached using the {@link CacheProvider} and {@link GeoCacheProvider}.
  * 
  * @author Jérémie Huchet
  */
-public class BikeService {
+public final class BikeService implements StationProvider {
 
     /** The Keolis service. */
-    private final static KeolisService keolisService = KeolisService.getInstance();
+    private final KeolisService keolisService;;
+
+    /** The cache for bike stations. */
+    private final CacheProvider<BikeStation> bikeCache;
+
+    /** The geo cache. */
+    private final GeoCacheProvider geoCache;
 
     /**
-     * Gets a bike station by its identifier.
+     * Creates a bike service.
      * 
-     * @param id
-     *            the identifier of the station
-     * @return the requested station
-     * @throws GenericException
-     *             unable to retrieve the requested station
+     * @param database
+     *            the database
      */
-    public static BikeStation getStation(final String id) throws GenericException {
+    public BikeService(final SQLiteDatabase database) {
 
-        BikeStation station = RemoteDataCacheProvider.get(BikeStation.class, id);
+        keolisService = new KeolisService();
+        bikeCache = new CacheProvider<BikeStation>(database, new BikeStationCacheEntryHandler(),
+                ItineRennesConstants.TTL_BIKE_STATIONS);
+        geoCache = GeoCacheProvider.getInstance(database);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.facade.StationProvider#getStation(java.lang.String)
+     */
+    @Override
+    public BikeStation getStation(final String id) throws GenericException {
+
+        BikeStation station = bikeCache.load(id);
         if (station == null) {
             station = keolisService.getBikeStation(id);
-            RemoteDataCacheProvider.put(id, station);
+            bikeCache.save(station);
         }
         return station;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.facade.StationProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<BikeStation> getStations(final BoundingBoxE6 bbox) throws GenericException {
+
+        if (geoCache.isExplored(bbox, BikeStation.class.getName())) {
+            return bikeCache.load(bbox);
+        } else {
+            return keolisService.getAllBikeStations();
+        }
     }
 
     /**
@@ -45,12 +85,12 @@ public class BikeService {
      * @throws GenericException
      *             unable to retrieve the stations
      */
-    public static List<BikeStation> getAllStations() throws GenericException {
+    private List<BikeStation> getAllStations() throws GenericException {
 
         final List<BikeStation> allStations = keolisService.getAllBikeStations();
         // TJHU permettre la récupération des stations d'une bounding box
         for (final BikeStation station : allStations) {
-            RemoteDataCacheProvider.put(station.getId(), station);
+            bikeCache.save(station);
         }
         return allStations;
     }

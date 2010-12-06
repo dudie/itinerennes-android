@@ -43,7 +43,7 @@ public final class Keo {
         public static final String GET_BIKE_DISTRICTS = "getbikedistricts";
 
         /** Constant for the name of the method to retrieve alert informations about lines. */
-        public static final String GET_LINES_ALERT = "getlinesalerts";
+        public static final String GET_LINES_ALERTS = "getlinesalerts";
 
         /** Constant for the name of the method to retrieve URLs to fetch lines icons. */
         public static final String GET_LINES_ICONS = "getlines";
@@ -211,7 +211,7 @@ public final class Keo {
     }
 
     /**
-     * Contains constants for method {@link Command#GET_LINES_ALERT}.
+     * Contains constants for method {@link Command#GET_LINES_ALERTS}.
      * 
      * @author Jérémie Huchet
      */
@@ -243,11 +243,11 @@ public final class Keo {
          * Set the line for which fetch for alerts. Use with {@link #PARAM_MODE}=
          * {@link #VALUE_MODE_LINE} to set the line name.
          */
-        public static final String PARAM_LINE = "line";
+        public static final String PARAM_LINE = "param[line]";
     }
 
     /**
-     * Contains constants for method {@link Command#GET_LINES}.
+     * Contains constants for method {@link Command#GET_LINES_ICONS}.
      * 
      * @author Jérémie Huchet
      */

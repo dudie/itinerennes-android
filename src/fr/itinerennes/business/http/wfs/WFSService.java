@@ -4,19 +4,18 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andnav.osm.util.BoundingBoxE6;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.beans.BoundingBox;
+import fr.itinerennes.beans.BusStation;
 import fr.itinerennes.business.http.GenericHttpService;
 import fr.itinerennes.exceptions.GenericException;
 
@@ -24,18 +23,19 @@ import fr.itinerennes.exceptions.GenericException;
  * Manage calls to the Geoserver WMS API.
  * 
  * @author Olivier Boudet
+ * @author Jérémie Huchet
  */
 
-public class WFSJsonService {
+public class WFSService {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(WFSJsonService.class);
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(WFSService.class);
 
     /** The HTTP client. */
     private final GenericHttpService httpService = new GenericHttpService();
 
     /** The HTTP response handler. */
-    private final WFSResponseHandler responseHandler = new WFSResponseHandler();
+    private final BusStationHttpResponseHandler busHandler = new BusStationHttpResponseHandler();
 
     /**
      * Creates a generic request to the Geoserver WMS API. This method will set the request headers,
@@ -84,18 +84,18 @@ public class WFSJsonService {
      *            the bounding box
      * @param max
      *            optional maximum number of results to fetch
-     * @throws JSONException
-     *             unable to parse the json response of the server
      * @throws GenericException
      *             unable to encode request parameters
-     * @return JSONArray a {@link JSONArray} containing all bus stations as {@link JSONObject}s
+     * @return a list of bus stations as {@link JSONObject}s
      */
-    public final JSONArray getBusStationsFromBbox(final BoundingBox bbox, final int max)
-            throws GenericException, JSONException {
+    public final List<BusStation> getBusStationsFromBbox(final BoundingBoxE6 bbox, final int max)
+            throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(5);
-        params.add(new BasicNameValuePair("bbox", String.format("%s,%s", bbox.toString(),
-                WFS.VALUE_SRS)));
+        // TOBO peut-on envoyer directement des integer E6 à l'api WFS ?
+        params.add(new BasicNameValuePair("bbox", String.format("%s,%s,%s,%s,%s",
+                bbox.getLonWestE6() / 1E6, bbox.getLatSouthE6() / 1E6, bbox.getLonEastE6() / 1E6,
+                bbox.getLatNorthE6() / 1E6, WFS.VALUE_SRS)));
         params.add(new BasicNameValuePair("request", WFS.VALUE_FEATURE_REQUEST));
         params.add(new BasicNameValuePair("typeName", WFS.VALUE_STOPS_LAYERS));
 
@@ -103,9 +103,24 @@ public class WFSJsonService {
             params.add(new BasicNameValuePair("maxFeatures", String.valueOf(max)));
         }
 
-        final JSONObject data = httpService.execute(createWFSRequest(params), responseHandler);
+        final List<BusStation> data = httpService.execute(createWFSRequest(params), busHandler);
 
-        return data.getJSONArray("features");
+        return data;
+    }
+
+    /**
+     * Gets bus stations contained in a bbox.
+     * 
+     * @param bbox
+     *            the bounding box
+     * @return all bus stations contained in the bbox
+     * @throws GenericException
+     *             unable to get a result from the server
+     */
+    public final List<BusStation> getBusStationsFromBbox(final BoundingBoxE6 bbox)
+            throws GenericException {
+
+        return getBusStationsFromBbox(bbox, 0);
     }
 
     /**
@@ -113,25 +128,23 @@ public class WFSJsonService {
      * 
      * @param id
      *            the identifier of the bus station
-     * @return a {@link JSONObject} containing the bus station
+     * @return a bus station
      * @throws GenericException
      *             unable to get a result from the server
-     * @throws JSONException
-     *             unable to parse the json response of the server
      */
-    public final JSONObject getBusStation(final String id) throws GenericException, JSONException {
+    public final BusStation getBusStation(final String id) throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(5);
         params.add(new BasicNameValuePair("request", WFS.VALUE_FEATURE_REQUEST));
         params.add(new BasicNameValuePair("typeName", WFS.VALUE_STOPS_LAYERS));
         params.add(new BasicNameValuePair("featureId", id));
 
-        final JSONObject data = httpService.execute(createWFSRequest(params), responseHandler);
+        final List<BusStation> data = httpService.execute(createWFSRequest(params), busHandler);
 
-        if (data.getJSONArray("features").length() > 1) {
+        if (data.size() > 1) {
             throw new GenericException(ErrorCodeConstants.WFS_RESPONSE_ERROR,
-                    "the request returns more than one result");
+                    "the request returned more than one result");
         }
-        return data.getJSONArray("features").getJSONObject(0);
+        return data.get(0);
     }
 }

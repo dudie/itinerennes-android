@@ -20,5 +20,8 @@ public class ErrorCodeConstants {
     public static final short API_CALL_FAILED = 3;
 
     /** The response from the Geoserver WFS API does not contain a feature collection. */
-    public static final short WFS_RESPONSE_ERROR = 2;
+    public static final short WFS_RESPONSE_ERROR = 4;
+
+    /** The response from the Keolis API does not contains valid data. */
+    public static final short KEOLIS_RESPONSE_ERROR = 5;
 }
