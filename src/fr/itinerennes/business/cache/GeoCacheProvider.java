@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.database.Columns.GeoExploreColumns;
 import fr.itinerennes.utils.DateUtils;
 
@@ -69,7 +70,7 @@ public final class GeoCacheProvider implements GeoExploreColumns {
     public static final String TABLE_NAME = "geo_explore";
 
     /** The time to live of an explored bounding box. */
-    private static final int TTL = 1000;
+    private static final int TTL = ItineRennesConstants.GEO_CACHE_TTL;
 
     /** The unique instance of the geo cache. */
     private static GeoCacheProvider instance;

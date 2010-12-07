@@ -64,4 +64,7 @@ public class ItineRennesConstants {
      */
     /** Life time for {@link BikeStation}s : {@value #TTL_BIKE_STATIONS} seconds. */
     public static final int TTL_BIKE_STATIONS = 3600;
+
+    /** The time to live of an explored bounding box. */
+    public static final int GEO_CACHE_TTL = 0;
 }
