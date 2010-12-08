@@ -157,8 +157,8 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
             station = new BikeStation();
             station.setId(c.getString(0));
             station.setName(c.getString(1));
-            station.setLongitude(c.getDouble(2));
-            station.setLatitude(c.getDouble(3));
+            station.setLongitude(c.getInt(2));
+            station.setLatitude(c.getInt(3));
             station.setAvailableBikes(c.getInt(4));
             station.setAvailableSlots(c.getInt(5));
             station.setDistrict(c.getString(6));
@@ -204,8 +204,8 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
             final BikeStation station = new BikeStation();
             station.setId(c.getString(0));
             station.setName(c.getString(1));
-            station.setLongitude(c.getDouble(2));
-            station.setLatitude(c.getDouble(3));
+            station.setLongitude(c.getInt(2));
+            station.setLatitude(c.getInt(3));
             station.setAvailableBikes(c.getInt(4));
             station.setAvailableSlots(c.getInt(5));
             station.setDistrict(c.getString(6));

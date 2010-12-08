@@ -79,8 +79,8 @@ public class BusStationHttpResponseHandler extends HttpResponseHandler<List<BusS
         final JSONObject properties = jsonObject.optJSONObject("properties");
 
         station.setName(properties.optString("stop_name"));
-        station.setLatitude(properties.optDouble("stop_lat"));
-        station.setLongitude(properties.optDouble("stop_lon"));
+        station.setLatitude((int) (properties.optDouble("stop_lat") * 1E6));
+        station.setLongitude((int) (properties.optDouble("stop_lon") * 1E6));
 
         return station;
     }

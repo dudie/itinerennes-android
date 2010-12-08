@@ -105,8 +105,8 @@ public final class BikeStationHttpResponseHandler extends HttpResponseHandler<Li
         station.setDistrict(jsonObject.optString("district"));
         station.setId(jsonObject.optString("number"));
         station.setLastUpdate(KeoUtils.convertJsonStringToDate(jsonObject.optString("lastupdate")));
-        station.setLatitude(jsonObject.optDouble("latitude"));
-        station.setLongitude(jsonObject.optDouble("longitude"));
+        station.setLatitude((int) (jsonObject.optDouble("latitude") * 1E6));
+        station.setLongitude((int) (jsonObject.optDouble("longitude") * 1E6));
         station.setName(jsonObject.optString("name"));
         station.setPos(KeoUtils.convertJsonIntToBoolean(jsonObject.optInt("pos")));
 

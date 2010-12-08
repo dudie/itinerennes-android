@@ -24,10 +24,10 @@ public class BikeStation implements Station {
     private boolean active;
 
     /** The latitude of the station. */
-    private double latitude;
+    private int latitude;
 
     /** The longitude of the station. */
-    private double longitude;
+    private int longitude;
 
     /** The amount of available slots in the station. */
     private int availableSlots;
@@ -135,7 +135,7 @@ public class BikeStation implements Station {
      * 
      * @return the latitude of the station
      */
-    public final double getLatitude() {
+    public final int getLatitude() {
 
         return latitude;
     }
@@ -146,7 +146,7 @@ public class BikeStation implements Station {
      * @param latitude
      *            the latitude of the station to set
      */
-    public final void setLatitude(final double latitude) {
+    public final void setLatitude(final int latitude) {
 
         this.latitude = latitude;
     }
@@ -156,7 +156,7 @@ public class BikeStation implements Station {
      * 
      * @return the longitude of the station
      */
-    public final double getLongitude() {
+    public final int getLongitude() {
 
         return longitude;
     }
@@ -167,7 +167,7 @@ public class BikeStation implements Station {
      * @param longitude
      *            the longitude of the station to set
      */
-    public final void setLongitude(final double longitude) {
+    public final void setLongitude(final int longitude) {
 
         this.longitude = longitude;
     }
