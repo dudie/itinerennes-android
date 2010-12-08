@@ -4,7 +4,12 @@ import java.util.List;
 
 import org.andnav.osm.util.BoundingBoxE6;
 
+import android.database.sqlite.SQLiteDatabase;
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.beans.BusStation;
+import fr.itinerennes.business.cache.BusStationCacheEntryHandler;
+import fr.itinerennes.business.cache.CacheProvider;
+import fr.itinerennes.business.cache.GeoCacheProvider;
 import fr.itinerennes.business.http.wfs.WFSService;
 import fr.itinerennes.exceptions.GenericException;
 
@@ -14,37 +19,66 @@ import fr.itinerennes.exceptions.GenericException;
  */
 public class BusService implements StationProvider {
 
+    /** The cache for bus stations. */
+    private final CacheProvider<BusStation> busCache;
+
+    /** The geo cache. */
+    private final GeoCacheProvider geoCache;
+
     /** The WFS service. */
-    private static final WFSService wfsService = new WFSService();
+    private final WFSService wfsService;
 
     /**
-     * Gets a bus station by its identifier.
+     * Creates a bike service.
      * 
-     * @param id
-     *            the identifier of the station
-     * @return the requested station
-     * @throws GenericException
-     *             unable to retrieve the requested station
+     * @param database
+     *            the database
      */
-    @Override
-    public final BusStation getStation(final String id) throws GenericException {
+    public BusService(final SQLiteDatabase database) {
 
-        return wfsService.getBusStation(id);
+        wfsService = new WFSService();
+        busCache = new CacheProvider<BusStation>(database,
+                new BusStationCacheEntryHandler(database), ItineRennesConstants.TTL_BUS_STATIONS);
+        geoCache = GeoCacheProvider.getInstance(database);
     }
 
     /**
-     * Gets all bus stations within a bounding box.
+     * {@inheritDoc}
      * 
-     * @param bbox
-     *            The bounding box from which request stations.
-     * @return the requested stations
-     * @throws GenericException
-     *             unable to retrieve the stations
+     * @see fr.itinerennes.business.facade.StationProvider#getStation(java.lang.String)
+     */
+    @Override
+    public BusStation getStation(final String id) throws GenericException {
+
+        BusStation station = busCache.load(id);
+        if (station == null) {
+            station = wfsService.getBusStation(id);
+            busCache.replace(station);
+        }
+        return station;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.facade.StationProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
      */
     @SuppressWarnings("unchecked")
     @Override
     public List<BusStation> getStations(final BoundingBoxE6 bbox) throws GenericException {
 
-        return wfsService.getBusStationsFromBbox(bbox);
+        if (geoCache.isExplored(bbox, BusStation.class.getName())) {
+            return busCache.load(bbox);
+        } else {
+            final List<BusStation> stations = wfsService.getBusStationsFromBbox(bbox);
+
+            for (final BusStation station : stations) {
+                busCache.replace(station);
+            }
+
+            geoCache.markExplored(bbox, BusStation.class.getName());
+            return stations;
+        }
     }
+
 }

@@ -41,11 +41,11 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.cache.CacheEntryHandler#save(java.lang.String, java.lang.String,
+     * @see fr.itinerennes.business.cache.CacheEntryHandler#replace(java.lang.String, java.lang.String,
      *      java.lang.Object)
      */
     @Override
-    public final void save(final String type, final String id, final BikeStation station) {
+    public final void replace(final String type, final String id, final BikeStation station) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("save.start - type={}, identifier={}", type, id);

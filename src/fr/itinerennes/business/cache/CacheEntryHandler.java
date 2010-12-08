@@ -18,7 +18,7 @@ import org.andnav.osm.util.BoundingBoxE6;
 public interface CacheEntryHandler<T> {
 
     /**
-     * Tells the handler to save the given value.
+     * Tells the handler to save or replace the given value.
      * 
      * @param type
      *            the metadata type
@@ -27,7 +27,7 @@ public interface CacheEntryHandler<T> {
      * @param value
      *            the value to save
      */
-    void save(String type, String id, T value);
+    void replace(String type, String id, T value);
 
     /**
      * Tells the handler to update the given value.

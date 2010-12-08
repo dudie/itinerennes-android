@@ -202,4 +202,13 @@ public final class Columns {
          */
         String LAST_UPDATE = "last_update";
     }
+
+    /**
+     * Generic columns for a bus station.
+     * 
+     * @author Olivier Boudet
+     */
+    public interface BusStationColumns extends StationColumns {
+
+    }
 }
