@@ -5,7 +5,6 @@ import java.util.List;
 import org.andnav.osm.util.BoundingBoxE6;
 
 import android.database.sqlite.SQLiteDatabase;
-
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.business.cache.BikeStationCacheEntryHandler;
@@ -41,8 +40,8 @@ public final class BikeService implements StationProvider {
     public BikeService(final SQLiteDatabase database) {
 
         keolisService = new KeolisService();
-        bikeCache = new CacheProvider<BikeStation>(database, new BikeStationCacheEntryHandler(),
-                ItineRennesConstants.TTL_BIKE_STATIONS);
+        bikeCache = new CacheProvider<BikeStation>(database, new BikeStationCacheEntryHandler(
+                database), ItineRennesConstants.TTL_BIKE_STATIONS);
         geoCache = GeoCacheProvider.getInstance(database);
     }
 

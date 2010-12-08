@@ -21,10 +21,7 @@ import android.os.AsyncTask;
 import android.util.AttributeSet;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.beans.Station;
-import fr.itinerennes.business.facade.BikeService;
-import fr.itinerennes.business.facade.BusService;
 import fr.itinerennes.business.facade.StationProvider;
-import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.ui.tasks.BuildOverlayTask;
 import fr.itinerennes.ui.views.overlays.StationOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
@@ -54,8 +51,8 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
     private final HashMap<Integer, BuildOverlayTask> tasks = new HashMap<Integer, BuildOverlayTask>();
 
-    /** The station providers. */
-    private final StationProvider[] stationProviders;
+    /** Array of stations providers. */
+    private StationProvider[] stationProviders;
 
     /**
      * @param context
@@ -65,10 +62,6 @@ public class MapView extends OpenStreetMapView implements MapListener {
         super(context);
         this.context = context;
         this.controller = new MapViewController(this);
-        this.stationProviders = new StationProvider[2];
-        final DatabaseHelper dbHelper = new DatabaseHelper(context);
-        stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[1] = new BusService(dbHelper.getWritableDatabase());
     }
 
     /**
@@ -80,10 +73,6 @@ public class MapView extends OpenStreetMapView implements MapListener {
         super(context, attrs);
         this.context = context;
         this.controller = new MapViewController(this);
-        this.stationProviders = new StationProvider[2];
-        final DatabaseHelper dbHelper = new DatabaseHelper(context);
-        stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[1] = new BusService(dbHelper.getWritableDatabase());
     }
 
     /**
@@ -95,10 +84,6 @@ public class MapView extends OpenStreetMapView implements MapListener {
         super(context, aRendererInfo);
         this.context = context;
         this.controller = new MapViewController(this);
-        this.stationProviders = new StationProvider[2];
-        final DatabaseHelper dbHelper = new DatabaseHelper(context);
-        stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[1] = new BusService(dbHelper.getWritableDatabase());
     }
 
     /**
@@ -112,10 +97,6 @@ public class MapView extends OpenStreetMapView implements MapListener {
         super(context, aRendererInfo, aTileProvider);
         this.context = context;
         this.controller = new MapViewController(this);
-        this.stationProviders = new StationProvider[2];
-        final DatabaseHelper dbHelper = new DatabaseHelper(context);
-        stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[1] = new BusService(dbHelper.getWritableDatabase());
     }
 
     /**
@@ -129,10 +110,6 @@ public class MapView extends OpenStreetMapView implements MapListener {
         super(context, aRendererInfo, aMapToShareTheTileProviderWith);
         this.context = context;
         this.controller = new MapViewController(this);
-        this.stationProviders = new StationProvider[2];
-        final DatabaseHelper dbHelper = new DatabaseHelper(context);
-        stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[1] = new BusService(dbHelper.getWritableDatabase());
     }
 
     /**
@@ -182,7 +159,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
     }
 
     /**
-     * Sets the focused flag which indicate if the item layout is visible
+     * Sets the focused flag which indicate if the item layout is visible.
      * 
      * @param focused
      *            focused or not
@@ -193,7 +170,17 @@ public class MapView extends OpenStreetMapView implements MapListener {
     }
 
     /**
-     * Gets the focused flag which indicate if the item layout is visible
+     * Sets the stations providers available.
+     * 
+     * @param stationProviders
+     */
+    public void setStationProviders(final StationProvider[] stationProviders) {
+
+        this.stationProviders = stationProviders;
+    }
+
+    /**
+     * Gets the focused flag which indicate if the item layout is visible.
      * 
      * @param focused
      *            focused or not

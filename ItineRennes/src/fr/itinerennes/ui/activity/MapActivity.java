@@ -15,11 +15,15 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.beans.Station;
+import fr.itinerennes.business.facade.BikeService;
+import fr.itinerennes.business.facade.BusService;
+import fr.itinerennes.business.facade.StationProvider;
+import fr.itinerennes.database.DatabaseHelper;
+import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
@@ -40,6 +44,9 @@ public class MapActivity extends Activity {
 
     /** The my location overlay. */
     private MyLocationOverlay myLocation;
+
+    /** The station providers. */
+    private final StationProvider[] stationProviders = new StationProvider[2];
 
     /**
      * Called when activity starts.
@@ -72,6 +79,11 @@ public class MapActivity extends Activity {
         final Button myLocation = (Button) findViewById(R.id.button_myPosition);
         myLocation.setOnClickListener(new MyLocationClickListener());
 
+        final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
+        stationProviders[Station.TYPE_BIKE] = new BikeService(dbHelper.getWritableDatabase());
+        stationProviders[Station.TYPE_BUS] = new BusService(dbHelper.getWritableDatabase());
+        this.map.setStationProviders(stationProviders);
+
         /**
          * The gesture listener to be used on the station overlay.
          */
@@ -97,37 +109,35 @@ public class MapActivity extends Activity {
                 final LinearLayout focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
                 final LayoutInflater inflater = LayoutInflater.from(getBaseContext());
 
-                // try {
-                switch (item.getStation().getType()) {
-                case Station.TYPE_BIKE:
-                    inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
+                try {
+                    switch (item.getStation().getType()) {
+                    case Station.TYPE_BIKE:
+                        inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
 
-                    // final BikeStation bikeStation =
-                    // BikeStationProvider.getStation(item.getStation()
-                    // .getId());
-                    final BikeStation bikeStation = new BikeStation();
+                        final BikeStation bikeStation = (BikeStation) stationProviders[Station.TYPE_BIKE]
+                                .getStation(item.getStation().getId());
 
-                    final TextView availablesSlots = (TextView) focusedBoxLayout
-                            .findViewById(R.id.available_slots);
-                    availablesSlots.setText(String.valueOf(bikeStation.getAvailableSlots()));
+                        final TextView availablesSlots = (TextView) focusedBoxLayout
+                                .findViewById(R.id.available_slots);
+                        availablesSlots.setText(String.valueOf(bikeStation.getAvailableSlots()));
 
-                    final TextView availablesBikes = (TextView) focusedBoxLayout
-                            .findViewById(R.id.available_bikes);
-                    availablesBikes.setText(String.valueOf(bikeStation.getAvailableBikes()));
+                        final TextView availablesBikes = (TextView) focusedBoxLayout
+                                .findViewById(R.id.available_bikes);
+                        availablesBikes.setText(String.valueOf(bikeStation.getAvailableBikes()));
 
-                    break;
-                case Station.TYPE_BUS:
-                    inflater.inflate(R.layout.bus_station_box_layout, focusedBoxLayout);
+                        break;
+                    case Station.TYPE_BUS:
+                        inflater.inflate(R.layout.bus_station_box_layout, focusedBoxLayout);
 
-                    break;
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                    }
+                } catch (final GenericException e) {
+                    LOGGER.error("Error while trying to fetch station informations.");
+
                 }
-                // // } catch (final GenericException e) {
-                // // LOGGER.error("Error while trying to fetch station informations.");
-                // //
-                // // }
                 final TextView title = (TextView) focusedBoxLayout.findViewById(R.id.station_name);
                 title.setText(item.getStation().getName());
 

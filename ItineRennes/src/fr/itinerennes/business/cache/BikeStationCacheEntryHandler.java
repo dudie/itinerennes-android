@@ -11,7 +11,6 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.database.Columns.BikeStationColumns;
 import fr.itinerennes.database.Columns.StationColumns;
@@ -36,13 +35,20 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
     private static final String WHERE_CLAUSE_ID = String.format("%s = ", ID);
 
     /** The database. */
-    private final SQLiteDatabase database = null;
+    private SQLiteDatabase database = null;
+
+    public BikeStationCacheEntryHandler(final SQLiteDatabase database) {
+
+        this.database = database;
+        // TJHU j'ai ajouté ce constructeur pour initialiser database, l'avais-tu prévu comme ça
+        // .
+    }
 
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.cache.CacheEntryHandler#replace(java.lang.String, java.lang.String,
-     *      java.lang.Object)
+     * @see fr.itinerennes.business.cache.CacheEntryHandler#replace(java.lang.String,
+     *      java.lang.String, java.lang.Object)
      */
     @Override
     public final void replace(final String type, final String id, final BikeStation station) {
