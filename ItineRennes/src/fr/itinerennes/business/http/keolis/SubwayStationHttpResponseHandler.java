@@ -98,8 +98,8 @@ public class SubwayStationHttpResponseHandler extends HttpResponseHandler<List<S
         final SubwayStation station = new SubwayStation();
         station.setId(jsonObject.optString("id"));
         station.setName(jsonObject.optString("name"));
-        station.setLongitude(jsonObject.optDouble("longitude"));
-        station.setLatitude(jsonObject.optDouble("latitude"));
+        station.setLongitude((int) (jsonObject.optDouble("longitude") * 1E6));
+        station.setLatitude((int) (jsonObject.optDouble("latitude") * 1E6));
         station.setHasPlatformDirection1(KeoUtils.convertJsonIntToBoolean(jsonObject
                 .optInt("hasPlatformDirection1")));
         station.setHasPlatformDirection2(KeoUtils.convertJsonIntToBoolean(jsonObject

@@ -59,8 +59,8 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
         final ContentValues values = new ContentValues(4);
         values.put(ID, id);
         values.put(NAME, station.getName());
-        values.put(LONGITUDE, station.getLongitude() * 1E6);
-        values.put(LATITUDE, station.getLatitude() * 1E6);
+        values.put(LONGITUDE, station.getLongitude());
+        values.put(LATITUDE, station.getLatitude());
 
         final long rowId = database.replace(BUS_STATION_TABLE_NAME, null, values);
         if (-1 == rowId) {
@@ -88,8 +88,8 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
         }
         final ContentValues values = new ContentValues(3);
         values.put(NAME, station.getName());
-        values.put(LONGITUDE, station.getLongitude() * 1E6);
-        values.put(LATITUDE, station.getLatitude() * 1E6);
+        values.put(LONGITUDE, station.getLongitude());
+        values.put(LATITUDE, station.getLatitude());
 
         final int updCount = database.update(BUS_STATION_TABLE_NAME, values, WHERE_CLAUSE_ID,
                 new String[] { id });
@@ -139,8 +139,8 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
             station = new BusStation();
             station.setId(c.getString(0));
             station.setName(c.getString(1));
-            station.setLongitude(c.getDouble(2) / 1E6);
-            station.setLatitude(c.getDouble(3) / 1E6);
+            station.setLongitude(c.getInt(2));
+            station.setLatitude(c.getInt(3));
         } else {
             station = null;
         }
@@ -178,8 +178,8 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
             final BusStation station = new BusStation();
             station.setId(c.getString(0));
             station.setName(c.getString(1));
-            station.setLongitude(c.getDouble(2) / 1E6);
-            station.setLatitude(c.getDouble(3) / 1E6);
+            station.setLongitude(c.getInt(2));
+            station.setLatitude(c.getInt(3));
             listStations.add(station);
         }
         c.close();

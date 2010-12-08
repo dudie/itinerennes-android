@@ -18,10 +18,10 @@ public class SubwayStation implements Station {
     private String name;
 
     /** The latitude of the subway station. */
-    private double latitude;
+    private int latitude;
 
     /** The longitude of the subway station. */
-    private double longitude;
+    private int longitude;
 
     /** Has the platform a direction 1 ? */
     private boolean hasPlatformDirection1;
@@ -90,7 +90,7 @@ public class SubwayStation implements Station {
      * 
      * @return the latitude
      */
-    public final double getLatitude() {
+    public final int getLatitude() {
 
         return latitude;
     }
@@ -101,7 +101,7 @@ public class SubwayStation implements Station {
      * @param latitude
      *            the latitude to set
      */
-    public final void setLatitude(final double latitude) {
+    public final void setLatitude(final int latitude) {
 
         this.latitude = latitude;
     }
@@ -111,7 +111,7 @@ public class SubwayStation implements Station {
      * 
      * @return the longitude
      */
-    public final double getLongitude() {
+    public final int getLongitude() {
 
         return longitude;
     }
@@ -122,7 +122,7 @@ public class SubwayStation implements Station {
      * @param longitude
      *            the longitude to set
      */
-    public final void setLongitude(final double longitude) {
+    public final void setLongitude(final int longitude) {
 
         this.longitude = longitude;
     }

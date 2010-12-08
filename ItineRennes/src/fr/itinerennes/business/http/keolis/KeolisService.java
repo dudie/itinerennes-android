@@ -115,8 +115,8 @@ public class KeolisService {
      * @throws GenericException
      *             unable to get a result from the server
      */
-    public final List<BikeStation> getBikeStationsNearFrom(final double latitude,
-            final double longitude) throws GenericException {
+    public final List<BikeStation> getBikeStationsNearFrom(final int latitude, final int longitude)
+            throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(8);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_LE_VELO_STAR));
@@ -218,8 +218,8 @@ public class KeolisService {
      * @throws GenericException
      *             unable to get a result from the server
      */
-    public final List<SubwayStation> getSubwayStationsNearFrom(final double latitude,
-            final double longitude) throws GenericException {
+    public final List<SubwayStation> getSubwayStationsNearFrom(final int latitude,
+            final int longitude) throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(8);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
