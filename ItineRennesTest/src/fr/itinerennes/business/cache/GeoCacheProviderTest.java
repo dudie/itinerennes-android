@@ -45,7 +45,6 @@ public class GeoCacheProviderTest extends AndroidTestCase implements GeoExploreC
         super.setUp();
         final DatabaseHelper dbHlpr = new DatabaseHelper(this.getContext());
         database = dbHlpr.getWritableDatabase();
-        database.beginTransaction();
         dropGeoCacheData();
         insertTestGeoCacheData();
 
@@ -81,7 +80,6 @@ public class GeoCacheProviderTest extends AndroidTestCase implements GeoExploreC
     @Override
     protected final void tearDown() throws Exception {
 
-        database.endTransaction();
         super.tearDown();
     }
 
