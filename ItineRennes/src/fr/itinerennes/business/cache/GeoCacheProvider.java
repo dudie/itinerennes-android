@@ -7,7 +7,6 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.database.Columns.GeoExploreColumns;
 import fr.itinerennes.utils.DateUtils;
@@ -64,7 +63,7 @@ public final class GeoCacheProvider implements GeoExploreColumns {
             LON_EAST, LAT_SOUTH, TYPE);
 
     /** SQL selection to retrieve bounding box by <code>_id</code>. */
-    private static final String WHERE_ID_EQUALS = String.format("%s = ", _ID);
+    private static final String WHERE_ID_EQUALS = String.format("%s = ? ", _ID);
 
     /** The geo cache table name. */
     public static final String TABLE_NAME = "geo_explore";
@@ -162,6 +161,7 @@ public final class GeoCacheProvider implements GeoExploreColumns {
             values.put(LAT_NORTH, bbox.getLatNorthE6());
             values.put(LON_EAST, bbox.getLonEastE6());
             values.put(LAT_SOUTH, bbox.getLatSouthE6());
+            values.put(TYPE, type);
 
             database.insert(TABLE_NAME, null, values);
         }

@@ -1,6 +1,8 @@
 package fr.itinerennes.ui.views;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.andnav.osm.events.MapListener;
 import org.andnav.osm.events.ScrollEvent;
@@ -17,7 +19,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
-
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.beans.Station;
 import fr.itinerennes.business.facade.BikeService;
 import fr.itinerennes.business.facade.BusService;
@@ -66,7 +68,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
         this.stationProviders = new StationProvider[2];
         final DatabaseHelper dbHelper = new DatabaseHelper(context);
         stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[1] = new BusService();
+        stationProviders[1] = new BusService(dbHelper.getWritableDatabase());
     }
 
     /**
@@ -81,7 +83,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
         this.stationProviders = new StationProvider[2];
         final DatabaseHelper dbHelper = new DatabaseHelper(context);
         stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[1] = new BusService();
+        stationProviders[1] = new BusService(dbHelper.getWritableDatabase());
     }
 
     /**
@@ -96,7 +98,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
         this.stationProviders = new StationProvider[2];
         final DatabaseHelper dbHelper = new DatabaseHelper(context);
         stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[1] = new BusService();
+        stationProviders[1] = new BusService(dbHelper.getWritableDatabase());
     }
 
     /**
@@ -113,7 +115,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
         this.stationProviders = new StationProvider[2];
         final DatabaseHelper dbHelper = new DatabaseHelper(context);
         stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[1] = new BusService();
+        stationProviders[1] = new BusService(dbHelper.getWritableDatabase());
     }
 
     /**
@@ -130,7 +132,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
         this.stationProviders = new StationProvider[2];
         final DatabaseHelper dbHelper = new DatabaseHelper(context);
         stationProviders[0] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[1] = new BusService();
+        stationProviders[1] = new BusService(dbHelper.getWritableDatabase());
     }
 
     /**
@@ -167,9 +169,13 @@ public class MapView extends OpenStreetMapView implements MapListener {
         }
 
         if (this.isShown()) {
-            executeBuildOverlayTask(Station.TYPE_BUS);
-            if (tasks.get(Station.TYPE_BIKE) == null) {
-                executeBuildOverlayTask(Station.TYPE_BIKE);
+            if (event.getZoomLevel() < ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
+                removeAllStationOverlays();
+            } else {
+                executeBuildOverlayTask(Station.TYPE_BUS);
+                if (tasks.get(Station.TYPE_BIKE) == null) {
+                    executeBuildOverlayTask(Station.TYPE_BIKE);
+                }
             }
         }
         return true;
@@ -249,24 +255,77 @@ public class MapView extends OpenStreetMapView implements MapListener {
      * @param type
      *            The type of the overlay to replace.
      */
-    public synchronized void refreshOverlay(
-            final StationOverlay<StationOverlayItem> stationOverlay, final int type) {
+    public void refreshOverlay(final StationOverlay<StationOverlayItem> stationOverlay,
+            final int type) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("refreshOverlay");
+            LOGGER.debug("refreshOverlay.start");
         }
 
+        final ArrayList<OpenStreetMapViewOverlay> overlaysToDelete = new ArrayList<OpenStreetMapViewOverlay>();
         for (final OpenStreetMapViewOverlay overlay : this.getOverlays()) {
-            if (overlay instanceof StationOverlay) {
-                if (((StationOverlay<StationOverlayItem>) overlay).getType() == type) {
-                    this.getOverlays().remove(overlay);
-                }
+            if (overlay instanceof StationOverlay && ((StationOverlay) overlay).getType() == type) {
+                overlaysToDelete.add(overlay);
             }
         }
+
+        removeOverlays(overlaysToDelete);
+
         if (stationOverlay != null) {
             this.getOverlays().add(stationOverlay);
         }
 
         this.postInvalidate();
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("refreshOverlay.end");
+        }
+
+    }
+
+    /**
+     * Removes any overlays from the map view.
+     * 
+     * @param overlaysToDelete
+     *            Array of overlays to delete
+     */
+    private synchronized void removeOverlays(
+            final ArrayList<OpenStreetMapViewOverlay> overlaysToDelete) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("removeStationOverlays.start");
+        }
+
+        for (final OpenStreetMapViewOverlay overlay : overlaysToDelete) {
+            this.getOverlays().remove(overlay);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("removeStationOverlays.end");
+        }
+    }
+
+    /**
+     * Removes all overlays of type StationOverlay from the map view.
+     */
+    private void removeAllStationOverlays() {
+
+        final ArrayList<OpenStreetMapViewOverlay> overlaysToDelete = new ArrayList<OpenStreetMapViewOverlay>();
+        for (final OpenStreetMapViewOverlay overlay : this.getOverlays()) {
+            if (overlay instanceof StationOverlay) {
+                overlaysToDelete.add(overlay);
+            }
+        }
+
+        removeOverlays(overlaysToDelete);
+
+        this.postInvalidate();
+
+        // cancel all BuildOverlayTask since we have deleted thoses overlays
+        for (final Entry<Integer, BuildOverlayTask> task : tasks.entrySet()) {
+            task.getValue().cancel(true);
+        }
+        tasks.clear();
+
     }
 }

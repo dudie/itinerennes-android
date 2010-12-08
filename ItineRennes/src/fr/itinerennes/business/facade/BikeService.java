@@ -57,7 +57,7 @@ public final class BikeService implements StationProvider {
         BikeStation station = bikeCache.load(id);
         if (station == null) {
             station = keolisService.getBikeStation(id);
-            bikeCache.save(station);
+            bikeCache.replace(station);
         }
         return station;
     }
@@ -90,7 +90,7 @@ public final class BikeService implements StationProvider {
         final List<BikeStation> allStations = keolisService.getAllBikeStations();
         // TJHU permettre la récupération des stations d'une bounding box
         for (final BikeStation station : allStations) {
-            bikeCache.save(station);
+            bikeCache.replace(station);
         }
         return allStations;
     }

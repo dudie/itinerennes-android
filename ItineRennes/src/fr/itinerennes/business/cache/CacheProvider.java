@@ -9,7 +9,6 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import fr.itinerennes.beans.Cacheable;
 import fr.itinerennes.database.Columns.MetadataColumns;
 
@@ -37,7 +36,7 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
 
     /** SQL query to find a metadata cache entry : {@value #QUERY_METADATA}. */
     private static final String QUERY_METADATA = String.format(
-            "SELECT FROM %s WHERE %s = ? AND %s = ?", METADATA_TABLE_NAME, TYPE, ID);
+            "SELECT * FROM %s WHERE %s = ? AND %s = ?", METADATA_TABLE_NAME, TYPE, ID);
 
     /** SQL query to insert a new metadata cache entry : {@value #INSERT_METADATA}. */
     // private static final String INSERT_METADATA = String.format(
@@ -86,20 +85,20 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
     /**
      * Saves the given value to the cache. A metadata is inserted in the metadata table (
      * {@value CacheProvider#METADATA_TABLE_NAME} ) and
-     * {@link CacheEntryHandler#save(String, String, Object)} is called to store the value.
+     * {@link CacheEntryHandler#replace(String, String, Object)} is called to store the value.
      * 
      * @param value
      *            the value to store
      */
-    public final synchronized void save(final T value) {
+    public final synchronized void replace(final T value) {
 
         final ContentValues metadata = new ContentValues(3);
         metadata.put(TYPE, value.getClass().getName());
         metadata.put(ID, value.getId());
         metadata.put(LAST_UPDATE, System.currentTimeMillis());
 
-        database.insert(METADATA_TABLE_NAME, null, metadata);
-        handler.save(type, value.getId(), value);
+        database.replace(METADATA_TABLE_NAME, null, metadata);
+        handler.replace(type, value.getId(), value);
     }
 
     /**
