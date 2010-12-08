@@ -3,9 +3,11 @@ package fr.itinerennes.business.service;
 import java.util.List;
 
 import org.andnav.osm.util.BoundingBoxE6;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.test.AndroidTestCase;
-
 import fr.itinerennes.beans.BusStation;
 import fr.itinerennes.business.http.wfs.WFSService;
 import fr.itinerennes.exceptions.GenericException;
@@ -16,6 +18,9 @@ import fr.itinerennes.exceptions.GenericException;
  * @author Olivier Boudet
  */
 public class WFSServiceTest extends AndroidTestCase {
+
+    /** The event logger. */
+    private static Logger LOGGER = LoggerFactory.getLogger(KeolisServiceTest.class);
 
     /** The tested WFS service. */
     private final WFSService wfsService = new WFSService();
@@ -37,6 +42,8 @@ public class WFSServiceTest extends AndroidTestCase {
      */
     public final void testGetBusStationsFromBbox() {
 
+        LOGGER.info("testGetBusStations.start");
+
         /*
          * Test with a bounding box containing any stations
          */
@@ -51,6 +58,20 @@ public class WFSServiceTest extends AndroidTestCase {
         assertNotNull("no bus stations returned by the api", stations);
         assertEquals("10 stations should be returned by the api", 10, stations.size());
 
+        for (final BusStation station : stations) {
+            LOGGER.debug("checking {}", station);
+            assertFalse(String.format("station [%s] has no id", station),
+                    StringUtils.isEmpty(station.getId()));
+            assertFalse(String.format("station [%s] has no name", station),
+                    StringUtils.isEmpty(station.getName()));
+            assertNotNull(String.format("station [%s] has no geoposition", station),
+                    station.getGeoPoint());
+            assertNotNull(String.format("station [%s] has latitude", station.getLatitude()),
+                    station.getGeoPoint());
+            assertNotNull(String.format("station [%s] has longitude", station.getLongitude()),
+                    station.getGeoPoint());
+        }
+
         /*
          * Test with a bounding box which does not contain station
          */
@@ -61,6 +82,8 @@ public class WFSServiceTest extends AndroidTestCase {
         }
         assertNotNull("stations is null", stations);
         assertTrue("no station should be returned by the api", stations.size() == 0);
+
+        LOGGER.info("testGetBusStations.end");
     }
 
     /**
@@ -78,7 +101,7 @@ public class WFSServiceTest extends AndroidTestCase {
         assertNotNull("a bus station should be returned by the api", station);
         assertEquals("stops.avenir1", station.getId());
         assertEquals("Avenir", station.getName());
-        assertEquals(48.054016051, station.getLatitude());
-        assertEquals(-1.783664796, station.getLongitude());
+        assertEquals(48054016, station.getLatitude());
+        assertEquals(-1783664, station.getLongitude());
     }
 }

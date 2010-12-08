@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.test.AndroidTestCase;
-
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.beans.LineTransportIcon;
@@ -82,7 +81,7 @@ public class KeolisServiceTest extends AndroidTestCase {
     }
 
     /**
-     * Test method for {@link KeolisService#getBikeStationsNearFrom(double, double)} .
+     * Test method for {@link KeolisService#getBikeStationsNearFrom(int, int)} .
      */
     public void testGetBikeStationsNearFrom() {
 
@@ -118,8 +117,8 @@ public class KeolisServiceTest extends AndroidTestCase {
         }
         assertNotNull("no bike station returned by the api", station);
         assertEquals(String.valueOf(53), station.getId());
-        assertEquals(48.12153, station.getLatitude());
-        assertEquals(-1.711088, station.getLongitude());
+        assertEquals(48121530, station.getLatitude());
+        assertEquals(-1711088, station.getLongitude());
         assertEquals("JF KENNEDY", station.getName());
         assertEquals("DALLE KENNEDY", station.getAddress());
         assertEquals("Villejean-Beauregard", station.getDistrict());
@@ -242,8 +241,8 @@ public class KeolisServiceTest extends AndroidTestCase {
         }
         assertNotNull("no subway station returned by the api", station);
         assertEquals("CDG", station.getId());
-        assertEquals(48.10556000, station.getLatitude());
-        assertEquals(-1.676990000, station.getLongitude());
+        assertEquals(48105560, station.getLatitude());
+        assertEquals(-1676990, station.getLongitude());
         assertEquals("Charles de Gaulle", station.getName());
         assertEquals(-3, station.getFloors());
         assertEquals(9, station.getRankingPlatformDirection1());
