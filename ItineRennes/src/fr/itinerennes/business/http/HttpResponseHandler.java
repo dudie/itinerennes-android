@@ -28,6 +28,9 @@ public abstract class HttpResponseHandler<T> implements ResponseHandler<T> {
     /** The HTTP success result code. */
     private static final int HTTP_SUCCESS = 200;
 
+    /** Default charset to use. */
+    private static final String DEFAULT_CHARSET = "UTF-8";
+
     /**
      * {@inheritDoc}
      * 
@@ -44,7 +47,7 @@ public abstract class HttpResponseHandler<T> implements ResponseHandler<T> {
         T result = null;
         if (isHttpSuccess(response)) {
             try {
-                result = handleContent(EntityUtils.toString(response.getEntity()));
+                result = handleContent(EntityUtils.toString(response.getEntity(), DEFAULT_CHARSET));
             } catch (final ParseException e) {
                 LOGGER.error(e.getMessage(), e);
             } catch (final GenericException e) {
