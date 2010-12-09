@@ -2,8 +2,8 @@ CREATE TABLE "bike_stations" (
     "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "lon" REAL NOT NULL,
-    "lat" REAL NOT NULL,
+    "lon" INTEGER NOT NULL,
+    "lat" INTEGER NOT NULL,
     "street_name" TEXT NOT NULL,
     "is_active" INTEGER NOT NULL,
     "avail_slots" INTEGER NOT NULL,
@@ -19,8 +19,8 @@ CREATE TABLE "bus_stations" (
     "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "lon" REAL NOT NULL,
-    "lat" REAL NOT NULL
+    "lon" INTEGER NOT NULL,
+    "lat" INTEGER NOT NULL
 );
 CREATE UNIQUE INDEX "bus_station_id_idx" on bus_stations (id ASC);
 CREATE INDEX "bus_station_lon_idx" on bus_stations (lon ASC);
@@ -29,8 +29,8 @@ CREATE TABLE "subway_stations" (
     "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "lon" REAL NOT NULL,
-    "lat" REAL NOT NULL,
+    "lon" INTEGER NOT NULL,
+    "lat" INTEGER NOT NULL,
     "has_pf_dir_1" INTEGER NOT NULL,
     "has_pf_dir_2" INTEGER NOT NULL,
     "rank_pf_dir_1" INTEGER NOT NULL,
