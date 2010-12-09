@@ -72,7 +72,7 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
         values.put(IS_POS, station.isPos());
         values.put(DISTRICT_NAME, station.getDistrict());
         values.put(LAST_UPDATE, DateUtils.toSeconds(station.getLastUpdate()));
-        final long rowId = database.insert(BIKE_STATION_TABLE_NAME, null, values);
+        final long rowId = database.replace(BIKE_STATION_TABLE_NAME, null, values);
         if (-1 == rowId) {
             LOGGER.error("station was not successfully inserted : {}", station.toString());
         }
