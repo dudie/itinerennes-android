@@ -52,7 +52,7 @@ public class ItineRennesConstants {
      * Database constantes.
      */
     /** The database schema version. */
-    public static final int DATABASE_VERSION = 11;
+    public static final int DATABASE_VERSION = 12;
 
     /** The database name. */
     public static final String DATABASE_NAME = "fr.itinerennes";
