@@ -40,10 +40,6 @@ public class BusStationActivity extends Activity {
 
         final TextView name = (TextView) findViewById(R.station.name);
         name.setText("Nom de l'arrêt de bus ");// super méga troniquement long");
-        LOGGER.debug("Bus stop title height = {}", name.getMeasuredHeight());
-
-        final ImageView icon = (ImageView) findViewById(R.station.icon);
-        icon.setImageDrawable(getBaseContext().getResources().getDrawable(R.drawable.icon_bus_32));
 
         final ViewGroup lineList = (ViewGroup) findViewById(R.station.line_icon_list);
         for (int i = 0; i < 1; i++) {
