@@ -5,6 +5,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
@@ -37,6 +38,16 @@ public class BikeStationActivity extends Activity {
 
         final TextView name = (TextView) findViewById(R.station.name);
         name.setText("Nom de la station de vélo");
+
+        final TextView availBikes = (TextView) findViewById(R.bike_station.available_bikes);
+        availBikes.setText("2 vélos");
+
+        final TextView availSlots = (TextView) findViewById(R.bike_station.available_slots);
+        availSlots.setText("3 places");
+
+        final ProgressBar status = (ProgressBar) findViewById(R.id.bikes_slots_status);
+        status.setMax(5);
+        status.setProgress(2);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
