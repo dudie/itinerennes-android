@@ -9,4 +9,7 @@
     <style name="SubwayStationHeader">
         <item name="android:textColor">#ff7400</item>
     </style>
+    <style name="WhiteText">
+        <item name="android:textColor">#ffffff</item>
+    </style>
 </resources>
