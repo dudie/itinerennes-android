@@ -9,6 +9,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
 import fr.itinerennes.R;
 import fr.itinerennes.beans.Station;
 import fr.itinerennes.business.facade.StationProvider;
@@ -89,7 +90,7 @@ public class BuildOverlayTask extends
                     item.setMarker(context.getResources().getDrawable(R.drawable.icon_bus));
                     break;
                 case Station.TYPE_BIKE:
-                    item.setMarker(context.getResources().getDrawable(R.drawable.icon_velo));
+                    item.setMarker(context.getResources().getDrawable(R.drawable.icon_bike));
                     break;
                 }
 

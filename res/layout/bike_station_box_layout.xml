@@ -8,7 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 	    <ImageView
-	        android:src="@drawable/icon_velo"
+	        android:src="@drawable/icon_bike"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:paddingRight="10px"/>
@@ -16,7 +16,8 @@
 		<TextView android:id="@+id/station_name"
 	        android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textStyle="bold"/>
+			android:textStyle="bold"
+            style="@style/BikeStationHeader"/>
 	</LinearLayout>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
@@ -25,19 +26,23 @@
 		<TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_available_slots"/>
+            android:text="@string/label_available_slots"
+            style="@style/BikeStationHeader"/>
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="10px"
-            android:id="@+id/available_slots"/>
+            android:id="@+id/available_slots"
+            style="@style/BikeStationHeader"/>
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_available_bikes"/>
+            android:text="@string/label_available_bikes"
+            style="@style/BikeStationHeader"/>
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/available_bikes"/>
+            android:id="@+id/available_bikes"
+            style="@style/BikeStationHeader"/>
     </LinearLayout>
 </LinearLayout>
