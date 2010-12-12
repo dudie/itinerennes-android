@@ -16,7 +16,8 @@
 		<TextView android:id="@+id/station_name"
 	        android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:textStyle="bold"/>
+			android:textStyle="bold"
+            style="@style/WhiteText"/>
 	</LinearLayout>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"

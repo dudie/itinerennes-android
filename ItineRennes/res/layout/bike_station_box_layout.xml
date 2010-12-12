@@ -17,7 +17,7 @@
 	        android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:textStyle="bold"
-            style="@style/BikeStationHeader"/>
+            style="@style/WhiteText"/>
 	</LinearLayout>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
@@ -27,22 +27,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_available_slots"
-            style="@style/BikeStationHeader"/>
+            style="@style/WhiteText"/>
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="10px"
             android:id="@+id/available_slots"
-            style="@style/BikeStationHeader"/>
+            style="@style/WhiteText"/>
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_available_bikes"
-            style="@style/BikeStationHeader"/>
+            style="@style/WhiteText"/>
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/available_bikes"
-            style="@style/BikeStationHeader"/>
+            style="@style/WhiteText"/>
     </LinearLayout>
 </LinearLayout>
