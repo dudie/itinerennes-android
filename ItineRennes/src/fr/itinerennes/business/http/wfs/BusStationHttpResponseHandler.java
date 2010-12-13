@@ -48,7 +48,7 @@ public class BusStationHttpResponseHandler extends HttpResponseHandler<List<BusS
                 // TOBO delete this condition when gtfs data will be fixed
                 final JSONObject properties = jsonStations.getJSONObject(i).getJSONObject(
                         "properties");
-                if (!properties.getString("stop_lat").equalsIgnoreCase("48.109946150056601")) {
+                if (!properties.getString("stop_lat").equalsIgnoreCase("48.10994615")) {
                     stations.add(convertJsonObjectToBusStation(jsonStations.getJSONObject(i)));
                 }
             }
