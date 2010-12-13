@@ -226,4 +226,14 @@ public final class GeoCacheProvider implements GeoExploreColumns {
         }
         return isExplored;
     }
+
+    /**
+     * Releases this object.
+     */
+    public synchronized void release() {
+
+        if (instance != null) {
+            instance = null;
+        }
+    }
 }

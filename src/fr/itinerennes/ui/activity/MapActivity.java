@@ -169,22 +169,31 @@ public class MapActivity extends Activity {
     @Override
     protected void onDestroy() {
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onDestroy");
+        }
+
         // release the database connection
         for (final StationProvider cacheProvider : stationProviders) {
             cacheProvider.release();
         }
-        super.onStop();
+        super.onDestroy();
     }
 
     @Override
     public void onWindowFocusChanged(final boolean hasFocus) {
 
-        super.onWindowFocusChanged(hasFocus);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onWindowFocusChanged");
+        }
 
-        final GeoPoint rennes = new GeoPoint(ItineRennesConstants.CONFIG_RENNES_LAT,
-                ItineRennesConstants.CONFIG_RENNES_LON);
-        map.getController().setZoom(ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
-        map.getController().setCenter(rennes);
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            final GeoPoint rennes = new GeoPoint(ItineRennesConstants.CONFIG_RENNES_LAT,
+                    ItineRennesConstants.CONFIG_RENNES_LON);
+            map.getController().setZoom(ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
+            map.getController().setCenter(rennes);
+        }
     }
 
     /**
