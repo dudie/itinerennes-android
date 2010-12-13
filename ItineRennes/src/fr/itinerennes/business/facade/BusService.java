@@ -90,7 +90,7 @@ public class BusService implements StationProvider {
     public void release() {
 
         busCache.release();
-
+        geoCache.release();
     }
 
 }

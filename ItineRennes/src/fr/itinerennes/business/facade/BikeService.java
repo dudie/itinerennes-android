@@ -103,6 +103,7 @@ public final class BikeService implements StationProvider {
     public void release() {
 
         bikeCache.release();
+        geoCache.release();
 
     }
 
