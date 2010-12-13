@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,9 @@ public class MapActivity extends Activity {
     /** The station providers. */
     private final StationProvider[] stationProviders = new StationProvider[2];
 
+    /** The focused station layout. */
+    private LinearLayout focusedBoxLayout;
+
     /**
      * Called when activity starts.
      * <p>
@@ -70,11 +74,6 @@ public class MapActivity extends Activity {
         this.myLocation = new MyLocationOverlay(this.getBaseContext(), map);
         myLocation.enableMyLocation();
         map.getOverlays().add(myLocation);
-
-        final GeoPoint rennes = new GeoPoint(ItineRennesConstants.CONFIG_RENNES_LAT,
-                ItineRennesConstants.CONFIG_RENNES_LON);
-        map.getController().setZoom(ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
-        map.getController().setCenter(rennes);
 
         final Button myLocation = (Button) findViewById(R.id.button_myPosition);
         myLocation.setOnClickListener(new MyLocationClickListener());
@@ -106,10 +105,14 @@ public class MapActivity extends Activity {
                     LOGGER.debug("OnItemGestureListener.onItemSingleTapUp");
                 }
 
-                final LinearLayout focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
-                final LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+                if (focusedBoxLayout == null) {
+                    focusedBoxLayout = (LinearLayout) findViewById(R.id.focused_box);
+                    focusedBoxLayout.setOnClickListener(new OnStationBoxClickListener());
+                }
 
                 try {
+                    final LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+
                     switch (item.getStation().getType()) {
                     case Station.TYPE_BIKE:
                         inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
@@ -144,6 +147,8 @@ public class MapActivity extends Activity {
                 focusedBoxLayout.setVisibility(View.VISIBLE);
                 map.setItemLayoutFocused(true);
 
+                focusedBoxLayout.setTag(R.id.selectedStation, item);
+
                 return true;
             }
 
@@ -159,6 +164,27 @@ public class MapActivity extends Activity {
 
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        // release the database connection
+        for (final StationProvider cacheProvider : stationProviders) {
+            cacheProvider.release();
+        }
+        super.onStop();
+    }
+
+    @Override
+    public void onWindowFocusChanged(final boolean hasFocus) {
+
+        super.onWindowFocusChanged(hasFocus);
+
+        final GeoPoint rennes = new GeoPoint(ItineRennesConstants.CONFIG_RENNES_LAT,
+                ItineRennesConstants.CONFIG_RENNES_LON);
+        map.getController().setZoom(ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
+        map.getController().setCenter(rennes);
     }
 
     /**
@@ -184,5 +210,37 @@ public class MapActivity extends Activity {
             myLocation.followLocation(true);
         }
 
+    }
+
+    /**
+     * An event listener which will trigger click event on the focused station box and open the
+     * station activity.
+     * 
+     * @author Olivier Boudet
+     */
+    private class OnStationBoxClickListener implements OnClickListener {
+
+        /**
+         * @param view
+         *            the view that was clicked
+         */
+        @Override
+        public void onClick(final View view) {
+
+            final StationOverlayItem stationItem = (StationOverlayItem) view
+                    .getTag(R.id.selectedStation);
+
+            Intent myIntent = null;
+
+            if (stationItem.getStation().getType() == Station.TYPE_BIKE) {
+                myIntent = new Intent(MapActivity.this, BikeStationActivity.class);
+            } else if (stationItem.getStation().getType() == Station.TYPE_BUS) {
+                myIntent = new Intent(MapActivity.this, BusStationActivity.class);
+            }
+
+            myIntent.putExtra("item", stationItem.getStation().getId());
+
+            startActivity(myIntent);
+        }
     }
 }

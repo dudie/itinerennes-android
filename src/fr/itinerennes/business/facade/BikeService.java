@@ -93,4 +93,17 @@ public final class BikeService implements StationProvider {
         }
         return allStations;
     }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.facade.StationProvider#release()
+     */
+    @Override
+    public void release() {
+
+        bikeCache.release();
+
+    }
+
 }

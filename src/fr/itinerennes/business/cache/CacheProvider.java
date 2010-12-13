@@ -79,7 +79,7 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
         this.database = database;
         this.handler = handler;
         this.ttl = ttl;
-        this.type = handler.getClass().getName();
+        this.type = handler.getObjectClassName();
     }
 
     /**
@@ -130,10 +130,10 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
 
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, id });
         T value = null;
-        if (c.moveToFirst() && ttl > System.currentTimeMillis() - c.getInt(0)) {
-        	value = handler.load(type, id); 
+        if (c.moveToFirst() && ttl > System.currentTimeMillis() - c.getLong(3)) {
+            value = handler.load(type, id);
         }
-        
+
         c.close();
         return value;
     }
@@ -163,6 +163,14 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
 
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, id });
         return c.getCount() > 1;
+    }
+
+    /**
+     * Releases all needed connections.
+     */
+    public void release() {
+
+        this.database.close();
     }
 
 }

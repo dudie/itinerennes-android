@@ -30,7 +30,7 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
     private static final String BUS_STATION_TABLE_NAME = "bus_stations";
 
     /** The SQL where clause to select on {@link StationColumns#ID} : {@value #WHERE_CLAUSE_ID}. */
-    private static final String WHERE_CLAUSE_ID = String.format("%s = ", ID);
+    private static final String WHERE_CLAUSE_ID = String.format("%s = ? ", ID);
 
     /** The database. */
     private SQLiteDatabase database = null;
@@ -187,5 +187,16 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
             LOGGER.debug("load.end");
         }
         return listStations;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.cache.CacheEntryHandler#getObjectClassName()
+     */
+    @Override
+    public String getObjectClassName() {
+
+        return BusStation.class.getName();
     }
 }

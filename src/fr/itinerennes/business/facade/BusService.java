@@ -81,4 +81,16 @@ public class BusService implements StationProvider {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.facade.StationProvider#release()
+     */
+    @Override
+    public void release() {
+
+        busCache.release();
+
+    }
+
 }

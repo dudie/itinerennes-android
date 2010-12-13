@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import fr.itinerennes.R;
+import fr.itinerennes.beans.BusStation;
+import fr.itinerennes.business.facade.BusService;
+import fr.itinerennes.database.DatabaseHelper;
+import fr.itinerennes.exceptions.GenericException;
 
 /**
  * This activity uses the <code>bus_station.xml</code> layout and displays a window with
@@ -23,6 +26,9 @@ public class BusStationActivity extends Activity {
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(BusStationActivity.class);
+
+    /** The Bus Service. */
+    private BusService busService;
 
     /**
      * {@inheritDoc}
@@ -37,9 +43,6 @@ public class BusStationActivity extends Activity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_station);
-
-        final TextView name = (TextView) findViewById(R.station.name);
-        name.setText("Nom de l'arrêt de bus ");// super méga troniquement long");
 
         final ViewGroup lineList = (ViewGroup) findViewById(R.station.line_icon_list);
         for (int i = 0; i < 1; i++) {
@@ -63,5 +66,31 @@ public class BusStationActivity extends Activity {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
         }
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+
+        final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
+        busService = new BusService(dbHelper.getWritableDatabase());
+
+        BusStation station;
+        try {
+            station = busService.getStation(getIntent().getExtras().getString("item"));
+            final TextView name = (TextView) findViewById(R.station.name);
+            name.setText(station.getName());
+            LOGGER.debug("Bus stop title height = {}", name.getMeasuredHeight());
+        } catch (final GenericException e) {
+            LOGGER.debug("Can't load bus station information.", e);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+
+        busService.release();
+        super.onStop();
     }
 }
