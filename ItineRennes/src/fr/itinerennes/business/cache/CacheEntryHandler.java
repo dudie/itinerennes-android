@@ -72,4 +72,11 @@ public interface CacheEntryHandler<T> {
      * @return
      */
     List<T> load(String type, BoundingBoxE6 bbox);
+
+    /**
+     * Ask the handler to get the class name of cached entries.
+     * 
+     * @return the name of the handled class
+     */
+    String getObjectClassName();
 }

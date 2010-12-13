@@ -32,7 +32,7 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
     private static final String BIKE_STATION_TABLE_NAME = "bike_stations";
 
     /** The SQL where clause to select on {@link StationColumns#ID} : {@value #WHERE_CLAUSE_ID}. */
-    private static final String WHERE_CLAUSE_ID = String.format("%s = ", ID);
+    private static final String WHERE_CLAUSE_ID = String.format("%s = ? ", ID);
 
     /** The database. */
     private SQLiteDatabase database = null;
@@ -220,6 +220,17 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
             LOGGER.debug("load.end");
         }
         return listStations;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.cache.CacheEntryHandler#getObjectClassName()
+     */
+    @Override
+    public String getObjectClassName() {
+
+        return BikeStation.class.getName();
     }
 
 }

@@ -204,7 +204,7 @@ public final class GeoCacheProvider implements GeoExploreColumns {
         boolean isExplored = false;
         while (c.moveToNext()) {
 
-            if (TTL < DateUtils.currentTimeSeconds() - c.getInt(1)) {
+            if (TTL < DateUtils.currentTimeSeconds() - c.getLong(1) / 1000) {
                 // ttl expired, remove this bbox from the cache
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("data for bbox[_id={}] is expired, removing it", c.getInt(0));
