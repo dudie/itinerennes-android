@@ -15,11 +15,11 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.beans.BikeStation;
-import fr.itinerennes.beans.LineTransportIcon;
-import fr.itinerennes.beans.SubwayStation;
 import fr.itinerennes.business.http.GenericHttpService;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.model.LineTransportIcon;
+import fr.itinerennes.model.SubwayStation;
 
 /**
  * Manage calls to the Keolis API.

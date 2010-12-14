@@ -10,9 +10,10 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import fr.itinerennes.beans.BusStation;
+
 import fr.itinerennes.database.Columns.BusStationColumns;
 import fr.itinerennes.database.Columns.StationColumns;
+import fr.itinerennes.model.BusStation;
 
 /**
  * Handles save / update / load / delete for {@link BusStation}.
@@ -35,6 +36,12 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
     /** The database. */
     private SQLiteDatabase database = null;
 
+    /**
+     * Creates a bus station cache entry handler.
+     * 
+     * @param database
+     *            the database
+     */
     public BusStationCacheEntryHandler(final SQLiteDatabase database) {
 
         this.database = database;

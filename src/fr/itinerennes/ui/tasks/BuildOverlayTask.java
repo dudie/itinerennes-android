@@ -11,9 +11,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import fr.itinerennes.R;
-import fr.itinerennes.beans.Station;
 import fr.itinerennes.business.facade.StationProvider;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.Station;
 import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.StationOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;

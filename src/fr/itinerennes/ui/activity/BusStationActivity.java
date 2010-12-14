@@ -7,10 +7,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import fr.itinerennes.R;
-import fr.itinerennes.beans.BusStation;
+import fr.itinerennes.model.BusStation;
+import fr.itinerennes.ui.adapter.BusTimeAdapter;
 import fr.itinerennes.business.facade.BusService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
@@ -55,13 +56,12 @@ public class BusStationActivity extends Activity {
             }
         }
 
-        final LinearLayout listTimes = (LinearLayout) findViewById(R.station.list_bus);
-        for (final String s : new String[] { "aaaaa", "bbbbb", "ccccc", "ddddd", "eeeee", "fffff",
-                "ggggg", "hhhhh", "iiiii", "jjjjj", "kkkkk", "lllll", "mmmmm", "nnnnn", "ooooo" }) {
-            final TextView time = (TextView) getLayoutInflater().inflate(R.layout.bus_time, null);
-            time.setText(s);
-            listTimes.addView(time);
-        }
+        final String[] testData = new String[] { "aaaaa", "bbbbb", "ccccc", "ddddd", "eeeee",
+                "fffff", "ggggg", "hhhhh", "iiiii", "jjjjj", "kkkkk", "lllll", "mmmmm", "nnnnn",
+                "ooooo" };
+
+        final ListView listTimes = (ListView) findViewById(R.station.list_bus);
+        listTimes.setAdapter(new BusTimeAdapter());
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");

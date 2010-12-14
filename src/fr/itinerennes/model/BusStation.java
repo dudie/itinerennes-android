@@ -1,4 +1,4 @@
-package fr.itinerennes.beans;
+package fr.itinerennes.model;
 
 import org.andnav.osm.util.GeoPoint;
 

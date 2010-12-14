@@ -8,9 +8,10 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import fr.itinerennes.beans.SubwayStation;
 import fr.itinerennes.business.http.HttpResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.SubwayStation;
+import fr.itinerennes.utils.StringUtils;
 
 /**
  * Handles http responses containing subway stations in json format.
@@ -97,7 +98,7 @@ public class SubwayStationHttpResponseHandler extends HttpResponseHandler<List<S
 
         final SubwayStation station = new SubwayStation();
         station.setId(jsonObject.optString("id"));
-        station.setName(jsonObject.optString("name"));
+        station.setName(StringUtils.toStartCase(jsonObject.optString("name")));
         station.setLongitude((int) (jsonObject.optDouble("longitude") * 1E6));
         station.setLatitude((int) (jsonObject.optDouble("latitude") * 1E6));
         station.setHasPlatformDirection1(KeoUtils.convertJsonIntToBoolean(jsonObject

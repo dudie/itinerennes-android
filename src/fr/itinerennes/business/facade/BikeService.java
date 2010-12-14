@@ -6,12 +6,12 @@ import org.andnav.osm.util.BoundingBoxE6;
 
 import android.database.sqlite.SQLiteDatabase;
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.business.cache.BikeStationCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheProvider;
 import fr.itinerennes.business.cache.GeoCacheProvider;
 import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BikeStation;
 
 /**
  * Service to consult informations about the bike transport service.

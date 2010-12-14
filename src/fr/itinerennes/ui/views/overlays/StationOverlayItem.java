@@ -2,7 +2,7 @@ package fr.itinerennes.ui.views.overlays;
 
 import org.andnav.osm.views.overlay.OpenStreetMapViewOverlayItem;
 
-import fr.itinerennes.beans.Station;
+import fr.itinerennes.model.Station;
 import fr.itinerennes.ui.views.MapView;
 
 /**

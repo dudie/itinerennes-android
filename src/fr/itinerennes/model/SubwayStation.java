@@ -1,4 +1,4 @@
-package fr.itinerennes.beans;
+package fr.itinerennes.model;
 
 import java.util.Date;
 
@@ -256,7 +256,7 @@ public class SubwayStation implements Station {
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.beans.Station#getGeoPoint()
+     * @see fr.itinerennes.model.Station#getGeoPoint()
      */
     @Override
     public final GeoPoint getGeoPoint() {
@@ -267,7 +267,7 @@ public class SubwayStation implements Station {
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.beans.Station#getType()
+     * @see fr.itinerennes.model.Station#getType()
      */
     @Override
     public final int getType() {

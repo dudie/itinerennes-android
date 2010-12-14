@@ -1,4 +1,4 @@
-package fr.itinerennes.beans;
+package fr.itinerennes.model;
 
 import fr.itinerennes.business.cache.CacheProvider;
 

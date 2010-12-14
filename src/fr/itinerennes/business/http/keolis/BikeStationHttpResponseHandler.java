@@ -8,9 +8,10 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.business.http.HttpResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.utils.StringUtils;
 
 /**
  * Handles http responses containing bike stations in json format.
@@ -99,15 +100,15 @@ public final class BikeStationHttpResponseHandler extends HttpResponseHandler<Li
 
         final BikeStation station = new BikeStation();
         station.setActive(KeoUtils.convertJsonIntToBoolean(jsonObject.optInt("state")));
-        station.setAddress(jsonObject.optString("address"));
+        station.setAddress(StringUtils.toStartCase(jsonObject.optString("address")));
         station.setAvailableBikes(jsonObject.optInt("bikesavailable"));
         station.setAvailableSlots(jsonObject.optInt("slotsavailable"));
-        station.setDistrict(jsonObject.optString("district"));
+        station.setDistrict(StringUtils.toStartCase(jsonObject.optString("district")));
         station.setId(jsonObject.optString("number"));
         station.setLastUpdate(KeoUtils.convertJsonStringToDate(jsonObject.optString("lastupdate")));
         station.setLatitude((int) (jsonObject.optDouble("latitude") * 1E6));
         station.setLongitude((int) (jsonObject.optDouble("longitude") * 1E6));
-        station.setName(jsonObject.optString("name"));
+        station.setName(StringUtils.toStartCase(jsonObject.optString("name")));
         station.setPos(KeoUtils.convertJsonIntToBoolean(jsonObject.optInt("pos")));
 
         return station;

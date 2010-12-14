@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.andnav.osm.util.BoundingBoxE6;
 
-import fr.itinerennes.beans.Station;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.Station;
 
 /**
  * Providers implementing this interface will be able to serve requests for stations.
