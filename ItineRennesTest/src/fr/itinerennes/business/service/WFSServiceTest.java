@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.test.AndroidTestCase;
-import fr.itinerennes.beans.BusStation;
 import fr.itinerennes.business.http.wfs.WFSService;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BusStation;
 
 /**
  * Test class for {@link WFSService}.
@@ -38,7 +38,7 @@ public class WFSServiceTest extends AndroidTestCase {
     }
 
     /**
-     * Test method for {@link WFSService#getBusStationsFromBbox(fr.itinerennes.beans.BoundingBox)}.
+     * Test method for {@link WFSService#getBusStationsFromBbox(fr.itinerennes.model.BoundingBox)}.
      */
     public final void testGetBusStationsFromBbox() {
 

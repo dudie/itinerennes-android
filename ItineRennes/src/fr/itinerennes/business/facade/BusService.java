@@ -5,13 +5,14 @@ import java.util.List;
 import org.andnav.osm.util.BoundingBoxE6;
 
 import android.database.sqlite.SQLiteDatabase;
+
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.beans.BusStation;
 import fr.itinerennes.business.cache.BusStationCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheProvider;
 import fr.itinerennes.business.cache.GeoCacheProvider;
 import fr.itinerennes.business.http.wfs.WFSService;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BusStation;
 
 /**
  * @author Jérémie Huchet
@@ -48,7 +49,7 @@ public class BusService implements StationProvider {
      * @see fr.itinerennes.business.facade.StationProvider#getStation(java.lang.String)
      */
     @Override
-    public BusStation getStation(final String id) throws GenericException {
+    public final BusStation getStation(final String id) throws GenericException {
 
         BusStation station = busCache.load(id);
         if (station == null) {
@@ -65,7 +66,7 @@ public class BusService implements StationProvider {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<BusStation> getStations(final BoundingBoxE6 bbox) throws GenericException {
+    public final List<BusStation> getStations(final BoundingBoxE6 bbox) throws GenericException {
 
         if (geoCache.isExplored(bbox, BusStation.class.getName())) {
             return busCache.load(bbox);

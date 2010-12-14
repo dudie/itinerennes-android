@@ -9,8 +9,8 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import fr.itinerennes.beans.Cacheable;
 import fr.itinerennes.database.Columns.MetadataColumns;
+import fr.itinerennes.model.Cacheable;
 
 /**
  * Manages a cache of data. Uses a database to store metadata information about saved entries.

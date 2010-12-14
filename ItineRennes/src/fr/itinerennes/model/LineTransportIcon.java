@@ -1,4 +1,4 @@
-package fr.itinerennes.beans;
+package fr.itinerennes.model;
 
 /**
  * Contains informations to retrieve the icon of a transport line.

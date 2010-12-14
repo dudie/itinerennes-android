@@ -15,9 +15,9 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.beans.BusStation;
 import fr.itinerennes.business.http.GenericHttpService;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BusStation;
 
 /**
  * Manage calls to the Geoserver WMS API.

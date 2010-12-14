@@ -1,7 +1,7 @@
 package fr.itinerennes;
 
-import fr.itinerennes.beans.BikeStation;
-import fr.itinerennes.beans.BusStation;
+import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.model.BusStation;
 
 /**
  * @author Jérémie Huchet

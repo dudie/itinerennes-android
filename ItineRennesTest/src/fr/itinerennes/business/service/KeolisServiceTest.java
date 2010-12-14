@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 
 import android.test.AndroidTestCase;
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.beans.BikeStation;
-import fr.itinerennes.beans.LineTransportIcon;
-import fr.itinerennes.beans.Station;
-import fr.itinerennes.beans.SubwayStation;
 import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.model.LineTransportIcon;
+import fr.itinerennes.model.Station;
+import fr.itinerennes.model.SubwayStation;
 
 /**
  * Test class for {@link KeolisService}.

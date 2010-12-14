@@ -8,9 +8,9 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import fr.itinerennes.beans.LineTransportIcon;
 import fr.itinerennes.business.http.HttpResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.LineTransportIcon;
 
 /**
  * Handles http responses containing bike stations in json format.

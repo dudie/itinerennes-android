@@ -2,8 +2,8 @@ package fr.itinerennes.business.facade;
 
 import android.test.AndroidTestCase;
 
-import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.business.http.keolis.KeolisService;
+import fr.itinerennes.model.BikeStation;
 
 /**
  * Test class for {@link KeolisService}.

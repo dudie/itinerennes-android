@@ -10,9 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
-import fr.itinerennes.beans.BusStation;
 import fr.itinerennes.business.http.HttpResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BusStation;
+import fr.itinerennes.utils.StringUtils;
 
 /**
  * Handles http responses containing bus stations in json format.
@@ -78,7 +79,7 @@ public class BusStationHttpResponseHandler extends HttpResponseHandler<List<BusS
 
         final JSONObject properties = jsonObject.optJSONObject("properties");
 
-        station.setName(properties.optString("stop_name"));
+        station.setName(StringUtils.toStartCase(properties.optString("stop_name")));
         station.setLatitude((int) (properties.optDouble("stop_lat") * 1E6));
         station.setLongitude((int) (properties.optDouble("stop_lon") * 1E6));
 

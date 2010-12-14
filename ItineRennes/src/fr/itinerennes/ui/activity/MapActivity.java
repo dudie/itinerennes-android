@@ -18,13 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.beans.BikeStation;
-import fr.itinerennes.beans.Station;
 import fr.itinerennes.business.facade.BikeService;
 import fr.itinerennes.business.facade.BusService;
 import fr.itinerennes.business.facade.StationProvider;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.model.Station;
 import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 

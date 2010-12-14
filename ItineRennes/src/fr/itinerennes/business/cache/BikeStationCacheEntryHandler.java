@@ -11,9 +11,9 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import fr.itinerennes.beans.BikeStation;
 import fr.itinerennes.database.Columns.BikeStationColumns;
 import fr.itinerennes.database.Columns.StationColumns;
+import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.utils.DateUtils;
 
 /**
@@ -37,11 +37,15 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
     /** The database. */
     private SQLiteDatabase database = null;
 
+    /**
+     * Creates a bike station cache entry handler.
+     * 
+     * @param database
+     *            the database
+     */
     public BikeStationCacheEntryHandler(final SQLiteDatabase database) {
 
         this.database = database;
-        // TJHU j'ai ajouté ce constructeur pour initialiser database, l'avais-tu prévu comme ça
-        // .
     }
 
     /**

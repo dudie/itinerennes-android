@@ -11,7 +11,7 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import fr.itinerennes.R;
-import fr.itinerennes.beans.Station;
+import fr.itinerennes.model.Station;
 import fr.itinerennes.ui.views.MapView;
 
 /**
