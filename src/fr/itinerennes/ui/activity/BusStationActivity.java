@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import fr.itinerennes.R;
-import fr.itinerennes.model.BusStation;
-import fr.itinerennes.ui.adapter.BusTimeAdapter;
 import fr.itinerennes.business.facade.BusService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BusStation;
+import fr.itinerennes.ui.adapter.BusTimeAdapter;
 
 /**
  * This activity uses the <code>bus_station.xml</code> layout and displays a window with
@@ -91,6 +92,6 @@ public class BusStationActivity extends Activity {
     protected void onPause() {
 
         busService.release();
-        super.onStop();
+        super.onPause();
     }
 }
