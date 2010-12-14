@@ -2,4 +2,12 @@
 	<string name="label_available_slots">Available slots :\u0020</string>
 	<string name="label_available_bikes">Available bikes :\u0020</string>
 	<string name="label_lines_dots">Lines :\u0020</string>
+	<plurals name="label_bikes">
+        <item quantity="one">bike</item>
+        <item quantity="other">bikes</item>
+    </plurals>
+    <plurals name="label_slots">
+        <item quantity="one">slot</item>
+        <item quantity="other">slots</item>
+    </plurals>
 </resources>

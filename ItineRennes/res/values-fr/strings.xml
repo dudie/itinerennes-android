@@ -2,4 +2,12 @@
 	<string name="label_available_slots">Places libres :\u0020</string>
     <string name="label_available_bikes">Vélos disponibles :\u0020</string>
     <string name="label_lines_dots">Lignes :\u0020</string>
+    <plurals name="label_bikes">
+        <item quantity="one">vélo</item>
+        <item quantity="other">vélos</item>
+    </plurals>
+    <plurals name="label_slots">
+        <item quantity="one">place</item>
+        <item quantity="other">places</item>
+    </plurals>
 </resources>
