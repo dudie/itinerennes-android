@@ -307,12 +307,20 @@ public class MapView extends OpenStreetMapView implements MapListener {
         removeOverlays(overlaysToDelete);
 
         this.postInvalidate();
+        
+        // cancel all BuildOverlayTask since we have deleted those overlays
+        cancelTasks();
 
-        // cancel all BuildOverlayTask since we have deleted thoses overlays
+    }
+    
+    /**
+     * Cancels all BuildOverlayTask that are running.
+     */
+    public synchronized void cancelTasks() {
+    	
         for (final Entry<Integer, BuildOverlayTask> task : tasks.entrySet()) {
             task.getValue().cancel(true);
         }
         tasks.clear();
-
     }
 }
