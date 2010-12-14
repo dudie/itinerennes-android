@@ -177,6 +177,9 @@ public class MapActivity extends Activity {
         for (final StationProvider cacheProvider : stationProviders) {
             cacheProvider.release();
         }
+        
+        this.map.cancelTasks();
+        
         super.onDestroy();
     }
 
