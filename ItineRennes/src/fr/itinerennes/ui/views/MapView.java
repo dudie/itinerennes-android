@@ -19,6 +19,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
+
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.facade.StationProvider;
 import fr.itinerennes.model.Station;
@@ -115,10 +116,11 @@ public class MapView extends OpenStreetMapView implements MapListener {
     /**
      * Called when the user scrolls the map. Deactivate the location following.
      * 
+     * @return true
      * @see org.andnav.osm.events.MapListener#onScroll(org.andnav.osm.events.ScrollEvent)
      */
     @Override
-    public boolean onScroll(final ScrollEvent event) {
+    public final boolean onScroll(final ScrollEvent event) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onScroll");
@@ -126,9 +128,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         if (this.isShown()) {
             executeBuildOverlayTask(Station.TYPE_BUS);
-            if (tasks.get(Station.TYPE_BIKE) == null) {
-                executeBuildOverlayTask(Station.TYPE_BIKE);
-            }
+            executeBuildOverlayTask(Station.TYPE_BIKE);
         }
         return true;
     }
@@ -136,10 +136,11 @@ public class MapView extends OpenStreetMapView implements MapListener {
     /**
      * Called when the user zoom in or out the map.
      * 
+     * @return true
      * @see org.andnav.osm.events.MapListener#onZoom(org.andnav.osm.events.ZoomEvent)
      */
     @Override
-    public boolean onZoom(final ZoomEvent event) {
+    public final boolean onZoom(final ZoomEvent event) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onZoom");
@@ -164,7 +165,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
      * @param focused
      *            focused or not
      */
-    public void setItemLayoutFocused(final boolean focused) {
+    public final void setItemLayoutFocused(final boolean focused) {
 
         this.focused = focused;
     }
@@ -173,8 +174,9 @@ public class MapView extends OpenStreetMapView implements MapListener {
      * Sets the stations providers available.
      * 
      * @param stationProviders
+     *            the station providers
      */
-    public void setStationProviders(final StationProvider[] stationProviders) {
+    public final void setStationProviders(final StationProvider[] stationProviders) {
 
         this.stationProviders = stationProviders;
     }
@@ -182,10 +184,9 @@ public class MapView extends OpenStreetMapView implements MapListener {
     /**
      * Gets the focused flag which indicate if the item layout is visible.
      * 
-     * @param focused
-     *            focused or not
+     * @return true if the item layout is visible
      */
-    public boolean isItemLayoutFocused() {
+    public final boolean isItemLayoutFocused() {
 
         return this.focused;
     }
@@ -196,7 +197,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
      * @param onItemGestureListener
      *            the listener to use with overlays.
      */
-    public void setOnItemGestureListener(
+    public final void setOnItemGestureListener(
             final OnItemGestureListener<StationOverlayItem> onItemGestureListener) {
 
         this.onItemGestureListener = onItemGestureListener;
@@ -208,7 +209,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
      * 
      * @return the OnItemGestureListener
      */
-    public OnItemGestureListener<StationOverlayItem> getOnItemGestureListener() {
+    public final OnItemGestureListener<StationOverlayItem> getOnItemGestureListener() {
 
         return this.onItemGestureListener;
 
@@ -242,7 +243,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
      * @param type
      *            The type of the overlay to replace.
      */
-    public void refreshOverlay(final StationOverlay<StationOverlayItem> stationOverlay,
+    public final void refreshOverlay(final StationOverlay<StationOverlayItem> stationOverlay,
             final int type) {
 
         if (LOGGER.isDebugEnabled()) {
@@ -251,7 +252,8 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         final ArrayList<OpenStreetMapViewOverlay> overlaysToDelete = new ArrayList<OpenStreetMapViewOverlay>();
         for (final OpenStreetMapViewOverlay overlay : this.getOverlays()) {
-            if (overlay instanceof StationOverlay && ((StationOverlay) overlay).getType() == type) {
+            if (overlay instanceof StationOverlay
+                    && ((StationOverlay<?>) overlay).getType() == type) {
                 overlaysToDelete.add(overlay);
             }
         }
@@ -307,17 +309,17 @@ public class MapView extends OpenStreetMapView implements MapListener {
         removeOverlays(overlaysToDelete);
 
         this.postInvalidate();
-        
+
         // cancel all BuildOverlayTask since we have deleted those overlays
         cancelTasks();
 
     }
-    
+
     /**
      * Cancels all BuildOverlayTask that are running.
      */
-    public synchronized void cancelTasks() {
-    	
+    public final synchronized void cancelTasks() {
+
         for (final Entry<Integer, BuildOverlayTask> task : tasks.entrySet()) {
             task.getValue().cancel(true);
         }

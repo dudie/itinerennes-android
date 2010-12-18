@@ -11,6 +11,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import fr.itinerennes.database.Columns.BikeStationColumns;
 import fr.itinerennes.database.Columns.StationColumns;
 import fr.itinerennes.model.BikeStation;
@@ -195,11 +196,11 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
         }
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, AVAILABLE_BIKES,
                 AVAILABLE_SLOTS, DISTRICT_NAME, IS_ACTIVE, IS_POS, LAST_UPDATE, STREET_NAME };
-        final String selection = String.format("%s <= ? AND %s >= ? AND %s <= ? AND %s >= ?",
+        final String selection = String.format("%s >= ? AND %s <= ? AND %s >= ? AND %s <= ?",
                 LONGITUDE, LONGITUDE, LATITUDE, LATITUDE);
         final String[] selectionArgs = new String[] { String.valueOf(bbox.getLonWestE6()),
                 String.valueOf(bbox.getLonEastE6()), String.valueOf(bbox.getLatSouthE6()),
-                String.valueOf(bbox.getLatSouthE6()) };
+                String.valueOf(bbox.getLatNorthE6()) };
         final Cursor c = database.query(BIKE_STATION_TABLE_NAME, columns, selection, selectionArgs,
                 null, null, null);
 

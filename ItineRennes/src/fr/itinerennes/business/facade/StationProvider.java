@@ -26,7 +26,7 @@ public interface StationProvider {
     Station getStation(String id) throws GenericException;
 
     /**
-     * Gets a bike station by its identifier.
+     * Gets stations located in the given bounding box.
      * 
      * @param <T>
      *            a subclass of {@link Station}
