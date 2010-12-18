@@ -5,6 +5,7 @@ import java.util.List;
 import org.andnav.osm.util.BoundingBoxE6;
 
 import android.database.sqlite.SQLiteDatabase;
+
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.cache.BikeStationCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheProvider;
@@ -63,6 +64,17 @@ public final class BikeService implements StationProvider {
 
     /**
      * {@inheritDoc}
+     * <ul>
+     * <li>if bounding box has already been explored : use the cache to get stations ;</li>
+     * <li>else
+     * <ol>
+     * <li>retrieve all stations</li>
+     * <li>store (or update) them in the cache</li>
+     * <li>mark the whole world as explored</li>
+     * <li>use the cache to load only the bike stations located in the given bounding box.</li>
+     * </ol>
+     * </li>
+     * </ul>
      * 
      * @see fr.itinerennes.business.facade.StationProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
      */
@@ -73,25 +85,15 @@ public final class BikeService implements StationProvider {
         if (geoCache.isExplored(bbox, BikeStation.class.getName())) {
             return bikeCache.load(bbox);
         } else {
-            return keolisService.getAllBikeStations();
+            final List<BikeStation> allStations = keolisService.getAllBikeStations();
+            for (final BikeStation station : allStations) {
+                bikeCache.replace(station);
+            }
+            // mark the whole world expored
+            geoCache.markExplored(new BoundingBoxE6(180 * 1E6, 180 * 1E6, -180 * 1E6, -180 * 1E6),
+                    BikeStation.class.getName());
+            return bikeCache.load(bbox);
         }
-    }
-
-    /**
-     * Gets all bike stations.
-     * 
-     * @return the requested stations
-     * @throws GenericException
-     *             unable to retrieve the stations
-     */
-    private List<BikeStation> getAllStations() throws GenericException {
-
-        final List<BikeStation> allStations = keolisService.getAllBikeStations();
-        // TJHU permettre la récupération des stations d'une bounding box
-        for (final BikeStation station : allStations) {
-            bikeCache.replace(station);
-        }
-        return allStations;
     }
 
     /**
