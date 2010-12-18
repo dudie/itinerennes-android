@@ -68,16 +68,17 @@ public class BusService implements StationProvider {
     @Override
     public final List<BusStation> getStations(final BoundingBoxE6 bbox) throws GenericException {
 
-        if (geoCache.isExplored(bbox, BusStation.class.getName())) {
+        final BoundingBoxE6 normalizedBbox = GeoCacheProvider.normalize(bbox);
+        if (geoCache.isExplored(normalizedBbox, BusStation.class.getName())) {
             return busCache.load(bbox);
         } else {
-            final List<BusStation> stations = wfsService.getBusStationsFromBbox(bbox);
+            final List<BusStation> stations = wfsService.getBusStationsFromBbox(normalizedBbox);
 
             for (final BusStation station : stations) {
                 busCache.replace(station);
             }
 
-            geoCache.markExplored(bbox, BusStation.class.getName());
+            geoCache.markExplored(normalizedBbox, BusStation.class.getName());
             return stations;
         }
     }

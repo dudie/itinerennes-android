@@ -7,6 +7,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.database.Columns.GeoExploreColumns;
 import fr.itinerennes.utils.DateUtils;
@@ -106,6 +107,56 @@ public final class GeoCacheProvider implements GeoExploreColumns {
             instance = new GeoCacheProvider(database);
         }
         return instance;
+    }
+
+    /**
+     * Creates a new bounding box with rounded coordinates. All coordinates are multiples of 10.
+     * 
+     * @param bbox
+     *            a bounding box to round coordinates
+     * @return a new bounding box with rounded coordinates.
+     */
+    public static BoundingBoxE6 normalize(final BoundingBoxE6 bbox) {
+
+        return new BoundingBoxE6(normalizePlus(bbox.getLatNorthE6()),
+                normalizePlus(bbox.getLonEastE6()), normalizeMinus(bbox.getLatSouthE6()),
+                normalizeMinus(bbox.getLonWestE6()));
+    }
+
+    /**
+     * Round the given value to an upper value multiple of 10.
+     * 
+     * @param coordE6
+     *            an integer value
+     * @return an integer value rounded to a multiple of 10 and greater than the given one.
+     */
+    public static int normalizePlus(final int coordE6) {
+
+        if (coordE6 % 10 == 0) {
+            return coordE6;
+        } else if (coordE6 < 0) {
+            return coordE6 + Math.abs(coordE6 % 10);
+        } else {
+            return coordE6 + (10 - Math.abs(coordE6 % 10));
+        }
+    }
+
+    /**
+     * Round the given value to a lower value multiple of 10.
+     * 
+     * @param coordE6
+     *            an integer value
+     * @return an integer value rounded to a multiple of 10 and lower than the given one.
+     */
+    public static int normalizeMinus(final int coordE6) {
+
+        if (coordE6 % 10 == 0) {
+            return coordE6;
+        } else if (coordE6 < 0) {
+            return coordE6 - (10 - Math.abs(coordE6 % 10));
+        } else {
+            return coordE6 - Math.abs(coordE6 % 10);
+        }
     }
 
     /**

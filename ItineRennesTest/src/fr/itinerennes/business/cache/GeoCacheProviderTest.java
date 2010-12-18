@@ -161,4 +161,61 @@ public class GeoCacheProviderTest extends AndroidTestCase implements GeoExploreC
 
         LOGGER.info("testIsExploredForUnexploredArea.end");
     }
+
+    /**
+     * Test methods for rounding values.
+     */
+    public final void testRound() {
+
+        int rounded;
+
+        // normalize minus
+        for (int i = -19; i < -10; i++) {
+            rounded = GeoCacheProvider.normalizeMinus(i);
+            assertEquals(-20, rounded);
+        }
+        for (int i = -10; i < 0; i++) {
+            rounded = GeoCacheProvider.normalizeMinus(i);
+            assertEquals(-10, rounded);
+        }
+        for (int i = 0; i < 10; i++) {
+            rounded = GeoCacheProvider.normalizeMinus(i);
+            assertEquals(0, rounded);
+        }
+        for (int i = 10; i < 20; i++) {
+            rounded = GeoCacheProvider.normalizeMinus(i);
+            assertEquals(10, rounded);
+        }
+
+        // normalize plus
+        for (int i = -19; i <= -10; i++) {
+            rounded = GeoCacheProvider.normalizePlus(i);
+            assertEquals(-10, rounded);
+        }
+        for (int i = -9; i <= 0; i++) {
+            rounded = GeoCacheProvider.normalizePlus(i);
+            assertEquals(0, rounded);
+        }
+        for (int i = 1; i <= 10; i++) {
+            rounded = GeoCacheProvider.normalizePlus(i);
+            assertEquals(10, rounded);
+        }
+        for (int i = 11; i <= 20; i++) {
+            rounded = GeoCacheProvider.normalizePlus(i);
+            assertEquals(20, rounded);
+        }
+    }
+
+    /**
+     * Test method for {@link GeoCacheProvider#normalize(BoundingBoxE6)}.
+     */
+    public final void testNormalize() {
+
+        final BoundingBoxE6 bbox = new BoundingBoxE6(1425, 233, 1322, 148);
+        final BoundingBoxE6 newBbox = GeoCacheProvider.normalize(bbox);
+        assertEquals(1430, newBbox.getLatNorthE6());
+        assertEquals(240, newBbox.getLonEastE6());
+        assertEquals(1320, newBbox.getLatSouthE6());
+        assertEquals(140, newBbox.getLonWestE6());
+    }
 }
