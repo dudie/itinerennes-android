@@ -9,7 +9,9 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.graphics.drawable.Drawable;
 import android.test.AndroidTestCase;
+
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.exceptions.GenericException;
@@ -169,7 +171,27 @@ public class KeolisServiceTest extends AndroidTestCase {
     }
 
     /**
-     * Test method for {@link KeolisService#getSubwayStationsNearFrom(double, double)} .
+     * Test method for {@link KeolisService#fetchIcon()}.
+     */
+    public void testFetchIcon() {
+
+        LOGGER.info("testFetchIcon.start");
+        try {
+            final List<LineTransportIcon> allIcons = keolisService.getAllLineIcons();
+            for (final LineTransportIcon lti : allIcons) {
+                LOGGER.info(String.format("fetching %s", lti.getIconUrl()));
+                final Drawable bitmap = keolisService.fetchIcon(lti);
+                assertNotNull(String.format("icon for line %s should not be null", bitmap));
+            }
+        } catch (final GenericException e) {
+            LOGGER.error("Generic exception", e);
+            fail(e.getMessage());
+        }
+        LOGGER.info("testFetchIcon.end");
+    }
+
+    /**
+     * Test method for {@link KeolisService#getSubwayStationsNearFrom(double, double)}.
      */
     public void testGetSubwayStationsNearFrom() {
 

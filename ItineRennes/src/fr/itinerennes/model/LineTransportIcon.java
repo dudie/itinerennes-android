@@ -5,13 +5,24 @@ package fr.itinerennes.model;
  * 
  * @author Jérémie Huchet
  */
-public class LineTransportIcon {
+public class LineTransportIcon implements Cacheable {
 
     /** The line identifier. */
     private String line;
 
     /** The URL to fetch the icon from. */
     private String iconUrl;
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.model.Cacheable#getId()
+     */
+    @Override
+    public final String getId() {
+
+        return getLine();
+    }
 
     /**
      * Gets the line identifier.
