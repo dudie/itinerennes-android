@@ -10,7 +10,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.business.http.HttpResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.LineTransportIcon;
+import fr.itinerennes.model.LineIcon;
 
 /**
  * Handles http responses containing bike stations in json format.
@@ -28,7 +28,7 @@ import fr.itinerennes.model.LineTransportIcon;
  * @author Jérémie Huchet
  */
 public final class LineIconsHttpResponseHandler extends
-        HttpResponseHandler<List<LineTransportIcon>> {
+        HttpResponseHandler<List<LineIcon>> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -40,7 +40,7 @@ public final class LineIconsHttpResponseHandler extends
      * @see fr.itinerennes.business.http.HttpResponseHandler#handleContent(java.lang.String)
      */
     @Override
-    protected List<LineTransportIcon> handleContent(final String content) throws GenericException {
+    protected List<LineIcon> handleContent(final String content) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("handleContent.start");
@@ -48,11 +48,11 @@ public final class LineIconsHttpResponseHandler extends
 
         final JSONObject data = KeoUtils.getServiceResponse(content);
 
-        List<LineTransportIcon> listIcons = null;
+        List<LineIcon> listIcons = null;
 
         if (null != data) {
 
-            listIcons = new ArrayList<LineTransportIcon>();
+            listIcons = new ArrayList<LineIcon>();
             final String baseUrl = data.optString("baseurl");
             final JSONArray jsonIcons = data.optJSONArray("line");
             for (int i = 0; !jsonIcons.isNull(i); i++) {
@@ -76,10 +76,10 @@ public final class LineIconsHttpResponseHandler extends
      *            the json object to convert
      * @return the bean representing the given json object
      */
-    private LineTransportIcon convertJsonObjectToLineTransportIcon(final String baseUrl,
+    private LineIcon convertJsonObjectToLineTransportIcon(final String baseUrl,
             final JSONObject jsonObject) {
 
-        final LineTransportIcon icon = new LineTransportIcon();
+        final LineIcon icon = new LineIcon();
         icon.setLine(jsonObject.optString("name"));
         icon.setIconUrl(baseUrl + jsonObject.optString("picto"));
         return icon;

@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import org.apache.http.util.ByteArrayBuffer;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -20,6 +21,9 @@ public final class FileUtils {
 
     /** Char buffer length for input reads. */
     private static final int CHAR_BUF_SIZE = 512;
+
+    /** Byte buffer length for input reads. */
+    private static final int BYTE_BUF_SIZE = 1024;
 
     /**
      * Private constructor to avoid instantiation.
@@ -50,5 +54,28 @@ public final class FileUtils {
         }
 
         return script.toString();
+    }
+
+    /**
+     * Reads the given input stream and returns it as an array of bytes.
+     * 
+     * @param in
+     *            an input stream to read
+     * @return an array of bytes with the content provided by the given input stream
+     */
+    public static byte[] readBytes(final InputStream in) {
+
+        final byte[] buffer = new byte[BYTE_BUF_SIZE];
+        final ByteArrayBuffer bytes = new ByteArrayBuffer(10 * BYTE_BUF_SIZE);
+        int len = 0;
+        try {
+            while ((len = in.read(buffer)) != -1) {
+                bytes.append(buffer, 0, len);
+            }
+        } catch (final IOException e) {
+            LOGGER.error("unable to read the input stream", e);
+        }
+
+        return bytes.toByteArray();
     }
 }

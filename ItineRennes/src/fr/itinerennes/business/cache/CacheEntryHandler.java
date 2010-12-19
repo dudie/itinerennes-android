@@ -30,18 +30,6 @@ public interface CacheEntryHandler<T> {
     void replace(String type, String id, T value);
 
     /**
-     * Tells the handler to update the given value.
-     * 
-     * @param type
-     *            the metadata type
-     * @param id
-     *            the metadata identifier
-     * @param value
-     *            the value to save
-     */
-    void update(String type, String id, T value);
-
-    /**
      * Tells the handler to delete the given value.
      * 
      * @param type
@@ -69,14 +57,15 @@ public interface CacheEntryHandler<T> {
      * @param type
      *            the metadata type
      * @param bbox
-     * @return
+     *            a bounding box
+     * @return a list of values located in the given bounding box
      */
     List<T> load(String type, BoundingBoxE6 bbox);
 
     /**
-     * Ask the handler to get the class name of cached entries.
+     * Ask the handler to get the class of cached entries.
      * 
-     * @return the name of the handled class
+     * @return the handled class
      */
-    String getObjectClassName();
+    Class<T> getHandledClass();
 }

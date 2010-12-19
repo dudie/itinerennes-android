@@ -72,6 +72,9 @@ public final class GeoCacheProvider implements GeoExploreColumns {
     /** The time to live of an explored bounding box. */
     private static final int TTL = ItineRennesConstants.GEO_CACHE_TTL;
 
+    /** The grid size. */
+    private static final int GRID_SIZE = 1000;
+
     /** The unique instance of the geo cache. */
     private static GeoCacheProvider instance;
 
@@ -132,12 +135,12 @@ public final class GeoCacheProvider implements GeoExploreColumns {
      */
     public static int normalizePlus(final int coordE6) {
 
-        if (coordE6 % 10 == 0) {
+        if (coordE6 % GRID_SIZE == 0) {
             return coordE6;
         } else if (coordE6 < 0) {
-            return coordE6 + Math.abs(coordE6 % 10);
+            return coordE6 + Math.abs(coordE6 % GRID_SIZE);
         } else {
-            return coordE6 + (10 - Math.abs(coordE6 % 10));
+            return coordE6 + (GRID_SIZE - Math.abs(coordE6 % GRID_SIZE));
         }
     }
 
@@ -150,12 +153,12 @@ public final class GeoCacheProvider implements GeoExploreColumns {
      */
     public static int normalizeMinus(final int coordE6) {
 
-        if (coordE6 % 10 == 0) {
+        if (coordE6 % GRID_SIZE == 0) {
             return coordE6;
         } else if (coordE6 < 0) {
-            return coordE6 - (10 - Math.abs(coordE6 % 10));
+            return coordE6 - (GRID_SIZE - Math.abs(coordE6 % GRID_SIZE));
         } else {
-            return coordE6 - Math.abs(coordE6 % 10);
+            return coordE6 - Math.abs(coordE6 % GRID_SIZE);
         }
     }
 

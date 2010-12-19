@@ -57,9 +57,9 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
     public final void replace(final String type, final String id, final BusStation station) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("save.start - type={}, identifier={}", type, id);
+            LOGGER.debug("replace.start - type={}, identifier={}", type, id);
             if (LOGGER.isTraceEnabled()) {
-                LOGGER.trace("save {}", station.toString());
+                LOGGER.trace("replace {}", station.toString());
             }
         }
 
@@ -71,37 +71,10 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
 
         final long rowId = database.replace(BUS_STATION_TABLE_NAME, null, values);
         if (-1 == rowId) {
-            LOGGER.error("station was not successfully inserted : {}", station.toString());
+            LOGGER.error("station was not successfully replaced : {}", station.toString());
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("save.end");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.business.cache.CacheEntryHandler#update(java.lang.String,
-     *      java.lang.String, java.lang.Object)
-     */
-    @Override
-    public final void update(final String type, final String id, final BusStation station) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("update.start -type={}, identifier={}", type, id);
-            if (LOGGER.isTraceEnabled()) {
-                LOGGER.trace("update {}", station.toString());
-            }
-        }
-        final ContentValues values = new ContentValues(3);
-        values.put(NAME, station.getName());
-        values.put(LONGITUDE, station.getLongitude());
-        values.put(LATITUDE, station.getLatitude());
-
-        final int updCount = database.update(BUS_STATION_TABLE_NAME, values, WHERE_CLAUSE_ID,
-                new String[] { id });
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("update.end - {} rows updated", updCount);
+            LOGGER.debug("replace.end");
         }
     }
 
@@ -153,8 +126,11 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
         }
         c.close();
 
-        if (LOGGER.isTraceEnabled()) {
-            LOGGER.trace("load.end - result={}", station.toString());
+        if (LOGGER.isDebugEnabled()) {
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("loaded {}", station.toString());
+            }
+            LOGGER.debug("load.end - resultNotNull={}", null != station);
         }
         return station;
     }
@@ -199,11 +175,11 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.cache.CacheEntryHandler#getObjectClassName()
+     * @see fr.itinerennes.business.cache.CacheEntryHandler#getHandledClass()
      */
     @Override
-    public String getObjectClassName() {
+    public Class<BusStation> getHandledClass() {
 
-        return BusStation.class.getName();
+        return BusStation.class;
     }
 }

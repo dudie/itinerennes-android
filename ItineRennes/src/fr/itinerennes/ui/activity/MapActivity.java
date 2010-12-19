@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.business.facade.BikeService;
@@ -26,6 +27,7 @@ import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.model.Station;
 import fr.itinerennes.ui.views.MapView;
+import fr.itinerennes.ui.views.overlays.DebugOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
 /**
@@ -74,6 +76,9 @@ public class MapActivity extends Activity {
         this.myLocation = new MyLocationOverlay(this.getBaseContext(), map);
         myLocation.enableMyLocation();
         map.getOverlays().add(myLocation);
+
+        // DEBUG
+        map.getOverlays().add(new DebugOverlay(getBaseContext()));
 
         final Button myLocation = (Button) findViewById(R.id.button_myPosition);
         myLocation.setOnClickListener(new MyLocationClickListener());
@@ -177,9 +182,9 @@ public class MapActivity extends Activity {
         for (final StationProvider cacheProvider : stationProviders) {
             cacheProvider.release();
         }
-        
+
         this.map.cancelTasks();
-        
+
         super.onDestroy();
     }
 

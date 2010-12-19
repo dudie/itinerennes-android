@@ -9,14 +9,13 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.graphics.drawable.Drawable;
 import android.test.AndroidTestCase;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
-import fr.itinerennes.model.LineTransportIcon;
+import fr.itinerennes.model.LineIcon;
 import fr.itinerennes.model.Station;
 import fr.itinerennes.model.SubwayStation;
 
@@ -121,8 +120,8 @@ public class KeolisServiceTest extends AndroidTestCase {
         assertEquals(String.valueOf(53), station.getId());
         assertEquals(48121530, station.getLatitude());
         assertEquals(-1711088, station.getLongitude());
-        assertEquals("JF KENNEDY", station.getName());
-        assertEquals("DALLE KENNEDY", station.getAddress());
+        assertEquals("Jf Kennedy", station.getName());
+        assertEquals("Dalle Kennedy", station.getAddress());
         assertEquals("Villejean-Beauregard", station.getDistrict());
         assertEquals(Station.TYPE_BIKE, station.getType());
 
@@ -136,7 +135,7 @@ public class KeolisServiceTest extends AndroidTestCase {
 
         LOGGER.info("testGetAllLineIcons.start");
 
-        List<LineTransportIcon> icons = null;
+        List<LineIcon> icons = null;
         try {
             icons = keolisService.getAllLineIcons();
         } catch (final GenericException e) {
@@ -147,7 +146,7 @@ public class KeolisServiceTest extends AndroidTestCase {
         assertEquals("on November, 29th 2010, the keolis API returns 61 bike districts", 61,
                 icons.size());
 
-        for (final LineTransportIcon icon : icons) {
+        for (final LineIcon icon : icons) {
             LOGGER.debug("checking {}", icon);
             assertFalse(String.format("icon [%s] is not associated to a line", icon),
                     StringUtils.isEmpty(icon.getLine()));
@@ -177,10 +176,10 @@ public class KeolisServiceTest extends AndroidTestCase {
 
         LOGGER.info("testFetchIcon.start");
         try {
-            final List<LineTransportIcon> allIcons = keolisService.getAllLineIcons();
-            for (final LineTransportIcon lti : allIcons) {
+            final List<LineIcon> allIcons = keolisService.getAllLineIcons();
+            for (final LineIcon lti : allIcons) {
                 LOGGER.info(String.format("fetching %s", lti.getIconUrl()));
-                final Drawable bitmap = keolisService.fetchIcon(lti);
+                final byte[] bitmap = keolisService.fetchIcon(lti);
                 assertNotNull(String.format("icon for line %s should not be null", bitmap));
             }
         } catch (final GenericException e) {
@@ -265,7 +264,7 @@ public class KeolisServiceTest extends AndroidTestCase {
         assertEquals("CDG", station.getId());
         assertEquals(48105560, station.getLatitude());
         assertEquals(-1676990, station.getLongitude());
-        assertEquals("Charles de Gaulle", station.getName());
+        assertEquals("Charles De Gaulle", station.getName());
         assertEquals(-3, station.getFloors());
         assertEquals(9, station.getRankingPlatformDirection1());
         assertEquals(21, station.getRankingPlatformDirection2());

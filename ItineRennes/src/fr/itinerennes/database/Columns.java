@@ -211,4 +211,36 @@ public final class Columns {
     public interface BusStationColumns extends StationColumns {
 
     }
+
+    /**
+     * Generic columns for the icon of a transport line.
+     * 
+     * @author Jérémie Huchet
+     */
+    public interface LineIconColumns extends BaseColumns {
+
+        /**
+         * The line identifier the icon belongs to.
+         * <P>
+         * Type: STRING
+         * </P>
+         */
+        String LINE_ID = "line_id";
+
+        /**
+         * The URL where to fetch the icon.
+         * <P>
+         * Type: STRING
+         * </P>
+         */
+        String URL = "url";
+
+        /**
+         * The bytes of the icon image.
+         * <P>
+         * Type: BLOB
+         * </P>
+         */
+        String ICON = "icon";
+    }
 }
