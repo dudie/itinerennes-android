@@ -9,6 +9,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import fr.itinerennes.database.Columns.MetadataColumns;
 import fr.itinerennes.model.Cacheable;
 
@@ -79,12 +80,12 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
         this.database = database;
         this.handler = handler;
         this.ttl = ttl;
-        this.type = handler.getObjectClassName();
+        this.type = handler.getHandledClass().getName();
     }
 
     /**
-     * Saves the given value to the cache. A metadata is inserted in the metadata table (
-     * {@value CacheProvider#METADATA_TABLE_NAME} ) and
+     * Saves or updates the given value to the cache. A metadata is inserted (or updated) in the
+     * metadata table ( {@value CacheProvider#METADATA_TABLE_NAME} ) and
      * {@link CacheEntryHandler#replace(String, String, Object)} is called to store the value.
      * 
      * @param value
@@ -99,24 +100,6 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
 
         database.replace(METADATA_TABLE_NAME, null, metadata);
         handler.replace(type, value.getId(), value);
-    }
-
-    /**
-     * Updates the given value of the cache. The metadata will be updated in table (
-     * {@value CacheProvider#METADATA_TABLE_NAME} ) and
-     * {@link CacheEntryHandler#update(String, String, Object)} is called to store the value.
-     * 
-     * @param value
-     *            the value to update
-     */
-    public final synchronized void update(final T value) {
-
-        final ContentValues metadata = new ContentValues(1);
-        metadata.put(LAST_UPDATE, System.currentTimeMillis());
-
-        database.update(METADATA_TABLE_NAME, metadata, String.format("%s = ", ID),
-                new String[] { value.getId() });
-        handler.update(type, value.getId(), value);
     }
 
     /**

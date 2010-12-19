@@ -1,5 +1,7 @@
 package fr.itinerennes.ui.activity;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -12,9 +14,12 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.business.facade.BusService;
+import fr.itinerennes.business.facade.LineIconService;
+import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
+import fr.itinerennes.model.LineIcon;
 import fr.itinerennes.ui.adapter.BusTimeAdapter;
 
 /**
@@ -46,13 +51,24 @@ public class BusStationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_station);
 
+        /* TJHU this must be replaced - start */
+        final KeolisService keoServ = new KeolisService();
+        List<LineIcon> allIcons = null;
+        try {
+            allIcons = keoServ.getAllLineIcons();
+        } catch (final GenericException e) {
+            LOGGER.error("error", e);
+        }
+        /* TJHU this must be replaced - end */
+
         final ViewGroup lineList = (ViewGroup) findViewById(R.station.line_icon_list);
         for (int i = 0; i < 1; i++) {
             for (final int img : new int[] { R.drawable.tmp_lm1, R.drawable.tmp_lm08,
                     R.drawable.tmp_lm9 }) {
                 final ImageView lineIcon = (ImageView) getLayoutInflater().inflate(
                         R.layout.line_icon, null);
-                lineIcon.setImageDrawable(getBaseContext().getResources().getDrawable(img));
+                lineIcon.setImageDrawable(new LineIconService().getIcon(allIcons.get((int) (Math
+                        .random() * 20))));
                 lineList.addView(lineIcon);
             }
         }
@@ -69,6 +85,11 @@ public class BusStationActivity extends Activity {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onResume()
+     */
     @Override
     protected void onResume() {
 
@@ -88,6 +109,11 @@ public class BusStationActivity extends Activity {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onPause()
+     */
     @Override
     protected void onPause() {
 

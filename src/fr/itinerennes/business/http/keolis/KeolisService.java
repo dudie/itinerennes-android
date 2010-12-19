@@ -17,15 +17,14 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.graphics.drawable.Drawable;
-
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.http.GenericHttpService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
-import fr.itinerennes.model.LineTransportIcon;
+import fr.itinerennes.model.LineIcon;
 import fr.itinerennes.model.SubwayStation;
+import fr.itinerennes.utils.FileUtils;
 
 /**
  * Manage calls to the Keolis API.
@@ -178,7 +177,7 @@ public class KeolisService {
      * @throws GenericException
      *             unable to get a result from the server
      */
-    public final List<LineTransportIcon> getAllLineIcons() throws GenericException {
+    public final List<LineIcon> getAllLineIcons() throws GenericException {
 
         final List<NameValuePair> params = new ArrayList<NameValuePair>(4);
         params.add(new BasicNameValuePair(Keo.Network.PARAM_NAME, Keo.Network.VALUE_STAR));
@@ -186,8 +185,7 @@ public class KeolisService {
         params.add(new BasicNameValuePair(Keo.GetLinesIcons.PARAM_MODE,
                 Keo.GetLinesIcons.VALUE_MODE_ALL));
 
-        final List<LineTransportIcon> data = httpService.execute(createKeolisRequest(params),
-                iconsHandler);
+        final List<LineIcon> data = httpService.execute(createKeolisRequest(params), iconsHandler);
 
         return data;
     }
@@ -197,16 +195,15 @@ public class KeolisService {
      * 
      * @param icon
      *            the icon to fetch
-     * @return the image
+     * @return the bytes of the image
      */
-    public final Drawable fetchIcon(final LineTransportIcon icon) {
+    public final byte[] fetchIcon(final LineIcon icon) {
 
         InputStream iconStream = null;
-        Drawable image = null;
         try {
             final URL url = new URL(icon.getIconUrl());
             iconStream = url.openStream();
-            image = Drawable.createFromStream(iconStream, icon.getLine());
+            icon.setIconBytes(FileUtils.readBytes(iconStream));
         } catch (final MalformedURLException e) {
             LOGGER.error("Unable to fetch icon {} : {}", e.getMessage());
         } catch (final IOException e) {
@@ -220,7 +217,7 @@ public class KeolisService {
                 }
             }
         }
-        return image;
+        return icon.getIconBytes();
     }
 
     /**

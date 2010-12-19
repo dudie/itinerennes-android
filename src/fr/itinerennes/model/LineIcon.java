@@ -1,17 +1,22 @@
 package fr.itinerennes.model;
 
+import java.util.Arrays;
+
 /**
  * Contains informations to retrieve the icon of a transport line.
  * 
  * @author Jérémie Huchet
  */
-public class LineTransportIcon implements Cacheable {
+public class LineIcon implements Cacheable {
 
     /** The line identifier. */
     private String line;
 
     /** The URL to fetch the icon from. */
     private String iconUrl;
+
+    /** The the icon bytes value. */
+    private byte[] iconBytes;
 
     /**
      * {@inheritDoc}
@@ -67,6 +72,27 @@ public class LineTransportIcon implements Cacheable {
     }
 
     /**
+     * Gets the icon bytes.
+     * 
+     * @return the icon bytes
+     */
+    public final byte[] getIconBytes() {
+
+        return iconBytes;
+    }
+
+    /**
+     * Sets the icon bytes.
+     * 
+     * @param iconBytes
+     *            the icon bytes to set
+     */
+    public final void setIconBytes(final byte[] iconBytes) {
+
+        this.iconBytes = iconBytes;
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see java.lang.Object#toString()
@@ -75,10 +101,12 @@ public class LineTransportIcon implements Cacheable {
     public String toString() {
 
         final StringBuilder builder = new StringBuilder();
-        builder.append("LineTransportIcon [line=");
+        builder.append("LineIcon [line=");
         builder.append(line);
         builder.append(", iconUrl=");
         builder.append(iconUrl);
+        builder.append(", iconBytes=");
+        builder.append(Arrays.toString(iconBytes));
         builder.append("]");
         return builder.toString();
     }

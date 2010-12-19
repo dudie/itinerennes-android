@@ -2,7 +2,6 @@ package fr.itinerennes;
 
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.model.BusStation;
-import fr.itinerennes.model.LineTransportIcon;
 
 /**
  * @author Jérémie Huchet
@@ -53,7 +52,7 @@ public class ItineRennesConstants {
      * Database constantes.
      */
     /** The database schema version. */
-    public static final int DATABASE_VERSION = 15;
+    public static final int DATABASE_VERSION = 20;
 
     /** The database name. */
     public static final String DATABASE_NAME = "fr.itinerennes";
