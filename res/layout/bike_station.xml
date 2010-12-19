@@ -9,8 +9,8 @@
 		android:gravity="center_vertical" 
 		android:padding="5px">
 
-		<ImageView android:src="@drawable/icon_bike_24" android:layout_width="24px"
-			android:layout_height="24px">
+		<ImageView android:src="@drawable/icon_bike_24" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
 		</ImageView>
 
 		<TextView android:id="@+station/name" android:layout_width="wrap_content"
