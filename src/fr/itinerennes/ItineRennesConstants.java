@@ -2,6 +2,7 @@ package fr.itinerennes;
 
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.model.BusStation;
+import fr.itinerennes.model.LineTransportIcon;
 
 /**
  * @author Jérémie Huchet
@@ -52,7 +53,7 @@ public class ItineRennesConstants {
      * Database constantes.
      */
     /** The database schema version. */
-    public static final int DATABASE_VERSION = 12;
+    public static final int DATABASE_VERSION = 15;
 
     /** The database name. */
     public static final String DATABASE_NAME = "fr.itinerennes";
@@ -74,6 +75,9 @@ public class ItineRennesConstants {
 
     /** Life time for {@link BusStation}s : {@value #TTL_BUS_STATIONS} seconds. */
     public static final int TTL_BUS_STATIONS = 3600;
+
+    /** Life time for {@link LineTransportIcon}s : {@value #TTL_LINE_TRANSPORT_ICONS} seconds. */
+    public static final int TTL_LINE_TRANSPORT_ICONS = 3600;
 
     /** The time to live of an explored bounding box. */
     public static final int GEO_CACHE_TTL = 3600;
