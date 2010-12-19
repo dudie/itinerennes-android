@@ -1,6 +1,10 @@
 package fr.itinerennes.business.http.keolis;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
+
+import android.graphics.drawable.Drawable;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesConstants;
@@ -184,6 +190,37 @@ public class KeolisService {
                 iconsHandler);
 
         return data;
+    }
+
+    /**
+     * Fetch an image icon for a transport line.
+     * 
+     * @param icon
+     *            the icon to fetch
+     * @return the image
+     */
+    public final Drawable fetchIcon(final LineTransportIcon icon) {
+
+        InputStream iconStream = null;
+        Drawable image = null;
+        try {
+            final URL url = new URL(icon.getIconUrl());
+            iconStream = url.openStream();
+            image = Drawable.createFromStream(iconStream, icon.getLine());
+        } catch (final MalformedURLException e) {
+            LOGGER.error("Unable to fetch icon {} : {}", e.getMessage());
+        } catch (final IOException e) {
+            LOGGER.error("Unable to fetch icon {} : {}", e.getMessage());
+        } finally {
+            if (null != iconStream) {
+                try {
+                    iconStream.close();
+                } catch (final IOException e) {
+                    LOGGER.error("Stream already closed : {}", e.getMessage());
+                }
+            }
+        }
+        return image;
     }
 
     /**
