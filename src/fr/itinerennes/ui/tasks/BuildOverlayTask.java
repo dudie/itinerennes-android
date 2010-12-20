@@ -102,6 +102,12 @@ public class BuildOverlayTask extends
                 case Station.TYPE_BIKE:
                     item.setMarker(context.getResources().getDrawable(R.drawable.icon_bike));
                     break;
+                case Station.TYPE_SUBWAY:
+                    item.setMarker(context.getResources().getDrawable(R.drawable.icon_subway_16));
+                    break;
+                default:
+                    // TJHU faire une icone par défaut et l'associer au marqueur
+                    break;
                 }
 
                 overlayItems.add(item);

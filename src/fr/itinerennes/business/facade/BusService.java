@@ -86,7 +86,7 @@ public class BusService implements StationProvider {
             stations = wfsService.getBusStationsFromBbox(normalizedBbox);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("caching {} bike stations", null != stations ? stations.size() : 0);
+                LOGGER.debug("caching {} bus stations", null != stations ? stations.size() : 0);
             }
 
             for (final BusStation station : stations) {

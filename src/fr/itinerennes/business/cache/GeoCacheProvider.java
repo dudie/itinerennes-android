@@ -276,7 +276,7 @@ public final class GeoCacheProvider implements GeoExploreColumns {
         c.close();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("isExplored.start - result={}", isExplored);
+            LOGGER.debug("isExplored.start - type={}, result={}", type, isExplored);
         }
         return isExplored;
     }
