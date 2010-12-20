@@ -180,12 +180,12 @@ public class MapActivity extends Activity {
             LOGGER.debug("onDestroy");
         }
 
+        this.map.cancelTasks();
+        
         // release the database connection
         for (final StationProvider cacheProvider : stationProviders) {
             cacheProvider.release();
         }
-
-        this.map.cancelTasks();
 
         super.onDestroy();
     }
