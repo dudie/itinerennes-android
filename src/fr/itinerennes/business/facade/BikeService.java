@@ -3,6 +3,8 @@ package fr.itinerennes.business.facade;
 import java.util.List;
 
 import org.andnav.osm.util.BoundingBoxE6;
+import org.slf4j.Logger;
+import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.database.sqlite.SQLiteDatabase;
 
@@ -22,6 +24,9 @@ import fr.itinerennes.model.BikeStation;
  * @author Jérémie Huchet
  */
 public final class BikeService implements StationProvider {
+
+    /** The event logger. */
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BikeService.class);
 
     /** The Keolis service. */
     private final KeolisService keolisService;;
@@ -82,18 +87,35 @@ public final class BikeService implements StationProvider {
     @Override
     public List<BikeStation> getStations(final BoundingBoxE6 bbox) throws GenericException {
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getStations.start - bbox={}", bbox);
+        }
+
+        final List<BikeStation> stations;
+
         if (geoCache.isExplored(bbox, BikeStation.class.getName())) {
-            return bikeCache.load(bbox);
+            stations = bikeCache.load(bbox);
         } else {
             final List<BikeStation> allStations = keolisService.getAllBikeStations();
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("caching {} bike stations", null != allStations ? allStations.size()
+                        : 0);
+            }
+
             for (final BikeStation station : allStations) {
                 bikeCache.replace(station);
             }
             // mark the whole world expored
             geoCache.markExplored(new BoundingBoxE6(180 * 1E6, 180 * 1E6, -180 * 1E6, -180 * 1E6),
                     BikeStation.class.getName());
-            return bikeCache.load(bbox);
+            stations = bikeCache.load(bbox);
         }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getStations.start - {} stations", null != stations ? stations.size() : 0);
+        }
+        return stations;
     }
 
     /**

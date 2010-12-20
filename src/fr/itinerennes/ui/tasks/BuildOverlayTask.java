@@ -56,6 +56,9 @@ public class BuildOverlayTask extends
     public BuildOverlayTask(final Context ctx, final MapView map,
             final StationProvider stationProvider, final int type) {
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("BuildOverlayTask.create - type={}", type);
+        }
         this.context = ctx;
         this.map = map;
         this.stationProvider = stationProvider;
@@ -67,10 +70,15 @@ public class BuildOverlayTask extends
      * 
      * @param params
      *            Bounding box used to refresh the overlay
-     * @return Void Returns nothing
+     * @return an overlay containing items located in the bounding box
      */
     @Override
     protected final StationOverlay<StationOverlayItem> doInBackground(final BoundingBoxE6... params) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("doInBackground.start - bbox={}",
+                    null != params && params.length > 0 ? params[0].toString() : null);
+        }
 
         List<Station> stations = null;
         try {
@@ -78,6 +86,8 @@ public class BuildOverlayTask extends
         } catch (final GenericException e) {
             LOGGER.error("error while trying to fetch stations.", e);
         }
+
+        final StationOverlay<StationOverlayItem> overlay;
 
         if (null != stations) {
             final List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
@@ -96,12 +106,17 @@ public class BuildOverlayTask extends
 
                 overlayItems.add(item);
             }
-            final StationOverlay<StationOverlayItem> overlay = new StationOverlay<StationOverlayItem>(
-                    context, overlayItems, map.getOnItemGestureListener(), type);
+            overlay = new StationOverlay<StationOverlayItem>(context, overlayItems,
+                    map.getOnItemGestureListener(), type);
 
-            return overlay;
+        } else {
+            overlay = null;
         }
-        return null;
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("doInBackground.end - {} stations", null != stations ? stations.size() : 0);
+        }
+        return overlay;
     }
 
     @Override

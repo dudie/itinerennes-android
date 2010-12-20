@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
+import android.util.Log;
+
 /**
  * A logger factory producing {@link ItinerennesLogger}s.
  * 
@@ -15,6 +17,12 @@ public final class ItinerennesLoggerFactory implements ILoggerFactory {
 
     /** The base string to remove from log tags. */
     private static final String PKG_BASE = "fr.itinerennes.";
+
+    /** The prefix prepended to all log tags. */
+    private static final String PREFIX = "ITR.";
+
+    /** The maximum tag length. */
+    private static final int MAX_TAG_LENGTH = 23;
 
     /**
      * Private constructor to avoid instantiation.
@@ -60,10 +68,57 @@ public final class ItinerennesLoggerFactory implements ILoggerFactory {
 
         // removes base package name
         if (packageName.startsWith(PKG_BASE)) {
-            return packageName.substring(PKG_BASE.length());
+            return truncate(packageName.substring(PKG_BASE.length()));
         } else {
-            return packageName;
+            return truncate(packageName);
         }
+    }
+
+    /**
+     * Truncates the given pakage name until its length is lower or equals to the maximum tag length
+     * ({@link #MAX_TAG_LENGTH}).
+     * 
+     * @param packageName
+     *            the package name to truncate
+     * @return the truncated package name
+     */
+    private static String truncate(final String packageName) {
+
+        int size = PREFIX.length() + packageName.length();
+
+        if (size <= MAX_TAG_LENGTH) {
+            return PREFIX + packageName;
+        }
+
+        final String[] names = packageName.split("\\.");
+
+        while (size > MAX_TAG_LENGTH) {
+            int longestIdx = -1;
+            for (int i = 0; i < names.length; i++) {
+                if (-1 == longestIdx
+                        || (i != names.length - 1 && names[i].length() > names[longestIdx].length())) {
+                    longestIdx = i;
+                }
+            }
+            names[longestIdx] = names[longestIdx].replaceFirst("..$", "*");
+            size -= 1;
+        }
+
+        final StringBuilder truncatedName = new StringBuilder();
+        truncatedName.append(PREFIX).deleteCharAt(truncatedName.length() - 1);
+
+        for (final String name : names) {
+            truncatedName.append(".");
+            truncatedName.append(name);
+        }
+
+        if (Log.isLoggable(PREFIX + "LoggerFactory", Log.INFO)) {
+            Log.i(ItinerennesLoggerFactory.class.getSimpleName(), "Log tag " + PREFIX + packageName
+                    + " is longer than 23 characters, using " + truncatedName.toString()
+                    + " instead");
+        }
+
+        return truncatedName.toString();
     }
 
     /**

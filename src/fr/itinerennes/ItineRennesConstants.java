@@ -80,4 +80,5 @@ public class ItineRennesConstants {
 
     /** The time to live of an explored bounding box. */
     public static final int GEO_CACHE_TTL = 3600;
+
 }

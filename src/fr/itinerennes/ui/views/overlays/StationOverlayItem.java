@@ -14,13 +14,13 @@ import fr.itinerennes.ui.views.MapView;
 public class StationOverlayItem extends OpenStreetMapViewOverlayItem {
 
     /** The station denoted by this item. */
-    private Station station;
+    private final Station station;
 
     /**
      * Creates the station overlay item.
      * 
-     * @param the
-     *            station denoted by this item
+     * @param station
+     *            the station denoted by this item
      */
     public StationOverlayItem(final Station station) {
 

@@ -10,6 +10,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+
 import fr.itinerennes.R;
 import fr.itinerennes.model.Station;
 import fr.itinerennes.ui.views.MapView;
@@ -58,7 +59,7 @@ public class StationOverlay<T extends StationOverlayItem> extends
     public boolean onSingleTapUp(final MotionEvent event, final OpenStreetMapView mapView) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onSingleTapUp");
+            LOGGER.debug("onSingleTapUp.start - x={}, y={}", event.getX(), event.getY());
         }
 
         /*
@@ -71,6 +72,9 @@ public class StationOverlay<T extends StationOverlayItem> extends
             focusedBox.setVisibility(ViewGroup.GONE);
             focusedBox.removeAllViews();
             ((MapView) mapView).setItemLayoutFocused(false);
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onSingleTapUp.end");
         }
         return super.onSingleTapUp(event, mapView);
     }

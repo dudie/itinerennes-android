@@ -226,7 +226,9 @@ public class MapView extends OpenStreetMapView implements MapListener {
         BuildOverlayTask task = tasks.get(type);
         if (task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
             task.cancel(true);
-            LOGGER.debug("cancelling previous BuildOverlayTask");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("cancelling previous BuildOverlayTask");
+            }
         }
         final BoundingBoxE6 bbox = this.getVisibleBoundingBoxE6();
         task = new BuildOverlayTask(this.context, this, stationProviders[type], type);
@@ -299,6 +301,9 @@ public class MapView extends OpenStreetMapView implements MapListener {
      */
     private void removeAllStationOverlays() {
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("removeAllStationOverlays.start");
+        }
         final ArrayList<OpenStreetMapViewOverlay> overlaysToDelete = new ArrayList<OpenStreetMapViewOverlay>();
         for (final OpenStreetMapViewOverlay overlay : this.getOverlays()) {
             if (overlay instanceof StationOverlay) {
@@ -313,6 +318,9 @@ public class MapView extends OpenStreetMapView implements MapListener {
         // cancel all BuildOverlayTask since we have deleted those overlays
         cancelTasks();
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("removeAllStationOverlays.end");
+        }
     }
 
     /**
@@ -320,9 +328,17 @@ public class MapView extends OpenStreetMapView implements MapListener {
      */
     public final synchronized void cancelTasks() {
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("cancelTasks.start");
+        }
+
         for (final Entry<Integer, BuildOverlayTask> task : tasks.entrySet()) {
             task.getValue().cancel(true);
         }
         tasks.clear();
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("cancelTasks.end");
+        }
     }
 }
