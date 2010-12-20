@@ -44,6 +44,10 @@ public class GenericHttpService {
     public final synchronized <T> T execute(final HttpUriRequest request,
             final HttpResponseHandler<T> handler) throws GenericException {
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("execute.start - request={}", request.getRequestLine());
+        }
+
         T response = null;
         try {
             response = httpClient.execute(request, handler);
@@ -53,6 +57,10 @@ public class GenericHttpService {
         } catch (final IOException e) {
             LOGGER.debug(e.getMessage(), e);
             throw new GenericException(ErrorCodeConstants.NETWORK, "i/o exception");
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("execute.end");
         }
         return response;
     }

@@ -41,7 +41,7 @@ public abstract class HttpResponseHandler<T> implements ResponseHandler<T> {
             IOException {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("handleResponse.start");
+            LOGGER.debug("handleResponse.start - status={}", response.getStatusLine());
         }
 
         T result = null;
