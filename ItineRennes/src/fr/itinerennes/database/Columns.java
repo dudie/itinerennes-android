@@ -204,6 +204,62 @@ public final class Columns {
     }
 
     /**
+     * Generic columns for a subway station.
+     * 
+     * @author Jérémie Huchet
+     */
+    public interface SubwayStationColumns extends StationColumns {
+
+        /**
+         * The has platform direction 1.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String HAS_PF_DIR_1 = "has_pf_dir_1";
+
+        /**
+         * The has platform direction 2.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String HAS_PF_DIR_2 = "has_pf_dir_2";
+
+        /**
+         * The rank platform direction 1.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String RANK_PF_DIR_1 = "rank_pf_dir_1";
+
+        /**
+         * The rank platform direction 2.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String RANK_PF_DIR_2 = "rank_pf_dir_2";
+
+        /**
+         * The number of floors.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String FLOORS = "floors";
+
+        /**
+         * The last update date.
+         * <P>
+         * Type: INTEGER (unix timestamp in seconds in seconds)
+         * </P>
+         */
+        String LAST_UPDATE = "last_update";
+    }
+
+    /**
      * Generic columns for a bus station.
      * 
      * @author Olivier Boudet

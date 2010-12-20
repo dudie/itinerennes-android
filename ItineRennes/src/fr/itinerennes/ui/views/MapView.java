@@ -129,6 +129,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
         if (this.isShown()) {
             executeBuildOverlayTask(Station.TYPE_BUS);
             executeBuildOverlayTask(Station.TYPE_BIKE);
+            executeBuildOverlayTask(Station.TYPE_SUBWAY);
         }
         return true;
     }
@@ -151,9 +152,8 @@ public class MapView extends OpenStreetMapView implements MapListener {
                 removeAllStationOverlays();
             } else {
                 executeBuildOverlayTask(Station.TYPE_BUS);
-                if (tasks.get(Station.TYPE_BIKE) == null) {
-                    executeBuildOverlayTask(Station.TYPE_BIKE);
-                }
+                executeBuildOverlayTask(Station.TYPE_BIKE);
+                executeBuildOverlayTask(Station.TYPE_SUBWAY);
             }
         }
         return true;

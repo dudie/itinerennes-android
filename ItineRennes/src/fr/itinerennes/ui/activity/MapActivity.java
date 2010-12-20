@@ -22,6 +22,7 @@ import fr.itinerennes.R;
 import fr.itinerennes.business.facade.BikeService;
 import fr.itinerennes.business.facade.BusService;
 import fr.itinerennes.business.facade.StationProvider;
+import fr.itinerennes.business.facade.SubwayService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
@@ -49,7 +50,7 @@ public class MapActivity extends Activity {
     private MyLocationOverlay myLocation;
 
     /** The station providers. */
-    private final StationProvider[] stationProviders = new StationProvider[2];
+    private final StationProvider[] stationProviders = new StationProvider[3];
 
     /** The focused station layout. */
     private LinearLayout focusedBoxLayout;
@@ -86,6 +87,7 @@ public class MapActivity extends Activity {
         final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
         stationProviders[Station.TYPE_BIKE] = new BikeService(dbHelper.getWritableDatabase());
         stationProviders[Station.TYPE_BUS] = new BusService(dbHelper.getWritableDatabase());
+        stationProviders[Station.TYPE_SUBWAY] = new SubwayService(dbHelper.getWritableDatabase());
         this.map.setStationProviders(stationProviders);
 
         /**
