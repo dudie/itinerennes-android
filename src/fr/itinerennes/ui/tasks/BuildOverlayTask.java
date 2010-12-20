@@ -97,13 +97,13 @@ public class BuildOverlayTask extends
 
                 switch (type) {
                 case Station.TYPE_BUS:
-                    item.setMarker(context.getResources().getDrawable(R.drawable.icon_bus));
+                    item.setMarker(context.getResources().getDrawable(R.drawable.marker_bus));
                     break;
                 case Station.TYPE_BIKE:
-                    item.setMarker(context.getResources().getDrawable(R.drawable.icon_bike));
+                    item.setMarker(context.getResources().getDrawable(R.drawable.marker_bike));
                     break;
                 case Station.TYPE_SUBWAY:
-                    item.setMarker(context.getResources().getDrawable(R.drawable.icon_subway_16));
+                    item.setMarker(context.getResources().getDrawable(R.drawable.marker_subway));
                     break;
                 default:
                     // TJHU faire une icone par défaut et l'associer au marqueur
