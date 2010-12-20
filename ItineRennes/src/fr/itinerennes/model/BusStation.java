@@ -107,16 +107,47 @@ public class BusStation implements Station {
         this.longitude = longitude;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.model.Station#getGeoPoint()
+     */
     @Override
     public final GeoPoint getGeoPoint() {
 
         return new GeoPoint(this.latitude, this.longitude);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.model.Station#getType()
+     */
     @Override
     public final int getType() {
 
         return Station.TYPE_BUS;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+
+        final StringBuilder builder = new StringBuilder();
+        builder.append("BusStation [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", latitude=");
+        builder.append(latitude);
+        builder.append(", longitude=");
+        builder.append(longitude);
+        builder.append("]");
+        return builder.toString();
     }
 
 }
