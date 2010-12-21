@@ -113,7 +113,7 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
 
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, id });
         T value = null;
-        if (c.moveToFirst() && ttl > System.currentTimeMillis() - c.getLong(3)) {
+        if (c.moveToFirst() && ttl > (System.currentTimeMillis() - c.getLong(3)) / 1000 ) {
             value = handler.load(type, id);
         }
 
