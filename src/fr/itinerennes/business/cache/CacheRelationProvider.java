@@ -12,6 +12,20 @@ import android.database.sqlite.SQLiteDatabase;
 import fr.itinerennes.database.Columns.MetadataColumns;
 import fr.itinerennes.model.Cacheable;
 
+/**
+ * Manages a cache of data. Uses a database to store metadata information about saved entries.
+ * <p>
+ * Metadata contains :
+ * <ul>
+ * <li>a <b>type</b> (the fully qualified class name of the objet)</li>
+ * <li>an <b>identifier</b>, must be unique for the same type</li>
+ * <li>a <b>last update date</b></li>
+ * </ul>
+ * 
+ * @param <T>
+ * @author Olivier Boudet
+ */
+
 public class CacheRelationProvider<T extends Cacheable> implements MetadataColumns {
 
     /** The event logger. */
