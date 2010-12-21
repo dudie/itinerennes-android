@@ -4,19 +4,29 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" 
     android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:paddingBottom="5px">
     
-    <ImageView />
+    <ImageView
+        android:id="@+station/bus_icon_line_departure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5px"/>
     
-    <TextView />
-    
-    <LinearLayout android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
         android:orientation="vertical">
         
-        <TextView />
+        <TextView
+            android:id="@+station/bus_headsign_departure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         
-        <TextView />
+        <TextView
+            android:id="@+station/bus_date_departure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         
     </LinearLayout>
     

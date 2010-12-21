@@ -1,6 +1,7 @@
 package fr.itinerennes;
 
 import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.model.BusRoute;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.SubwayStation;
 
@@ -49,11 +50,28 @@ public class ItineRennesConstants {
     /** Geoserver API URL. */
     public static final String GEOSERVER_API_URL = "http://otp.itinerennes.fr/geoserver/ows/";
 
+    /** Geoserver stop feature prefix. */
+    public static final String GEOSERVER_STOP_PREFIX = "stops.";
+
+    /*
+     * OpenTripPlanner constants.
+     */
+
+    /** OTP Extended API URL. */
+    public static final String OTP_API_URL = "http://otp.itinerennes.fr/opentripplanner-api-extended/";
+
+    /** Path to append to the Extended API URL to get stop informations. */
+    public static final String OTP_API_STOP_PATH = "stop";
+
+    /** Path to append to the Extended API URL to get departures informations. */
+    public static final String OTP_API_DEPARTURES_PATH = "departures";
+
     /*
      * Database constantes.
      */
+
     /** The database schema version. */
-    public static final int DATABASE_VERSION = 20;
+    public static final int DATABASE_VERSION = 21;
 
     /** The database name. */
     public static final String DATABASE_NAME = "fr.itinerennes";
@@ -78,6 +96,9 @@ public class ItineRennesConstants {
 
     /** Life time for {@link BusStation}s : {@value #TTL_BUS_STATIONS} seconds. */
     public static final int TTL_BUS_STATIONS = 3600;
+
+    /** Life time for {@link BusRoute}s : {@value #TTL_BUS_ROUTE} seconds. */
+    public static final int TTL_BUS_ROUTE = 3600;
 
     /** Life time for {@link LineTransportIcon}s : {@value #TTL_LINE_TRANSPORT_ICONS} seconds. */
     public static final int TTL_LINE_TRANSPORT_ICONS = 3600;

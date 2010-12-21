@@ -24,4 +24,7 @@ public class ErrorCodeConstants {
 
     /** The response from the Keolis API does not contains valid data. */
     public static final short KEOLIS_RESPONSE_ERROR = 5;
+
+    /** The response from the OpenTripPlanner API does not contain a valid data. */
+    public static final short OTP_RESPONSE_ERROR = 6;
 }

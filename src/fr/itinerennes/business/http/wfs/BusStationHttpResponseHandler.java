@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.http.HttpResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
@@ -75,7 +76,9 @@ public class BusStationHttpResponseHandler extends HttpResponseHandler<List<BusS
     private BusStation convertJsonObjectToBusStation(final JSONObject jsonObject) {
 
         final BusStation station = new BusStation();
-        station.setId(jsonObject.optString("id"));
+
+        station.setId(jsonObject.optString("id").substring(
+                ItineRennesConstants.GEOSERVER_STOP_PREFIX.length()));
 
         final JSONObject properties = jsonObject.optJSONObject("properties");
 

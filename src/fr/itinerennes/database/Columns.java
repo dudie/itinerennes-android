@@ -6,6 +6,7 @@ import android.provider.BaseColumns;
  * Contains database columns names constants.
  * 
  * @author Jérémie Huchet
+ * @author Olivier Boudet
  */
 public final class Columns {
 
@@ -265,6 +266,80 @@ public final class Columns {
      * @author Olivier Boudet
      */
     public interface BusStationColumns extends StationColumns {
+
+    }
+
+    /**
+     * Generic columns for a route.
+     * 
+     * @author Olivier Boudet
+     */
+    public interface RouteColumns extends BaseColumns {
+
+        /**
+         * The unique ID for a route.
+         * <P>
+         * Type: TEXT (String)
+         * </P>
+         */
+        String ID = "id";
+
+    }
+
+    /**
+     * Generic columns for a bus route.
+     * 
+     * @author Olivier Boudet
+     */
+    public interface BusRouteColumns extends RouteColumns {
+
+        /**
+         * The long name for a route.
+         * <P>
+         * Type: TEXT (String)
+         * </P>
+         */
+        String LONG_NAME = "long_name";
+
+        /**
+         * The short name for a route.
+         * <P>
+         * Type: TEXT (String)
+         * </P>
+         */
+        String SHORT_NAME = "short_name";
+
+        /**
+         * The agency id for a route.
+         * <P>
+         * Type: INTEGER (int)
+         * </P>
+         */
+        String AGENCY = "agency";
+    }
+
+    /**
+     * Generic columns for a bus route.
+     * 
+     * @author Olivier Boudet
+     */
+    public interface BusStationRouteColumns {
+
+        /**
+         * The station id.
+         * <P>
+         * Type: TEXT (String)
+         * </P>
+         */
+        String STATION_ID = "station_id";
+
+        /**
+         * The route id which is available from the station.
+         * <P>
+         * Type: TEXT (String)
+         * </P>
+         */
+        String ROUTE_ID = "route_id";
 
     }
 

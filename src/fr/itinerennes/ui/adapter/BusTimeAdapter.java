@@ -1,13 +1,21 @@
 package fr.itinerennes.ui.adapter;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import android.content.Context;
 import android.database.DataSetObserver;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import fr.itinerennes.R;
+import fr.itinerennes.model.BusDeparture;
 
 /**
  * @author Jérémie Huchet
@@ -16,6 +24,18 @@ public class BusTimeAdapter implements ListAdapter {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BusTimeAdapter.class);
+
+    /** The android context. */
+    private final Context context;
+
+    /** Bus time data. */
+    private final List<BusDeparture> data;
+
+    public BusTimeAdapter(final Context context, final List<BusDeparture> departures) {
+
+        this.data = departures;
+        this.context = context;
+    }
 
     /**
      * {@inheritDoc}
@@ -65,12 +85,8 @@ public class BusTimeAdapter implements ListAdapter {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getCount.start");
         }
-        // TJHU Auto-generated method stub
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getCount.end");
-        }
-        return 50;
+        return data.size();
     }
 
     /**
@@ -79,17 +95,12 @@ public class BusTimeAdapter implements ListAdapter {
      * @see android.widget.Adapter#getItem(int)
      */
     @Override
-    public Object getItem(final int position) {
+    public BusDeparture getItem(final int position) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getItem.start");
         }
-        // TJHU Auto-generated method stub
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getItem.end");
-        }
-        return null;
+        return data.get(position);
     }
 
     /**
@@ -102,11 +113,6 @@ public class BusTimeAdapter implements ListAdapter {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getItemId.start");
-        }
-        // TJHU Auto-generated method stub
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getItemId.end");
         }
         return position;
     }
@@ -142,16 +148,26 @@ public class BusTimeAdapter implements ListAdapter {
             LOGGER.debug("getView.start");
         }
 
-        TextView v = (TextView) convertView;
-        if (null == v) {
-            v = new TextView(parent.getContext());
-        }
-        v.setText(String.valueOf(position));
+        final LayoutInflater inflater = LayoutInflater.from(context);
+        final View busTimeView = inflater.inflate(R.layout.bus_time, null);
+
+        final ImageView departureLineIconeView = (ImageView) busTimeView
+                .findViewById(R.station.bus_icon_line_departure);
+        departureLineIconeView.setImageDrawable(context.getResources().getDrawable(
+                R.drawable.tmp_lm1));
+
+        final TextView departureHeadsignView = (TextView) busTimeView
+                .findViewById(R.station.bus_headsign_departure);
+        departureHeadsignView.setText(data.get(position).getHeadsign());
+
+        final TextView departureDateView = (TextView) busTimeView
+                .findViewById(R.station.bus_date_departure);
+        departureDateView.setText(data.get(position).getDepartureDate().toLocaleString());
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getView.end");
         }
-        return v;
+        return busTimeView;
     }
 
     /**

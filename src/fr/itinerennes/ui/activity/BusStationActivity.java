@@ -13,11 +13,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
+import fr.itinerennes.business.facade.BusDepartureService;
+import fr.itinerennes.business.facade.BusRouteService;
 import fr.itinerennes.business.facade.BusService;
-import fr.itinerennes.business.facade.LineIconService;
 import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BusDeparture;
+import fr.itinerennes.model.BusRoute;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.LineIcon;
 import fr.itinerennes.ui.adapter.BusTimeAdapter;
@@ -27,6 +30,7 @@ import fr.itinerennes.ui.adapter.BusTimeAdapter;
  * informations about a bus station.
  * 
  * @author Jérémie Huchet
+ * @author Olivier Boudet
  */
 public class BusStationActivity extends Activity {
 
@@ -36,6 +40,12 @@ public class BusStationActivity extends Activity {
 
     /** The Bus Service. */
     private BusService busService;
+
+    /** The Bus Route Service. */
+    private BusRouteService busRouteService;
+
+    /** The Departure Service. */
+    BusDepartureService busDepartureService;
 
     /**
      * {@inheritDoc}
@@ -50,35 +60,6 @@ public class BusStationActivity extends Activity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_station);
-
-        /* TJHU this must be replaced - start */
-        final KeolisService keoServ = new KeolisService();
-        List<LineIcon> allIcons = null;
-        try {
-            allIcons = keoServ.getAllLineIcons();
-        } catch (final GenericException e) {
-            LOGGER.error("error", e);
-        }
-        /* TJHU this must be replaced - end */
-
-        final ViewGroup lineList = (ViewGroup) findViewById(R.station.line_icon_list);
-        for (int i = 0; i < 1; i++) {
-            for (final int img : new int[] { R.drawable.tmp_lm1, R.drawable.tmp_lm08,
-                    R.drawable.tmp_lm9 }) {
-                final ImageView lineIcon = (ImageView) getLayoutInflater().inflate(
-                        R.layout.line_icon, null);
-                lineIcon.setImageDrawable(new LineIconService().getIcon(allIcons.get((int) (Math
-                        .random() * 20))));
-                lineList.addView(lineIcon);
-            }
-        }
-
-        final String[] testData = new String[] { "aaaaa", "bbbbb", "ccccc", "ddddd", "eeeee",
-                "fffff", "ggggg", "hhhhh", "iiiii", "jjjjj", "kkkkk", "lllll", "mmmmm", "nnnnn",
-                "ooooo" };
-
-        final ListView listTimes = (ListView) findViewById(R.station.list_bus);
-        listTimes.setAdapter(new BusTimeAdapter());
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
@@ -97,16 +78,67 @@ public class BusStationActivity extends Activity {
 
         final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
         busService = new BusService(dbHelper.getWritableDatabase());
+        busRouteService = new BusRouteService(dbHelper.getWritableDatabase());
+        busDepartureService = new BusDepartureService(dbHelper.getWritableDatabase());
 
-        BusStation station;
+        final String stationId = getIntent().getExtras().getString("item");
+
         try {
-            station = busService.getStation(getIntent().getExtras().getString("item"));
+            /* Displaying bus stop title */
+            BusStation station = busService.getStation(stationId);
             final TextView name = (TextView) findViewById(R.station.name);
             name.setText(station.getName());
             LOGGER.debug("Bus stop title height = {}", name.getMeasuredHeight());
         } catch (final GenericException e) {
-            LOGGER.debug("Can't load bus station information.", e);
+            LOGGER.debug(
+                    String.format("Can't load station informations for the station %s.", stationId),
+                    e);
         }
+
+        /* TJHU this must be replaced - start */
+        final KeolisService keoServ = new KeolisService();
+        List<LineIcon> allIcons = null;
+        try {
+            allIcons = keoServ.getAllLineIcons();
+        } catch (final GenericException e) {
+            LOGGER.error("error", e);
+        }
+        /* TJHU this must be replaced - end */
+
+        try {
+            /* Fetching routes informations for this station. */
+            final List<BusRoute> busRoutes = busRouteService.getStationRoutes(stationId);
+
+            /* Displaying routes icons. */
+            final ViewGroup lineList = (ViewGroup) findViewById(R.station.line_icon_list);
+            if (busRoutes != null) {
+                for (final BusRoute busRoute : busRoutes) {
+                    final ImageView lineIcon = (ImageView) getLayoutInflater().inflate(
+                            R.layout.line_icon, null);
+                    lineIcon.setImageDrawable(getBaseContext().getResources().getDrawable(
+                            R.drawable.tmp_lm1));
+                    lineList.addView(lineIcon);
+                    LOGGER.debug("Showing icon for line {}.", busRoute.getId());
+                }
+            }
+        } catch (final GenericException e) {
+            LOGGER.debug(
+                    String.format("Can't load routes informations for the station %s.", stationId),
+                    e);
+        }
+
+        try {
+            /* Fetching and displaying departures informations for this station. */
+            final ListView listTimes = (ListView) findViewById(R.station.list_bus);
+            final List<BusDeparture> departures = busDepartureService
+                    .getStationDepartures(stationId);
+
+            listTimes.setAdapter(new BusTimeAdapter(getBaseContext(), departures));
+        } catch (final GenericException e) {
+            LOGGER.debug(String.format("Can't load departures informations for the station %s.",
+                    stationId), e);
+        }
+
     }
 
     /**
@@ -118,6 +150,7 @@ public class BusStationActivity extends Activity {
     protected void onPause() {
 
         busService.release();
+        busRouteService.release();
         super.onPause();
     }
 }
