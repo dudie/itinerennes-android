@@ -44,6 +44,20 @@ CREATE TABLE "subway_stations" (
 CREATE UNIQUE INDEX "subway_station_id_idx" on subway_stations (id ASC);
 CREATE INDEX "subway_station_lon_idx" on subway_stations (lon ASC);
 CREATE INDEX "subway_station_lat_idx" on subway_stations (lat ASC);
+CREATE TABLE "bus_routes" (
+    "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "id" TEXT NOT NULL,
+    "long_name" TEXT NOT NULL,
+    "short_name" TEXT NOT NULL,
+    "agency" INTEGER NOT NULL
+);
+CREATE UNIQUE INDEX "bus_route_id_idx" on bus_routes (id ASC);
+CREATE TABLE "bus_routes_stations" (
+    "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "route_id" TEXT NOT NULL,
+    "station_id" TEXT NOT NULL
+);
+CREATE UNIQUE INDEX "bus_route_station_idx" on bus_routes_stations (station_id ASC, route_id ASC);
 
 CREATE TABLE "cache_metadata" (
     "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,

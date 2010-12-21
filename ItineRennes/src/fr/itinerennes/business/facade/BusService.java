@@ -17,6 +17,10 @@ import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
 
 /**
+ * Service to consult informations about the bus transport service.
+ * <p>
+ * Every method call is cached using the {@link CacheProvider} and {@link GeoCacheProvider}.
+ * 
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
