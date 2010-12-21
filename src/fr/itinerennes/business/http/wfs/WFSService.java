@@ -20,7 +20,7 @@ import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
 
 /**
- * Manage calls to the Geoserver WMS API.
+ * Manage calls to the Geoserver WFS API.
  * 
  * @author Olivier Boudet
  * @author Jérémie Huchet
