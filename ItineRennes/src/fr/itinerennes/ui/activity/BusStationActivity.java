@@ -111,6 +111,7 @@ public class BusStationActivity extends Activity {
 
             /* Displaying routes icons. */
             final ViewGroup lineList = (ViewGroup) findViewById(R.station.line_icon_list);
+            lineList.removeAllViews();
             if (busRoutes != null) {
                 for (final BusRoute busRoute : busRoutes) {
                     final ImageView lineIcon = (ImageView) getLayoutInflater().inflate(
