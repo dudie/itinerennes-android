@@ -14,14 +14,16 @@
         android:layout_margin="5px"/>
     
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"  
         android:orientation="vertical">
         
         <TextView
             android:id="@+station/bus_headsign_departure"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textStyle="bold"/>
         
         <TextView
             android:id="@+station/bus_date_departure"
@@ -29,5 +31,13 @@
             android:layout_height="wrap_content"/>
         
     </LinearLayout>
+    
+    <TextView
+            android:id="@+station/bus_time_before_departure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_margin="5px"
+            android:textStyle="bold"/>
     
 </LinearLayout>
