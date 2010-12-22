@@ -7,6 +7,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,6 +164,13 @@ public class BusTimeAdapter implements ListAdapter {
         final TextView departureDateView = (TextView) busTimeView
                 .findViewById(R.station.bus_date_departure);
         departureDateView.setText(data.get(position).getDepartureDate().toLocaleString());
+
+        final TextView timeBeforeDepartureView = (TextView) busTimeView
+                .findViewById(R.station.bus_time_before_departure);
+
+        timeBeforeDepartureView.setText(DateUtils.getRelativeTimeSpanString(data.get(position)
+                .getDepartureDate().getTime(), System.currentTimeMillis(),
+                DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getView.end");
