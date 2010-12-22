@@ -146,7 +146,9 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
     public final boolean contains(final String id) {
 
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, id });
-        return c.getCount() > 1;
+        final boolean contains = c.getCount() > 0;
+        c.close();
+        return contains;
     }
 
     /**

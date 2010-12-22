@@ -125,11 +125,36 @@ public class BuildOverlayTask extends
         return overlay;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+     */
     @Override
     protected void onPostExecute(final StationOverlay<StationOverlayItem> overlay) {
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onPostExecute.start");
+        }
         map.refreshOverlay(overlay, type);
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onPostExecute.end");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.os.AsyncTask#onCancelled()
+     */
+    @Override
+    protected void onCancelled() {
+
+        super.onCancelled();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onCancelled.start/end");
+        }
     }
 
     /**
