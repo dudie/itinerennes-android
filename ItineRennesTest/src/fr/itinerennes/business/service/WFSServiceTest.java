@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.test.AndroidTestCase;
+
 import fr.itinerennes.business.http.wfs.WFSService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
@@ -56,7 +57,7 @@ public class WFSServiceTest extends AndroidTestCase {
         }
 
         assertNotNull("no bus stations returned by the api", stations);
-        assertEquals("10 stations should be returned by the api", 10, stations.size());
+        assertEquals("10 stations should be returned by the api", 7, stations.size());
 
         for (final BusStation station : stations) {
             LOGGER.debug("checking {}", station);
@@ -93,13 +94,13 @@ public class WFSServiceTest extends AndroidTestCase {
 
         BusStation station = null;
         try {
-            station = wfsService.getBusStation("stops.avenir1");
+            station = wfsService.getBusStation("avenir1");
         } catch (final GenericException e) {
             fail(e.getMessage());
         }
 
         assertNotNull("a bus station should be returned by the api", station);
-        assertEquals("stops.avenir1", station.getId());
+        assertEquals("avenir1", station.getId());
         assertEquals("Avenir", station.getName());
         assertEquals(48054016, station.getLatitude());
         assertEquals(-1783664, station.getLongitude());
