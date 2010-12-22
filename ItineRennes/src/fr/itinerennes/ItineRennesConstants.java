@@ -27,9 +27,6 @@ public class ItineRennesConstants {
     /** Maximum zoom level displaying overlay items. */
     public static final int CONFIG_MINIMUM_ZOOM_ITEMS = 15;
 
-    /** Maximum zoom level displaying overlay items. */
-    public static final int CONFIG_MINIMUM_ZOOM_MAP = 12;
-
     /*
      * Keolis constants.
      */

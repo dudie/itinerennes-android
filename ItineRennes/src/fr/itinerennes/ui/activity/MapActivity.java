@@ -28,7 +28,6 @@ import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.model.Station;
 import fr.itinerennes.ui.views.MapView;
-import fr.itinerennes.ui.views.overlays.DebugOverlay;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
 /**
@@ -79,7 +78,7 @@ public class MapActivity extends Activity {
         map.getOverlays().add(myLocation);
 
         // DEBUG
-        map.getOverlays().add(new DebugOverlay(getBaseContext()));
+        // map.getOverlays().add(new DebugOverlay(getBaseContext()));
 
         final Button myLocation = (Button) findViewById(R.id.button_myPosition);
         myLocation.setOnClickListener(new MyLocationClickListener());

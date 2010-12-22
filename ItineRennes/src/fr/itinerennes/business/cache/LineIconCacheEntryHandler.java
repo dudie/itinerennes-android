@@ -25,7 +25,7 @@ public class LineIconCacheEntryHandler implements CacheEntryHandler<LineIcon>, L
             .getLogger(LineIconCacheEntryHandler.class);
 
     /** The database table name : {@value LineIconCacheEntryHandler#LINE_ICONS_TABLE_NAME} . */
-    private static final String LINE_ICONS_TABLE_NAME = "bus_stations";
+    private static final String LINE_ICONS_TABLE_NAME = "line_icons";
 
     /**
      * The SQL where clause to select on {@link LineIconColumns#LINE_ID} : {@value #WHERE_CLAUSE_ID}

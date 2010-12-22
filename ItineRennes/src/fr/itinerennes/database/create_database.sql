@@ -80,7 +80,7 @@ CREATE UNIQUE INDEX "geo_explore_coords_idx" on geo_explore (lon_west ASC, lat_n
 
 CREATE TABLE "line_icons" (
     "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    "line_id" NULL NOT NULL,
+    "line_id" TEXT NOT NULL,
     "url" TEXT NOT NULL,
     "icon" BLOB
 );
