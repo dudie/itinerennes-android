@@ -93,9 +93,7 @@ public class BusService implements StationProvider {
                 LOGGER.debug("caching {} bus stations", null != stations ? stations.size() : 0);
             }
 
-            for (final BusStation station : stations) {
-                busCache.replace(station);
-            }
+            busCache.replace(stations);
 
             geoCache.markExplored(normalizedBbox, BusStation.class.getName());
         }

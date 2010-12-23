@@ -103,9 +103,8 @@ public final class BikeService implements StationProvider {
                         : 0);
             }
 
-            for (final BikeStation station : allStations) {
-                bikeCache.replace(station);
-            }
+            bikeCache.replace(allStations);
+
             // mark the whole world expored
             geoCache.markExplored(new BoundingBoxE6(180 * 1E6, 180 * 1E6, -180 * 1E6, -180 * 1E6),
                     BikeStation.class.getName());
