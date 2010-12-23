@@ -27,6 +27,7 @@ import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.model.Station;
+import fr.itinerennes.ui.views.MapQuestRenderer;
 import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.StationOverlayItem;
 
@@ -69,6 +70,9 @@ public class MapActivity extends Activity {
         setContentView(R.layout.main_map);
 
         this.map = (MapView) findViewById(R.id.map);
+
+        map.setRenderer(new MapQuestRenderer());
+
         map.setMapListener(new DelayedMapListener(this.map, 1000));
         map.setBuiltInZoomControls(true);
         // map.setMultiTouchControls(true);
@@ -180,7 +184,7 @@ public class MapActivity extends Activity {
         }
 
         this.map.cancelTasks();
-        
+
         // release the database connection
         for (final StationProvider cacheProvider : stationProviders) {
             cacheProvider.release();
