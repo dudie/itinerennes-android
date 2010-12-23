@@ -103,6 +103,28 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
     }
 
     /**
+     * Saves or updates the list of given values to the cache. A metadata is inserted (or updated)
+     * for each value in the metadata table ( {@value CacheProvider#METADATA_TABLE_NAME} ) and
+     * {@link CacheEntryHandler#replace(String, String, Object)} is called to store the value.
+     * 
+     * @param value
+     *            the list of values to store
+     */
+    public final synchronized void replace(final List<T> values) {
+
+        database.beginTransaction();
+        try {
+            for (T value : values) {
+                handler.replace(type, value.getId(), value);
+            }
+            database.setTransactionSuccessful();
+        } finally {
+            database.endTransaction();
+        }
+
+    }
+
+    /**
      * Search for a value in the cache identified by the given <code>id</code>.
      * 
      * @param id

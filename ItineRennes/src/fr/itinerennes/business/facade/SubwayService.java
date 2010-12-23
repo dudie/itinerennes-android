@@ -95,9 +95,8 @@ public class SubwayService implements StationProvider {
                         : 0);
             }
 
-            for (final SubwayStation station : allStations) {
-                subwayCache.replace(station);
-            }
+            subwayCache.replace(allStations);
+
             // mark the whole world expored
             geoCache.markExplored(new BoundingBoxE6(180 * 1E6, 180 * 1E6, -180 * 1E6, -180 * 1E6),
                     BikeStation.class.getName());
