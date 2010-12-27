@@ -51,4 +51,11 @@ public interface Station extends Cacheable {
      * @return the geographical localization of the station
      */
     GeoPoint getGeoPoint();
+
+    /**
+     * Gets the icon id of the station.
+     * 
+     * @return the id of the stations's icon
+     */
+    int getIconDrawableId();
 }

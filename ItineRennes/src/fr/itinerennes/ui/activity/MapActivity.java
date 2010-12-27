@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -153,6 +154,10 @@ public class MapActivity extends Activity {
                 }
                 final TextView title = (TextView) focusedBoxLayout.findViewById(R.id.station_name);
                 title.setText(item.getStation().getName());
+
+                final ImageView icon = (ImageView) focusedBoxLayout.findViewById(R.id.station_icon);
+                icon.setImageDrawable(getBaseContext().getResources().getDrawable(
+                        item.getStation().getIconDrawableId()));
 
                 focusedBoxLayout.setVisibility(View.VISIBLE);
                 map.setItemLayoutFocused(true);

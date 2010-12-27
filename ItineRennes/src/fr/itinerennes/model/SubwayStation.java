@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.andnav.osm.util.GeoPoint;
 
+import fr.itinerennes.R;
+
 /**
  * Represents a subway station.
  * 
@@ -308,4 +310,14 @@ public class SubwayStation implements Station {
         return builder.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.model.Station#getIconDrawableId()
+     */
+    @Override
+    public int getIconDrawableId() {
+
+        return R.drawable.icon_subway_16;
+    }
 }
