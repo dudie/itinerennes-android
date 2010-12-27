@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.andnav.osm.util.GeoPoint;
 
+import fr.itinerennes.R;
+
 /**
  * Bean representing a bike station.
  * 
@@ -336,4 +338,14 @@ public class BikeStation implements Station {
         return builder.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.model.Station#getIconDrawableId()
+     */
+    @Override
+    public int getIconDrawableId() {
+
+        return R.drawable.icon_bike;
+    }
 }
