@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
+import fr.itinerennes.business.facade.SubwayService;
+import fr.itinerennes.database.DatabaseHelper;
+import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.SubwayStation;
 
 /**
  * This activity uses the <code>subway_station.xml</code> layout and displays a window with
@@ -20,6 +24,9 @@ public class SubwayStationActivity extends Activity {
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(SubwayStationActivity.class);
+
+    /** The Subway Service. */
+    private SubwayService subwayService;
 
     /**
      * {@inheritDoc}
@@ -35,11 +42,44 @@ public class SubwayStationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subway_station);
 
-        final TextView name = (TextView) findViewById(R.station.name);
-        name.setText("Nom de la station de métro");
+        final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
+        subwayService = new SubwayService(dbHelper.getReadableDatabase());
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onResume()
+     */
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+
+        SubwayStation station;
+        try {
+            station = subwayService.getStation(getIntent().getExtras().getString("item"));
+
+            final TextView name = (TextView) findViewById(R.station.name);
+            name.setText(station.getName());
+        } catch (final GenericException e) {
+            LOGGER.debug("Can't load subway station information.", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onDestroy()
+     */
+    @Override
+    protected void onDestroy() {
+
+        subwayService.release();
+        super.onDestroy();
     }
 }
