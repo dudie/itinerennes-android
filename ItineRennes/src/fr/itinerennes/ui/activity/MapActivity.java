@@ -347,6 +347,11 @@ public class MapActivity extends Activity {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
+     */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
 
