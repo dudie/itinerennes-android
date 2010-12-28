@@ -6,7 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -16,13 +22,11 @@ import fr.itinerennes.R;
 import fr.itinerennes.business.facade.BusDepartureService;
 import fr.itinerennes.business.facade.BusRouteService;
 import fr.itinerennes.business.facade.BusService;
-import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
 import fr.itinerennes.model.BusRoute;
 import fr.itinerennes.model.BusStation;
-import fr.itinerennes.model.LineIcon;
 import fr.itinerennes.ui.adapter.BusTimeAdapter;
 
 /**
@@ -32,7 +36,7 @@ import fr.itinerennes.ui.adapter.BusTimeAdapter;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class BusStationActivity extends Activity {
+public class BusStationActivity extends Activity implements Runnable {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -45,7 +49,28 @@ public class BusStationActivity extends Activity {
     private BusRouteService busRouteService;
 
     /** The Departure Service. */
-    BusDepartureService busDepartureService;
+    private BusDepartureService busDepartureService;
+
+    /** The progress dialog while the activity is loading. */
+    private ProgressDialog progressDialog;
+
+    /** The diplsayed station. */
+    BusStation station;
+
+    /** The list of routes for this station. */
+    List<BusRoute> busRoutes;
+
+    /** The list of departures for those routes. */
+    List<BusDeparture> departures;
+
+    /** Handler for messages from thread which fetch information from the cache or the network. */
+    private Handler handler;
+
+    /** Message to send to handler in case of a successful download of informations. */
+    private final int MESSAGE_SUCCESS = 0;
+
+    /** Message to send to handler in case of a failed download of informations. */
+    private final int MESSAGE_FAILURE = 1;
 
     /**
      * {@inheritDoc}
@@ -60,6 +85,24 @@ public class BusStationActivity extends Activity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_station);
+
+        final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
+        busService = new BusService(dbHelper.getWritableDatabase());
+        busRouteService = new BusRouteService(dbHelper.getWritableDatabase());
+        busDepartureService = new BusDepartureService(dbHelper.getWritableDatabase());
+
+        handler = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+
+                updateUI();
+                if (msg.what != MESSAGE_SUCCESS) {
+                    showDialog(msg.what);
+                }
+                progressDialog.dismiss();
+            }
+        };
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
@@ -76,40 +119,23 @@ public class BusStationActivity extends Activity {
 
         super.onResume();
 
-        final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
-        busService = new BusService(dbHelper.getWritableDatabase());
-        busRouteService = new BusRouteService(dbHelper.getWritableDatabase());
-        busDepartureService = new BusDepartureService(dbHelper.getWritableDatabase());
+        progressDialog = ProgressDialog.show(this, "", "Loading. Please wait...", false, false);
 
-        final String stationId = getIntent().getExtras().getString("item");
+        Thread thread = new Thread(this);
+        thread.start();
 
-        try {
-            /* Displaying bus stop title */
-            BusStation station = busService.getStation(stationId);
+    }
+
+    private void updateUI() {
+
+        /* Displaying station name. */
+        if (station != null) {
             final TextView name = (TextView) findViewById(R.station.name);
             name.setText(station.getName());
-            LOGGER.debug("Bus stop title height = {}", name.getMeasuredHeight());
-        } catch (final GenericException e) {
-            LOGGER.debug(
-                    String.format("Can't load station informations for the station %s.", stationId),
-                    e);
         }
 
-        /* TJHU this must be replaced - start */
-        final KeolisService keoServ = new KeolisService();
-        List<LineIcon> allIcons = null;
-        try {
-            allIcons = keoServ.getAllLineIcons();
-        } catch (final GenericException e) {
-            LOGGER.error("error", e);
-        }
-        /* TJHU this must be replaced - end */
-
-        try {
-            /* Fetching routes informations for this station. */
-            final List<BusRoute> busRoutes = busRouteService.getStationRoutes(stationId);
-
-            /* Displaying routes icons. */
+        /* Displaying routes icons. */
+        if (busRoutes != null) {
             final ViewGroup lineList = (ViewGroup) findViewById(R.station.line_icon_list);
             lineList.removeAllViews();
             if (busRoutes != null) {
@@ -122,36 +148,91 @@ public class BusStationActivity extends Activity {
                     LOGGER.debug("Showing icon for line {}.", busRoute.getId());
                 }
             }
+        }
+
+        /* Displaying departures dates. */
+        if (departures != null) {
+            final ListView listTimes = (ListView) findViewById(R.station.list_bus);
+            listTimes.setAdapter(new BusTimeAdapter(getBaseContext(), departures));
+        }
+    }
+
+    @Override
+    public void run() {
+
+        int returnCode = MESSAGE_SUCCESS;
+
+        final String stationId = getIntent().getExtras().getString("item");
+
+        try {
+            /* Fetching station from the cache or the network. */
+            station = busService.getStation(stationId);
+        } catch (final GenericException e) {
+            LOGGER.debug(
+                    String.format("Can't load station informations for the station %s.", stationId),
+                    e);
+            returnCode = MESSAGE_FAILURE;
+        }
+
+        try {
+            /* Fetching routes informations for this station from the cache or the network. */
+            busRoutes = busRouteService.getStationRoutes(stationId);
+
         } catch (final GenericException e) {
             LOGGER.debug(
                     String.format("Can't load routes informations for the station %s.", stationId),
                     e);
+            returnCode = MESSAGE_FAILURE;
         }
 
         try {
-            /* Fetching and displaying departures informations for this station. */
-            final ListView listTimes = (ListView) findViewById(R.station.list_bus);
-            final List<BusDeparture> departures = busDepartureService
-                    .getStationDepartures(stationId);
+            /* Fetching departures informations from the network. */
 
-            listTimes.setAdapter(new BusTimeAdapter(getBaseContext(), departures));
+            departures = busDepartureService.getStationDepartures(stationId);
+
         } catch (final GenericException e) {
             LOGGER.debug(String.format("Can't load departures informations for the station %s.",
                     stationId), e);
+            returnCode = MESSAGE_FAILURE;
         }
 
+        handler.sendEmptyMessage(returnCode);
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see android.app.Activity#onPause()
+     * @see android.app.Activity#onDestroy()
      */
     @Override
-    protected void onPause() {
+    protected void onDestroy() {
 
         busService.release();
         busRouteService.release();
-        super.onPause();
+        super.onDestroy();
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+
+        AlertDialog dialog;
+        switch (id) {
+        case MESSAGE_FAILURE:
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.error_network).setCancelable(true)
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            dialog.cancel();
+                        }
+                    });
+            dialog = builder.create();
+            break;
+        default:
+            dialog = null;
+        }
+        return dialog;
     }
 }

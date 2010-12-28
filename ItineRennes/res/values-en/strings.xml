@@ -10,4 +10,5 @@
         <item quantity="one">slot</item>
         <item quantity="other">slots</item>
     </plurals>
+<string name="error_network">Some informations can not be fetched. Please verify your network.</string>
 </resources>

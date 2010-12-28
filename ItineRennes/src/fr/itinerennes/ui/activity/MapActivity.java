@@ -9,6 +9,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,37 +122,14 @@ public class MapActivity extends Activity {
                     focusedBoxLayout.setOnClickListener(new OnStationBoxClickListener());
                 }
 
-                try {
-                    final LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+                final ShowStationBoxTask showStationBoxTask = new ShowStationBoxTask();
 
-                    switch (item.getStation().getType()) {
-                    case Station.TYPE_BIKE:
-                        inflater.inflate(R.layout.bike_station_box_layout, focusedBoxLayout);
+                final LayoutInflater inflater = LayoutInflater.from(getBaseContext());
+                inflater.inflate(R.layout.station_box, focusedBoxLayout);
 
-                        final BikeStation bikeStation = (BikeStation) stationProviders[Station.TYPE_BIKE]
-                                .getStation(item.getStation().getId());
+                showStationBoxTask.execute(stationProviders[item.getStation().getType()], item
+                        .getStation().getId());
 
-                        final TextView availablesSlots = (TextView) focusedBoxLayout
-                                .findViewById(R.id.available_slots);
-                        availablesSlots.setText(String.valueOf(bikeStation.getAvailableSlots()));
-
-                        final TextView availablesBikes = (TextView) focusedBoxLayout
-                                .findViewById(R.id.available_bikes);
-                        availablesBikes.setText(String.valueOf(bikeStation.getAvailableBikes()));
-
-                        break;
-                    case Station.TYPE_BUS:
-                        inflater.inflate(R.layout.bus_station_box_layout, focusedBoxLayout);
-
-                        break;
-
-                    default:
-                        break;
-                    }
-                } catch (final GenericException e) {
-                    LOGGER.error("Error while trying to fetch station informations.");
-
-                }
                 final TextView title = (TextView) focusedBoxLayout.findViewById(R.id.station_name);
                 title.setText(item.getStation().getName());
 
@@ -269,5 +247,102 @@ public class MapActivity extends Activity {
 
             startActivity(myIntent);
         }
+    }
+
+    public void fillStationBox(final Station station) {
+
+        if (map.isItemLayoutFocused() && station != null) {
+            switch (station.getType()) {
+            case Station.TYPE_BIKE:
+
+                final TextView availablesSlots = (TextView) focusedBoxLayout
+                        .findViewById(R.id.available_slots);
+                availablesSlots
+                        .setText(String.valueOf(((BikeStation) station).getAvailableSlots()));
+
+                final TextView availablesBikes = (TextView) focusedBoxLayout
+                        .findViewById(R.id.available_bikes);
+                availablesBikes
+                        .setText(String.valueOf(((BikeStation) station).getAvailableBikes()));
+
+                focusedBoxLayout.findViewById(R.id.bike_station_box).setVisibility(View.VISIBLE);
+                break;
+            case Station.TYPE_BUS:
+                break;
+            case Station.TYPE_SUBWAY:
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+    /**
+     * A class derivating from ASyncTask to fetch informations of a station and show it in the box
+     * at the top of the map.
+     * 
+     * @author Olivier Boudet
+     */
+    private class ShowStationBoxTask extends AsyncTask<Object, Void, Station> {
+
+        @Override
+        protected void onPreExecute() {
+
+            if (focusedBoxLayout.findViewById(R.id.station_progressbar) != null) {
+                focusedBoxLayout.findViewById(R.id.station_progressbar).setVisibility(View.VISIBLE);
+            }
+        }
+
+        /**
+         * Fetch in background the stations.
+         * 
+         * @param params
+         *            The first object in this array in the station provider to use. The second is
+         *            the id of the station.
+         * @return the station
+         */
+        @Override
+        protected final Station doInBackground(final Object... params) {
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("doInBackground.start");
+            }
+
+            Station station = null;
+            try {
+                station = ((StationProvider) params[0]).getStation((String) params[1]);
+            } catch (final GenericException e) {
+                LOGGER.error("error while trying to fetch station.", e);
+            }
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("doInBackground.end - {} station", station);
+            }
+            return station;
+        }
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+         */
+        @Override
+        protected void onPostExecute(final Station station) {
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("onPostExecute.start");
+            }
+
+            fillStationBox(station);
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("onPostExecute.end");
+            }
+
+            if (focusedBoxLayout.findViewById(R.id.station_progressbar) != null) {
+                focusedBoxLayout.findViewById(R.id.station_progressbar).setVisibility(View.GONE);
+            }
+        }
+
     }
 }
