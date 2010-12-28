@@ -77,6 +77,21 @@ public class MapActivity extends Activity {
 
         map.setMapListener(new DelayedMapListener(this.map, 1000));
         map.setBuiltInZoomControls(true);
+
+        int latitude = ItineRennesConstants.CONFIG_RENNES_LAT;
+        int longitude = ItineRennesConstants.CONFIG_RENNES_LON;
+        int zoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
+
+        if (savedInstanceState != null) {
+            latitude = savedInstanceState.getInt("Latitude");
+            longitude = savedInstanceState.getInt("Longitude");
+            zoomLevel = savedInstanceState.getInt("ZoomLevel");
+        }
+
+        final GeoPoint center = new GeoPoint(latitude, longitude);
+        map.getController().setZoom(zoomLevel);
+        map.getController().setCenter(center);
+
         // map.setMultiTouchControls(true);
 
         this.myLocation = new MyLocationOverlay(this.getBaseContext(), map);
@@ -174,22 +189,6 @@ public class MapActivity extends Activity {
         }
 
         super.onDestroy();
-    }
-
-    @Override
-    public void onWindowFocusChanged(final boolean hasFocus) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onWindowFocusChanged");
-        }
-
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            final GeoPoint rennes = new GeoPoint(ItineRennesConstants.CONFIG_RENNES_LAT,
-                    ItineRennesConstants.CONFIG_RENNES_LON);
-            map.getController().setZoom(ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
-            map.getController().setCenter(rennes);
-        }
     }
 
     /**
@@ -347,4 +346,15 @@ public class MapActivity extends Activity {
         }
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putInt("Latitude", map.getMapCenterLatitudeE6());
+        savedInstanceState.putInt("Longitude", map.getMapCenterLongitudeE6());
+        savedInstanceState.putInt("ZoomLevel", map.getZoomLevel());
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
 }
