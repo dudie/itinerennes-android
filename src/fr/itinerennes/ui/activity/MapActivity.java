@@ -241,6 +241,8 @@ public class MapActivity extends Activity {
                 myIntent = new Intent(MapActivity.this, BikeStationActivity.class);
             } else if (stationItem.getStation().getType() == Station.TYPE_BUS) {
                 myIntent = new Intent(MapActivity.this, BusStationActivity.class);
+            } else if (stationItem.getStation().getType() == Station.TYPE_SUBWAY) {
+                myIntent = new Intent(MapActivity.this, SubwayStationActivity.class);
             }
 
             myIntent.putExtra("item", stationItem.getStation().getId());
