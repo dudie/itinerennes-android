@@ -61,6 +61,14 @@ public class LineIconService {
 
         BitmapDrawable image = null;
 
+        // TOBO a virer quand l'api keolis fournira les icones de ces lignes...
+        if (line.equalsIgnoreCase("151") || line.equalsIgnoreCase("152")
+                || line.equalsIgnoreCase("153") || line.equalsIgnoreCase("156")
+                || line.equalsIgnoreCase("158") || line.equalsIgnoreCase("172")
+                || line.equalsIgnoreCase("173")) {
+            return null;
+        }
+
         if (!iconCache.contains(line)) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(
@@ -71,9 +79,8 @@ public class LineIconService {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("replacing {} line icon data", allIcons.size());
             }
-            for (final LineIcon icon : allIcons) {
-                iconCache.replace(icon);
-            }
+
+            iconCache.replace(allIcons);
         }
 
         final LineIcon lineIcon = iconCache.load(line);

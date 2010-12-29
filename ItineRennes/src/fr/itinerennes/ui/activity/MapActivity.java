@@ -78,14 +78,17 @@ public class MapActivity extends Activity {
         map.setMapListener(new DelayedMapListener(this.map, 1000));
         map.setBuiltInZoomControls(true);
 
-        int latitude = ItineRennesConstants.CONFIG_RENNES_LAT;
-        int longitude = ItineRennesConstants.CONFIG_RENNES_LON;
-        int zoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
-
+        final int latitude;
+        final int longitude;
+        final int zoomLevel;
         if (savedInstanceState != null) {
             latitude = savedInstanceState.getInt("Latitude");
             longitude = savedInstanceState.getInt("Longitude");
             zoomLevel = savedInstanceState.getInt("ZoomLevel");
+        } else {
+            latitude = ItineRennesConstants.CONFIG_RENNES_LAT;
+            longitude = ItineRennesConstants.CONFIG_RENNES_LON;
+            zoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
         }
 
         final GeoPoint center = new GeoPoint(latitude, longitude);
@@ -353,7 +356,7 @@ public class MapActivity extends Activity {
      * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
      */
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(final Bundle savedInstanceState) {
 
         savedInstanceState.putInt("Latitude", map.getMapCenterLatitudeE6());
         savedInstanceState.putInt("Longitude", map.getMapCenterLongitudeE6());

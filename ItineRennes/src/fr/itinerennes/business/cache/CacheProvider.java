@@ -114,8 +114,8 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
 
         database.beginTransaction();
         try {
-            for (T value : values) {
-                handler.replace(type, value.getId(), value);
+            for (final T value : values) {
+                replace(value);
             }
             database.setTransactionSuccessful();
         } finally {
