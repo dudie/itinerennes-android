@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -104,7 +103,7 @@ public class MapActivity extends Activity {
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
 
-        final Button myLocation = (Button) findViewById(R.id.button_myPosition);
+        final ImageView myLocation = (ImageView) findViewById(R.id.button_myPosition);
         myLocation.setOnClickListener(new MyLocationClickListener());
 
         final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());

@@ -2,30 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:id="@+id/main_layout"
-	android:background="#FFFFFF">
+	android:id="@+id/main_layout">
 
-	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<LinearLayout
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:stretchColumns="1"
-		android:id="@+id/topbar_layout"
-		android:layout_below="@id/main_layout">
+		android:layout_height="@dimen/toolbar_height"
+		android:id="@+id/toolbar_layout"
+		android:layout_below="@id/main_layout"
+        android:background="@drawable/toolbar_background"
+            android:gravity="center_vertical">
+		
+		<EditText android:id="@+id/field_search" 
+            android:layout_weight="1" 
+			android:layout_width="fill_parent" android:layout_height="40dp" />
+	
+		<ImageView android:layout_width="2px"
+			android:layout_height="@dimen/toolbar_height" 
+			android:src="@drawable/toolbar_separator" />
+	
+		<ImageView android:id="@+id/button_layers"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/button_layers" android:padding="4dp" />
+	
+		<ImageView android:layout_width="2px"
+			android:layout_height="@dimen/toolbar_height" 
+			android:src="@drawable/toolbar_separator" />
+    
+        <ImageView android:id="@+id/button_myPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_mylocation" android:padding="4dp" />
 
-		<TableRow>
-
-			<EditText android:layout_column="1" android:id="@+id/field_search"
-				android:layout_width="fill_parent" android:layout_height="wrap_content" />
-
-			<Button android:layout_column="2" android:id="@+id/button_layers"
-				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:minWidth="20px" android:text="OK" />
-			<Button android:layout_column="3" android:id="@+id/button_myPosition"
-				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:minWidth="20px" android:text="OK" />
-
-		</TableRow>
-	</TableLayout>
+	</LinearLayout>
+	
 	<fr.itinerennes.ui.views.MapView
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/map"
@@ -33,7 +43,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:clickable="true"
-		android:layout_below="@+id/topbar_layout"
+		android:layout_below="@+id/toolbar_layout"
 		renderer="Mapnik"
 		/>
 
@@ -46,5 +56,9 @@
 		android:background="#95000000"
 		android:layout_alignTop="@+id/map">
 	</LinearLayout>
-
+	
+    <ImageView android:layout_width="fill_parent"
+        android:layout_height="10dp" 
+        android:src="@drawable/toolbar_shadow" 
+        android:layout_alignTop="@+id/map"/>
 </RelativeLayout>
