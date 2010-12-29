@@ -16,6 +16,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
+import fr.itinerennes.business.facade.LineIconService;
+import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
 
 /**
@@ -32,10 +34,15 @@ public class BusTimeAdapter implements ListAdapter {
     /** Bus time data. */
     private final List<BusDeparture> data;
 
-    public BusTimeAdapter(final Context context, final List<BusDeparture> departures) {
+    /** Line Icon Service. */
+    private final LineIconService lineIconService;
+
+    public BusTimeAdapter(final Context context, final List<BusDeparture> departures,
+            final LineIconService lineIconService) {
 
         this.data = departures;
         this.context = context;
+        this.lineIconService = lineIconService;
     }
 
     /**
@@ -154,8 +161,13 @@ public class BusTimeAdapter implements ListAdapter {
 
         final ImageView departureLineIconeView = (ImageView) busTimeView
                 .findViewById(R.station.bus_icon_line_departure);
-        departureLineIconeView.setImageDrawable(context.getResources().getDrawable(
-                R.drawable.tmp_lm1));
+        try {
+            departureLineIconeView.setImageDrawable(lineIconService.getIcon(data.get(position)
+                    .getRouteId()));
+        } catch (final GenericException e) {
+            LOGGER.error("Line icon for the route {} can not be fetched.", data.get(position)
+                    .getRouteId());
+        }
 
         final TextView departureHeadsignView = (TextView) busTimeView
                 .findViewById(R.station.bus_headsign_departure);

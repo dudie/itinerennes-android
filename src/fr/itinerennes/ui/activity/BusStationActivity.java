@@ -22,6 +22,7 @@ import fr.itinerennes.R;
 import fr.itinerennes.business.facade.BusDepartureService;
 import fr.itinerennes.business.facade.BusRouteService;
 import fr.itinerennes.business.facade.BusService;
+import fr.itinerennes.business.facade.LineIconService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
@@ -50,6 +51,9 @@ public class BusStationActivity extends Activity implements Runnable {
 
     /** The Departure Service. */
     private BusDepartureService busDepartureService;
+
+    /** The LineIcon Service. */
+    private LineIconService lineIconService;
 
     /** The progress dialog while the activity is loading. */
     private ProgressDialog progressDialog;
@@ -87,14 +91,15 @@ public class BusStationActivity extends Activity implements Runnable {
         setContentView(R.layout.bus_station);
 
         final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
-        busService = new BusService(dbHelper.getWritableDatabase());
-        busRouteService = new BusRouteService(dbHelper.getWritableDatabase());
-        busDepartureService = new BusDepartureService(dbHelper.getWritableDatabase());
+        busService = new BusService(dbHelper.getReadableDatabase());
+        busRouteService = new BusRouteService(dbHelper.getReadableDatabase());
+        busDepartureService = new BusDepartureService(dbHelper.getReadableDatabase());
+        lineIconService = new LineIconService(dbHelper.getReadableDatabase());
 
         handler = new Handler() {
 
             @Override
-            public void handleMessage(Message msg) {
+            public void handleMessage(final Message msg) {
 
                 updateUI();
                 if (msg.what != MESSAGE_SUCCESS) {
@@ -121,7 +126,7 @@ public class BusStationActivity extends Activity implements Runnable {
 
         progressDialog = ProgressDialog.show(this, "", "Loading. Please wait...", false, false);
 
-        Thread thread = new Thread(this);
+        final Thread thread = new Thread(this);
         thread.start();
 
     }
@@ -142,8 +147,13 @@ public class BusStationActivity extends Activity implements Runnable {
                 for (final BusRoute busRoute : busRoutes) {
                     final ImageView lineIcon = (ImageView) getLayoutInflater().inflate(
                             R.layout.line_icon, null);
-                    lineIcon.setImageDrawable(getBaseContext().getResources().getDrawable(
-                            R.drawable.tmp_lm1));
+                    try {
+                        lineIcon.setImageDrawable(lineIconService.getIcon(busRoute.getId()));
+                    } catch (final GenericException e) {
+                        LOGGER.error(
+                                String.format("Line icon for the route %s can not be fetched.",
+                                        busRoute.getId()), e);
+                    }
                     lineList.addView(lineIcon);
                     LOGGER.debug("Showing icon for line {}.", busRoute.getId());
                 }
@@ -153,7 +163,7 @@ public class BusStationActivity extends Activity implements Runnable {
         /* Displaying departures dates. */
         if (departures != null) {
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
-            listTimes.setAdapter(new BusTimeAdapter(getBaseContext(), departures));
+            listTimes.setAdapter(new BusTimeAdapter(getBaseContext(), departures, lineIconService));
         }
     }
 
@@ -209,21 +219,22 @@ public class BusStationActivity extends Activity implements Runnable {
 
         busService.release();
         busRouteService.release();
+        // lineIconService.release();
         super.onDestroy();
     }
 
     @Override
-    protected Dialog onCreateDialog(int id) {
+    protected Dialog onCreateDialog(final int id) {
 
         AlertDialog dialog;
         switch (id) {
         case MESSAGE_FAILURE:
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.error_network).setCancelable(true)
                     .setNeutralButton("OK", new DialogInterface.OnClickListener() {
 
                         @Override
-                        public void onClick(DialogInterface dialog, int id) {
+                        public void onClick(final DialogInterface dialog, final int id) {
 
                             dialog.cancel();
                         }
