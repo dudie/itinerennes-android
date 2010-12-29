@@ -19,7 +19,7 @@ public final class ItinerennesLoggerFactory implements ILoggerFactory {
     private static final String PKG_BASE = "fr.itinerennes.";
 
     /** The prefix prepended to all log tags. */
-    private static final String PREFIX = "ITR.";
+    public static final String PREFIX = "ITR.";
 
     /** The maximum tag length. */
     private static final int MAX_TAG_LENGTH = 23;
