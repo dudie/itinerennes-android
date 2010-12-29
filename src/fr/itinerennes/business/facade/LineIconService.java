@@ -1,5 +1,10 @@
 package fr.itinerennes.business.facade;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.impl.ItinerennesLoggerFactory;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,6 +14,7 @@ import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.cache.CacheProvider;
 import fr.itinerennes.business.cache.LineIconCacheEntryHandler;
 import fr.itinerennes.business.http.keolis.KeolisService;
+import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.LineIcon;
 
 /**
@@ -17,6 +23,9 @@ import fr.itinerennes.model.LineIcon;
  * @author Jérémie Huchet
  */
 public class LineIconService {
+
+    /** The event logger. */
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(LineIconService.class);
 
     /** The Keolis service. */
     private final KeolisService keolisService;;
@@ -37,12 +46,6 @@ public class LineIconService {
                 ItineRennesConstants.TTL_LINE_TRANSPORT_ICONS);
     }
 
-    public LineIconService() {
-
-        keolisService = new KeolisService();
-        iconCache = null;
-    }
-
     /**
      * Gets an icon representing a transport line.
      * 
@@ -50,9 +53,54 @@ public class LineIconService {
      *            the name of the line you want the icon
      * @return the drawable
      */
-    public final Drawable getIcon(final LineIcon icon /* String line */) {
+    public final Drawable getIcon(final String line) throws GenericException {
 
-        final byte[] data = keolisService.fetchIcon(icon);
-        return new BitmapDrawable(BitmapFactory.decodeByteArray(data, 0, data.length));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getIcon.start - line={}", line);
+        }
+
+        BitmapDrawable image = null;
+
+        if (!iconCache.contains(line)) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(
+                        "cache does not contains the icon for line {}, fetching all line icon data",
+                        line);
+            }
+            final List<LineIcon> allIcons = keolisService.getAllLineIcons();
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("replacing {} line icon data", allIcons.size());
+            }
+            for (final LineIcon icon : allIcons) {
+                iconCache.replace(icon);
+            }
+        }
+
+        final LineIcon lineIcon = iconCache.load(line);
+        if (null != lineIcon && null == lineIcon.getIconBytes()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("fetching icon for line {}", line);
+            }
+            final byte[] data = keolisService.fetchIcon(lineIcon);
+            lineIcon.setIconBytes(data);
+            iconCache.replace(lineIcon);
+        }
+
+        if (null != lineIcon && null != lineIcon.getIconBytes()) {
+            image = new BitmapDrawable(BitmapFactory.decodeByteArray(lineIcon.getIconBytes(), 0,
+                    lineIcon.getIconBytes().length));
+        }
+
+        if (null == image) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("icon not found for line {}, using default", line);
+            }
+            // TJHU mettre une image par défaut (besoin du contexte applicatif à priori)
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getIcon.end - imageNotNull={}", null != image);
+        }
+        return image;
     }
 }
