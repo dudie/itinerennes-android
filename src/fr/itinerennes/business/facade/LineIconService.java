@@ -69,7 +69,9 @@ public class LineIconService {
             return null;
         }
 
-        if (!iconCache.contains(line)) {
+        final LineIcon lineIcon = iconCache.load(line);
+
+        if (lineIcon == null) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(
                         "cache does not contains the icon for line {}, fetching all line icon data",
@@ -83,7 +85,6 @@ public class LineIconService {
             iconCache.replace(allIcons);
         }
 
-        final LineIcon lineIcon = iconCache.load(line);
         if (null != lineIcon && null == lineIcon.getIconBytes()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("fetching icon for line {}", line);
