@@ -47,12 +47,7 @@ public class BusStationHttpResponseHandler extends HttpResponseHandler<List<BusS
         try {
             final JSONArray jsonStations = jsonResult.getJSONArray("features");
             for (int i = 0; !jsonStations.isNull(i); i++) {
-                // TOBO delete this condition when gtfs data will be fixed
-                final JSONObject properties = jsonStations.getJSONObject(i).getJSONObject(
-                        "properties");
-                if (!properties.getString("stop_lat").equalsIgnoreCase("48.10994615")) {
-                    stations.add(convertJsonObjectToBusStation(jsonStations.getJSONObject(i)));
-                }
+                stations.add(convertJsonObjectToBusStation(jsonStations.getJSONObject(i)));
             }
         } catch (final JSONException e) {
             final String message = "a station can't be converted";
