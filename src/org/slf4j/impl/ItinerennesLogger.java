@@ -253,7 +253,8 @@ public class ItinerennesLogger extends AndroidLogger {
      */
     private String format(final String message) {
 
-        return String.format("%-30.30s %s", this.classname, message);
+        return String.format("%s%-30.30s %s", ItinerennesLoggerFactory.PREFIX, this.classname,
+                message);
     }
 
     /**
