@@ -7,14 +7,14 @@
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
 		android:gravity="center_vertical" 
-		android:padding="5px">
+		android:padding="5dp">
 
 		<ImageView android:src="@drawable/icon_bus_24" android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 		</ImageView>
 
 		<TextView android:id="@+station/name" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:textSize="20sp" android:paddingLeft="5px"
+			android:layout_height="wrap_content" android:textSize="20sp" android:paddingLeft="5dp"
             style="@style/BusStationHeader">
 		</TextView>
 
@@ -22,7 +22,8 @@
 
     <LinearLayout android:id="@+station/line_icon_list" android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:gravity="center_horizontal">
+		android:gravity="center"
+		android:layout_marginBottom="5dp">
         <!-- the icons of each lines are appended here -->
 	</LinearLayout>
 
@@ -31,15 +32,15 @@
 	
 		<ImageButton android:layout_alignParentLeft="true"
 			android:layout_centerHorizontal="true" android:layout_width="fill_parent"
-			android:layout_height="48px" android:layout_weight="1" />
+			android:layout_height="48dp" android:layout_weight="1" />
 	
 		<ImageButton android:layout_centerInParent="true"
 			android:layout_centerHorizontal="true" android:layout_width="fill_parent"
-			android:layout_height="48px" android:layout_weight="1" />
+			android:layout_height="48dp" android:layout_weight="1" />
 	
 		<ImageButton android:layout_alignParentRight="true"
 			android:layout_centerHorizontal="true" android:layout_width="fill_parent"
-			android:layout_height="48px" android:layout_weight="1" />
+			android:layout_height="48dp" android:layout_weight="1" />
         
     </LinearLayout>
 	
