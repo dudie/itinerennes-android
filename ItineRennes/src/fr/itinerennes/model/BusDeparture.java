@@ -12,6 +12,9 @@ public class BusDeparture {
     /** Id of the route. */
     private String routeId;
 
+    /** Short name of the route. */
+    private String routeShortName;
+
     /** Headsign of the trip. */
     private String headsign;
 
@@ -26,6 +29,16 @@ public class BusDeparture {
     public final String getRouteId() {
 
         return routeId;
+    }
+
+    /**
+     * Gets the route short name.
+     * 
+     * @return short name of the route
+     */
+    public final String getRouteShortName() {
+
+        return routeShortName;
     }
 
     /**
@@ -57,6 +70,17 @@ public class BusDeparture {
     public final void setRouteId(final String id) {
 
         this.routeId = id;
+    }
+
+    /**
+     * Sets the route short name.
+     * 
+     * @param shortName
+     *            route short name
+     */
+    public final void setRouteShortName(String shortName) {
+
+        this.routeShortName = shortName;
     }
 
     /**

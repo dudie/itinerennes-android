@@ -163,10 +163,10 @@ public class BusTimeAdapter implements ListAdapter {
                 .findViewById(R.station.bus_icon_line_departure);
         try {
             departureLineIconeView.setImageDrawable(lineIconService.getIcon(data.get(position)
-                    .getRouteId()));
+                    .getRouteShortName()));
         } catch (final GenericException e) {
             LOGGER.error("Line icon for the route {} can not be fetched.", data.get(position)
-                    .getRouteId());
+                    .getRouteShortName());
         }
 
         final TextView departureHeadsignView = (TextView) busTimeView

@@ -69,7 +69,7 @@ public class LineIconService {
             return null;
         }
 
-        final LineIcon lineIcon = iconCache.load(line);
+        LineIcon lineIcon = iconCache.load(line);
 
         if (lineIcon == null) {
             if (LOGGER.isDebugEnabled()) {
@@ -83,6 +83,8 @@ public class LineIconService {
             }
 
             iconCache.replace(allIcons);
+
+            lineIcon = iconCache.load(line);
         }
 
         if (null != lineIcon && null == lineIcon.getIconBytes()) {
