@@ -5,13 +5,13 @@
     android:layout_height="wrap_content" 
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:paddingBottom="5px">
+    android:paddingBottom="5dp">
     
     <ImageView
         android:id="@+station/bus_icon_line_departure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5px"/>
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="5dp"/>
     
     <LinearLayout
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
-            android:layout_margin="5px"
+            android:layout_margin="5dp"
             android:textStyle="bold"/>
     
 </LinearLayout>

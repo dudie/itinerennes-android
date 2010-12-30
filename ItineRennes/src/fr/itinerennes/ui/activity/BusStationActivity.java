@@ -59,22 +59,22 @@ public class BusStationActivity extends Activity implements Runnable {
     private ProgressDialog progressDialog;
 
     /** The diplsayed station. */
-    BusStation station;
+    private BusStation station;
 
     /** The list of routes for this station. */
-    List<BusRoute> busRoutes;
+    private List<BusRoute> busRoutes;
 
     /** The list of departures for those routes. */
-    List<BusDeparture> departures;
+    private List<BusDeparture> departures;
 
     /** Handler for messages from thread which fetch information from the cache or the network. */
     private Handler handler;
 
     /** Message to send to handler in case of a successful download of informations. */
-    private final int MESSAGE_SUCCESS = 0;
+    private static final int MESSAGE_SUCCESS = 0;
 
     /** Message to send to handler in case of a failed download of informations. */
-    private final int MESSAGE_FAILURE = 1;
+    private static final int MESSAGE_FAILURE = 1;
 
     /**
      * {@inheritDoc}
@@ -120,7 +120,7 @@ public class BusStationActivity extends Activity implements Runnable {
      * @see android.app.Activity#onResume()
      */
     @Override
-    protected void onResume() {
+    protected final void onResume() {
 
         super.onResume();
 
@@ -149,6 +149,7 @@ public class BusStationActivity extends Activity implements Runnable {
                             R.layout.line_icon, null);
                     try {
                         lineIcon.setImageDrawable(lineIconService.getIcon(busRoute.getId()));
+
                     } catch (final GenericException e) {
                         LOGGER.error(
                                 String.format("Line icon for the route %s can not be fetched.",
@@ -168,7 +169,7 @@ public class BusStationActivity extends Activity implements Runnable {
     }
 
     @Override
-    public void run() {
+    public final void run() {
 
         int returnCode = MESSAGE_SUCCESS;
 
@@ -215,7 +216,7 @@ public class BusStationActivity extends Activity implements Runnable {
      * @see android.app.Activity#onDestroy()
      */
     @Override
-    protected void onDestroy() {
+    protected final void onDestroy() {
 
         busService.release();
         busRouteService.release();
@@ -224,7 +225,7 @@ public class BusStationActivity extends Activity implements Runnable {
     }
 
     @Override
-    protected Dialog onCreateDialog(final int id) {
+    protected final Dialog onCreateDialog(final int id) {
 
         AlertDialog dialog;
         switch (id) {

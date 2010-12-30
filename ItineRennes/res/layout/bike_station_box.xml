@@ -13,7 +13,7 @@
        <TextView 
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:paddingRight="10px"
+           android:paddingRight="10dp"
            android:id="@+id/available_slots"
            style="@style/WhiteText"/>
        <TextView 

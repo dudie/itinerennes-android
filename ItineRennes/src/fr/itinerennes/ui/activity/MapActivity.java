@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,6 +47,12 @@ public class MapActivity extends Activity {
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapActivity.class);
 
+    /** Dialog identifier for layers selection. */
+    private static final int DIALOG_SELECT_LAYERS = 0;
+
+    /** Map listener event delayed listener constant value. */
+    private static final long MAP_LISTNER_DELAY = 1000;
+
     /** The map view. */
     private MapView map;
 
@@ -74,7 +83,7 @@ public class MapActivity extends Activity {
 
         map.setRenderer(new MapQuestRenderer());
 
-        map.setMapListener(new DelayedMapListener(this.map, 1000));
+        map.setMapListener(new DelayedMapListener(this.map, MAP_LISTNER_DELAY));
         map.setBuiltInZoomControls(true);
 
         final int latitude;
@@ -96,15 +105,17 @@ public class MapActivity extends Activity {
 
         // map.setMultiTouchControls(true);
 
+        final ImageView layersButton = (ImageView) this.findViewById(R.id.button_layers);
+        layersButton.setOnClickListener(new LayersClickListener());
+
         this.myLocation = new MyLocationOverlay(this.getBaseContext(), map);
         myLocation.enableMyLocation();
         map.getOverlays().add(myLocation);
+        final ImageView myLocationButton = (ImageView) findViewById(R.id.button_myPosition);
+        myLocationButton.setOnClickListener(new MyLocationClickListener());
 
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
-
-        final ImageView myLocation = (ImageView) findViewById(R.id.button_myPosition);
-        myLocation.setOnClickListener(new MyLocationClickListener());
 
         final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
         stationProviders[Station.TYPE_BIKE] = new BikeService(dbHelper.getWritableDatabase());
@@ -176,6 +187,35 @@ public class MapActivity extends Activity {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onCreateDialog(int)
+     */
+    @Override
+    protected Dialog onCreateDialog(final int id) {
+
+        AlertDialog dialog;
+        switch (id) {
+        case DIALOG_SELECT_LAYERS:
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.select_layer).setCancelable(true)
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(final DialogInterface dialog, final int id) {
+
+                            dialog.cancel();
+                        }
+                    });
+            dialog = builder.create();
+            break;
+        default:
+            dialog = null;
+        }
+        return dialog;
+    }
+
     @Override
     protected void onDestroy() {
 
@@ -213,7 +253,35 @@ public class MapActivity extends Activity {
         @Override
         public void onClick(final View button) {
 
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("myLocation.button.click");
+            }
             myLocation.followLocation(true);
+        }
+
+    }
+
+    /**
+     * An event listener which will display the dialog box to ask the user which layers he wants to
+     * show.
+     * 
+     * @author Jérémie Huchet
+     */
+    private class LayersClickListener implements OnClickListener {
+
+        /**
+         * Displays a dialog box with a list of displayable and selectable layers.
+         * 
+         * @param button
+         *            the view that was clicked
+         */
+        @Override
+        public void onClick(final View button) {
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("layers.button.click");
+            }
+            showDialog(DIALOG_SELECT_LAYERS);
         }
 
     }
@@ -252,7 +320,7 @@ public class MapActivity extends Activity {
         }
     }
 
-    public void fillStationBox(final Station station) {
+    public final void fillStationBox(final Station station) {
 
         if (map.isItemLayoutFocused() && station != null) {
             switch (station.getType()) {
@@ -355,7 +423,7 @@ public class MapActivity extends Activity {
      * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
      */
     @Override
-    public void onSaveInstanceState(final Bundle savedInstanceState) {
+    public final void onSaveInstanceState(final Bundle savedInstanceState) {
 
         savedInstanceState.putInt("Latitude", map.getMapCenterLatitudeE6());
         savedInstanceState.putInt("Longitude", map.getMapCenterLongitudeE6());

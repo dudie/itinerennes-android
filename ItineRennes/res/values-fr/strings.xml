@@ -10,5 +10,6 @@
         <item quantity="one">place</item>
         <item quantity="other">places</item>
     </plurals>
-<string name="error_network">Certaines informations n\'ont pas pu être récupérées. Merci de vérifier votre réseau.</string>
+    <string name="error_network">Certaines informations n\'ont pas pu être récupérées. Merci de vérifier votre réseau.</string>
+    <string name="select_layer">Sélectionnez des claques</string>
 </resources>
