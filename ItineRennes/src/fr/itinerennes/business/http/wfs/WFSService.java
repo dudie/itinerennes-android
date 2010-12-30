@@ -141,10 +141,15 @@ public class WFSService {
 
         final List<BusStation> data = httpService.execute(createWFSRequest(params), busHandler);
 
-        if (data.size() > 1) {
+        if (data != null && data.size() > 1) {
             throw new GenericException(ErrorCodeConstants.WFS_RESPONSE_ERROR,
                     "the request returned more than one result");
         }
-        return data.get(0);
+
+        if (data != null && !data.isEmpty()) {
+            return data.get(0);
+        } else {
+            return null;
+        }
     }
 }
