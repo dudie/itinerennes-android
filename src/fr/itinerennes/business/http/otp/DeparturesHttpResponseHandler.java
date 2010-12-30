@@ -21,30 +21,30 @@ import fr.itinerennes.model.BusDeparture;
  * "departures": [{
  *  "route":{
  *      "shortName":"8",
- *      "longName":"SAINT GREGOIRE - POTERIE",
+ *      "longName":"Ligne 8",
  *      "mode":"BUS",
  *      "agencyId":"1",
- *      "routeId":"08-88"
+ *      "routeId":"08"
  *      },
  *      "headsign":"8 St GrÃ©goire Ricocquais",
  *      "date":"2010-12-19T17:01:00+01:00"
  *  }, {
  *  "route":{
  *      "shortName":"8",
- *      "longName":"SAINT GREGOIRE - POTERIE",
+ *      "longName":"Ligne 8",
  *      "mode":"BUS",
  *      "agencyId":"1",
- *      "routeId":"08-88"
+ *      "routeId":"08"
  *      },
  *      "headsign":"8 St GrÃ©goire Ricocquais",
  *      "date":"2010-12-19T17:46:00+01:00"
  *  },{
  *  "route":{
  *      "shortName":"8",
- *      "longName":"SAINT GREGOIRE - POTERIE",
+ *      "longName":"Ligne 8",
  *      "mode":"BUS",
  *      "agencyId":"1",
- *      "routeId":"08-88"
+ *      "routeId":"08"
  *      },
  *      "headsign":"8 St GrÃ©goire Ricocquais",
  *      "date":"2010-12-19T18:31:00+01:00"
@@ -132,6 +132,7 @@ public final class DeparturesHttpResponseHandler extends HttpResponseHandler<Lis
         final BusDeparture departure = new BusDeparture();
 
         departure.setRouteId(jsonObject.getJSONObject("route").optString("routeId"));
+        departure.setRouteShortName(jsonObject.getJSONObject("route").optString("shortName"));
         departure.setHeadsign(jsonObject.optString("headsign"));
         departure.setDepartureDate(OTPUtils.convertJsonStringToDate(jsonObject.optString("date")));
 

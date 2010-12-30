@@ -148,15 +148,15 @@ public class BusStationActivity extends Activity implements Runnable {
                     final ImageView lineIcon = (ImageView) getLayoutInflater().inflate(
                             R.layout.line_icon, null);
                     try {
-                        lineIcon.setImageDrawable(lineIconService.getIcon(busRoute.getId()));
+                        lineIcon.setImageDrawable(lineIconService.getIcon(busRoute.getShortName()));
 
                     } catch (final GenericException e) {
-                        LOGGER.error(
-                                String.format("Line icon for the route %s can not be fetched.",
-                                        busRoute.getId()), e);
+                        LOGGER.error(String.format(
+                                "Line icon for the route %s can not be fetched.",
+                                busRoute.getShortName()), e);
                     }
                     lineList.addView(lineIcon);
-                    LOGGER.debug("Showing icon for line {}.", busRoute.getId());
+                    LOGGER.debug("Showing icon for line {}.", busRoute.getShortName());
                 }
             }
         }
