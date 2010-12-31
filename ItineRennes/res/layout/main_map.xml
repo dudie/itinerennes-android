@@ -23,7 +23,7 @@
 		<ImageView android:id="@+id/button_layers"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:src="@drawable/button_layers" android:padding="4dp" />
+			android:src="@drawable/toolbar_layers_icon" android:layout_margin="4dp" />
 	
 		<ImageView android:layout_width="2px"
 			android:layout_height="@dimen/toolbar_height" 
@@ -32,7 +32,7 @@
         <ImageView android:id="@+id/button_myPosition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/button_mylocation" android:padding="4dp" />
+            android:src="@drawable/toolbar_mylocation_icon" android:layout_margin="4dp" />
 
 	</LinearLayout>
 	
@@ -53,7 +53,8 @@
 		android:layout_height="wrap_content"
 		android:padding="10px"
 		android:visibility="gone"
-		android:background="#95000000"
+		android:background="@drawable/map_box_background"
+		android:layout_margin="5dp"
 		android:layout_alignTop="@+id/map">
 	</LinearLayout>
 	

@@ -346,6 +346,6 @@ public class BikeStation implements Station {
     @Override
     public int getIconDrawableId() {
 
-        return R.drawable.icon_bike;
+        return R.drawable.bike_marker_icon;
     }
 }
