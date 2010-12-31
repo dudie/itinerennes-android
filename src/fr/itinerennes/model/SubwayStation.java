@@ -316,8 +316,8 @@ public class SubwayStation implements Station {
      * @see fr.itinerennes.model.Station#getIconDrawableId()
      */
     @Override
-    public int getIconDrawableId() {
+    public final int getIconDrawableId() {
 
-        return R.drawable.icon_subway_16;
+        return R.drawable.subway_marker_icon;
     }
 }
