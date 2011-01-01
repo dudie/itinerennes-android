@@ -1,5 +1,6 @@
 package fr.itinerennes.ui.adapter;
 
+import java.text.DateFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -175,7 +176,8 @@ public class BusTimeAdapter implements ListAdapter {
 
         final TextView departureDateView = (TextView) busTimeView
                 .findViewById(R.station.bus_date_departure);
-        departureDateView.setText(data.get(position).getDepartureDate().toLocaleString());
+        departureDateView.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+                DateFormat.SHORT).format(data.get(position).getDepartureDate()));
 
         final TextView timeBeforeDepartureView = (TextView) busTimeView
                 .findViewById(R.station.bus_time_before_departure);
