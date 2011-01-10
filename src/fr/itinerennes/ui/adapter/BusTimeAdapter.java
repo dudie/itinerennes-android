@@ -241,8 +241,9 @@ public class BusTimeAdapter extends BaseAdapter {
                 departures = busDepartureService.getStationDepartures(station.getId(),
                         data.get(data.size() - 1).getDepartureDate());
             } catch (final GenericException e) {
-                // TOBO Auto-generated catch block
-                e.printStackTrace();
+                LOGGER.debug(String.format(
+                        "Can't fetch departures informations for station {} and date {} ",
+                        station.getId(), data.get(data.size() - 1).getDepartureDate()), e);
             }
 
             return departures;
