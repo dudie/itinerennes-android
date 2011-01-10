@@ -7,24 +7,28 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
-import android.database.DataSetObserver;
+import android.os.AsyncTask;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
+import fr.itinerennes.business.facade.BusDepartureService;
 import fr.itinerennes.business.facade.LineIconService;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
+import fr.itinerennes.model.BusStation;
+import fr.itinerennes.ui.activity.BusStationActivity;
 
 /**
  * @author Jérémie Huchet
  */
-public class BusTimeAdapter implements ListAdapter {
+public class BusTimeAdapter extends BaseAdapter {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BusTimeAdapter.class);
@@ -38,49 +42,34 @@ public class BusTimeAdapter implements ListAdapter {
     /** Line Icon Service. */
     private final LineIconService lineIconService;
 
-    public BusTimeAdapter(final Context context, final List<BusDeparture> departures,
-            final LineIconService lineIconService) {
+    /** View to add to the list when data is loading. */
+    private View pendingView = null;
+
+    /** Global instance of Layout inflater. */
+    private LayoutInflater inflater = null;
+
+    /** Bus station displayed in the activity. */
+    private final BusStation station;
+
+    /**
+     * Constructor.
+     * 
+     * @param c
+     *            The android context
+     * @param busStation
+     *            Station to display
+     * @param departures
+     *            departures to display in the list
+     * @param iconService
+     *            service to use to fetch keolis icons
+     */
+    public BusTimeAdapter(final Context c, final BusStation busStation,
+            final List<BusDeparture> departures, final LineIconService iconService) {
 
         this.data = departures;
-        this.context = context;
-        this.lineIconService = lineIconService;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.widget.Adapter#registerDataSetObserver(android.database.DataSetObserver)
-     */
-    @Override
-    public void registerDataSetObserver(final DataSetObserver observer) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("registerDataSetObserver.start");
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("registerDataSetObserver.end");
-        }
-
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.widget.Adapter#unregisterDataSetObserver(android.database.DataSetObserver)
-     */
-    @Override
-    public void unregisterDataSetObserver(final DataSetObserver observer) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("unregisterDataSetObserver.start");
-        }
-        // TJHU Auto-generated method stub
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("unregisterDataSetObserver.end");
-        }
-
+        this.context = c;
+        this.station = busStation;
+        this.lineIconService = iconService;
     }
 
     /**
@@ -89,13 +78,16 @@ public class BusTimeAdapter implements ListAdapter {
      * @see android.widget.Adapter#getCount()
      */
     @Override
-    public int getCount() {
+    public final int getCount() {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getCount.start");
         }
 
-        return data.size();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getCount.end");
+        }
+        return data.size() + 1;
     }
 
     /**
@@ -104,7 +96,7 @@ public class BusTimeAdapter implements ListAdapter {
      * @see android.widget.Adapter#getItem(int)
      */
     @Override
-    public BusDeparture getItem(final int position) {
+    public final BusDeparture getItem(final int position) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getItem.start");
@@ -118,7 +110,7 @@ public class BusTimeAdapter implements ListAdapter {
      * @see android.widget.Adapter#getItemId(int)
      */
     @Override
-    public long getItemId(final int position) {
+    public final long getItemId(final int position) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getItemId.start");
@@ -129,35 +121,27 @@ public class BusTimeAdapter implements ListAdapter {
     /**
      * {@inheritDoc}
      * 
-     * @see android.widget.Adapter#hasStableIds()
-     */
-    @Override
-    public boolean hasStableIds() {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("hasStableIds.start");
-        }
-        // TJHU Auto-generated method stub
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("hasStableIds.end");
-        }
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
      * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
      */
     @Override
-    public View getView(final int position, final View convertView, final ViewGroup parent) {
+    public final View getView(final int position, final View convertView, final ViewGroup parent) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getView.start");
         }
 
-        final LayoutInflater inflater = LayoutInflater.from(context);
+        if (inflater == null) {
+            inflater = LayoutInflater.from(context);
+        }
+
+        if (position == data.size()) {
+            if (pendingView == null) {
+                pendingView = inflater.inflate(R.layout.bus_time_pending, null);
+            }
+            new AppendTask().execute();
+            return (pendingView);
+        }
+
         final View busTimeView = inflater.inflate(R.layout.bus_time, null);
 
         final ImageView departureLineIconeView = (ImageView) busTimeView
@@ -195,29 +179,10 @@ public class BusTimeAdapter implements ListAdapter {
     /**
      * {@inheritDoc}
      * 
-     * @see android.widget.Adapter#getItemViewType(int)
-     */
-    @Override
-    public int getItemViewType(final int position) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getItemViewType.start");
-        }
-        // TJHU Auto-generated method stub
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getItemViewType.end");
-        }
-        return 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
      * @see android.widget.Adapter#getViewTypeCount()
      */
     @Override
-    public int getViewTypeCount() {
+    public final int getViewTypeCount() {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getViewTypeCount.start");
@@ -227,63 +192,72 @@ public class BusTimeAdapter implements ListAdapter {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getViewTypeCount.end");
         }
-        return 1;
+
+        return (super.getViewTypeCount() + 1);
     }
 
     /**
-     * {@inheritDoc}
+     * Takes a list of @link {@link BusDeparture} and add them to the ListView.
      * 
-     * @see android.widget.Adapter#isEmpty()
+     * @param departures
+     *            departures to append to the ListView
      */
-    @Override
-    public boolean isEmpty() {
+    public final void addDepartures(final List<BusDeparture> departures) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("isEmpty.start");
+            LOGGER.debug("addDepartures.start");
         }
-        // TJHU Auto-generated method stub
+
+        data.addAll(departures);
+        notifyDataSetChanged();
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("isEmpty.end");
+            LOGGER.debug("addDepartures.end");
         }
-        return false;
     }
 
     /**
-     * {@inheritDoc}
+     * Class used to fetch departures in background and append them to the ListView on the @link
+     * {@link BusStationActivity}.
      * 
-     * @see android.widget.ListAdapter#areAllItemsEnabled()
+     * @author Olivier Boudet
      */
-    @Override
-    public boolean areAllItemsEnabled() {
+    class AppendTask extends AsyncTask<Void, Void, List<BusDeparture>> {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("areAllItemsEnabled.start");
-        }
-        // TJHU Auto-generated method stub
+        /**
+         * {@inheritDoc}
+         * 
+         * @see android.os.AsyncTask#doInBackground(Params[])
+         */
+        @Override
+        protected List<BusDeparture> doInBackground(final Void... params) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("areAllItemsEnabled.end");
+            final DatabaseHelper dbHelper = new DatabaseHelper(context);
+            final BusDepartureService busDepartureService = new BusDepartureService(
+                    dbHelper.getReadableDatabase());
+            List<BusDeparture> departures = null;
+
+            try {
+                departures = busDepartureService.getStationDepartures(station.getId(),
+                        data.get(data.size() - 1).getDepartureDate());
+            } catch (final GenericException e) {
+                // TOBO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            return departures;
         }
-        return false;
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+         */
+        @Override
+        protected void onPostExecute(final List<BusDeparture> departures) {
+
+            addDepartures(departures);
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.widget.ListAdapter#isEnabled(int)
-     */
-    @Override
-    public boolean isEnabled(final int position) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("isEnabled.start");
-        }
-        // TJHU Auto-generated method stub
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("isEnabled.end");
-        }
-        return false;
-    }
 }

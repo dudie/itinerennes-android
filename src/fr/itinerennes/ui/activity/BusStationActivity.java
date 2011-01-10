@@ -124,7 +124,8 @@ public class BusStationActivity extends Activity implements Runnable {
 
         super.onResume();
 
-        progressDialog = ProgressDialog.show(this, "", "Loading. Please wait...", false, false);
+        progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.loading),
+                false, true);
 
         final Thread thread = new Thread(this);
         thread.start();
@@ -164,7 +165,8 @@ public class BusStationActivity extends Activity implements Runnable {
         /* Displaying departures dates. */
         if (departures != null) {
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
-            listTimes.setAdapter(new BusTimeAdapter(getBaseContext(), departures, lineIconService));
+            listTimes.setAdapter(new BusTimeAdapter(getBaseContext(), station, departures,
+                    lineIconService));
         }
     }
 

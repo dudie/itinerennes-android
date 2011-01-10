@@ -3,6 +3,8 @@ package fr.itinerennes.business.http.otp;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
@@ -108,15 +110,22 @@ public class OTPService {
      * 
      * @param id
      *            id of station
+     * @param dateDeparture
+     *            the minimum date and time for departures
      * @throws GenericException
      *             unable to encode request parameters
      * @return a list of {@link BusDeparture}.
      */
-    public final List<BusDeparture> getStopDepartures(final String id) throws GenericException {
+    public final List<BusDeparture> getStopDepartures(final String id, final Date dateDeparture)
+            throws GenericException {
 
         final List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(1);
 
         params.add(new BasicNameValuePair("id", id));
+
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateDeparture);
+        params.add(new BasicNameValuePair("timestamp", Long.toString(calendar.getTimeInMillis())));
 
         final List<BusDeparture> data = httpService.execute(
                 createOTPRequest(ItineRennesConstants.OTP_API_DEPARTURES_PATH, params),
@@ -124,5 +133,4 @@ public class OTPService {
 
         return data;
     }
-
 }
