@@ -1,5 +1,6 @@
 package fr.itinerennes.business.facade;
 
+import java.util.Date;
 import java.util.List;
 
 import android.database.sqlite.SQLiteDatabase;
@@ -29,8 +30,33 @@ public class BusDepartureService {
         otpService = new OTPService();
     }
 
-    public List<BusDeparture> getStationDepartures(final String stationId) throws GenericException {
+    /**
+     * Gets first departures for the given station.
+     * 
+     * @param stationId
+     *            id of the station
+     * @return the list of departures
+     * @throws GenericException
+     */
+    public final List<BusDeparture> getStationDepartures(final String stationId)
+            throws GenericException {
 
-        return otpService.getStopDepartures(stationId);
+        return getStationDepartures(stationId, new Date());
+    }
+
+    /**
+     * Gets first departures after the given date for the given station.
+     * 
+     * @param stationId
+     *            id of the station
+     * @param departureDate
+     *            minimum date for departures to retrieve
+     * @return the list of departures
+     * @throws GenericException
+     */
+    public final List<BusDeparture> getStationDepartures(final String stationId,
+            final Date departureDate) throws GenericException {
+
+        return otpService.getStopDepartures(stationId, departureDate);
     }
 }

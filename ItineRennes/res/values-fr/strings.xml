@@ -12,4 +12,5 @@
     </plurals>
     <string name="error_network">Certaines informations n\'ont pas pu être récupérées. Merci de vérifier votre réseau.</string>
     <string name="select_layer">Sélectionnez des claques</string>
+    <string name="loading">Chargement... Merci de patienter.</string>
 </resources>
