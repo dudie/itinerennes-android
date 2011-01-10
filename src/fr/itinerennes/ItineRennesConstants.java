@@ -91,8 +91,11 @@ public class ItineRennesConstants {
     /*
      * Cache life time values.
      */
+    /** Minimum time between two calls to a keolis getAll*Stations() calls. */
+    public static final int MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS = 3600;
+
     /** Life time for {@link BikeStation}s : {@value #TTL_BIKE_STATIONS} seconds. */
-    public static final int TTL_BIKE_STATIONS = 3600;
+    public static final int TTL_BIKE_STATIONS = 60;
 
     /** Life time for {@link SubwayStation}s : {@value #TTL_SUBWAY_STATIONS} seconds. */
     public static final int TTL_SUBWAY_STATIONS = 3600;

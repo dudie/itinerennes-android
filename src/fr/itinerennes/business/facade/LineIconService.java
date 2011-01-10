@@ -30,6 +30,9 @@ public class LineIconService {
     /** The Keolis service. */
     private final KeolisService keolisService;;
 
+    /** The service delayer used to retrieve icons. */
+    private final AbstractDelayedService<LineIcon> delayedService;
+
     /** The cache for line icons. */
     private final CacheProvider<LineIcon> iconCache;
 
@@ -44,6 +47,15 @@ public class LineIconService {
         keolisService = new KeolisService();
         iconCache = new CacheProvider<LineIcon>(database, new LineIconCacheEntryHandler(database),
                 ItineRennesConstants.TTL_LINE_TRANSPORT_ICONS);
+        delayedService = new AbstractDelayedService<LineIcon>(iconCache,
+                ItineRennesConstants.MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS) {
+
+            @Override
+            protected List<LineIcon> getAll() throws GenericException {
+
+                return keolisService.getAllLineIcons();
+            }
+        };
     }
 
     /**
@@ -69,19 +81,7 @@ public class LineIconService {
         LineIcon lineIcon = iconCache.load(line);
 
         if (lineIcon == null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(
-                        "cache does not contains the icon for line {}, fetching all line icon data",
-                        line);
-            }
-            final List<LineIcon> allIcons = keolisService.getAllLineIcons();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("replacing {} line icon data", allIcons.size());
-            }
-
-            iconCache.replace(allIcons);
-
-            lineIcon = iconCache.load(line);
+            lineIcon = delayedService.getResource(line);
         }
 
         if (null != lineIcon && null == lineIcon.getIconBytes()) {
