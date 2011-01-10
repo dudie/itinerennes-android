@@ -62,10 +62,7 @@ public class LineIconService {
         BitmapDrawable image = null;
 
         // TOBO a virer quand l'api keolis fournira les icones de ces lignes...
-        if (line.equalsIgnoreCase("151") || line.equalsIgnoreCase("152")
-                || line.equalsIgnoreCase("153") || line.equalsIgnoreCase("156")
-                || line.equalsIgnoreCase("158") || line.equalsIgnoreCase("172")
-                || line.equalsIgnoreCase("173")) {
+        if (line.equalsIgnoreCase("158")) {
             return null;
         }
 
