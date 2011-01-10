@@ -23,7 +23,7 @@ public interface StationProvider {
      * @throws GenericException
      *             unable to retrieve the requested station
      */
-    Station getStation(String id) throws GenericException;
+    <T extends Station> T getStation(String id) throws GenericException;
 
     /**
      * Gets stations located in the given bounding box.
