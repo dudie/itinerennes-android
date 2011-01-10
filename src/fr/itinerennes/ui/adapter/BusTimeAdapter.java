@@ -45,6 +45,13 @@ public class BusTimeAdapter extends BaseAdapter {
     /** View to add to the list when data is loading. */
     private View pendingView = null;
 
+    /**
+     * Flag to indicate if the list should be extended again. Needed when the departures service
+     * returns no more results, for example when requesting departures for the next day. TOBO to
+     * delete when the issue ITR-19 will be fixed.
+     */
+    private boolean continueAppending = true;
+
     /** Global instance of Layout inflater. */
     private LayoutInflater inflater = null;
 
@@ -87,6 +94,11 @@ public class BusTimeAdapter extends BaseAdapter {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getCount.end");
         }
+        if (!continueAppending) {
+            // return the real size of data list
+            return data.size();
+        }
+        // return one more line to show the pending view
         return data.size() + 1;
     }
 
@@ -134,46 +146,53 @@ public class BusTimeAdapter extends BaseAdapter {
             inflater = LayoutInflater.from(context);
         }
 
+        View view = null;
+
         if (position == data.size()) {
             if (pendingView == null) {
                 pendingView = inflater.inflate(R.layout.bus_time_pending, null);
             }
+
             new AppendTask().execute();
-            return (pendingView);
+            view = pendingView;
+
+        } else {
+
+            final View busTimeView = inflater.inflate(R.layout.bus_time, null);
+
+            final ImageView departureLineIconeView = (ImageView) busTimeView
+                    .findViewById(R.station.bus_icon_line_departure);
+            try {
+                departureLineIconeView.setImageDrawable(lineIconService.getIcon(data.get(position)
+                        .getRouteShortName()));
+            } catch (final GenericException e) {
+                LOGGER.error("Line icon for the route {} can not be fetched.", data.get(position)
+                        .getRouteShortName());
+            }
+
+            final TextView departureHeadsignView = (TextView) busTimeView
+                    .findViewById(R.station.bus_headsign_departure);
+            departureHeadsignView.setText(data.get(position).getHeadsign());
+
+            final TextView departureDateView = (TextView) busTimeView
+                    .findViewById(R.station.bus_date_departure);
+            departureDateView.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
+                    DateFormat.SHORT).format(data.get(position).getDepartureDate()));
+
+            final TextView timeBeforeDepartureView = (TextView) busTimeView
+                    .findViewById(R.station.bus_time_before_departure);
+
+            timeBeforeDepartureView.setText(DateUtils.getRelativeTimeSpanString(data.get(position)
+                    .getDepartureDate().getTime(), System.currentTimeMillis(),
+                    DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
+
+            view = busTimeView;
         }
-
-        final View busTimeView = inflater.inflate(R.layout.bus_time, null);
-
-        final ImageView departureLineIconeView = (ImageView) busTimeView
-                .findViewById(R.station.bus_icon_line_departure);
-        try {
-            departureLineIconeView.setImageDrawable(lineIconService.getIcon(data.get(position)
-                    .getRouteShortName()));
-        } catch (final GenericException e) {
-            LOGGER.error("Line icon for the route {} can not be fetched.", data.get(position)
-                    .getRouteShortName());
-        }
-
-        final TextView departureHeadsignView = (TextView) busTimeView
-                .findViewById(R.station.bus_headsign_departure);
-        departureHeadsignView.setText(data.get(position).getHeadsign());
-
-        final TextView departureDateView = (TextView) busTimeView
-                .findViewById(R.station.bus_date_departure);
-        departureDateView.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
-                DateFormat.SHORT).format(data.get(position).getDepartureDate()));
-
-        final TextView timeBeforeDepartureView = (TextView) busTimeView
-                .findViewById(R.station.bus_time_before_departure);
-
-        timeBeforeDepartureView.setText(DateUtils.getRelativeTimeSpanString(data.get(position)
-                .getDepartureDate().getTime(), System.currentTimeMillis(),
-                DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getView.end");
         }
-        return busTimeView;
+        return view;
     }
 
     /**
@@ -207,8 +226,12 @@ public class BusTimeAdapter extends BaseAdapter {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addDepartures.start");
         }
+        if (departures != null) {
 
-        data.addAll(departures);
+            data.addAll(departures);
+        } else {
+            continueAppending = false;
+        }
         notifyDataSetChanged();
 
         if (LOGGER.isDebugEnabled()) {
@@ -244,6 +267,8 @@ public class BusTimeAdapter extends BaseAdapter {
                 LOGGER.debug(String.format(
                         "Can't fetch departures informations for station {} and date {} ",
                         station.getId(), data.get(data.size() - 1).getDepartureDate()), e);
+            } finally {
+                dbHelper.close();
             }
 
             return departures;

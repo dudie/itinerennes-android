@@ -82,25 +82,27 @@ public final class DeparturesHttpResponseHandler extends HttpResponseHandler<Lis
 
             try {
                 if (null != jsonStop) {
-                    // try to handle the response as if there is one departure
-                    final JSONObject jsonDeparture = jsonStop.optJSONObject("departures");
-                    if (null != jsonDeparture) {
-                        if (LOGGER.isDebugEnabled()) {
-                            LOGGER.debug("response contains 1 departure");
-                        }
-                        departures = new ArrayList<BusDeparture>(1);
-                        departures.add(convertJsonObjectToDeparture(jsonDeparture));
-                    } else {
+                    if (jsonStop.has("departures")) {
+                        // try to handle the response as if there is one departure
+                        final JSONObject jsonDeparture = jsonStop.optJSONObject("departures");
+                        if (null != jsonDeparture) {
+                            if (LOGGER.isDebugEnabled()) {
+                                LOGGER.debug("response contains 1 departure");
+                            }
+                            departures = new ArrayList<BusDeparture>(1);
+                            departures.add(convertJsonObjectToDeparture(jsonDeparture));
+                        } else {
 
-                        JSONArray jsonDepartures;
+                            JSONArray jsonDepartures;
 
-                        jsonDepartures = jsonStop.getJSONArray("departures");
+                            jsonDepartures = jsonStop.getJSONArray("departures");
 
-                        departures = new ArrayList<BusDeparture>(jsonDepartures.length());
+                            departures = new ArrayList<BusDeparture>(jsonDepartures.length());
 
-                        for (int i = 0; !jsonDepartures.isNull(i); i++) {
-                            departures.add(convertJsonObjectToDeparture(jsonDepartures
-                                    .getJSONObject(i)));
+                            for (int i = 0; !jsonDepartures.isNull(i); i++) {
+                                departures.add(convertJsonObjectToDeparture(jsonDepartures
+                                        .getJSONObject(i)));
+                            }
                         }
                     }
                 }
