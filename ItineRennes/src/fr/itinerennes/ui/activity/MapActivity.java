@@ -65,6 +65,12 @@ public class MapActivity extends Activity {
     /** The focused station layout. */
     private LinearLayout focusedBoxLayout;
 
+    /** The GeoPoint on which center the map when showing the activity. */
+    private GeoPoint defaultMapCenter;
+
+    /** The zoom level of the map when showing the activity. */
+    private int defaultZoomLevel;
+
     /**
      * Called when activity starts.
      * <p>
@@ -88,21 +94,16 @@ public class MapActivity extends Activity {
 
         final int latitude;
         final int longitude;
-        final int zoomLevel;
         if (savedInstanceState != null) {
             latitude = savedInstanceState.getInt("Latitude");
             longitude = savedInstanceState.getInt("Longitude");
-            zoomLevel = savedInstanceState.getInt("ZoomLevel");
+            defaultZoomLevel = savedInstanceState.getInt("ZoomLevel");
         } else {
             latitude = ItineRennesConstants.CONFIG_RENNES_LAT;
             longitude = ItineRennesConstants.CONFIG_RENNES_LON;
-            zoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
+            defaultZoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
         }
-
-        final GeoPoint center = new GeoPoint(latitude, longitude);
-        map.getController().setZoom(zoomLevel);
-        map.getController().setCenter(center);
-
+        defaultMapCenter = new GeoPoint(latitude, longitude);
         // map.setMultiTouchControls(true);
 
         final ImageView layersButton = (ImageView) this.findViewById(R.id.button_layers);
@@ -231,6 +232,25 @@ public class MapActivity extends Activity {
         }
 
         super.onDestroy();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onWindowFocusChanged(boolean)
+     */
+    @Override
+    public void onWindowFocusChanged(final boolean hasFocus) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onWindowFocusChanged");
+        }
+
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            map.getController().setZoom(defaultZoomLevel);
+            map.getController().setCenter(defaultMapCenter);
+        }
     }
 
     /**
