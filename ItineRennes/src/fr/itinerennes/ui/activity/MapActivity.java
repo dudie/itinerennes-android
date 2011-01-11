@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ZoomControls;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
@@ -90,8 +91,28 @@ public class MapActivity extends Activity {
         map.setRenderer(new MapQuestRenderer());
 
         map.setMapListener(new DelayedMapListener(this.map, MAP_LISTNER_DELAY));
-        map.setBuiltInZoomControls(true);
 
+        // Zoom Buttons
+        map.setBuiltInZoomControls(false);
+        final ZoomControls zoomControls = (ZoomControls) findViewById(R.id.zoom_controls);
+        zoomControls.setOnZoomInClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(final View v) {
+
+                map.getController().setZoom(map.getZoomLevel() + 1);
+            }
+        });
+        zoomControls.setOnZoomOutClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(final View v) {
+
+                map.getController().setZoom(map.getZoomLevel() - 1);
+            }
+        });
+
+        // center of the map
         final int latitude;
         final int longitude;
         if (savedInstanceState != null) {
