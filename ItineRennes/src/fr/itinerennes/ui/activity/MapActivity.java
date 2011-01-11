@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ZoomControls;
 
@@ -173,7 +174,8 @@ public class MapActivity extends Activity {
                     focusedBoxLayout.setOnClickListener(new OnStationBoxClickListener());
                 }
 
-                final ShowStationBoxTask showStationBoxTask = new ShowStationBoxTask();
+                final ShowStationBoxTask showStationBoxTask = new ShowStationBoxTask(item
+                        .getStation().getType());
 
                 final LayoutInflater inflater = LayoutInflater.from(getBaseContext());
                 inflater.inflate(R.layout.station_box, focusedBoxLayout);
@@ -344,11 +346,13 @@ public class MapActivity extends Activity {
             Intent myIntent = null;
 
             if (stationItem.getStation().getType() == Station.TYPE_BIKE) {
-                myIntent = new Intent(MapActivity.this, BikeStationActivity.class);
+                // BikeStationActivity development is temporarily stopped
+                // myIntent = new Intent(MapActivity.this, BikeStationActivity.class);
             } else if (stationItem.getStation().getType() == Station.TYPE_BUS) {
                 myIntent = new Intent(MapActivity.this, BusStationActivity.class);
             } else if (stationItem.getStation().getType() == Station.TYPE_SUBWAY) {
-                myIntent = new Intent(MapActivity.this, SubwayStationActivity.class);
+                // SubwayStationActivity development is temporarily stopped
+                // myIntent = new Intent(MapActivity.this, SubwayStationActivity.class);
             }
 
             myIntent.putExtra("item", stationItem.getStation().getId());
@@ -371,17 +375,22 @@ public class MapActivity extends Activity {
             switch (station.getType()) {
             case Station.TYPE_BIKE:
 
+                final BikeStation bikeStation = (BikeStation) station;
                 final TextView availablesSlots = (TextView) focusedBoxLayout
                         .findViewById(R.id.available_slots);
-                availablesSlots
-                        .setText(String.valueOf(((BikeStation) station).getAvailableSlots()));
+                availablesSlots.setText(String.valueOf(bikeStation.getAvailableSlots()));
 
                 final TextView availablesBikes = (TextView) focusedBoxLayout
                         .findViewById(R.id.available_bikes);
-                availablesBikes
-                        .setText(String.valueOf(((BikeStation) station).getAvailableBikes()));
+                availablesBikes.setText(String.valueOf(bikeStation.getAvailableBikes()));
 
-                focusedBoxLayout.findViewById(R.id.bike_station_box).setVisibility(View.VISIBLE);
+                final ProgressBar gauge = (ProgressBar) focusedBoxLayout
+                        .findViewById(R.id.bike_station_gauge);
+                gauge.setMax(bikeStation.getAvailableBikes() + bikeStation.getAvailableSlots());
+                gauge.setIndeterminate(false);
+                gauge.setProgress(bikeStation.getAvailableBikes());
+                gauge.setSecondaryProgress(bikeStation.getAvailableBikes()
+                        + bikeStation.getAvailableSlots());
                 break;
             case Station.TYPE_BUS:
                 focusedBoxLayout.setBackgroundResource(R.drawable.map_box_background_right_arrow);
@@ -405,10 +414,26 @@ public class MapActivity extends Activity {
      */
     private class ShowStationBoxTask extends AsyncTask<Object, Void, Station> {
 
+        /** The type of the station. */
+        private final int type;
+
+        /**
+         * Creates the task to fill the station box.
+         * 
+         * @param stationType
+         *            the type of the station
+         */
+        public ShowStationBoxTask(final int stationType) {
+
+            this.type = stationType;
+        }
+
         @Override
         protected void onPreExecute() {
 
-            if (focusedBoxLayout.findViewById(R.id.station_progressbar) != null) {
+            if (Station.TYPE_BIKE == type) {
+                focusedBoxLayout.findViewById(R.id.bike_station_box).setVisibility(View.VISIBLE);
+            } else if (focusedBoxLayout.findViewById(R.id.station_progressbar) != null) {
                 focusedBoxLayout.findViewById(R.id.station_progressbar).setVisibility(View.VISIBLE);
             }
         }

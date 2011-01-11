@@ -1,31 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>   
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-       android:orientation="vertical"
+       android:orientation="horizontal"
+       android:gravity="center"
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:visibility="gone"
        android:id="@+id/bike_station_box">
-	<TextView 
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/label_available_slots"
-           style="@style/WhiteText"/>
-       <TextView 
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:paddingRight="10dp"
-           android:id="@+id/available_slots"
-           style="@style/WhiteText"/>
-       <TextView 
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/label_available_bikes"
-           style="@style/WhiteText"/>
-       <TextView 
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:id="@+id/available_bikes"
-           style="@style/WhiteText"/>
-    <ProgressBar android:indeterminate="true" android:layout_width="fill_parent" android:layout_height="10dp" 
+
+    <ImageView android:src="@drawable/bike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView android:id="@+id/available_bikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textStyle="bold"
+        android:text="-"
+        style="@style/WhiteText"/>
+
+    <ProgressBar android:id="@+id/bike_station_gauge"
+        android:indeterminate="true" 
+        android:layout_width="wrap_content" 
+        android:layout_height="10dp" 
+        android:layout_weight="1"
         style="?android:attr/progressBarStyleHorizontal"/>
+
+    <TextView android:id="@+id/available_slots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textStyle="bold"
+        android:text="-"
+        style="@style/WhiteText"/>
+
+    <ImageView android:src="@drawable/slot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>
