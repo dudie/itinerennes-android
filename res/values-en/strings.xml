@@ -1,6 +1,4 @@
 <resources>
-	<string name="label_available_slots">Available slots :\u0020</string>
-	<string name="label_available_bikes">Available bikes :\u0020</string>
 	<string name="label_lines_dots">Lines :\u0020</string>
 	<plurals name="label_bikes">
         <item quantity="one">bike</item>
