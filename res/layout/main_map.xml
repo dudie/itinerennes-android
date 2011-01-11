@@ -3,38 +3,6 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:id="@+id/main_layout">
-
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="@dimen/toolbar_height"
-		android:id="@+id/toolbar_layout"
-		android:layout_below="@id/main_layout"
-        android:background="@drawable/toolbar_background"
-            android:gravity="center_vertical">
-		
-		<EditText android:id="@+id/field_search" 
-            android:layout_weight="1" 
-			android:layout_width="fill_parent" android:layout_height="40dp" />
-	
-		<ImageView android:layout_width="2px"
-			android:layout_height="@dimen/toolbar_height" 
-			android:src="@drawable/toolbar_separator" />
-	
-		<ImageView android:id="@+id/button_layers"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:src="@drawable/toolbar_layers_icon" android:layout_margin="4dp" />
-	
-		<ImageView android:layout_width="2px"
-			android:layout_height="@dimen/toolbar_height" 
-			android:src="@drawable/toolbar_separator" />
-    
-        <ImageView android:id="@+id/button_myPosition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/toolbar_mylocation_icon" android:layout_margin="4dp" />
-
-	</LinearLayout>
 	
 	<fr.itinerennes.ui.views.MapView
 		xmlns:android="http://schemas.android.com/apk/res/android"
@@ -43,7 +11,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:clickable="true"
-		android:layout_below="@+id/toolbar_layout"
+		android:layout_below="@+id/main_layout"
 		renderer="Mapnik"
 		/>
 

@@ -106,14 +106,12 @@ public class MapActivity extends Activity {
         defaultMapCenter = new GeoPoint(latitude, longitude);
         // map.setMultiTouchControls(true);
 
-        final ImageView layersButton = (ImageView) this.findViewById(R.id.button_layers);
-        layersButton.setOnClickListener(new LayersClickListener());
-
-        this.myLocation = new MyLocationOverlay(this.getBaseContext(), map);
-        myLocation.enableMyLocation();
-        map.getOverlays().add(myLocation);
-        final ImageView myLocationButton = (ImageView) findViewById(R.id.button_myPosition);
-        myLocationButton.setOnClickListener(new MyLocationClickListener());
+        // TJHU remapper ce code sur un nouveau bouton mylocation
+        // this.myLocation = new MyLocationOverlay(this.getBaseContext(), map);
+        // myLocation.enableMyLocation();
+        // map.getOverlays().add(myLocation);
+        // final ImageView myLocationButton = (ImageView) findViewById(R.id.button_myPosition);
+        // myLocationButton.setOnClickListener(new MyLocationClickListener());
 
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
