@@ -100,7 +100,7 @@ public class BuildOverlayTask extends
                     item.setMarker(context.getResources().getDrawable(R.drawable.bus_marker_icon));
                     break;
                 case Station.TYPE_BIKE:
-                    item.setMarker(context.getResources().getDrawable(R.drawable.bike_marker));
+                    item.setMarker(context.getResources().getDrawable(R.drawable.bike_marker_icon));
                     break;
                 case Station.TYPE_SUBWAY:
                     item.setMarker(context.getResources()
