@@ -9,7 +9,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.business.facade.AbstractService;
 import fr.itinerennes.database.Columns.GeoExploreColumns;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.utils.DateUtils;
 
 /**
@@ -48,7 +50,7 @@ import fr.itinerennes.utils.DateUtils;
 /**
  * @author kops
  */
-public final class GeoCacheProvider implements GeoExploreColumns {
+public final class GeoCacheProvider extends AbstractService implements GeoExploreColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(GeoCacheProvider.class);
@@ -78,18 +80,15 @@ public final class GeoCacheProvider implements GeoExploreColumns {
     /** The unique instance of the geo cache. */
     private static GeoCacheProvider instance;
 
-    /** The database. */
-    private final SQLiteDatabase database;
-
     /**
      * Creates the geo cache.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    private GeoCacheProvider(final SQLiteDatabase database) {
+    private GeoCacheProvider(final DatabaseHelper dbHelper) {
 
-        this.database = database;
+        super(dbHelper);
     }
 
     /**
@@ -97,17 +96,17 @@ public final class GeoCacheProvider implements GeoExploreColumns {
      * <p>
      * If you provide a null database, then a mock will be created and used until
      * 
-     * @param database
-     *            the database, used at the first call of this method to create the singleton
+     * @param dbHelper
+     *            the database helper, used at the first call of this method to create the singleton
      * @return the {@link GeoCacheProvider};
      */
-    public static GeoCacheProvider getInstance(final SQLiteDatabase database) {
+    public static GeoCacheProvider getInstance(final DatabaseHelper dbHelper) {
 
         if (instance == null) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("initializing geo cache provider");
             }
-            instance = new GeoCacheProvider(database);
+            instance = new GeoCacheProvider(dbHelper);
         }
         return instance;
     }
@@ -181,6 +180,7 @@ public final class GeoCacheProvider implements GeoExploreColumns {
         // mark the bouding box explored only if it has not already been
         // if it has already been explored, the last update date will remains the old one
         if (!isExplored(bbox, type)) {
+            final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
             /*
              * before marking an area explored, we must remove smaller areas included in it
@@ -242,6 +242,7 @@ public final class GeoCacheProvider implements GeoExploreColumns {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("isExplored.start - bbox={}, type={}", bbox.toString(), type);
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final String[] selectionArgs = new String[] { String.valueOf(bbox.getLonWestE6()),
                 String.valueOf(bbox.getLatNorthE6()), String.valueOf(bbox.getLonEastE6()),

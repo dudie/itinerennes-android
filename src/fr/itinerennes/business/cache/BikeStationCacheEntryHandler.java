@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import fr.itinerennes.database.Columns.BikeStationColumns;
 import fr.itinerennes.database.Columns.StationColumns;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.utils.DateUtils;
 
@@ -22,8 +23,8 @@ import fr.itinerennes.utils.DateUtils;
  * 
  * @author Jérémie Huchet
  */
-public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStation>,
-        BikeStationColumns {
+public class BikeStationCacheEntryHandler extends AbstractDatabaseCacheEntryHandler implements
+        CacheEntryHandler<BikeStation>, BikeStationColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -35,18 +36,15 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
     /** The SQL where clause to select on {@link StationColumns#ID} : {@value #WHERE_CLAUSE_ID}. */
     private static final String WHERE_CLAUSE_ID = String.format("%s = ? ", ID);
 
-    /** The database. */
-    private SQLiteDatabase database = null;
-
     /**
      * Creates a bike station cache entry handler.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    public BikeStationCacheEntryHandler(final SQLiteDatabase database) {
+    public BikeStationCacheEntryHandler(final DatabaseHelper dbHelper) {
 
-        this.database = database;
+        super(dbHelper);
     }
 
     /**
@@ -64,6 +62,7 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
                 LOGGER.trace("replace {}", station.toString());
             }
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final ContentValues values = new ContentValues(11);
         values.put(ID, id);
@@ -98,6 +97,7 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("delete.start - type={}, identifier={}", type, id);
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
         final int delCount = database.delete(BIKE_STATION_TABLE_NAME, WHERE_CLAUSE_ID,
                 new String[] { id });
         if (LOGGER.isDebugEnabled()) {
@@ -116,6 +116,8 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, identifier={}", type, id);
         }
+
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, AVAILABLE_BIKES,
                 AVAILABLE_SLOTS, DISTRICT_NAME, IS_ACTIVE, IS_POS, LAST_UPDATE, STREET_NAME };
@@ -163,6 +165,8 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, bbox={}", type, bbox.toString());
         }
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, AVAILABLE_BIKES,
                 AVAILABLE_SLOTS, DISTRICT_NAME, IS_ACTIVE, IS_POS, LAST_UPDATE, STREET_NAME };
         final String selection = String.format("%s >= ? AND %s <= ? AND %s >= ? AND %s <= ?",
@@ -202,7 +206,7 @@ public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStati
      * @see fr.itinerennes.business.cache.CacheEntryHandler#getHandledClass()
      */
     @Override
-    public Class<BikeStation> getHandledClass() {
+    public final Class<BikeStation> getHandledClass() {
 
         return BikeStation.class;
     }

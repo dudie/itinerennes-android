@@ -9,7 +9,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import fr.itinerennes.business.facade.AbstractService;
 import fr.itinerennes.database.Columns.MetadataColumns;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.Cacheable;
 
 /**
@@ -26,7 +28,8 @@ import fr.itinerennes.model.Cacheable;
  * @author Olivier Boudet
  */
 
-public class CacheRelationProvider<T extends Cacheable> implements MetadataColumns {
+public class CacheRelationProvider<T extends Cacheable> extends AbstractService implements
+        MetadataColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -38,9 +41,6 @@ public class CacheRelationProvider<T extends Cacheable> implements MetadataColum
     /** SQL query to find a metadata cache entry : {@value #QUERY_METADATA}. */
     private static final String QUERY_METADATA = String.format(
             "SELECT * FROM %s WHERE %s = ? AND %s = ?", METADATA_TABLE_NAME, TYPE, ID);
-
-    /** The database used to store metadata. */
-    private final SQLiteDatabase database;
 
     /** The cache entry handler used to save, update, load and delete cache entry values. */
     private final CacheRelationEntryHandler<T> handler;
@@ -57,17 +57,17 @@ public class CacheRelationProvider<T extends Cacheable> implements MetadataColum
     /**
      * Creates the cache provider.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      * @param handler
      *            the cache relation entry handler to use to store the values
      * @param ttl
      *            the "time to live" for the entries saved in this cache
      */
-    public CacheRelationProvider(final SQLiteDatabase database,
+    public CacheRelationProvider(final DatabaseHelper dbHelper,
             final CacheRelationEntryHandler<T> handler, final int ttl) {
 
-        this.database = database;
+        super(dbHelper);
         this.handler = handler;
         this.ttl = ttl;
 
@@ -83,6 +83,8 @@ public class CacheRelationProvider<T extends Cacheable> implements MetadataColum
      *            the value to store
      */
     public final synchronized void replace(final T value, final String relationKey) {
+
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final ContentValues metadata = new ContentValues(3);
         metadata.put(TYPE, value.getClass().getName());
@@ -103,6 +105,8 @@ public class CacheRelationProvider<T extends Cacheable> implements MetadataColum
      */
     public final List<T> load(final String relationKeyId) {
 
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, relationKeyId });
         List<T> values = null;
         if (c.moveToFirst() && ttl > (System.currentTimeMillis() - c.getLong(3)) / 1000) {
@@ -111,13 +115,5 @@ public class CacheRelationProvider<T extends Cacheable> implements MetadataColum
 
         c.close();
         return values;
-    }
-
-    /**
-     * Releases all needed connections.
-     */
-    public void release() {
-
-        this.database.close();
     }
 }

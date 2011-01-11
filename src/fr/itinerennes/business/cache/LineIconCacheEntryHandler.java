@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import fr.itinerennes.database.Columns.LineIconColumns;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.LineIcon;
 
 /**
@@ -18,7 +19,8 @@ import fr.itinerennes.model.LineIcon;
  * 
  * @author Jérémie Huchet
  */
-public class LineIconCacheEntryHandler implements CacheEntryHandler<LineIcon>, LineIconColumns {
+public class LineIconCacheEntryHandler extends AbstractDatabaseCacheEntryHandler implements
+        CacheEntryHandler<LineIcon>, LineIconColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -33,18 +35,15 @@ public class LineIconCacheEntryHandler implements CacheEntryHandler<LineIcon>, L
      */
     private static final String WHERE_CLAUSE_ID = String.format("%s = ? ", LINE_ID);
 
-    /** The database. */
-    private SQLiteDatabase database = null;
-
     /**
      * Creates a line icon cache entry handler.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    public LineIconCacheEntryHandler(final SQLiteDatabase database) {
+    public LineIconCacheEntryHandler(final DatabaseHelper dbHelper) {
 
-        this.database = database;
+        super(dbHelper);
     }
 
     /**
@@ -62,6 +61,7 @@ public class LineIconCacheEntryHandler implements CacheEntryHandler<LineIcon>, L
                 LOGGER.trace("replace {}", icon.toString());
             }
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final ContentValues values = new ContentValues(4);
         values.put(LINE_ID, id);
@@ -90,6 +90,8 @@ public class LineIconCacheEntryHandler implements CacheEntryHandler<LineIcon>, L
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("delete.start - type={}, line_identifier={}", type, lineId);
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
         final int delCount = database.delete(LINE_ICONS_TABLE_NAME, WHERE_CLAUSE_ID,
                 new String[] { lineId });
         if (LOGGER.isDebugEnabled()) {
@@ -108,6 +110,7 @@ public class LineIconCacheEntryHandler implements CacheEntryHandler<LineIcon>, L
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, identifier={}", type, lineId);
         }
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
 
         final String[] columns = new String[] { LINE_ID, URL, ICON };
         final String[] selectionArgs = new String[] { lineId };

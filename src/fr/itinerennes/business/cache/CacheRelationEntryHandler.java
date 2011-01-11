@@ -16,7 +16,7 @@ import java.util.List;
 public interface CacheRelationEntryHandler<T> {
 
     /**
-     * Tells the handler to save or replace the given value
+     * Tells the handler to save or replace the given value.
      * 
      * @param type
      *            the metadata type

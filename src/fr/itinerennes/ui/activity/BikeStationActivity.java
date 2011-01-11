@@ -27,6 +27,9 @@ public class BikeStationActivity extends Activity {
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(BikeStationActivity.class);
 
+    /** The database helper. */
+    private DatabaseHelper dbHelper;
+
     /** The Bike Service. */
     private BikeService bikeService;
 
@@ -54,8 +57,7 @@ public class BikeStationActivity extends Activity {
 
         super.onResume();
 
-        final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
-        bikeService = new BikeService(dbHelper.getWritableDatabase());
+        bikeService = new BikeService(dbHelper);
 
         BikeStation station;
         try {
@@ -84,10 +86,15 @@ public class BikeStationActivity extends Activity {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onDestroy()
+     */
     @Override
-    protected void onPause() {
+    protected final void onDestroy() {
 
-        bikeService.release();
-        super.onPause();
+        dbHelper.close();
+        super.onDestroy();
     }
 }

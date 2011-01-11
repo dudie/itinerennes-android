@@ -37,5 +37,4 @@ public class StationOverlayItem extends OpenStreetMapViewOverlayItem {
 
         return station;
     }
-
 }

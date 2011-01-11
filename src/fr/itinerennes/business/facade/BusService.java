@@ -6,13 +6,12 @@ import org.andnav.osm.util.BoundingBoxE6;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import fr.itinerennes.business.cache.BusStationCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheProvider;
 import fr.itinerennes.business.cache.CacheProvider.CacheEntry;
 import fr.itinerennes.business.cache.GeoCacheProvider;
 import fr.itinerennes.business.http.wfs.WFSService;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
 
@@ -24,7 +23,7 @@ import fr.itinerennes.model.BusStation;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class BusService implements StationProvider {
+public class BusService extends AbstractService implements StationProvider {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BusService.class);
@@ -41,15 +40,16 @@ public class BusService implements StationProvider {
     /**
      * Creates a bike service.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    public BusService(final SQLiteDatabase database) {
+    public BusService(final DatabaseHelper dbHelper) {
 
+        super(dbHelper);
         wfsService = new WFSService();
-        busCache = new CacheProvider<BusStation>(database,
-                new BusStationCacheEntryHandler(database));
-        geoCache = GeoCacheProvider.getInstance(database);
+        busCache = new CacheProvider<BusStation>(dbHelper,
+                new BusStationCacheEntryHandler(dbHelper));
+        geoCache = GeoCacheProvider.getInstance(dbHelper);
     }
 
     /**
@@ -83,7 +83,6 @@ public class BusService implements StationProvider {
      * 
      * @see fr.itinerennes.business.facade.StationProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public final List<BusStation> getStations(final BoundingBoxE6 bbox) throws GenericException {
 
@@ -111,18 +110,6 @@ public class BusService implements StationProvider {
             LOGGER.debug("getStations.end - {} stations", null != stations ? stations.size() : 0);
         }
         return stations;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.business.facade.StationProvider#release()
-     */
-    @Override
-    public void release() {
-
-        busCache.release();
-        geoCache.release();
     }
 
 }

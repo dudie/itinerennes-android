@@ -12,7 +12,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import fr.itinerennes.business.facade.AbstractService;
 import fr.itinerennes.database.Columns.MetadataColumns;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.Cacheable;
 
 /**
@@ -29,7 +31,7 @@ import fr.itinerennes.model.Cacheable;
  * @param <T>
  * @author Jérémie Huchet
  */
-public class CacheProvider<T extends Cacheable> implements MetadataColumns {
+public class CacheProvider<T extends Cacheable> extends AbstractService implements MetadataColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(CacheProvider.class);
@@ -52,9 +54,6 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
     // "UPDATE %s SET (%s = ?) WHERE %s = ? AND %s = ?", METADATA_TABLE_NAME, LAST_UPDATE,
     // TYPE, ID);
 
-    /** The database used to store metadata. */
-    private final SQLiteDatabase database;
-
     /** The cache entry handler used to save, update, load and delete cache entry values. */
     private final CacheEntryHandler<T> handler;
 
@@ -67,16 +66,14 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
     /**
      * Creates the cache provider.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      * @param handler
      *            the cache entry handler to use to store the values
-     * @param ttl
-     *            the "time to live" for the entries saved in this cache
      */
-    public CacheProvider(final SQLiteDatabase database, final CacheEntryHandler<T> handler) {
+    public CacheProvider(final DatabaseHelper dbHelper, final CacheEntryHandler<T> handler) {
 
-        this.database = database;
+        super(dbHelper);
         this.handler = handler;
         this.type = handler.getHandledClass().getName();
     }
@@ -168,6 +165,7 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
      */
     public final synchronized void replace(final T value) {
 
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
         final ContentValues metadata = new ContentValues(3);
         metadata.put(TYPE, value.getClass().getName());
         metadata.put(ID, value.getId());
@@ -187,6 +185,7 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
      */
     public final synchronized void replace(final List<T> values) {
 
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
         database.beginTransaction();
         try {
             for (final T value : values) {
@@ -208,6 +207,7 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
      */
     public final CacheEntry<T> load(final String id) {
 
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, id });
         CacheEntry<T> entry = null;
 
@@ -232,6 +232,7 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
      */
     public final List<CacheEntry<T>> load(final BoundingBoxE6 bbox) {
 
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
         final List<T> values = handler.load(type, bbox);
         final List<CacheEntry<T>> entries = new ArrayList<CacheEntry<T>>(values == null ? 0
                 : values.size());
@@ -262,18 +263,11 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
      */
     public final boolean contains(final String id) {
 
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, id });
         final boolean contains = c.getCount() > 0;
         c.close();
         return contains;
-    }
-
-    /**
-     * Releases all needed connections.
-     */
-    public void release() {
-
-        this.database.close();
     }
 
 }

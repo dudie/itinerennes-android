@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import fr.itinerennes.database.Columns.StationColumns;
 import fr.itinerennes.database.Columns.SubwayStationColumns;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.SubwayStation;
 import fr.itinerennes.utils.DateUtils;
 
@@ -22,31 +23,28 @@ import fr.itinerennes.utils.DateUtils;
  * 
  * @author Jérémie Huchet
  */
-public class SubwayStationCacheEntryHandler implements CacheEntryHandler<SubwayStation>,
-        SubwayStationColumns {
+public class SubwayStationCacheEntryHandler extends AbstractDatabaseCacheEntryHandler implements
+        CacheEntryHandler<SubwayStation>, SubwayStationColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(SubwayStationCacheEntryHandler.class);
 
-    /** The database table name : {@value SubwayStationCacheEntryHandler#BIKE_STATION_TABLE_NAME} . */
+    /** The database table name : {@value SubwayStationCacheEntryHandler#BIKE_STATION_TABLE_NAME}. */
     private static final String SUBWAY_STATION_TABLE_NAME = "subway_stations";
 
     /** The SQL where clause to select on {@link StationColumns#ID} : {@value #WHERE_CLAUSE_ID}. */
     private static final String WHERE_CLAUSE_ID = String.format("%s = ? ", ID);
 
-    /** The database. */
-    private SQLiteDatabase database = null;
-
     /**
      * Creates a subway station cache entry handler.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    public SubwayStationCacheEntryHandler(final SQLiteDatabase database) {
+    public SubwayStationCacheEntryHandler(final DatabaseHelper dbHelper) {
 
-        this.database = database;
+        super(dbHelper);
     }
 
     /**
@@ -64,6 +62,7 @@ public class SubwayStationCacheEntryHandler implements CacheEntryHandler<SubwayS
                 LOGGER.trace("replace {}", station.toString());
             }
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final ContentValues values = new ContentValues(11);
         values.put(ID, id);
@@ -97,6 +96,8 @@ public class SubwayStationCacheEntryHandler implements CacheEntryHandler<SubwayS
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("delete.start - type={}, identifier={}", type, id);
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
         final int delCount = database.delete(SUBWAY_STATION_TABLE_NAME, WHERE_CLAUSE_ID,
                 new String[] { id });
         if (LOGGER.isDebugEnabled()) {
@@ -115,6 +116,7 @@ public class SubwayStationCacheEntryHandler implements CacheEntryHandler<SubwayS
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, identifier={}", type, id);
         }
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, FLOORS,
                 RANK_PF_DIR_1, RANK_PF_DIR_2, HAS_PF_DIR_1, HAS_PF_DIR_2, LAST_UPDATE };
@@ -161,6 +163,8 @@ public class SubwayStationCacheEntryHandler implements CacheEntryHandler<SubwayS
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, bbox={}", type, bbox.toString());
         }
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, FLOORS,
                 RANK_PF_DIR_1, RANK_PF_DIR_2, HAS_PF_DIR_1, HAS_PF_DIR_2, LAST_UPDATE };
         final String selection = String.format("%s >= ? AND %s <= ? AND %s >= ? AND %s <= ?",

@@ -3,9 +3,8 @@ package fr.itinerennes.business.facade;
 import java.util.Date;
 import java.util.List;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import fr.itinerennes.business.http.otp.OTPService;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
 
@@ -14,7 +13,7 @@ import fr.itinerennes.model.BusDeparture;
  * 
  * @author Olivier Boudet
  */
-public class BusDepartureService {
+public class BusDepartureService extends AbstractService {
 
     /** The OTP service. */
     private final OTPService otpService;
@@ -22,11 +21,12 @@ public class BusDepartureService {
     /**
      * Creates an OTP service.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    public BusDepartureService(final SQLiteDatabase database) {
+    public BusDepartureService(final DatabaseHelper dbHelper) {
 
+        super(dbHelper);
         otpService = new OTPService();
     }
 
