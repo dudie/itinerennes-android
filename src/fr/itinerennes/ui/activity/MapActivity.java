@@ -362,6 +362,14 @@ public class MapActivity extends Activity {
     public final void fillStationBox(final Station station) {
 
         if (map.isItemLayoutFocused() && station != null) {
+            // save previous padding because changing the background erase it
+            final int top = focusedBoxLayout.getPaddingTop();
+            final int left = focusedBoxLayout.getPaddingLeft();
+            final int right = focusedBoxLayout.getPaddingRight();
+            final int bottom = focusedBoxLayout.getPaddingBottom();
+            // restore default background
+            focusedBoxLayout.setBackgroundResource(R.drawable.map_box_background);
+
             switch (station.getType()) {
             case Station.TYPE_BIKE:
 
@@ -378,12 +386,16 @@ public class MapActivity extends Activity {
                 focusedBoxLayout.findViewById(R.id.bike_station_box).setVisibility(View.VISIBLE);
                 break;
             case Station.TYPE_BUS:
+                focusedBoxLayout.setBackgroundResource(R.drawable.map_box_background_right_arrow);
                 break;
             case Station.TYPE_SUBWAY:
                 break;
             default:
                 break;
             }
+
+            // restore previsous padding
+            focusedBoxLayout.setPadding(left, top, right, bottom);
         }
     }
 
