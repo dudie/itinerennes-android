@@ -25,9 +25,4 @@
 		android:layout_margin="5dp"
 		android:layout_alignTop="@+id/map">
 	</LinearLayout>
-	
-    <ImageView android:layout_width="fill_parent"
-        android:layout_height="6dp" 
-        android:src="@drawable/toolbar_shadow" 
-        android:layout_alignTop="@+id/map"/>
 </RelativeLayout>
