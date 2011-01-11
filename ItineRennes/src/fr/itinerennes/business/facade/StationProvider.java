@@ -37,9 +37,4 @@ public interface StationProvider<T extends Station> {
      *             unable to retrieve the requested station
      */
     List<T> getStations(final BoundingBoxE6 bbox) throws GenericException;
-
-    /**
-     * Releases all needed connections.
-     */
-    void release();
 }

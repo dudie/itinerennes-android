@@ -61,6 +61,9 @@ public class BusStationActivity extends Activity implements Runnable {
     /** The diplsayed station. */
     private BusStation station;
 
+    /** The database helper. */
+    private DatabaseHelper dbHelper;
+
     /** The list of routes for this station. */
     private List<BusRoute> busRoutes;
 
@@ -90,11 +93,11 @@ public class BusStationActivity extends Activity implements Runnable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_station);
 
-        final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
-        busService = new BusService(dbHelper.getReadableDatabase());
-        busRouteService = new BusRouteService(dbHelper.getReadableDatabase());
-        busDepartureService = new BusDepartureService(dbHelper.getReadableDatabase());
-        lineIconService = new LineIconService(dbHelper.getReadableDatabase());
+        dbHelper = new DatabaseHelper(getBaseContext());
+        busService = new BusService(dbHelper);
+        busRouteService = new BusRouteService(dbHelper);
+        busDepartureService = new BusDepartureService(dbHelper);
+        lineIconService = new LineIconService(dbHelper);
 
         handler = new Handler() {
 
@@ -220,9 +223,7 @@ public class BusStationActivity extends Activity implements Runnable {
     @Override
     protected final void onDestroy() {
 
-        busService.release();
-        busRouteService.release();
-        // lineIconService.release();
+        dbHelper.close();
         super.onDestroy();
     }
 

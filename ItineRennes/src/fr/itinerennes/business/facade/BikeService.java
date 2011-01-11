@@ -5,11 +5,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import fr.itinerennes.business.cache.BikeStationCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheProvider;
 import fr.itinerennes.business.http.keolis.KeolisService;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
 
@@ -32,12 +31,13 @@ public final class BikeService extends AbstractKeolisStationProvider<BikeStation
     /**
      * Creates a bike service.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    public BikeService(final SQLiteDatabase database) {
+    public BikeService(final DatabaseHelper dbHelper) {
 
-        super(new CacheProvider<BikeStation>(database, new BikeStationCacheEntryHandler(database)));
+        super(dbHelper, new CacheProvider<BikeStation>(dbHelper, new BikeStationCacheEntryHandler(
+                dbHelper)));
     }
 
     /**

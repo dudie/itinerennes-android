@@ -2,11 +2,10 @@ package fr.itinerennes.business.facade;
 
 import java.util.List;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import fr.itinerennes.business.cache.BusRouteCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheRelationProvider;
 import fr.itinerennes.business.http.otp.OTPService;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusRoute;
 import fr.itinerennes.model.Station;
@@ -18,7 +17,7 @@ import fr.itinerennes.model.Station;
  * 
  * @author Olivier Boudet
  */
-public class BusRouteService implements RouteProvider {
+public class BusRouteService extends AbstractService implements RouteProvider {
 
     /** The OTP service. */
     private final OTPService otpService;
@@ -29,14 +28,15 @@ public class BusRouteService implements RouteProvider {
     /**
      * Creates an OTP service.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    public BusRouteService(final SQLiteDatabase database) {
+    public BusRouteService(final DatabaseHelper dbHelper) {
 
+        super(dbHelper);
         otpService = new OTPService();
-        routeCache = new CacheRelationProvider<BusRoute>(database, new BusRouteCacheEntryHandler(
-                database), BusRoute.TTL);
+        routeCache = new CacheRelationProvider<BusRoute>(dbHelper, new BusRouteCacheEntryHandler(
+                dbHelper), BusRoute.TTL);
     }
 
     @Override

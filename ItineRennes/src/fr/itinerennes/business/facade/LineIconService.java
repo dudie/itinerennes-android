@@ -5,7 +5,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,6 +14,7 @@ import fr.itinerennes.business.cache.CacheProvider;
 import fr.itinerennes.business.cache.CacheProvider.CacheEntry;
 import fr.itinerennes.business.cache.LineIconCacheEntryHandler;
 import fr.itinerennes.business.http.keolis.KeolisService;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.LineIcon;
 import fr.itinerennes.utils.DateUtils;
@@ -24,7 +24,7 @@ import fr.itinerennes.utils.DateUtils;
  * 
  * @author Jérémie Huchet
  */
-public class LineIconService {
+public class LineIconService extends AbstractService {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(LineIconService.class);
@@ -41,12 +41,13 @@ public class LineIconService {
     /**
      * Creates a line transport icon service.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    public LineIconService(final SQLiteDatabase database) {
+    public LineIconService(final DatabaseHelper dbHelper) {
 
-        iconCache = new CacheProvider<LineIcon>(database, new LineIconCacheEntryHandler(database));;
+        super(dbHelper);
+        iconCache = new CacheProvider<LineIcon>(dbHelper, new LineIconCacheEntryHandler(dbHelper));;
     }
 
     /**

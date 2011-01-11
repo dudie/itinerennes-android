@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>   
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-       android:orientation="horizontal"
+       android:orientation="vertical"
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:visibility="gone"
@@ -26,4 +26,6 @@
            android:layout_height="wrap_content"
            android:id="@+id/available_bikes"
            style="@style/WhiteText"/>
-   </LinearLayout>
+    <ProgressBar android:indeterminate="true" android:layout_width="fill_parent" android:layout_height="10dp" 
+        style="?android:attr/progressBarStyleHorizontal"/>
+</LinearLayout>

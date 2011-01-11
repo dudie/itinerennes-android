@@ -256,8 +256,7 @@ public class BusTimeAdapter extends BaseAdapter {
         protected List<BusDeparture> doInBackground(final Void... params) {
 
             final DatabaseHelper dbHelper = new DatabaseHelper(context);
-            final BusDepartureService busDepartureService = new BusDepartureService(
-                    dbHelper.getReadableDatabase());
+            final BusDepartureService busDepartureService = new BusDepartureService(dbHelper);
             List<BusDeparture> departures = null;
 
             try {

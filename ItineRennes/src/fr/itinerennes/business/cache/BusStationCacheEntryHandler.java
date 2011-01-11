@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import fr.itinerennes.database.Columns.BusStationColumns;
 import fr.itinerennes.database.Columns.StationColumns;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.BusStation;
 
 /**
@@ -20,8 +21,8 @@ import fr.itinerennes.model.BusStation;
  * 
  * @author Olivier Boudet
  */
-public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation>,
-        BusStationColumns {
+public class BusStationCacheEntryHandler extends AbstractDatabaseCacheEntryHandler implements
+        CacheEntryHandler<BusStation>, BusStationColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -33,18 +34,15 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
     /** The SQL where clause to select on {@link StationColumns#ID} : {@value #WHERE_CLAUSE_ID}. */
     private static final String WHERE_CLAUSE_ID = String.format("%s = ? ", ID);
 
-    /** The database. */
-    private SQLiteDatabase database = null;
-
     /**
      * Creates a bus station cache entry handler.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    public BusStationCacheEntryHandler(final SQLiteDatabase database) {
+    public BusStationCacheEntryHandler(final DatabaseHelper dbHelper) {
 
-        this.database = database;
+        super(dbHelper);
     }
 
     /**
@@ -62,6 +60,7 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
                 LOGGER.trace("replace {}", station.toString());
             }
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final ContentValues values = new ContentValues(4);
         values.put(ID, id);
@@ -90,6 +89,7 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("delete.start - type={}, identifier={}", type, id);
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
         final int delCount = database.delete(BUS_STATION_TABLE_NAME, WHERE_CLAUSE_ID,
                 new String[] { id });
         if (LOGGER.isDebugEnabled()) {
@@ -108,6 +108,7 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, identifier={}", type, id);
         }
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE };
         final String[] selectionArgs = new String[] { id };
@@ -147,6 +148,8 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, bbox={}", type, bbox.toString());
         }
+        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE };
         final String selection = String.format("%s >= ? AND %s <= ? AND %s >= ? AND %s <= ?",
                 LONGITUDE, LONGITUDE, LATITUDE, LATITUDE);
@@ -178,7 +181,7 @@ public class BusStationCacheEntryHandler implements CacheEntryHandler<BusStation
      * @see fr.itinerennes.business.cache.CacheEntryHandler#getHandledClass()
      */
     @Override
-    public Class<BusStation> getHandledClass() {
+    public final Class<BusStation> getHandledClass() {
 
         return BusStation.class;
     }

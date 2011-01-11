@@ -60,6 +60,9 @@ public class MapActivity extends Activity {
     /** The my location overlay. */
     private MyLocationOverlay myLocation;
 
+    /** The database helper. */
+    private DatabaseHelper dbHelper;
+
     /** The station providers. */
     private final StationProvider[] stationProviders = new StationProvider[3];
 
@@ -137,10 +140,10 @@ public class MapActivity extends Activity {
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
 
-        final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
-        stationProviders[Station.TYPE_BIKE] = new BikeService(dbHelper.getWritableDatabase());
-        stationProviders[Station.TYPE_BUS] = new BusService(dbHelper.getWritableDatabase());
-        stationProviders[Station.TYPE_SUBWAY] = new SubwayService(dbHelper.getWritableDatabase());
+        dbHelper = new DatabaseHelper(getBaseContext());
+        stationProviders[Station.TYPE_BIKE] = new BikeService(dbHelper);
+        stationProviders[Station.TYPE_BUS] = new BusService(dbHelper);
+        stationProviders[Station.TYPE_SUBWAY] = new SubwayService(dbHelper);
         this.map.setStationProviders(stationProviders);
 
         /**
@@ -236,20 +239,15 @@ public class MapActivity extends Activity {
         return dialog;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onDestroy()
+     */
     @Override
-    protected void onDestroy() {
+    protected final void onDestroy() {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onDestroy");
-        }
-
-        this.map.cancelTasks();
-
-        // release the database connection
-        for (final StationProvider cacheProvider : stationProviders) {
-            cacheProvider.release();
-        }
-
+        dbHelper.close();
         super.onDestroy();
     }
 

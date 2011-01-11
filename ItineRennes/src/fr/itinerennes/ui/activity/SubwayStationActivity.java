@@ -25,6 +25,9 @@ public class SubwayStationActivity extends Activity {
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(SubwayStationActivity.class);
 
+    /** The database helper. */
+    private DatabaseHelper dbHelper;
+
     /** The Subway Service. */
     private SubwayService subwayService;
 
@@ -42,8 +45,8 @@ public class SubwayStationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subway_station);
 
-        final DatabaseHelper dbHelper = new DatabaseHelper(getBaseContext());
-        subwayService = new SubwayService(dbHelper.getReadableDatabase());
+        dbHelper = new DatabaseHelper(getBaseContext());
+        subwayService = new SubwayService(dbHelper);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
@@ -79,7 +82,7 @@ public class SubwayStationActivity extends Activity {
     @Override
     protected void onDestroy() {
 
-        subwayService.release();
+        dbHelper.close();
         super.onDestroy();
     }
 }

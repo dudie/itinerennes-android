@@ -10,6 +10,7 @@ import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.cache.CacheProvider;
 import fr.itinerennes.business.cache.CacheProvider.CacheEntry;
 import fr.itinerennes.business.http.keolis.KeolisService;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.Station;
 import fr.itinerennes.utils.DateUtils;
@@ -21,8 +22,8 @@ import fr.itinerennes.utils.DateUtils;
  *            the type of stations returned by the service
  * @author Jérémie Huchet
  */
-public abstract class AbstractKeolisStationProvider<T extends Station> implements
-        StationProvider<T> {
+public abstract class AbstractKeolisStationProvider<T extends Station> extends AbstractService
+        implements StationProvider<T> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -40,11 +41,14 @@ public abstract class AbstractKeolisStationProvider<T extends Station> implement
     /**
      * Creates the service.
      * 
+     * @param dbHelper
+     *            the database helper
      * @param cache
      *            a cache provider to handle stations caching
      */
-    public AbstractKeolisStationProvider(final CacheProvider<T> cache) {
+    public AbstractKeolisStationProvider(final DatabaseHelper dbHelper, final CacheProvider<T> cache) {
 
+        super(dbHelper);
         this.cache = cache;
     }
 
@@ -180,16 +184,4 @@ public abstract class AbstractKeolisStationProvider<T extends Station> implement
     }
 
     protected abstract List<T> retrieveAllStations() throws GenericException;
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.business.facade.StationProvider#release()
-     */
-    @Override
-    public void release() {
-
-        // TODO Auto-generated method stub
-
-    }
 }

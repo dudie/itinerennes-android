@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import fr.itinerennes.database.Columns.BusRouteColumns;
 import fr.itinerennes.database.Columns.BusStationRouteColumns;
 import fr.itinerennes.database.Columns.StationColumns;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.BusRoute;
 import fr.itinerennes.model.BusStation;
 
@@ -21,8 +22,8 @@ import fr.itinerennes.model.BusStation;
  * 
  * @author Olivier Boudet
  */
-public class BusRouteCacheEntryHandler implements CacheRelationEntryHandler<BusRoute>,
-        BusRouteColumns, BusStationRouteColumns {
+public class BusRouteCacheEntryHandler extends AbstractDatabaseCacheEntryHandler implements
+        CacheRelationEntryHandler<BusRoute>, BusRouteColumns, BusStationRouteColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -40,18 +41,15 @@ public class BusRouteCacheEntryHandler implements CacheRelationEntryHandler<BusR
     /** The SQL where clause to select on {@link StationColumns#ID} : {@value #WHERE_CLAUSE_ID}. */
     private static final String WHERE_CLAUSE_ID = String.format("%s = ? ", STATION_ID);
 
-    /** The database. */
-    private SQLiteDatabase database = null;
-
     /**
-     * Creates a bus station cache entry handler.
+     * Creates a bus route cache entry handler.
      * 
-     * @param database
-     *            the database
+     * @param dbHelper
+     *            the database helper
      */
-    public BusRouteCacheEntryHandler(final SQLiteDatabase database) {
+    public BusRouteCacheEntryHandler(final DatabaseHelper dbHelper) {
 
-        this.database = database;
+        super(dbHelper);
     }
 
     /**
@@ -70,6 +68,7 @@ public class BusRouteCacheEntryHandler implements CacheRelationEntryHandler<BusR
                 LOGGER.trace("replace {}", route.toString());
             }
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues(4);
         values.put(ID, id);
@@ -107,17 +106,18 @@ public class BusRouteCacheEntryHandler implements CacheRelationEntryHandler<BusR
     }
 
     @Override
-    public Class<BusRoute> getHandledClass() {
+    public final Class<BusRoute> getHandledClass() {
 
         return BusRoute.class;
     }
 
     @Override
-    public List<BusRoute> load(final String type, final String id) {
+    public final List<BusRoute> load(final String type, final String id) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, identifier={}", type, id);
         }
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         List<BusRoute> routes = new ArrayList<BusRoute>();
 
