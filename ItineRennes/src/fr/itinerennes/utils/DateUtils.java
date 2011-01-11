@@ -43,4 +43,18 @@ public final class DateUtils {
 
         return (int) (date.getTime() / 1000);
     }
+
+    /**
+     * Is the given TTL expired at the given date for the current time.
+     * 
+     * @param date
+     *            the date to test
+     * @param ttl
+     *            the time to live
+     * @return true if the given date is expired
+     */
+    public static boolean isExpired(final Date date, final int ttl) {
+
+        return currentTimeSeconds() > date.getTime() + ttl;
+    }
 }

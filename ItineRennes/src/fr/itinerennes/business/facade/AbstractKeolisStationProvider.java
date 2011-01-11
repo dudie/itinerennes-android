@@ -6,10 +6,13 @@ import org.andnav.osm.util.BoundingBoxE6;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.cache.CacheProvider;
+import fr.itinerennes.business.cache.CacheProvider.CacheEntry;
 import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.Station;
+import fr.itinerennes.utils.DateUtils;
 
 /**
  * Manages commons functionalities offered by {@link StationProvider}s using {@link KeolisService}.
@@ -18,14 +21,12 @@ import fr.itinerennes.model.Station;
  *            the type of stations returned by the service
  * @author Jérémie Huchet
  */
-public abstract class AbstractKeolisStationProvider<T extends Station> implements StationProvider {
+public abstract class AbstractKeolisStationProvider<T extends Station> implements
+        StationProvider<T> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(AbstractKeolisStationProvider.class);
-
-    /** The service delayer used to retrieve stations. */
-    private final AbstractDelayedService<T> delayedService;
 
     /**
      * The cache of stations (this reference points to the same instance the
@@ -33,16 +34,18 @@ public abstract class AbstractKeolisStationProvider<T extends Station> implement
      */
     private final CacheProvider<T> cache;
 
+    /** The last time all the cache was updated (in seconds). */
+    private final int lastGlobalUpdate = 0;
+
     /**
      * Creates the service.
      * 
-     * @param delayedService
-     *            a delayed service
+     * @param cache
+     *            a cache provider to handle stations caching
      */
-    public AbstractKeolisStationProvider(final AbstractDelayedService<T> delayedService) {
+    public AbstractKeolisStationProvider(final CacheProvider<T> cache) {
 
-        this.delayedService = delayedService;
-        this.cache = delayedService.getCache();
+        this.cache = cache;
     }
 
     /**
@@ -51,15 +54,20 @@ public abstract class AbstractKeolisStationProvider<T extends Station> implement
      * @see fr.itinerennes.business.facade.StationProvider#getStation(java.lang.String)
      */
     @Override
-    public T getStation(final String id) throws GenericException {
+    public final T getStation(final String id) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getStation.start - id={}", id);
         }
 
-        // TJHU consulter les métadonnées du cache pour vérifier que la station retournée depuis le
-        // cache n'est pas périmiée
-        final T station = delayedService.getResource(id);
+        T station = null;
+        final CacheEntry<T> cachedStation = cache.load(id);
+        if (DateUtils.isExpired(cachedStation.getLastUpdate(), Station.TTL)) {
+            station = retrieveFreshStation(id);
+            cache.replace(station);
+        } else {
+            station = cachedStation.getValue();
+        }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getStation.end - stationNotNull=%s", station != null);
@@ -77,15 +85,22 @@ public abstract class AbstractKeolisStationProvider<T extends Station> implement
      * @throws GenericException
      *             an error occurred
      */
-    public T getFreshStation(final String id) throws GenericException {
+    public final T getFreshStation(final String id) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getFreshStation.start - id={}", id);
         }
-        // TJHU contrôler la date de dernière mise à jour de l'information dans le cache. Si date <
-        // 60 secondes, mise à jour inutile et donc pas d'appel à retrieveFreshStation() mais appel
-        // au cache directement
-        final T station = retrieveFreshStation(id);
+
+        T station = null;
+        final CacheEntry<T> cachedStation = cache.load(id);
+        if (DateUtils.isExpired(cachedStation.getLastUpdate(),
+                ItineRennesConstants.KEOLIS_INSTANT_UPDATE_TIME)) {
+            station = retrieveFreshStation(id);
+            cache.replace(station);
+        } else {
+            station = cachedStation.getValue();
+        }
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getFreshStation.end - stationNotNull=%s", station != null);
         }
@@ -109,13 +124,53 @@ public abstract class AbstractKeolisStationProvider<T extends Station> implement
      * @see fr.itinerennes.business.facade.StationProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
      */
     @Override
-    public List<T> getStations(final BoundingBoxE6 bbox) throws GenericException {
+    public final List<T> getStations(final BoundingBoxE6 bbox) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getStations.start - bbos={}", bbox);
         }
 
-        final List<T> stations = cache.load(bbox);
+        List<T> stations = null;
+
+        // load cached data
+        final List<CacheEntry<T>> cachedStations = cache.load(bbox);
+
+        // if last global update call was a long time ago
+        // force update if there is no cached result
+        // or check expire dates and update if necessary
+        boolean doUpdate = false;
+        if (lastGlobalUpdate < DateUtils.currentTimeSeconds()
+                + ItineRennesConstants.MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS) {
+            if (null == cachedStations || cachedStations.isEmpty()) {
+                doUpdate = true;
+            } else {
+                for (final CacheEntry<T> entry : cachedStations) {
+                    if (DateUtils.isExpired(entry.getLastUpdate(), entry.getValue().TTL)) {
+                        doUpdate = true;
+                    }
+                }
+            }
+        }
+
+        if (doUpdate) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("starting cache global update");
+            }
+            stations = retrieveAllStations();
+            cache.replace(stations);
+            // remove stations out of the bbox
+            // TJHU concurrent modification exception
+            // for (final T station : stations) {
+            // if (station.getGeoPoint().getLongitudeE6() < bbox.getLonWestE6()
+            // || station.getGeoPoint().getLongitudeE6() > bbox.getLonEastE6()
+            // || station.getGeoPoint().getLatitudeE6() < bbox.getLatSouthE6()
+            // || station.getGeoPoint().getLatitudeE6() < bbox.getLatNorthE6()) {
+            // stations.remove(stations);
+            // }
+            // }
+        } else {
+            stations = CacheEntry.values(cachedStations);
+        }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getStations.end - %s stations", stations == null ? 0 : stations.size());
@@ -123,6 +178,8 @@ public abstract class AbstractKeolisStationProvider<T extends Station> implement
 
         return stations;
     }
+
+    protected abstract List<T> retrieveAllStations() throws GenericException;
 
     /**
      * {@inheritDoc}

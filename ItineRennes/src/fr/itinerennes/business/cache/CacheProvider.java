@@ -1,5 +1,7 @@
 package fr.itinerennes.business.cache;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.andnav.osm.util.BoundingBoxE6;
@@ -36,8 +38,9 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
     private static final String METADATA_TABLE_NAME = "cache_metadata";
 
     /** SQL query to find a metadata cache entry : {@value #QUERY_METADATA}. */
-    private static final String QUERY_METADATA = String.format(
-            "SELECT * FROM %s WHERE %s = ? AND %s = ?", METADATA_TABLE_NAME, TYPE, ID);
+    private static final String QUERY_METADATA = String
+            .format("SELECT %s FROM %s WHERE %s = ? AND %s = ?", LAST_UPDATE, METADATA_TABLE_NAME,
+                    TYPE, ID);
 
     /** SQL query to insert a new metadata cache entry : {@value #INSERT_METADATA}. */
     // private static final String INSERT_METADATA = String.format(
@@ -55,9 +58,6 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
     /** The cache entry handler used to save, update, load and delete cache entry values. */
     private final CacheEntryHandler<T> handler;
 
-    /** The time to live for this type of cache entries. */
-    private final int ttl;
-
     /**
      * A type to make unique the identifiers of the entries of this cache (use the cached class
      * name).
@@ -74,13 +74,88 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
      * @param ttl
      *            the "time to live" for the entries saved in this cache
      */
-    public CacheProvider(final SQLiteDatabase database, final CacheEntryHandler<T> handler,
-            final int ttl) {
+    public CacheProvider(final SQLiteDatabase database, final CacheEntryHandler<T> handler) {
 
         this.database = database;
         this.handler = handler;
-        this.ttl = ttl;
         this.type = handler.getHandledClass().getName();
+    }
+
+    /**
+     * Represents an entry of the cache.
+     * 
+     * @author Jérémie Huchet
+     * @param <T>
+     *            the type of the value thsi entry represents.
+     */
+    public static class CacheEntry<V extends Cacheable> {
+
+        /** The last update date of the entry. */
+        private Date lastUpdate;
+
+        /** The value. */
+        private V value;
+
+        /**
+         * Gets the lastUpdate.
+         * 
+         * @return the lastUpdate
+         */
+        public final Date getLastUpdate() {
+
+            return lastUpdate;
+        }
+
+        /**
+         * Sets the lastUpdate.
+         * 
+         * @param lastUpdate
+         *            the lastUpdate to set
+         */
+        private void setLastUpdate(final Date lastUpdate) {
+
+            this.lastUpdate = lastUpdate;
+        }
+
+        /**
+         * Gets the value.
+         * 
+         * @return the value
+         */
+        public final V getValue() {
+
+            return value;
+        }
+
+        /**
+         * Sets the value.
+         * 
+         * @param value
+         *            the value to set
+         */
+        private void setValue(final V value) {
+
+            this.value = value;
+        }
+
+        /**
+         * Converts the given cache entries to a list of values.
+         * 
+         * @param <K>
+         *            a Cacheable type
+         * @param entries
+         *            the cache entries to convert to a list of values
+         * @return a list containing the values of the cache entries.
+         */
+        public static <K extends Cacheable> List<K> values(final List<CacheEntry<K>> entries) {
+
+            final ArrayList<K> values = new ArrayList<K>(entries.size());
+            for (final CacheEntry<K> entry : entries) {
+                values.add(entry.getValue());
+            }
+            return values;
+        }
+
     }
 
     /**
@@ -131,17 +206,19 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
      *            the identifier of the value
      * @return the cached value, or null if the result was outdated or if no result was found
      */
-    public final T load(final String id) {
+    public final CacheEntry<T> load(final String id) {
 
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, id });
-        T value = null;
+        CacheEntry<T> entry = null;
 
-        if (c.moveToFirst() && ttl > (System.currentTimeMillis() - c.getLong(3)) / 1000) {
-            value = handler.load(type, id);
+        if (c.moveToFirst()) {
+            entry = new CacheEntry<T>();
+            entry.setLastUpdate(new Date(c.getLong(0)));
+            entry.setValue(handler.load(type, id));
         }
 
         c.close();
-        return value;
+        return entry;
     }
 
     /**
@@ -153,9 +230,27 @@ public class CacheProvider<T extends Cacheable> implements MetadataColumns {
      * @return the values related to the given bounding box (in most cases, these should be values
      *         located in the given bounding box..) or null if nothing is found
      */
-    public final List<T> load(final BoundingBoxE6 bbox) {
+    public final List<CacheEntry<T>> load(final BoundingBoxE6 bbox) {
 
-        return handler.load(type, bbox);
+        final List<T> values = handler.load(type, bbox);
+        final List<CacheEntry<T>> entries = new ArrayList<CacheEntry<T>>(values == null ? 0
+                : values.size());
+
+        for (final T value : values) {
+
+            final CacheEntry<T> entry = new CacheEntry<T>();
+            final Cursor c = database
+                    .rawQuery(QUERY_METADATA, new String[] { type, value.getId() });
+            if (c.moveToFirst()) {
+                entry.setLastUpdate(new Date(c.getLong(0)));
+                entry.setValue(value);
+            } else {
+                LOGGER.warn("no metadata found for entry type={}, id={}", type, value.getId());
+            }
+            c.close();
+            entries.add(entry);
+        }
+        return entries;
     }
 
     /**
