@@ -8,9 +8,9 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.cache.BusStationCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheProvider;
+import fr.itinerennes.business.cache.CacheProvider.CacheEntry;
 import fr.itinerennes.business.cache.GeoCacheProvider;
 import fr.itinerennes.business.http.wfs.WFSService;
 import fr.itinerennes.exceptions.GenericException;
@@ -48,7 +48,7 @@ public class BusService implements StationProvider {
 
         wfsService = new WFSService();
         busCache = new CacheProvider<BusStation>(database,
-                new BusStationCacheEntryHandler(database), ItineRennesConstants.TTL_BUS_STATIONS);
+                new BusStationCacheEntryHandler(database));
         geoCache = GeoCacheProvider.getInstance(database);
     }
 
@@ -60,10 +60,20 @@ public class BusService implements StationProvider {
     @Override
     public final BusStation getStation(final String id) throws GenericException {
 
-        BusStation station = busCache.load(id);
-        if (station == null) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getStations.start - id={}", id);
+        }
+        BusStation station = null;
+        final CacheEntry<BusStation> cachedEntry = busCache.load(id);
+        if (station == null
+                || fr.itinerennes.utils.DateUtils.isExpired(cachedEntry.getLastUpdate(),
+                        BusStation.TTL)) {
             station = wfsService.getBusStation(id);
             busCache.replace(station);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getStations.start - stationNotNull={}", station != null);
         }
         return station;
     }
@@ -85,7 +95,7 @@ public class BusService implements StationProvider {
 
         final BoundingBoxE6 normalizedBbox = GeoCacheProvider.normalize(bbox);
         if (geoCache.isExplored(normalizedBbox, BusStation.class.getName())) {
-            stations = busCache.load(bbox);
+            stations = CacheEntry.values(busCache.load(bbox));
         } else {
             stations = wfsService.getBusStationsFromBbox(normalizedBbox);
 
@@ -98,7 +108,7 @@ public class BusService implements StationProvider {
             geoCache.markExplored(normalizedBbox, BusStation.class.getName());
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getStations.start - {} stations", null != stations ? stations.size() : 0);
+            LOGGER.debug("getStations.end - {} stations", null != stations ? stations.size() : 0);
         }
         return stations;
     }

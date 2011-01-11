@@ -9,6 +9,9 @@ import fr.itinerennes.business.cache.CacheProvider;
  */
 public interface Cacheable {
 
+    /** Default cache lifetime : {@value #TTL} seconds. */
+    int TTL = 3600;
+
     /**
      * Gets the identifier of this bean.
      * 

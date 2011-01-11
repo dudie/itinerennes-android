@@ -7,7 +7,6 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.cache.BikeStationCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheProvider;
 import fr.itinerennes.business.http.keolis.KeolisService;
@@ -38,31 +37,36 @@ public final class BikeService extends AbstractKeolisStationProvider<BikeStation
      */
     public BikeService(final SQLiteDatabase database) {
 
-        super(new AbstractDelayedService<BikeStation>(
-                new CacheProvider<BikeStation>(database,
-                        new BikeStationCacheEntryHandler(database),
-                        ItineRennesConstants.TTL_BIKE_STATIONS),
-                ItineRennesConstants.MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS) {
-
-            @Override
-            protected List<BikeStation> getAll() throws GenericException {
-
-                return keolisService.getAllBikeStations();
-            }
-        });
+        super(new CacheProvider<BikeStation>(database, new BikeStationCacheEntryHandler(database)));
     }
 
     /**
      * Retrieves a bike station from the keolis network service.
      * 
+     * @param id
+     *            the identifier of the station
      * @return the bike station
      * @throws GenericException
      *             an error occurred
      * @see fr.itinerennes.business.facade.AbstractKeolisStationProvider#retrieveFreshStation(java.lang.String)
      */
     @Override
-    protected final BikeStation retrieveFreshStation(final String id) throws GenericException {
+    protected BikeStation retrieveFreshStation(final String id) throws GenericException {
 
         return keolisService.getBikeStation(id);
+    }
+
+    /**
+     * Retrieves all bike stations from the keolis network service.
+     * 
+     * @return all the bike stations
+     * @throws GenericException
+     *             an error occurred
+     * @see fr.itinerennes.business.facade.AbstractKeolisStationProvider#retrieveAllStations()
+     */
+    @Override
+    protected List<BikeStation> retrieveAllStations() throws GenericException {
+
+        return keolisService.getAllBikeStations();
     }
 }

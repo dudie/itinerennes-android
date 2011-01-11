@@ -1,9 +1,5 @@
 package fr.itinerennes;
 
-import fr.itinerennes.model.BikeStation;
-import fr.itinerennes.model.BusRoute;
-import fr.itinerennes.model.BusStation;
-import fr.itinerennes.model.SubwayStation;
 
 /**
  * @author Jérémie Huchet
@@ -91,23 +87,12 @@ public class ItineRennesConstants {
     /*
      * Cache life time values.
      */
+
+    /** The keolis instant update time in seconds. */
+    public static final int KEOLIS_INSTANT_UPDATE_TIME = 60;
+
     /** Minimum time between two calls to a keolis getAll*Stations() calls. */
     public static final int MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS = 3600;
-
-    /** Life time for {@link BikeStation}s : {@value #TTL_BIKE_STATIONS} seconds. */
-    public static final int TTL_BIKE_STATIONS = 60;
-
-    /** Life time for {@link SubwayStation}s : {@value #TTL_SUBWAY_STATIONS} seconds. */
-    public static final int TTL_SUBWAY_STATIONS = 3600;
-
-    /** Life time for {@link BusStation}s : {@value #TTL_BUS_STATIONS} seconds. */
-    public static final int TTL_BUS_STATIONS = 3600;
-
-    /** Life time for {@link BusRoute}s : {@value #TTL_BUS_ROUTE} seconds. */
-    public static final int TTL_BUS_ROUTE = 3600;
-
-    /** Life time for {@link LineTransportIcon}s : {@value #TTL_LINE_TRANSPORT_ICONS} seconds. */
-    public static final int TTL_LINE_TRANSPORT_ICONS = 3600;
 
     /** The time to live of an explored bounding box : {@value #GEO_CACHE_TTL}. */
     public static final int GEO_CACHE_TTL = 3600;

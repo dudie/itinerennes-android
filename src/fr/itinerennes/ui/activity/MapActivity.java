@@ -401,7 +401,7 @@ public class MapActivity extends Activity {
 
             Station station = null;
             try {
-                station = ((StationProvider) params[0]).getStation((String) params[1]);
+                station = ((StationProvider<Station>) params[0]).getStation((String) params[1]);
             } catch (final GenericException e) {
                 LOGGER.error("error while trying to fetch station.", e);
             }

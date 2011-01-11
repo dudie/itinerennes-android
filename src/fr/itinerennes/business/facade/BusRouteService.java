@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.cache.BusRouteCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheRelationProvider;
 import fr.itinerennes.business.http.otp.OTPService;
@@ -37,7 +36,7 @@ public class BusRouteService implements RouteProvider {
 
         otpService = new OTPService();
         routeCache = new CacheRelationProvider<BusRoute>(database, new BusRouteCacheEntryHandler(
-                database), ItineRennesConstants.TTL_BUS_ROUTE);
+                database), BusRoute.TTL);
     }
 
     @Override

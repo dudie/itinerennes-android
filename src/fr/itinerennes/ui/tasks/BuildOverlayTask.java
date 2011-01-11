@@ -39,7 +39,7 @@ public class BuildOverlayTask extends
     private final int type;
 
     /** The station provider to use to retrieve the stations to display. */
-    private final StationProvider stationProvider;
+    private final StationProvider<Station> stationProvider;
 
     /**
      * Constructor.
@@ -54,7 +54,7 @@ public class BuildOverlayTask extends
      *            the type of station refreshed
      */
     public BuildOverlayTask(final Context ctx, final MapView map,
-            final StationProvider stationProvider, final int type) {
+            final StationProvider<Station> stationProvider, final int type) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("BuildOverlayTask.create - type={}", type);
@@ -76,8 +76,8 @@ public class BuildOverlayTask extends
     protected final StationOverlay<StationOverlayItem> doInBackground(final BoundingBoxE6... params) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("doInBackground.start - bbox={}",
-                    null != params && params.length > 0 ? params[0].toString() : null);
+            LOGGER.debug("doInBackground.start - type={}, bbox={}", type, null != params
+                    && params.length > 0 ? params[0].toString() : null);
         }
 
         List<Station> stations = null;
@@ -121,7 +121,8 @@ public class BuildOverlayTask extends
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("doInBackground.end - {} stations", null != stations ? stations.size() : 0);
+            LOGGER.debug("doInBackground.end - type={}, {} stations", type,
+                    null != stations ? stations.size() : 0);
         }
         return overlay;
     }
@@ -135,12 +136,12 @@ public class BuildOverlayTask extends
     protected void onPostExecute(final StationOverlay<StationOverlayItem> overlay) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onPostExecute.start");
+            LOGGER.debug("onPostExecute.start - type={}", type);
         }
         map.refreshOverlay(overlay, type);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onPostExecute.end");
+            LOGGER.debug("onPostExecute.end - type={}", type);
         }
     }
 
@@ -154,7 +155,7 @@ public class BuildOverlayTask extends
 
         super.onCancelled();
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCancelled.start/end");
+            LOGGER.debug("onCancelled.start/end - type={}", type);
         }
     }
 

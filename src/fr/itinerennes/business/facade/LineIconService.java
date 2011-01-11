@@ -12,10 +12,12 @@ import android.graphics.drawable.Drawable;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.cache.CacheProvider;
+import fr.itinerennes.business.cache.CacheProvider.CacheEntry;
 import fr.itinerennes.business.cache.LineIconCacheEntryHandler;
 import fr.itinerennes.business.http.keolis.KeolisService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.LineIcon;
+import fr.itinerennes.utils.DateUtils;
 
 /**
  * Methods to get an icon representing a transport line.
@@ -28,13 +30,13 @@ public class LineIconService {
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(LineIconService.class);
 
     /** The Keolis service. */
-    private final KeolisService keolisService;;
-
-    /** The service delayer used to retrieve icons. */
-    private final AbstractDelayedService<LineIcon> delayedService;
+    private final KeolisService keolisService = new KeolisService();
 
     /** The cache for line icons. */
     private final CacheProvider<LineIcon> iconCache;
+
+    /** The last time all the cache was updated (in seconds). */
+    private final int lastGlobalUpdate = 0;
 
     /**
      * Creates a line transport icon service.
@@ -44,18 +46,7 @@ public class LineIconService {
      */
     public LineIconService(final SQLiteDatabase database) {
 
-        keolisService = new KeolisService();
-        iconCache = new CacheProvider<LineIcon>(database, new LineIconCacheEntryHandler(database),
-                ItineRennesConstants.TTL_LINE_TRANSPORT_ICONS);
-        delayedService = new AbstractDelayedService<LineIcon>(iconCache,
-                ItineRennesConstants.MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS) {
-
-            @Override
-            protected List<LineIcon> getAll() throws GenericException {
-
-                return keolisService.getAllLineIcons();
-            }
-        };
+        iconCache = new CacheProvider<LineIcon>(database, new LineIconCacheEntryHandler(database));;
     }
 
     /**
@@ -71,17 +62,27 @@ public class LineIconService {
             LOGGER.debug("getIcon.start - line={}", line);
         }
 
-        BitmapDrawable image = null;
+        Drawable image = null;
 
         // TOBO a virer quand l'api keolis fournira les icones de ces lignes...
         if (line.equalsIgnoreCase("158")) {
             return null;
         }
 
-        LineIcon lineIcon = iconCache.load(line);
+        LineIcon lineIcon = null;
+        CacheEntry<LineIcon> cachedLineIcon = iconCache.load(line);
 
-        if (lineIcon == null) {
-            lineIcon = delayedService.getResource(line);
+        // icon isn't available in cache, AND the time between two global cache update is expired
+        if (cachedLineIcon == null
+                && lastGlobalUpdate < DateUtils.currentTimeSeconds()
+                        + ItineRennesConstants.MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS) {
+            final List<LineIcon> allIcons = keolisService.getAllLineIcons();
+            iconCache.replace(allIcons);
+            cachedLineIcon = iconCache.load(line);
+        }
+
+        if (cachedLineIcon != null) {
+            lineIcon = cachedLineIcon.getValue();
         }
 
         if (null != lineIcon && null == lineIcon.getIconBytes()) {
@@ -102,12 +103,25 @@ public class LineIconService {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("icon not found for line {}, using default", line);
             }
-            // TJHU mettre une image par défaut (besoin du contexte applicatif à priori)
+            image = getStaticIcon(line);
         }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getIcon.end - imageNotNull={}", null != image);
         }
         return image;
+    }
+
+    /**
+     * Returns a mock icon. This method always returns a displayable drawable.
+     * 
+     * @param line
+     *            the name of the line you want the icon
+     * @return the drawable
+     */
+    public final Drawable getStaticIcon(final String line) {
+
+        // TJHU mettre une image par défaut (besoin du contexte applicatif à priori)
+        return null;
     }
 }
