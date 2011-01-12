@@ -79,6 +79,18 @@ public class BusStationActivity extends Activity implements Runnable {
     /** Message to send to handler in case of a failed download of informations. */
     private static final int MESSAGE_FAILURE = 1;
 
+    /** Message to send to handler to increment the progress dialog. */
+    private static final int MESSAGE_INCREMENT_PROGRESS = 3;
+
+    /** Id for the progress dialog. */
+    private static final int PROGRESS_DIALOG = 0;
+
+    /** Id for the failure dialog. */
+    private static final int FAILURE_DIALOG = 1;
+
+    /** The intial size of the progress bar. */
+    private static final int INITIAL_PROGRESS_MAX = 4;
+
     /**
      * {@inheritDoc}
      * 
@@ -104,11 +116,23 @@ public class BusStationActivity extends Activity implements Runnable {
             @Override
             public void handleMessage(final Message msg) {
 
-                updateUI();
-                if (msg.what != MESSAGE_SUCCESS) {
-                    showDialog(msg.what);
+                switch (msg.what) {
+                case MESSAGE_SUCCESS:
+                    updateUI();
+                    removeDialog(PROGRESS_DIALOG);
+                    break;
+                case MESSAGE_FAILURE:
+                    updateUI();
+                    removeDialog(PROGRESS_DIALOG);
+                    showDialog(FAILURE_DIALOG);
+                    break;
+                case MESSAGE_INCREMENT_PROGRESS:
+                    progressDialog.incrementProgressBy(1);
+
+                default:
+                    break;
                 }
-                progressDialog.dismiss();
+
             }
         };
 
@@ -127,8 +151,7 @@ public class BusStationActivity extends Activity implements Runnable {
 
         super.onResume();
 
-        progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.loading),
-                false, true);
+        showDialog(PROGRESS_DIALOG);
 
         final Thread thread = new Thread(this);
         thread.start();
@@ -193,7 +216,7 @@ public class BusStationActivity extends Activity implements Runnable {
         try {
             /* Fetching routes informations for this station from the cache or the network. */
             busRoutes = busRouteService.getStationRoutes(stationId);
-
+            handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
         } catch (final GenericException e) {
             LOGGER.debug(
                     String.format("Can't load routes informations for the station %s.", stationId),
@@ -201,11 +224,24 @@ public class BusStationActivity extends Activity implements Runnable {
             returnCode = MESSAGE_FAILURE;
         }
 
+        if (busRoutes != null) {
+            progressDialog.setMax(progressDialog.getMax() + busRoutes.size());
+            for (final BusRoute busRoute : busRoutes) {
+                try {
+                    lineIconService.getIcon(busRoute.getShortName());
+                    progressDialog.incrementProgressBy(1);
+                } catch (final GenericException e) {
+                    LOGGER.error(String.format("Line icon for the route %s can not be fetched.",
+                            busRoute.getShortName()), e);
+                }
+            }
+        }
+
         try {
             /* Fetching departures informations from the network. */
 
             departures = busDepartureService.getStationDepartures(stationId);
-
+            handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
         } catch (final GenericException e) {
             LOGGER.debug(String.format("Can't load departures informations for the station %s.",
                     stationId), e);
@@ -230,9 +266,8 @@ public class BusStationActivity extends Activity implements Runnable {
     @Override
     protected final Dialog onCreateDialog(final int id) {
 
-        AlertDialog dialog;
         switch (id) {
-        case MESSAGE_FAILURE:
+        case FAILURE_DIALOG:
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.error_network).setCancelable(true)
                     .setNeutralButton("OK", new DialogInterface.OnClickListener() {
@@ -243,11 +278,28 @@ public class BusStationActivity extends Activity implements Runnable {
                             dialog.cancel();
                         }
                     });
-            dialog = builder.create();
-            break;
+            return builder.create();
+        case PROGRESS_DIALOG:
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setMessage(getBaseContext().getResources().getString(R.string.loading));
+            progressDialog.setCancelable(false);
+            return progressDialog;
         default:
-            dialog = null;
+            return null;
         }
-        return dialog;
+    }
+
+    @Override
+    protected final void onPrepareDialog(int id, Dialog dialog) {
+
+        switch (id) {
+        case PROGRESS_DIALOG:
+            ((ProgressDialog) dialog).setProgress(0);
+            ((ProgressDialog) dialog).setMax(INITIAL_PROGRESS_MAX);
+
+        default:
+            break;
+        }
     }
 }
