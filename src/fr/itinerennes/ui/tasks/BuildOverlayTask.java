@@ -10,7 +10,6 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import fr.itinerennes.R;
 import fr.itinerennes.business.facade.StationProvider;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.Station;
@@ -94,22 +93,7 @@ public class BuildOverlayTask extends
 
             for (final Station station : stations) {
                 final StationOverlayItem item = new StationOverlayItem(station);
-
-                switch (type) {
-                case Station.TYPE_BUS:
-                    item.setMarker(context.getResources().getDrawable(R.drawable.bus_marker_icon));
-                    break;
-                case Station.TYPE_BIKE:
-                    item.setMarker(context.getResources().getDrawable(R.drawable.bike_marker_icon));
-                    break;
-                case Station.TYPE_SUBWAY:
-                    item.setMarker(context.getResources()
-                            .getDrawable(R.drawable.subway_marker_icon));
-                    break;
-                default:
-                    // TJHU faire une icone par défaut et l'associer au marqueur
-                    break;
-                }
+                item.setMarker(context.getResources().getDrawable(station.getIconDrawableId()));
 
                 overlayItems.add(item);
             }
@@ -158,52 +142,4 @@ public class BuildOverlayTask extends
             LOGGER.debug("onCancelled.start/end - type={}", type);
         }
     }
-
-    /**
-     * Gets all bus stations within the passed bbox from WFS API and returns a list of station
-     * overlay items.
-     * 
-     * @return list of station overlay items
-     * @throws GenericException
-     *             network exception during request
-     * @param bbox
-     *            Bounding Box used to refresh the overlay
-     */
-    // private List<StationOverlayItem> getBusStationOverlayItemsFromBbox(final BoundingBoxE6 bbox)
-    // throws GenericException {
-    //
-    // final List<BusStation> busStations = BusService.getBusStationsFromBbox(bbox);
-    // final List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
-    //
-    // for (final BusStation station : busStations) {
-    // final StationOverlayItem item = new StationOverlayItem(station);
-    // item.setMarker(context.getResources().getDrawable(R.drawable.icon_bus));
-    //
-    // overlayItems.add(item);
-    // }
-    // return overlayItems;
-    //
-    // }
-
-    /**
-     * Gets all bike stations from Keolis API and returns a list of station overlay items.
-     * 
-     * @return list of station overlay items
-     * @throws GenericException
-     *             network exception during request
-     */
-    // private List<StationOverlayItem> getBikeStationOverlayItems() throws GenericException {
-    //
-    // final List<BikeStation> bikeStations = BikeStationProvider.getAllStations();
-    // final List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
-    //
-    // for (final BikeStation station : bikeStations) {
-    // final StationOverlayItem item = new StationOverlayItem(station);
-    // item.setMarker(context.getResources().getDrawable(R.drawable.icon_velo));
-    //
-    // overlayItems.add(item);
-    // }
-    // return overlayItems;
-    //
-    // }
 }
