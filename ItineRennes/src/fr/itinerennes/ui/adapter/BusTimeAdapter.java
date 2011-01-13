@@ -1,12 +1,14 @@
 package fr.itinerennes.ui.adapter;
 
 import java.text.DateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -18,7 +20,6 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.business.facade.BusDepartureService;
-import fr.itinerennes.business.facade.LineIconService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
@@ -39,8 +40,8 @@ public class BusTimeAdapter extends BaseAdapter {
     /** Bus time data. */
     private final List<BusDeparture> data;
 
-    /** Line Icon Service. */
-    private final LineIconService lineIconService;
+    /** Map containing icons for routes. */
+    private final HashMap<String, Drawable> routesIcons;
 
     /** View to add to the list when data is loading. */
     private View pendingView = null;
@@ -67,16 +68,16 @@ public class BusTimeAdapter extends BaseAdapter {
      *            Station to display
      * @param departures
      *            departures to display in the list
-     * @param iconService
-     *            service to use to fetch keolis icons
+     * @param routesIcons
+     *            list of routes icons
      */
     public BusTimeAdapter(final Context c, final BusStation busStation,
-            final List<BusDeparture> departures, final LineIconService iconService) {
+            final List<BusDeparture> departures, final HashMap<String, Drawable> routesIcons) {
 
         this.data = departures;
         this.context = c;
         this.station = busStation;
-        this.lineIconService = iconService;
+        this.routesIcons = routesIcons;
     }
 
     /**
@@ -162,13 +163,8 @@ public class BusTimeAdapter extends BaseAdapter {
 
             final ImageView departureLineIconeView = (ImageView) busTimeView
                     .findViewById(R.station.bus_icon_line_departure);
-            try {
-                departureLineIconeView.setImageDrawable(lineIconService.getIcon(data.get(position)
-                        .getRouteShortName()));
-            } catch (final GenericException e) {
-                LOGGER.error("Line icon for the route {} can not be fetched.", data.get(position)
-                        .getRouteShortName());
-            }
+            departureLineIconeView.setImageDrawable(routesIcons
+                    .get(data.get(position).getRouteId()));
 
             final TextView departureHeadsignView = (TextView) busTimeView
                     .findViewById(R.station.bus_headsign_departure);
