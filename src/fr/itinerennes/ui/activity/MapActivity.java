@@ -53,7 +53,7 @@ public class MapActivity extends Activity {
     private static final int DIALOG_SELECT_LAYERS = 0;
 
     /** Map listener event delayed listener constant value. */
-    private static final long MAP_LISTNER_DELAY = 1000;
+    private static final long MAP_LISTNER_DELAY = 800;
 
     /** The map view. */
     private MapView map;
@@ -71,10 +71,10 @@ public class MapActivity extends Activity {
     private LinearLayout focusedBoxLayout;
 
     /** The GeoPoint on which center the map when showing the activity. */
-    private GeoPoint defaultMapCenter;
+    private GeoPoint startMapCenter;
 
     /** The zoom level of the map when showing the activity. */
-    private int defaultZoomLevel;
+    private int startZoomLevel;
 
     /**
      * Called when activity starts.
@@ -117,18 +117,16 @@ public class MapActivity extends Activity {
         });
 
         // center of the map
-        final int latitude;
-        final int longitude;
         if (savedInstanceState != null) {
-            latitude = savedInstanceState.getInt("Latitude");
-            longitude = savedInstanceState.getInt("Longitude");
-            defaultZoomLevel = savedInstanceState.getInt("ZoomLevel");
+            startZoomLevel = savedInstanceState.getInt("ZoomLevel");
+            startMapCenter = (GeoPoint) savedInstanceState.getSerializable("startCenter");
         } else {
-            latitude = ItineRennesConstants.CONFIG_RENNES_LAT;
-            longitude = ItineRennesConstants.CONFIG_RENNES_LON;
-            defaultZoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
+            final int latitude = ItineRennesConstants.CONFIG_RENNES_LAT;
+            final int longitude = ItineRennesConstants.CONFIG_RENNES_LON;
+            startZoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
+            startMapCenter = new GeoPoint(latitude, longitude);
         }
-        defaultMapCenter = new GeoPoint(latitude, longitude);
+
         // map.setMultiTouchControls(true);
 
         // TJHU remapper ce code sur un nouveau bouton mylocation
@@ -266,8 +264,8 @@ public class MapActivity extends Activity {
 
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-            map.getController().setZoom(defaultZoomLevel);
-            map.getController().setCenter(defaultMapCenter);
+            map.getController().setZoom(startZoomLevel);
+            map.getController().setCenter(startMapCenter);
         }
     }
 
@@ -498,8 +496,8 @@ public class MapActivity extends Activity {
     @Override
     public final void onSaveInstanceState(final Bundle savedInstanceState) {
 
-        savedInstanceState.putInt("Latitude", map.getMapCenterLatitudeE6());
-        savedInstanceState.putInt("Longitude", map.getMapCenterLongitudeE6());
+        startMapCenter = new GeoPoint(map.getMapCenterLatitudeE6(), map.getMapCenterLongitudeE6());
+        savedInstanceState.putSerializable("startCenter", startMapCenter);
         savedInstanceState.putInt("ZoomLevel", map.getZoomLevel());
 
         super.onSaveInstanceState(savedInstanceState);
