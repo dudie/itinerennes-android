@@ -1,5 +1,6 @@
 package fr.itinerennes.ui.activity;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -67,6 +69,9 @@ public class BusStationActivity extends Activity implements Runnable {
     /** The list of routes for this station. */
     private List<BusRoute> busRoutes;
 
+    /** The list of route icon. */
+    private final HashMap<String, Drawable> routesIcon = new HashMap<String, Drawable>();
+
     /** The list of departures for those routes. */
     private List<BusDeparture> departures;
 
@@ -89,7 +94,7 @@ public class BusStationActivity extends Activity implements Runnable {
     private static final int FAILURE_DIALOG = 1;
 
     /** The intial size of the progress bar. */
-    private static final int INITIAL_PROGRESS_MAX = 4;
+    private static final int INITIAL_PROGRESS_MAX = 3;
 
     /**
      * {@inheritDoc}
@@ -174,14 +179,8 @@ public class BusStationActivity extends Activity implements Runnable {
                 for (final BusRoute busRoute : busRoutes) {
                     final ImageView lineIcon = (ImageView) getLayoutInflater().inflate(
                             R.layout.line_icon, null);
-                    try {
-                        lineIcon.setImageDrawable(lineIconService.getIcon(busRoute.getShortName()));
+                    lineIcon.setImageDrawable(routesIcon.get(busRoute.getId()));
 
-                    } catch (final GenericException e) {
-                        LOGGER.error(String.format(
-                                "Line icon for the route %s can not be fetched.",
-                                busRoute.getShortName()), e);
-                    }
                     lineList.addView(lineIcon);
                     LOGGER.debug("Showing icon for line {}.", busRoute.getShortName());
                 }
@@ -192,7 +191,7 @@ public class BusStationActivity extends Activity implements Runnable {
         if (departures != null) {
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
             listTimes.setAdapter(new BusTimeAdapter(getBaseContext(), station, departures,
-                    lineIconService));
+                    routesIcon));
         }
     }
 
@@ -206,6 +205,7 @@ public class BusStationActivity extends Activity implements Runnable {
         try {
             /* Fetching station from the cache or the network. */
             station = busService.getStation(stationId);
+            handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
         } catch (final GenericException e) {
             LOGGER.debug(
                     String.format("Can't load station informations for the station %s.", stationId),
@@ -228,7 +228,8 @@ public class BusStationActivity extends Activity implements Runnable {
             progressDialog.setMax(progressDialog.getMax() + busRoutes.size());
             for (final BusRoute busRoute : busRoutes) {
                 try {
-                    lineIconService.getIcon(busRoute.getShortName());
+                    routesIcon.put(busRoute.getId(),
+                            lineIconService.getIcon(busRoute.getShortName()));
                     progressDialog.incrementProgressBy(1);
                 } catch (final GenericException e) {
                     LOGGER.error(String.format("Line icon for the route %s can not be fetched.",
