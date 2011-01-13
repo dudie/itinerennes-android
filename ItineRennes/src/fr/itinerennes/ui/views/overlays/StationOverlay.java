@@ -1,7 +1,6 @@
 package fr.itinerennes.ui.views.overlays;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.andnav.osm.util.BoundingBoxE6;
@@ -126,9 +125,10 @@ public class StationOverlay<T extends StationOverlayItem> extends
      */
     public void removeItems(final int type) {
 
-        final List<T> newList = duplicateList(this.mItemList);
+        final List<StationOverlayItem> newList = new ArrayList<StationOverlayItem>(this.mItemList);
 
-        final T selectedItem = (selectedIndex != NOT_SET) ? newList.get(selectedIndex) : null;
+        final StationOverlayItem selectedItem = (selectedIndex != NOT_SET) ? newList
+                .get(selectedIndex) : null;
 
         synchronized (newList) {
             for (final StationOverlayItem item : newList) {
@@ -147,9 +147,10 @@ public class StationOverlay<T extends StationOverlayItem> extends
      */
     public void removeUnvisibleItems(final BoundingBoxE6 bbox) {
 
-        final List<T> newList = duplicateList(this.mItemList);
+        final List<StationOverlayItem> newList = new ArrayList<StationOverlayItem>(this.mItemList);
 
-        final T selectedItem = (selectedIndex != NOT_SET) ? newList.get(selectedIndex) : null;
+        final StationOverlayItem selectedItem = (selectedIndex != NOT_SET) ? newList
+                .get(selectedIndex) : null;
 
         synchronized (newList) {
             for (final StationOverlayItem item : newList) {
@@ -167,7 +168,7 @@ public class StationOverlay<T extends StationOverlayItem> extends
      * @param item
      *            item to search in the item list
      */
-    private void updateSelectedItemIndex(final T item) {
+    private void updateSelectedItemIndex(final StationOverlayItem item) {
 
         if (selectedIndex != NOT_SET && item != null) {
             selectedIndex = (this.mItemList.lastIndexOf(item) > -1) ? this.mItemList
@@ -292,20 +293,5 @@ public class StationOverlay<T extends StationOverlayItem> extends
 
         rect.set(left, top, right, bottom);
         return rect;
-    }
-
-    /**
-     * Copy all elements of a list to a new one.
-     * 
-     * @param source
-     *            the list to duplicate
-     * @return a new list with all elements of the source list
-     */
-    private List<T> duplicateList(List<T> source) {
-
-        final List<T> newList = new ArrayList<T>();
-        Collections.copy(newList, source);
-
-        return newList;
     }
 }
