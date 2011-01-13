@@ -191,7 +191,6 @@ public class MapActivity extends Activity {
                         item.getStation().getIconDrawableId()));
 
                 focusedBoxLayout.setVisibility(View.VISIBLE);
-                map.setItemLayoutFocused(true);
 
                 focusedBoxLayout.setTag(R.id.selectedStation, item);
 
@@ -363,7 +362,7 @@ public class MapActivity extends Activity {
 
     public final void fillStationBox(final Station station) {
 
-        if (map.isItemLayoutFocused() && station != null) {
+        if (station != null) {
             // save previous padding because changing the background erase it
             final int top = focusedBoxLayout.getPaddingTop();
             final int left = focusedBoxLayout.getPaddingLeft();

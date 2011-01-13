@@ -10,7 +10,6 @@ import org.andnav.osm.events.ZoomEvent;
 import org.andnav.osm.util.BoundingBoxE6;
 import org.andnav.osm.views.OpenStreetMapView;
 import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay.OnItemGestureListener;
-import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
 import org.andnav.osm.views.util.IOpenStreetMapRendererInfo;
 import org.andnav.osm.views.util.OpenStreetMapTileProvider;
 import org.slf4j.Logger;
@@ -47,13 +46,17 @@ public class MapView extends OpenStreetMapView implements MapListener {
     /** OnItemGestureListener. */
     private OnItemGestureListener<StationOverlayItem> onItemGestureListener;
 
-    /** Boolean indicating if the focused item layout is visible. */
-    boolean focused;
-
     private final HashMap<Integer, BuildOverlayTask> tasks = new HashMap<Integer, BuildOverlayTask>();
 
     /** Array of stations providers. */
     private StationProvider[] stationProviders;
+
+    private StationOverlay overlay;
+
+    public StationOverlay getOverlay() {
+
+        return overlay;
+    }
 
     /**
      * @param context
@@ -63,6 +66,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
         super(context);
         this.context = context;
         this.controller = new MapViewController(this);
+
     }
 
     /**
@@ -126,6 +130,10 @@ public class MapView extends OpenStreetMapView implements MapListener {
             LOGGER.debug("onScroll");
         }
 
+        if (overlay != null) {
+            overlay.unFocusItem(this);
+        }
+
         if (this.isShown()) {
             executeBuildOverlayTask(Station.TYPE_BUS);
             executeBuildOverlayTask(Station.TYPE_BIKE);
@@ -149,7 +157,7 @@ public class MapView extends OpenStreetMapView implements MapListener {
 
         if (this.isShown()) {
             if (event.getZoomLevel() < ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
-                removeAllStationOverlays();
+                removeStationOverlay();
             } else {
                 executeBuildOverlayTask(Station.TYPE_BUS);
                 executeBuildOverlayTask(Station.TYPE_BIKE);
@@ -157,17 +165,6 @@ public class MapView extends OpenStreetMapView implements MapListener {
             }
         }
         return true;
-    }
-
-    /**
-     * Sets the focused flag which indicate if the item layout is visible.
-     * 
-     * @param focused
-     *            focused or not
-     */
-    public final void setItemLayoutFocused(final boolean focused) {
-
-        this.focused = focused;
     }
 
     /**
@@ -179,16 +176,6 @@ public class MapView extends OpenStreetMapView implements MapListener {
     public final void setStationProviders(final StationProvider[] stationProviders) {
 
         this.stationProviders = stationProviders;
-    }
-
-    /**
-     * Gets the focused flag which indicate if the item layout is visible.
-     * 
-     * @return true if the item layout is visible
-     */
-    public final boolean isItemLayoutFocused() {
-
-        return this.focused;
     }
 
     /**
@@ -223,6 +210,11 @@ public class MapView extends OpenStreetMapView implements MapListener {
      */
     private void executeBuildOverlayTask(final int type) {
 
+        if (this.overlay == null) {
+            this.overlay = new StationOverlay<StationOverlayItem>(context,
+                    new ArrayList<StationOverlayItem>(), getOnItemGestureListener(), type);
+            this.getOverlays().add(overlay);
+        }
         BuildOverlayTask task = tasks.get(type);
         if (task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
             task.cancel(true);
@@ -231,95 +223,26 @@ public class MapView extends OpenStreetMapView implements MapListener {
             }
         }
         final BoundingBoxE6 bbox = this.getVisibleBoundingBoxE6();
-        task = new BuildOverlayTask(this.context, this, stationProviders[type], type);
+        task = new BuildOverlayTask(this.context, this, stationProviders[type], type, this.overlay);
         tasks.put(type, task);
         tasks.get(type).execute(bbox);
     }
 
     /**
-     * Synchronized method to refresh an overlay on the map. If an overlay of the same type already
-     * exists on the map, it will be replaced.
-     * 
-     * @param stationOverlay
-     *            Overlay to add on the map
-     * @param type
-     *            The type of the overlay to replace.
+     * Removes the station overlay from the map view.
      */
-    public final void refreshOverlay(final StationOverlay<StationOverlayItem> stationOverlay,
-            final int type) {
+    private synchronized void removeStationOverlay() {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("refreshOverlay.start");
+            LOGGER.debug("removeStationOverlay.start");
         }
 
-        final ArrayList<OpenStreetMapViewOverlay> overlaysToDelete = new ArrayList<OpenStreetMapViewOverlay>();
-        for (final OpenStreetMapViewOverlay overlay : this.getOverlays()) {
-            if (overlay instanceof StationOverlay
-                    && ((StationOverlay<?>) overlay).getType() == type) {
-                overlaysToDelete.add(overlay);
-            }
-        }
-
-        removeOverlays(overlaysToDelete);
-
-        if (stationOverlay != null) {
-            this.getOverlays().add(stationOverlay);
-        }
-
-        this.postInvalidate();
+        this.getOverlays().remove(overlay);
+        overlay.unFocusItem(this);
+        overlay = null;
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("refreshOverlay.end");
-        }
-
-    }
-
-    /**
-     * Removes any overlays from the map view.
-     * 
-     * @param overlaysToDelete
-     *            Array of overlays to delete
-     */
-    private synchronized void removeOverlays(
-            final ArrayList<OpenStreetMapViewOverlay> overlaysToDelete) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("removeStationOverlays.start");
-        }
-
-        for (final OpenStreetMapViewOverlay overlay : overlaysToDelete) {
-            this.getOverlays().remove(overlay);
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("removeStationOverlays.end");
-        }
-    }
-
-    /**
-     * Removes all overlays of type StationOverlay from the map view.
-     */
-    private void removeAllStationOverlays() {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("removeAllStationOverlays.start");
-        }
-        final ArrayList<OpenStreetMapViewOverlay> overlaysToDelete = new ArrayList<OpenStreetMapViewOverlay>();
-        for (final OpenStreetMapViewOverlay overlay : this.getOverlays()) {
-            if (overlay instanceof StationOverlay) {
-                overlaysToDelete.add(overlay);
-            }
-        }
-
-        removeOverlays(overlaysToDelete);
-
-        this.postInvalidate();
-
-        // cancel all BuildOverlayTask since we have deleted those overlays
-        cancelTasks();
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("removeAllStationOverlays.end");
+            LOGGER.debug("removeStationOverlay.end");
         }
     }
 

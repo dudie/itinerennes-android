@@ -40,6 +40,8 @@ public class BuildOverlayTask extends
     /** The station provider to use to retrieve the stations to display. */
     private final StationProvider<Station> stationProvider;
 
+    private final StationOverlay<StationOverlayItem> overlay;
+
     /**
      * Constructor.
      * 
@@ -53,7 +55,8 @@ public class BuildOverlayTask extends
      *            the type of station refreshed
      */
     public BuildOverlayTask(final Context ctx, final MapView map,
-            final StationProvider<Station> stationProvider, final int type) {
+            final StationProvider<Station> stationProvider, final int type,
+            final StationOverlay<StationOverlayItem> overlay) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("BuildOverlayTask.create - type={}", type);
@@ -62,6 +65,7 @@ public class BuildOverlayTask extends
         this.map = map;
         this.stationProvider = stationProvider;
         this.type = type;
+        this.overlay = overlay;
     }
 
     /**
@@ -86,8 +90,6 @@ public class BuildOverlayTask extends
             LOGGER.error("error while trying to fetch stations.", e);
         }
 
-        final StationOverlay<StationOverlayItem> overlay;
-
         if (null != stations) {
             final List<StationOverlayItem> overlayItems = new ArrayList<StationOverlayItem>();
 
@@ -97,11 +99,9 @@ public class BuildOverlayTask extends
 
                 overlayItems.add(item);
             }
-            overlay = new StationOverlay<StationOverlayItem>(context, overlayItems,
-                    map.getOnItemGestureListener(), type);
+            overlay.removeUnvisibleItems(map.getVisibleBoundingBoxE6());
+            overlay.addItems(overlayItems);
 
-        } else {
-            overlay = null;
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -122,7 +122,8 @@ public class BuildOverlayTask extends
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPostExecute.start - type={}", type);
         }
-        map.refreshOverlay(overlay, type);
+
+        map.postInvalidate();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPostExecute.end - type={}", type);
