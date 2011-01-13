@@ -45,7 +45,7 @@ public final class DateUtils {
     }
 
     /**
-     * Is the given TTL expired at the given date for the current time.
+     * Is the given TTL expired at the given date for the current time. 1294798682 1294798396799
      * 
      * @param date
      *            the date to test
@@ -55,6 +55,6 @@ public final class DateUtils {
      */
     public static boolean isExpired(final Date date, final int ttl) {
 
-        return currentTimeSeconds() > date.getTime() + ttl;
+        return currentTimeSeconds() > date.getTime() / 1000 + ttl;
     }
 }
