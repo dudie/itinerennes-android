@@ -80,6 +80,9 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
     public boolean onSingleTapUp(final MotionEvent event, final OpenStreetMapView mapView) {
 
         final boolean handled = super.onSingleTapUp(event, mapView);
+        if (handled == false) {
+            focusedItemIndex = NOT_SET;
+        }
         mapView.postInvalidate();
         return handled;
     }
@@ -89,7 +92,7 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
 
         // set the new focused element
         focusedItemIndex = index;
-        return false;
+        return true;
     }
 
     @Override
