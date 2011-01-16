@@ -187,7 +187,10 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
     public final void onManagedDraw(final Canvas c, final OpenStreetMapView osmv) {
 
         for (final T overlay : overlays) {
-            overlay.onManagedDraw(c, osmv);
+            overlay.onDrawOverlay(c, osmv);
+        }
+        for (final T overlay : overlays) {
+            overlay.onDrawOverlayFinished(c, osmv);
         }
     }
 
