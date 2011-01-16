@@ -13,12 +13,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
+import fr.itinerennes.ui.adapter.MapBoxAdapter;
+import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
+import fr.itinerennes.ui.views.overlays.FocusableOverlayItem;
+import fr.itinerennes.ui.views.overlays.OverlayItem;
 
 /**
  * The map box view component is a simple {@link LinearLayout} with common functionalities to handle
  * updates of its content.
  * 
  * @author Jérémie Huchet
+ * @param <D>
  */
 public class MapBoxView extends LinearLayout {
 
@@ -27,6 +32,9 @@ public class MapBoxView extends LinearLayout {
 
     /** The intent to use to start a new activity when the box is clicked. */
     private Intent onClickIntent;
+
+    /** The task used to fill the map box view with additional information in background. */
+    private DisplayMapBoxTask<?> mapBoxDisplayer = null;
 
     /**
      * @param context
@@ -191,5 +199,41 @@ public class MapBoxView extends LinearLayout {
 
         setClickable(null != onClickIntent);
         this.onClickIntent = onClickIntent;
+    }
+
+    /**
+     * Cancel the {@link DisplayMapBoxTask} if you request the visibility to be {@link View#GONE}.
+     * <p>
+     * {@inheritDoc}
+     * 
+     * @see android.view.View#setVisibility(int)
+     */
+    @Override
+    public final void setVisibility(final int visibility) {
+
+        if (GONE == visibility) {
+            mapBoxDisplayer.cancel(true);
+        }
+        super.setVisibility(visibility);
+    }
+
+    /**
+     * Updates the content of the map box view with the given adapter for the given item.
+     * 
+     * @param <D>
+     *            the type of data of the item bundle
+     * @param adapter
+     *            the adapter to use to update the view
+     * @param item
+     *            the item to be displayed
+     */
+    public final <D> void updateInBackground(final MapBoxAdapter<OverlayItem<D>, D> adapter,
+            final FocusableOverlayItem<D> item) {
+
+        if (null != mapBoxDisplayer) {
+            mapBoxDisplayer.cancel(true);
+        }
+        mapBoxDisplayer = new DisplayMapBoxTask<D>(getContext(), this, adapter, item);
+        mapBoxDisplayer.execute();
     }
 }

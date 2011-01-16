@@ -17,7 +17,6 @@ import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
-import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
 import fr.itinerennes.ui.views.MapBoxView;
 
 /**
@@ -36,9 +35,6 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(FocusableItemizedOverlay.class);
-
-    /** The task used to fill the map box view with additional information in background. */
-    private DisplayMapBoxTask<D> mapBoxDisplayer = null;
 
     /** The adapter to use to display the focused item. */
     private final MapBoxAdapter<OverlayItem<D>, D> boxDisplayAdaper;
@@ -87,7 +83,7 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
     @Override
     public final boolean onBlur(final MapBoxView additionalInformationView) {
 
-        if (NOT_SET != focusedItemIndex) {
+        if (NOT_SET != prevFocusedItemIndex) {
             final T item = mItemList.get(prevFocusedItemIndex);
             onBlurHelper(additionalInformationView, item);
         }
@@ -135,12 +131,7 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
             LOGGER.debug("onFocusHelper.start - itemId={}", item.getId());
         }
 
-        if (null != mapBoxDisplayer) {
-            mapBoxDisplayer.cancel(true);
-        }
-        mapBoxDisplayer = new DisplayMapBoxTask<D>(context, additionalInformationView,
-                boxDisplayAdaper, item);
-        mapBoxDisplayer.execute();
+        additionalInformationView.updateInBackground(boxDisplayAdaper, item);
         item.onFocus();
 
         if (LOGGER.isDebugEnabled()) {
@@ -162,7 +153,6 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
             LOGGER.debug("onBlurHelper.start - itemId={}", item.getId());
         }
 
-        mapBoxDisplayer.cancel(true);
         additionalInformationView.setVisibility(View.GONE);
         item.onBlur();
 

@@ -80,6 +80,8 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
     public boolean onSingleTapUp(final MotionEvent event, final OpenStreetMapView mapView) {
 
         final boolean handled = super.onSingleTapUp(event, mapView);
+        // if single tap up returns true, no item have matched the tap coordinates
+        // focus has been loosed
         if (handled == false) {
             focusedItemIndex = NOT_SET;
         }
