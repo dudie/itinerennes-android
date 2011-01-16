@@ -1,4 +1,4 @@
-package fr.itinerennes.business.facade;
+package fr.itinerennes.business.service;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.facade.StationProvider#getStation(java.lang.String)
+     * @see fr.itinerennes.business.service.StationProvider#getStation(java.lang.String)
      */
     @Override
     public final T getStation(final String id) throws GenericException {
@@ -125,7 +125,7 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.facade.StationProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
+     * @see fr.itinerennes.business.service.StationProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
      */
     @Override
     public final List<T> getStations(final BoundingBoxE6 bbox) throws GenericException {

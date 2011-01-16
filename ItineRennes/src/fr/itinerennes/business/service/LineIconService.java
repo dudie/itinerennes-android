@@ -1,15 +1,25 @@
-package fr.itinerennes.business.facade;
+package fr.itinerennes.business.service;
 
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.R;
 import fr.itinerennes.business.cache.CacheProvider;
 import fr.itinerennes.business.cache.CacheProvider.CacheEntry;
 import fr.itinerennes.business.cache.LineIconCacheEntryHandler;
@@ -104,7 +114,7 @@ public class LineIconService extends AbstractService {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("icon not found for line {}, using default", line);
             }
-            image = getStaticIcon(line);
+            // image = getDefaultIcon(line);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -120,9 +130,35 @@ public class LineIconService extends AbstractService {
      *            the name of the line you want the icon
      * @return the drawable
      */
-    public final Drawable getStaticIcon(final String line) {
+    public final Drawable getDefaultIcon(final Context context, final String line) {
 
-        // TJHU mettre une image par défaut (besoin du contexte applicatif à priori)
-        return null;
+        final Bitmap icon = Bitmap.createBitmap(46, 46, Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(icon);
+
+        final Paint p = new Paint();
+        p.setColor(Color.RED);
+        canvas.drawLine(0, 0, 46, 46, p);
+
+        final LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,
+                LayoutParams.FILL_PARENT);
+
+        final Bitmap iconBackground = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.default_line_icon);
+
+        final TextView text = new TextView(context);
+        text.setBackgroundDrawable(new BitmapDrawable(iconBackground));
+        text.setText(line);
+        text.setGravity(Gravity.CENTER);
+        text.setLayoutParams(params);
+        text.layout(0, 0, 0, 0);
+
+        final RelativeLayout layout = new RelativeLayout(context);
+        layout.addView(text);
+        layout.forceLayout();
+        layout.draw(canvas);
+
+        final Drawable d = new BitmapDrawable(icon);
+        d.setBounds(0, 0, 46, 46);
+        return d;
     }
 }

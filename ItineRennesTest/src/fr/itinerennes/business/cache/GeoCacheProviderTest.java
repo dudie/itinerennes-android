@@ -48,7 +48,7 @@ public class GeoCacheProviderTest extends AndroidTestCase implements GeoExploreC
         dropGeoCacheData();
         insertTestGeoCacheData();
 
-        geoCache = GeoCacheProvider.getInstance(database);
+        geoCache = GeoCacheProvider.getInstance(dbHlpr);
     }
 
     /**

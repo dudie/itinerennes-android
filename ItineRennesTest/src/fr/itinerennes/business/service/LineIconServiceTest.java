@@ -10,8 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.test.AndroidTestCase;
 
-import fr.itinerennes.business.facade.LineIconService;
 import fr.itinerennes.business.http.keolis.KeolisService;
+import fr.itinerennes.business.service.LineIconService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.LineIcon;
@@ -49,8 +49,7 @@ public class LineIconServiceTest extends AndroidTestCase {
 
         LOGGER.info("loading database and service...");
         final DatabaseHelper dbHlpr = new DatabaseHelper(this.getContext());
-        database = dbHlpr.getWritableDatabase();
-        lineIconService = new LineIconService(database);
+        lineIconService = new LineIconService(dbHlpr);
 
         LOGGER.info("loading test data...");
         // gets all lines name and store them in property "lines"

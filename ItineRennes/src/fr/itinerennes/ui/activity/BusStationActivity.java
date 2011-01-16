@@ -6,7 +6,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -21,11 +20,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
-import fr.itinerennes.business.facade.BusDepartureService;
-import fr.itinerennes.business.facade.BusRouteService;
-import fr.itinerennes.business.facade.BusService;
-import fr.itinerennes.business.facade.LineIconService;
-import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
 import fr.itinerennes.model.BusRoute;
@@ -39,32 +33,17 @@ import fr.itinerennes.ui.adapter.BusTimeAdapter;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class BusStationActivity extends Activity implements Runnable {
+public class BusStationActivity extends ITRContext implements Runnable {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(BusStationActivity.class);
-
-    /** The Bus Service. */
-    private BusService busService;
-
-    /** The Bus Route Service. */
-    private BusRouteService busRouteService;
-
-    /** The Departure Service. */
-    private BusDepartureService busDepartureService;
-
-    /** The LineIcon Service. */
-    private LineIconService lineIconService;
 
     /** The progress dialog while the activity is loading. */
     private ProgressDialog progressDialog;
 
     /** The diplsayed station. */
     private BusStation station;
-
-    /** The database helper. */
-    private DatabaseHelper dbHelper;
 
     /** The list of routes for this station. */
     private List<BusRoute> busRoutes;
@@ -109,12 +88,6 @@ public class BusStationActivity extends Activity implements Runnable {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_station);
-
-        dbHelper = new DatabaseHelper(getBaseContext());
-        busService = new BusService(dbHelper);
-        busRouteService = new BusRouteService(dbHelper);
-        busDepartureService = new BusDepartureService(dbHelper);
-        lineIconService = new LineIconService(dbHelper);
 
         handler = new Handler() {
 
@@ -182,6 +155,11 @@ public class BusStationActivity extends Activity implements Runnable {
                     lineIcon.setImageDrawable(routesIcon.get(busRoute.getId()));
 
                     lineList.addView(lineIcon);
+
+                    // final TextView text = (TextView) getLayoutInflater().inflate(
+                    // R.layout.line_icon_default, null);
+                    // text.setText(busRoute.getShortName());
+                    // lineList.addView(text);
                     LOGGER.debug("Showing icon for line {}.", busRoute.getShortName());
                 }
             }
@@ -204,7 +182,7 @@ public class BusStationActivity extends Activity implements Runnable {
 
         try {
             /* Fetching station from the cache or the network. */
-            station = busService.getStation(stationId);
+            station = getBusService().getStation(stationId);
             handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
         } catch (final GenericException e) {
             LOGGER.debug(
@@ -215,7 +193,7 @@ public class BusStationActivity extends Activity implements Runnable {
 
         try {
             /* Fetching routes informations for this station from the cache or the network. */
-            busRoutes = busRouteService.getStationRoutes(stationId);
+            busRoutes = getBusRouteService().getStationRoutes(stationId);
             handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
         } catch (final GenericException e) {
             LOGGER.debug(
@@ -229,7 +207,7 @@ public class BusStationActivity extends Activity implements Runnable {
             for (final BusRoute busRoute : busRoutes) {
                 try {
                     routesIcon.put(busRoute.getId(),
-                            lineIconService.getIcon(busRoute.getShortName()));
+                            getLineIconService().getIcon(busRoute.getShortName()));
                     progressDialog.incrementProgressBy(1);
                 } catch (final GenericException e) {
                     LOGGER.error(String.format("Line icon for the route %s can not be fetched.",
@@ -241,7 +219,7 @@ public class BusStationActivity extends Activity implements Runnable {
         try {
             /* Fetching departures informations from the network. */
 
-            departures = busDepartureService.getStationDepartures(stationId);
+            departures = getBusDepartureService().getStationDepartures(stationId);
             handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
         } catch (final GenericException e) {
             LOGGER.debug(String.format("Can't load departures informations for the station %s.",
@@ -249,19 +227,19 @@ public class BusStationActivity extends Activity implements Runnable {
             returnCode = MESSAGE_FAILURE;
         }
 
+        /* Fetching line icons. */
+        if (busRoutes != null) {
+            for (final BusRoute busRoute : busRoutes) {
+                try {
+                    getLineIconService().getIcon(busRoute.getShortName());
+                } catch (final GenericException e) {
+                    LOGGER.error(String.format("Line icon for the route %s can not be fetched.",
+                            busRoute.getShortName()), e);
+                }
+            }
+        }
+
         handler.sendEmptyMessage(returnCode);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onDestroy()
-     */
-    @Override
-    protected final void onDestroy() {
-
-        dbHelper.close();
-        super.onDestroy();
     }
 
     @Override
@@ -292,7 +270,7 @@ public class BusStationActivity extends Activity implements Runnable {
     }
 
     @Override
-    protected final void onPrepareDialog(int id, Dialog dialog) {
+    protected final void onPrepareDialog(final int id, final Dialog dialog) {
 
         switch (id) {
         case PROGRESS_DIALOG:

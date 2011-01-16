@@ -3,6 +3,7 @@ package fr.itinerennes.business.facade;
 import android.test.AndroidTestCase;
 
 import fr.itinerennes.business.http.keolis.KeolisService;
+import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.model.BikeStation;
 
 /**

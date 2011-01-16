@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes">
+
+    <!-- PRESSED -->
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="5dp" />
+                    <solid android:color="#95000000" />
+                    <stroke android:width="2dp" android:color="@color/orange" />
+                </shape>
+            </item>
+            <item>
+                <bitmap android:gravity="center" android:src="@drawable/bus_marker_icon" />
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <bitmap android:gravity="center" android:src="@drawable/bus_marker_icon" />
+    </item>
+</selector>

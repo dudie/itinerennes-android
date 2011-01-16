@@ -253,7 +253,8 @@ public class ItinerennesLogger extends AndroidLogger {
      */
     private String format(final String message) {
 
-        return String.format("%s%-30.30s %s", ItinerennesLoggerFactory.PREFIX, this.classname,
+        return String.format("%s%-6.7s.%-30.30s %s", ItinerennesLoggerFactory.PREFIX, Thread
+                .currentThread().getName().replaceAll("AsyncTask ", "task"), this.classname,
                 message);
     }
 

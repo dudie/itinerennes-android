@@ -1,0 +1,128 @@
+package fr.itinerennes.ui.tasks;
+
+import org.slf4j.Logger;
+import org.slf4j.impl.ItinerennesLoggerFactory;
+
+import android.content.Context;
+import android.os.AsyncTask;
+import android.view.View;
+
+import fr.itinerennes.ui.adapter.MapBoxAdapter;
+import fr.itinerennes.ui.views.MapBoxView;
+import fr.itinerennes.ui.views.overlays.OverlayItem;
+
+/**
+ * @param <D>
+ *            the type of the bundled data with the item
+ * @author Jérémie Huchet
+ */
+public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
+
+    /** The event logger. */
+    private static final Logger LOGGER = ItinerennesLoggerFactory
+            .getLogger(DisplayMapBoxTask.class);
+
+    /** The application context. */
+    private final Context context;
+
+    /** The view where the additional informations are added. */
+    private final MapBoxView boxView;
+
+    /** The {@link MapBoxAdapter} used to display the map box informations. */
+    private final MapBoxAdapter<OverlayItem<D>, D> adapter;
+
+    /** The marker item. */
+    private final OverlayItem<D> item;
+
+    /**
+     * Creates the task which will display the map box.
+     * 
+     * @param context
+     *            the application context
+     * @param boxView
+     *            the view where the additional informations are added
+     * @param adapter
+     *            the map box adapter
+     * @parama the marker item
+     */
+    public DisplayMapBoxTask(final Context context, final MapBoxView boxView,
+            final MapBoxAdapter<OverlayItem<D>, D> adapter, final OverlayItem<D> item) {
+
+        this.context = context;
+        this.boxView = boxView;
+        this.adapter = adapter;
+        this.item = item;
+    }
+
+    /**
+     * Active the loading icon.
+     * 
+     * @see android.os.AsyncTask#onPreExecute()
+     */
+    @Override
+    protected void onPreExecute() {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onPreExecute.start - itemId={}", item.getId());
+        }
+        boxView.setLoading(true);
+        final int res = adapter.getBoxIcon(item);
+        boxView.setIcon(context.getResources().getDrawable(res));
+        boxView.setTitle(adapter.getBoxTitle(item));
+        boxView.setAdditionalInformations(adapter.getBoxDetailsView(context, item));
+        boxView.setLoading(true);
+        boxView.setVisibility(View.VISIBLE);
+        boxView.setOnClickIntent(adapter.getOnClickIntent(context, item));
+        boxView.postInvalidate();
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onPreExecute.end - itemId={}", item.getId());
+        }
+    }
+
+    /**
+     * Uses the adapter to load some data in background.
+     * <p>
+     * {@inheritDoc}
+     * 
+     * @see android.os.AsyncTask#doInBackground(Params[])
+     */
+    @Override
+    protected final D doInBackground(final Void... params) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("doInBackground.start - itemId={}", item.getId());
+        }
+
+        final D data = adapter.backgroundLoad(item);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("doInBackground.end - itemId={}", item.getId());
+        }
+        return data;
+    }
+
+    /**
+     * Updates the map box view with the loaded data and deactive the loadinf icon.
+     * <p>
+     * {@inheritDoc}
+     * 
+     * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+     */
+    @Override
+    protected final void onPostExecute(final D data) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onPostExecute.start - itemId={}", item.getId());
+        }
+        final int res = adapter.getBoxIcon(item, data);
+        boxView.setIcon(context.getResources().getDrawable(res));
+        boxView.setTitle(adapter.getBoxTitle(item, data));
+        adapter.updateBoxDetailsView(boxView.getAdditionalInformations(), item, data);
+        boxView.setLoading(false);
+        boxView.postInvalidate();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onPostExecute.end - itemId={}", item.getId());
+        }
+    }
+}

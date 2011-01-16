@@ -9,7 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.business.facade.AbstractService;
+import fr.itinerennes.business.service.AbstractService;
 import fr.itinerennes.database.Columns.GeoExploreColumns;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.utils.DateUtils;

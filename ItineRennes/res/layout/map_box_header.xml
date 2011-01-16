@@ -4,19 +4,19 @@
        android:layout_width="fill_parent"
        android:layout_height="wrap_content">
        
-    <ImageView android:id="@+id/station_icon"
+    <ImageView android:id="@+id/map_box_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingRight="10dp"/>
     
-	<TextView android:id="@+id/station_name"
+	<TextView android:id="@+id/map_box_title"
         android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"
 		android:textStyle="bold"
            style="@style/WhiteText"/>
            
-    <ProgressBar android:id="@+id/station_progressbar"
+    <ProgressBar android:id="@+id/map_box_progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
@@ -26,4 +26,5 @@
         />
         
 </LinearLayout>
+
 

@@ -26,23 +26,6 @@
 		android:layout_marginBottom="5dp">
         <!-- the icons of each lines are appended here -->
 	</LinearLayout>
-
-    <LinearLayout android:layout_width="fill_parent"
-	    android:layout_height="wrap_content" android:orientation="horizontal">
-	
-		<ImageButton android:layout_alignParentLeft="true"
-			android:layout_centerHorizontal="true" android:layout_width="fill_parent"
-			android:layout_height="48dp" android:layout_weight="1" />
-	
-		<ImageButton android:layout_centerInParent="true"
-			android:layout_centerHorizontal="true" android:layout_width="fill_parent"
-			android:layout_height="48dp" android:layout_weight="1" />
-	
-		<ImageButton android:layout_alignParentRight="true"
-			android:layout_centerHorizontal="true" android:layout_width="fill_parent"
-			android:layout_height="48dp" android:layout_weight="1" />
-        
-    </LinearLayout>
 	
 	<ListView android:id="@+station/list_bus" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:orientation="vertical">

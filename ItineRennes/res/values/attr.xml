@@ -1,0 +1,8 @@
+<resources>
+	<declare-styleable name="ClickableState">
+	    <attr name="state_clickable" format="boolean"/>
+	</declare-styleable>
+	<declare-styleable name="ITRZoomControls">
+	    <attr name="mapview" format="integer"/>
+	</declare-styleable>
+</resources>

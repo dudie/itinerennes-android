@@ -19,7 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
-import fr.itinerennes.business.facade.BusDepartureService;
+import fr.itinerennes.business.service.BusDepartureService;
+import fr.itinerennes.business.service.LineIconService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
