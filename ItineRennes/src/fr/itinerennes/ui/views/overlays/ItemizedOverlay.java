@@ -13,6 +13,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Point;
 
 import fr.itinerennes.ui.adapter.BusTimeAdapter;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
@@ -35,13 +36,26 @@ import fr.itinerennes.ui.views.MapView;
  * @author Jérémie Huchet
  */
 public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
-        OpenStreetMapViewItemizedOverlay<T> implements MapListener {
+        OpenStreetMapViewItemizedOverlay<T> implements MapListener,
+        OpenStreetMapViewItemizedOverlay.OnItemGestureListener<T> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BusTimeAdapter.class);
 
+    /** The index of the current focused item. <code>NOT_SET</code> if not item is focused. */
+    protected int focusedItemIndex = NOT_SET;
+
+    /**
+     * The index of the previously focused item. Value may be <code>NOT_SET</code> initially or
+     * after onBlur() calls.
+     */
+    protected int prevFocusedItemIndex = NOT_SET;
+
+    /** The current screen coordinates. */
+    protected Point curScreenCoords = new Point();
+
     /** The adapter to use to provide items. */
-    private final ItemizedOverlayAdapter<T, D> adapter;
+    protected ItemizedOverlayAdapter<T, D> adapter;
 
     /** The async task in charge for managing overlay updates. */
     private UpdateOverlayTask<T, D> overlayUpdater = null;
@@ -58,14 +72,32 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
 
         super(context, new ArrayList<T>(), null);
         this.adapter = adapter;
+        super.mOnItemGestureListener = this;
+    }
+
+    @Override
+    public final boolean onItemSingleTapUp(final int index, final T item) {
+
+        // set the new focused element
+        focusedItemIndex = index;
+        return false;
+    }
+
+    @Override
+    public final boolean onItemLongPress(final int index, final T item) {
+
+        // TJHU que fait on si clic long sur un item ?
+        return false;
     }
 
     /**
      * Removes all items from the overlay.
      */
-    public void clear() {
+    public void onClearOverlay(final OpenStreetMapView mapview) {
 
+        focusedItemIndex = NOT_SET;
         super.mItemList.clear();
+        mapview.postInvalidate();
     }
 
     /**
@@ -74,9 +106,43 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
      * @param items
      *            the items to add to the overlay
      */
-    public void addAll(final List<T> items) {
+    public void onAddItems(final OpenStreetMapView mapview, final T prevSelectedItem,
+            final List<T> items) {
 
+        // change the list of items
         super.mItemList.addAll(items);
+
+        // if an item was previously focused, set the focusedItemIndex to its new index value
+        if (null != prevSelectedItem) {
+            boolean indexUpdated = false;
+            for (int i = 0; i < super.mItemList.size() && !indexUpdated; i++) {
+                if (prevSelectedItem.getId().equals(super.mItemList.get(i).getId())) {
+                    indexUpdated = true;
+                    focusedItemIndex = i;
+                }
+            }
+            // focusedItemIndex was not updated, the previous item is no longer in the current
+            // bounding box
+            // - trigger onBlur() as the item is no longer focused
+            // - set the focusedItemIndex to NOT_SET
+            if (!indexUpdated) {
+                // TJHU onBlurHelper(additionalInformationView, focusedItem);
+                focusedItemIndex = NOT_SET;
+            }
+        }
+        mapview.postInvalidate();
+    }
+
+    public void onReplaceItems(final OpenStreetMapView mapview, final List<T> items) {
+
+        final T prevSelectedItem;
+        if (NOT_SET != focusedItemIndex) {
+            prevSelectedItem = super.mItemList.get(focusedItemIndex);
+        } else {
+            prevSelectedItem = null;
+        }
+        super.mItemList.clear();
+        this.onAddItems(mapview, prevSelectedItem, items);
     }
 
     @Override
