@@ -1,8 +1,5 @@
 package fr.itinerennes.ui.views.overlays;
 
-import java.util.Iterator;
-
-import org.andnav.osm.events.MapListener;
 import org.andnav.osm.views.OpenStreetMapView;
 import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay;
 import org.slf4j.Logger;
@@ -35,24 +32,11 @@ import fr.itinerennes.ui.views.MapBoxView;
  * @author Olivier Boudet
  */
 public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> extends
-        ItemizedOverlay<T, D> implements FocusableOverlay<D>, MapListener,
-        OpenStreetMapViewItemizedOverlay.OnItemGestureListener<T> {
+        ItemizedOverlay<T, D> implements FocusableOverlay<D> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(FocusableItemizedOverlay.class);
-
-    /** The index of the current focused item. <code>NOT_SET</code> if not item is focused. */
-    private int focusedItemIndex = NOT_SET;
-
-    /**
-     * The index of the previously focused item. Value may be <code>NOT_SET</code> initially or
-     * after onBlur() calls.
-     */
-    private int prevFocusedItemIndex = NOT_SET;
-
-    /** The current screen coordinates. */
-    private final Point curScreenCoords = new Point();
 
     /** The task used to fill the map box view with additional information in background. */
     private DisplayMapBoxTask<D> mapBoxDisplayer = null;
@@ -79,7 +63,6 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
         super(context, itemProviderAdapter);
         this.context = context;
         this.boxDisplayAdaper = boxDisplayAdaper;
-        super.mOnItemGestureListener = this;
     }
 
     @Override
@@ -91,21 +74,6 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
         prevFocusedItemIndex = focusedItemIndex;
         focusedItemIndex = NOT_SET;
         return super.onSingleTapUp(event, mapView);
-    }
-
-    @Override
-    public final boolean onItemSingleTapUp(final int index, final T item) {
-
-        // set the new focused element
-        focusedItemIndex = index;
-        return false;
-    }
-
-    @Override
-    public final boolean onItemLongPress(final int index, final T item) {
-
-        // TJHU que fait on si clic long sur un item ?
-        return false;
     }
 
     /**
@@ -211,41 +179,6 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onBlurHelpe.end - itemId={}", item.getId());
-        }
-    }
-
-    @Override
-    protected final void updateOverlay(final OpenStreetMapView osmView) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("updateOverlay.start");
-        }
-
-        // store the identifier of the current focused item
-        final String focusedItemId;
-        if (NOT_SET != focusedItemIndex) {
-            focusedItemId = mItemList.get(focusedItemIndex).getId();
-        } else {
-            focusedItemId = null;
-        }
-
-        // update the overlay
-        super.updateOverlay(osmView);
-
-        // if an item was previously focused, set the focusedItemIndex to its new index value
-        if (null != focusedItemId) {
-            boolean removed = false;
-            final Iterator<T> i = mItemList.iterator();
-            while (i.hasNext() && !removed) {
-                if (focusedItemId.equals(i.next().getId())) {
-                    i.remove();
-                    removed = true;
-                }
-            }
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("updateOverlay.end");
         }
     }
 

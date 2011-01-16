@@ -150,7 +150,7 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
 
         for (final T overlay : overlays) {
 
-            if (overlay.onLongPress(event, osmView)) {
+            if (overlay.onSingleTapUp(event, osmView)) {
                 return true;
             }
         }

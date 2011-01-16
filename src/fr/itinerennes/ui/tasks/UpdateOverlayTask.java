@@ -88,8 +88,7 @@ public class UpdateOverlayTask<T extends OverlayItem<D>, D> extends
             LOGGER.debug("onPostExecute.start - {} overlay items", null != items ? items.size() : 0);
         }
 
-        overlay.clear();
-        overlay.addAll(items);
+        overlay.onReplaceItems(osmView, items);
         osmView.postInvalidate();
 
         if (LOGGER.isDebugEnabled()) {
