@@ -12,7 +12,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import fr.itinerennes.business.facade.AbstractService;
+import fr.itinerennes.business.service.AbstractService;
 import fr.itinerennes.database.Columns.MetadataColumns;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.Cacheable;
@@ -180,12 +180,13 @@ public class CacheProvider<T extends Cacheable> extends AbstractService implemen
      * for each value in the metadata table ( {@value CacheProvider#METADATA_TABLE_NAME} ) and
      * {@link CacheEntryHandler#replace(String, String, Object)} is called to store the value.
      * 
-     * @param value
+     * @param values
      *            the list of values to store
      */
     public final synchronized void replace(final List<T> values) {
 
         final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
         database.beginTransaction();
         try {
             for (final T value : values) {

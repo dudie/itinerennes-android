@@ -1,4 +1,4 @@
-package fr.itinerennes.business.facade;
+package fr.itinerennes.business.service;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public final class SubwayService extends AbstractKeolisStationProvider<SubwaySta
      * @return the subway station
      * @throws GenericException
      *             an error occurred
-     * @see fr.itinerennes.business.facade.AbstractKeolisStationProvider#retrieveFreshStation(java.lang.String)
+     * @see fr.itinerennes.business.service.AbstractKeolisStationProvider#retrieveFreshStation(java.lang.String)
      */
     @Override
     protected SubwayStation retrieveFreshStation(final String id) throws GenericException {
@@ -62,7 +62,7 @@ public final class SubwayService extends AbstractKeolisStationProvider<SubwaySta
      * @return all the subway stations
      * @throws GenericException
      *             an error occurred
-     * @see fr.itinerennes.business.facade.AbstractKeolisStationProvider#retrieveAllStations()
+     * @see fr.itinerennes.business.service.AbstractKeolisStationProvider#retrieveAllStations()
      */
     @Override
     protected List<SubwayStation> retrieveAllStations() throws GenericException {

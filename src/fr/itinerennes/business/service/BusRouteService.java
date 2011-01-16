@@ -1,4 +1,4 @@
-package fr.itinerennes.business.facade;
+package fr.itinerennes.business.service;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class BusRouteService extends AbstractService implements RouteProvider {
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.facade.RouteProvider#getStationRoutes(java.lang.String)
+     * @see fr.itinerennes.business.service.RouteProvider#getStationRoutes(java.lang.String)
      */
     @Override
     public List<BusRoute> getStationRoutes(final String stationId) throws GenericException {

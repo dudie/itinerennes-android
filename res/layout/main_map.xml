@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:id="@+id/main_layout">
@@ -12,24 +13,28 @@
 		android:layout_height="fill_parent"
 		android:clickable="true"
 		android:layout_below="@+id/main_layout"
-		renderer="Mapnik"
+		renderer="MapQuest"
 		/>
 
     <fr.itinerennes.ui.views.ITRZoomControls
-        android:id="@+id/zoom_controls"
+        android:id="@+id/zoom_controls" 
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true" 
+        itr:mapview="@+id/map"/>
 
 
-	<LinearLayout
-        android:id="@+id/focused_box"
+	<fr.itinerennes.ui.views.MapBoxView
+        android:id="@+id/map_box"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
+		android:orientation="vertical"
 		android:padding="10dp"
 		android:visibility="gone"
 		android:background="@drawable/map_box_background"
-		android:layout_margin="5dp">
-	</LinearLayout>
+		android:layout_margin="5dp"
+		android:onClick="onMapBoxClickHandler">
+        <include layout="@layout/map_box_header" />
+	</fr.itinerennes.ui.views.MapBoxView>
 </RelativeLayout>
