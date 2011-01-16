@@ -10,10 +10,8 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.view.View;
 
-import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
@@ -235,21 +233,14 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
 
         final Drawable marker = item.getDrawable();
 
-        final Drawable[] layers = new Drawable[2];
-        layers[0] = osmv.getContext().getResources().getDrawable(R.drawable.marker_selected_border);
-        layers[1] = marker;
-
-        final LayerDrawable layerDrawable = new LayerDrawable(layers);
-
         final Rect rect = new Rect();
         getItemBoundingRetangle(item, rect, curScreenCoords);
-        // draw it
-        layerDrawable.setBounds(rect);
-        layerDrawable.draw(canvas);
+        marker.draw(canvas);
     }
 
     /**
-     * Finds the bounding rectangle for the object in current projection.
+     * <strong>from OSMDROID</strong> Finds the bounding rectangle for the object in current
+     * projection.
      * 
      * @param item
      * @param rect
