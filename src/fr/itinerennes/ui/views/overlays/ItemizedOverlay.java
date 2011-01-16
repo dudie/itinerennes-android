@@ -14,6 +14,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.view.MotionEvent;
 
 import fr.itinerennes.ui.adapter.BusTimeAdapter;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
@@ -73,6 +74,14 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
         super(context, new ArrayList<T>(), null);
         this.adapter = adapter;
         super.mOnItemGestureListener = this;
+    }
+
+    @Override
+    public boolean onSingleTapUp(final MotionEvent event, final OpenStreetMapView mapView) {
+
+        final boolean handled = super.onSingleTapUp(event, mapView);
+        mapView.postInvalidate();
+        return handled;
     }
 
     @Override

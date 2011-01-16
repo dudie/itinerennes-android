@@ -11,7 +11,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.view.MotionEvent;
 import android.view.View;
 
 import fr.itinerennes.R;
@@ -63,17 +62,6 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
         super(context, itemProviderAdapter);
         this.context = context;
         this.boxDisplayAdaper = boxDisplayAdaper;
-    }
-
-    @Override
-    public boolean onSingleTapUp(final MotionEvent event, final OpenStreetMapView mapView) {
-
-        // unset the current focused item
-        // super.onSingleTapUp() will trigger onItemSingleTapUp() with the index of the newly
-        // selected item (maybe the same)
-        prevFocusedItemIndex = focusedItemIndex;
-        focusedItemIndex = NOT_SET;
-        return super.onSingleTapUp(event, mapView);
     }
 
     /**
