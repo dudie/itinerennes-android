@@ -160,6 +160,6 @@ public class BusStation implements Station {
     @Override
     public int getIconDrawableId() {
 
-        return R.drawable.bus_marker_icon;
+        return R.drawable.bus_marker_icon_focusable;
     }
 }

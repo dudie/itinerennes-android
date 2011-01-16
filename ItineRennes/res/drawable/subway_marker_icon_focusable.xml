@@ -7,11 +7,11 @@
         <layer-list>
             <item android:drawable="@drawable/marker_selected_border"/>
             <item>
-                <bitmap android:gravity="center" android:src="@drawable/bus_marker_icon" />
+                <bitmap android:gravity="center" android:src="@drawable/subway_marker_icon" />
             </item>
         </layer-list>
     </item>
     <item>
-        <bitmap android:gravity="center" android:src="@drawable/bus_marker_icon" />
+        <bitmap android:gravity="center" android:src="@drawable/subway_marker_icon" />
     </item>
 </selector>

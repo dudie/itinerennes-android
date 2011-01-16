@@ -318,6 +318,6 @@ public class SubwayStation implements Station {
     @Override
     public final int getIconDrawableId() {
 
-        return R.drawable.subway_marker_icon;
+        return R.drawable.subway_marker_icon_focusable;
     }
 }
