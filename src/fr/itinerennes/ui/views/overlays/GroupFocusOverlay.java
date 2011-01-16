@@ -57,30 +57,41 @@ public class GroupFocusOverlay<T extends FocusableOverlay<?>> extends GroupOverl
 
         // true if onSingleTapUp event propagation should be stopped
         boolean stopSingleTapUpPropagation = false;
-        // true if onBlur and onFocus event propagation should be stopped
-        boolean stopBlurPropagation = false;
-        boolean stopFocusPropagation = false;
-        boolean stopKeepFocusPropagation = false;
+
+        T overlayWinningFocus = null;
+        T overlayLoosingFocus = null;
+        T overlayKeepingFocus = null;
 
         for (final T overlay : overlays) {
             final boolean hasFocusBeforeSingleTapUp = overlay.hasFocus();
-            if (!stopSingleTapUpPropagation) {
-                stopSingleTapUpPropagation = overlay.onSingleTapUp(event, osmView);
-            }
+            stopSingleTapUpPropagation &= overlay.onSingleTapUp(event, osmView);
             final boolean hasFocusAfterSingleTapUp = overlay.hasFocus();
 
-            // the overlay has loosed focus
-            if (!stopBlurPropagation && hasFocusBeforeSingleTapUp && !hasFocusAfterSingleTapUp) {
-                stopBlurPropagation = overlay.onBlur(focusedItemAdditionalInfo);
-            }
             // the overlay has won focus
-            if (!stopFocusPropagation && !hasFocusBeforeSingleTapUp && hasFocusAfterSingleTapUp) {
-                stopFocusPropagation = overlay.onFocus(focusedItemAdditionalInfo);
+            if (!hasFocusBeforeSingleTapUp && hasFocusAfterSingleTapUp) {
+                overlayWinningFocus = overlay;
+            }
+            // the overlay has loosed focus
+            if (hasFocusBeforeSingleTapUp && !hasFocusAfterSingleTapUp) {
+                overlayLoosingFocus = overlay;
             }
             // the overlay has kept the focus
-            if (!stopKeepFocusPropagation && hasFocusBeforeSingleTapUp && hasFocusAfterSingleTapUp) {
-                stopKeepFocusPropagation = overlay.onKeepFocus(focusedItemAdditionalInfo);
+            if (hasFocusBeforeSingleTapUp && hasFocusAfterSingleTapUp) {
+                overlayKeepingFocus = overlay;
             }
+        }
+
+        // trigger onBlur before unFocus !!
+        if (overlayLoosingFocus != null) {
+            overlayLoosingFocus.onBlur(focusedItemAdditionalInfo);
+        }
+
+        if (overlayWinningFocus != null) {
+            overlayWinningFocus.onFocus(focusedItemAdditionalInfo);
+        }
+
+        if (overlayKeepingFocus != null) {
+            overlayKeepingFocus.onKeepFocus(focusedItemAdditionalInfo);
         }
 
         return stopSingleTapUpPropagation;

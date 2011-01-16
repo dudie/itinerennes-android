@@ -87,11 +87,11 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
     @Override
     public final boolean onBlur(final MapBoxView additionalInformationView) {
 
-        final T item = mItemList.get(prevFocusedItemIndex);
-        prevFocusedItemIndex = NOT_SET;
-        if (null != item) {
+        if (NOT_SET != focusedItemIndex) {
+            final T item = mItemList.get(prevFocusedItemIndex);
             onBlurHelper(additionalInformationView, item);
         }
+        prevFocusedItemIndex = NOT_SET;
         return false;
     }
 
@@ -162,6 +162,7 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
             LOGGER.debug("onBlurHelper.start - itemId={}", item.getId());
         }
 
+        mapBoxDisplayer.cancel(true);
         additionalInformationView.setVisibility(View.GONE);
         item.onBlur();
 
