@@ -12,11 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
-import fr.itinerennes.ui.adapter.BusTimeAdapter;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.tasks.UpdateOverlayTask;
 import fr.itinerennes.ui.views.MapListenerWrapper;
@@ -41,7 +39,7 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
         OpenStreetMapViewItemizedOverlay.OnItemGestureListener<T> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BusTimeAdapter.class);
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ItemizedOverlay.class);
 
     /** The index of the current focused item. <code>NOT_SET</code> if not item is focused. */
     protected int focusedItemIndex = NOT_SET;
@@ -83,6 +81,7 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
         // if single tap up returns true, no item have matched the tap coordinates
         // focus has been loosed
         if (handled == false) {
+            prevFocusedItemIndex = focusedItemIndex;
             focusedItemIndex = NOT_SET;
         }
         mapView.postInvalidate();
@@ -93,6 +92,7 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
     public final boolean onItemSingleTapUp(final int index, final T item) {
 
         // set the new focused element
+        prevFocusedItemIndex = focusedItemIndex;
         focusedItemIndex = index;
         return true;
     }
@@ -110,6 +110,7 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
     public void onClearOverlay(final OpenStreetMapView mapview) {
 
         focusedItemIndex = NOT_SET;
+        prevFocusedItemIndex = NOT_SET;
         super.mItemList.clear();
         mapview.postInvalidate();
     }
@@ -125,50 +126,62 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
 
         // change the list of items
         super.mItemList.addAll(items);
+        mapview.postInvalidate();
+    }
+
+    public void onReplaceItems(final OpenStreetMapView mapview, final List<T> items) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onReplaceItems.start - {} new items", items == null ? 0 : items.size());
+        }
+        // store the current focused item
+        // it will be used to retrieve its new index in nthe new item list
+        final T currentFocusedItem;
+        if (NOT_SET != focusedItemIndex) {
+            currentFocusedItem = super.mItemList.get(focusedItemIndex);
+        } else {
+            currentFocusedItem = null;
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("currentFocusedItem = {}", null == currentFocusedItem ? "NONE"
+                    : currentFocusedItem.getData());
+            LOGGER.debug("focusedItemIndex = {}", NOT_SET == focusedItemIndex ? "NOT_SET"
+                    : focusedItemIndex);
+        }
+
+        super.mItemList.clear();
+        super.mItemList.addAll(items);
 
         // if an item was previously focused, set the focusedItemIndex to its new index value
-        if (null != prevSelectedItem) {
+        if (null != currentFocusedItem) {
             boolean indexUpdated = false;
             for (int i = 0; i < super.mItemList.size() && !indexUpdated; i++) {
-                if (prevSelectedItem.getId().equals(super.mItemList.get(i).getId())) {
+                if (currentFocusedItem.getId().equals(super.mItemList.get(i).getId())) {
                     indexUpdated = true;
                     focusedItemIndex = i;
                 }
             }
             // focusedItemIndex was not updated, the previous item is no longer in the current
             // bounding box
-            // - trigger onBlur() as the item is no longer focused
+            // '- trigger onBlur() as the item is no longer focused)
             // - set the focusedItemIndex to NOT_SET
             if (!indexUpdated) {
                 // TJHU onBlurHelper(additionalInformationView, focusedItem);
                 focusedItemIndex = NOT_SET;
             }
         }
-        mapview.postInvalidate();
-    }
 
-    public void onReplaceItems(final OpenStreetMapView mapview, final List<T> items) {
-
-        final T prevSelectedItem;
-        if (NOT_SET != focusedItemIndex) {
-            prevSelectedItem = super.mItemList.get(focusedItemIndex);
-        } else {
-            prevSelectedItem = null;
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("newFocusedItemIndex = {}", NOT_SET == focusedItemIndex ? "NOT_SET"
+                    : focusedItemIndex);
         }
-        super.mItemList.clear();
-        this.onAddItems(mapview, prevSelectedItem, items);
-    }
 
-    @Override
-    public void onDraw(final Canvas canvas, final OpenStreetMapView mapView) {
+        mapview.postInvalidate();
 
-        super.onDraw(canvas, mapView);
-    }
-
-    @Override
-    protected void onDrawFinished(final Canvas c, final OpenStreetMapView osmv) {
-
-        super.onDrawFinished(c, osmv);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onReplaceItems.end");
+        }
     }
 
     /**
