@@ -67,7 +67,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         this.map = (MapView) findViewById(R.id.map);
 
         final MapOverlayHelper overlayHelper = new MapOverlayHelper(this, map);
-        overlayHelper.show(/* BUS_STATIONS | BIKE_STATIONS | */SUBWAY_STATIONS);
+        overlayHelper.show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS);
 
         // center of the map
         if (savedInstanceState != null) {
