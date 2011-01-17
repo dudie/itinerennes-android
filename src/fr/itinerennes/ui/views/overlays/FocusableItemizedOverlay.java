@@ -188,7 +188,10 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
     @Override
     protected void onDrawItem(final Canvas canvas, final int index, final Point curScreenCoords) {
 
-        if (NOT_SET != index && focusedItemIndex != index) {
+        if (NOT_SET != index /*
+                              * TJHU bug item focusé non dessiné lorsque la carte est déplacée &&
+                              * focusedItemIndex != index
+                              */) {
             LOGGER.debug("drawing item id={}", index);
             super.onDrawItem(canvas, index, curScreenCoords);
         } else if (focusedItemIndex == index) {
