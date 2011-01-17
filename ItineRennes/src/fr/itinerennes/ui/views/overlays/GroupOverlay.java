@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.andnav.osm.views.OpenStreetMapView;
 import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
+import org.slf4j.Logger;
+import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -20,6 +22,9 @@ import android.view.MotionEvent;
  * @author Jérémie Huchet
  */
 public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewOverlay {
+
+    /** The event logger. */
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(GroupOverlay.class);
 
     /** A list of focusable overlays. */
     protected final List<T> overlays;
@@ -64,6 +69,13 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
     public final void clear() {
 
         overlays.clear();
+    }
+
+    @Override
+    public void onManagedDraw(final Canvas c, final OpenStreetMapView osmv) {
+
+        LOGGER.debug("-------------------------------------------");
+        super.onManagedDraw(c, osmv);
     }
 
     /**
@@ -174,24 +186,6 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
             }
         }
         return false;
-    }
-
-    /**
-     * Delegates {@link OpenStreetMapViewOverlay#onManagedDraw(Canvas, OpenStreetMapView)} to all
-     * the grouped overlays.
-     * 
-     * @see org.andnav.osm.views.overlay.OpenStreetMapViewOverlay#onManagedDraw(android.graphics.Canvas,
-     *      org.andnav.osm.views.OpenStreetMapView)
-     */
-    @Override
-    public final void onManagedDraw(final Canvas c, final OpenStreetMapView osmv) {
-
-        for (final T overlay : overlays) {
-            overlay.onDrawOverlay(c, osmv);
-        }
-        for (final T overlay : overlays) {
-            overlay.onDrawOverlayFinished(c, osmv);
-        }
     }
 
     /**

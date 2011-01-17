@@ -1,7 +1,5 @@
 package fr.itinerennes.ui.views.overlays;
 
-import java.util.ArrayList;
-
 import org.andnav.osm.util.GeoPoint;
 
 import android.graphics.drawable.Drawable;
@@ -35,19 +33,6 @@ public class FocusableOverlayItem<D> extends OverlayItem<D> {
      */
     public boolean onFocus() {
 
-        final int[] actualStates = getDrawable().getState();
-        final ArrayList<Integer> newStates = new ArrayList<Integer>(actualStates.length + 1);
-        for (final int state : actualStates) {
-            if (state != android.R.attr.state_pressed) {
-                newStates.add(state);
-            }
-        }
-        newStates.add(android.R.attr.state_pressed);
-        final int[] newStatesArray = new int[newStates.size()];
-        for (int i = 0; i < newStatesArray.length; i++) {
-            newStatesArray[i] = newStates.get(i);
-        }
-        getDrawable().setState(newStatesArray);
         return false;
     }
 
@@ -58,18 +43,6 @@ public class FocusableOverlayItem<D> extends OverlayItem<D> {
      */
     public boolean onBlur() {
 
-        final int[] actualStates = getDrawable().getState();
-        final ArrayList<Integer> newStates = new ArrayList<Integer>(actualStates.length);
-        for (final int state : actualStates) {
-            if (state != android.R.attr.state_pressed) {
-                newStates.add(state);
-            }
-        }
-        final int[] newStatesArray = new int[newStates.size()];
-        for (int i = 0; i < newStatesArray.length; i++) {
-            newStatesArray[i] = newStates.get(i);
-        }
-        getDrawable().setState(newStatesArray);
         return false;
     }
 

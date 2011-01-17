@@ -57,6 +57,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     @Override
     public final void onCreate(final Bundle savedInstanceState) {
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onCreate.start");
+        }
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_map);
@@ -64,18 +67,26 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         this.map = (MapView) findViewById(R.id.map);
 
         final MapOverlayHelper overlayHelper = new MapOverlayHelper(this, map);
-        overlayHelper.show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS);
+        overlayHelper.show(/* BUS_STATIONS | BIKE_STATIONS | */SUBWAY_STATIONS);
 
         // center of the map
         if (savedInstanceState != null) {
             startZoomLevel = savedInstanceState.getInt("ZoomLevel");
             startMapCenter = (GeoPoint) savedInstanceState.getSerializable("startCenter");
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("restoring map zoom : {}", startZoomLevel);
+                LOGGER.debug("restoring map center : LON={} LAT={}",
+                        startMapCenter.getLongitudeE6(), startMapCenter.getLatitudeE6());
+            }
         } else {
             final int latitude = ItineRennesConstants.CONFIG_RENNES_LAT;
             final int longitude = ItineRennesConstants.CONFIG_RENNES_LON;
             startZoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
             startMapCenter = new GeoPoint(latitude, longitude);
         }
+        map.getController().setZoom(startZoomLevel);
+        map.getController().setCenter(startMapCenter);
 
         // map.setMultiTouchControls(true);
 
@@ -89,6 +100,67 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onCreate.end");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onWindowFocusChanged(boolean)
+     */
+    @Override
+    public void onWindowFocusChanged(final boolean hasFocus) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onWindowFocusChanged.start - hasFocus={}", hasFocus);
+        }
+
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("restoring map zoom : {}", startZoomLevel);
+                LOGGER.debug("restoring map center : LON={} LAT={}",
+                        startMapCenter.getLongitudeE6(), startMapCenter.getLatitudeE6());
+            }
+            map.getController().setZoom(startZoomLevel);
+            map.getController().setCenter(startMapCenter);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onWindowFocusChanged.end");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
+     */
+    @Override
+    public final void onSaveInstanceState(final Bundle savedInstanceState) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onSaveInstanceState.start");
+        }
+
+        startMapCenter = new GeoPoint(map.getMapCenterLatitudeE6(), map.getMapCenterLongitudeE6());
+        savedInstanceState.putSerializable("startCenter", startMapCenter);
+        savedInstanceState.putInt("ZoomLevel", map.getZoomLevel());
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("saving map zoom : {}", map.getZoomLevel());
+            LOGGER.debug("saving map center : LON={} LAT={}", startMapCenter.getLongitudeE6(),
+                    startMapCenter.getLatitudeE6());
+        }
+
+        super.onSaveInstanceState(savedInstanceState);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onSaveInstanceState.end");
+        }
     }
 
     /**
@@ -132,25 +204,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             dialog = null;
         }
         return dialog;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onWindowFocusChanged(boolean)
-     */
-    @Override
-    public void onWindowFocusChanged(final boolean hasFocus) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onWindowFocusChanged");
-        }
-
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            map.getController().setZoom(startZoomLevel);
-            map.getController().setCenter(startMapCenter);
-        }
     }
 
     /**
@@ -204,21 +257,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             showDialog(DIALOG_SELECT_LAYERS);
         }
 
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
-     */
-    @Override
-    public final void onSaveInstanceState(final Bundle savedInstanceState) {
-
-        startMapCenter = new GeoPoint(map.getMapCenterLatitudeE6(), map.getMapCenterLongitudeE6());
-        savedInstanceState.putSerializable("startCenter", startMapCenter);
-        savedInstanceState.putInt("ZoomLevel", map.getZoomLevel());
-
-        super.onSaveInstanceState(savedInstanceState);
     }
 
 }

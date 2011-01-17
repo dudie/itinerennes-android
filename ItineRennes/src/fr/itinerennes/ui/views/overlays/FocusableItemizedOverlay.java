@@ -5,7 +5,6 @@ import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -37,9 +36,6 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
     /** The adapter to use to display the focused item. */
     private final MapBoxAdapter<OverlayItem<D>, D> boxDisplayAdaper;
 
-    /** The application context. */
-    private final Context context;
-
     /**
      * Creates the focusable itemized overlay.
      * 
@@ -54,7 +50,6 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
         // OnItemGestureListener is implemented by this class and shouldn't be overridden as is
         // triggers more precise event helpers (onFocusHelper() and onBlurHelper())
         super(context, itemProviderAdapter);
-        this.context = context;
         this.boxDisplayAdaper = boxDisplayAdaper;
     }
 
@@ -193,9 +188,10 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
     @Override
     protected void onDrawItem(final Canvas canvas, final int index, final Point curScreenCoords) {
 
-        if (index != focusedItemIndex) {
+        if (NOT_SET != index && focusedItemIndex != index) {
+            LOGGER.debug("drawing item id={}", index);
             super.onDrawItem(canvas, index, curScreenCoords);
-        } else if (NOT_SET != focusedItemIndex) {
+        } else if (focusedItemIndex == index) {
             this.curScreenCoords.set(curScreenCoords.x, curScreenCoords.y);
         }
     }
@@ -225,6 +221,7 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
         super.onDrawFinished(canvas, osmv);
 
         if (NOT_SET == focusedItemIndex) {
+            LOGGER.debug("NOT drawing focused item id=NOT_SET");
             return;
         }
 
@@ -232,10 +229,17 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
         final T item = this.mItemList.get(focusedItemIndex);
 
         final Drawable marker = item.getDrawable();
+        final int[] originalState = marker.getState();
+        marker.setState(new int[] { android.R.attr.state_pressed });
 
         final Rect rect = new Rect();
         getItemBoundingRetangle(item, rect, curScreenCoords);
         marker.draw(canvas);
+        LOGGER.debug("drawing focused item id={}, marker={}, state=" + marker.getState()[0],
+                focusedItemIndex, marker.getCurrent());
+
+        // restore original state
+        marker.setState(originalState);
     }
 
     /**
