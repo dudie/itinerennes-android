@@ -21,6 +21,14 @@ public interface FocusableOverlay<D> extends WrappableOverlay {
     boolean hasFocus();
 
     /**
+     * Set the focus state of the overlay.
+     * 
+     * @param hasFocus
+     *            true if the overlay has focus, else false
+     */
+    void setFocused(boolean hasFocus);
+
+    /**
      * Triggered method by a {@link GroupFocusOverlay} when this overlay wins focus.
      * 
      * @param additionalInformationView
