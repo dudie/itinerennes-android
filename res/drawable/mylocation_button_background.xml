@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes">
+
+    <item android:state_checked="true">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="10dp" />
+                    <solid android:color="#95000000" />
+                    <stroke android:width="2dp" android:color="@color/orange" />
+                </shape>
+            </item>
+            <item android:gravity="center">
+                <bitmap android:src="@drawable/toolbar_mylocation_icon" />
+            </item>
+        </layer-list>
+    </item>
+    
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="10dp" />
+                    <solid android:color="#95000000" />
+                </shape>
+            </item>
+            <item android:gravity="center">
+                <bitmap android:src="@drawable/toolbar_mylocation_icon" />
+            </item>
+        </layer-list>
+    </item>
+</selector>
+
+

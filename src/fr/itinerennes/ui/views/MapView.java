@@ -8,7 +8,10 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.widget.ToggleButton;
 
+import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ITRContext;
 
 /**
@@ -69,4 +72,14 @@ public class MapView extends OpenStreetMapView {
         return mapListeners;
     }
 
+    @Override
+    public boolean onTouchEvent(final MotionEvent event) {
+
+        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            final ToggleButton myLocationButton = (ToggleButton) context
+                    .findViewById(R.id.mylocation_button);
+            myLocationButton.setChecked(false);
+        }
+        return super.onTouchEvent(event);
+    }
 }

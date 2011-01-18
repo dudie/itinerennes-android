@@ -24,6 +24,19 @@
         android:layout_alignParentRight="true" 
         itr:mapview="@+id/map"/>
 
+    <ToggleButton
+        android:id="@+id/mylocation_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/mylocation_button_background"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textOn=""
+        android:textOff=""
+        android:checked="true"
+        android:onClick="onMyLocationButtonClick"
+        />
 
 	<fr.itinerennes.ui.views.MapBoxView
         android:id="@+id/map_box"
@@ -37,4 +50,6 @@
 		android:onClick="onMapBoxClickHandler">
         <include layout="@layout/map_box_header" />
 	</fr.itinerennes.ui.views.MapBoxView>
+	
+	
 </RelativeLayout>
