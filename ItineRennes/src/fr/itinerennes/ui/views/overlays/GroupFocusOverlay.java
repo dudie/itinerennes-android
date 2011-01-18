@@ -81,17 +81,31 @@ public class GroupFocusOverlay<T extends FocusableOverlay<?>> extends GroupOverl
             }
         }
 
-        // trigger onBlur before unFocus !!
-        if (overlayLoosingFocus != null) {
-            overlayLoosingFocus.onBlur(focusedItemAdditionalInfo);
-        }
-
-        if (overlayWinningFocus != null) {
-            overlayWinningFocus.onFocus(focusedItemAdditionalInfo);
-        }
-
+        // workaround to avoid multiple item selection (see ITR-43)
+        // give priority to the overlay keeping focus (see ITR-43)
         if (overlayKeepingFocus != null) {
+            // set NOT_FOCUSED overlays not keeping focus (see ITR-43)
+            for (final T overlay : overlays) {
+                if (!overlay.equals(overlayKeepingFocus)) {
+                    overlay.setFocused(false);
+                }
+            }
             overlayKeepingFocus.onKeepFocus(focusedItemAdditionalInfo);
+        } else {
+            // set NOT_FOCUSED overlays not winning focus (see ITR-43)
+            for (final T overlay : overlays) {
+                if (!overlay.equals(overlayWinningFocus)) {
+                    overlay.setFocused(false);
+                }
+            }
+            // trigger onBlur before unFocus !!
+            if (overlayLoosingFocus != null) {
+                overlayLoosingFocus.onBlur(focusedItemAdditionalInfo);
+            }
+
+            if (overlayWinningFocus != null) {
+                overlayWinningFocus.onFocus(focusedItemAdditionalInfo);
+            }
         }
 
         return stopSingleTapUpPropagation;
