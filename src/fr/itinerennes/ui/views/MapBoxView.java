@@ -1,7 +1,5 @@
 package fr.itinerennes.ui.views;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -23,9 +21,11 @@ import fr.itinerennes.ui.views.overlays.OverlayItem;
  * updates of its content.
  * 
  * @author Jérémie Huchet
- * @param <D>
  */
 public class MapBoxView extends LinearLayout {
+
+    /** The clickable state set. */
+    protected static final int[] CLICKABLE_STATE_SET = { R.attr.state_clickable };
 
     /** The optional additional informations view. */
     private View additionalInformations = null;
@@ -41,7 +41,7 @@ public class MapBoxView extends LinearLayout {
      */
     public MapBoxView(final Context context) {
 
-        super(context);
+        this(context, null);
     }
 
     /**
@@ -51,6 +51,7 @@ public class MapBoxView extends LinearLayout {
     public MapBoxView(final Context context, final AttributeSet attrs) {
 
         super(context, attrs);
+        setClickable(true);
     }
 
     /**
@@ -136,50 +137,6 @@ public class MapBoxView extends LinearLayout {
     }
 
     /**
-     * Modify the background of the view when a listener is attached.
-     * 
-     * @see android.view.View#setOnClickListener(android.view.View.OnClickListener)
-     */
-    @Override
-    public final void setOnClickListener(final OnClickListener l) {
-
-        super.setOnClickListener(l);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.view.View#setClickable(boolean)
-     */
-    @Override
-    public final void setClickable(final boolean clickable) {
-
-        super.setClickable(clickable);
-        if (null == getBackground()) {
-            return;
-        }
-
-        final int[] actualState = getBackground().getState();
-        final ArrayList<Integer> newState = new ArrayList<Integer>(actualState.length + 1);
-        for (final int state : actualState) {
-            if (state != R.attr.state_clickable) {
-                newState.add(state);
-            }
-        }
-        if (clickable) {
-            newState.add(R.attr.state_clickable);
-        }
-
-        final int[] arrayNewStates = new int[newState.size()];
-        for (int i = 0; i < arrayNewStates.length; i++) {
-            arrayNewStates[i] = newState.get(i);
-        }
-
-        getBackground().setState(arrayNewStates);
-
-    }
-
-    /**
      * Gets the intent to use to start a new activity when the box is clicked.
      * 
      * @return the intent to use to start a new activity when the box is clicked
@@ -197,8 +154,8 @@ public class MapBoxView extends LinearLayout {
      */
     public final void setOnClickIntent(final Intent onClickIntent) {
 
-        setClickable(null != onClickIntent);
         this.onClickIntent = onClickIntent;
+        refreshDrawableState();
     }
 
     /**
@@ -235,5 +192,26 @@ public class MapBoxView extends LinearLayout {
         }
         mapBoxDisplayer = new DisplayMapBoxTask<D>(getContext(), this, adapter, item);
         mapBoxDisplayer.execute();
+    }
+
+    /**
+     * Check if an {@link #onClickIntent} is set and update the background state.
+     * <p>
+     * {@inheritDoc}
+     * 
+     * @see android.view.ViewGroup#drawableStateChanged()
+     */
+    @Override
+    protected final void drawableStateChanged() {
+
+        super.drawableStateChanged();
+        final Drawable d = getBackground();
+        if (null != d) {
+            if (null != onClickIntent) {
+                d.setState(mergeDrawableStates(super.onCreateDrawableState(1), CLICKABLE_STATE_SET));
+            } else {
+                super.onCreateDrawableState(0);
+            }
+        }
     }
 }
