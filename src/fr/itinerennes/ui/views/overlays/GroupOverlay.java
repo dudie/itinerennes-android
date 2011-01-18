@@ -71,13 +71,6 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
         overlays.clear();
     }
 
-    @Override
-    public void onManagedDraw(final Canvas c, final OpenStreetMapView osmv) {
-
-        LOGGER.debug("-------------------------------------------");
-        super.onManagedDraw(c, osmv);
-    }
-
     /**
      * Delegates {@link OpenStreetMapViewOverlay#onDraw(Canvas, OpenStreetMapView)} to all the
      * grouped overlays.

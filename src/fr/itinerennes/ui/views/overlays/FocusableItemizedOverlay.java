@@ -76,6 +76,8 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
     @Override
     public final boolean onBlur(final MapBoxView additionalInformationView) {
 
+        // this case should never occurs : if the overlays has loosed focus, then it should win
+        // focus before loosing it again
         if (NOT_SET != prevFocusedItemIndex) {
             final T item = mItemList.get(prevFocusedItemIndex);
             onBlurHelper(additionalInformationView, item);
@@ -108,6 +110,22 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
     public final boolean hasFocus() {
 
         return focusedItemIndex != NOT_SET;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.ui.views.overlays.FocusableOverlay#setFocused(boolean)
+     */
+    @Override
+    public void setFocused(final boolean hasFocus) {
+
+        if (hasFocus) {
+            focusedItemIndex = prevFocusedItemIndex;
+        } else {
+            prevFocusedItemIndex = focusedItemIndex;
+            focusedItemIndex = NOT_SET;
+        }
     }
 
     /**
@@ -192,7 +210,6 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
                               * TJHU bug item focusé non dessiné lorsque la carte est déplacée &&
                               * focusedItemIndex != index
                               */) {
-            LOGGER.debug("drawing item id={}", index);
             super.onDrawItem(canvas, index, curScreenCoords);
         } else if (focusedItemIndex == index) {
             this.curScreenCoords.set(curScreenCoords.x, curScreenCoords.y);
@@ -219,12 +236,9 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
     @Override
     protected void onDrawFinished(final Canvas canvas, final OpenStreetMapView osmv) {
 
-        // TJHU pourquoi la bordure orange n'apparait pas ?
-        // TOBO pourquoi la bordure orange n'apparait pas ?
         super.onDrawFinished(canvas, osmv);
 
         if (NOT_SET == focusedItemIndex) {
-            LOGGER.debug("NOT drawing focused item id=NOT_SET");
             return;
         }
 
@@ -238,8 +252,6 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
         final Rect rect = new Rect();
         getItemBoundingRetangle(item, rect, curScreenCoords);
         marker.draw(canvas);
-        LOGGER.debug("drawing focused item id={}, marker={}, state=" + marker.getState()[0],
-                focusedItemIndex, marker.getCurrent());
 
         // restore original state
         marker.setState(originalState);
