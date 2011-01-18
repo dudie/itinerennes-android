@@ -1,7 +1,6 @@
 package fr.itinerennes.ui.activity;
 
 import org.andnav.osm.util.GeoPoint;
-import org.andnav.osm.views.overlay.MyLocationOverlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -17,6 +16,7 @@ import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.views.MapBoxView;
 import fr.itinerennes.ui.views.MapView;
+import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.ui.views.overlays.MapOverlayHelper;
 import fr.itinerennes.ui.views.overlays.OverlayConstants;
 
@@ -39,7 +39,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     private MapView map;
 
     /** The my location overlay. */
-    private MyLocationOverlay myLocation;
+    private LocationOverlay myLocation;
 
     /** The GeoPoint on which center the map when showing the activity. */
     private GeoPoint startMapCenter;
@@ -90,7 +90,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         // map.setMultiTouchControls(true);
 
-        this.myLocation = new MyLocationOverlay(this.getBaseContext(), map);
+        myLocation = new LocationOverlay(this, map);
         map.getOverlays().add(myLocation);
 
         // DEBUG
@@ -138,7 +138,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     @Override
     protected void onResume() {
 
-        toggleFollowLocation();
+        myLocation.toggleFollowLocation();
 
         super.onResume();
     }
@@ -152,7 +152,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     protected void onPause() {
 
         if (myLocation.isLocationFollowEnabled()) {
-            toggleFollowLocation();
+            myLocation.toggleFollowLocation();
         }
         super.onPause();
     }
@@ -208,7 +208,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
      */
     public final void onMyLocationButtonClick(final View button) {
 
-        toggleFollowLocation();
+        myLocation.toggleFollowLocation();
 
     }
 
@@ -264,22 +264,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             showDialog(DIALOG_SELECT_LAYERS);
         }
 
-    }
-
-    /**
-     * Toggle FollowLocation and EnableMyLocation flags for the MyLocationOverlay.
-     * 
-     * @param myLocation
-     */
-    public void toggleFollowLocation() {
-
-        if (myLocation.isLocationFollowEnabled()) {
-            myLocation.followLocation(false);
-            myLocation.disableMyLocation();
-        } else {
-            myLocation.enableMyLocation();
-            myLocation.followLocation(true);
-        }
     }
 
 }
