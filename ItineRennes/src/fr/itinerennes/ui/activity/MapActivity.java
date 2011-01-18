@@ -92,6 +92,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         myLocation = new LocationOverlay(this, map);
         map.getOverlays().add(myLocation);
+        map.getListeners().add(myLocation);
 
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
