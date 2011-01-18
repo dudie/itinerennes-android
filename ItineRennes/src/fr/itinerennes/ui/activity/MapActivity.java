@@ -90,12 +90,8 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         // map.setMultiTouchControls(true);
 
-        // TJHU remapper ce code sur un nouveau bouton mylocation
-        // this.myLocation = new MyLocationOverlay(this.getBaseContext(), map);
-        // myLocation.enableMyLocation();
-        // map.getOverlays().add(myLocation);
-        // final ImageView myLocationButton = (ImageView) findViewById(R.id.button_myPosition);
-        // myLocationButton.setOnClickListener(new MyLocationClickListener());
+        this.myLocation = new MyLocationOverlay(this.getBaseContext(), map);
+        map.getOverlays().add(myLocation);
 
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
@@ -132,6 +128,33 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onWindowFocusChanged.end");
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onResume()
+     */
+    @Override
+    protected void onResume() {
+
+        toggleFollowLocation();
+
+        super.onResume();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onPause()
+     */
+    @Override
+    protected void onPause() {
+
+        if (myLocation.isLocationFollowEnabled()) {
+            toggleFollowLocation();
+        }
+        super.onPause();
     }
 
     /**
@@ -178,6 +201,18 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     }
 
     /**
+     * Click method handler invoked when a click event is detected on the my location button.
+     * 
+     * @param button
+     *            the button view on which the event was detected
+     */
+    public final void onMyLocationButtonClick(final View button) {
+
+        toggleFollowLocation();
+
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see android.app.Activity#onCreateDialog(int)
@@ -207,34 +242,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     }
 
     /**
-     * An event listener which will focus the map to the current location given by GPS and activate
-     * location following.
-     * 
-     * @author Jérémie Huchet
-     */
-    private class MyLocationClickListener implements OnClickListener {
-
-        /**
-         * When triggered, centers the map to the current location and adapt zoom level to location
-         * precision. Adds an overlay icon to the current place of the user and activates GPS
-         * location following (the overlay icon will move and the map will stay centered on the
-         * icon).
-         * 
-         * @param button
-         *            the view that was clicked
-         */
-        @Override
-        public void onClick(final View button) {
-
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("myLocation.button.click");
-            }
-            myLocation.followLocation(true);
-        }
-
-    }
-
-    /**
      * An event listener which will display the dialog box to ask the user which layers he wants to
      * show.
      * 
@@ -257,6 +264,22 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             showDialog(DIALOG_SELECT_LAYERS);
         }
 
+    }
+
+    /**
+     * Toggle FollowLocation and EnableMyLocation flags for the MyLocationOverlay.
+     * 
+     * @param myLocation
+     */
+    public void toggleFollowLocation() {
+
+        if (myLocation.isLocationFollowEnabled()) {
+            myLocation.followLocation(false);
+            myLocation.disableMyLocation();
+        } else {
+            myLocation.enableMyLocation();
+            myLocation.followLocation(true);
+        }
     }
 
 }
