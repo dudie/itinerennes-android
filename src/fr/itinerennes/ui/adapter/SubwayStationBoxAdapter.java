@@ -50,8 +50,7 @@ public class SubwayStationBoxAdapter implements
      *      fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final View getBoxDetailsView(final Context context,
-            final OverlayItem<SubwayStation> item) {
+    public final View getBoxDetailsView(final Context context, final OverlayItem<SubwayStation> item) {
 
         return null;
     }
@@ -127,7 +126,6 @@ public class SubwayStationBoxAdapter implements
     public final Intent getOnClickIntent(final Context packageContext,
             final OverlayItem<SubwayStation> item) {
 
-        // TODO Auto-generated method stub
         return null;
     }
 }

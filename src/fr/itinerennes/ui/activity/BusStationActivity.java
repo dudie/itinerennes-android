@@ -153,14 +153,10 @@ public class BusStationActivity extends ITRContext implements Runnable {
                 final View imageContainer = getLayoutInflater().inflate(R.layout.line_icon, null);
                 final ImageView lineIcon = (ImageView) imageContainer
                         .findViewById(R.station.bus_line_icon);
-                lineIcon.setImageDrawable(routesIcon.get(busRoute.getId()));
+                lineIcon.setImageDrawable(routesIcon.get(busRoute.getShortName()));
 
                 lineList.addView(imageContainer);
 
-                // final TextView text = (TextView) getLayoutInflater().inflate(
-                // R.layout.line_icon_default, null);
-                // text.setText(busRoute.getShortName());
-                // lineList.addView(text);
                 LOGGER.debug("Showing icon for line {}.", busRoute.getShortName());
             }
         }
@@ -202,11 +198,12 @@ public class BusStationActivity extends ITRContext implements Runnable {
             returnCode = MESSAGE_FAILURE;
         }
 
+        /* Fetching line icons. */
         if (busRoutes != null) {
             progressDialog.setMax(progressDialog.getMax() + busRoutes.size());
             for (final BusRoute busRoute : busRoutes) {
                 try {
-                    routesIcon.put(busRoute.getId(),
+                    routesIcon.put(busRoute.getShortName(),
                             getLineIconService().getIcon(busRoute.getShortName()));
                     progressDialog.incrementProgressBy(1);
                 } catch (final GenericException e) {
@@ -225,18 +222,6 @@ public class BusStationActivity extends ITRContext implements Runnable {
             LOGGER.debug(String.format("Can't load departures informations for the station %s.",
                     stationId), e);
             returnCode = MESSAGE_FAILURE;
-        }
-
-        /* Fetching line icons. */
-        if (busRoutes != null) {
-            for (final BusRoute busRoute : busRoutes) {
-                try {
-                    getLineIconService().getIcon(busRoute.getShortName());
-                } catch (final GenericException e) {
-                    LOGGER.error(String.format("Line icon for the route %s can not be fetched.",
-                            busRoute.getShortName()), e);
-                }
-            }
         }
 
         handler.sendEmptyMessage(returnCode);

@@ -8,9 +8,7 @@
        android:id="@+id/bus_station_box">
 
     <LinearLayout android:id="@+id/bus_station_box_line_icon_list" android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content" android:orientation="horizontal"  android:gravity="center">
         <!-- the icons of each lines are appended here -->
     </LinearLayout>
 

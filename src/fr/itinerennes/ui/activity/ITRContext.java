@@ -12,6 +12,8 @@ import fr.itinerennes.business.service.BusService;
 import fr.itinerennes.business.service.LineIconService;
 import fr.itinerennes.business.service.SubwayService;
 import fr.itinerennes.database.DatabaseHelper;
+import fr.itinerennes.exceptions.DefaultExceptionHandler;
+import fr.itinerennes.exceptions.ExceptionHandler;
 
 /**
  * An abstract activity providing common functionalities such as automatic.
@@ -21,8 +23,10 @@ import fr.itinerennes.database.DatabaseHelper;
 public abstract class ITRContext extends Activity {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
-            .getLogger(ITRContext.class);
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ITRContext.class);
+
+    /** The default exception handler. */
+    private static ExceptionHandler exceptionHandler;
 
     /** The database helper. */
     private static DatabaseHelper databaseHelper;
@@ -58,6 +62,19 @@ public abstract class ITRContext extends Activity {
         if (databaseHelper != null) {
             databaseHelper.close();
         }
+    }
+
+    /**
+     * Gets the exception handler.
+     * 
+     * @return the current exception handler
+     */
+    public final ExceptionHandler getExceptionHandler() {
+
+        if (exceptionHandler == null) {
+            exceptionHandler = new DefaultExceptionHandler();
+        }
+        return exceptionHandler;
     }
 
     /**
