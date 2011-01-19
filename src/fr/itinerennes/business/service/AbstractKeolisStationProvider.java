@@ -1,5 +1,6 @@
 package fr.itinerennes.business.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.andnav.osm.util.BoundingBoxE6;
@@ -131,7 +132,7 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
     public final List<T> getStations(final BoundingBoxE6 bbox) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getStations.start - bbos={}", bbox);
+            LOGGER.debug("getStations.start - bbox={}", bbox);
         }
 
         List<T> stations = null;
@@ -143,8 +144,8 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
         // force update if there is no cached result
         // or check expire dates and update if necessary
         boolean doUpdate = false;
-        if (lastGlobalUpdate < DateUtils.currentTimeSeconds()
-                + ItineRennesConstants.MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS) {
+        if (DateUtils.isExpired(lastGlobalUpdate,
+                ItineRennesConstants.MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS)) {
             if (null == cachedStations || cachedStations.isEmpty()) {
                 doUpdate = true;
             } else {
@@ -163,21 +164,22 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
             stations = retrieveAllStations();
             cache.replace(stations);
             // remove stations out of the bbox
-            // TJHU concurrent modification exception
-            // for (final T station : stations) {
-            // if (station.getGeoPoint().getLongitudeE6() < bbox.getLonWestE6()
-            // || station.getGeoPoint().getLongitudeE6() > bbox.getLonEastE6()
-            // || station.getGeoPoint().getLatitudeE6() < bbox.getLatSouthE6()
-            // || station.getGeoPoint().getLatitudeE6() < bbox.getLatNorthE6()) {
-            // stations.remove(stations);
-            // }
-            // }
+            final Iterator<T> i = stations.iterator();
+            while (i.hasNext()) {
+                final T station = i.next();
+                if (station.getGeoPoint().getLongitudeE6() < bbox.getLonWestE6()
+                        || station.getGeoPoint().getLongitudeE6() > bbox.getLonEastE6()
+                        || station.getGeoPoint().getLatitudeE6() < bbox.getLatSouthE6()
+                        || station.getGeoPoint().getLatitudeE6() > bbox.getLatNorthE6()) {
+                    i.remove();
+                }
+            }
         } else {
             stations = CacheEntry.values(cachedStations);
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getStations.end - %s stations", stations == null ? 0 : stations.size());
+            LOGGER.debug("getStations.end - {} stations", stations == null ? 0 : stations.size());
         }
 
         return stations;

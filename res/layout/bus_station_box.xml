@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+       android:orientation="horizontal"
+       android:gravity="center"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:visibility="gone"
+       android:id="@+id/bus_station_box">
+
+    <LinearLayout android:id="@+id/bus_station_box_line_icon_list" android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <!-- the icons of each lines are appended here -->
+    </LinearLayout>
+
+</LinearLayout>

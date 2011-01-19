@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -148,20 +149,19 @@ public class BusStationActivity extends ITRContext implements Runnable {
         if (busRoutes != null) {
             final ViewGroup lineList = (ViewGroup) findViewById(R.station.line_icon_list);
             lineList.removeAllViews();
-            if (busRoutes != null) {
-                for (final BusRoute busRoute : busRoutes) {
-                    final ImageView lineIcon = (ImageView) getLayoutInflater().inflate(
-                            R.layout.line_icon, null);
-                    lineIcon.setImageDrawable(routesIcon.get(busRoute.getId()));
+            for (final BusRoute busRoute : busRoutes) {
+                final View imageContainer = getLayoutInflater().inflate(R.layout.line_icon, null);
+                final ImageView lineIcon = (ImageView) imageContainer
+                        .findViewById(R.station.bus_line_icon);
+                lineIcon.setImageDrawable(routesIcon.get(busRoute.getId()));
 
-                    lineList.addView(lineIcon);
+                lineList.addView(imageContainer);
 
-                    // final TextView text = (TextView) getLayoutInflater().inflate(
-                    // R.layout.line_icon_default, null);
-                    // text.setText(busRoute.getShortName());
-                    // lineList.addView(text);
-                    LOGGER.debug("Showing icon for line {}.", busRoute.getShortName());
-                }
+                // final TextView text = (TextView) getLayoutInflater().inflate(
+                // R.layout.line_icon_default, null);
+                // text.setText(busRoute.getShortName());
+                // lineList.addView(text);
+                LOGGER.debug("Showing icon for line {}.", busRoute.getShortName());
             }
         }
 
