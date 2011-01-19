@@ -27,7 +27,7 @@ public class MapView extends OpenStreetMapView {
     }
 
     /** Map listener event delayed listener constant value. */
-    private static final long MAP_LISTNER_DELAY = 800;
+    private static final long MAP_LISTENER_DELAY = 800;
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapView.class);
@@ -57,15 +57,22 @@ public class MapView extends OpenStreetMapView {
 
         super(context, attrs);
         this.context = (ITRContext) context;
-        this.controller = new MapViewController(this);
+        this.controller = new MapViewController(this.context, this);
 
         mapListeners = new MapListenerWrapper(3);
-        setMapListener(new DelayedMapListener(mapListeners, MAP_LISTNER_DELAY));
+        setMapListener(new DelayedMapListener(mapListeners, MAP_LISTENER_DELAY));
 
+    }
+
+    @Override
+    public MapViewController getController() {
+
+        return controller;
     }
 
     public MapListenerWrapper getListeners() {
 
         return mapListeners;
     }
+
 }

@@ -1,31 +1,43 @@
 package fr.itinerennes.ui.views.overlays;
 
-import org.andnav.osm.events.MapListener;
-import org.andnav.osm.events.ScrollEvent;
-import org.andnav.osm.events.ZoomEvent;
 import org.andnav.osm.views.OpenStreetMapView;
 import org.andnav.osm.views.overlay.MyLocationOverlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.widget.ToggleButton;
 
-import fr.itinerennes.R;
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.views.MapView;
 
-public class LocationOverlay extends MyLocationOverlay implements MapListener {
-
-    private final ITRContext context;
-
-    public LocationOverlay(Context ctx, OpenStreetMapView mapView) {
-
-        super(ctx, mapView);
-        this.context = (ITRContext) ctx;
-    }
+public class LocationOverlay extends MyLocationOverlay {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(LocationOverlay.class);
+
+    private final ITRContext context;
+
+    /** Toggle Button to toogle the follow location feature. */
+    private final ToggleButton myLocationButton;
+
+    /** The map on which this location overlay is attached. */
+    private final MapView map;
+
+    /** Delay for desactivate follow location on map move event. */
+    private static final long MAP_MOVE_DELAY = 500;
+
+    public LocationOverlay(final Context ctx, final OpenStreetMapView mapView,
+            final ToggleButton button) {
+
+        super(ctx, mapView);
+        this.context = (ITRContext) ctx;
+        this.myLocationButton = button;
+        this.map = (MapView) mapView;
+    }
 
     /**
      * Toggle FollowLocation and EnableMyLocation flags for the MyLocationOverlay.
@@ -33,37 +45,51 @@ public class LocationOverlay extends MyLocationOverlay implements MapListener {
     public void toggleFollowLocation() {
 
         if (isLocationFollowEnabled()) {
-            followLocation(false);
-            disableMyLocation();
+            disableFollowLocation();
         } else {
-            enableMyLocation();
-            followLocation(true);
+            enableFollowLocation();
         }
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * @see org.andnav.osm.events.MapListener#onScroll(org.andnav.osm.events.ScrollEvent)
+     * Disable FollowLocation and EnableMyLocation flags for the MyLocationOverlay.
      */
-    @Override
-    public boolean onScroll(ScrollEvent arg0) {
+    public void disableFollowLocation() {
 
-        final ToggleButton myLocationButton = (ToggleButton) context
-                .findViewById(R.id.mylocation_button);
+        followLocation(false);
+        disableMyLocation();
         myLocationButton.setChecked(false);
-        return false;
+
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * @see org.andnav.osm.events.MapListener#onZoom(org.andnav.osm.events.ZoomEvent)
+     * Enable FollowLocation and EnableMyLocation flags for the MyLocationOverlay.
      */
-    @Override
-    public boolean onZoom(ZoomEvent arg0) {
+    public void enableFollowLocation() {
 
-        // TODO Auto-generated method stub
+        enableMyLocation();
+        followLocation(true);
+        myLocationButton.setChecked(true);
+        map.getController().setZoom(ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
+
+    }
+
+    @Override
+    public boolean onTouchEvent(final MotionEvent event, final OpenStreetMapView mapView) {
+
+        if (event.getAction() == MotionEvent.ACTION_MOVE
+                && (SystemClock.uptimeMillis() - event.getDownTime() >= MAP_MOVE_DELAY)) {
+
+            final LocationOverlay overlay = ((MapView) mapView).getController()
+                    .getMapOverlayHelper().getLocationOverlay();
+            if (overlay.isLocationFollowEnabled()) {
+
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Disabling follow location because of a touch event on the map");
+                }
+                overlay.disableFollowLocation();
+            }
+        }
         return false;
     }
 

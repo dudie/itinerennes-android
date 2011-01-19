@@ -12,12 +12,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.views.MapBoxView;
 import fr.itinerennes.ui.views.MapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
-import fr.itinerennes.ui.views.overlays.MapOverlayHelper;
 import fr.itinerennes.ui.views.overlays.OverlayConstants;
 
 /**
@@ -66,33 +64,11 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         this.map = (MapView) findViewById(R.id.map);
 
-        final MapOverlayHelper overlayHelper = new MapOverlayHelper(this, map);
-        overlayHelper.show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS);
+        this.map.getController().getMapOverlayHelper()
+                .show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS | LOCATION);
+        this.myLocation = map.getController().getMapOverlayHelper().getLocationOverlay();
 
-        // center of the map
-        if (savedInstanceState != null) {
-            startZoomLevel = savedInstanceState.getInt("ZoomLevel");
-            startMapCenter = (GeoPoint) savedInstanceState.getSerializable("startCenter");
-
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("restoring map zoom : {}", startZoomLevel);
-                LOGGER.debug("restoring map center : LON={} LAT={}",
-                        startMapCenter.getLongitudeE6(), startMapCenter.getLatitudeE6());
-            }
-        } else {
-            final int latitude = ItineRennesConstants.CONFIG_RENNES_LAT;
-            final int longitude = ItineRennesConstants.CONFIG_RENNES_LON;
-            startZoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
-            startMapCenter = new GeoPoint(latitude, longitude);
-        }
-        map.getController().setZoom(startZoomLevel);
-        map.getController().setCenter(startMapCenter);
-
-        // map.setMultiTouchControls(true);
-
-        myLocation = new LocationOverlay(this, map);
-        map.getOverlays().add(myLocation);
-        map.getListeners().add(myLocation);
+        map.setMultiTouchControls(true);
 
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
@@ -117,13 +93,13 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("restoring map zoom : {}", startZoomLevel);
-                LOGGER.debug("restoring map center : LON={} LAT={}",
-                        startMapCenter.getLongitudeE6(), startMapCenter.getLatitudeE6());
+            if (startMapCenter != null) {
+
+                map.getController().setZoom(startZoomLevel);
+                map.getController().setCenter(startMapCenter);
+            } else {
+                myLocation.enableFollowLocation();
             }
-            map.getController().setZoom(startZoomLevel);
-            map.getController().setCenter(startMapCenter);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -134,26 +110,26 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     /**
      * {@inheritDoc}
      * 
-     * @see android.app.Activity#onResume()
-     */
-    @Override
-    protected void onResume() {
-
-        myLocation.toggleFollowLocation();
-
-        super.onResume();
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
      * @see android.app.Activity#onPause()
      */
     @Override
     protected void onPause() {
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onPause.start");
+        }
+
         if (myLocation.isLocationFollowEnabled()) {
-            myLocation.toggleFollowLocation();
+            myLocation.disableFollowLocation();
+            startMapCenter = null;
+        } else {
+            startMapCenter = new GeoPoint(map.getMapCenterLatitudeE6(),
+                    map.getMapCenterLongitudeE6());
+            startZoomLevel = map.getZoomLevel();
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onPause.end");
         }
         super.onPause();
     }
@@ -170,21 +146,43 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             LOGGER.debug("onSaveInstanceState.start");
         }
 
-        startMapCenter = new GeoPoint(map.getMapCenterLatitudeE6(), map.getMapCenterLongitudeE6());
-        savedInstanceState.putSerializable("startCenter", startMapCenter);
-        savedInstanceState.putInt("ZoomLevel", map.getZoomLevel());
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("saving map zoom : {}", map.getZoomLevel());
-            LOGGER.debug("saving map center : LON={} LAT={}", startMapCenter.getLongitudeE6(),
-                    startMapCenter.getLatitudeE6());
+        if (myLocation.isLocationFollowEnabled()) {
+            savedInstanceState.putBoolean("followLocation", myLocation.isLocationFollowEnabled());
+        } else {
+            savedInstanceState.putSerializable("startCenter",
+                    new GeoPoint(map.getMapCenterLatitudeE6(), map.getMapCenterLongitudeE6()));
+            savedInstanceState.putInt("ZoomLevel", map.getZoomLevel());
         }
-
         super.onSaveInstanceState(savedInstanceState);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onSaveInstanceState.end");
         }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onRestoreInstanceState.start");
+        }
+
+        // center of the map
+        if (savedInstanceState != null) {
+
+            if (!savedInstanceState.getBoolean("followLocation")) {
+
+                startZoomLevel = savedInstanceState.getInt("ZoomLevel");
+                startMapCenter = (GeoPoint) savedInstanceState.getSerializable("startCenter");
+
+            }
+
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onRestoreInstanceState.end");
+        }
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     /**

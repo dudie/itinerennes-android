@@ -3,6 +3,8 @@ package fr.itinerennes.ui.views.overlays;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import android.widget.ToggleButton;
+
 import fr.itinerennes.R;
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.model.BusStation;
@@ -35,7 +37,7 @@ public class MapOverlayHelper implements OverlayConstants {
     private final int current = 0;
 
     /** The overlay with items focusable in the map box. */
-    private final GroupFocusOverlay<FocusableOverlay<?>> groupFocus;
+    private GroupFocusOverlay<FocusableOverlay<?>> groupFocus;
 
     /** The bus stations focusable overlay. */
     private FocusableItemizedOverlay<FocusableOverlayItem<BusStation>, BusStation> busStationOverlay;
@@ -45,6 +47,9 @@ public class MapOverlayHelper implements OverlayConstants {
 
     /** The subway stations focusable overlay. */
     private FocusableItemizedOverlay<FocusableOverlayItem<SubwayStation>, SubwayStation> subwayStationOverlay;
+
+    /** The my location overlay. */
+    private LocationOverlay locationOverlay;
 
     /**
      * Creates the map overlay helper.
@@ -58,12 +63,16 @@ public class MapOverlayHelper implements OverlayConstants {
 
         this.context = context;
         this.map = map;
-        this.groupFocus = new GroupFocusOverlay<FocusableOverlay<?>>(context,
-                (MapBoxView) context.findViewById(R.id.map_box));
-        this.map.getOverlays().add(groupFocus);
+
     }
 
     public void show(final int mask) {
+
+        if (this.groupFocus == null) {
+            this.groupFocus = new GroupFocusOverlay<FocusableOverlay<?>>(context,
+                    (MapBoxView) context.findViewById(R.id.map_box));
+            this.map.getOverlays().add(groupFocus);
+        }
 
         if (match(BUS_STATIONS, mask) && !match(BUS_STATIONS, current)) {
             groupFocus.addOverlay(getBusStationOverlay());
@@ -76,6 +85,9 @@ public class MapOverlayHelper implements OverlayConstants {
         if (match(SUBWAY_STATIONS, mask) && !match(SUBWAY_STATIONS, current)) {
             groupFocus.addOverlay(getSubwayStationOverlay());
             map.getListeners().add(getSubwayStationOverlay());
+        }
+        if (match(LOCATION, mask) && !match(LOCATION, current)) {
+            this.map.getOverlays().add(getLocationOverlay());
         }
     }
 
@@ -158,5 +170,20 @@ public class MapOverlayHelper implements OverlayConstants {
         }
 
         return subwayStationOverlay;
+    }
+
+    /**
+     * Gets the subway station focusable overlay. Instantiate it if necessary.
+     * 
+     * @return the location overlay
+     */
+    public final synchronized LocationOverlay getLocationOverlay() {
+
+        if (null == locationOverlay) {
+            locationOverlay = new LocationOverlay(context, map,
+                    (ToggleButton) context.findViewById(R.id.mylocation_button));
+        }
+
+        return locationOverlay;
     }
 }
