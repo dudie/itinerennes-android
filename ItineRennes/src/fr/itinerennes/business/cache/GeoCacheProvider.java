@@ -210,7 +210,7 @@ public final class GeoCacheProvider extends AbstractService implements GeoExplor
 
             // once included areas are deleted, insert the bigger and new one
             final ContentValues values = new ContentValues(5);
-            values.put(LAST_UPDATE, System.currentTimeMillis());
+            values.put(LAST_UPDATE, DateUtils.currentTimeSeconds());
             values.put(LON_WEST, bbox.getLonWestE6());
             values.put(LAT_NORTH, bbox.getLatNorthE6());
             values.put(LON_EAST, bbox.getLonEastE6());
@@ -259,7 +259,7 @@ public final class GeoCacheProvider extends AbstractService implements GeoExplor
         boolean isExplored = false;
         while (c.moveToNext()) {
 
-            if (TTL < DateUtils.currentTimeSeconds() - c.getLong(1) / 1000) {
+            if (DateUtils.isExpired(c.getInt(1), TTL)) {
                 // ttl expired, remove this bbox from the cache
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("data for bbox[_id={}] is expired, removing it", c.getInt(0));

@@ -1,13 +1,23 @@
 package fr.itinerennes.ui.adapter;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import fr.itinerennes.R;
+import fr.itinerennes.business.service.BusRouteService;
+import fr.itinerennes.business.service.BusService;
+import fr.itinerennes.business.service.LineIconService;
+import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BusRoute;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.ui.activity.BusStationActivity;
 import fr.itinerennes.ui.views.overlays.OverlayItem;
@@ -20,6 +30,31 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(BusStationBoxAdapter.class);
+
+    /** The bus service. */
+    private final BusService busService;
+
+    /** The bus route service. */
+    private final BusRouteService busRouteService;
+
+    /** The line icon service. */
+    private final LineIconService lineIconService;
+
+    /**
+     * Creates the bus station adapter for map box.
+     * 
+     * @param busService
+     *            the bus service
+     * @param busRouteService
+     *            the bus route service
+     */
+    public BusStationBoxAdapter(final BusService busService, final BusRouteService busRouteService,
+            final LineIconService lineIconService) {
+
+        this.busService = busService;
+        this.busRouteService = busRouteService;
+        this.lineIconService = lineIconService;
+    }
 
     /**
      * {@inheritDoc}
@@ -54,12 +89,15 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
     @Override
     public final View getBoxDetailsView(final Context context, final OverlayItem<BusStation> item) {
 
-        // there nothing to display
-        return null;
+        final LayoutInflater inflater = LayoutInflater.from(context);
+        final LinearLayout busInfo = (LinearLayout) inflater
+                .inflate(R.layout.bus_station_box, null);
+        busInfo.setVisibility(View.GONE);
+        return busInfo;
     }
 
     /**
-     * The bus stations does not need to load something in background.
+     * Preload data with the services and pray the cache keep them...
      * 
      * @return null
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#backgroundLoad(fr.itinerennes.ui.views.overlays.OverlayItem)
@@ -67,8 +105,21 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
     @Override
     public final BusStation backgroundLoad(final OverlayItem<BusStation> item) {
 
-        // there nothing to preload, everything is in the overlay
-        return null;
+        // TJHU on ne fait que mettre en cache, il vaudrait mieux passer directement les
+        // informations !!! (au cas ou le cache expire ou que ce n'est pas bien mis en cache)
+        BusStation station = null;
+        List<BusRoute> busRoutes = null;
+        try {
+            station = busService.getStation(item.getData().getId());
+            busRoutes = busRouteService.getStationRoutes(item.getData().getId());
+            for (final BusRoute route : busRoutes) {
+                lineIconService.getIcon(route.getId());
+            }
+        } catch (final GenericException e) {
+            LOGGER.error("unable to retrieve bus routes and icons for station " + item.getData(), e);
+        }
+
+        return station;
     }
 
     /**
@@ -105,11 +156,26 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
      *      fr.itinerennes.ui.views.overlays.OverlayItem, java.lang.Object)
      */
     @Override
-    public void updateBoxDetailsView(final View boxDetailsView, final OverlayItem<BusStation> item,
-            final BusStation data) {
+    public final void updateBoxDetailsView(final View busDetailsView,
+            final OverlayItem<BusStation> item, final BusStation data) {
 
-        // TJHU Auto-generated method stub
+        final LinearLayout iconsView = (LinearLayout) busDetailsView
+                .findViewById(R.id.bus_station_box_line_icon_list);
+        List<BusRoute> busRoutes;
+        try {
+            busRoutes = busRouteService.getStationRoutes(item.getData().getId());
+            for (final BusRoute route : busRoutes) {
 
+                final View imageContainer = LayoutInflater.from(busDetailsView.getContext())
+                        .inflate(R.layout.line_icon, null);
+                final ImageView lineIcon = (ImageView) imageContainer
+                        .findViewById(R.station.bus_line_icon);
+                lineIcon.setImageDrawable(lineIconService.getIcon(route.getId()));
+                iconsView.addView(imageContainer);
+            }
+        } catch (final GenericException e) {
+            LOGGER.error("unable to retrieve bus routes and icons for station " + item.getData(), e);
+        }
     }
 
     /**

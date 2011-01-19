@@ -46,7 +46,7 @@ public class LineIconService extends AbstractService {
     private final CacheProvider<LineIcon> iconCache;
 
     /** The last time all the cache was updated (in seconds). */
-    private final int lastGlobalUpdate = 0;
+    private int lastGlobalUpdate = 0;
 
     /**
      * Creates a line transport icon service.
@@ -67,13 +67,13 @@ public class LineIconService extends AbstractService {
      *            the name of the line you want the icon
      * @return the drawable
      */
-    public final Drawable getIcon(final String line) throws GenericException {
+    public final BitmapDrawable getIcon(final String line) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getIcon.start - line={}", line);
         }
 
-        Drawable image = null;
+        BitmapDrawable image = null;
 
         // TOBO a virer quand l'api keolis fournira les icones de ces lignes...
         if (line.equalsIgnoreCase("158")) {
@@ -85,10 +85,11 @@ public class LineIconService extends AbstractService {
 
         // icon isn't available in cache, AND the time between two global cache update is expired
         if (cachedLineIcon == null
-                && lastGlobalUpdate < DateUtils.currentTimeSeconds()
-                        + ItineRennesConstants.MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS) {
+                && DateUtils.isExpired(lastGlobalUpdate,
+                        ItineRennesConstants.MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS)) {
             final List<LineIcon> allIcons = keolisService.getAllLineIcons();
             iconCache.replace(allIcons);
+            lastGlobalUpdate = DateUtils.currentTimeSeconds();
             cachedLineIcon = iconCache.load(line);
         }
 

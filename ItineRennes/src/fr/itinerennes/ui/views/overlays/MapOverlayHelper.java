@@ -110,7 +110,9 @@ public class MapOverlayHelper implements OverlayConstants {
         if (null == busStationOverlay) {
             final StationItemizedOverlayAdapter<BusStation> busItemAdapter = new StationItemizedOverlayAdapter<BusStation>(
                     context, context.getBusService());
-            final BusStationBoxAdapter busDisplayAdaper = new BusStationBoxAdapter();
+            final BusStationBoxAdapter busDisplayAdaper = new BusStationBoxAdapter(
+                    context.getBusService(), context.getBusRouteService(),
+                    context.getLineIconService());
 
             busStationOverlay = new FocusableItemizedOverlay<FocusableOverlayItem<BusStation>, BusStation>(
                     context, busItemAdapter, busDisplayAdaper);
