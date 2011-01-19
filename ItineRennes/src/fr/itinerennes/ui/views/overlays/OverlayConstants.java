@@ -18,4 +18,7 @@ public interface OverlayConstants {
 
     /** The subway station overlay. */
     int SUBWAY_STATIONS = 4;
+
+    /** The my location overlay. */
+    int LOCATION = 8;
 }

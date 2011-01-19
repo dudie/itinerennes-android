@@ -59,6 +59,9 @@ public class ItineRennesConstants {
     /** OTP Extended API URL. */
     public static final String OTP_API_URL = "http://otp.itinerennes.fr/opentripplanner-api-extended/";
 
+    // public static final String OTP_API_URL =
+    // "http://10.0.2.2:8080/itr-opentripplanner-api-extended/";
+
     /** Path to append to the Extended API URL to get stop informations. */
     public static final String OTP_API_STOP_PATH = "stop";
 
