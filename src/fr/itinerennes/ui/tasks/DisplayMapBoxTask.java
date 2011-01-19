@@ -69,9 +69,9 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
         final int res = adapter.getBoxIcon(item);
         boxView.setIcon(context.getResources().getDrawable(res));
         boxView.setTitle(adapter.getBoxTitle(item));
-        boxView.setAdditionalInformations(adapter.getBoxDetailsView(context, item));
         boxView.setLoading(true);
         boxView.setVisibility(View.VISIBLE);
+        boxView.setAdditionalInformations(adapter.getBoxDetailsView(context, item));
         boxView.setOnClickIntent(adapter.getOnClickIntent(context, item));
         boxView.postInvalidate();
 

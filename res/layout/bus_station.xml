@@ -20,10 +20,7 @@
 
 	</LinearLayout>
 
-    <LinearLayout android:id="@+station/line_icon_list" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center">
-        <!-- the icons of each lines are appended here -->
-	</LinearLayout>
+    <include layout="@layout/line_icon_list" />
 	
 	<ListView android:id="@+station/list_bus" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:orientation="vertical">

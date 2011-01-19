@@ -109,7 +109,6 @@ public class MapBoxView extends LinearLayout {
 
         removeAdditionalInformations();
         if (view != null) {
-            view.setVisibility(VISIBLE);
             additionalInformations = view;
             addView(view);
         }
