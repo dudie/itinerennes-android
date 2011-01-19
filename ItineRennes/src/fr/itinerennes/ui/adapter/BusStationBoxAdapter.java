@@ -170,7 +170,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
                         .inflate(R.layout.line_icon, null);
                 final ImageView lineIcon = (ImageView) imageContainer
                         .findViewById(R.station.bus_line_icon);
-                lineIcon.setImageDrawable(lineIconService.getIcon(route.getId()));
+                lineIcon.setImageDrawable(lineIconService.getIcon(route.getShortName()));
                 iconsView.addView(imageContainer);
             }
         } catch (final GenericException e) {
