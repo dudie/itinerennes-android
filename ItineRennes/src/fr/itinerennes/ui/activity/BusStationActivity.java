@@ -147,7 +147,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         /* Displaying routes icons. */
         if (busRoutes != null) {
-            final ViewGroup lineList = (ViewGroup) findViewById(R.station.line_icon_list);
+            final ViewGroup lineList = (ViewGroup) findViewById(R.id.line_icon_container);
             lineList.removeAllViews();
             for (final BusRoute busRoute : busRoutes) {
                 final View imageContainer = getLayoutInflater().inflate(R.layout.line_icon, null);

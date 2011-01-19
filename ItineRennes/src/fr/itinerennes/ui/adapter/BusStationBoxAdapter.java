@@ -90,8 +90,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
     public final View getBoxDetailsView(final Context context, final OverlayItem<BusStation> item) {
 
         final LayoutInflater inflater = LayoutInflater.from(context);
-        final LinearLayout busInfo = (LinearLayout) inflater
-                .inflate(R.layout.bus_station_box, null);
+        final View busInfo = inflater.inflate(R.layout.line_icon_list, null);
         busInfo.setVisibility(View.GONE);
         return busInfo;
     }
@@ -160,7 +159,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
             final OverlayItem<BusStation> item, final BusStation data) {
 
         final LinearLayout iconsView = (LinearLayout) busDetailsView
-                .findViewById(R.id.bus_station_box_line_icon_list);
+                .findViewById(R.id.line_icon_container);
         List<BusRoute> busRoutes;
         try {
             busRoutes = busRouteService.getStationRoutes(item.getData().getId());
@@ -176,6 +175,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
         } catch (final GenericException e) {
             LOGGER.error("unable to retrieve bus routes and icons for station " + item.getData(), e);
         }
+        busDetailsView.setVisibility(View.VISIBLE);
     }
 
     /**
