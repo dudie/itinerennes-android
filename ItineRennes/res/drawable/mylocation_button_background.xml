@@ -11,7 +11,11 @@
                     <stroke android:width="2dp" android:color="@color/orange" />
                 </shape>
             </item>
-            <item android:gravity="center">
+            <item android:gravity="center"
+                android:top="6dp"
+                android:bottom="6dp"
+	            android:right="6dp"
+	            android:left="6dp">
                 <bitmap android:src="@drawable/toolbar_mylocation_icon" />
             </item>
         </layer-list>
@@ -23,9 +27,14 @@
                 <shape android:shape="rectangle">
                     <corners android:radius="10dp" />
                     <solid android:color="#95000000" />
+                    <stroke android:width="1dp" android:color="@color/black"/>
                 </shape>
             </item>
-            <item android:gravity="center">
+            <item android:gravity="center"
+                android:top="6dp"
+                android:bottom="6dp"
+                android:right="6dp"
+                android:left="6dp">
                 <bitmap android:src="@drawable/toolbar_mylocation_icon" />
             </item>
         </layer-list>
