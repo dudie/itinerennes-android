@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.views.MapBoxView;
 import fr.itinerennes.ui.views.MapView;
@@ -69,6 +71,19 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         this.myLocation = map.getController().getMapOverlayHelper().getLocationOverlay();
 
         map.setMultiTouchControls(true);
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            // location provider not enabled. Centering in rennes
+            startMapCenter = new GeoPoint(ItineRennesConstants.CONFIG_RENNES_LAT,
+                    ItineRennesConstants.CONFIG_RENNES_LON);
+            startZoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Location service is not enabled. Centering in Rennes.");
+            }
+        }
 
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
