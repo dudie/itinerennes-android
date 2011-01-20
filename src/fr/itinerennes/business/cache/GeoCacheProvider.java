@@ -259,7 +259,7 @@ public final class GeoCacheProvider extends AbstractService implements GeoExplor
         boolean isExplored = false;
         while (c.moveToNext()) {
 
-            if (DateUtils.isExpired(c.getInt(1), TTL)) {
+            if (DateUtils.isExpired(c.getLong(1), TTL)) {
                 // ttl expired, remove this bbox from the cache
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("data for bbox[_id={}] is expired, removing it", c.getInt(0));

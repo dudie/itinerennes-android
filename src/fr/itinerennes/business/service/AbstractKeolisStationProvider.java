@@ -37,7 +37,7 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
     private final CacheProvider<T> cache;
 
     /** The last time all the cache was updated (in seconds). */
-    private final int lastGlobalUpdate = 0;
+    private long lastGlobalUpdate = 0;
 
     /**
      * Creates the service.
@@ -163,6 +163,8 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
             }
             stations = retrieveAllStations();
             cache.replace(stations);
+            lastGlobalUpdate = DateUtils.currentTimeSeconds();
+
             // remove stations out of the bbox
             final Iterator<T> i = stations.iterator();
             while (i.hasNext()) {
