@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_long">ItinéRennes for Android™</string>
+    <string name="visit_our_website">Please visit our website at http://www.itinerennes.fr/</string>
+    <string name="about_keolis">Keolis</string>
+	<string name="about_openstreetmap_data">© OpenStreetMap contributors, CC-BY-SA</string>
+    <string name="about_openstreetmap_logo">© OpenStreetMap logo, CC-BY-SA</string>
+    <string name="about_osmdroid">Osmdroid</string>
+    <string name="about_mapquest">Mapquest</string>
+</resources>

@@ -9,6 +9,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -29,9 +32,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapActivity.class);
-
-    /** Dialog identifier for layers selection. */
-    private static final int DIALOG_SELECT_LAYERS = 0;
 
     /** The map view. */
     private MapView map;
@@ -113,7 +113,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
      * @see android.app.Activity#onPause()
      */
     @Override
-    protected void onPause() {
+    protected final void onPause() {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPause.start");
@@ -132,6 +132,33 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             LOGGER.debug("onPause.end");
         }
         super.onPause();
+    }
+
+    /**
+     * Creates the option menu with the following items.
+     * <ul>
+     * <li>about</li>
+     * </ul>
+     * <p>
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+     */
+    @Override
+    public final boolean onCreateOptionsMenu(final Menu menu) {
+
+        final MenuItem about = menu.add(Menu.NONE, MenuOptions.ABOUT, Menu.NONE, R.string.about);
+        about.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(final MenuItem item) {
+
+                showDialog(Dialogs.ABOUT);
+                return true;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     /**
@@ -221,7 +248,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         AlertDialog dialog;
         switch (id) {
-        case DIALOG_SELECT_LAYERS:
+        case Dialogs.SELECT_LAYERS:
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.select_layer).setCancelable(true)
                     .setNeutralButton("OK", new DialogInterface.OnClickListener() {
@@ -233,6 +260,13 @@ public class MapActivity extends ITRContext implements OverlayConstants {
                         }
                     });
             dialog = builder.create();
+            break;
+        case Dialogs.ABOUT:
+            final AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
+            aboutBuilder.setTitle(R.string.about).setCancelable(true);
+            final View aboutView = getLayoutInflater().inflate(R.layout.about, null);
+            aboutBuilder.setView(aboutView);
+            dialog = aboutBuilder.create();
             break;
         default:
             dialog = null;
@@ -260,9 +294,33 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("layers.button.click");
             }
-            showDialog(DIALOG_SELECT_LAYERS);
+            showDialog(Dialogs.SELECT_LAYERS);
         }
+    }
 
+    /**
+     * Class containing menu constants.
+     * 
+     * @author Jérémie Huchet
+     */
+    private static final class MenuOptions {
+
+        /** "About" menu option. */
+        public static final int ABOUT = 0;
+    }
+
+    /**
+     * Class containing dialog boxes contants.
+     * 
+     * @author Jérémie Huchet
+     */
+    private static final class Dialogs {
+
+        /** Dialog identifier for layers selection. */
+        private static final int SELECT_LAYERS = 0;
+
+        /** "About" dialog box. */
+        public static final int ABOUT = 1;
     }
 
 }
