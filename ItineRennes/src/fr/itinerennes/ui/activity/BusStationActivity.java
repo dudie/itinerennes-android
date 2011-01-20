@@ -8,7 +8,6 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
@@ -41,7 +41,10 @@ public class BusStationActivity extends ITRContext implements Runnable {
             .getLogger(BusStationActivity.class);
 
     /** The progress dialog while the activity is loading. */
-    private ProgressDialog progressDialog;
+    private Dialog progressDialog;
+
+    /** The progress bar displayed in the progress dialog. */
+    ProgressBar progressBar;
 
     /** The diplsayed station. */
     private BusStation station;
@@ -74,7 +77,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
     private static final int FAILURE_DIALOG = 1;
 
     /** The intial size of the progress bar. */
-    private static final int INITIAL_PROGRESS_MAX = 3;
+    private static final int INITIAL_PROGRESS_MAX = 30;
 
     /**
      * {@inheritDoc}
@@ -106,7 +109,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
                     showDialog(FAILURE_DIALOG);
                     break;
                 case MESSAGE_INCREMENT_PROGRESS:
-                    progressDialog.incrementProgressBy(1);
+                    progressBar.incrementProgressBy(msg.arg1 > 0 ? msg.arg1 : 1);
 
                 default:
                     break;
@@ -198,21 +201,6 @@ public class BusStationActivity extends ITRContext implements Runnable {
             returnCode = MESSAGE_FAILURE;
         }
 
-        /* Fetching line icons. */
-        if (busRoutes != null) {
-            progressDialog.setMax(progressDialog.getMax() + busRoutes.size());
-            for (final BusRoute busRoute : busRoutes) {
-                try {
-                    routesIcon.put(busRoute.getShortName(),
-                            getLineIconService().getIcon(busRoute.getShortName()));
-                    progressDialog.incrementProgressBy(1);
-                } catch (final GenericException e) {
-                    LOGGER.error(String.format("Line icon for the route %s can not be fetched.",
-                            busRoute.getShortName()), e);
-                }
-            }
-        }
-
         try {
             /* Fetching departures informations from the network. */
 
@@ -222,6 +210,23 @@ public class BusStationActivity extends ITRContext implements Runnable {
             LOGGER.debug(String.format("Can't load departures informations for the station %s.",
                     stationId), e);
             returnCode = MESSAGE_FAILURE;
+        }
+
+        /* Fetching line icons. */
+        if (busRoutes != null) {
+            final int increment = (progressBar.getMax() - progressBar.getProgress())
+                    / busRoutes.size();
+            for (final BusRoute busRoute : busRoutes) {
+                try {
+                    routesIcon.put(busRoute.getShortName(),
+                            getLineIconService().getIcon(busRoute.getShortName()));
+                    handler.sendMessage(handler.obtainMessage(MESSAGE_INCREMENT_PROGRESS,
+                            increment, 0));
+                } catch (final GenericException e) {
+                    LOGGER.error(String.format("Line icon for the route %s can not be fetched.",
+                            busRoute.getShortName()), e);
+                }
+            }
         }
 
         handler.sendEmptyMessage(returnCode);
@@ -244,9 +249,9 @@ public class BusStationActivity extends ITRContext implements Runnable {
                     });
             return builder.create();
         case PROGRESS_DIALOG:
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setMessage(getBaseContext().getResources().getString(R.string.loading));
+            progressDialog = new Dialog(this);
+            progressDialog.setContentView(R.layout.progress_dialog);
+            progressDialog.setTitle(getBaseContext().getResources().getString(R.string.loading));
             progressDialog.setCancelable(false);
             return progressDialog;
         default:
@@ -259,8 +264,9 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         switch (id) {
         case PROGRESS_DIALOG:
-            ((ProgressDialog) dialog).setProgress(0);
-            ((ProgressDialog) dialog).setMax(INITIAL_PROGRESS_MAX);
+            progressBar = (ProgressBar) progressDialog.findViewById(R.id.progress_bar);
+            progressBar.setProgress(0);
+            progressBar.setMax(INITIAL_PROGRESS_MAX);
 
         default:
             break;
