@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.business.service.BusDepartureService;
-import fr.itinerennes.business.service.LineIconService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
@@ -164,8 +163,8 @@ public class BusTimeAdapter extends BaseAdapter {
 
             final ImageView departureLineIconeView = (ImageView) busTimeView
                     .findViewById(R.station.bus_icon_line_departure);
-            departureLineIconeView.setImageDrawable(routesIcons
-                    .get(data.get(position).getRouteId()));
+            departureLineIconeView.setImageDrawable(routesIcons.get(data.get(position)
+                    .getRouteShortName()));
 
             final TextView departureHeadsignView = (TextView) busTimeView
                     .findViewById(R.station.bus_headsign_departure);
