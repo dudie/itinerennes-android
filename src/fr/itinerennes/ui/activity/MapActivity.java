@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
@@ -34,6 +36,8 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapActivity.class);
+
+    private static final int TOAST_DURATION = 300;
 
     /** The map view. */
     private MapView map;
@@ -249,7 +253,14 @@ public class MapActivity extends ITRContext implements OverlayConstants {
      */
     public final void onMyLocationButtonClick(final View button) {
 
-        myLocation.toggleFollowLocation();
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            Toast.makeText(this, R.string.location_service_disabled, TOAST_DURATION).show();
+            ((ToggleButton) button).setChecked(false);
+        } else {
+            myLocation.toggleFollowLocation();
+        }
 
     }
 
