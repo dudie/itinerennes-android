@@ -66,6 +66,8 @@
         <TextView android:text="@string/credits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:textColor="@color/white"/>
   
         <TextView android:text="@string/about_keolis"
@@ -76,8 +78,6 @@
         <TextView android:text="@string/about_openstreetmap_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
             android:textColor="@color/white"/>
 		    
         <LinearLayout
