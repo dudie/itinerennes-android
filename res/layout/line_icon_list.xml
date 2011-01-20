@@ -6,7 +6,8 @@
 
 	<HorizontalScrollView
 	       android:layout_width="wrap_content"
-	       android:layout_height="wrap_content">
+	       android:layout_height="wrap_content"
+	       android:scrollbarAlwaysDrawHorizontalTrack="true">
 	
 	    <LinearLayout android:id="@+id/line_icon_container" android:layout_width="fill_parent"
 	        android:layout_height="40dp" android:orientation="horizontal"  android:gravity="center">
