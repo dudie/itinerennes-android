@@ -46,7 +46,7 @@ public class LineIconService extends AbstractService {
     private final CacheProvider<LineIcon> iconCache;
 
     /** The last time all the cache was updated (in seconds). */
-    private int lastGlobalUpdate = 0;
+    private long lastGlobalUpdate = 0;
 
     /**
      * Creates a line transport icon service.

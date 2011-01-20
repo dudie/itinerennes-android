@@ -27,9 +27,9 @@ public final class DateUtils {
      * 
      * @return the amount of seconds since 1970-01-01
      */
-    public static int currentTimeSeconds() {
+    public static long currentTimeSeconds() {
 
-        return (int) (System.currentTimeMillis() / 1000);
+        return (System.currentTimeMillis() / 1000);
     }
 
     /**
@@ -39,9 +39,9 @@ public final class DateUtils {
      *            a date
      * @return the amount of seconds since 1970-01-01
      */
-    public static int toSeconds(final Date date) {
+    public static long toSeconds(final Date date) {
 
-        return (int) (date.getTime() / 1000);
+        return (date.getTime() / 1000);
     }
 
     /**
@@ -55,7 +55,7 @@ public final class DateUtils {
      */
     public static boolean isExpired(final Date date, final int ttl) {
 
-        return isExpired((int) (date.getTime() / 1000), ttl);
+        return isExpired((date.getTime() / 1000), ttl);
     }
 
     /**
@@ -67,7 +67,7 @@ public final class DateUtils {
      *            the time to live
      * @return true if the given date is expired
      */
-    public static boolean isExpired(final int secondsTimestamp, final int ttl) {
+    public static boolean isExpired(final long secondsTimestamp, final int ttl) {
 
         return currentTimeSeconds() > secondsTimestamp + ttl;
     }
