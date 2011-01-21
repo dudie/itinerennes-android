@@ -70,6 +70,8 @@ public class BusService extends AbstractService implements StationProvider<BusSt
                         BusStation.TTL)) {
             station = wfsService.getBusStation(id);
             busCache.replace(station);
+        } else {
+            station = cachedEntry.getValue();
         }
 
         if (LOGGER.isDebugEnabled()) {
