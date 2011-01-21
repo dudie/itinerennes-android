@@ -36,19 +36,16 @@ import fr.itinerennes.utils.DateUtils;
  * 
  * <dt>Example 1 :</dt>
  * <dl>
- * I've explored <code>A</code> and <code>B</code> and i've notified {@link GeoCacheProvider}. If
- * I ask it if I've already explored <code>C</code> it will tell me yes.
+ * I've explored <code>A</code> and <code>B</code> and i've notified {@link GeoCacheProvider}. If I
+ * ask it if I've already explored <code>C</code> it will tell me yes.
  * </dl>
  * <dt>Example 2 :</dt>
  * <dl>
- * I've explored <code>B</code> and <code>C</code> and i've notified {@link GeoCacheProvider}. If
- * I ask it if I've already explored <code>A</code> it will tell me NO.
+ * I've explored <code>B</code> and <code>C</code> and i've notified {@link GeoCacheProvider}. If I
+ * ask it if I've already explored <code>A</code> it will tell me NO.
  * </dl>
  * 
  * @author Jérémie Huchet
- */
-/**
- * @author kops
  */
 public final class GeoCacheProvider extends AbstractService implements GeoExploreColumns {
 
