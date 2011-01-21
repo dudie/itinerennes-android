@@ -92,13 +92,13 @@ public class GroupFocusOverlay<T extends FocusableOverlay<?>> extends GroupOverl
             }
             overlayKeepingFocus.onKeepFocus(focusedItemAdditionalInfo);
         } else {
-            // set NOT_FOCUSED overlays not winning focus (see ITR-43)
+            // set NOT_FOCUSED overlays not winning focus and not loosing focus (see ITR-43)
             for (final T overlay : overlays) {
-                if (!overlay.equals(overlayWinningFocus)) {
+                if (!overlay.equals(overlayWinningFocus) && !overlay.equals(overlayLoosingFocus)) {
                     overlay.setFocused(false);
                 }
             }
-            // trigger onBlur before unFocus !!
+            // trigger onBlur before onFocus !!
             if (overlayLoosingFocus != null) {
                 overlayLoosingFocus.onBlur(focusedItemAdditionalInfo);
             }
