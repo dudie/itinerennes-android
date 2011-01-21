@@ -65,7 +65,7 @@ public class BusService extends AbstractService implements StationProvider<BusSt
         }
         BusStation station = null;
         final CacheEntry<BusStation> cachedEntry = busCache.load(id);
-        if (station == null
+        if (cachedEntry == null
                 || fr.itinerennes.utils.DateUtils.isExpired(cachedEntry.getLastUpdate(),
                         BusStation.TTL)) {
             station = wfsService.getBusStation(id);
