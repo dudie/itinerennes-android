@@ -205,9 +205,9 @@ public class KeolisService {
             iconStream = url.openStream();
             icon.setIconBytes(FileUtils.readBytes(iconStream));
         } catch (final MalformedURLException e) {
-            LOGGER.error("Unable to fetch icon {} : {}", e.getMessage());
+            LOGGER.error("Unable to fetch icon {} : {}", icon, e.getMessage());
         } catch (final IOException e) {
-            LOGGER.error("Unable to fetch icon {} : {}", e.getMessage());
+            LOGGER.error("Unable to fetch icon {} : {}", icon, e.getMessage());
         } finally {
             if (null != iconStream) {
                 try {

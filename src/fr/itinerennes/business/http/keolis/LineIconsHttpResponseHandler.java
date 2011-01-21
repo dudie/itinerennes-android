@@ -27,8 +27,7 @@ import fr.itinerennes.model.LineIcon;
  * 
  * @author Jérémie Huchet
  */
-public final class LineIconsHttpResponseHandler extends
-        HttpResponseHandler<List<LineIcon>> {
+public final class LineIconsHttpResponseHandler extends HttpResponseHandler<List<LineIcon>> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -81,7 +80,7 @@ public final class LineIconsHttpResponseHandler extends
 
         final LineIcon icon = new LineIcon();
         icon.setLine(jsonObject.optString("name"));
-        icon.setIconUrl(baseUrl + jsonObject.optString("picto"));
+        icon.setIconUrl(String.format("%s/%s", baseUrl, jsonObject.optString("picto")));
         return icon;
     }
 }
