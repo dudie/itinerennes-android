@@ -3,7 +3,7 @@ package fr.itinerennes.business.cache;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andnav.osm.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 

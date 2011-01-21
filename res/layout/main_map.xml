@@ -5,7 +5,7 @@
 	android:layout_height="fill_parent"
 	android:id="@+id/main_layout">
 	
-	<fr.itinerennes.ui.views.MapView
+	<fr.itinerennes.ui.views.ITRMapView
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/map"
 		android:layout_centerInParent="true"

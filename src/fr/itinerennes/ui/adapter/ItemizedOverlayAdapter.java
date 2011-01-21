@@ -2,15 +2,15 @@ package fr.itinerennes.ui.adapter;
 
 import java.util.List;
 
-import org.andnav.osm.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Marker;
 
-import fr.itinerennes.ui.views.MapView;
-import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.ITRMapView;
+import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 
 /**
- * Classes implementing this interface are bridges between a {@link MapView} and the {@link Marker}
- * displayed.
+ * Classes implementing this interface are bridges between a {@link ITRMapView} and the
+ * {@link Marker} displayed.
  * 
  * @param <T>
  *            the type of the items of this overlay
@@ -18,7 +18,7 @@ import fr.itinerennes.ui.views.overlays.OverlayItem;
  *            the type of overlay items this adapter returns
  * @author Jérémie Huchet
  */
-public interface ItemizedOverlayAdapter<T extends OverlayItem<D>, D> {
+public interface ItemizedOverlayAdapter<T extends ITROverlayItem<D>, D> {
 
     /**
      * This method is called by the MapView when it wants to find the markers located in the given

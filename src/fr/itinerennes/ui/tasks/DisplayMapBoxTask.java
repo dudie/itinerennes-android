@@ -9,7 +9,7 @@ import android.view.View;
 
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.views.MapBoxView;
-import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 
 /**
  * @param <D>
@@ -29,10 +29,10 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
     private final MapBoxView boxView;
 
     /** The {@link MapBoxAdapter} used to display the map box informations. */
-    private final MapBoxAdapter<OverlayItem<D>, D> adapter;
+    private final MapBoxAdapter<ITROverlayItem<D>, D> adapter;
 
     /** The marker item. */
-    private final OverlayItem<D> item;
+    private final ITROverlayItem<D> item;
 
     /**
      * Creates the task which will display the map box.
@@ -46,7 +46,7 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
      * @parama the marker item
      */
     public DisplayMapBoxTask(final Context context, final MapBoxView boxView,
-            final MapBoxAdapter<OverlayItem<D>, D> adapter, final OverlayItem<D> item) {
+            final MapBoxAdapter<ITROverlayItem<D>, D> adapter, final ITROverlayItem<D> item) {
 
         this.context = context;
         this.boxView = boxView;

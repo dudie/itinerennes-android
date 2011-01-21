@@ -1,6 +1,6 @@
 package fr.itinerennes.ui.activity;
 
-import org.andnav.osm.util.GeoPoint;
+import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -21,7 +21,7 @@ import android.widget.ToggleButton;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.views.MapBoxView;
-import fr.itinerennes.ui.views.MapView;
+import fr.itinerennes.ui.views.ITRMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.ui.views.overlays.OverlayConstants;
 
@@ -40,7 +40,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     private static final int TOAST_DURATION = 300;
 
     /** The map view. */
-    private MapView map;
+    private ITRMapView map;
 
     /** The my location overlay. */
     private LocationOverlay myLocation;
@@ -68,7 +68,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         setContentView(R.layout.main_map);
 
-        this.map = (MapView) findViewById(R.id.map);
+        this.map = (ITRMapView) findViewById(R.id.map);
 
         this.map.getController().getMapOverlayHelper()
                 .show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS | LOCATION);

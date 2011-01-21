@@ -9,13 +9,13 @@ import android.view.View;
 
 import fr.itinerennes.R;
 import fr.itinerennes.model.SubwayStation;
-import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 
 /**
  * @author Jérémie Huchet
  */
 public class SubwayStationBoxAdapter implements
-        MapBoxAdapter<OverlayItem<SubwayStation>, SubwayStation> {
+        MapBoxAdapter<ITROverlayItem<SubwayStation>, SubwayStation> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -27,7 +27,7 @@ public class SubwayStationBoxAdapter implements
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxTitle(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final String getBoxTitle(final OverlayItem<SubwayStation> item) {
+    public final String getBoxTitle(final ITROverlayItem<SubwayStation> item) {
 
         return item.getData().getName();
     }
@@ -38,7 +38,7 @@ public class SubwayStationBoxAdapter implements
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxIcon(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final int getBoxIcon(final OverlayItem<SubwayStation> item) {
+    public final int getBoxIcon(final ITROverlayItem<SubwayStation> item) {
 
         return R.drawable.subway_marker_icon;
     }
@@ -50,7 +50,7 @@ public class SubwayStationBoxAdapter implements
      *      fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final View getBoxDetailsView(final Context context, final OverlayItem<SubwayStation> item) {
+    public final View getBoxDetailsView(final Context context, final ITROverlayItem<SubwayStation> item) {
 
         return null;
     }
@@ -61,7 +61,7 @@ public class SubwayStationBoxAdapter implements
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#backgroundLoad(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final SubwayStation backgroundLoad(final OverlayItem<SubwayStation> item) {
+    public final SubwayStation backgroundLoad(final ITROverlayItem<SubwayStation> item) {
 
         return null;
     }
@@ -73,7 +73,7 @@ public class SubwayStationBoxAdapter implements
      *      java.lang.Object)
      */
     @Override
-    public final String getBoxTitle(final OverlayItem<SubwayStation> item, final SubwayStation data) {
+    public final String getBoxTitle(final ITROverlayItem<SubwayStation> item, final SubwayStation data) {
 
         return getBoxTitle(item);
     }
@@ -85,7 +85,7 @@ public class SubwayStationBoxAdapter implements
      *      java.lang.Object)
      */
     @Override
-    public final int getBoxIcon(final OverlayItem<SubwayStation> item, final SubwayStation data) {
+    public final int getBoxIcon(final ITROverlayItem<SubwayStation> item, final SubwayStation data) {
 
         return getBoxIcon(item);
     }
@@ -94,11 +94,11 @@ public class SubwayStationBoxAdapter implements
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateBoxDetailsView(android.view.View,
-     *      fr.itinerennes.ui.views.overlays.OverlayItem, java.lang.Object)
+     *      fr.itinerennes.ui.views.overlays.ITROverlayItem, java.lang.Object)
      */
     @Override
     public final void updateBoxDetailsView(final View boxDetailsView,
-            final OverlayItem<SubwayStation> item, final SubwayStation data) {
+            final ITROverlayItem<SubwayStation> item, final SubwayStation data) {
 
         // TJHU Auto-generated method stub
 
@@ -111,7 +111,7 @@ public class SubwayStationBoxAdapter implements
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#beforeStartActivity(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public void beforeStartActivity(final OverlayItem<SubwayStation> item) {
+    public void beforeStartActivity(final ITROverlayItem<SubwayStation> item) {
 
         // nothing is done before
     }
@@ -124,7 +124,7 @@ public class SubwayStationBoxAdapter implements
      */
     @Override
     public final Intent getOnClickIntent(final Context packageContext,
-            final OverlayItem<SubwayStation> item) {
+            final ITROverlayItem<SubwayStation> item) {
 
         return null;
     }

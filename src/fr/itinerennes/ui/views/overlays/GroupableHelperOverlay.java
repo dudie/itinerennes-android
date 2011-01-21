@@ -1,6 +1,6 @@
 package fr.itinerennes.ui.views.overlays;
 
-import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
+import org.osmdroid.views.overlay.Overlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -12,7 +12,7 @@ import android.view.MotionEvent;
  * 
  * @author Jérémie Huchet
  */
-public abstract class GroupableHelperOverlay extends OpenStreetMapViewOverlay {
+public abstract class GroupableHelperOverlay extends Overlay {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory

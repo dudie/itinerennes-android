@@ -20,12 +20,12 @@ import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusRoute;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.ui.activity.BusStationActivity;
-import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 
 /**
  * @author Jérémie Huchet
  */
-public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStation>, BusStation> {
+public class BusStationBoxAdapter implements MapBoxAdapter<ITROverlayItem<BusStation>, BusStation> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -59,10 +59,10 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxTitle(fr.itinerennes.ui.views.overlays.OverlayItem)
+     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxTitle(fr.itinerennes.ui.views.overlays.ITROverlayItem)
      */
     @Override
-    public final String getBoxTitle(final OverlayItem<BusStation> item) {
+    public final String getBoxTitle(final ITROverlayItem<BusStation> item) {
 
         return item.getData().getName();
     }
@@ -70,10 +70,10 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxIcon(fr.itinerennes.ui.views.overlays.OverlayItem)
+     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxIcon(fr.itinerennes.ui.views.overlays.ITROverlayItem)
      */
     @Override
-    public final int getBoxIcon(final OverlayItem<BusStation> item) {
+    public final int getBoxIcon(final ITROverlayItem<BusStation> item) {
 
         return R.drawable.bus_marker_icon_focusable;
     }
@@ -87,7 +87,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxDetailsView(java.lang.Object)
      */
     @Override
-    public final View getBoxDetailsView(final Context context, final OverlayItem<BusStation> item) {
+    public final View getBoxDetailsView(final Context context, final ITROverlayItem<BusStation> item) {
 
         final LayoutInflater inflater = LayoutInflater.from(context);
         final View busInfo = inflater.inflate(R.layout.line_icon_list, null);
@@ -99,10 +99,10 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
      * Preload data with the services and pray the cache keep them...
      * 
      * @return null
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#backgroundLoad(fr.itinerennes.ui.views.overlays.OverlayItem)
+     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#backgroundLoad(fr.itinerennes.ui.views.overlays.ITROverlayItem)
      */
     @Override
-    public final BusStation backgroundLoad(final OverlayItem<BusStation> item) {
+    public final BusStation backgroundLoad(final ITROverlayItem<BusStation> item) {
 
         // TJHU on ne fait que mettre en cache, il vaudrait mieux passer directement les
         // informations !!! (au cas ou le cache expire ou que ce n'est pas bien mis en cache)
@@ -125,11 +125,11 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
      * {@inheritDoc}
      * 
      * @return the name of the bus station
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxDetailsTitle(fr.itinerennes.ui.views.overlays.OverlayItem,
+     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxDetailsTitle(fr.itinerennes.ui.views.overlays.ITROverlayItem,
      *      java.lang.Object)
      */
     @Override
-    public final String getBoxTitle(final OverlayItem<BusStation> item, final BusStation data) {
+    public final String getBoxTitle(final ITROverlayItem<BusStation> item, final BusStation data) {
 
         return getBoxTitle(item);
     }
@@ -141,7 +141,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxIcon(java.lang.Object)
      */
     @Override
-    public final int getBoxIcon(final OverlayItem<BusStation> item, final BusStation data) {
+    public final int getBoxIcon(final ITROverlayItem<BusStation> item, final BusStation data) {
 
         return R.drawable.bus_marker_icon;
     }
@@ -152,11 +152,11 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateBoxDetailsView(android.view.View,
-     *      fr.itinerennes.ui.views.overlays.OverlayItem, java.lang.Object)
+     *      fr.itinerennes.ui.views.overlays.ITROverlayItem, java.lang.Object)
      */
     @Override
     public final void updateBoxDetailsView(final View busDetailsView,
-            final OverlayItem<BusStation> item, final BusStation data) {
+            final ITROverlayItem<BusStation> item, final BusStation data) {
 
         final LinearLayout iconsView = (LinearLayout) busDetailsView
                 .findViewById(R.id.line_icon_container);
@@ -184,7 +184,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#beforeStartActivity(java.lang.Object)
      */
     @Override
-    public final void beforeStartActivity(final OverlayItem<BusStation> item) {
+    public final void beforeStartActivity(final ITROverlayItem<BusStation> item) {
 
     }
 
@@ -197,7 +197,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<OverlayItem<BusStatio
      */
     @Override
     public final Intent getOnClickIntent(final Context packageContext,
-            final OverlayItem<BusStation> item) {
+            final ITROverlayItem<BusStation> item) {
 
         final Intent myIntent = new Intent(packageContext, BusStationActivity.class);
         myIntent.putExtra("item", item.getData().getId());

@@ -3,11 +3,11 @@ package fr.itinerennes.ui.views.overlays;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andnav.osm.events.MapListener;
-import org.andnav.osm.events.ScrollEvent;
-import org.andnav.osm.events.ZoomEvent;
-import org.andnav.osm.views.OpenStreetMapView;
-import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay;
+import org.osmdroid.events.MapListener;
+import org.osmdroid.events.ScrollEvent;
+import org.osmdroid.events.ZoomEvent;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedOverlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -17,8 +17,8 @@ import android.view.MotionEvent;
 
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.tasks.UpdateOverlayTask;
+import fr.itinerennes.ui.views.ITRMapView;
 import fr.itinerennes.ui.views.MapListenerWrapper;
-import fr.itinerennes.ui.views.MapView;
 
 /**
  * An enhanced itemized overlay which can use an {@link ItemizedOverlayAdapter} to update itself
@@ -34,9 +34,8 @@ import fr.itinerennes.ui.views.MapView;
  *            the type of the bundled data with the item
  * @author Jérémie Huchet
  */
-public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
-        OpenStreetMapViewItemizedOverlay<T> implements MapListener,
-        OpenStreetMapViewItemizedOverlay.OnItemGestureListener<T> {
+public class ITRItemizedOverlay<T extends ITROverlayItem<D>, D> extends ItemizedOverlay<T>
+        implements MapListener, ItemizedOverlay.OnItemGestureListener<T> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ItemizedOverlay.class);
@@ -67,7 +66,7 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
      * @param adapter
      *            the adapter this overlay should use to update its content when the map moves
      */
-    public ItemizedOverlay(final Context context, final ItemizedOverlayAdapter<T, D> adapter) {
+    public ITRItemizedOverlay(final Context context, final ItemizedOverlayAdapter<T, D> adapter) {
 
         super(context, new ArrayList<T>(), null);
         this.adapter = adapter;
@@ -75,11 +74,11 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
     }
 
     @Override
-    public boolean onSingleTapUp(final MotionEvent event, final OpenStreetMapView mapView) {
+    public boolean onSingleTapUp(final MotionEvent event, final MapView mapView) {
 
         final boolean handled = super.onSingleTapUp(event, mapView);
-        // if single tap up returns false, no item have matched the tap coordinates
-        // focus has been lost
+        // if single tap up returns true, no item have matched the tap coordinates
+        // focus has been loosed
         if (handled == false) {
             prevFocusedItemIndex = focusedItemIndex;
             focusedItemIndex = NOT_SET;
@@ -107,7 +106,7 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
     /**
      * Removes all items from the overlay.
      */
-    public void onClearOverlay(final OpenStreetMapView mapview) {
+    public void onClearOverlay(final MapView mapview) {
 
         focusedItemIndex = NOT_SET;
         prevFocusedItemIndex = NOT_SET;
@@ -121,15 +120,14 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
      * @param items
      *            the items to add to the overlay
      */
-    public void onAddItems(final OpenStreetMapView mapview, final T prevSelectedItem,
-            final List<T> items) {
+    public void onAddItems(final MapView mapview, final T prevSelectedItem, final List<T> items) {
 
         // change the list of items
         super.mItemList.addAll(items);
         mapview.postInvalidate();
     }
 
-    public void onReplaceItems(final OpenStreetMapView mapview, final List<T> items) {
+    public void onReplaceItems(final MapView mapview, final List<T> items) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onReplaceItems.start - {} new items", items == null ? 0 : items.size());
@@ -185,7 +183,7 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
     }
 
     /**
-     * When this overlay is linked to a {@link MapView}, this method is triggered when the map
+     * When this overlay is linked to a {@link ITRMapView}, this method is triggered when the map
      * scrolls.
      * <p>
      * When it occurs, the overlay use its adapter and update its content.
@@ -202,8 +200,8 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
     }
 
     /**
-     * When this overlay is linked to a {@link MapView}, this method is triggered when the map zoom
-     * changes.
+     * When this overlay is linked to a {@link ITRMapView}, this method is triggered when the map
+     * zoom changes.
      * <p>
      * When it occurs, the overlay use its adapter and update its content.
      * 
@@ -225,12 +223,12 @@ public class ItemizedOverlay<T extends OverlayItem<D>, D> extends
      * @param osmView
      *            the open street map view
      */
-    protected void updateOverlay(final OpenStreetMapView osmView) {
+    protected void updateOverlay(final MapView osmView) {
 
         if (null != overlayUpdater) {
             overlayUpdater.cancel(true);
         }
         overlayUpdater = new UpdateOverlayTask<T, D>(osmView, this, adapter);
-        overlayUpdater.execute(osmView.getVisibleBoundingBoxE6());
+        overlayUpdater.execute(osmView.getBoundingBox());
     }
 }

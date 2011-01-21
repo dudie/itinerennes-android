@@ -1,6 +1,6 @@
 package fr.itinerennes.ui.views.overlays;
 
-import org.andnav.osm.util.GeoPoint;
+import org.osmdroid.util.GeoPoint;
 
 import android.graphics.drawable.Drawable;
 
@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable;
  *            the type of the bundled data with the item
  * @author Jérémie Huchet
  */
-public class FocusableOverlayItem<D> extends OverlayItem<D> {
+public class FocusableOverlayItem<D> extends ITROverlayItem<D> {
 
     /**
      * Create an item for a {@link FocusableOverlay}.

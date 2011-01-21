@@ -2,7 +2,7 @@ package fr.itinerennes.business.cache;
 
 import java.util.List;
 
-import org.andnav.osm.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxE6;
 
 /**
  * Implementing this interface defines how a {@link CacheProvider} will handle the values it has to
