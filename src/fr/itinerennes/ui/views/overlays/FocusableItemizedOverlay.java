@@ -41,6 +41,10 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
      * 
      * @param context
      *            the itinerennes application context
+     * @param itemProviderAdapter
+     *            the provider to use to populate the overlay
+     * @param boxDisplayAdaper
+     *            the adapter to use to display selected marker information
      */
     public FocusableItemizedOverlay(final ITRContext context,
             final ItemizedOverlayAdapter<T, D> itemProviderAdapter,
