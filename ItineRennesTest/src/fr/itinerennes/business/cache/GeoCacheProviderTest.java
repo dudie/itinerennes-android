@@ -1,6 +1,6 @@
 package fr.itinerennes.business.cache;
 
-import org.andnav.osm.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -213,9 +213,9 @@ public class GeoCacheProviderTest extends AndroidTestCase implements GeoExploreC
 
         final BoundingBoxE6 bbox = new BoundingBoxE6(1425, 233, 1322, 148);
         final BoundingBoxE6 newBbox = GeoCacheProvider.normalize(bbox);
-        assertEquals(1430, newBbox.getLatNorthE6());
-        assertEquals(240, newBbox.getLonEastE6());
-        assertEquals(1320, newBbox.getLatSouthE6());
-        assertEquals(140, newBbox.getLonWestE6());
+        assertEquals(2000, newBbox.getLatNorthE6());
+        assertEquals(1000, newBbox.getLonEastE6());
+        assertEquals(1000, newBbox.getLatSouthE6());
+        assertEquals(0, newBbox.getLonWestE6());
     }
 }
