@@ -15,7 +15,7 @@ import fr.itinerennes.ui.adapter.BusStationBoxAdapter;
 import fr.itinerennes.ui.adapter.StationItemizedOverlayAdapter;
 import fr.itinerennes.ui.adapter.SubwayStationBoxAdapter;
 import fr.itinerennes.ui.views.MapBoxView;
-import fr.itinerennes.ui.views.MapView;
+import fr.itinerennes.ui.views.ITRMapView;
 
 /**
  * An helper class to get the map overlays.
@@ -31,7 +31,7 @@ public class MapOverlayHelper implements OverlayConstants {
     private final ITRContext context;
 
     /** The map where overlays must be managed. */
-    private final MapView map;
+    private final ITRMapView map;
 
     /** Byte mask describing the current state of overlays. */
     private final int current = 0;
@@ -59,7 +59,7 @@ public class MapOverlayHelper implements OverlayConstants {
      * @param context
      *            the itinerennes application context
      */
-    public MapOverlayHelper(final ITRContext context, final MapView map) {
+    public MapOverlayHelper(final ITRContext context, final ITRMapView map) {
 
         this.context = context;
         this.map = map;

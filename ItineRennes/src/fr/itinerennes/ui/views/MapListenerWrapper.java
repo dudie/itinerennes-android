@@ -2,9 +2,9 @@ package fr.itinerennes.ui.views;
 
 import java.util.ArrayList;
 
-import org.andnav.osm.events.MapListener;
-import org.andnav.osm.events.ScrollEvent;
-import org.andnav.osm.events.ZoomEvent;
+import org.osmdroid.events.MapListener;
+import org.osmdroid.events.ScrollEvent;
+import org.osmdroid.events.ZoomEvent;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 

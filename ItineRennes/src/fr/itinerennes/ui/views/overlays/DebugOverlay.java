@@ -1,10 +1,10 @@
 package fr.itinerennes.ui.views.overlays;
 
-import org.andnav.osm.util.BoundingBoxE6;
-import org.andnav.osm.util.GeoPoint;
-import org.andnav.osm.views.OpenStreetMapView;
-import org.andnav.osm.views.OpenStreetMapView.OpenStreetMapViewProjection;
-import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
+import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.MapView.Projection;
+import org.osmdroid.views.overlay.Overlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -20,7 +20,7 @@ import fr.itinerennes.business.cache.GeoCacheProvider;
  * 
  * @author Jérémie Huchet
  */
-public class DebugOverlay extends OpenStreetMapViewOverlay {
+public class DebugOverlay extends Overlay {
 
     /** The paint. */
     private final Paint paint;
@@ -51,20 +51,20 @@ public class DebugOverlay extends OpenStreetMapViewOverlay {
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    protected void onDraw(final Canvas c, final OpenStreetMapView osmv) {
+    protected void onDraw(final Canvas c, final MapView osmv) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onDraw.start");
         }
 
-        final OpenStreetMapViewProjection pj = osmv.getProjection();
+        final Projection pj = osmv.getProjection();
 
         final Point start = new Point(), end = new Point();
 
-        final int north = osmv.getMapCenterLatitudeE6() + osmv.getLatitudeSpanE6() / 2;
-        final int south = osmv.getMapCenterLatitudeE6() - osmv.getLatitudeSpanE6() / 2;
-        final int east = osmv.getMapCenterLongitudeE6() + osmv.getLongitudeSpanE6() / 2;
-        final int west = osmv.getMapCenterLongitudeE6() - osmv.getLongitudeSpanE6() / 2;
+        final int north = osmv.getMapCenterLatitudeE6() + osmv.getLatitudeSpan() / 2;
+        final int south = osmv.getMapCenterLatitudeE6() - osmv.getLatitudeSpan() / 2;
+        final int east = osmv.getMapCenterLongitudeE6() + osmv.getLongitudeSpan() / 2;
+        final int west = osmv.getMapCenterLongitudeE6() - osmv.getLongitudeSpan() / 2;
 
         final BoundingBoxE6 screenBbox = GeoCacheProvider.normalize(new BoundingBoxE6(north, east,
                 south, west));
@@ -99,7 +99,7 @@ public class DebugOverlay extends OpenStreetMapViewOverlay {
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    protected void onDrawFinished(final Canvas arg0, final OpenStreetMapView arg1) {
+    protected void onDrawFinished(final Canvas arg0, final MapView arg1) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onDrawFinished.start/end");

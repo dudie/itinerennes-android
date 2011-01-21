@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 import android.view.View;
 
 import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
-import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 
 /**
  * Common base interface of implementation for an adapter that can be used to fill the MapBox when a
@@ -20,7 +20,7 @@ import fr.itinerennes.ui.views.overlays.OverlayItem;
  *            the type of data the adapter uses
  * @author Jérémie Huchet
  */
-public interface MapBoxAdapter<T extends OverlayItem<?>, D> {
+public interface MapBoxAdapter<T extends ITROverlayItem<?>, D> {
 
     /**
      * This method should return the title to display in the information box instantaneously.

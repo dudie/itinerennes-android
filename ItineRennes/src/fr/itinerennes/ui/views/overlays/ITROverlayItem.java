@@ -1,7 +1,7 @@
 package fr.itinerennes.ui.views.overlays;
 
-import org.andnav.osm.util.GeoPoint;
-import org.andnav.osm.views.overlay.OpenStreetMapViewOverlayItem;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.overlay.OverlayItem;
 
 /**
  * Base class for {@link ItemizedOverlay} items.
@@ -10,20 +10,20 @@ import org.andnav.osm.views.overlay.OpenStreetMapViewOverlayItem;
  *            the type of the bundled data with the item
  * @author Jérémie Huchet
  */
-public class OverlayItem<D> extends OpenStreetMapViewOverlayItem {
+public class ITROverlayItem<D> extends OverlayItem {
 
     /** The bundled data with this item. */
     private D data;
 
     /**
-     * Creates an item for an {@link OverlayItem}.
+     * Creates an item for an {@link ITROverlayItem}.
      * 
      * @param id
      *            an identifier for the item
      * @param location
      *            the location of the item
      */
-    public OverlayItem(final String id, final GeoPoint location) {
+    public ITROverlayItem(final String id, final GeoPoint location) {
 
         super(id, null, location);
     }

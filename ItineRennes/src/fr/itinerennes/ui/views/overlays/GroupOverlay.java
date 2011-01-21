@@ -3,8 +3,8 @@ package fr.itinerennes.ui.views.overlays;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andnav.osm.views.OpenStreetMapView;
-import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Overlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -21,7 +21,7 @@ import android.view.MotionEvent;
  *            should also provide a subclass of {@link OpenStreetMapViewOverlay}</strong>
  * @author Jérémie Huchet
  */
-public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewOverlay {
+public class GroupOverlay<T extends WrappableOverlay> extends Overlay {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(GroupOverlay.class);
@@ -79,7 +79,7 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    protected final void onDraw(final Canvas c, final OpenStreetMapView osmv) {
+    protected final void onDraw(final Canvas c, final MapView osmv) {
 
         for (final T overlay : overlays) {
 
@@ -95,7 +95,7 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    protected final void onDrawFinished(final Canvas c, final OpenStreetMapView osmv) {
+    protected final void onDrawFinished(final Canvas c, final MapView osmv) {
 
         for (final T overlay : overlays) {
 
@@ -111,8 +111,7 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
      *      android.view.KeyEvent, org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    public final boolean onKeyDown(final int keyCode, final KeyEvent event,
-            final OpenStreetMapView mapView) {
+    public final boolean onKeyDown(final int keyCode, final KeyEvent event, final MapView mapView) {
 
         for (final T overlay : overlays) {
 
@@ -131,8 +130,7 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
      *      android.view.KeyEvent, org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    public final boolean onKeyUp(final int keyCode, final KeyEvent event,
-            final OpenStreetMapView mapView) {
+    public final boolean onKeyUp(final int keyCode, final KeyEvent event, final MapView mapView) {
 
         for (final T overlay : overlays) {
 
@@ -151,7 +149,7 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    public boolean onSingleTapUp(final MotionEvent event, final OpenStreetMapView osmView) {
+    public boolean onSingleTapUp(final MotionEvent event, final MapView osmView) {
 
         for (final T overlay : overlays) {
 
@@ -170,7 +168,7 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    public boolean onLongPress(final MotionEvent event, final OpenStreetMapView osmv) {
+    public boolean onLongPress(final MotionEvent event, final MapView osmv) {
 
         for (final T overlay : overlays) {
 
@@ -189,7 +187,7 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    public final boolean onTouchEvent(final MotionEvent event, final OpenStreetMapView mapView) {
+    public final boolean onTouchEvent(final MotionEvent event, final MapView mapView) {
 
         for (final T overlay : overlays) {
 
@@ -208,7 +206,7 @@ public class GroupOverlay<T extends WrappableOverlay> extends OpenStreetMapViewO
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    public final boolean onTrackballEvent(final MotionEvent event, final OpenStreetMapView mapView) {
+    public final boolean onTrackballEvent(final MotionEvent event, final MapView mapView) {
 
         for (final T overlay : overlays) {
 

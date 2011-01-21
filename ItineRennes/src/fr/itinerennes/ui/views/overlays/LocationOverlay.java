@@ -1,7 +1,7 @@
 package fr.itinerennes.ui.views.overlays;
 
-import org.andnav.osm.views.OpenStreetMapView;
-import org.andnav.osm.views.overlay.MyLocationOverlay;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.MyLocationOverlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -12,7 +12,7 @@ import android.widget.ToggleButton;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.ui.activity.ITRContext;
-import fr.itinerennes.ui.views.MapView;
+import fr.itinerennes.ui.views.ITRMapView;
 
 public class LocationOverlay extends MyLocationOverlay {
 
@@ -25,18 +25,17 @@ public class LocationOverlay extends MyLocationOverlay {
     private final ToggleButton myLocationButton;
 
     /** The map on which this location overlay is attached. */
-    private final MapView map;
+    private final ITRMapView map;
 
     /** Delay for desactivate follow location on map move event. */
     private static final long MAP_MOVE_DELAY = 500;
 
-    public LocationOverlay(final Context ctx, final OpenStreetMapView mapView,
-            final ToggleButton button) {
+    public LocationOverlay(final Context ctx, final MapView mapView, final ToggleButton button) {
 
         super(ctx, mapView);
         this.context = (ITRContext) ctx;
         this.myLocationButton = button;
-        this.map = (MapView) mapView;
+        this.map = (ITRMapView) mapView;
     }
 
     /**
@@ -75,12 +74,12 @@ public class LocationOverlay extends MyLocationOverlay {
     }
 
     @Override
-    public boolean onTouchEvent(final MotionEvent event, final OpenStreetMapView mapView) {
+    public boolean onTouchEvent(final MotionEvent event, final MapView mapView) {
 
         if (event.getAction() == MotionEvent.ACTION_MOVE
                 && (SystemClock.uptimeMillis() - event.getDownTime() >= MAP_MOVE_DELAY)) {
 
-            final LocationOverlay overlay = ((MapView) mapView).getController()
+            final LocationOverlay overlay = ((ITRMapView) mapView).getController()
                     .getMapOverlayHelper().getLocationOverlay();
             if (overlay.isLocationFollowEnabled()) {
 

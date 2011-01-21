@@ -1,18 +1,18 @@
 package fr.itinerennes.ui.views;
 
-import org.andnav.osm.views.OpenStreetMapViewController;
+import org.osmdroid.views.MapController;
 
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.views.overlays.MapOverlayHelper;
 
 /**
- * A controller for {@link MapView}. Provides convenience methods to manipulates the map displayed
- * to the user screen.
+ * A controller for {@link ITRMapView}. Provides convenience methods to manipulates the map
+ * displayed to the user screen.
  * 
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class MapViewController extends OpenStreetMapViewController {
+public class MapViewController extends MapController {
 
     /** The map overlay helper to use with the map associated with this controller. */
     private final MapOverlayHelper mapOverlayHelper;
@@ -21,7 +21,7 @@ public class MapViewController extends OpenStreetMapViewController {
      * @param map
      *            the map view to which associate the controller
      */
-    public MapViewController(final ITRContext context, final MapView map) {
+    public MapViewController(final ITRContext context, final ITRMapView map) {
 
         super(map);
 

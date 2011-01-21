@@ -1,7 +1,6 @@
 package fr.itinerennes.ui.views.overlays;
 
-import org.andnav.osm.views.OpenStreetMapView;
-import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
+import org.osmdroid.views.MapView;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -53,7 +52,7 @@ public class GroupFocusOverlay<T extends FocusableOverlay<?>> extends GroupOverl
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    public final boolean onSingleTapUp(final MotionEvent event, final OpenStreetMapView osmView) {
+    public final boolean onSingleTapUp(final MotionEvent event, final MapView osmView) {
 
         // true if onSingleTapUp event propagation should be stopped
         boolean stopSingleTapUpPropagation = false;
@@ -118,7 +117,7 @@ public class GroupFocusOverlay<T extends FocusableOverlay<?>> extends GroupOverl
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    public final boolean onLongPress(final MotionEvent event, final OpenStreetMapView osmv) {
+    public final boolean onLongPress(final MotionEvent event, final MapView osmv) {
 
         // TJHU à implémenter pour gérer le focus lorsque clic long ?
         return super.onLongPress(event, osmv);

@@ -14,7 +14,7 @@ public class ITRZoomControls extends ZoomControls {
 
     private final int mapResId;
 
-    private MapView map;
+    private ITRMapView map;
 
     public ITRZoomControls(final Context context, final AttributeSet attr) {
 
@@ -59,7 +59,7 @@ public class ITRZoomControls extends ZoomControls {
 
     public final void tryInitZoomControls() {
 
-        map = (MapView) ((ITRContext) getContext()).findViewById(mapResId);
+        map = (ITRMapView) ((ITRContext) getContext()).findViewById(mapResId);
         if (null != map) {
             map.setBuiltInZoomControls(false);
         }

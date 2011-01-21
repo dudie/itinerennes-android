@@ -1,8 +1,7 @@
 package fr.itinerennes.ui.views;
 
-import org.andnav.osm.events.DelayedMapListener;
-import org.andnav.osm.views.OpenStreetMapView;
-import org.andnav.osm.views.util.OpenStreetMapRendererFactory;
+import org.osmdroid.events.DelayedMapListener;
+import org.osmdroid.views.MapView;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -17,20 +16,13 @@ import fr.itinerennes.ui.activity.ITRContext;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class MapView extends OpenStreetMapView {
-
-    /**
-     * Register the map quest render on class loading.
-     */
-    static {
-        OpenStreetMapRendererFactory.addRenderer(new MapQuestRenderer());
-    }
+public class ITRMapView extends MapView {
 
     /** Map listener event delayed listener constant value. */
     private static final long MAP_LISTENER_DELAY = 800;
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapView.class);
+    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ITRMapView.class);
 
     /** The map controller. */
     private final MapViewController controller;
@@ -44,7 +36,7 @@ public class MapView extends OpenStreetMapView {
     /**
      * @param context
      */
-    public MapView(final ITRContext context) {
+    public ITRMapView(final ITRContext context) {
 
         this(context, null);
     }
@@ -53,7 +45,7 @@ public class MapView extends OpenStreetMapView {
      * @param context
      * @param attrs
      */
-    public MapView(final Context context, final AttributeSet attrs) {
+    public ITRMapView(final Context context, final AttributeSet attrs) {
 
         super(context, attrs);
         this.context = (ITRContext) context;

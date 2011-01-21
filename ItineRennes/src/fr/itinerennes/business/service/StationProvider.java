@@ -2,7 +2,7 @@ package fr.itinerennes.business.service;
 
 import java.util.List;
 
-import org.andnav.osm.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBoxE6;
 
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.Station;

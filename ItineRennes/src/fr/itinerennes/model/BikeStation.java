@@ -2,7 +2,7 @@ package fr.itinerennes.model;
 
 import java.util.Date;
 
-import org.andnav.osm.util.GeoPoint;
+import org.osmdroid.util.GeoPoint;
 
 import fr.itinerennes.R;
 

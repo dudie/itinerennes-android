@@ -1,7 +1,6 @@
 package fr.itinerennes.ui.views.overlays;
 
-import org.andnav.osm.views.OpenStreetMapView;
-import org.andnav.osm.views.overlay.OpenStreetMapViewOverlay;
+import org.osmdroid.views.MapView;
 
 import android.graphics.Canvas;
 import android.view.KeyEvent;
@@ -24,7 +23,7 @@ public interface WrappableOverlay {
      *            the open street map view
      * @see OpenStreetMapViewOverlay#onManagedDraw(Canvas, OpenStreetMapView)
      */
-    void onManagedDraw(Canvas canvas, OpenStreetMapView mapView);
+    void onManagedDraw(Canvas canvas, MapView mapView);
 
     /**
      * Workaround method to make {@link OpenStreetMapViewOverlay} wrappable.
@@ -37,7 +36,7 @@ public interface WrappableOverlay {
      * @param mapView
      *            the open street map view
      */
-    void onDrawOverlay(Canvas canvas, OpenStreetMapView mapView);
+    void onDrawOverlay(Canvas canvas, MapView mapView);
 
     /**
      * Workaround method to make {@link OpenStreetMapViewOverlay} wrappable.
@@ -50,7 +49,7 @@ public interface WrappableOverlay {
      * @param mapView
      *            the open street map view
      */
-    void onDrawOverlayFinished(final Canvas canvas, final OpenStreetMapView mapView);
+    void onDrawOverlayFinished(final Canvas canvas, final MapView mapView);
 
     /**
      * @param keyCode
@@ -63,7 +62,7 @@ public interface WrappableOverlay {
      *         be stopped
      * @see OpenStreetMapViewOverlay#onKeyDown(int, KeyEvent, OpenStreetMapView)
      */
-    boolean onKeyDown(final int keyCode, KeyEvent event, final OpenStreetMapView mapView);
+    boolean onKeyDown(final int keyCode, KeyEvent event, final MapView mapView);
 
     /**
      * @param keyCode
@@ -76,7 +75,7 @@ public interface WrappableOverlay {
      *         be stopped
      * @see OpenStreetMapViewOverlay#onKeyUp(int, KeyEvent, OpenStreetMapView)
      */
-    boolean onKeyUp(final int keyCode, KeyEvent event, final OpenStreetMapView mapView);
+    boolean onKeyUp(final int keyCode, KeyEvent event, final MapView mapView);
 
     /**
      * @param event
@@ -87,7 +86,7 @@ public interface WrappableOverlay {
      *         be stopped
      * @see OpenStreetMapViewOverlay#onTouchEvent(MotionEvent, OpenStreetMapView)
      */
-    boolean onTouchEvent(final MotionEvent event, final OpenStreetMapView mapView);
+    boolean onTouchEvent(final MotionEvent event, final MapView mapView);
 
     /**
      * @param event
@@ -98,7 +97,7 @@ public interface WrappableOverlay {
      *         be stopped
      * @see OpenStreetMapViewOverlay#onTrackballEvent(MotionEvent, OpenStreetMapView)
      */
-    boolean onTrackballEvent(final MotionEvent event, final OpenStreetMapView mapView);
+    boolean onTrackballEvent(final MotionEvent event, final MapView mapView);
 
     /**
      * @param event
@@ -109,7 +108,7 @@ public interface WrappableOverlay {
      *         be stopped
      * @see OpenStreetMapViewOverlay#onSingleTapUp(MotionEvent, OpenStreetMapView)
      */
-    boolean onSingleTapUp(MotionEvent event, OpenStreetMapView mapView);
+    boolean onSingleTapUp(MotionEvent event, MapView mapView);
 
     /**
      * @param event
@@ -120,5 +119,5 @@ public interface WrappableOverlay {
      *         be stopped
      * @see OpenStreetMapViewOverlay#onLongPress(MotionEvent, OpenStreetMapView)
      */
-    boolean onLongPress(MotionEvent event, OpenStreetMapView mapView);
+    boolean onLongPress(MotionEvent event, MapView mapView);
 }

@@ -1,6 +1,6 @@
 package fr.itinerennes.model;
 
-import org.andnav.osm.util.GeoPoint;
+import org.osmdroid.util.GeoPoint;
 
 import fr.itinerennes.ItineRennesConstants;
 

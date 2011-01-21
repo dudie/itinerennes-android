@@ -14,7 +14,7 @@ import fr.itinerennes.R;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
 import fr.itinerennes.ui.views.overlays.FocusableOverlayItem;
-import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 
 /**
  * The map box view component is a simple {@link LinearLayout} with common functionalities to handle
@@ -183,7 +183,7 @@ public class MapBoxView extends LinearLayout {
      * @param item
      *            the item to be displayed
      */
-    public final <D> void updateInBackground(final MapBoxAdapter<OverlayItem<D>, D> adapter,
+    public final <D> void updateInBackground(final MapBoxAdapter<ITROverlayItem<D>, D> adapter,
             final FocusableOverlayItem<D> item) {
 
         if (null != mapBoxDisplayer) {

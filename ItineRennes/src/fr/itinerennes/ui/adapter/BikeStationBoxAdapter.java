@@ -15,12 +15,12 @@ import fr.itinerennes.R;
 import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
-import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 
 /**
  * @author Jérémie Huchet
  */
-public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStation>, BikeStation> {
+public class BikeStationBoxAdapter implements MapBoxAdapter<ITROverlayItem<BikeStation>, BikeStation> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -46,7 +46,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStat
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxTitle(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final String getBoxTitle(final OverlayItem<BikeStation> item) {
+    public final String getBoxTitle(final ITROverlayItem<BikeStation> item) {
 
         return item.getData().getName();
     }
@@ -57,7 +57,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStat
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxIcon(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final int getBoxIcon(final OverlayItem<BikeStation> item) {
+    public final int getBoxIcon(final ITROverlayItem<BikeStation> item) {
 
         return R.drawable.bike_marker_icon;
     }
@@ -69,7 +69,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStat
      *      java.lang.Object)
      */
     @Override
-    public final View getBoxDetailsView(final Context context, final OverlayItem<BikeStation> item) {
+    public final View getBoxDetailsView(final Context context, final ITROverlayItem<BikeStation> item) {
 
         final LayoutInflater inflater = LayoutInflater.from(context);
         final LinearLayout bikeInfo = (LinearLayout) inflater.inflate(R.layout.bike_station_box,
@@ -84,7 +84,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStat
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#backgroundLoad(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final BikeStation backgroundLoad(final OverlayItem<BikeStation> item) {
+    public final BikeStation backgroundLoad(final ITROverlayItem<BikeStation> item) {
 
         BikeStation upToDateStation = null;
         try {
@@ -102,7 +102,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStat
      *      java.lang.Object)
      */
     @Override
-    public final String getBoxTitle(final OverlayItem<BikeStation> item, final BikeStation data) {
+    public final String getBoxTitle(final ITROverlayItem<BikeStation> item, final BikeStation data) {
 
         final String title;
         if (data == null) {
@@ -120,7 +120,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStat
      *      java.lang.Object)
      */
     @Override
-    public final int getBoxIcon(final OverlayItem<BikeStation> item, final BikeStation data) {
+    public final int getBoxIcon(final ITROverlayItem<BikeStation> item, final BikeStation data) {
 
         return getBoxIcon(item);
     }
@@ -131,11 +131,11 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStat
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateBoxDetailsView(android.view.View,
-     *      fr.itinerennes.ui.views.overlays.OverlayItem, java.lang.Object)
+     *      fr.itinerennes.ui.views.overlays.ITROverlayItem, java.lang.Object)
      */
     @Override
     public final void updateBoxDetailsView(final View bikeInfo,
-            final OverlayItem<BikeStation> item, final BikeStation bikeStation) {
+            final ITROverlayItem<BikeStation> item, final BikeStation bikeStation) {
 
         final TextView availablesSlots = (TextView) bikeInfo.findViewById(R.id.available_slots);
         availablesSlots.setText(String.valueOf(bikeStation.getAvailableSlots()));
@@ -158,7 +158,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStat
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#beforeStartActivity(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final void beforeStartActivity(final OverlayItem<BikeStation> item) {
+    public final void beforeStartActivity(final ITROverlayItem<BikeStation> item) {
 
         // nothing to do
     }
@@ -174,7 +174,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStat
      */
     @Override
     public final Intent getOnClickIntent(final Context packageContext,
-            final OverlayItem<BikeStation> item) {
+            final ITROverlayItem<BikeStation> item) {
 
         return null;
     }

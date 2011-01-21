@@ -1,7 +1,6 @@
 package fr.itinerennes.ui.views.overlays;
 
-import org.andnav.osm.views.OpenStreetMapView;
-import org.andnav.osm.views.overlay.OpenStreetMapViewItemizedOverlay;
+import org.osmdroid.views.MapView;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -27,14 +26,14 @@ import fr.itinerennes.ui.views.MapBoxView;
  * @author Olivier Boudet
  */
 public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> extends
-        ItemizedOverlay<T, D> implements FocusableOverlay<D> {
+        ITRItemizedOverlay<T, D> implements FocusableOverlay<D> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(FocusableItemizedOverlay.class);
 
     /** The adapter to use to display the focused item. */
-    private final MapBoxAdapter<OverlayItem<D>, D> boxDisplayAdaper;
+    private final MapBoxAdapter<ITROverlayItem<D>, D> boxDisplayAdaper;
 
     /**
      * Creates the focusable itemized overlay.
@@ -48,7 +47,7 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
      */
     public FocusableItemizedOverlay(final ITRContext context,
             final ItemizedOverlayAdapter<T, D> itemProviderAdapter,
-            final MapBoxAdapter<OverlayItem<D>, D> boxDisplayAdaper) {
+            final MapBoxAdapter<ITROverlayItem<D>, D> boxDisplayAdaper) {
 
         // items are set using setItems() / addItem() / removeItem()
         // OnItemGestureListener is implemented by this class and shouldn't be overridden as is
@@ -183,7 +182,7 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    public final void onDrawOverlay(final Canvas canvas, final OpenStreetMapView mapView) {
+    public final void onDrawOverlay(final Canvas canvas, final MapView mapView) {
 
         onDraw(canvas, mapView);
     }
@@ -195,7 +194,7 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    public final void onDrawOverlayFinished(final Canvas canvas, final OpenStreetMapView mapView) {
+    public final void onDrawOverlayFinished(final Canvas canvas, final MapView mapView) {
 
         onDrawFinished(canvas, mapView);
 
@@ -226,7 +225,7 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
      * @see fr.itinerennes.ui.views.overlays.FocusableOverlay#getMapBoxAdapter()
      */
     @Override
-    public MapBoxAdapter<OverlayItem<D>, D> getMapBoxAdapter() {
+    public MapBoxAdapter<ITROverlayItem<D>, D> getMapBoxAdapter() {
 
         return boxDisplayAdaper;
     }
@@ -238,7 +237,7 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
-    protected void onDrawFinished(final Canvas canvas, final OpenStreetMapView osmv) {
+    protected void onDrawFinished(final Canvas canvas, final MapView osmv) {
 
         super.onDrawFinished(canvas, osmv);
 

@@ -2,16 +2,16 @@ package fr.itinerennes.ui.tasks;
 
 import java.util.List;
 
-import org.andnav.osm.util.BoundingBoxE6;
-import org.andnav.osm.views.OpenStreetMapView;
+import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.views.MapView;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.os.AsyncTask;
 
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
-import fr.itinerennes.ui.views.overlays.ItemizedOverlay;
-import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.overlays.ITRItemizedOverlay;
+import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 
 /**
  * A class derivating from ASyncTask to refresh an overlay in background.
@@ -19,7 +19,7 @@ import fr.itinerennes.ui.views.overlays.OverlayItem;
  * @author Olivier Boudet
  * @author Jérémie Huchet
  */
-public class UpdateOverlayTask<T extends OverlayItem<D>, D> extends
+public class UpdateOverlayTask<T extends ITROverlayItem<D>, D> extends
         AsyncTask<BoundingBoxE6, Void, List<T>> {
 
     /** The event logger. */
@@ -27,10 +27,10 @@ public class UpdateOverlayTask<T extends OverlayItem<D>, D> extends
             .getLogger(UpdateOverlayTask.class);
 
     /** The map view to redraw. */
-    private final OpenStreetMapView osmView;
+    private final MapView osmView;
 
     /** The map overlay to update. */
-    private final ItemizedOverlay<T, D> overlay;
+    private final ITRItemizedOverlay<T, D> overlay;
 
     /** The map marker adapter to use. */
     private final ItemizedOverlayAdapter<T, D> mapMarkerAdapter;
@@ -43,7 +43,7 @@ public class UpdateOverlayTask<T extends OverlayItem<D>, D> extends
      * @param mapMarkerAdapter
      *            the map marker adapter to use
      */
-    public UpdateOverlayTask(final OpenStreetMapView osmView, final ItemizedOverlay<T, D> overlay,
+    public UpdateOverlayTask(final MapView osmView, final ITRItemizedOverlay<T, D> overlay,
             final ItemizedOverlayAdapter<T, D> mapMarkerAdapter) {
 
         this.osmView = osmView;
