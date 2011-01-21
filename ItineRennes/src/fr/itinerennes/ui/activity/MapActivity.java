@@ -85,7 +85,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             startZoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Location service is not enabled. Centering in Rennes.");
+                LOGGER.debug("Map Center : Location service is not enabled. Centering in Rennes.");
             }
         }
 
@@ -113,10 +113,15 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         if (hasFocus) {
             if (startMapCenter != null) {
-
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(String.format("Map Center : Centering in {}.", startMapCenter));
+                }
                 map.getController().setZoom(startZoomLevel);
                 map.getController().setCenter(startMapCenter);
             } else {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Map Center : Enabling follow location.");
+                }
                 myLocation.enableFollowLocation();
             }
         }
@@ -139,6 +144,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         }
 
         if (myLocation.isLocationFollowEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Map Center : Disabling follow location.");
+            }
             myLocation.disableFollowLocation();
             startMapCenter = null;
         } else {
