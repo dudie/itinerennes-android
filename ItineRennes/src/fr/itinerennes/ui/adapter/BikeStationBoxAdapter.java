@@ -74,7 +74,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<OverlayItem<BikeStat
         final LayoutInflater inflater = LayoutInflater.from(context);
         final LinearLayout bikeInfo = (LinearLayout) inflater.inflate(R.layout.bike_station_box,
                 null);
-
+        bikeInfo.setVisibility(View.VISIBLE);
         return bikeInfo;
     }
 
