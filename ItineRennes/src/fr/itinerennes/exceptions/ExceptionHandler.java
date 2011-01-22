@@ -9,11 +9,8 @@ public interface ExceptionHandler {
 
     /**
      * Called by a component when an exception occurred.
-     * 
-     * @param thread
-     *            the thread that has an uncaught exception
      * @param ex
      *            the exception that was thrown
      */
-    void handleException(Thread thread, Throwable ex);
+    void handleException(Throwable ex);
 }

@@ -44,7 +44,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
     private Dialog progressDialog;
 
     /** The progress bar displayed in the progress dialog. */
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
 
     /** The diplsayed station. */
     private BusStation station;

@@ -98,24 +98,20 @@ public class BusStationBoxAdapter implements MapBoxAdapter<ITROverlayItem<BusSta
     /**
      * Preload data with the services and pray the cache keep them...
      * 
-     * @return null
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#backgroundLoad(fr.itinerennes.ui.views.overlays.ITROverlayItem)
      */
     @Override
-    public final BusStation backgroundLoad(final ITROverlayItem<BusStation> item) {
+    public final BusStation backgroundLoad(final ITROverlayItem<BusStation> item)
+            throws GenericException {
 
         // TJHU on ne fait que mettre en cache, il vaudrait mieux passer directement les
         // informations !!! (au cas ou le cache expire ou que ce n'est pas bien mis en cache)
         BusStation station = null;
         List<BusRoute> busRoutes = null;
-        try {
-            station = busService.getStation(item.getData().getId());
-            busRoutes = busRouteService.getStationRoutes(item.getData().getId());
-            for (final BusRoute route : busRoutes) {
-                lineIconService.getIcon(route.getId());
-            }
-        } catch (final GenericException e) {
-            LOGGER.error("unable to retrieve bus routes and icons for station " + item.getData(), e);
+        station = busService.getStation(item.getData().getId());
+        busRoutes = busRouteService.getStationRoutes(item.getData().getId());
+        for (final BusRoute route : busRoutes) {
+            lineIconService.getIcon(route.getId());
         }
 
         return station;

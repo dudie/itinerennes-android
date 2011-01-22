@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 
+import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
 import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 
@@ -58,8 +59,10 @@ public interface MapBoxAdapter<T extends ITROverlayItem<?>, D> {
      * @param item
      *            the focused item
      * @return some useful data to fill the information box view
+     * @throws GenericException
+     *             if the background load cannot be completed
      */
-    D backgroundLoad(T item);
+    D backgroundLoad(T item) throws GenericException;
 
     /**
      * This method should return the title to display in the information box after

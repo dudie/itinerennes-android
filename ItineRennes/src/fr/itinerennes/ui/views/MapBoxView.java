@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
+import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
 import fr.itinerennes.ui.views.overlays.FocusableOverlayItem;
@@ -39,7 +40,7 @@ public class MapBoxView extends LinearLayout {
     /**
      * @param context
      */
-    public MapBoxView(final Context context) {
+    public MapBoxView(final ITRContext context) {
 
         this(context, null);
     }
@@ -189,7 +190,7 @@ public class MapBoxView extends LinearLayout {
         if (null != mapBoxDisplayer) {
             mapBoxDisplayer.cancel(true);
         }
-        mapBoxDisplayer = new DisplayMapBoxTask<D>(getContext(), this, adapter, item);
+        mapBoxDisplayer = new DisplayMapBoxTask<D>((ITRContext) getContext(), this, adapter, item);
         mapBoxDisplayer.execute();
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Marker;
 
+import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.views.ITRMapView;
 import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 
@@ -12,9 +13,9 @@ import fr.itinerennes.ui.views.overlays.ITROverlayItem;
  * Classes implementing this interface are bridges between a {@link ITRMapView} and the
  * {@link Marker} displayed.
  * 
- * @param <T>
+ * @param <D>
  *            the type of the items of this overlay
- * @param <T>
+ * @param <D>
  *            the type of overlay items this adapter returns
  * @author Jérémie Huchet
  */
@@ -27,6 +28,8 @@ public interface ItemizedOverlayAdapter<T extends ITROverlayItem<D>, D> {
      * @param bbox
      *            the requested bounding box
      * @return a list of markers located in the requested bounding box
+     * @throws GenericException
+     *             if an error occurs
      */
-    List<T> getItems(final BoundingBoxE6 bbox);
+    List<T> getItems(final BoundingBoxE6 bbox) throws GenericException;
 }
