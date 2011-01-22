@@ -13,7 +13,7 @@
 		android:layout_height="fill_parent"
 		android:clickable="true"
 		android:layout_below="@+id/main_layout"
-		renderer="MapQuest"
+		tilesource="MapquestOSM"
 		/>
 
     <fr.itinerennes.ui.views.ITRZoomControls
