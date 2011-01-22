@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,8 +21,8 @@ import android.widget.ToggleButton;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.ui.views.MapBoxView;
 import fr.itinerennes.ui.views.ITRMapView;
+import fr.itinerennes.ui.views.MapBoxView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.ui.views.overlays.OverlayConstants;
 
@@ -39,6 +40,16 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
     private static final int TOAST_DURATION = 300;
 
+    private static final String PREFS_SCROLL_X = "scrollX";
+
+    private static final String PREFS_SCROLL_Y = "scrollY";
+
+    private static final String PREFS_ZOOM_LEVEL = "zoomLevel";
+
+    private static final String PREFS_SHOW_LOCATION = "followLocation";
+
+    private static final String PREFS_NAME = "itinerennes";
+
     /** The map view. */
     private ITRMapView map;
 
@@ -50,6 +61,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
     /** The zoom level of the map when showing the activity. */
     private int startZoomLevel;
+
+    /** Shared preferences. */
+    private SharedPreferences sharedPreferences;
 
     /**
      * Called when activity starts.
@@ -66,6 +80,8 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         }
         super.onCreate(savedInstanceState);
 
+        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
         setContentView(R.layout.main_map);
 
         this.map = (ITRMapView) findViewById(R.id.map);
@@ -76,18 +92,12 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         map.setMultiTouchControls(true);
 
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            // location provider not enabled. Centering in rennes
-            startMapCenter = new GeoPoint(ItineRennesConstants.CONFIG_RENNES_LAT,
-                    ItineRennesConstants.CONFIG_RENNES_LON);
-            startZoomLevel = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
-
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Map Center : Location service is not enabled. Centering in Rennes.");
-            }
-        }
+        map.getController().setZoom(
+                sharedPreferences
+                        .getInt(PREFS_ZOOM_LEVEL, ItineRennesConstants.CONFIG_DEFAULT_ZOOM));
+        map.scrollTo(
+                sharedPreferences.getInt(PREFS_SCROLL_X, ItineRennesConstants.CONFIG_RENNES_LAT),
+                sharedPreferences.getInt(PREFS_SCROLL_Y, ItineRennesConstants.CONFIG_RENNES_LON));
 
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
@@ -100,35 +110,23 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     /**
      * {@inheritDoc}
      * 
-     * @see android.app.Activity#onWindowFocusChanged(boolean)
+     * @see android.app.Activity#onResume()
      */
     @Override
-    public void onWindowFocusChanged(final boolean hasFocus) {
+    protected void onResume() {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onWindowFocusChanged.start - hasFocus={}", hasFocus);
+            LOGGER.debug("onResume.start");
         }
 
-        super.onWindowFocusChanged(hasFocus);
-
-        if (hasFocus) {
-            if (startMapCenter != null) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(String.format("Map Center : Centering in {}.", startMapCenter));
-                }
-                map.getController().setZoom(startZoomLevel);
-                map.getController().setCenter(startMapCenter);
-            } else {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Map Center : Enabling follow location.");
-                }
-                myLocation.enableFollowLocation();
-            }
+        if (sharedPreferences.getBoolean(PREFS_SHOW_LOCATION, true)) {
+            myLocation.enableFollowLocation();
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onWindowFocusChanged.end");
+            LOGGER.debug("onResume.end");
         }
+        super.onResume();
     }
 
     /**
@@ -143,17 +141,14 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             LOGGER.debug("onPause.start");
         }
 
-        if (myLocation.isLocationFollowEnabled()) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Map Center : Disabling follow location.");
-            }
-            myLocation.disableFollowLocation();
-            startMapCenter = null;
-        } else {
-            startMapCenter = new GeoPoint(map.getMapCenterLatitudeE6(),
-                    map.getMapCenterLongitudeE6());
-            startZoomLevel = map.getZoomLevel();
-        }
+        final SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt(PREFS_SCROLL_X, map.getScrollX());
+        edit.putInt(PREFS_SCROLL_Y, map.getScrollY());
+        edit.putInt(PREFS_ZOOM_LEVEL, map.getZoomLevel());
+        edit.putBoolean(PREFS_SHOW_LOCATION, myLocation.isMyLocationEnabled());
+        edit.commit();
+
+        myLocation.disableFollowLocation();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPause.end");
@@ -189,57 +184,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
-     */
-    @Override
-    public final void onSaveInstanceState(final Bundle savedInstanceState) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onSaveInstanceState.start");
-        }
-
-        if (myLocation.isLocationFollowEnabled()) {
-            savedInstanceState.putBoolean("followLocation", myLocation.isLocationFollowEnabled());
-        } else {
-            savedInstanceState.putSerializable("startCenter",
-                    new GeoPoint(map.getMapCenterLatitudeE6(), map.getMapCenterLongitudeE6()));
-            savedInstanceState.putInt("ZoomLevel", map.getZoomLevel());
-        }
-        super.onSaveInstanceState(savedInstanceState);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onSaveInstanceState.end");
-        }
-    }
-
-    @Override
-    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onRestoreInstanceState.start");
-        }
-
-        // center of the map
-        if (savedInstanceState != null) {
-
-            if (!savedInstanceState.getBoolean("followLocation")) {
-
-                startZoomLevel = savedInstanceState.getInt("ZoomLevel");
-                startMapCenter = (GeoPoint) savedInstanceState.getSerializable("startCenter");
-
-            }
-
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onRestoreInstanceState.end");
-        }
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    /**
      * Click method handler invoked when a click event is detected on the map box view.
      * 
      * @param boxView
@@ -261,7 +205,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
      */
     public final void onMyLocationButtonClick(final View button) {
 
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        final LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             Toast.makeText(this, R.string.location_service_disabled, TOAST_DURATION).show();
