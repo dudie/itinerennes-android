@@ -72,7 +72,7 @@ public abstract class ITRContext extends Activity {
     public final ExceptionHandler getExceptionHandler() {
 
         if (exceptionHandler == null) {
-            exceptionHandler = new DefaultExceptionHandler();
+            exceptionHandler = new DefaultExceptionHandler(this);
         }
         return exceptionHandler;
     }

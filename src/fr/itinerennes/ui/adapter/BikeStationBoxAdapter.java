@@ -20,7 +20,8 @@ import fr.itinerennes.ui.views.overlays.ITROverlayItem;
 /**
  * @author Jérémie Huchet
  */
-public class BikeStationBoxAdapter implements MapBoxAdapter<ITROverlayItem<BikeStation>, BikeStation> {
+public class BikeStationBoxAdapter implements
+        MapBoxAdapter<ITROverlayItem<BikeStation>, BikeStation> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -69,7 +70,8 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<ITROverlayItem<BikeS
      *      java.lang.Object)
      */
     @Override
-    public final View getBoxDetailsView(final Context context, final ITROverlayItem<BikeStation> item) {
+    public final View getBoxDetailsView(final Context context,
+            final ITROverlayItem<BikeStation> item) {
 
         final LayoutInflater inflater = LayoutInflater.from(context);
         final LinearLayout bikeInfo = (LinearLayout) inflater.inflate(R.layout.bike_station_box,
@@ -84,14 +86,10 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<ITROverlayItem<BikeS
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#backgroundLoad(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final BikeStation backgroundLoad(final ITROverlayItem<BikeStation> item) {
+    public final BikeStation backgroundLoad(final ITROverlayItem<BikeStation> item)
+            throws GenericException {
 
-        BikeStation upToDateStation = null;
-        try {
-            upToDateStation = bikeService.getFreshStation(item.getData().getId());
-        } catch (final GenericException e) {
-            LOGGER.error("unable to retrieve the bike station id=" + item.getData().getId(), e);
-        }
+        final BikeStation upToDateStation = bikeService.getFreshStation(item.getData().getId());
         return upToDateStation;
     }
 
@@ -136,6 +134,12 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<ITROverlayItem<BikeS
     @Override
     public final void updateBoxDetailsView(final View bikeInfo,
             final ITROverlayItem<BikeStation> item, final BikeStation bikeStation) {
+
+        if (bikeStation == null) {
+            // an error occurred during backgroundLoad()
+            bikeInfo.setVisibility(View.GONE);
+            return;
+        }
 
         final TextView availablesSlots = (TextView) bikeInfo.findViewById(R.id.available_slots);
         availablesSlots.setText(String.valueOf(bikeStation.getAvailableSlots()));

@@ -11,10 +11,10 @@ import org.osmdroid.views.overlay.ItemizedOverlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.content.Context;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
+import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.tasks.UpdateOverlayTask;
 import fr.itinerennes.ui.views.ITRMapView;
@@ -39,6 +39,9 @@ public class ITRItemizedOverlay<T extends ITROverlayItem<D>, D> extends Itemized
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ItemizedOverlay.class);
+
+    /** The itinerennes application context. */
+    private final ITRContext context;
 
     /** The index of the current focused item. <code>NOT_SET</code> if not item is focused. */
     protected int focusedItemIndex = NOT_SET;
@@ -66,9 +69,10 @@ public class ITRItemizedOverlay<T extends ITROverlayItem<D>, D> extends Itemized
      * @param adapter
      *            the adapter this overlay should use to update its content when the map moves
      */
-    public ITRItemizedOverlay(final Context context, final ItemizedOverlayAdapter<T, D> adapter) {
+    public ITRItemizedOverlay(final ITRContext context, final ItemizedOverlayAdapter<T, D> adapter) {
 
         super(context, new ArrayList<T>(), null);
+        this.context = context;
         this.adapter = adapter;
         super.mOnItemGestureListener = this;
     }
@@ -133,7 +137,7 @@ public class ITRItemizedOverlay<T extends ITROverlayItem<D>, D> extends Itemized
             LOGGER.debug("onReplaceItems.start - {} new items", items == null ? 0 : items.size());
         }
         // store the current focused item
-        // it will be used to retrieve its new index in nthe new item list
+        // it will be used to retrieve its new index in the new item list
         final T currentFocusedItem;
         if (NOT_SET != focusedItemIndex) {
             currentFocusedItem = super.mItemList.get(focusedItemIndex);
@@ -228,7 +232,7 @@ public class ITRItemizedOverlay<T extends ITROverlayItem<D>, D> extends Itemized
         if (null != overlayUpdater) {
             overlayUpdater.cancel(true);
         }
-        overlayUpdater = new UpdateOverlayTask<T, D>(osmView, this, adapter);
+        overlayUpdater = new UpdateOverlayTask<T, D>(context, osmView, this, adapter);
         overlayUpdater.execute(osmView.getBoundingBox());
     }
 }
