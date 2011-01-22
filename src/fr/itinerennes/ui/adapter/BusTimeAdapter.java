@@ -8,13 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -26,7 +24,6 @@ import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
 import fr.itinerennes.model.BusStation;
-import fr.itinerennes.ui.activity.BusRouteActivity;
 import fr.itinerennes.ui.activity.BusStationActivity;
 
 /**
@@ -184,16 +181,6 @@ public class BusTimeAdapter extends BaseAdapter {
             timeBeforeDepartureView.setText(DateUtils.getRelativeTimeSpanString(data.get(position)
                     .getDepartureDate().getTime(), System.currentTimeMillis(),
                     DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
-
-            busTimeView.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(final View v) {
-
-                    final Intent i = new Intent(context, BusRouteActivity.class);
-                    context.startActivity(i);
-                }
-            });
 
             view = busTimeView;
         }
