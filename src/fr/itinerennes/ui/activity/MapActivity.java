@@ -40,9 +40,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
     private static final int TOAST_DURATION = 300;
 
-    private static final String PREFS_SCROLL_X = "scrollX";
+    private static final String PREFS_CENTER_LAT = "scrollX";
 
-    private static final String PREFS_SCROLL_Y = "scrollY";
+    private static final String PREFS_CENTER_LON = "scrollY";
 
     private static final String PREFS_ZOOM_LEVEL = "zoomLevel";
 
@@ -56,14 +56,11 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     /** The my location overlay. */
     private LocationOverlay myLocation;
 
-    /** The GeoPoint on which center the map when showing the activity. */
-    private GeoPoint startMapCenter;
-
-    /** The zoom level of the map when showing the activity. */
-    private int startZoomLevel;
-
     /** Shared preferences. */
     private SharedPreferences sharedPreferences;
+
+    /** Location manager. */
+    LocationManager locationManager;
 
     /**
      * Called when activity starts.
@@ -81,6 +78,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         super.onCreate(savedInstanceState);
 
         sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         setContentView(R.layout.main_map);
 
@@ -95,9 +93,10 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         map.getController().setZoom(
                 sharedPreferences
                         .getInt(PREFS_ZOOM_LEVEL, ItineRennesConstants.CONFIG_DEFAULT_ZOOM));
-        map.scrollTo(
-                sharedPreferences.getInt(PREFS_SCROLL_X, ItineRennesConstants.CONFIG_RENNES_LAT),
-                sharedPreferences.getInt(PREFS_SCROLL_Y, ItineRennesConstants.CONFIG_RENNES_LON));
+        map.getController().setCenter(
+                new GeoPoint(sharedPreferences.getInt(PREFS_CENTER_LAT,
+                        ItineRennesConstants.CONFIG_RENNES_LAT), sharedPreferences.getInt(
+                        PREFS_CENTER_LON, ItineRennesConstants.CONFIG_RENNES_LON)));
 
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
@@ -119,7 +118,11 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             LOGGER.debug("onResume.start");
         }
 
-        if (sharedPreferences.getBoolean(PREFS_SHOW_LOCATION, true)) {
+        // if a location provider is enabled and follow location is activated in preferences, the
+        // follow location feature is enabled
+        if (sharedPreferences.getBoolean(PREFS_SHOW_LOCATION, true)
+                && (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager
+                        .isProviderEnabled(LocationManager.NETWORK_PROVIDER))) {
             myLocation.enableFollowLocation();
         }
 
@@ -141,9 +144,10 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             LOGGER.debug("onPause.start");
         }
 
+        // saving in preferences the state of the map (center, follow location and zoom)
         final SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putInt(PREFS_SCROLL_X, map.getScrollX());
-        edit.putInt(PREFS_SCROLL_Y, map.getScrollY());
+        edit.putInt(PREFS_CENTER_LAT, map.getMapCenterLatitudeE6());
+        edit.putInt(PREFS_CENTER_LON, map.getMapCenterLongitudeE6());
         edit.putInt(PREFS_ZOOM_LEVEL, map.getZoomLevel());
         edit.putBoolean(PREFS_SHOW_LOCATION, myLocation.isMyLocationEnabled());
         edit.commit();
@@ -205,7 +209,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
      */
     public final void onMyLocationButtonClick(final View button) {
 
-        final LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             Toast.makeText(this, R.string.location_service_disabled, TOAST_DURATION).show();
