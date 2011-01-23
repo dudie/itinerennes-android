@@ -6,6 +6,8 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.Context;
 import android.widget.Toast;
 
+import fr.itinerennes.R;
+
 /**
  * A simple exception handler which logs exceptions and displays a toast message to the user.
  * 
@@ -44,7 +46,8 @@ public class DefaultExceptionHandler implements ExceptionHandler {
     @Override
     public final void handleException(final Throwable ex) {
 
-        Toast.makeText(context, ex.getMessage(), ERROR_TOAST_DURATION).show();
+        final String msg = context.getResources().getString(R.string.error_network_connectivity);
+        Toast.makeText(context, msg, ERROR_TOAST_DURATION).show();
         LOGGER.error("an error occurred", ex);
     }
 }
