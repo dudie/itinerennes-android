@@ -38,17 +38,23 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapActivity.class);
 
+    /** Duration of toast messages. */
     private static final int TOAST_DURATION = 300;
 
-    private static final String PREFS_CENTER_LAT = "scrollX";
+    /** Preferences file name. */
+    private static final String PREFS_NAME = "itinerennes";
 
-    private static final String PREFS_CENTER_LON = "scrollY";
+    /** Preferences key for map center latitude. */
+    private static final String PREFS_CENTER_LAT = "latitude";
 
+    /** Preferences key for map center longitude. */
+    private static final String PREFS_CENTER_LON = "longitude";
+
+    /** Preferences key for map zoom level. */
     private static final String PREFS_ZOOM_LEVEL = "zoomLevel";
 
+    /** Preferences key for follow location feature. */
     private static final String PREFS_SHOW_LOCATION = "followLocation";
-
-    private static final String PREFS_NAME = "itinerennes";
 
     /** The map view. */
     private ITRMapView map;
@@ -60,7 +66,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     private SharedPreferences sharedPreferences;
 
     /** Location manager. */
-    LocationManager locationManager;
+    private LocationManager locationManager;
 
     /**
      * Called when activity starts.
@@ -112,7 +118,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
      * @see android.app.Activity#onResume()
      */
     @Override
-    protected void onResume() {
+    protected final void onResume() {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onResume.start");
@@ -225,7 +231,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
      * @see android.app.Activity#onCreateDialog(int)
      */
     @Override
-    protected Dialog onCreateDialog(final int id) {
+    protected final Dialog onCreateDialog(final int id) {
 
         AlertDialog dialog;
         switch (id) {
