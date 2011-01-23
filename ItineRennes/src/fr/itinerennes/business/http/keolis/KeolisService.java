@@ -207,7 +207,16 @@ public class KeolisService {
         } catch (final MalformedURLException e) {
             LOGGER.error("Unable to fetch icon {} : {}", icon, e.getMessage());
         } catch (final IOException e) {
-            LOGGER.error("Unable to fetch icon {} : {}", icon, e.getMessage());
+            /* **************************** */
+            // TJHU workaround ITR-48
+            try {
+                final URL url = new URL(icon.getIconUrl().replaceAll("ex\\.png$", ".png"));
+                iconStream = url.openStream();
+                icon.setIconBytes(FileUtils.readBytes(iconStream));
+            } catch (final Exception ee) {
+                LOGGER.error("Unable to fetch icon {} : {}", icon, e.getMessage());
+            }
+            /* **************************** */
         } finally {
             if (null != iconStream) {
                 try {
