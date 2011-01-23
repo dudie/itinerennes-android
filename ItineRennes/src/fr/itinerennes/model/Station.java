@@ -13,7 +13,7 @@ import fr.itinerennes.ItineRennesConstants;
 public interface Station extends Cacheable {
 
     /** Life time for cached {@link Station}s : {@value #TTL} seconds. */
-    int TTL = 3600;
+    int TTL = 7776000;
 
     /** Station type bike. */
     int TYPE_BIKE = 0;

@@ -1,6 +1,5 @@
 package fr.itinerennes;
 
-
 /**
  * @author Jérémie Huchet
  * @author Olivier Boudet
@@ -98,6 +97,6 @@ public class ItineRennesConstants {
     public static final int MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS = 3600;
 
     /** The time to live of an explored bounding box : {@value #GEO_CACHE_TTL}. */
-    public static final int GEO_CACHE_TTL = 3600;
+    public static final int GEO_CACHE_TTL = 7776000;
 
 }
