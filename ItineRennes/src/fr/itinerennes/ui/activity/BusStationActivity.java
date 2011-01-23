@@ -41,7 +41,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
             .getLogger(BusStationActivity.class);
 
     /** The progress dialog while the activity is loading. */
-    private Dialog progressDialog;
+    private AlertDialog progressDialog;
 
     /** The progress bar displayed in the progress dialog. */
     private ProgressBar progressBar;
@@ -249,10 +249,13 @@ public class BusStationActivity extends ITRContext implements Runnable {
                     });
             return builder.create();
         case PROGRESS_DIALOG:
-            progressDialog = new Dialog(this);
-            progressDialog.setContentView(R.layout.progress_dialog);
-            progressDialog.setTitle(getBaseContext().getResources().getString(R.string.loading));
-            progressDialog.setCancelable(false);
+            final AlertDialog.Builder progressBuilder = new AlertDialog.Builder(this);
+            progressBuilder.setTitle(R.string.loading).setCancelable(true);
+            final View progressView = getLayoutInflater().inflate(R.layout.progress_dialog, null);
+            progressBuilder.setView(progressView);
+            progressBuilder.setCancelable(true);
+            progressDialog = progressBuilder.create();
+
             return progressDialog;
         default:
             return null;
