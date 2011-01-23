@@ -167,8 +167,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
         /* Displaying departures dates. */
         if (departures != null) {
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
-            listTimes.setAdapter(new BusTimeAdapter(getBaseContext(), station, departures,
-                    routesIcon));
+            listTimes.setAdapter(new BusTimeAdapter(this, station, departures, routesIcon));
         }
     }
 

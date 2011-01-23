@@ -7,9 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +23,8 @@ import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.ui.activity.BusStationActivity;
+import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.tasks.SafeAsyncTask;
 
 /**
  * @author Jérémie Huchet
@@ -35,7 +35,7 @@ public class BusTimeAdapter extends BaseAdapter {
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BusTimeAdapter.class);
 
     /** The android context. */
-    private final Context context;
+    private final ITRContext context;
 
     /** Bus time data. */
     private final List<BusDeparture> data;
@@ -71,7 +71,7 @@ public class BusTimeAdapter extends BaseAdapter {
      * @param routesIcons
      *            list of routes icons
      */
-    public BusTimeAdapter(final Context c, final BusStation busStation,
+    public BusTimeAdapter(final ITRContext c, final BusStation busStation,
             final List<BusDeparture> departures, final HashMap<String, Drawable> routesIcons) {
 
         this.data = departures;
@@ -154,7 +154,7 @@ public class BusTimeAdapter extends BaseAdapter {
                 pendingView = inflater.inflate(R.layout.bus_time_pending, null);
             }
 
-            new AppendTask().execute();
+            new AppendDeparturesTask(context).execute();
             view = pendingView;
 
         } else {
@@ -241,43 +241,55 @@ public class BusTimeAdapter extends BaseAdapter {
      * 
      * @author Olivier Boudet
      */
-    class AppendTask extends AsyncTask<Void, Void, List<BusDeparture>> {
+    class AppendDeparturesTask extends SafeAsyncTask<Void, Void, List<BusDeparture>> {
 
         /**
-         * {@inheritDoc}
+         * Creates the task which will display departures information.
          * 
-         * @see android.os.AsyncTask#doInBackground(Params[])
+         * @param context
+         *            the itinerennes application context
+         */
+        public AppendDeparturesTask(final ITRContext context) {
+
+            super(context);
+        }
+
+        /**
+         * Load next departures informations in background.
+         * <p>
+         * {@inheritDoc}
+         * </p>
+         * 
+         * @throws GenericException
+         * @see fr.itinerennes.ui.tasks.SafeAsyncTask#doInBackgroundSafely(Params[])
          */
         @Override
-        protected List<BusDeparture> doInBackground(final Void... params) {
+        protected List<BusDeparture> doInBackgroundSafely(final Void... params)
+                throws GenericException {
 
-            final DatabaseHelper dbHelper = new DatabaseHelper(context);
+            final DatabaseHelper dbHelper = context.getDatabaseHelper();
             final BusDepartureService busDepartureService = new BusDepartureService(dbHelper);
             List<BusDeparture> departures = null;
 
-            try {
-                departures = busDepartureService.getStationDepartures(station.getId(),
-                        data.get(data.size() - 1).getDepartureDate());
-            } catch (final GenericException e) {
-                LOGGER.debug(String.format(
-                        "Can't fetch departures informations for station {} and date {} ",
-                        station.getId(), data.get(data.size() - 1).getDepartureDate()), e);
-            } finally {
-                dbHelper.close();
-            }
+            departures = busDepartureService.getStationDepartures(station.getId(),
+                    data.get(data.size() - 1).getDepartureDate());
 
             return departures;
         }
 
         /**
+         * Appends fetched departures to the list and notify the adapter that data changed.
+         * <p>
          * {@inheritDoc}
+         * </p>
          * 
-         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+         * @see fr.itinerennes.ui.tasks.SafeAsyncTask#onCustomPostExecute(java.lang.Object)
          */
         @Override
-        protected void onPostExecute(final List<BusDeparture> departures) {
+        protected void onCustomPostExecute(final List<BusDeparture> departures) {
 
             addDepartures(departures);
+
         }
     }
 
