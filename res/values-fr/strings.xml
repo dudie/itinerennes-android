@@ -4,5 +4,5 @@
     <string name="error_network">Certaines informations n\'ont pas pu être récupérées. Merci de vérifier votre réseau.</string>
     <string name="select_layer">Sélectionnez des claques</string>
     <string name="loading">Chargement... Merci de patienter.</string>
-    <string name="location_service_disabled">Le service de localisation n\'est pas activé. Merci de l\'activer d\'abord dans les paramètres du système.</string>
+    <string name="location_service_disabled">Le service de localisation n\'est pas activé. Activez le dans les paramètres du système.</string>
 </resources>
