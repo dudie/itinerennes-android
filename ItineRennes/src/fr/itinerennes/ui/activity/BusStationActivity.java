@@ -249,10 +249,10 @@ public class BusStationActivity extends ITRContext implements Runnable {
             return builder.create();
         case PROGRESS_DIALOG:
             final AlertDialog.Builder progressBuilder = new AlertDialog.Builder(this);
-            progressBuilder.setTitle(R.string.loading).setCancelable(true);
+            progressBuilder.setTitle(R.string.loading);
             final View progressView = getLayoutInflater().inflate(R.layout.progress_dialog, null);
             progressBuilder.setView(progressView);
-            progressBuilder.setCancelable(true);
+            progressBuilder.setCancelable(false);
             progressDialog = progressBuilder.create();
 
             return progressDialog;
