@@ -7,6 +7,9 @@ package fr.itinerennes.model;
  */
 public interface Route extends Cacheable {
 
+    /** Life time for cached {@link Route}s : {@value #TTL} seconds. */
+    int TTL = 7776000;
+
     /**
      * Gets the identifier of the route.
      * 
