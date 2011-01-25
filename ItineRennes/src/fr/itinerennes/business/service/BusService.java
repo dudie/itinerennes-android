@@ -104,9 +104,11 @@ public class BusService extends AbstractService implements StationProvider<BusSt
                 LOGGER.debug("caching {} bus stations", null != stations ? stations.size() : 0);
             }
 
-            busCache.replace(stations);
+            if (stations != null) {
+                busCache.replace(stations);
 
-            geoCache.markExplored(normalizedBbox, BusStation.class.getName());
+                geoCache.markExplored(normalizedBbox, BusStation.class.getName());
+            }
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getStations.end - {} stations", null != stations ? stations.size() : 0);
