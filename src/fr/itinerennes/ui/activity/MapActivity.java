@@ -23,6 +23,7 @@ import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.views.ITRMapView;
 import fr.itinerennes.ui.views.MapBoxView;
+import fr.itinerennes.ui.views.PreloadDialog;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.ui.views.overlays.OverlayConstants;
 
@@ -107,6 +108,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
 
+        final PreloadDialog preload = new PreloadDialog(this);
+        preload.show();
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
         }
@@ -180,6 +184,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     public final boolean onCreateOptionsMenu(final Menu menu) {
 
         final MenuItem about = menu.add(Menu.NONE, MenuOptions.ABOUT, Menu.NONE, R.string.about);
+        about.setIcon(android.R.drawable.ic_menu_help);
         about.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 
             @Override
@@ -253,6 +258,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             aboutBuilder.setTitle(R.string.about).setCancelable(true);
             final View aboutView = getLayoutInflater().inflate(R.layout.about, null);
             aboutBuilder.setView(aboutView);
+            aboutBuilder.setIcon(android.R.drawable.ic_dialog_info);
             dialog = aboutBuilder.create();
             break;
         default:

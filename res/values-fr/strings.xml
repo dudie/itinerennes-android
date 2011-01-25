@@ -5,4 +5,6 @@
     <string name="select_layer">Sélectionnez des claques</string>
     <string name="loading">Chargement... Merci de patienter.</string>
     <string name="location_service_disabled">Le service de localisation n\'est pas activé. Activez le dans les paramètres du système.</string>
+    <string name="preload_dialog_title">Premier démarrage</string>
+    <string name="advice_preload_data">Vous utilisez ItinéRennes pour la première fois, nous vous recommandons de patienter pendant le chargement de quelques données. Vous pouvez passer cette étape, l\'application sera entièrement fonctionnelle, cependant vous subirez quelques lenteurs lors de l\'utilisation de la carte.</string>
 </resources>
