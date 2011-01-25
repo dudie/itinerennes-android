@@ -5,4 +5,6 @@
     <string name="select_layer">Select layers</string>
     <string name="loading">Loading... Please wait.</string>
     <string name="location_service_disabled">The location service is disabled. Enable it in system parameters.</string>
+    <string name="preload_dialog_title">First start</string>
+    <string name="advice_preload_data">You are starting ItinéRennes for the first time, its recommened to load some data before using it. You can skip this step, the app will be fully functional, but you will issue some latencies during map scrolling.</string>
 </resources>
