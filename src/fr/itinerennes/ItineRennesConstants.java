@@ -68,6 +68,18 @@ public class ItineRennesConstants {
     public static final String OTP_API_DEPARTURES_PATH = "departures";
 
     /*
+     * OneBusAway constants.
+     */
+    /** OneBusAway API URL. */
+    public static final String OBA_API_URL = "http://otp.itinerennes.fr/onebusaway-api-webapp/api/where/%s/%s.json";
+
+    /** OneBusAway API version. */
+    public static final String OBA_API_VERSION = "2";
+
+    /** OneBusAway API version. */
+    public static final String OBA_API_KEY = "web";
+
+    /*
      * Database constantes.
      */
 
