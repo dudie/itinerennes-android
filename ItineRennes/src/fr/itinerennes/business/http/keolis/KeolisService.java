@@ -82,7 +82,7 @@ public class KeolisService {
                 msg.append(param.getName()).append("=").append(param.getValue()).append("&");
             }
             msg.deleteCharAt(msg.length() - 1);
-            LOGGER.debug(msg.toString());
+            LOGGER.debug("createKeolisRequest - {}", msg.toString());
         }
 
         return req;

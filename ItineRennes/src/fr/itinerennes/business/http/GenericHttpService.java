@@ -48,6 +48,10 @@ public class GenericHttpService {
             LOGGER.debug("execute.start - request={}", request.getRequestLine());
         }
 
+        if (handler.getListener() != null) {
+            handler.getListener().onRequestStart(request);
+        }
+
         T response = null;
         try {
             response = httpClient.execute(request, handler);
@@ -57,6 +61,12 @@ public class GenericHttpService {
         } catch (final IOException e) {
             LOGGER.debug(e.getMessage(), e);
             throw new GenericException(ErrorCodeConstants.NETWORK, "i/o exception");
+        } finally {
+            request.abort();
+        }
+
+        if (handler.getListener() != null) {
+            handler.getListener().onRequestFinish(response);
         }
 
         if (LOGGER.isDebugEnabled()) {
