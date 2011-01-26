@@ -57,7 +57,7 @@ public class OneBusAwayService {
         req.addHeader("Accept", "application/json");
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(urlCall.toString());
+            LOGGER.debug("createOBARequest - {}", urlCall.toString());
         }
 
         return req;

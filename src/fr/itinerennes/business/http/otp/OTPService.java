@@ -78,7 +78,7 @@ public class OTPService {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(req.getURI().toString());
+            LOGGER.debug("createOTPRequest - {}", req.getURI().toString());
         }
 
         return req;
