@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.views.ITRMapView;
@@ -41,21 +42,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
     /** Duration of toast messages. */
     private static final int TOAST_DURATION = 300;
-
-    /** Preferences file name. */
-    private static final String PREFS_NAME = "itinerennes";
-
-    /** Preferences key for map center latitude. */
-    private static final String PREFS_CENTER_LAT = "latitude";
-
-    /** Preferences key for map center longitude. */
-    private static final String PREFS_CENTER_LON = "longitude";
-
-    /** Preferences key for map zoom level. */
-    private static final String PREFS_ZOOM_LEVEL = "zoomLevel";
-
-    /** Preferences key for follow location feature. */
-    private static final String PREFS_SHOW_LOCATION = "followLocation";
 
     /** The map view. */
     private ITRMapView map;
@@ -84,7 +70,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         }
         super.onCreate(savedInstanceState);
 
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(ITRPrefs.PREFS_NAME, MODE_PRIVATE);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         setContentView(R.layout.main_map);
@@ -98,18 +84,24 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         map.setMultiTouchControls(true);
 
         map.getController().setZoom(
-                sharedPreferences
-                        .getInt(PREFS_ZOOM_LEVEL, ItineRennesConstants.CONFIG_DEFAULT_ZOOM));
+                sharedPreferences.getInt(ITRPrefs.MAP_ZOOM_LEVEL,
+                        ItineRennesConstants.CONFIG_DEFAULT_ZOOM));
         map.getController().setCenter(
-                new GeoPoint(sharedPreferences.getInt(PREFS_CENTER_LAT,
+                new GeoPoint(sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LAT,
                         ItineRennesConstants.CONFIG_RENNES_LAT), sharedPreferences.getInt(
-                        PREFS_CENTER_LON, ItineRennesConstants.CONFIG_RENNES_LON)));
+                        ITRPrefs.MAP_CENTER_LON, ItineRennesConstants.CONFIG_RENNES_LON)));
 
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
 
-        final PreloadDialog preload = new PreloadDialog(this);
-        preload.show();
+        // if first start of the application, open the preload dialog
+        if (sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
+            final PreloadDialog preload = new PreloadDialog(this);
+            preload.show();
+            final SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, false);
+            edit.commit();
+        }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
@@ -130,7 +122,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         // if a location provider is enabled and follow location is activated in preferences, the
         // follow location feature is enabled
-        if (sharedPreferences.getBoolean(PREFS_SHOW_LOCATION, true)
+        if (sharedPreferences.getBoolean(ITRPrefs.MAP_SHOW_LOCATION, true)
                 && (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager
                         .isProviderEnabled(LocationManager.NETWORK_PROVIDER))) {
             myLocation.enableFollowLocation();
@@ -156,10 +148,10 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         // saving in preferences the state of the map (center, follow location and zoom)
         final SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putInt(PREFS_CENTER_LAT, map.getMapCenterLatitudeE6());
-        edit.putInt(PREFS_CENTER_LON, map.getMapCenterLongitudeE6());
-        edit.putInt(PREFS_ZOOM_LEVEL, map.getZoomLevel());
-        edit.putBoolean(PREFS_SHOW_LOCATION, myLocation.isMyLocationEnabled());
+        edit.putInt(ITRPrefs.MAP_CENTER_LAT, map.getMapCenterLatitudeE6());
+        edit.putInt(ITRPrefs.MAP_CENTER_LON, map.getMapCenterLongitudeE6());
+        edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, map.getZoomLevel());
+        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, myLocation.isMyLocationEnabled());
         edit.commit();
 
         myLocation.disableFollowLocation();
