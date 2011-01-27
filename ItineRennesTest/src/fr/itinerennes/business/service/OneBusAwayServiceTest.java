@@ -1,7 +1,5 @@
 package fr.itinerennes.business.service;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +7,7 @@ import android.test.AndroidTestCase;
 
 import fr.itinerennes.business.http.oba.OneBusAwayService;
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.BusStation;
+import fr.itinerennes.model.oba.Schedule;
 
 /**
  * Test class for {@link OneBusAwayService}.
@@ -25,20 +23,26 @@ public class OneBusAwayServiceTest extends AndroidTestCase {
     private final OneBusAwayService obaService = new OneBusAwayService();
 
     /**
-     * Test method for {@link OneBusAwayService#getStopsForRoute(String)}.
+     * Test method for {@link OneBusAwayService#getTripDetails(String)}.
      */
-    public void testGetBikeStations() {
+    public void testGetTripDetails() {
 
-        LOGGER.info("testGetBikeStations.start");
+        LOGGER.info("testGetTripDetails.start");
 
-        List<BusStation> stations = null;
+        Schedule schedule = null;
         try {
-            stations = obaService.getStopsForRoute("1_1");
+            schedule = obaService.getTripDetails("1_10000");
         } catch (final GenericException e) {
             LOGGER.error("GenericException", e);
             fail(e.getMessage());
         }
 
-        LOGGER.info("testGetBikeStations.end");
+        assertNotNull("no schedule returned by the api", schedule);
+        assertEquals("33 stop times should be returned by the api", schedule.getStopTimes().size(),
+                33);
+        assertEquals("the first stop of this trip should be Grand Quartier", schedule
+                .getStopTimes().get(0).getStop().getName(), "Grand Quartier");
+
+        LOGGER.info("testGetTripDetails.end");
     }
 }
