@@ -196,7 +196,8 @@ public class BusStationBoxAdapter implements MapBoxAdapter<ITROverlayItem<BusSta
             final ITROverlayItem<BusStation> item) {
 
         final Intent myIntent = new Intent(packageContext, BusStationActivity.class);
-        myIntent.putExtra("item", item.getData().getId());
+        myIntent.putExtra(BusStationActivity.INTENT_STOP_ID, item.getData().getId());
+        myIntent.putExtra(BusStationActivity.INTENT_STOP_NAME, item.getData().getName());
         return myIntent;
     }
 

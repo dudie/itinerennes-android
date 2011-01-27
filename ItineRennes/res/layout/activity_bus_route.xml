@@ -14,9 +14,12 @@
 			android:layout_height="32dp">
 		</ImageView>
 
-		<TextView android:id="@+activity_bus_route/route_name" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:textSize="20sp" android:paddingLeft="5dp"
-            style="@style/BusStationHeader">
+		<TextView android:id="@+activity_bus_route/route_name" 
+		    android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:layout_weight="1"
+			android:textSize="20sp" 
+			android:paddingLeft="5dp">
 		</TextView>
 
 	</LinearLayout>
