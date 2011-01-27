@@ -21,6 +21,9 @@ public class BusDeparture {
     /** Date of the departure. */
     private Date date;
 
+    /** Trip id of this departure. */
+    private String tripId;
+
     /**
      * Gets the route id.
      * 
@@ -78,7 +81,7 @@ public class BusDeparture {
      * @param shortName
      *            route short name
      */
-    public final void setRouteShortName(String shortName) {
+    public final void setRouteShortName(final String shortName) {
 
         this.routeShortName = shortName;
     }
@@ -106,8 +109,28 @@ public class BusDeparture {
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the tripId.
      * 
+     * @return the tripId
+     */
+    public String getTripId() {
+
+        return tripId;
+    }
+
+    /**
+     * Sets the tripId.
+     * 
+     * @param tripId
+     *            the tripId to set
+     */
+    public void setTripId(final String tripId) {
+
+        this.tripId = tripId;
+    }
+
+    /*
+     * (non-javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
@@ -116,10 +139,14 @@ public class BusDeparture {
         final StringBuilder builder = new StringBuilder();
         builder.append("BusDeparture [routeId=");
         builder.append(routeId);
+        builder.append(", routeShortName=");
+        builder.append(routeShortName);
         builder.append(", headsign=");
         builder.append(headsign);
         builder.append(", date=");
         builder.append(date);
+        builder.append(", tripId=");
+        builder.append(tripId);
         builder.append("]");
         return builder.toString();
     }
