@@ -14,7 +14,8 @@
 		android:layout_height="wrap_content"
 		android:layout_weight="1"
 		android:textStyle="bold"
-           style="@style/WhiteText"/>
+		android:textSize="16sp"
+        style="@style/WhiteText"/>
            
     <ProgressBar android:id="@+id/map_box_progressbar"
         android:layout_width="wrap_content"

@@ -1,6 +1,7 @@
 package fr.itinerennes.ui.adapter;
 
-import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -77,6 +78,7 @@ public class BusTimeAdapter extends BaseAdapter {
         this.context = c;
         this.station = busStation;
         this.routesIcons = routesIcons;
+        this.inflater = LayoutInflater.from(context);
     }
 
     /**
@@ -87,13 +89,6 @@ public class BusTimeAdapter extends BaseAdapter {
     @Override
     public final int getCount() {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getCount.start");
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getCount.end");
-        }
         if (!continueAppending) {
             // return the real size of data list
             return data.size();
@@ -110,9 +105,6 @@ public class BusTimeAdapter extends BaseAdapter {
     @Override
     public final BusDeparture getItem(final int position) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getItem.start");
-        }
         return data.get(position);
     }
 
@@ -124,9 +116,6 @@ public class BusTimeAdapter extends BaseAdapter {
     @Override
     public final long getItemId(final int position) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getItemId.start");
-        }
         return position;
     }
 
@@ -137,14 +126,6 @@ public class BusTimeAdapter extends BaseAdapter {
      */
     @Override
     public final View getView(final int position, final View convertView, final ViewGroup parent) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getView.start");
-        }
-
-        if (inflater == null) {
-            inflater = LayoutInflater.from(context);
-        }
 
         View view = null;
 
@@ -167,12 +148,11 @@ public class BusTimeAdapter extends BaseAdapter {
 
             final TextView departureHeadsignView = (TextView) busTimeView
                     .findViewById(R.station.bus_headsign_departure);
-            departureHeadsignView.setText(data.get(position).getHeadsign());
+            departureHeadsignView.setText(data.get(position).getSimpleHeadsign());
 
             final TextView departureDateView = (TextView) busTimeView
                     .findViewById(R.station.bus_date_departure);
-            departureDateView.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM,
-                    DateFormat.SHORT).format(data.get(position).getDepartureDate()));
+            departureDateView.setText(formatDepartureDate(data.get(position).getDepartureDate()));
 
             final TextView timeBeforeDepartureView = (TextView) busTimeView
                     .findViewById(R.station.bus_time_before_departure);
@@ -184,9 +164,6 @@ public class BusTimeAdapter extends BaseAdapter {
             view = busTimeView;
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getView.end");
-        }
         return view;
     }
 
@@ -198,16 +175,40 @@ public class BusTimeAdapter extends BaseAdapter {
     @Override
     public final int getViewTypeCount() {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getViewTypeCount.start");
-        }
-        // TJHU Auto-generated method stub
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getViewTypeCount.end");
-        }
-
         return (super.getViewTypeCount() + 1);
+    }
+
+    /**
+     * Formats the given departure date.
+     * <ul>
+     * <li>if today, displays : 10h05</li>
+     * <li>if tomorrow, displays : tomorrow at 10h05</li>
+     * <li>if after, displays : in * days at 10h05</li>
+     * </ul>
+     * 
+     * @param date
+     *            a date to format
+     * @return the date formatted
+     */
+    private final String formatDepartureDate(final Date date) {
+
+        final Calendar c = Calendar.getInstance();
+        c.set(Calendar.MILLISECOND, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        final int days = fr.itinerennes.utils.DateUtils.getDayCount(date.getTime()
+                - c.getTimeInMillis());
+        final String time = DateUtils.formatDateTime(context, date.getTime(),
+                DateUtils.FORMAT_24HOUR | DateUtils.FORMAT_SHOW_TIME);
+        switch (days) {
+        case 0:
+            return context.getResources().getString(R.string.date_today_at, time);
+        case 1:
+            return context.getResources().getString(R.string.date_tomorrow_at, time);
+        default:
+            return context.getResources().getString(R.string.date_in_x_days_at, days, time);
+        }
     }
 
     /**
@@ -216,11 +217,8 @@ public class BusTimeAdapter extends BaseAdapter {
      * @param departures
      *            departures to append to the ListView
      */
-    public final void addDepartures(final List<BusDeparture> departures) {
+    private final void addDepartures(final List<BusDeparture> departures) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("addDepartures.start");
-        }
         if (departures != null) {
 
             data.addAll(departures);
@@ -228,10 +226,6 @@ public class BusTimeAdapter extends BaseAdapter {
             continueAppending = false;
         }
         notifyDataSetChanged();
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("addDepartures.end");
-        }
     }
 
     /**
@@ -240,7 +234,7 @@ public class BusTimeAdapter extends BaseAdapter {
      * 
      * @author Olivier Boudet
      */
-    class AppendDeparturesTask extends SafeAsyncTask<Void, Void, List<BusDeparture>> {
+    private final class AppendDeparturesTask extends SafeAsyncTask<Void, Void, List<BusDeparture>> {
 
         /**
          * Creates the task which will display departures information.

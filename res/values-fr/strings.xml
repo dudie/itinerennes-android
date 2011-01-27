@@ -7,4 +7,8 @@
     <string name="location_service_disabled">Le service de localisation n\'est pas activé. Activez le dans les paramètres du système.</string>
     <string name="preload_dialog_title">Premier démarrage</string>
     <string name="advice_preload_data">Vous utilisez ItinéRennes pour la première fois, nous vous recommandons de patienter pendant le chargement de quelques données. Vous pouvez passer cette étape, l\'application sera entièrement fonctionnelle, cependant vous subirez quelques lenteurs lors de l\'utilisation de la carte.</string>
+    <!-- dates -->
+    <string name="date_today_at">aujourd\'hui à %0$s</string>
+    <string name="date_tomorrow_at">demain à %0$s</string>
+    <string name="date_in_x_days_at">dans %0$s jours à %1$s</string>
 </resources>

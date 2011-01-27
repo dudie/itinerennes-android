@@ -7,4 +7,8 @@
     <string name="location_service_disabled">The location service is disabled. Enable it in system parameters.</string>
     <string name="preload_dialog_title">First start</string>
     <string name="advice_preload_data">You are starting ItinéRennes for the first time, its recommened to load some data before using it. You can skip this step, the app will be fully functional, but you will issue some latencies during map scrolling.</string>
+    <!-- dates -->
+    <string name="date_today_at">today at %s</string>
+    <string name="date_tomorrow_at">tomorrow at %s</string>
+    <string name="date_in_x_days_at">in %0$s days at %1$s</string>
 </resources>

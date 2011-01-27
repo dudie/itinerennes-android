@@ -112,10 +112,13 @@ public class OneBusAwayService {
     public Schedule getTripDetails(final String tripId) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getTripDetails.start - routeId={}", tripId);
+            LOGGER.debug("getTripDetails.start - tripId={}", tripId);
         }
         final String urlCall = String.format(ItineRennesConstants.OBA_API_URL, "trip-details",
-                tripId);
+        // TJHU l'agency devrait être retournée par le serveur
+                "1_" +
+                // ajout temporaire
+                        tripId);
 
         final List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(2);
         params.add(new BasicNameValuePair(OBA_INCLUDE_REFERENCE, "true"));

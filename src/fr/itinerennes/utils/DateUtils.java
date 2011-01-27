@@ -2,9 +2,6 @@ package fr.itinerennes.utils;
 
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
-
 /**
  * Some utilities to deal with dates.
  * 
@@ -12,8 +9,11 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
  */
 public final class DateUtils {
 
-    /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(DateUtils.class);
+    /** How many milliseconds in one second. */
+    private static final int ONE_SECOND_IN_MILLISECONDS = 1000;
+
+    /** How many milliseconds in one day. */
+    private static final int ONE_DAY_IN_MILLISECONDS = 86400000;
 
     /**
      * Private constructor to avoid instantiation.
@@ -70,5 +70,17 @@ public final class DateUtils {
     public static boolean isExpired(final long secondsTimestamp, final int ttl) {
 
         return currentTimeSeconds() > secondsTimestamp + ttl;
+    }
+
+    /**
+     * Gets how long is the given time in days.
+     * 
+     * @param timeMillis
+     *            a time in milliseconds
+     * @return the day count the given time includes
+     */
+    public static int getDayCount(final long timeMillis) {
+
+        return (int) (timeMillis / ONE_DAY_IN_MILLISECONDS);
     }
 }
