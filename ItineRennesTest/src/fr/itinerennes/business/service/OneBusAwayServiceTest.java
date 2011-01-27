@@ -1,5 +1,7 @@
 package fr.itinerennes.business.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,6 +9,7 @@ import android.test.AndroidTestCase;
 
 import fr.itinerennes.business.http.oba.OneBusAwayService;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.oba.ArrivalAndDeparture;
 import fr.itinerennes.model.oba.Schedule;
 
 /**
@@ -44,5 +47,26 @@ public class OneBusAwayServiceTest extends AndroidTestCase {
                 .getStopTimes().get(0).getStop().getName(), "Grand Quartier");
 
         LOGGER.info("testGetTripDetails.end");
+    }
+    
+    /**
+     * Test method for {@link OneBusAwayService#getArrivalsAndDeparturesForStop(String)}.
+     */
+    public void testGetArrivalsAndDeparturesForStop() {
+
+        LOGGER.info("testGetArrivalsAndDeparturesForStop.start");
+
+        List<ArrivalAndDeparture> arrivalsAndDepartures = null;
+        try {
+            arrivalsAndDepartures = obaService.getArrivalsAndDeparturesForStop("1_gdquart");
+        } catch (final GenericException e) {
+            LOGGER.error("GenericException", e);
+            fail(e.getMessage());
+        }
+
+        assertNotNull("no arrivals and departures returned by the api", arrivalsAndDepartures);
+        
+
+        LOGGER.info("testGetArrivalsAndDeparturesForStop.end");
     }
 }
