@@ -6,9 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
+import android.content.Intent;
+import android.sax.StartElementListener;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.model.oba.StopTime;
+import fr.itinerennes.ui.activity.BusStationActivity;
 
 /**
  * @author Jérémie Huchet
@@ -108,6 +112,18 @@ public class BusRouteStopsAdapter extends BaseAdapter {
                 DateUtils.FORMAT_ABBREV_RELATIVE));
 
         final ProgressBar progressBar = (ProgressBar) view.findViewById(R.trip_time.progress_bar);
+
+        view.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(final View v) {
+
+                final Intent i = new Intent(view.getContext(), BusStationActivity.class);
+                i.putExtra(BusStationActivity.INTENT_STOP_ID, stopTime.getStop().getId());
+                i.putExtra(BusStationActivity.INTENT_STOP_NAME, stopTime.getStop().getName());
+                view.getContext().startActivity(i);
+            }
+        });
 
         return view;
     }

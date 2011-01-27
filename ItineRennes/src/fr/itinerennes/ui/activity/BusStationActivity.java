@@ -220,7 +220,9 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         int returnCode = MESSAGE_SUCCESS;
 
-        final String stationId = getIntent().getExtras().getString(INTENT_STOP_ID);
+        // TJHU substring '1_' temporairement le temps de modifier les appels vers OTP
+        final String stationId = getIntent().getExtras().getString(INTENT_STOP_ID)
+                .replaceFirst("^1_", "");
 
         try {
             /* Fetching routes informations for this station from the cache or the network. */
@@ -235,7 +237,6 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         try {
             /* Fetching departures informations from the network. */
-
             departures = getBusDepartureService().getStationDepartures(stationId);
             handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
         } catch (final GenericException e) {
