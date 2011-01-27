@@ -72,12 +72,7 @@ public class BusRouteActivity extends ITRContext {
         }
 
         final ImageView routeIcon = (ImageView) findViewById(R.activity_bus_route.route_icon);
-        try {
-            routeIcon.setImageDrawable(getLineIconService().getIcon(routeShortName));
-        } catch (final GenericException e) {
-            // TJHU Auto-generated catch block
-            e.printStackTrace();
-        }
+        routeIcon.setImageDrawable(getLineIconService().getIconOrDefault(this, routeShortName));
 
         final TextView routeName = (TextView) findViewById(R.activity_bus_route.route_name);
         routeName.setText(routeHeadsign);

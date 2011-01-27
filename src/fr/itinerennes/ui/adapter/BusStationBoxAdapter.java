@@ -165,7 +165,8 @@ public class BusStationBoxAdapter implements MapBoxAdapter<ITROverlayItem<BusSta
                         .inflate(R.layout.line_icon, null);
                 final ImageView lineIcon = (ImageView) imageContainer
                         .findViewById(R.station.bus_line_icon);
-                lineIcon.setImageDrawable(lineIconService.getIcon(route.getShortName()));
+                lineIcon.setImageDrawable(lineIconService.getIconOrDefault(
+                        busDetailsView.getContext(), route.getShortName()));
                 iconsView.addView(imageContainer);
             }
         } catch (final GenericException e) {
