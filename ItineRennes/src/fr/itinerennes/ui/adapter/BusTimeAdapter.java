@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.business.service.BusDepartureService;
-import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
 import fr.itinerennes.model.BusStation;
@@ -267,8 +266,7 @@ public class BusTimeAdapter extends BaseAdapter {
         protected List<BusDeparture> doInBackgroundSafely(final Void... params)
                 throws GenericException {
 
-            final DatabaseHelper dbHelper = context.getDatabaseHelper();
-            final BusDepartureService busDepartureService = new BusDepartureService(dbHelper);
+            final BusDepartureService busDepartureService = context.getBusDepartureService();
             List<BusDeparture> departures = null;
 
             departures = busDepartureService.getStationDepartures(station.getId(),

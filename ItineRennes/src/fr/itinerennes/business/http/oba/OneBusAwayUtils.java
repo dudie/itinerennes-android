@@ -50,6 +50,18 @@ public class OneBusAwayUtils {
     }
 
     /**
+     * Convert a timestamp to a Date.
+     * 
+     * @param timestamp
+     * @return the date
+     */
+    public static final Date dateFromTimestamp(final Long timestamp) {
+
+        return dateFromTimestamps(timestamp, (long) 0);
+
+    }
+
+    /**
      * Add two timestamps and returns a Date.
      * 
      * @param timestamp1
