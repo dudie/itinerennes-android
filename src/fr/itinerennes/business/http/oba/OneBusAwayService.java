@@ -13,6 +13,7 @@ import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.http.GenericHttpService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
+import fr.itinerennes.model.oba.Schedule;
 
 /**
  * Manage calls to the OneBusAway API.
@@ -72,7 +73,8 @@ public class OneBusAwayService {
      * @throws GenericException
      *             an error occurred
      */
-    public List<BusStation> getStopsForRoute(final String routeId) throws GenericException {
+    public List<BusStation> getStopsForRoute(final String routeId, final String direction)
+            throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("stopsForRoute.start - routeId={}", routeId);
@@ -84,12 +86,41 @@ public class OneBusAwayService {
         final HttpGet request = createOBARequest(urlCall, params);
 
         final List<BusStation> stops = httpService.execute(request,
-                new StopsForRouteHttpResponseHandler());
+                new StopsForRouteHttpResponseHandler(direction));
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("stopsForRoute.end");
         }
         return stops;
+    }
+
+    /**
+     * Gets the trip details.
+     * 
+     * @param tripId
+     *            the identifier of the trip
+     * @return the schedule for the given trip
+     * @throws GenericException
+     *             an error occurred
+     */
+    public Schedule getTripDetails(final String tripId) throws GenericException {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getTripDetails.start - routeId={}", tripId);
+        }
+        final String urlCall = String.format(ItineRennesConstants.OBA_API_URL, "trip-details",
+                tripId);
+
+        final List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(2);
+        final HttpGet request = createOBARequest(urlCall, params);
+
+        final Schedule schedule = httpService
+                .execute(request, new TripDetailsHttpResponseHandler());
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("stopsForRoute.end");
+        }
+        return schedule;
     }
 
 }
