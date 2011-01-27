@@ -9,8 +9,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
@@ -136,10 +134,6 @@ public class LineIconService extends AbstractService {
         final Bitmap icon = Bitmap.createBitmap(46, 46, Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(icon);
 
-        final Paint p = new Paint();
-        p.setColor(Color.RED);
-        canvas.drawLine(0, 0, 46, 46, p);
-
         final LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,
                 LayoutParams.FILL_PARENT);
 
@@ -151,7 +145,7 @@ public class LineIconService extends AbstractService {
         text.setText(line);
         text.setGravity(Gravity.CENTER);
         text.setLayoutParams(params);
-        text.layout(0, 0, 0, 0);
+        text.layout(0, 0, 46, 46);
 
         final RelativeLayout layout = new RelativeLayout(context);
         layout.addView(text);
