@@ -21,7 +21,6 @@ import fr.itinerennes.R;
 import fr.itinerennes.business.service.BusDepartureService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
-import fr.itinerennes.model.BusStation;
 import fr.itinerennes.ui.activity.BusStationActivity;
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.tasks.SafeAsyncTask;
@@ -56,27 +55,27 @@ public class BusTimeAdapter extends BaseAdapter {
     /** Global instance of Layout inflater. */
     private LayoutInflater inflater = null;
 
-    /** Bus station displayed in the activity. */
-    private final BusStation station;
+    /** The identifier of the bus station displayed in the activity. */
+    private final String stopId;
 
     /**
      * Constructor.
      * 
      * @param c
      *            The android context
-     * @param busStation
-     *            Station to display
+     * @param stopId
+     *            the identifier of the displayed station
      * @param departures
      *            departures to display in the list
      * @param routesIcons
      *            list of routes icons
      */
-    public BusTimeAdapter(final ITRContext c, final BusStation busStation,
+    public BusTimeAdapter(final ITRContext c, final String stopId,
             final List<BusDeparture> departures, final HashMap<String, Drawable> routesIcons) {
 
         this.data = departures;
         this.context = c;
-        this.station = busStation;
+        this.stopId = stopId;
         this.routesIcons = routesIcons;
         this.inflater = LayoutInflater.from(context);
     }
@@ -263,8 +262,8 @@ public class BusTimeAdapter extends BaseAdapter {
             final BusDepartureService busDepartureService = context.getBusDepartureService();
             List<BusDeparture> departures = null;
 
-            departures = busDepartureService.getStationDepartures(station.getId(),
-                    data.get(data.size() - 1).getDepartureDate());
+            departures = busDepartureService.getStationDepartures(stopId, data.get(data.size() - 1)
+                    .getDepartureDate());
 
             return departures;
         }

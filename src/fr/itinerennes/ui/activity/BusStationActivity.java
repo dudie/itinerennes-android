@@ -27,7 +27,6 @@ import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusDeparture;
 import fr.itinerennes.model.BusRoute;
-import fr.itinerennes.model.BusStation;
 import fr.itinerennes.ui.adapter.BusTimeAdapter;
 
 /**
@@ -43,26 +42,13 @@ public class BusStationActivity extends ITRContext implements Runnable {
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(BusStationActivity.class);
 
-    /** The progress dialog while the activity is loading. */
-    private AlertDialog progressDialog;
+    /** Intent parameter name for the station identifier. */
+    public static final String INTENT_STOP_ID = String.format("%s.stopId",
+            BusStationActivity.class.getName());
 
-    /** The progress bar displayed in the progress dialog. */
-    private ProgressBar progressBar;
-
-    /** The diplsayed station. */
-    private BusStation station;
-
-    /** The list of routes for this station. */
-    private List<BusRoute> busRoutes;
-
-    /** The list of route icon. */
-    private final HashMap<String, Drawable> routesIcon = new HashMap<String, Drawable>();
-
-    /** The list of departures for those routes. */
-    private List<BusDeparture> departures;
-
-    /** Handler for messages from thread which fetch information from the cache or the network. */
-    private Handler handler;
+    /** Intent parameter name for the station name. */
+    public static final String INTENT_STOP_NAME = String.format("%s.stopName",
+            BusStationActivity.class.getName());
 
     /** Message to send to handler in case of a successful download of informations. */
     private static final int MESSAGE_SUCCESS = 0;
@@ -82,8 +68,38 @@ public class BusStationActivity extends ITRContext implements Runnable {
     /** The intial size of the progress bar. */
     private static final int INITIAL_PROGRESS_MAX = 30;
 
+    /** The identifier of the displayed station. */
+    private String stopId;
+
+    /** The name of the displayed station. */
+    private String stopName;
+
+    /** The progress dialog while the activity is loading. */
+    private AlertDialog progressDialog;
+
+    /** The progress bar displayed in the progress dialog. */
+    private ProgressBar progressBar;
+
+    /** The list of routes for this station. */
+    private List<BusRoute> busRoutes;
+
+    /** The list of route icon. */
+    private final HashMap<String, Drawable> routesIcon = new HashMap<String, Drawable>();
+
+    /** The list of departures for those routes. */
+    private List<BusDeparture> departures;
+
+    /** Handler for messages from thread which fetch information from the cache or the network. */
+    private Handler handler;
+
     /**
-     * {@inheritDoc}
+     * Creates the activity.
+     * <ul>
+     * <li>Loads the main layout</li>
+     * <li>Sets the station name</li>
+     * <li>Set up a message handler to trigger actions when loading</li>
+     * <li></li>
+     * </ul>
      * 
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
@@ -96,6 +112,14 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_station);
+
+        // retrieve intent parameters
+        stopId = getIntent().getStringExtra(INTENT_STOP_ID);
+        stopName = getIntent().getStringExtra(INTENT_STOP_NAME);
+
+        /* Sets the station name. */
+        final TextView name = (TextView) findViewById(R.station.name);
+        name.setText(stopName);
 
         handler = new Handler() {
 
@@ -128,7 +152,8 @@ public class BusStationActivity extends ITRContext implements Runnable {
     }
 
     /**
-     * {@inheritDoc}
+     * When the activity is resumed, show a loading dialog box and start a thread updating the list
+     * view's content.
      * 
      * @see android.app.Activity#onResume()
      */
@@ -144,13 +169,10 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
     }
 
+    /**
+     * Updates the content of the screen.
+     */
     private void updateUI() {
-
-        /* Displaying station name. */
-        if (station != null) {
-            final TextView name = (TextView) findViewById(R.station.name);
-            name.setText(station.getName());
-        }
 
         /* Displaying routes icons. */
         if (busRoutes != null) {
@@ -171,7 +193,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
         /* Displaying departures dates. */
         if (departures != null) {
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
-            listTimes.setAdapter(new BusTimeAdapter(this, station, departures, routesIcon));
+            listTimes.setAdapter(new BusTimeAdapter(this, stopId, departures, routesIcon));
             listTimes.setOnItemClickListener(new OnItemClickListener() {
 
                 @Override
@@ -181,10 +203,12 @@ public class BusStationActivity extends ITRContext implements Runnable {
                     final Intent i = new Intent(getBaseContext(), BusRouteActivity.class);
                     final BusDeparture departure = (BusDeparture) parent.getAdapter().getItem(
                             position);
-                    i.putExtra("stopName", station.getName());
-                    i.putExtra("routeHeadsign", departure.getSimpleHeadsign());
-                    i.putExtra("routeShortName", departure.getRouteShortName());
-                    i.putExtra("tripId", departure.getTripId());
+                    i.putExtra(BusRouteActivity.INTENT_STOP_ID, stopId);
+                    i.putExtra(BusRouteActivity.INTENT_ROUTE_HEADSIGN,
+                            departure.getSimpleHeadsign());
+                    i.putExtra(BusRouteActivity.INTENT_ROUTE_SHORT_NAME,
+                            departure.getRouteShortName());
+                    i.putExtra(BusRouteActivity.INTENT_TRIP_ID, departure.getTripId());
                     startActivity(i);
                 }
             });
@@ -196,18 +220,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         int returnCode = MESSAGE_SUCCESS;
 
-        final String stationId = getIntent().getExtras().getString("item");
-
-        try {
-            /* Fetching station from the cache or the network. */
-            station = getBusService().getStation(stationId);
-            handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
-        } catch (final GenericException e) {
-            LOGGER.debug(
-                    String.format("Can't load station informations for the station %s.", stationId),
-                    e);
-            returnCode = MESSAGE_FAILURE;
-        }
+        final String stationId = getIntent().getExtras().getString(INTENT_STOP_ID);
 
         try {
             /* Fetching routes informations for this station from the cache or the network. */

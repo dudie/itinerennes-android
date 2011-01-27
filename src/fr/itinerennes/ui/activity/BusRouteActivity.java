@@ -26,6 +26,25 @@ public class BusRouteActivity extends ITRContext {
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BusRouteActivity.class);
 
     /**
+     * Intent parameter name for the stop identifier where to scroll in the list of displayed trip
+     * departures.
+     */
+    public static final String INTENT_STOP_ID = String.format("%s.stopId",
+            BusRouteActivity.class.getName());
+
+    /** Intent parameter name for the route headsign. */
+    public static final String INTENT_ROUTE_HEADSIGN = String.format("%s.routeHeadsign",
+            BusRouteActivity.class.getName());
+
+    /** Intent parameter name for the route short name. */
+    public static final String INTENT_ROUTE_SHORT_NAME = String.format("%s.routeShortName",
+            BusRouteActivity.class.getName());
+
+    /** Intent parameter name for the trip identifier. */
+    public static final String INTENT_TRIP_ID = String.format("%s.tripId",
+            BusRouteActivity.class.getName());
+
+    /**
      * Creates the main screen.
      * 
      * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -39,10 +58,10 @@ public class BusRouteActivity extends ITRContext {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_route);
 
-        final String stopName = getIntent().getExtras().getString("stopName");
-        final String routeHeadsign = getIntent().getExtras().getString("routeHeadsign");
-        final String routeShortName = getIntent().getExtras().getString("routeShortName");
-        final String tripId = getIntent().getExtras().getString("tripId");
+        final String stopId = getIntent().getExtras().getString(INTENT_STOP_ID);
+        final String routeHeadsign = getIntent().getExtras().getString(INTENT_ROUTE_HEADSIGN);
+        final String routeShortName = getIntent().getExtras().getString(INTENT_ROUTE_SHORT_NAME);
+        final String tripId = getIntent().getExtras().getString(INTENT_TRIP_ID);
 
         Schedule schedule = null;
         try {
@@ -67,7 +86,7 @@ public class BusRouteActivity extends ITRContext {
         final BusRouteStopsAdapter routeStopsAdapter = new BusRouteStopsAdapter(this,
                 schedule.getStopTimes());
         listRouteStops.setAdapter(routeStopsAdapter);
-        listRouteStops.setSelectionFromTop(routeStopsAdapter.getIndexForStopNamed(stopName), 50);
+        listRouteStops.setSelectionFromTop(routeStopsAdapter.getIndexForStopId(stopId), 50);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");

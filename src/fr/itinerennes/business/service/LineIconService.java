@@ -123,6 +123,31 @@ public class LineIconService extends AbstractService {
     }
 
     /**
+     * Gets an icon for the given line.
+     * <p>
+     * If no icon was found, or if an error occurs a default icon is returned.
+     * 
+     * @param context
+     *            a context
+     * @param line
+     *            the route short name you want the icon
+     * @return an icon for the given route short name
+     */
+    public final Drawable getIconOrDefault(final Context context, final String line) {
+
+        Drawable icon = null;
+        try {
+            icon = getIcon(line);
+        } catch (final GenericException e) {
+            LOGGER.error("unable to load the icon for the line {}", line);
+        }
+        if (icon == null) {
+            icon = getDefaultIcon(context, line);
+        }
+        return icon;
+    }
+
+    /**
      * Returns a mock icon. This method always returns a displayable drawable.
      * 
      * @param line

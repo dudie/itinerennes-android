@@ -115,15 +115,15 @@ public class BusRouteStopsAdapter extends BaseAdapter {
     /**
      * Gets the index of the item representing a stop time at the given stop.
      * 
-     * @param stopName
-     *            the name of the stop you want the index
+     * @param stopId
+     *            the identifier of the stop you want the index
      * @return the position of the requested stop.
      */
-    public final int getIndexForStopNamed(final String stopName) {
+    public final int getIndexForStopId(final String stopId) {
 
         final int length = arrivalAndDepartures.size();
         for (int i = 0; i < length; i++) {
-            if (arrivalAndDepartures.get(i).getStop().getName().equalsIgnoreCase(stopName)) {
+            if (arrivalAndDepartures.get(i).getStop().getId().equalsIgnoreCase(stopId)) {
                 return i;
             }
         }
