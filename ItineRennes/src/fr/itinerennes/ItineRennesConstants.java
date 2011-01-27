@@ -103,12 +103,12 @@ public class ItineRennesConstants {
      */
 
     /** The keolis instant update time in seconds. */
-    public static final int KEOLIS_INSTANT_UPDATE_TIME = 60;
+    public static final int KEOLIS_INSTANT_UPDATE_TIME = 60; // 1 minute
 
     /** Minimum time between two calls to a keolis getAll*Stations() calls. */
-    public static final int MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS = 3600;
+    public static final int MIN_TIME_BETWEEN_KEOLIS_GET_ALL_CALLS = 604800; // 7 days
 
     /** The time to live of an explored bounding box : {@value #GEO_CACHE_TTL}. */
-    public static final int GEO_CACHE_TTL = 7776000;
+    public static final int GEO_CACHE_TTL = 7776000; // 3 months
 
 }

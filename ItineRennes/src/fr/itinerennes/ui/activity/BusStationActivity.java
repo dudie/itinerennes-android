@@ -249,15 +249,9 @@ public class BusStationActivity extends ITRContext implements Runnable {
             final int increment = (progressBar.getMax() - progressBar.getProgress())
                     / busRoutes.size();
             for (final BusRoute busRoute : busRoutes) {
-                try {
-                    routesIcon.put(busRoute.getShortName(),
-                            getLineIconService().getIcon(busRoute.getShortName()));
-                    handler.sendMessage(handler.obtainMessage(MESSAGE_INCREMENT_PROGRESS,
-                            increment, 0));
-                } catch (final GenericException e) {
-                    LOGGER.error(String.format("Line icon for the route %s can not be fetched.",
-                            busRoute.getShortName()), e);
-                }
+                routesIcon.put(busRoute.getShortName(),
+                        getLineIconService().getIconOrDefault(this, busRoute.getShortName()));
+                handler.sendMessage(handler.obtainMessage(MESSAGE_INCREMENT_PROGRESS, increment, 0));
             }
         }
 
