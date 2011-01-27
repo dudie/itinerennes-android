@@ -5,6 +5,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.Activity;
 
+import fr.itinerennes.business.http.oba.OneBusAwayService;
 import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.business.service.BusDepartureService;
 import fr.itinerennes.business.service.BusRouteService;
@@ -48,6 +49,9 @@ public abstract class ITRContext extends Activity {
 
     /** The line icon service. */
     private LineIconService lineIconService;
+
+    /** The OneBusAway service. */
+    private OneBusAwayService oneBusAwayService;
 
     /**
      * Close the database helper. If this method is derived, you must ensure to call
@@ -166,5 +170,18 @@ public abstract class ITRContext extends Activity {
             lineIconService = new LineIconService(getDatabaseHelper());
         }
         return lineIconService;
+    }
+
+    /**
+     * Gets a reference to the OneBusAway service.
+     * 
+     * @return a reference to the OneBusAway service
+     */
+    public final OneBusAwayService getOneBusAwayService() {
+
+        if (oneBusAwayService == null) {
+            oneBusAwayService = new OneBusAwayService();
+        }
+        return oneBusAwayService;
     }
 }

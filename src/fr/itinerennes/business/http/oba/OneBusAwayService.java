@@ -13,6 +13,7 @@ import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.http.GenericHttpService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
+import fr.itinerennes.model.oba.ArrivalAndDeparture;
 import fr.itinerennes.model.oba.Schedule;
 
 /**
@@ -25,6 +26,8 @@ public class OneBusAwayService {
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(OneBusAwayService.class);
+
+    private static final String OBA_INCLUDE_REFERENCE = "includeReferences";
 
     /** The HTTP client. */
     private final GenericHttpService httpService = new GenericHttpService();
@@ -83,10 +86,13 @@ public class OneBusAwayService {
                 routeId);
 
         final List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(2);
+        params.add(new BasicNameValuePair(OBA_INCLUDE_REFERENCE, "false"));
+
         final HttpGet request = createOBARequest(urlCall, params);
 
-        final List<BusStation> stops = httpService.execute(request,
-                new StopsForRouteHttpResponseHandler(direction));
+        // final List<BusStation> stops = httpService.execute(request,
+        // new StopsForRouteHttpResponseHandler(direction));
+        final List<BusStation> stops = null;
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("stopsForRoute.end");
@@ -112,15 +118,48 @@ public class OneBusAwayService {
                 tripId);
 
         final List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(2);
+        params.add(new BasicNameValuePair(OBA_INCLUDE_REFERENCE, "true"));
+
         final HttpGet request = createOBARequest(urlCall, params);
 
         final Schedule schedule = httpService
                 .execute(request, new TripDetailsHttpResponseHandler());
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("stopsForRoute.end");
+            LOGGER.debug("getTripDetails.end");
         }
         return schedule;
+    }
+
+    /**
+     * Gets arrivals and departures for stop.
+     * 
+     * @param stopId
+     *            id of the stop to get arrivals and departures
+     * @return the list of arrivals and departures
+     * @throws GenericException
+     */
+    public List<ArrivalAndDeparture> getArrivalsAndDeparturesForStop(final String stopId)
+            throws GenericException {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getArrivalsAndDeparturesForStop.start - stopId={}", stopId);
+        }
+        final String urlCall = String.format(ItineRennesConstants.OBA_API_URL,
+                "arrivals-and-departures-for-stop", stopId);
+
+        final List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(2);
+        params.add(new BasicNameValuePair(OBA_INCLUDE_REFERENCE, "false"));
+
+        final HttpGet request = createOBARequest(urlCall, params);
+
+        final List<ArrivalAndDeparture> arrivalsAndDepartures = httpService.execute(request,
+                new ArrivalsAndDeparturesForStopHttpResponseHandler());
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getArrivalsAndDeparturesForStop.end");
+        }
+        return arrivalsAndDepartures;
     }
 
 }

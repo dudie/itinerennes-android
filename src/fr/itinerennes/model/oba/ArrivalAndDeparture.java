@@ -29,7 +29,7 @@ public class ArrivalAndDeparture {
     private String stopId;
 
     /** The index of the stop into the sequence of stops that make up the trip for this arrival. */
-    private String stopSequence;
+    private int stopSequence;
 
     /**
      * The route short name that potentially overrides the route short name in the referenced route
@@ -54,6 +54,9 @@ public class ArrivalAndDeparture {
 
     /** Scheduled departure date/time. */
     private Date scheduledDepartureTime;
+
+    /** The distance of the arriving transit vehicle from the stop, in meters. */
+    private Double distanceFromStop;
 
     /**
      * Gets the routeId.
@@ -144,7 +147,7 @@ public class ArrivalAndDeparture {
      * 
      * @return the stopSequence
      */
-    public final String getStopSequence() {
+    public final int getStopSequence() {
 
         return stopSequence;
     }
@@ -155,7 +158,7 @@ public class ArrivalAndDeparture {
      * @param stopSequence
      *            the stopSequence to set
      */
-    public final void setStopSequence(final String stopSequence) {
+    public final void setStopSequence(final int stopSequence) {
 
         this.stopSequence = stopSequence;
     }
@@ -263,6 +266,61 @@ public class ArrivalAndDeparture {
     public final void setScheduledDepartureTime(final Date scheduledDepartureTime) {
 
         this.scheduledDepartureTime = scheduledDepartureTime;
+    }
+
+    /**
+     * Gets the distanceFromStop.
+     * 
+     * @return the distanceFromStop
+     */
+    public Double getDistanceFromStop() {
+
+        return distanceFromStop;
+    }
+
+    /**
+     * Sets the distanceFromStop.
+     * 
+     * @param distanceFromStop
+     *            the distanceFromStop to set
+     */
+    public void setDistanceFromStop(Double distanceFromStop) {
+
+        this.distanceFromStop = distanceFromStop;
+    }
+
+    /*
+     * (non-javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("ArrivalAndDeparture [routeId=");
+        builder.append(routeId);
+        builder.append(", tripId=");
+        builder.append(tripId);
+        builder.append(", serviceDate=");
+        builder.append(serviceDate);
+        builder.append(", stopId=");
+        builder.append(stopId);
+        builder.append(", stopSequence=");
+        builder.append(stopSequence);
+        builder.append(", routeShortName=");
+        builder.append(routeShortName);
+        builder.append(", routeLongName=");
+        builder.append(routeLongName);
+        builder.append(", tripHeadsign=");
+        builder.append(tripHeadsign);
+        builder.append(", scheduledArrivalTime=");
+        builder.append(scheduledArrivalTime);
+        builder.append(", scheduledDepartureTime=");
+        builder.append(scheduledDepartureTime);
+        builder.append(", distanceFromStop=");
+        builder.append(distanceFromStop);
+        builder.append("]");
+        return builder.toString();
     }
 
 }
