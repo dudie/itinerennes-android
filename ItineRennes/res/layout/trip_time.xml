@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal"
+	android:layout_height="fill_parent" 
+	android:layout_width="fill_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
+	
+	<TextView android:id="@+trip_time/departure_time" 
+	    android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center" />
+        
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="vertical"
+	    android:layout_height="fill_parent" 
+	    android:layout_width="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1">
+	
+	    <TextView android:id="@+trip_time/stop_name" 
+	        android:layout_height="wrap_content"
+	        android:layout_width="wrap_content"
+            android:textStyle="bold"
+	        android:layout_weight="1" />
+	        
+	        
+	    <TextView android:id="@+trip_time/relative_time" 
+	        android:layout_height="wrap_content"
+	        android:layout_width="wrap_content"
+	        android:layout_weight="1" />
+
+	</LinearLayout>
+	        
+    <ProgressBar android:id="@+trip_time/progress_bar"
+       android:layout_height="wrap_content" 
+       android:layout_width="wrap_content"
+       android:visibility="gone" />
+
+</LinearLayout>

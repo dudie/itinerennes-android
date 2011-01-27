@@ -9,12 +9,15 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -90,6 +93,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.start");
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_station);
 
@@ -168,6 +172,22 @@ public class BusStationActivity extends ITRContext implements Runnable {
         if (departures != null) {
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
             listTimes.setAdapter(new BusTimeAdapter(this, station, departures, routesIcon));
+            listTimes.setOnItemClickListener(new OnItemClickListener() {
+
+                @Override
+                public void onItemClick(final AdapterView<?> parent, final View view,
+                        final int position, final long id) {
+
+                    final Intent i = new Intent(getBaseContext(), BusRouteActivity.class);
+                    final BusDeparture departure = (BusDeparture) parent.getAdapter().getItem(
+                            position);
+                    i.putExtra("stopName", station.getName());
+                    i.putExtra("routeHeadsign", departure.getSimpleHeadsign());
+                    i.putExtra("routeShortName", departure.getRouteShortName());
+                    i.putExtra("tripId", departure.getTripId());
+                    startActivity(i);
+                }
+            });
         }
     }
 

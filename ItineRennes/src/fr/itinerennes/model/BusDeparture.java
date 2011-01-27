@@ -65,6 +65,16 @@ public class BusDeparture {
     }
 
     /**
+     * Gets the route headsign truncated to not display the route shortname.
+     * 
+     * @return the route headsign truncated to not display the route shortname
+     */
+    public final String getSimpleHeadsign() {
+
+        return headsign.replaceFirst("^.* \\| ", "");
+    }
+
+    /**
      * Sets the route id.
      * 
      * @param id

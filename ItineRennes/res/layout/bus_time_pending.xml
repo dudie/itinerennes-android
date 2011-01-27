@@ -3,11 +3,12 @@
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:gravity="center"
-	android:layout_margin="5dp">
+	android:padding="10dp">
 	
 	<ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginRight="10dp"/>
         
 	<TextView android:id="@+station/bus_time_pending" 
 	   android:text="@string/loading" 
