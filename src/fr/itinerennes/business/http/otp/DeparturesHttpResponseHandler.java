@@ -137,6 +137,7 @@ public final class DeparturesHttpResponseHandler extends HttpResponseHandler<Lis
         departure.setRouteShortName(jsonObject.getJSONObject("route").optString("shortName"));
         departure.setHeadsign(jsonObject.optString("headsign"));
         departure.setDepartureDate(OTPUtils.convertJsonStringToDate(jsonObject.optString("date")));
+        departure.setTripId(jsonObject.optString("trip"));
 
         return departure;
     }
