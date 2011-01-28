@@ -30,12 +30,10 @@ import fr.itinerennes.ui.views.MapListenerWrapper;
  * @see MapListenerWrapper
  * @param <T>
  *            the type of the items of this overlay
- * @param <D>
- *            the type of the bundled data with the item
  * @author Jérémie Huchet
  */
-public class ITRItemizedOverlay<T extends ITROverlayItem<D>, D> extends ItemizedOverlay<T>
-        implements MapListener, ItemizedOverlay.OnItemGestureListener<T> {
+public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> implements
+        MapListener, ItemizedOverlay.OnItemGestureListener<T> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ItemizedOverlay.class);
@@ -56,10 +54,10 @@ public class ITRItemizedOverlay<T extends ITROverlayItem<D>, D> extends Itemized
     protected Point curScreenCoords = new Point();
 
     /** The adapter to use to provide items. */
-    protected ItemizedOverlayAdapter<T, D> adapter;
+    protected ItemizedOverlayAdapter<T> adapter;
 
     /** The async task in charge for managing overlay updates. */
-    private UpdateOverlayTask<T, D> overlayUpdater = null;
+    private UpdateOverlayTask<T> overlayUpdater = null;
 
     /**
      * Creates the itemized overlay.
@@ -69,7 +67,7 @@ public class ITRItemizedOverlay<T extends ITROverlayItem<D>, D> extends Itemized
      * @param adapter
      *            the adapter this overlay should use to update its content when the map moves
      */
-    public ITRItemizedOverlay(final ITRContext context, final ItemizedOverlayAdapter<T, D> adapter) {
+    public ITRItemizedOverlay(final ITRContext context, final ItemizedOverlayAdapter<T> adapter) {
 
         super(context, new ArrayList<T>(), null);
         this.context = context;
@@ -232,7 +230,7 @@ public class ITRItemizedOverlay<T extends ITROverlayItem<D>, D> extends Itemized
         if (null != overlayUpdater) {
             overlayUpdater.cancel(true);
         }
-        overlayUpdater = new UpdateOverlayTask<T, D>(context, osmView, this, adapter);
+        overlayUpdater = new UpdateOverlayTask<T>(context, osmView, this, adapter);
         overlayUpdater.execute(osmView.getBoundingBox());
     }
 }

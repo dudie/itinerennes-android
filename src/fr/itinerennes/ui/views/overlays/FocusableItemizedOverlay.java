@@ -20,20 +20,18 @@ import fr.itinerennes.ui.views.MapBoxView;
  * 
  * @param <T>
  *            the type of the items of this overlay
- * @param <D>
- *            the type of the bundled data with each items of this overlay
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> extends
-        ITRItemizedOverlay<T, D> implements FocusableOverlay<D> {
+public class FocusableItemizedOverlay<T extends SelectableMarker<D>, D> extends
+        ITRItemizedOverlay<T> implements FocusableOverlay<D> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(FocusableItemizedOverlay.class);
 
     /** The adapter to use to display the focused item. */
-    private final MapBoxAdapter<ITROverlayItem<D>, D> boxDisplayAdaper;
+    private final MapBoxAdapter<Marker<D>, D> boxDisplayAdaper;
 
     /**
      * Creates the focusable itemized overlay.
@@ -46,8 +44,8 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
      *            the adapter to use to display selected marker information
      */
     public FocusableItemizedOverlay(final ITRContext context,
-            final ItemizedOverlayAdapter<T, D> itemProviderAdapter,
-            final MapBoxAdapter<ITROverlayItem<D>, D> boxDisplayAdaper) {
+            final ItemizedOverlayAdapter<T> itemProviderAdapter,
+            final MapBoxAdapter<Marker<D>, D> boxDisplayAdaper) {
 
         // items are set using setItems() / addItem() / removeItem()
         // OnItemGestureListener is implemented by this class and shouldn't be overridden as is
@@ -225,7 +223,7 @@ public class FocusableItemizedOverlay<T extends FocusableOverlayItem<D>, D> exte
      * @see fr.itinerennes.ui.views.overlays.FocusableOverlay#getMapBoxAdapter()
      */
     @Override
-    public MapBoxAdapter<ITROverlayItem<D>, D> getMapBoxAdapter() {
+    public MapBoxAdapter<Marker<D>, D> getMapBoxAdapter() {
 
         return boxDisplayAdaper;
     }

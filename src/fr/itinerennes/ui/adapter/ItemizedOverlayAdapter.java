@@ -3,23 +3,20 @@ package fr.itinerennes.ui.adapter;
 import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
-import org.slf4j.Marker;
 
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.views.ITRMapView;
-import fr.itinerennes.ui.views.overlays.ITROverlayItem;
+import fr.itinerennes.ui.views.overlays.Marker;
 
 /**
- * Classes implementing this interface are bridges between a {@link ITRMapView} and the
- * {@link Marker} displayed.
+ * Classes implementing this interface are bridges between a {@link ITRMapView} and the marker
+ * displayed.
  * 
- * @param <D>
- *            the type of the items of this overlay
- * @param <D>
- *            the type of overlay items this adapter returns
+ * @param <T>
+ *            a subclass of Marker
  * @author Jérémie Huchet
  */
-public interface ItemizedOverlayAdapter<T extends ITROverlayItem<D>, D> {
+public interface ItemizedOverlayAdapter<T extends Marker<?>> {
 
     /**
      * This method is called by the MapView when it wants to find the markers located in the given

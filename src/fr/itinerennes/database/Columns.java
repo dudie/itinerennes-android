@@ -374,4 +374,39 @@ public final class Columns {
          */
         String ICON = "icon";
     }
+
+    /**
+     * Columns for a bookmark.
+     * 
+     * @author Jérémie Huchet
+     */
+    public interface BookmarksColumns extends BaseColumns {
+
+        /** The name of the bookmarks table. */
+        String BOOKMARKS_TABLE_NAME = "bookmarks";
+
+        /**
+         * The label of the bookmark.
+         * <P>
+         * Type: STRING
+         * </P>
+         */
+        String LABEL = "label";
+
+        /**
+         * The type of the resource the bookmark represents.
+         * <P>
+         * Type: STRING
+         * </P>
+         */
+        String TYPE = "type";
+
+        /**
+         * The identifier of the resource the bookmark represents.
+         * <P>
+         * Type: STRING
+         * </P>
+         */
+        String ID = "id";
+    }
 }

@@ -3,6 +3,7 @@ package fr.itinerennes.ui.views.overlays;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import android.graphics.Color;
 import android.widget.ToggleButton;
 
 import fr.itinerennes.R;
@@ -14,8 +15,8 @@ import fr.itinerennes.ui.adapter.BikeStationBoxAdapter;
 import fr.itinerennes.ui.adapter.BusStationBoxAdapter;
 import fr.itinerennes.ui.adapter.StationItemizedOverlayAdapter;
 import fr.itinerennes.ui.adapter.SubwayStationBoxAdapter;
-import fr.itinerennes.ui.views.MapBoxView;
 import fr.itinerennes.ui.views.ITRMapView;
+import fr.itinerennes.ui.views.MapBoxView;
 
 /**
  * An helper class to get the map overlays.
@@ -40,13 +41,13 @@ public class MapOverlayHelper implements OverlayConstants {
     private GroupFocusOverlay<FocusableOverlay<?>> groupFocus;
 
     /** The bus stations focusable overlay. */
-    private FocusableItemizedOverlay<FocusableOverlayItem<BusStation>, BusStation> busStationOverlay;
+    private FocusableItemizedOverlay<SelectableMarker<BusStation>, BusStation> busStationOverlay;
 
     /** The bike stations focusable overlay. */
-    private FocusableItemizedOverlay<FocusableOverlayItem<BikeStation>, BikeStation> bikeStationOverlay;
+    private FocusableItemizedOverlay<SelectableMarker<BikeStation>, BikeStation> bikeStationOverlay;
 
     /** The subway stations focusable overlay. */
-    private FocusableItemizedOverlay<FocusableOverlayItem<SubwayStation>, SubwayStation> subwayStationOverlay;
+    private FocusableItemizedOverlay<SelectableMarker<SubwayStation>, SubwayStation> subwayStationOverlay;
 
     /** The my location overlay. */
     private LocationOverlay locationOverlay;
@@ -89,6 +90,11 @@ public class MapOverlayHelper implements OverlayConstants {
         if (match(LOCATION, mask) && !match(LOCATION, current)) {
             this.map.getOverlays().add(getLocationOverlay());
         }
+        if (match(PATH, mask) && !match(PATH, current)) {
+            final PolylineOverlay path = new PolylineOverlay(Color.RED, context);
+            path.setPolyline("sjtdHzkfIzJzOfT~M");
+            this.map.getOverlays().add(path);
+        }
     }
 
     public void hide(final int mask) {
@@ -117,7 +123,7 @@ public class MapOverlayHelper implements OverlayConstants {
      * 
      * @return the bus station focusable overlay
      */
-    public final synchronized FocusableItemizedOverlay<FocusableOverlayItem<BusStation>, BusStation> getBusStationOverlay() {
+    public final synchronized FocusableItemizedOverlay<SelectableMarker<BusStation>, BusStation> getBusStationOverlay() {
 
         if (null == busStationOverlay) {
             final StationItemizedOverlayAdapter<BusStation> busItemAdapter = new StationItemizedOverlayAdapter<BusStation>(
@@ -126,7 +132,7 @@ public class MapOverlayHelper implements OverlayConstants {
                     context.getBusService(), context.getBusRouteService(),
                     context.getLineIconService());
 
-            busStationOverlay = new FocusableItemizedOverlay<FocusableOverlayItem<BusStation>, BusStation>(
+            busStationOverlay = new FocusableItemizedOverlay<SelectableMarker<BusStation>, BusStation>(
                     context, busItemAdapter, busDisplayAdaper);
         }
 
@@ -138,7 +144,7 @@ public class MapOverlayHelper implements OverlayConstants {
      * 
      * @return the bike station focusable overlay
      */
-    public final synchronized FocusableItemizedOverlay<FocusableOverlayItem<BikeStation>, BikeStation> getBikeStationOverlay() {
+    public final synchronized FocusableItemizedOverlay<SelectableMarker<BikeStation>, BikeStation> getBikeStationOverlay() {
 
         if (null == bikeStationOverlay) {
             final StationItemizedOverlayAdapter<BikeStation> bikeItemAdapter = new StationItemizedOverlayAdapter<BikeStation>(
@@ -146,7 +152,7 @@ public class MapOverlayHelper implements OverlayConstants {
             final BikeStationBoxAdapter bikeDisplayAdaper = new BikeStationBoxAdapter(
                     context.getBikeService());
 
-            bikeStationOverlay = new FocusableItemizedOverlay<FocusableOverlayItem<BikeStation>, BikeStation>(
+            bikeStationOverlay = new FocusableItemizedOverlay<SelectableMarker<BikeStation>, BikeStation>(
                     context, bikeItemAdapter, bikeDisplayAdaper);
         }
 
@@ -158,14 +164,14 @@ public class MapOverlayHelper implements OverlayConstants {
      * 
      * @return the subway station focusable overlay
      */
-    public final synchronized FocusableItemizedOverlay<FocusableOverlayItem<SubwayStation>, SubwayStation> getSubwayStationOverlay() {
+    public final synchronized FocusableItemizedOverlay<SelectableMarker<SubwayStation>, SubwayStation> getSubwayStationOverlay() {
 
         if (null == subwayStationOverlay) {
             final StationItemizedOverlayAdapter<SubwayStation> subwayItemAdapter = new StationItemizedOverlayAdapter<SubwayStation>(
                     context, context.getSubwayService());
             final SubwayStationBoxAdapter subwayDisplayAdaper = new SubwayStationBoxAdapter();
 
-            subwayStationOverlay = new FocusableItemizedOverlay<FocusableOverlayItem<SubwayStation>, SubwayStation>(
+            subwayStationOverlay = new FocusableItemizedOverlay<SelectableMarker<SubwayStation>, SubwayStation>(
                     context, subwayItemAdapter, subwayDisplayAdaper);
         }
 

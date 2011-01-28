@@ -78,7 +78,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         this.map = (ITRMapView) findViewById(R.id.map);
 
         this.map.getController().getMapOverlayHelper()
-                .show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS | LOCATION);
+                .show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS | LOCATION | PATH);
         this.myLocation = map.getController().getMapOverlayHelper().getLocationOverlay();
 
         map.setMultiTouchControls(true);
@@ -98,9 +98,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         if (sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
             final PreloadDialog preload = new PreloadDialog(this);
             preload.show();
-            final SharedPreferences.Editor edit = sharedPreferences.edit();
-            edit.putBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, false);
-            edit.commit();
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -175,7 +172,16 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     @Override
     public final boolean onCreateOptionsMenu(final Menu menu) {
 
-        final MenuItem about = menu.add(Menu.NONE, MenuOptions.ABOUT, Menu.NONE, R.string.about);
+        // BOOKMARKS
+        final MenuItem favourites = menu.add(Menu.NONE, MenuOptions.BOOKMARKS, Menu.NONE,
+                R.string.menu_bookmarks);
+        favourites.setIcon(android.R.drawable.btn_star);
+        final Intent favActivityIntent = new Intent(this, BookmarksActivity.class);
+        favourites.setIntent(favActivityIntent);
+
+        // ABOUT
+        final MenuItem about = menu.add(Menu.NONE, MenuOptions.ABOUT, Menu.NONE,
+                R.string.menu_about);
         about.setIcon(android.R.drawable.ic_menu_help);
         about.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 
@@ -223,6 +229,16 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     }
 
     /**
+     * Triggered when the user clicks on a star in the mapbox view.
+     * 
+     * @param button
+     *            the button view on which the event was detected
+     */
+    public final void onStarButtonClick(final View button) {
+
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see android.app.Activity#onCreateDialog(int)
@@ -247,7 +263,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             break;
         case Dialogs.ABOUT:
             final AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
-            aboutBuilder.setTitle(R.string.about).setCancelable(true);
+            aboutBuilder.setTitle(R.string.menu_about).setCancelable(true);
             final View aboutView = getLayoutInflater().inflate(R.layout.about, null);
             aboutBuilder.setView(aboutView);
             aboutBuilder.setIcon(android.R.drawable.ic_dialog_info);
@@ -292,6 +308,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         /** "About" menu option. */
         public static final int ABOUT = 0;
+
+        /** "Favourites" menu option. */
+        public static final int BOOKMARKS = 1;
     }
 
     /**
