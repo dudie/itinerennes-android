@@ -27,21 +27,13 @@ public class SelectableMarker<D> extends Marker<D> {
     }
 
     /**
-     * Should be implemented by subclasses to defines item behavior when it wins focus.
+     * Should be implemented by subclasses to defines item behavior when its selected state changes.
      * 
+     * @param selected
+     *            the new selected state of the item
      * @return true will stop the event propagation and means the event has been completely handled
      */
-    public boolean onFocus() {
-
-        return false;
-    }
-
-    /**
-     * Should be implemented by subclasses to defines item behavior when it looses focus.
-     * 
-     * @return true will stop the event propagation and means the event has been completely handled
-     */
-    public boolean onBlur() {
+    public boolean onSelectStateChange(final boolean selected) {
 
         return false;
     }

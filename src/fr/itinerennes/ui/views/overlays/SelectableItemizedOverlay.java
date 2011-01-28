@@ -33,6 +33,9 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
     /** The adapter to use to display the focused item. */
     private final MapBoxAdapter<Marker<D>, D> boxDisplayAdaper;
 
+    /** The target view where additional informations are displayed when an item is selected. */
+    private final MapBoxView additionalInformationView;
+
     /**
      * Creates the focusable itemized overlay.
      * 
@@ -45,59 +48,44 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
      */
     public SelectableItemizedOverlay(final ITRContext context,
             final ItemizedOverlayAdapter<T> itemProviderAdapter,
-            final MapBoxAdapter<Marker<D>, D> boxDisplayAdaper) {
+            final MapBoxAdapter<Marker<D>, D> boxDisplayAdaper,
+            final MapBoxView additionalInformationView) {
 
         // items are set using setItems() / addItem() / removeItem()
         // OnItemGestureListener is implemented by this class and shouldn't be overridden as is
         // triggers more precise event helpers (onFocusHelper() and onBlurHelper())
         super(context, itemProviderAdapter);
         this.boxDisplayAdaper = boxDisplayAdaper;
+        this.additionalInformationView = additionalInformationView;
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#onSelect(fr.itinerennes.ui.views.MapBoxView)
+     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#onSelectStateChanged(boolean)
      */
     @Override
-    public final boolean onSelect(final MapBoxView additionalInformationView) {
+    public boolean onSelectStateChanged(final boolean selected) {
 
-        final T item = mItemList.get(focusedItemIndex);
-        if (null != item) {
-            onFocusHelper(additionalInformationView, item);
-        }
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#onDeselect(fr.itinerennes.ui.views.MapBoxView)
-     */
-    @Override
-    public final boolean onDeselect(final MapBoxView additionalInformationView) {
-
-        // this case should never occurs : if the overlays has loosed focus, then it should win
-        // focus before loosing it again
-        if (NOT_SET != prevFocusedItemIndex) {
-            final T item = mItemList.get(prevFocusedItemIndex);
-            onBlurHelper(additionalInformationView, item);
-        }
-        prevFocusedItemIndex = NOT_SET;
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#onKeepSelect(fr.itinerennes.ui.views.MapBoxView)
-     */
-    @Override
-    public final boolean onKeepSelect(final MapBoxView additionalInformationView) {
-
-        final T item = mItemList.get(focusedItemIndex);
-        if (null != item) {
-            onFocusHelper(additionalInformationView, item);
+        if (selected) {
+            if (focusedItemIndex != NOT_SET) {
+                final T item = mItemList.get(focusedItemIndex);
+                if (null != item) {
+                    additionalInformationView.updateInBackground(boxDisplayAdaper, item);
+                    item.onSelectStateChange(selected);
+                }
+            }
+        } else {
+            // this case should never occurs : if the overlays has loosed focus, then it should win
+            // focus before loosing it again
+            if (NOT_SET != prevFocusedItemIndex) {
+                final T item = mItemList.get(prevFocusedItemIndex);
+                if (null != item) {
+                    additionalInformationView.setVisibility(View.GONE);
+                    item.onSelectStateChange(selected);
+                }
+            }
+            prevFocusedItemIndex = NOT_SET;
         }
         return false;
     }
@@ -126,50 +114,6 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
         } else {
             prevFocusedItemIndex = focusedItemIndex;
             focusedItemIndex = NOT_SET;
-        }
-    }
-
-    /**
-     * Helper function to handle focus events.
-     * 
-     * @param additionalInformationView
-     *            the view containing additional informations about the focused item
-     * @param item
-     *            the newly focused item
-     */
-    protected void onFocusHelper(final MapBoxView additionalInformationView, final T item) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onFocusHelper.start - itemId={}", item.getId());
-        }
-
-        additionalInformationView.updateInBackground(boxDisplayAdaper, item);
-        item.onFocus();
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onFocusHelper.end - itemId={}", item.getId());
-        }
-    }
-
-    /**
-     * Helper function to handle blur events.
-     * 
-     * @param additionalInformationView
-     *            the view containing additional informations about the focused item
-     * @param item
-     *            the newly focused item
-     */
-    protected void onBlurHelper(final MapBoxView additionalInformationView, final T item) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onBlurHelper.start - itemId={}", item.getId());
-        }
-
-        additionalInformationView.setVisibility(View.GONE);
-        item.onBlur();
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onBlurHelpe.end - itemId={}", item.getId());
         }
     }
 
@@ -215,17 +159,6 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
         } else if (focusedItemIndex == index) {
             this.curScreenCoords.set(curScreenCoords.x, curScreenCoords.y);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#getMapBoxAdapter()
-     */
-    @Override
-    public MapBoxAdapter<Marker<D>, D> getMapBoxAdapter() {
-
-        return boxDisplayAdaper;
     }
 
     /**
