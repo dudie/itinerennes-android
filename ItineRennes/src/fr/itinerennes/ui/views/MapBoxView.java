@@ -5,17 +5,20 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
-import fr.itinerennes.ui.views.overlays.FocusableOverlayItem;
-import fr.itinerennes.ui.views.overlays.ITROverlayItem;
+import fr.itinerennes.ui.views.overlays.Marker;
+import fr.itinerennes.ui.views.overlays.SelectableMarker;
 
 /**
  * The map box view component is a simple {@link LinearLayout} with common functionalities to handle
@@ -37,6 +40,12 @@ public class MapBoxView extends LinearLayout {
     /** The task used to fill the map box view with additional information in background. */
     private DisplayMapBoxTask<?> mapBoxDisplayer = null;
 
+    private String bookmarkType;
+
+    private String bookmarkId;
+
+    private String bookmarkLabel;
+
     /**
      * @param context
      */
@@ -53,6 +62,31 @@ public class MapBoxView extends LinearLayout {
 
         super(context, attrs);
         setClickable(true);
+    }
+
+    @Override
+    protected final void onFinishInflate() {
+
+        super.onFinishInflate();
+
+        final ToggleButton favButton = (ToggleButton) findViewById(R.id.map_box_toggle_bookmark);
+        favButton.setVisibility(VISIBLE);
+        favButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
+
+                if (null != bookmarkId && null != bookmarkType && null != bookmarkLabel) {
+                    if (isChecked) {
+                        ((ITRContext) getContext()).getBookmarksService().setStarred(bookmarkType,
+                                bookmarkId, bookmarkLabel);
+                    } else {
+                        ((ITRContext) getContext()).getBookmarksService().setNotStarred(
+                                bookmarkType, bookmarkId);
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -184,8 +218,8 @@ public class MapBoxView extends LinearLayout {
      * @param item
      *            the item to be displayed
      */
-    public final <D> void updateInBackground(final MapBoxAdapter<ITROverlayItem<D>, D> adapter,
-            final FocusableOverlayItem<D> item) {
+    public final <D> void updateInBackground(final MapBoxAdapter<Marker<D>, D> adapter,
+            final SelectableMarker<D> item) {
 
         if (null != mapBoxDisplayer) {
             mapBoxDisplayer.cancel(true);
@@ -214,4 +248,51 @@ public class MapBoxView extends LinearLayout {
             }
         }
     }
+
+    /**
+     * Sets the star button state.
+     * 
+     * @param starred
+     *            true to highlight the star icon
+     */
+    public final void setStarred(final boolean starred) {
+
+        final ToggleButton favButton = (ToggleButton) findViewById(R.id.map_box_toggle_bookmark);
+        favButton.setVisibility(VISIBLE);
+        favButton.setChecked(starred);
+    }
+
+    /**
+     * Sets the bookmarkType.
+     * 
+     * @param bookmarkType
+     *            the bookmarkType to set
+     */
+    public final void setBookmarkType(final String bookmarkType) {
+
+        this.bookmarkType = bookmarkType;
+    }
+
+    /**
+     * Sets the bookmarkId.
+     * 
+     * @param bookmarkId
+     *            the bookmarkId to set
+     */
+    public final void setBookmarkId(final String bookmarkId) {
+
+        this.bookmarkId = bookmarkId;
+    }
+
+    /**
+     * Sets the bookmarkLabel.
+     * 
+     * @param bookmarkLabel
+     *            the bookmarkLabel to set
+     */
+    public final void setBookmarkLabel(final String bookmarkLabel) {
+
+        this.bookmarkLabel = bookmarkLabel;
+    }
+
 }

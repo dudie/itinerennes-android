@@ -21,4 +21,7 @@ public interface OverlayConstants {
 
     /** The my location overlay. */
     int LOCATION = 8;
+
+    /** A path overlay. */
+    int PATH = 16;
 }

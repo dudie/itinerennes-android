@@ -7,6 +7,7 @@ import android.app.Activity;
 
 import fr.itinerennes.business.http.oba.OneBusAwayService;
 import fr.itinerennes.business.service.BikeService;
+import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.business.service.BusDepartureService;
 import fr.itinerennes.business.service.BusRouteService;
 import fr.itinerennes.business.service.BusService;
@@ -52,6 +53,9 @@ public abstract class ITRContext extends Activity {
 
     /** The OneBusAway service. */
     private OneBusAwayService oneBusAwayService;
+
+    /** The bookmarks service. */
+    private BookmarkService bookmarksService;
 
     /**
      * Close the database helper. If this method is derived, you must ensure to call
@@ -183,5 +187,13 @@ public abstract class ITRContext extends Activity {
             oneBusAwayService = new OneBusAwayService();
         }
         return oneBusAwayService;
+    }
+
+    public final BookmarkService getBookmarksService() {
+
+        if (bookmarksService == null) {
+            bookmarksService = new BookmarkService(getDatabaseHelper());
+        }
+        return bookmarksService;
     }
 }

@@ -15,13 +15,13 @@ import fr.itinerennes.R;
 import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
-import fr.itinerennes.ui.views.overlays.ITROverlayItem;
+import fr.itinerennes.ui.views.overlays.Marker;
 
 /**
  * @author Jérémie Huchet
  */
 public class BikeStationBoxAdapter implements
-        MapBoxAdapter<ITROverlayItem<BikeStation>, BikeStation> {
+        MapBoxAdapter<Marker<BikeStation>, BikeStation> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -47,7 +47,7 @@ public class BikeStationBoxAdapter implements
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxTitle(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final String getBoxTitle(final ITROverlayItem<BikeStation> item) {
+    public final String getBoxTitle(final Marker<BikeStation> item) {
 
         return item.getData().getName();
     }
@@ -58,7 +58,7 @@ public class BikeStationBoxAdapter implements
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxIcon(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final int getBoxIcon(final ITROverlayItem<BikeStation> item) {
+    public final int getBoxIcon(final Marker<BikeStation> item) {
 
         return R.drawable.bike_marker_icon;
     }
@@ -71,7 +71,7 @@ public class BikeStationBoxAdapter implements
      */
     @Override
     public final View getBoxDetailsView(final Context context,
-            final ITROverlayItem<BikeStation> item) {
+            final Marker<BikeStation> item) {
 
         final LayoutInflater inflater = LayoutInflater.from(context);
         final LinearLayout bikeInfo = (LinearLayout) inflater.inflate(R.layout.bike_station_box,
@@ -86,7 +86,7 @@ public class BikeStationBoxAdapter implements
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#backgroundLoad(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final BikeStation backgroundLoad(final ITROverlayItem<BikeStation> item)
+    public final BikeStation backgroundLoad(final Marker<BikeStation> item)
             throws GenericException {
 
         final BikeStation upToDateStation = bikeService.getFreshStation(item.getData().getId());
@@ -100,7 +100,7 @@ public class BikeStationBoxAdapter implements
      *      java.lang.Object)
      */
     @Override
-    public final String getBoxTitle(final ITROverlayItem<BikeStation> item, final BikeStation data) {
+    public final String getBoxTitle(final Marker<BikeStation> item, final BikeStation data) {
 
         final String title;
         if (data == null) {
@@ -118,7 +118,7 @@ public class BikeStationBoxAdapter implements
      *      java.lang.Object)
      */
     @Override
-    public final int getBoxIcon(final ITROverlayItem<BikeStation> item, final BikeStation data) {
+    public final int getBoxIcon(final Marker<BikeStation> item, final BikeStation data) {
 
         return getBoxIcon(item);
     }
@@ -129,11 +129,11 @@ public class BikeStationBoxAdapter implements
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateBoxDetailsView(android.view.View,
-     *      fr.itinerennes.ui.views.overlays.ITROverlayItem, java.lang.Object)
+     *      fr.itinerennes.ui.views.overlays.Marker, java.lang.Object)
      */
     @Override
     public final void updateBoxDetailsView(final View bikeInfo,
-            final ITROverlayItem<BikeStation> item, final BikeStation bikeStation) {
+            final Marker<BikeStation> item, final BikeStation bikeStation) {
 
         if (bikeStation == null) {
             // an error occurred during backgroundLoad()
@@ -162,7 +162,7 @@ public class BikeStationBoxAdapter implements
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#beforeStartActivity(fr.itinerennes.ui.views.overlays.Marker)
      */
     @Override
-    public final void beforeStartActivity(final ITROverlayItem<BikeStation> item) {
+    public final void beforeStartActivity(final Marker<BikeStation> item) {
 
         // nothing to do
     }
@@ -178,7 +178,7 @@ public class BikeStationBoxAdapter implements
      */
     @Override
     public final Intent getOnClickIntent(final Context packageContext,
-            final ITROverlayItem<BikeStation> item) {
+            final Marker<BikeStation> item) {
 
         return null;
     }

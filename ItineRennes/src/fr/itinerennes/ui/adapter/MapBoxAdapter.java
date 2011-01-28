@@ -1,7 +1,5 @@
 package fr.itinerennes.ui.adapter;
 
-import org.slf4j.Marker;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,7 +7,7 @@ import android.view.View;
 
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
-import fr.itinerennes.ui.views.overlays.ITROverlayItem;
+import fr.itinerennes.ui.views.overlays.Marker;
 
 /**
  * Common base interface of implementation for an adapter that can be used to fill the MapBox when a
@@ -21,7 +19,7 @@ import fr.itinerennes.ui.views.overlays.ITROverlayItem;
  *            the type of data the adapter uses
  * @author Jérémie Huchet
  */
-public interface MapBoxAdapter<T extends ITROverlayItem<?>, D> {
+public interface MapBoxAdapter<T extends Marker<?>, D> {
 
     /**
      * This method should return the title to display in the information box instantaneously.
@@ -66,36 +64,36 @@ public interface MapBoxAdapter<T extends ITROverlayItem<?>, D> {
 
     /**
      * This method should return the title to display in the information box after
-     * {@link #backgroundLoad(Marker)} was executed.
+     * {@link #backgroundLoad(T)} was executed.
      * 
      * @param item
      *            the focused item
      * @param data
-     *            the preloaded data with {@link #backgroundLoad(Marker)}
+     *            the preloaded data with {@link #backgroundLoad(T)}
      * @return the title to display in the information box
      */
     String getBoxTitle(T item, D data);
 
     /**
      * This method should return the icon to display in the information box after
-     * {@link #backgroundLoad(Marker)} was executed.
+     * {@link #backgroundLoad(T)} was executed.
      * 
      * @param item
      *            the focused item
      * @param data
-     *            the preloaded data with {@link #backgroundLoad(Marker)}
+     *            the preloaded data with {@link #backgroundLoad(T)}
      * @return the resource id of the drawable to display in the information box
      */
     int getBoxIcon(T item, D data);
 
     /**
-     * This method is triggered after {@link #backgroundLoad(Marker)} was executed. So you are able
-     * to update its content with the data loaded in background.
+     * This method is triggered after {@link #backgroundLoad(T)} was executed. So you are able to
+     * update its content with the data loaded in background.
      * 
      * @param item
      *            the focused item
      * @param data
-     *            the preloaded data with {@link #backgroundLoad(Marker)}
+     *            the preloaded data with {@link #backgroundLoad(T)}
      * @param boxDetailsView
      */
     void updateBoxDetailsView(View boxDetailsView, T item, final D data);

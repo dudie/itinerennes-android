@@ -10,20 +10,20 @@ import org.osmdroid.views.overlay.OverlayItem;
  *            the type of the bundled data with the item
  * @author Jérémie Huchet
  */
-public class ITROverlayItem<D> extends OverlayItem {
+public class Marker<D> extends OverlayItem {
 
     /** The bundled data with this item. */
     private D data;
 
     /**
-     * Creates an item for an {@link ITROverlayItem}.
+     * Creates an item for an {@link Marker}.
      * 
      * @param id
      *            an identifier for the item
      * @param location
      *            the location of the item
      */
-    public ITROverlayItem(final String id, final GeoPoint location) {
+    public Marker(final String id, final GeoPoint location) {
 
         super(id, null, location);
     }

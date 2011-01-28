@@ -61,6 +61,6 @@ public interface FocusableOverlay<D> extends WrappableOverlay {
      * 
      * @return the map box adapter to use to display item additional information
      */
-    MapBoxAdapter<ITROverlayItem<D>, D> getMapBoxAdapter();
+    MapBoxAdapter<Marker<D>, D> getMapBoxAdapter();
 
 }

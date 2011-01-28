@@ -5,10 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 
+import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.activity.ITRContext;
@@ -88,5 +91,15 @@ public class PreloadDialog extends AlertDialog {
     protected void onStart() {
 
         loader.execute(BBOX_WORLD);
+    }
+
+    @Override
+    protected void onStop() {
+
+        final SharedPreferences sharedPreferences = context.getSharedPreferences(
+                ITRPrefs.PREFS_NAME, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, false);
+        edit.commit();
     }
 }

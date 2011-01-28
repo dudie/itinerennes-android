@@ -11,7 +11,7 @@ import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.views.overlays.ITRItemizedOverlay;
-import fr.itinerennes.ui.views.overlays.ITROverlayItem;
+import fr.itinerennes.ui.views.overlays.Marker;
 
 /**
  * A class derivating from ASyncTask to refresh an overlay in background.
@@ -19,7 +19,7 @@ import fr.itinerennes.ui.views.overlays.ITROverlayItem;
  * @author Olivier Boudet
  * @author Jérémie Huchet
  */
-public class UpdateOverlayTask<T extends ITROverlayItem<D>, D> extends
+public class UpdateOverlayTask<T extends Marker<?>> extends
         SafeAsyncTask<BoundingBoxE6, Void, List<T>> {
 
     /** The event logger. */
@@ -30,10 +30,10 @@ public class UpdateOverlayTask<T extends ITROverlayItem<D>, D> extends
     private final MapView osmView;
 
     /** The map overlay to update. */
-    private final ITRItemizedOverlay<T, D> overlay;
+    private final ITRItemizedOverlay<T> overlay;
 
     /** The map marker adapter to use. */
-    private final ItemizedOverlayAdapter<T, D> mapMarkerAdapter;
+    private final ItemizedOverlayAdapter<T> mapMarkerAdapter;
 
     /**
      * Constructor.
@@ -46,8 +46,7 @@ public class UpdateOverlayTask<T extends ITROverlayItem<D>, D> extends
      *            the map marker adapter to use
      */
     public UpdateOverlayTask(final ITRContext context, final MapView osmView,
-            final ITRItemizedOverlay<T, D> overlay,
-            final ItemizedOverlayAdapter<T, D> mapMarkerAdapter) {
+            final ITRItemizedOverlay<T> overlay, final ItemizedOverlayAdapter<T> mapMarkerAdapter) {
 
         super(context);
         this.osmView = osmView;

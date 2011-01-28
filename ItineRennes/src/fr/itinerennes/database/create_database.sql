@@ -85,3 +85,11 @@ CREATE TABLE "line_icons" (
     "icon" BLOB
 );
 CREATE UNIQUE INDEX "index_unique_line_id" on line_icons (line_id ASC);
+
+CREATE TABLE "bookmarks" (
+    "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "label" TEXT NOT NULL,
+    "type" TEXT NOT NULL, 
+    "id" TEXT NOT NULL
+);
+CREATE UNIQUE INDEX "bookmarks_idx" on bookmarks (type ASC, id ASC);

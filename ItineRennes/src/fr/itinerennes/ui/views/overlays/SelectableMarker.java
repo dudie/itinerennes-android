@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable;
  *            the type of the bundled data with the item
  * @author Jérémie Huchet
  */
-public class FocusableOverlayItem<D> extends ITROverlayItem<D> {
+public class SelectableMarker<D> extends Marker<D> {
 
     /**
      * Create an item for a {@link FocusableOverlay}.
@@ -21,7 +21,7 @@ public class FocusableOverlayItem<D> extends ITROverlayItem<D> {
      * @param location
      *            coordinates defining the location of the marker on the map
      */
-    public FocusableOverlayItem(final String title, final GeoPoint location) {
+    public SelectableMarker(final String title, final GeoPoint location) {
 
         super(title, location);
     }
