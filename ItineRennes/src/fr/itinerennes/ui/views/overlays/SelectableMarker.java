@@ -5,7 +5,7 @@ import org.osmdroid.util.GeoPoint;
 import android.graphics.drawable.Drawable;
 
 /**
- * Base class for {@link FocusableOverlay} items.
+ * Base class for {@link SelectableOverlay} items.
  * 
  * @param <D>
  *            the type of the bundled data with the item
@@ -14,7 +14,7 @@ import android.graphics.drawable.Drawable;
 public class SelectableMarker<D> extends Marker<D> {
 
     /**
-     * Create an item for a {@link FocusableOverlay}.
+     * Create an item for a {@link SelectableOverlay}.
      * 
      * @param title
      *            the title of the item

@@ -5,16 +5,15 @@ import java.util.List;
 import org.osmdroid.util.BoundingBoxE6;
 
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.Station;
 
 /**
  * Providers implementing this interface will be able to serve requests for stations.
  * 
  * @param <T>
- *            the type of station handled by the provider
+ *            the type of marker handled by the provider
  * @author Jérémie Huchet
  */
-public interface StationProvider<T extends Station> {
+public interface MarkerProvider<T> {
 
     /**
      * Gets a station by its identifier.

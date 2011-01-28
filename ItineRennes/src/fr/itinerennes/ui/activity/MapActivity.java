@@ -46,6 +46,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     /** The map view. */
     private ITRMapView map;
 
+    /** The map box view. */
+    private View mapBox;
+
     /** The my location overlay. */
     private LocationOverlay myLocation;
 
@@ -76,6 +79,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         setContentView(R.layout.main_map);
 
         this.map = (ITRMapView) findViewById(R.id.map);
+        this.mapBox = findViewById(R.id.map_box);
 
         this.map.getController().getMapOverlayHelper()
                 .show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS | LOCATION | PATH);

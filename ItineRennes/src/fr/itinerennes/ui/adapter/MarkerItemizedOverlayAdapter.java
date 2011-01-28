@@ -7,7 +7,7 @@ import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import fr.itinerennes.business.service.StationProvider;
+import fr.itinerennes.business.service.MarkerProvider;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.Station;
 import fr.itinerennes.ui.activity.ITRContext;
@@ -16,30 +16,30 @@ import fr.itinerennes.ui.views.overlays.SelectableMarker;
 /**
  * @author Jérémie Huchet
  */
-public class StationItemizedOverlayAdapter<T extends Station> implements
+public class MarkerItemizedOverlayAdapter<T extends Station> implements
         ItemizedOverlayAdapter<SelectableMarker<T>> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
-            .getLogger(StationItemizedOverlayAdapter.class);
+            .getLogger(MarkerItemizedOverlayAdapter.class);
 
     /** The itinerennes application context. */
     private final ITRContext context;
 
     /** The station provider. */
-    private final StationProvider<T> stationProvider;
+    private final MarkerProvider<T> stationProvider;
 
     /**
      * Creates a map marker adapter to display stations markers retrieved using a
-     * {@link StationProvider}.
+     * {@link MarkerProvider}.
      * 
      * @param context
      *            the itinerennes application context
      * @param stationProvider
      *            the station provider to use
      */
-    public StationItemizedOverlayAdapter(final ITRContext context,
-            final StationProvider<T> stationProvider) {
+    public MarkerItemizedOverlayAdapter(final ITRContext context,
+            final MarkerProvider<T> stationProvider) {
 
         this.context = context;
         this.stationProvider = stationProvider;

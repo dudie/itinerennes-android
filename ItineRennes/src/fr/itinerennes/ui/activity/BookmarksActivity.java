@@ -28,11 +28,13 @@ public class BookmarksActivity extends ITRContext implements BookmarksColumns {
 
     /**
      * Loads the bookmarks and display them in a list view.
+     * <p>
+     * {@inheritDoc}
      * 
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected final void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmarks);
