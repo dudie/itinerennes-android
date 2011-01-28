@@ -4,10 +4,8 @@ import org.osmdroid.views.MapView;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import android.content.Context;
 import android.view.MotionEvent;
-
-import fr.itinerennes.ui.activity.ITRContext;
-import fr.itinerennes.ui.views.MapBoxView;
 
 /**
  * An OSM overlay wrapping multiple overlays and allowing only one of them to be focused.
@@ -15,8 +13,8 @@ import fr.itinerennes.ui.views.MapBoxView;
  * Delegates every {@link OpenStreetMapViewOverlay} method calls to each wrapped overlay.
  * 
  * @param <T>
- *            a class implementing {@link SelectableOverlay}. <strong> To ensure normal behavior, you
- *            should also provide a subclass of {@link OpenStreetMapViewOverlay}</strong>
+ *            a class implementing {@link SelectableOverlay}. <strong> To ensure normal behavior,
+ *            you should also provide a subclass of {@link OpenStreetMapViewOverlay}</strong>
  * @author Jérémie Huchet
  */
 public class GroupSelectOverlay<T extends SelectableOverlay<?>> extends GroupOverlay<T> {
@@ -25,21 +23,15 @@ public class GroupSelectOverlay<T extends SelectableOverlay<?>> extends GroupOve
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(GroupSelectOverlay.class);
 
-    /** The view containing additional informations about the focused item. */
-    private final MapBoxView focusedItemAdditionalInfo;
-
     /**
-     * Creates the overlay wrapper.
+     * Create the group focus overlay.
      * 
      * @param context
-     *            the itinerennes application context
-     * @param focusedItemAdditionalInfo
-     *            the view containing additional informations about the focused item
+     *            the context
      */
-    public GroupSelectOverlay(final ITRContext context, final MapBoxView focusedItemAdditionalInfo) {
+    public GroupSelectOverlay(final Context context) {
 
         super(context);
-        this.focusedItemAdditionalInfo = focusedItemAdditionalInfo;
     }
 
     /**
@@ -89,7 +81,7 @@ public class GroupSelectOverlay<T extends SelectableOverlay<?>> extends GroupOve
                     overlay.setSelected(false);
                 }
             }
-            overlayKeepingFocus.onKeepSelect(focusedItemAdditionalInfo);
+            overlayKeepingFocus.onSelectStateChanged(true);
         } else {
             // set NOT_FOCUSED overlays not winning focus and not loosing focus (see ITR-43)
             for (final T overlay : overlays) {
@@ -99,11 +91,11 @@ public class GroupSelectOverlay<T extends SelectableOverlay<?>> extends GroupOve
             }
             // trigger onBlur before onFocus !!
             if (overlayLoosingFocus != null) {
-                overlayLoosingFocus.onDeselect(focusedItemAdditionalInfo);
+                overlayLoosingFocus.onSelectStateChanged(false);
             }
 
             if (overlayWinningFocus != null) {
-                overlayWinningFocus.onSelect(focusedItemAdditionalInfo);
+                overlayWinningFocus.onSelectStateChanged(true);
             }
         }
 
