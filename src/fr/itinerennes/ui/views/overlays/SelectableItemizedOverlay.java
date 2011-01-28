@@ -23,12 +23,12 @@ import fr.itinerennes.ui.views.MapBoxView;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class FocusableItemizedOverlay<T extends SelectableMarker<D>, D> extends
-        ITRItemizedOverlay<T> implements FocusableOverlay<D> {
+public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
+        ITRItemizedOverlay<T> implements SelectableOverlay<D> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
-            .getLogger(FocusableItemizedOverlay.class);
+            .getLogger(SelectableItemizedOverlay.class);
 
     /** The adapter to use to display the focused item. */
     private final MapBoxAdapter<Marker<D>, D> boxDisplayAdaper;
@@ -43,7 +43,7 @@ public class FocusableItemizedOverlay<T extends SelectableMarker<D>, D> extends
      * @param boxDisplayAdaper
      *            the adapter to use to display selected marker information
      */
-    public FocusableItemizedOverlay(final ITRContext context,
+    public SelectableItemizedOverlay(final ITRContext context,
             final ItemizedOverlayAdapter<T> itemProviderAdapter,
             final MapBoxAdapter<Marker<D>, D> boxDisplayAdaper) {
 
@@ -57,10 +57,10 @@ public class FocusableItemizedOverlay<T extends SelectableMarker<D>, D> extends
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.FocusableOverlay#onFocus(fr.itinerennes.ui.views.MapBoxView)
+     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#onSelect(fr.itinerennes.ui.views.MapBoxView)
      */
     @Override
-    public final boolean onFocus(final MapBoxView additionalInformationView) {
+    public final boolean onSelect(final MapBoxView additionalInformationView) {
 
         final T item = mItemList.get(focusedItemIndex);
         if (null != item) {
@@ -72,10 +72,10 @@ public class FocusableItemizedOverlay<T extends SelectableMarker<D>, D> extends
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.FocusableOverlay#onBlur(fr.itinerennes.ui.views.MapBoxView)
+     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#onDeselect(fr.itinerennes.ui.views.MapBoxView)
      */
     @Override
-    public final boolean onBlur(final MapBoxView additionalInformationView) {
+    public final boolean onDeselect(final MapBoxView additionalInformationView) {
 
         // this case should never occurs : if the overlays has loosed focus, then it should win
         // focus before loosing it again
@@ -90,10 +90,10 @@ public class FocusableItemizedOverlay<T extends SelectableMarker<D>, D> extends
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.FocusableOverlay#onKeepFocus(fr.itinerennes.ui.views.MapBoxView)
+     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#onKeepSelect(fr.itinerennes.ui.views.MapBoxView)
      */
     @Override
-    public final boolean onKeepFocus(final MapBoxView additionalInformationView) {
+    public final boolean onKeepSelect(final MapBoxView additionalInformationView) {
 
         final T item = mItemList.get(focusedItemIndex);
         if (null != item) {
@@ -105,7 +105,7 @@ public class FocusableItemizedOverlay<T extends SelectableMarker<D>, D> extends
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.FocusableOverlay#hasFocus()
+     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#hasFocus()
      */
     @Override
     public final boolean hasFocus() {
@@ -116,10 +116,10 @@ public class FocusableItemizedOverlay<T extends SelectableMarker<D>, D> extends
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.FocusableOverlay#setFocused(boolean)
+     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#setSelected(boolean)
      */
     @Override
-    public void setFocused(final boolean hasFocus) {
+    public void setSelected(final boolean hasFocus) {
 
         if (hasFocus) {
             focusedItemIndex = prevFocusedItemIndex;
@@ -220,7 +220,7 @@ public class FocusableItemizedOverlay<T extends SelectableMarker<D>, D> extends
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.FocusableOverlay#getMapBoxAdapter()
+     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#getMapBoxAdapter()
      */
     @Override
     public MapBoxAdapter<Marker<D>, D> getMapBoxAdapter() {

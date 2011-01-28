@@ -17,14 +17,14 @@ import fr.itinerennes.model.Station;
 import fr.itinerennes.utils.DateUtils;
 
 /**
- * Manages commons functionalities offered by {@link StationProvider}s using {@link KeolisService}.
+ * Manages commons functionalities offered by {@link MarkerProvider}s using {@link KeolisService}.
  * 
  * @param <T>
  *            the type of stations returned by the service
  * @author Jérémie Huchet
  */
 public abstract class AbstractKeolisStationProvider<T extends Station> extends AbstractService
-        implements StationProvider<T> {
+        implements MarkerProvider<T> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -56,7 +56,7 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.service.StationProvider#getStation(java.lang.String)
+     * @see fr.itinerennes.business.service.MarkerProvider#getStation(java.lang.String)
      */
     @Override
     public final T getStation(final String id) throws GenericException {
@@ -126,7 +126,7 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.service.StationProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
+     * @see fr.itinerennes.business.service.MarkerProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
      */
     @Override
     public final List<T> getStations(final BoundingBoxE6 bbox) throws GenericException {

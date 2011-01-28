@@ -15,15 +15,15 @@ import fr.itinerennes.ui.views.MapBoxView;
  * Delegates every {@link OpenStreetMapViewOverlay} method calls to each wrapped overlay.
  * 
  * @param <T>
- *            a class implementing {@link FocusableOverlay}. <strong> To ensure normal behavior, you
+ *            a class implementing {@link SelectableOverlay}. <strong> To ensure normal behavior, you
  *            should also provide a subclass of {@link OpenStreetMapViewOverlay}</strong>
  * @author Jérémie Huchet
  */
-public class GroupFocusOverlay<T extends FocusableOverlay<?>> extends GroupOverlay<T> {
+public class GroupSelectOverlay<T extends SelectableOverlay<?>> extends GroupOverlay<T> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
-            .getLogger(GroupFocusOverlay.class);
+            .getLogger(GroupSelectOverlay.class);
 
     /** The view containing additional informations about the focused item. */
     private final MapBoxView focusedItemAdditionalInfo;
@@ -36,7 +36,7 @@ public class GroupFocusOverlay<T extends FocusableOverlay<?>> extends GroupOverl
      * @param focusedItemAdditionalInfo
      *            the view containing additional informations about the focused item
      */
-    public GroupFocusOverlay(final ITRContext context, final MapBoxView focusedItemAdditionalInfo) {
+    public GroupSelectOverlay(final ITRContext context, final MapBoxView focusedItemAdditionalInfo) {
 
         super(context);
         this.focusedItemAdditionalInfo = focusedItemAdditionalInfo;
@@ -45,8 +45,8 @@ public class GroupFocusOverlay<T extends FocusableOverlay<?>> extends GroupOverl
     /**
      * {@inheritDoc}
      * <p>
-     * Additionnaly, it triggers focus events ({@link FocusableOverlay#onBlur()},
-     * {@link FocusableOverlay#onFocus()}).
+     * Additionnaly, it triggers focus events ({@link SelectableOverlay#onBlur()},
+     * {@link SelectableOverlay#onFocus()}).
      * 
      * @see org.andnav.osm.views.overlay.OpenStreetMapViewOverlay#onSingleTapUp(android.view.MotionEvent,
      *      org.andnav.osm.views.OpenStreetMapView)
@@ -86,24 +86,24 @@ public class GroupFocusOverlay<T extends FocusableOverlay<?>> extends GroupOverl
             // set NOT_FOCUSED overlays not keeping focus (see ITR-43)
             for (final T overlay : overlays) {
                 if (!overlay.equals(overlayKeepingFocus)) {
-                    overlay.setFocused(false);
+                    overlay.setSelected(false);
                 }
             }
-            overlayKeepingFocus.onKeepFocus(focusedItemAdditionalInfo);
+            overlayKeepingFocus.onKeepSelect(focusedItemAdditionalInfo);
         } else {
             // set NOT_FOCUSED overlays not winning focus and not loosing focus (see ITR-43)
             for (final T overlay : overlays) {
                 if (!overlay.equals(overlayWinningFocus) && !overlay.equals(overlayLoosingFocus)) {
-                    overlay.setFocused(false);
+                    overlay.setSelected(false);
                 }
             }
             // trigger onBlur before onFocus !!
             if (overlayLoosingFocus != null) {
-                overlayLoosingFocus.onBlur(focusedItemAdditionalInfo);
+                overlayLoosingFocus.onDeselect(focusedItemAdditionalInfo);
             }
 
             if (overlayWinningFocus != null) {
-                overlayWinningFocus.onFocus(focusedItemAdditionalInfo);
+                overlayWinningFocus.onSelect(focusedItemAdditionalInfo);
             }
         }
 

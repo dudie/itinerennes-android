@@ -4,14 +4,14 @@ import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.views.MapBoxView;
 
 /**
- * Classes implementing this interface may receive events from a {@link GroupFocusOverlay} when an
+ * Classes implementing this interface may receive events from a {@link GroupSelectOverlay} when an
  * item is focused.
  * 
  * @param <D>
  *            the type of data bundled with the overlay item
  * @author Jérémie Huchet
  */
-public interface FocusableOverlay<D> extends WrappableOverlay {
+public interface SelectableOverlay<D> extends WrappableOverlay {
 
     /**
      * Returns the focused state of this overlay.
@@ -26,35 +26,35 @@ public interface FocusableOverlay<D> extends WrappableOverlay {
      * @param hasFocus
      *            true if the overlay has focus, else false
      */
-    void setFocused(boolean hasFocus);
+    void setSelected(boolean hasFocus);
 
     /**
-     * Triggered method by a {@link GroupFocusOverlay} when this overlay wins focus.
+     * Triggered method by a {@link GroupSelectOverlay} when this overlay wins focus.
      * 
      * @param additionalInformationView
      *            the view containing additional informations about the focused item
      * @return true if the focus event was completely handled and its propagation should be stopped
      */
-    boolean onFocus(MapBoxView additionalInformationView);
+    boolean onSelect(MapBoxView additionalInformationView);
 
     /**
-     * Triggered method by a {@link GroupFocusOverlay} when this overlay looses focus.
+     * Triggered method by a {@link GroupSelectOverlay} when this overlay looses focus.
      * 
      * @param additionalInformationView
      *            the view containing additional informations about the focused item
      * @return true if the blur event was completely handled and its propagation should be stopped
      */
-    boolean onBlur(MapBoxView additionalInformationView);
+    boolean onDeselect(MapBoxView additionalInformationView);
 
     /**
-     * Triggered method by a {@link GroupFocusOverlay} when this overlay keeps the focus.
+     * Triggered method by a {@link GroupSelectOverlay} when this overlay keeps the focus.
      * 
      * @param additionalInformationView
      *            the view containing additional informations about the focused item
      * @return true if the keep focus event was completely handled and its propagation should be
      *         stopped
      */
-    boolean onKeepFocus(MapBoxView additionalInformationView);
+    boolean onKeepSelect(MapBoxView additionalInformationView);
 
     /**
      * Returns a map box adapter.

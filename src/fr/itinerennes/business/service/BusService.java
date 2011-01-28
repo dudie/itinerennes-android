@@ -23,7 +23,7 @@ import fr.itinerennes.model.BusStation;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class BusService extends AbstractService implements StationProvider<BusStation> {
+public class BusService extends AbstractService implements MarkerProvider<BusStation> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BusService.class);
@@ -55,7 +55,7 @@ public class BusService extends AbstractService implements StationProvider<BusSt
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.service.StationProvider#getStation(java.lang.String)
+     * @see fr.itinerennes.business.service.MarkerProvider#getStation(java.lang.String)
      */
     @Override
     public final BusStation getStation(final String id) throws GenericException {
@@ -83,7 +83,7 @@ public class BusService extends AbstractService implements StationProvider<BusSt
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.service.StationProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
+     * @see fr.itinerennes.business.service.MarkerProvider#getStations(org.andnav.osm.util.BoundingBoxE6)
      */
     @Override
     public final List<BusStation> getStations(final BoundingBoxE6 bbox) throws GenericException {
