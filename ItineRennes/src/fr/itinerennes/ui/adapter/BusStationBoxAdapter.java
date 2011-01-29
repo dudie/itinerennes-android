@@ -85,8 +85,8 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
         final ToggleButton star = (ToggleButton) busView.findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getBookmarksService().isStarred(BusStation.class.getName(),
                 item.getData().getId()));
-        star.setOnCheckedChangeListener(new ToggleStarListener(context.getBookmarksService(),
-                BusStation.class.getName(), item.getData().getId(), item.getData().getName()));
+        star.setOnCheckedChangeListener(new ToggleStarListener(context, BusStation.class.getName(),
+                item.getData().getId(), item.getData().getName()));
 
         return busView;
     }
