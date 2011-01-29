@@ -30,4 +30,7 @@ public class ErrorCodeConstants {
 
     /** The response from the OneBuwAway API contains an error message. */
     public static final short OBA_RESPONSE_ERROR = 7;
+
+    /** A bookmark was not found. */
+    public static final short BOOKMARK_NOT_FOUND = 8;
 }

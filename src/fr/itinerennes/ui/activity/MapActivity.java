@@ -39,6 +39,32 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapActivity.class);
 
+    /** Intent parameter name to pass the map zoom level to set. */
+    public static final String INTENT_SET_MAP_ZOOM = String.format("%s.setMapZoom",
+            MapActivity.class.getName());
+
+    /** Intent parameter name to pass the map latidute to set. */
+    public static final String INTENT_SET_MAP_LAT = String.format("%s.setMapLatitude",
+            MapActivity.class.getName());
+
+    /** Intent parameter name to pass the map longitude to set. */
+    public static final String INTENT_SET_MAP_LON = String.format("%s.setMapLongitude",
+            MapActivity.class.getName());
+
+    /**
+     * Intent parameter name to use to set the type of something to find in the overlay and to set
+     * selected.
+     */
+    public static final String INTENT_SELECT_BOOKMARK_TYPE = String.format("%s.selectBookmarkType",
+            MapActivity.class.getName());
+
+    /**
+     * Intent parameter name to use to set the identifier of something to find in the overlay and to
+     * set selected.
+     */
+    public static final String INTENT_SELECT_BOOKMARK_ID = String.format("s.selectBookmarkId",
+            MapActivity.class.getName());
+
     /** Duration of toast messages. */
     private static final int TOAST_DURATION = 300;
 
@@ -81,18 +107,25 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         this.mapBox = findViewById(R.id.map_box);
 
         this.map.getController().getMapOverlayHelper()
-                .show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS | LOCATION | PATH);
+                .show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS | LOCATION);
         this.myLocation = map.getController().getMapOverlayHelper().getLocationOverlay();
 
         map.setMultiTouchControls(true);
 
-        map.getController().setZoom(
-                sharedPreferences.getInt(ITRPrefs.MAP_ZOOM_LEVEL,
-                        ItineRennesConstants.CONFIG_DEFAULT_ZOOM));
-        map.getController().setCenter(
-                new GeoPoint(sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LAT,
-                        ItineRennesConstants.CONFIG_RENNES_LAT), sharedPreferences.getInt(
-                        ITRPrefs.MAP_CENTER_LON, ItineRennesConstants.CONFIG_RENNES_LON)));
+        // if intent asks for a specific zoom level, its values overrides the ones
+        // saved when the activity was paused
+        final int zoomToRestore = sharedPreferences.getInt(ITRPrefs.MAP_ZOOM_LEVEL,
+                ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
+        final int newZoom = getIntent().getIntExtra(INTENT_SET_MAP_ZOOM, zoomToRestore);
+        map.getController().setZoom(newZoom);
+        // same thing with the map center
+        final int lonToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LAT,
+                ItineRennesConstants.CONFIG_RENNES_LAT);
+        final int latToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LON,
+                ItineRennesConstants.CONFIG_RENNES_LON);
+        final int newLat = getIntent().getIntExtra(INTENT_SET_MAP_LAT, lonToRestore);
+        final int newLon = getIntent().getIntExtra(INTENT_SET_MAP_LON, latToRestore);
+        map.getController().setCenter(new GeoPoint(newLat, newLon));
 
         // DEBUG
         // map.getOverlays().add(new DebugOverlay(getBaseContext()));
