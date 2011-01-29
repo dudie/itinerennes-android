@@ -31,7 +31,7 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
             .getLogger(SelectableItemizedOverlay.class);
 
     /** The adapter to use to display the focused item. */
-    private final MapBoxAdapter<Marker<D>, D> boxDisplayAdaper;
+    private final MapBoxAdapter<T> boxDisplayAdaper;
 
     /** The target view where additional informations are displayed when an item is selected. */
     private final MapBoxView additionalInformationView;
@@ -48,8 +48,7 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
      */
     public SelectableItemizedOverlay(final ITRContext context,
             final ItemizedOverlayAdapter<T> itemProviderAdapter,
-            final MapBoxAdapter<Marker<D>, D> boxDisplayAdaper,
-            final MapBoxView additionalInformationView) {
+            final MapBoxAdapter<T> boxDisplayAdaper, final MapBoxView additionalInformationView) {
 
         // items are set using setItems() / addItem() / removeItem()
         // OnItemGestureListener is implemented by this class and shouldn't be overridden as is

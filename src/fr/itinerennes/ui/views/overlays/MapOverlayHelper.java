@@ -137,9 +137,7 @@ public class MapOverlayHelper implements OverlayConstants {
         if (null == busStationOverlay) {
             final MarkerItemizedOverlayAdapter<BusStation> busItemAdapter = new MarkerItemizedOverlayAdapter<BusStation>(
                     context, context.getBusService());
-            final BusStationBoxAdapter busDisplayAdaper = new BusStationBoxAdapter(
-                    context.getBusService(), context.getBusRouteService(),
-                    context.getLineIconService());
+            final BusStationBoxAdapter busDisplayAdaper = new BusStationBoxAdapter(context);
 
             busStationOverlay = new SelectableItemizedOverlay<SelectableMarker<BusStation>, BusStation>(
                     context, busItemAdapter, busDisplayAdaper, getMapBoxView());
@@ -158,8 +156,7 @@ public class MapOverlayHelper implements OverlayConstants {
         if (null == bikeStationOverlay) {
             final MarkerItemizedOverlayAdapter<BikeStation> bikeItemAdapter = new MarkerItemizedOverlayAdapter<BikeStation>(
                     context, context.getBikeService());
-            final BikeStationBoxAdapter bikeDisplayAdaper = new BikeStationBoxAdapter(
-                    context.getBikeService());
+            final BikeStationBoxAdapter bikeDisplayAdaper = new BikeStationBoxAdapter(context);
 
             bikeStationOverlay = new SelectableItemizedOverlay<SelectableMarker<BikeStation>, BikeStation>(
                     context, bikeItemAdapter, bikeDisplayAdaper, getMapBoxView());
@@ -178,7 +175,7 @@ public class MapOverlayHelper implements OverlayConstants {
         if (null == subwayStationOverlay) {
             final MarkerItemizedOverlayAdapter<SubwayStation> subwayItemAdapter = new MarkerItemizedOverlayAdapter<SubwayStation>(
                     context, context.getSubwayService());
-            final SubwayStationBoxAdapter subwayDisplayAdaper = new SubwayStationBoxAdapter();
+            final SubwayStationBoxAdapter subwayDisplayAdaper = new SubwayStationBoxAdapter(context);
 
             subwayStationOverlay = new SelectableItemizedOverlay<SelectableMarker<SubwayStation>, SubwayStation>(
                     context, subwayItemAdapter, subwayDisplayAdaper, getMapBoxView());

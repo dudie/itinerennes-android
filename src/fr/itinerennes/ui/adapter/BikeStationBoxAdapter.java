@@ -3,184 +3,142 @@ package fr.itinerennes.ui.adapter;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import fr.itinerennes.R;
-import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
-import fr.itinerennes.ui.views.overlays.Marker;
+import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.views.ToggleStarListener;
+import fr.itinerennes.ui.views.overlays.SelectableMarker;
 
 /**
  * @author Jérémie Huchet
  */
-public class BikeStationBoxAdapter implements
-        MapBoxAdapter<Marker<BikeStation>, BikeStation> {
+public class BikeStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BikeStation>> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(BikeStationBoxAdapter.class);
 
-    /** The bike service. */
-    private final BikeService bikeService;
+    /** The itinerennes context. */
+    private final ITRContext context;
+
+    /** The layout inflater. */
+    private final LayoutInflater inflater;
+
+    /** The bike station with data refreshed less than 1 minute ago. */
+    private BikeStation upToDateStation;
 
     /**
-     * Creates the bike station adapter for map box.
+     * Creates the bus station adapter for map box.
      * 
-     * @param bikeService
-     *            the bike service
+     * @param context
+     *            the context
      */
-    public BikeStationBoxAdapter(final BikeService bikeService) {
+    public BikeStationBoxAdapter(final ITRContext context) {
 
-        this.bikeService = bikeService;
+        this.context = context;
+        inflater = context.getLayoutInflater();
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxTitle(fr.itinerennes.ui.views.overlays.Marker)
-     */
-    @Override
-    public final String getBoxTitle(final Marker<BikeStation> item) {
-
-        return item.getData().getName();
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxIcon(fr.itinerennes.ui.views.overlays.Marker)
+     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getView(java.lang.Object)
      */
     @Override
-    public final int getBoxIcon(final Marker<BikeStation> item) {
+    public final View getView(final SelectableMarker<BikeStation> item) {
 
-        return R.drawable.bike_marker_icon;
+        final View bikeView = inflater.inflate(R.layout.map_box_bike, null);
+        ((TextView) bikeView.findViewById(R.id.map_box_title)).setText(item.getData().getName());
+
+        final ToggleButton star = (ToggleButton) bikeView
+                .findViewById(R.id.map_box_toggle_bookmark);
+        star.setChecked(context.getBookmarksService().isStarred(BikeStation.class.getName(),
+                item.getData().getId()));
+        star.setOnCheckedChangeListener(new ToggleStarListener(context.getBookmarksService(),
+                BikeStation.class.getName(), item.getData().getId(), item.getData().getName()));
+
+        return bikeView;
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxDetailsView(fr.itinerennes.ui.views.overlays.Marker,
+     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#onStartLoading(android.view.View)
+     */
+    @Override
+    public final void onStartLoading(final View view) {
+
+        view.findViewById(R.id.map_box_progressbar).setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#doInBackground(android.view.View,
      *      java.lang.Object)
      */
     @Override
-    public final View getBoxDetailsView(final Context context,
-            final Marker<BikeStation> item) {
+    public final void doInBackground(final View view, final SelectableMarker<BikeStation> item) {
 
-        final LayoutInflater inflater = LayoutInflater.from(context);
-        final LinearLayout bikeInfo = (LinearLayout) inflater.inflate(R.layout.bike_station_box,
-                null);
-        bikeInfo.setVisibility(View.VISIBLE);
-        return bikeInfo;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#backgroundLoad(fr.itinerennes.ui.views.overlays.Marker)
-     */
-    @Override
-    public final BikeStation backgroundLoad(final Marker<BikeStation> item)
-            throws GenericException {
-
-        final BikeStation upToDateStation = bikeService.getFreshStation(item.getData().getId());
-        return upToDateStation;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxTitle(fr.itinerennes.ui.views.overlays.Marker,
-     *      java.lang.Object)
-     */
-    @Override
-    public final String getBoxTitle(final Marker<BikeStation> item, final BikeStation data) {
-
-        final String title;
-        if (data == null) {
-            title = getBoxTitle(item);
-        } else {
-            title = data.getName();
+        try {
+            upToDateStation = context.getBikeService().getFreshStation(item.getData().getId());
+        } catch (final GenericException e) {
+            context.getExceptionHandler().handleException(e);
         }
-        return title;
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getBoxIcon(fr.itinerennes.ui.views.overlays.Marker,
-     *      java.lang.Object)
+     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateView(android.view.View, java.lang.Object)
      */
     @Override
-    public final int getBoxIcon(final Marker<BikeStation> item, final BikeStation data) {
+    public final void updateView(final View view, final SelectableMarker<BikeStation> item) {
 
-        return getBoxIcon(item);
-    }
+        final View bikeStationDetails = view.findViewById(R.id.map_box_bike_details);
 
-    /**
-     * Updates the bike station details with the retrieved values (available bikes/slots).
-     * <p>
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateBoxDetailsView(android.view.View,
-     *      fr.itinerennes.ui.views.overlays.Marker, java.lang.Object)
-     */
-    @Override
-    public final void updateBoxDetailsView(final View bikeInfo,
-            final Marker<BikeStation> item, final BikeStation bikeStation) {
-
-        if (bikeStation == null) {
+        if (upToDateStation == null) {
             // an error occurred during backgroundLoad()
-            bikeInfo.setVisibility(View.GONE);
+            bikeStationDetails.setVisibility(View.GONE);
             return;
+        } else {
+            bikeStationDetails.setVisibility(View.VISIBLE);
         }
 
-        final TextView availablesSlots = (TextView) bikeInfo.findViewById(R.id.available_slots);
-        availablesSlots.setText(String.valueOf(bikeStation.getAvailableSlots()));
+        final TextView availablesSlots = (TextView) bikeStationDetails
+                .findViewById(R.id.available_slots);
+        availablesSlots.setText(String.valueOf(upToDateStation.getAvailableSlots()));
 
-        final TextView availablesBikes = (TextView) bikeInfo.findViewById(R.id.available_bikes);
-        availablesBikes.setText(String.valueOf(bikeStation.getAvailableBikes()));
+        final TextView availablesBikes = (TextView) bikeStationDetails
+                .findViewById(R.id.available_bikes);
+        availablesBikes.setText(String.valueOf(upToDateStation.getAvailableBikes()));
 
-        final ProgressBar gauge = (ProgressBar) bikeInfo.findViewById(R.id.bike_station_gauge);
-        gauge.setMax(bikeStation.getAvailableBikes() + bikeStation.getAvailableSlots());
+        final ProgressBar gauge = (ProgressBar) bikeStationDetails
+                .findViewById(R.id.bike_station_gauge);
+        gauge.setMax(upToDateStation.getAvailableBikes() + upToDateStation.getAvailableSlots());
         gauge.setIndeterminate(false);
-        gauge.setProgress(bikeStation.getAvailableBikes());
-        gauge.setSecondaryProgress(bikeStation.getAvailableBikes()
-                + bikeStation.getAvailableSlots());
+        gauge.setProgress(upToDateStation.getAvailableBikes());
+        gauge.setSecondaryProgress(upToDateStation.getAvailableBikes()
+                + upToDateStation.getAvailableSlots());
 
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#beforeStartActivity(fr.itinerennes.ui.views.overlays.Marker)
+     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#onStopLoading(android.view.View)
      */
     @Override
-    public final void beforeStartActivity(final Marker<BikeStation> item) {
+    public final void onStopLoading(final View view) {
 
-        // nothing to do
-    }
-
-    /**
-     * No intent has to be load on box click.
-     * <p>
-     * {@inheritDoc}
-     * 
-     * @return null
-     * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getOnClickIntent(android.content.Context,
-     *      fr.itinerennes.ui.views.overlays.Marker)
-     */
-    @Override
-    public final Intent getOnClickIntent(final Context packageContext,
-            final Marker<BikeStation> item) {
-
-        return null;
+        view.findViewById(R.id.map_box_progressbar).setVisibility(View.GONE);
     }
 
 }
