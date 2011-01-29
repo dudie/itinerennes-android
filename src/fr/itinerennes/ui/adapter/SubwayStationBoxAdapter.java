@@ -56,8 +56,8 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SelectableMarker<S
                 .findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getBookmarksService().isStarred(SubwayStation.class.getName(),
                 item.getData().getId()));
-        star.setOnCheckedChangeListener(new ToggleStarListener(context.getBookmarksService(),
-                SubwayStation.class.getName(), item.getData().getId(), item.getData().getName()));
+        star.setOnCheckedChangeListener(new ToggleStarListener(context, SubwayStation.class
+                .getName(), item.getData().getId(), item.getData().getName()));
 
         return subwayView;
     }

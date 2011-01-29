@@ -11,4 +11,7 @@
     <string name="date_today_at">today at %s</string>
     <string name="date_tomorrow_at">tomorrow at %s</string>
     <string name="date_in_x_days_at">in %0$s days at %1$s</string>
+    <!-- bookmarks -->
+    <string name="added_to_bookmarks"><i>%s</i> added to bookmarks</string>
+    <string name="removed_from_bookmarks"><i>%s</i> removed from bookmarks</string>
 </resources>

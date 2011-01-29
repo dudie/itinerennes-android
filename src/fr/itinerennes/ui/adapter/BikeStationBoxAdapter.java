@@ -61,7 +61,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<SelectableMarker<Bik
                 .findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getBookmarksService().isStarred(BikeStation.class.getName(),
                 item.getData().getId()));
-        star.setOnCheckedChangeListener(new ToggleStarListener(context.getBookmarksService(),
+        star.setOnCheckedChangeListener(new ToggleStarListener(context,
                 BikeStation.class.getName(), item.getData().getId(), item.getData().getName()));
 
         return bikeView;

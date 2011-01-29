@@ -11,4 +11,8 @@
     <string name="date_today_at">aujourd\'hui à %0$s</string>
     <string name="date_tomorrow_at">demain à %0$s</string>
     <string name="date_in_x_days_at">dans %0$s jours à %1$s</string>
+    
+    <!-- bookmarks -->
+    <string name="added_to_bookmarks"><i>%s</i> ajouté aux favoris</string>
+    <string name="removed_from_bookmarks"><i>%s</i> retiré des favoris</string>
 </resources>
