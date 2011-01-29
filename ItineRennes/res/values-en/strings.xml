@@ -14,4 +14,5 @@
     <!-- bookmarks -->
     <string name="added_to_bookmarks"><i>%s</i> added to bookmarks</string>
     <string name="removed_from_bookmarks"><i>%s</i> removed from bookmarks</string>
+    <string name="delete_bookmark_not_found"><i>%s</i> removed from bookmarks because it\'s not available anymore</string>
 </resources>
