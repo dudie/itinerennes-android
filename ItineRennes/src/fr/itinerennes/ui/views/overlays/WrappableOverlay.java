@@ -14,7 +14,7 @@ import android.view.MotionEvent;
  * 
  * @author Jérémie Huchet
  */
-public interface WrappableOverlay {
+public interface WrappableOverlay extends ToggleableOverlay {
 
     /**
      * @param canvas

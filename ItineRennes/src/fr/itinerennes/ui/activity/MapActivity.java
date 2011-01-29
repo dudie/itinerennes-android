@@ -1,5 +1,10 @@
 package fr.itinerennes.ui.activity;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
@@ -25,7 +30,9 @@ import fr.itinerennes.R;
 import fr.itinerennes.ui.views.ITRMapView;
 import fr.itinerennes.ui.views.PreloadDialog;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
+import fr.itinerennes.ui.views.overlays.MapOverlayHelper;
 import fr.itinerennes.ui.views.overlays.OverlayConstants;
+import fr.itinerennes.ui.views.overlays.SelectableOverlay;
 
 /**
  * This is the main activity. Uses the <code>main_map.xml</code> layout and displays a menu bar on
@@ -106,8 +113,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         this.map = (ITRMapView) findViewById(R.id.map);
         this.mapBox = findViewById(R.id.map_box);
 
-        this.map.getController().getMapOverlayHelper()
-                .show(BUS_STATIONS | BIKE_STATIONS | SUBWAY_STATIONS | LOCATION);
         this.myLocation = map.getController().getMapOverlayHelper().getLocationOverlay();
 
         map.setMultiTouchControls(true);
@@ -127,13 +132,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         final int newLon = getIntent().getIntExtra(INTENT_SET_MAP_LON, latToRestore);
         map.getController().setCenter(new GeoPoint(newLat, newLon));
 
-        // DEBUG
-        // map.getOverlays().add(new DebugOverlay(getBaseContext()));
-
         // if first start of the application, open the preload dialog
         if (sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
-            final PreloadDialog preload = new PreloadDialog(this);
-            preload.show();
+            showDialog(Dialogs.PRELOAD);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -161,6 +162,18 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             myLocation.enableFollowLocation();
         }
 
+        // restore previous displayed overlays
+        final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
+        if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, true)) {
+            moh.getBusStationOverlay().setEnabled(true);
+        }
+        if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, true)) {
+            moh.getBikeStationOverlay().setEnabled(true);
+        }
+        if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, true)) {
+            moh.getSubwayStationOverlay().setEnabled(true);
+        }
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onResume.end");
         }
@@ -185,6 +198,14 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         edit.putInt(ITRPrefs.MAP_CENTER_LON, map.getMapCenterLongitudeE6());
         edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, map.getZoomLevel());
         edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, myLocation.isMyLocationEnabled());
+
+        // save current displayed overlays
+        final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
+        edit.putBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, moh.getBusStationOverlay().isEnabled());
+        edit.putBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, moh.getBikeStationOverlay().isEnabled());
+        edit.putBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, moh.getSubwayStationOverlay()
+                .isEnabled());
+        // valid modifications
         edit.commit();
 
         myLocation.disableFollowLocation();
@@ -207,6 +228,19 @@ public class MapActivity extends ITRContext implements OverlayConstants {
      */
     @Override
     public final boolean onCreateOptionsMenu(final Menu menu) {
+
+        // LAYERS
+        final MenuItem layers = menu.add(Menu.NONE, MenuOptions.LAYERS, Menu.NONE,
+                R.string.menu_layers);
+        layers.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(final MenuItem item) {
+
+                showDialog(Dialogs.SELECT_LAYERS);
+                return true;
+            }
+        });
 
         // BOOKMARKS
         final MenuItem favourites = menu.add(Menu.NONE, MenuOptions.BOOKMARKS, Menu.NONE,
@@ -261,16 +295,44 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         AlertDialog dialog;
         switch (id) {
         case Dialogs.SELECT_LAYERS:
+            final MapOverlayHelper overlayHelper = map.getController().getMapOverlayHelper();
+            final List<SelectableOverlay<?>> allOverlays = overlayHelper.getToggleableOVerlays();
+            final Map<String, SelectableOverlay<?>> namesToOverlays = new HashMap<String, SelectableOverlay<?>>();
+            final String[] options = new String[allOverlays.size()];
+            final boolean[] selections = new boolean[allOverlays.size()];
+
+            for (int i = 0; i < options.length; i++) {
+                options[i] = allOverlays.get(i).getLocalizedName();
+                selections[i] = allOverlays.get(i).isEnabled();
+                namesToOverlays.put(options[i], allOverlays.get(i));
+            }
+
+            final Map<String, Boolean> results = new HashMap<String, Boolean>();
+
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.select_layer).setCancelable(true)
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            builder.setTitle(R.string.select_layer);
+            // TJHU faire une icone calque builder.setIcon(id);
+            builder.setMultiChoiceItems(options, selections,
+                    new DialogInterface.OnMultiChoiceClickListener() {
 
                         @Override
-                        public void onClick(final DialogInterface dialog, final int id) {
+                        public void onClick(final DialogInterface dialog, final int which,
+                                final boolean isChecked) {
 
-                            dialog.cancel();
+                            results.put(options[which], isChecked);
                         }
                     });
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(final DialogInterface dialog, final int which) {
+
+                    for (final Entry<String, Boolean> userInput : results.entrySet()) {
+                        namesToOverlays.get(userInput.getKey()).setEnabled(userInput.getValue());
+                    }
+                }
+            });
+
             dialog = builder.create();
             break;
         case Dialogs.ABOUT:
@@ -280,6 +342,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             aboutBuilder.setView(aboutView);
             aboutBuilder.setIcon(android.R.drawable.ic_dialog_info);
             dialog = aboutBuilder.create();
+            break;
+        case Dialogs.PRELOAD:
+            dialog = new PreloadDialog(this);
             break;
         default:
             dialog = null;
@@ -319,10 +384,13 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     private static final class MenuOptions {
 
         /** "About" menu option. */
-        public static final int ABOUT = 0;
+        private static final int ABOUT = 0;
 
         /** "Favourites" menu option. */
-        public static final int BOOKMARKS = 1;
+        private static final int BOOKMARKS = 1;
+
+        /** "Layers" menu option. */
+        private static final int LAYERS = 2;
     }
 
     /**
@@ -336,7 +404,10 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         private static final int SELECT_LAYERS = 0;
 
         /** "About" dialog box. */
-        public static final int ABOUT = 1;
+        private static final int ABOUT = 1;
+
+        /** Preload data dialog. */
+        private static final int PRELOAD = 2;
     }
 
 }

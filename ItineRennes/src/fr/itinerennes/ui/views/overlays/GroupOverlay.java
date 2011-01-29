@@ -64,6 +64,16 @@ public class GroupOverlay<T extends WrappableOverlay> extends Overlay {
     }
 
     /**
+     * Gets the list of overlays grouped in this overlay.
+     * 
+     * @return the overlays grouped in this overlay
+     */
+    public final List<T> getOverlays() {
+
+        return overlays;
+    }
+
+    /**
      * Removes all overlays from the group.
      */
     public final void clear() {

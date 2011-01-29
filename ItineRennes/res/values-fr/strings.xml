@@ -7,6 +7,7 @@
     <string name="location_service_disabled">Le service de localisation n\'est pas activé. Activez le dans les paramètres du système.</string>
     <string name="preload_dialog_title">Premier démarrage</string>
     <string name="advice_preload_data">Vous utilisez ItinéRennes pour la première fois, nous vous recommandons de patienter pendant le chargement de quelques données. Vous pouvez passer cette étape, l\'application sera entièrement fonctionnelle, cependant vous subirez quelques lenteurs lors de l\'utilisation de la carte.</string>
+    <string name="ok">Ok</string>
     <!-- dates -->
     <string name="date_today_at">aujourd\'hui à %0$s</string>
     <string name="date_tomorrow_at">demain à %0$s</string>
@@ -16,4 +17,9 @@
     <string name="added_to_bookmarks"><i>%s</i> ajouté aux favoris</string>
     <string name="removed_from_bookmarks"><i>%s</i> retiré des favoris</string>
     <string name="delete_bookmark_not_found"><i>%s</i> est retiré des favoris car il n\'est plus disponible</string>
+    <!-- overlays -->
+    <string name="overlay_unamed">Overlay sans nom</string>
+    <string name="overlay_bus">Arrêts de bus</string>
+    <string name="overlay_subway">Stations de métro</string>
+    <string name="overlay_bike">Stations de vélo</string>
 </resources>

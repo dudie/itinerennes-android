@@ -14,6 +14,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
+import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.tasks.UpdateOverlayTask;
@@ -59,6 +60,15 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
     /** The async task in charge for managing overlay updates. */
     private UpdateOverlayTask<T> overlayUpdater = null;
 
+    /** The localized name of the overlay. */
+    private String localizedName;
+
+    /**
+     * The map on which this overlay is displayed. Used to attach a listener on map moves when this
+     * overlay is enabled and detach it when disabled.
+     */
+    private final ITRMapView map;
+
     /**
      * Creates the itemized overlay.
      * 
@@ -67,12 +77,15 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
      * @param adapter
      *            the adapter this overlay should use to update its content when the map moves
      */
-    public ITRItemizedOverlay(final ITRContext context, final ItemizedOverlayAdapter<T> adapter) {
+    public ITRItemizedOverlay(final ITRContext context, final ITRMapView map,
+            final ItemizedOverlayAdapter<T> adapter) {
 
         super(context, new ArrayList<T>(), null);
         this.context = context;
+        this.map = map;
         this.adapter = adapter;
         super.mOnItemGestureListener = this;
+        this.localizedName = context.getString(R.string.overlay_unamed);
     }
 
     @Override
@@ -227,10 +240,57 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
      */
     protected void updateOverlay(final MapView osmView) {
 
-        if (null != overlayUpdater) {
-            overlayUpdater.cancel(true);
+        if (isEnabled()) {
+            if (null != overlayUpdater) {
+                overlayUpdater.cancel(true);
+            }
+            overlayUpdater = new UpdateOverlayTask<T>(context, osmView, this, adapter);
+            overlayUpdater.execute(osmView.getBoundingBox());
         }
-        overlayUpdater = new UpdateOverlayTask<T>(context, osmView, this, adapter);
-        overlayUpdater.execute(osmView.getBoundingBox());
+    }
+
+    /**
+     * Sets the localized name of the overlay.
+     * 
+     * @param name
+     *            the new name of the overlay
+     */
+    public final void setLocalizedName(final String name) {
+
+        localizedName = name;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.ui.views.overlays.ToggleableOverlay#getLocalizedName()
+     */
+    public final String getLocalizedName() {
+
+        return localizedName;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.osmdroid.views.overlay.Overlay#setEnabled(boolean)
+     */
+    @Override
+    public final void setEnabled(final boolean enabled) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("setEnabled.start - overlay={}, enabled={}", localizedName, enabled);
+        }
+        super.setEnabled(enabled);
+        if (enabled) {
+            map.getListeners().add(this);
+            updateOverlay(map);
+        } else {
+            map.getListeners().remove(this);
+            onClearOverlay(map);
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("setEnabled.end - overlay={}, enabled={}", localizedName, enabled);
+        }
     }
 }

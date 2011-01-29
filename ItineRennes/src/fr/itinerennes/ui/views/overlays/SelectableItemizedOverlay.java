@@ -13,6 +13,7 @@ import android.view.View;
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
+import fr.itinerennes.ui.views.ITRMapView;
 import fr.itinerennes.ui.views.MapBoxView;
 
 /**
@@ -46,14 +47,12 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
      * @param boxDisplayAdaper
      *            the adapter to use to display selected marker information
      */
-    public SelectableItemizedOverlay(final ITRContext context,
+    public SelectableItemizedOverlay(final ITRContext context, final ITRMapView map,
             final ItemizedOverlayAdapter<T> itemProviderAdapter,
             final MapBoxAdapter<T> boxDisplayAdaper, final MapBoxView additionalInformationView) {
 
         // items are set using setItems() / addItem() / removeItem()
-        // OnItemGestureListener is implemented by this class and shouldn't be overridden as is
-        // triggers more precise event helpers (onFocusHelper() and onBlurHelper())
-        super(context, itemProviderAdapter);
+        super(context, map, itemProviderAdapter);
         this.boxDisplayAdaper = boxDisplayAdaper;
         this.additionalInformationView = additionalInformationView;
     }
@@ -64,7 +63,7 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
      * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#onSelectStateChanged(boolean)
      */
     @Override
-    public boolean onSelectStateChanged(final boolean selected) {
+    public final boolean onSelectStateChanged(final boolean selected) {
 
         if (selected) {
             if (focusedItemIndex != NOT_SET) {
@@ -106,7 +105,7 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
      * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#setSelected(boolean)
      */
     @Override
-    public void setSelected(final boolean hasFocus) {
+    public final void setSelected(final boolean hasFocus) {
 
         if (hasFocus) {
             focusedItemIndex = prevFocusedItemIndex;
