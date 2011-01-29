@@ -2,4 +2,5 @@
 <resources>
     <string name="menu_about">À propos</string>
     <string name="menu_bookmarks">Favoris</string>
+    <string name="menu_layers">Calques</string>
 </resources>

@@ -1,9 +1,11 @@
 package fr.itinerennes.ui.views.overlays;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.graphics.Color;
 import android.widget.ToggleButton;
 
 import fr.itinerennes.R;
@@ -67,64 +69,28 @@ public class MapOverlayHelper implements OverlayConstants {
 
     }
 
-    public void show(final int mask) {
-
-        if (this.groupFocus == null) {
-            this.groupFocus = new GroupSelectOverlay<SelectableOverlay<?>>(context);
-            this.map.getOverlays().add(groupFocus);
-        }
-
-        if (match(BUS_STATIONS, mask) && !match(BUS_STATIONS, current)) {
-            groupFocus.addOverlay(getBusStationOverlay());
-            map.getListeners().add(getBusStationOverlay());
-        }
-        if (match(BIKE_STATIONS, mask) && !match(BIKE_STATIONS, current)) {
-            groupFocus.addOverlay(getBikeStationOverlay());
-            map.getListeners().add(getBikeStationOverlay());
-        }
-        if (match(SUBWAY_STATIONS, mask) && !match(SUBWAY_STATIONS, current)) {
-            groupFocus.addOverlay(getSubwayStationOverlay());
-            map.getListeners().add(getSubwayStationOverlay());
-        }
-        if (match(LOCATION, mask) && !match(LOCATION, current)) {
-            this.map.getOverlays().add(getLocationOverlay());
-        }
-        if (match(PATH, mask) && !match(PATH, current)) {
-            final PolylineOverlay path = new PolylineOverlay(Color.RED, context);
-            path.setPolyline("sjtdHzkfIzJzOfT~M");
-            this.map.getOverlays().add(path);
-        }
-    }
-
-    public void hide(final int mask) {
-
-        if (match(BUS_STATIONS, mask) && !match(BUS_STATIONS, current)) {
-            groupFocus.removeOverlay(getBusStationOverlay());
-            map.getListeners().remove(getBusStationOverlay());
-        }
-        if (match(BIKE_STATIONS, mask) && match(BIKE_STATIONS, current)) {
-            groupFocus.removeOverlay(getBikeStationOverlay());
-            map.getListeners().remove(getBikeStationOverlay());
-        }
-        if (match(SUBWAY_STATIONS, mask) && !match(SUBWAY_STATIONS, current)) {
-            groupFocus.removeOverlay(getSubwayStationOverlay());
-            map.getListeners().remove(getSubwayStationOverlay());
-        }
-    }
-
-    private boolean match(final int value, final int mask) {
-
-        return (value & mask) == value;
-    }
-
     /**
      * Gets the target view of overlays displaying details when they are selected.
      * 
      * @return the map box view
      */
-    private MapBoxView getMapBoxView() {
+    private final MapBoxView getMapBoxView() {
 
         return (MapBoxView) context.findViewById(R.id.map_box);
+    }
+
+    /**
+     * Gets the group focus overlay.
+     * 
+     * @return the group focus overlay
+     */
+    private GroupSelectOverlay<SelectableOverlay<?>> getGroupSelectOverlay() {
+
+        if (null == groupFocus) {
+            groupFocus = new GroupSelectOverlay<SelectableOverlay<?>>(context);
+            map.getOverlays().add(groupFocus);
+        }
+        return groupFocus;
     }
 
     /**
@@ -140,7 +106,11 @@ public class MapOverlayHelper implements OverlayConstants {
             final BusStationBoxAdapter busDisplayAdaper = new BusStationBoxAdapter(context);
 
             busStationOverlay = new SelectableItemizedOverlay<SelectableMarker<BusStation>, BusStation>(
-                    context, busItemAdapter, busDisplayAdaper, getMapBoxView());
+                    context, map, busItemAdapter, busDisplayAdaper, getMapBoxView());
+
+            busStationOverlay.setLocalizedName(context.getString(R.string.overlay_bus));
+            busStationOverlay.setEnabled(false);
+            getGroupSelectOverlay().addOverlay(busStationOverlay);
         }
 
         return busStationOverlay;
@@ -159,7 +129,11 @@ public class MapOverlayHelper implements OverlayConstants {
             final BikeStationBoxAdapter bikeDisplayAdaper = new BikeStationBoxAdapter(context);
 
             bikeStationOverlay = new SelectableItemizedOverlay<SelectableMarker<BikeStation>, BikeStation>(
-                    context, bikeItemAdapter, bikeDisplayAdaper, getMapBoxView());
+                    context, map, bikeItemAdapter, bikeDisplayAdaper, getMapBoxView());
+
+            bikeStationOverlay.setLocalizedName(context.getString(R.string.overlay_bike));
+            bikeStationOverlay.setEnabled(false);
+            getGroupSelectOverlay().addOverlay(bikeStationOverlay);
         }
 
         return bikeStationOverlay;
@@ -178,7 +152,11 @@ public class MapOverlayHelper implements OverlayConstants {
             final SubwayStationBoxAdapter subwayDisplayAdaper = new SubwayStationBoxAdapter(context);
 
             subwayStationOverlay = new SelectableItemizedOverlay<SelectableMarker<SubwayStation>, SubwayStation>(
-                    context, subwayItemAdapter, subwayDisplayAdaper, getMapBoxView());
+                    context, map, subwayItemAdapter, subwayDisplayAdaper, getMapBoxView());
+
+            subwayStationOverlay.setLocalizedName(context.getString(R.string.overlay_subway));
+            subwayStationOverlay.setEnabled(false);
+            getGroupSelectOverlay().addOverlay(subwayStationOverlay);
         }
 
         return subwayStationOverlay;
@@ -194,8 +172,31 @@ public class MapOverlayHelper implements OverlayConstants {
         if (null == locationOverlay) {
             locationOverlay = new LocationOverlay(context, map,
                     (ToggleButton) context.findViewById(R.id.mylocation_button));
+
+            map.getOverlays().add(locationOverlay);
         }
 
         return locationOverlay;
+    }
+
+    /**
+     * Gets the list of all overlays that can be shown or hidden.
+     * 
+     * @return a list of all overlays that can be shown or hidden
+     */
+    public final List<SelectableOverlay<?>> getToggleableOVerlays() {
+
+        final List<SelectableOverlay<?>> result = new ArrayList<SelectableOverlay<?>>();
+        result.addAll(getGroupSelectOverlay().getOverlays());
+        if (!result.contains(getBusStationOverlay())) {
+            result.add(getBusStationOverlay());
+        }
+        if (!result.contains(getBikeStationOverlay())) {
+            result.add(getBikeStationOverlay());
+        }
+        if (!result.contains(getSubwayStationOverlay())) {
+            result.add(getSubwayStationOverlay());
+        }
+        return result;
     }
 }
