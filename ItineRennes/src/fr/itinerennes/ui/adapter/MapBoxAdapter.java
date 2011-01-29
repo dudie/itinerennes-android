@@ -1,17 +1,11 @@
 package fr.itinerennes.ui.adapter;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.view.View;
 
-import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
-import fr.itinerennes.ui.views.overlays.Marker;
 
 /**
- * Common base interface of implementation for an adapter that can be used to fill the MapBox when a
- * marker is focused.
+ * Common base interface of implementation for an adapter that can be used to fill the MapBox.
  * <p>
  * See {@link DisplayMapBoxTask} for other details about the box loading.
  * 
@@ -19,103 +13,53 @@ import fr.itinerennes.ui.views.overlays.Marker;
  *            the type of data the adapter uses
  * @author Jérémie Huchet
  */
-public interface MapBoxAdapter<T extends Marker<?>, D> {
+public interface MapBoxAdapter<T> {
 
     /**
-     * This method should return the title to display in the information box instantaneously.
+     * This method should initializes the view displaying additional informations for the given
+     * item. Execution must be quick as it is executed by the UI thread.
      * 
      * @param item
-     *            the focused item
-     * @return the title to display in the information box
+     *            the item for which the view must be generated
+     * @return the view to display in the map box
      */
-    String getBoxTitle(T item);
+    View getView(T item);
 
     /**
-     * This method should return the drawable to display in the information instantaneously.
+     * Called before the {@link #doInBackground(View, Object)} begins.
      * 
-     * @param item
-     *            the focused item
-     * @return the resource id of the drawable to display in the information box
+     * @param view
+     *            the view you returned in {@link #getView(Object)}
      */
-    int getBoxIcon(T item);
+    void onStartLoading(View view);
 
     /**
-     * This method should return the view to display in the information box.
+     * This method allow you to do some tasks in a background thread. If you use some global
+     * variables in the adapter, be sure to reinitializes them.
      * 
-     * @param context
-     *            the application context
+     * @param view
+     *            the view you returned in {@link #getView(Object)}
      * @param item
-     *            the focused item
-     * @return the view to display in the information box
+     *            the item for which this adapter generates a view
      */
-    View getBoxDetailsView(Context context, T item);
+    void doInBackground(View view, T item);
 
     /**
-     * This method is run in the background part of an {@link AsyncTask}, so it can be used to load
-     * useful data to populate the information box view whithout blocking the ui thread.
+     * This method is called after the method {@link #doInBackground(View, Object)} finished.
      * 
+     * @param view
+     *            the view you returned in {@link #getView(Object)}
      * @param item
-     *            the focused item
-     * @return some useful data to fill the information box view
-     * @throws GenericException
-     *             if the background load cannot be completed
+     *            the item for which this adapter generates a view
      */
-    D backgroundLoad(T item) throws GenericException;
+    void updateView(View view, T item);
 
     /**
-     * This method should return the title to display in the information box after
-     * {@link #backgroundLoad(T)} was executed.
+     * Called after the {@link #updateView(View, Object)}.
      * 
-     * @param item
-     *            the focused item
-     * @param data
-     *            the preloaded data with {@link #backgroundLoad(T)}
-     * @return the title to display in the information box
+     * @param view
+     *            the view you returned in {@link #getView(Object)}
      */
-    String getBoxTitle(T item, D data);
+    void onStopLoading(View view);
 
-    /**
-     * This method should return the icon to display in the information box after
-     * {@link #backgroundLoad(T)} was executed.
-     * 
-     * @param item
-     *            the focused item
-     * @param data
-     *            the preloaded data with {@link #backgroundLoad(T)}
-     * @return the resource id of the drawable to display in the information box
-     */
-    int getBoxIcon(T item, D data);
-
-    /**
-     * This method is triggered after {@link #backgroundLoad(T)} was executed. So you are able to
-     * update its content with the data loaded in background.
-     * 
-     * @param item
-     *            the focused item
-     * @param data
-     *            the preloaded data with {@link #backgroundLoad(T)}
-     * @param boxDetailsView
-     */
-    void updateBoxDetailsView(View boxDetailsView, T item, final D data);
-
-    /**
-     * When the user clicks on the map box, this method is called before a new activity is started
-     * with the itent provided by {@link #getOnClickIntent(Object)}.
-     * 
-     * @param item
-     *            the focused item
-     */
-    void beforeStartActivity(T item);
-
-    /**
-     * When the user clicks on the map box, this method is used to retrieve an intent to start a new
-     * activity if {@link #beforeStartActivity(Object)} returned true.
-     * 
-     * @param packageContext
-     *            a Context of the application package
-     * @param item
-     *            the focused item
-     * @return the intent to use to start a new activity when the box is clicked
-     */
-    Intent getOnClickIntent(Context packageContext, T item);
 }

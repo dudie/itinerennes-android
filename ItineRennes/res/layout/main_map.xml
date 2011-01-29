@@ -42,12 +42,8 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		android:padding="5dp"
 		android:visibility="gone"
-		android:background="@drawable/map_box_background"
-		android:layout_margin="5dp"
-		android:onClick="onMapBoxClickHandler">
-        <include layout="@layout/map_box_header" />
+		android:layout_margin="5dp">
 	</fr.itinerennes.ui.views.MapBoxView>
 	
 	

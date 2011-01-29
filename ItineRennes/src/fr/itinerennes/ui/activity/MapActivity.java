@@ -23,7 +23,6 @@ import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.views.ITRMapView;
-import fr.itinerennes.ui.views.MapBoxView;
 import fr.itinerennes.ui.views.PreloadDialog;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.ui.views.overlays.OverlayConstants;
@@ -201,20 +200,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     }
 
     /**
-     * Click method handler invoked when a click event is detected on the map box view.
-     * 
-     * @param boxView
-     *            the map box view on which the event was detected
-     */
-    public final void onMapBoxClickHandler(final View boxView) {
-
-        final Intent intent = ((MapBoxView) boxView).getOnClickIntent();
-        if (null != intent) {
-            startActivity(intent);
-        }
-    }
-
-    /**
      * Click method handler invoked when a click event is detected on the my location button.
      * 
      * @param button
@@ -229,16 +214,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         } else {
             myLocation.toggleFollowLocation();
         }
-
-    }
-
-    /**
-     * Triggered when the user clicks on a star in the mapbox view.
-     * 
-     * @param button
-     *            the button view on which the event was detected
-     */
-    public final void onStarButtonClick(final View button) {
 
     }
 
