@@ -1,10 +1,11 @@
 package fr.itinerennes.business.http.oba;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
@@ -14,7 +15,8 @@ import fr.itinerennes.business.http.GenericHttpService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.oba.ArrivalAndDeparture;
-import fr.itinerennes.model.oba.Schedule;
+import fr.itinerennes.model.oba.StopSchedule;
+import fr.itinerennes.model.oba.TripSchedule;
 
 /**
  * Manage calls to the OneBusAway API.
@@ -27,7 +29,11 @@ public class OneBusAwayService {
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(OneBusAwayService.class);
 
+    /** Parameter used by OneBusAway API to include references or not. */
     private static final String OBA_INCLUDE_REFERENCE = "includeReferences";
+
+    /** Date format for OBA requests. */
+    private final SimpleDateFormat obaSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /** The HTTP client. */
     private final GenericHttpService httpService = new GenericHttpService();
@@ -39,7 +45,7 @@ public class OneBusAwayService {
      *            the url where to make the call
      * @param parameters
      *            the request parameters
-     * @return an {@link HttpPost} to send to execute the request
+     * @return an {@link HttpGet} to send to execute the request
      * @throws GenericException
      *             unable to encode request parameters
      */
@@ -72,11 +78,13 @@ public class OneBusAwayService {
      * 
      * @param routeId
      *            the identifier of the route you wants the stops
+     * @param direction
+     *            direction of the route to get stops
      * @return the list of stations for the given route
      * @throws GenericException
      *             an error occurred
      */
-    public List<BusStation> getStopsForRoute(final String routeId, final String direction)
+    public final List<BusStation> getStopsForRoute(final String routeId, final String direction)
             throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
@@ -109,24 +117,21 @@ public class OneBusAwayService {
      * @throws GenericException
      *             an error occurred
      */
-    public Schedule getTripDetails(final String tripId) throws GenericException {
+    public final TripSchedule getTripDetails(final String tripId) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getTripDetails.start - tripId={}", tripId);
         }
         final String urlCall = String.format(ItineRennesConstants.OBA_API_URL, "trip-details",
-        // TJHU l'agency devrait être retournée par le serveur
-                "1_" +
-                // ajout temporaire
-                        tripId);
+                tripId);
 
         final List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(2);
         params.add(new BasicNameValuePair(OBA_INCLUDE_REFERENCE, "true"));
 
         final HttpGet request = createOBARequest(urlCall, params);
 
-        final Schedule schedule = httpService
-                .execute(request, new TripDetailsHttpResponseHandler());
+        final TripSchedule schedule = httpService.execute(request,
+                new TripDetailsHttpResponseHandler());
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getTripDetails.end");
@@ -142,7 +147,7 @@ public class OneBusAwayService {
      * @return the list of arrivals and departures
      * @throws GenericException
      */
-    public List<ArrivalAndDeparture> getArrivalsAndDeparturesForStop(final String stopId)
+    public final List<ArrivalAndDeparture> getArrivalsAndDeparturesForStop(final String stopId)
             throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
@@ -165,4 +170,35 @@ public class OneBusAwayService {
         return arrivalsAndDepartures;
     }
 
+    /**
+     * Gets schedule for a stop.
+     * 
+     * @param stopId
+     *            id of the stop to get schedule
+     * @return the full schedule
+     * @throws GenericException
+     */
+    public final StopSchedule getScheduleForStop(final String stopId, final Date date)
+            throws GenericException {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getScheduleForStop.start - stopId={}", stopId);
+        }
+        final String urlCall = String.format(ItineRennesConstants.OBA_API_URL, "schedule-for-stop",
+                stopId);
+
+        final List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(2);
+        params.add(new BasicNameValuePair(OBA_INCLUDE_REFERENCE, "true"));
+        params.add(new BasicNameValuePair("date", obaSimpleDateFormat.format(date)));
+
+        final HttpGet request = createOBARequest(urlCall, params);
+
+        final StopSchedule schedule = httpService.execute(request,
+                new ScheduleForStopHttpResponseHandler());
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getScheduleForStop.end");
+        }
+        return schedule;
+    }
 }

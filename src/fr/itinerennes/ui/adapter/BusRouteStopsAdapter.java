@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
-import fr.itinerennes.model.oba.StopTime;
+import fr.itinerennes.model.oba.TripStopTime;
 import fr.itinerennes.ui.activity.BusStationActivity;
 
 /**
@@ -37,7 +37,7 @@ public class BusRouteStopsAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
 
     /** The list of arrival times and departure times of the bus for each stop of the trip. */
-    private final List<StopTime> arrivalAndDepartures;
+    private final List<TripStopTime> arrivalAndDepartures;
 
     /**
      * Constructor.
@@ -47,7 +47,7 @@ public class BusRouteStopsAdapter extends BaseAdapter {
      * @param arrivalAndDepartures
      *            the list of arrival times and departure times of the bus for each stop of the trip
      */
-    public BusRouteStopsAdapter(final Context context, final List<StopTime> arrivalAndDepartures) {
+    public BusRouteStopsAdapter(final Context context, final List<TripStopTime> arrivalAndDepartures) {
 
         this.context = context;
         this.inflater = LayoutInflater.from(context);
@@ -71,7 +71,7 @@ public class BusRouteStopsAdapter extends BaseAdapter {
      * @see android.widget.Adapter#getItem(int)
      */
     @Override
-    public final StopTime getItem(final int position) {
+    public final TripStopTime getItem(final int position) {
 
         return arrivalAndDepartures.get(position);
     }
@@ -97,7 +97,7 @@ public class BusRouteStopsAdapter extends BaseAdapter {
 
         final View view = inflater.inflate(R.layout.trip_time, null);
 
-        final StopTime stopTime = arrivalAndDepartures.get(position);
+        final TripStopTime stopTime = arrivalAndDepartures.get(position);
 
         final TextView stopName = (TextView) view.findViewById(R.trip_time.stop_name);
         stopName.setText(stopTime.getStop().getName());

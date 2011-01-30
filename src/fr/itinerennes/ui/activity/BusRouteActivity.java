@@ -9,9 +9,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
-import fr.itinerennes.business.http.oba.OneBusAwayService;
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.oba.Schedule;
+import fr.itinerennes.model.oba.TripSchedule;
 import fr.itinerennes.ui.adapter.BusRouteStopsAdapter;
 
 /**
@@ -63,9 +62,9 @@ public class BusRouteActivity extends ITRContext {
         final String routeShortName = getIntent().getExtras().getString(INTENT_ROUTE_SHORT_NAME);
         final String tripId = getIntent().getExtras().getString(INTENT_TRIP_ID);
 
-        Schedule schedule = null;
+        TripSchedule schedule = null;
         try {
-            schedule = new OneBusAwayService().getTripDetails(tripId);
+            schedule = getOneBusAwayService().getTripDetails(tripId);
         } catch (final GenericException e) {
             // TJHU Auto-generated catch block
             e.printStackTrace();

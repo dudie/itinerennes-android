@@ -11,14 +11,17 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.business.http.HttpResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.oba.Schedule;
+import fr.itinerennes.model.oba.Route;
 import fr.itinerennes.model.oba.Stop;
-import fr.itinerennes.model.oba.StopTime;
+import fr.itinerennes.model.oba.TripSchedule;
+import fr.itinerennes.model.oba.TripStopTime;
 
 /**
- * @author orgoz
+ * Handles responses for a call to the "trip-details" method of the OneBusAway API.
+ * 
+ * @author Olivier Boudet
  */
-public class TripDetailsHttpResponseHandler extends HttpResponseHandler<Schedule> {
+public class TripDetailsHttpResponseHandler extends HttpResponseHandler<TripSchedule> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -30,7 +33,7 @@ public class TripDetailsHttpResponseHandler extends HttpResponseHandler<Schedule
      * @see fr.itinerennes.business.http.HttpResponseHandler#handleContent(java.lang.String)
      */
     @Override
-    protected Schedule handleContent(final String content) throws GenericException {
+    protected final TripSchedule handleContent(final String content) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("handleContent.start");
@@ -38,9 +41,9 @@ public class TripDetailsHttpResponseHandler extends HttpResponseHandler<Schedule
 
         final JSONObject data = OneBusAwayUtils.getServiceResponse(content);
 
-        Schedule schedule = null;
+        TripSchedule schedule = null;
         if (data != null) {
-            schedule = new Schedule();
+            schedule = new TripSchedule();
 
             try {
                 final JSONObject entry = data.getJSONObject("entry");
@@ -49,8 +52,12 @@ public class TripDetailsHttpResponseHandler extends HttpResponseHandler<Schedule
                 final JSONArray stopTimes = schedules.getJSONArray("stopTimes");
 
                 final JSONObject references = data.getJSONObject("references");
-                final HashMap<String, Stop> stops = getReferencedStops(references
-                        .getJSONArray("stops"));
+
+                final HashMap<String, Route> routes = OneBusAwayUtils
+                        .getReferencedRoutes(references.getJSONArray("routes"));
+
+                final HashMap<String, Stop> stops = OneBusAwayUtils.getReferencedStops(
+                        references.getJSONArray("stops"), routes);
 
                 for (int i = 0; !stopTimes.isNull(i); i++) {
                     schedule.getStopTimes().add(
@@ -76,46 +83,6 @@ public class TripDetailsHttpResponseHandler extends HttpResponseHandler<Schedule
     }
 
     /**
-     * @param jsonArray
-     * @return
-     */
-    private HashMap<String, Stop> getReferencedStops(final JSONArray jsonArray) {
-
-        HashMap<String, Stop> stops = null;
-
-        if (jsonArray != null) {
-            stops = new HashMap<String, Stop>();
-            for (int i = 0; !jsonArray.isNull(i); i++) {
-                final JSONObject jsonStop = jsonArray.optJSONObject(i);
-                stops.put(jsonStop.optString("id"), convertJsonObjectToStop(jsonStop));
-            }
-        }
-        return stops;
-    }
-
-    /**
-     * @param optJSONObject
-     * @return
-     * @throws JSONException
-     */
-    private Stop convertJsonObjectToStop(final JSONObject jsonStop) {
-
-        final Stop stop = new Stop();
-        stop.setId(jsonStop.optString("id"));
-        stop.setLon(jsonStop.optDouble("lon"));
-        stop.setLat(jsonStop.optDouble("lon"));
-        stop.setDirection(jsonStop.optString("direction"));
-        stop.setName(jsonStop.optString("name"));
-        stop.setCode(jsonStop.optInt("code"));
-        final JSONArray routes = jsonStop.optJSONArray("routeIds");
-        for (int i = 0; !routes.isNull(i); i++) {
-            stop.getRouteIds().add(routes.optString(i));
-        }
-
-        return stop;
-    }
-
-    /**
      * Converts a json object to a bean representing a stop time.
      * 
      * @param jsonObject
@@ -126,10 +93,10 @@ public class TripDetailsHttpResponseHandler extends HttpResponseHandler<Schedule
      *            map with stops referenced in the response
      * @return the stop time bean
      */
-    private StopTime convertJsonObjectToStopTime(final JSONObject jsonObject,
+    private TripStopTime convertJsonObjectToStopTime(final JSONObject jsonObject,
             final Long serviceDate, final HashMap<String, Stop> stops) {
 
-        final StopTime stopTime = new StopTime();
+        final TripStopTime stopTime = new TripStopTime();
         stopTime.setStop(stops.get(jsonObject.optString("stopId")));
         stopTime.setArrivalTime(OneBusAwayUtils.dateFromTimestamps(serviceDate,
                 jsonObject.optLong("arrivalTime")));

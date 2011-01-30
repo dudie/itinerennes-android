@@ -1,7 +1,6 @@
 package fr.itinerennes.business.http.oba;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -14,11 +13,12 @@ import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.business.http.HttpResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.oba.ArrivalAndDeparture;
-import fr.itinerennes.model.oba.Stop;
-import fr.itinerennes.model.oba.StopTime;
 
 /**
- * @author orgoz
+ * Handles responses for a call to the "arrivals-and-departures-for-stop" method of the OneBusAway
+ * API.
+ * 
+ * @author Olivier Boudet
  */
 public class ArrivalsAndDeparturesForStopHttpResponseHandler extends
         HttpResponseHandler<List<ArrivalAndDeparture>> {
@@ -33,7 +33,8 @@ public class ArrivalsAndDeparturesForStopHttpResponseHandler extends
      * @see fr.itinerennes.business.http.HttpResponseHandler#handleContent(java.lang.String)
      */
     @Override
-    protected List<ArrivalAndDeparture> handleContent(final String content) throws GenericException {
+    protected final List<ArrivalAndDeparture> handleContent(final String content)
+            throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("handleContent.start");
@@ -74,6 +75,7 @@ public class ArrivalsAndDeparturesForStopHttpResponseHandler extends
      * Converts a JSON object to a ArrivalAndDeparture object.
      * 
      * @param jsonArrivalAndDeparture
+     *            JSON Object describing an ArrivalAndDeparture.
      * @return the arrival and departure object
      */
     private ArrivalAndDeparture convertJsonObjectToArrivalAndDeparture(
@@ -98,31 +100,5 @@ public class ArrivalsAndDeparturesForStopHttpResponseHandler extends
         arrivalAndDeparture.setStopId(jsonArrivalAndDeparture.optString("stopId"));
 
         return arrivalAndDeparture;
-    }
-
-    /**
-     * Converts a json object to a bean representing a stop time.
-     * 
-     * @param jsonObject
-     *            the json object to convert to a stop time
-     * @param serviceDate
-     *            the service date of the trip for this stop time
-     * @param stops
-     *            map with stops referenced in the response
-     * @return the stop time bean
-     */
-    private StopTime convertJsonObjectToStopTime(final JSONObject jsonObject,
-            final Long serviceDate, final HashMap<String, Stop> stops) {
-
-        final StopTime stopTime = new StopTime();
-        stopTime.setStop(stops.get(jsonObject.optString("stopId")));
-        stopTime.setArrivalTime(OneBusAwayUtils.dateFromTimestamps(serviceDate,
-                jsonObject.optLong("arrivalTime")));
-        stopTime.setDepartureTime(OneBusAwayUtils.dateFromTimestamps(serviceDate,
-                jsonObject.optLong("departureTime")));
-        stopTime.setDistanceAlongTrip(jsonObject.optDouble("distanceAlongTrip"));
-        stopTime.setStopHeadsign(jsonObject.optString("stopHeadsign"));
-
-        return stopTime;
     }
 }

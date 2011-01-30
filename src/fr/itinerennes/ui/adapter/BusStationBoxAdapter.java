@@ -76,7 +76,9 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
             public void onClick(final View v) {
 
                 final Intent i = new Intent(context, BusStationActivity.class);
-                i.putExtra(BusStationActivity.INTENT_STOP_ID, item.getData().getId());
+                // TOBO on ajoute '1_' temporairement il faut utiliser le agencyId a la place
+                final String stopId = String.format("1_%s", item.getData().getId());
+                i.putExtra(BusStationActivity.INTENT_STOP_ID, stopId);
                 i.putExtra(BusStationActivity.INTENT_STOP_NAME, item.getData().getName());
                 context.startActivity(i);
             }
