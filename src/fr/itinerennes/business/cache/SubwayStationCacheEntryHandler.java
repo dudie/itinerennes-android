@@ -116,7 +116,7 @@ public class SubwayStationCacheEntryHandler extends AbstractDatabaseCacheEntryHa
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, identifier={}", type, id);
         }
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, FLOORS,
                 RANK_PF_DIR_1, RANK_PF_DIR_2, HAS_PF_DIR_1, HAS_PF_DIR_2, LAST_UPDATE };
@@ -163,7 +163,7 @@ public class SubwayStationCacheEntryHandler extends AbstractDatabaseCacheEntryHa
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, bbox={}", type, bbox.toString());
         }
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, FLOORS,
                 RANK_PF_DIR_1, RANK_PF_DIR_2, HAS_PF_DIR_1, HAS_PF_DIR_2, LAST_UPDATE };

@@ -108,7 +108,7 @@ public class BusStationCacheEntryHandler extends AbstractDatabaseCacheEntryHandl
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, identifier={}", type, id);
         }
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE };
         final String[] selectionArgs = new String[] { id };
@@ -148,7 +148,7 @@ public class BusStationCacheEntryHandler extends AbstractDatabaseCacheEntryHandl
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, bbox={}", type, bbox.toString());
         }
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE };
         final String selection = String.format("%s >= ? AND %s <= ? AND %s >= ? AND %s <= ?",

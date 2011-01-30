@@ -118,20 +118,14 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         map.setMultiTouchControls(true);
 
-        // if intent asks for a specific zoom level, its values overrides the ones
-        // saved when the activity was paused
         final int zoomToRestore = sharedPreferences.getInt(ITRPrefs.MAP_ZOOM_LEVEL,
                 ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
-        final int newZoom = getIntent().getIntExtra(INTENT_SET_MAP_ZOOM, zoomToRestore);
-        map.getController().setZoom(newZoom);
-        // same thing with the map center
-        final int lonToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LAT,
+        map.getController().setZoom(zoomToRestore);
+        final int latToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LAT,
                 ItineRennesConstants.CONFIG_RENNES_LAT);
-        final int latToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LON,
+        final int lonToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LON,
                 ItineRennesConstants.CONFIG_RENNES_LON);
-        final int newLat = getIntent().getIntExtra(INTENT_SET_MAP_LAT, lonToRestore);
-        final int newLon = getIntent().getIntExtra(INTENT_SET_MAP_LON, latToRestore);
-        map.getController().setCenter(new GeoPoint(newLat, newLon));
+        map.getController().setCenter(new GeoPoint(latToRestore, lonToRestore));
 
         // if first start of the application, open the preload dialog
         if (sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
@@ -215,6 +209,47 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             LOGGER.debug("onPause.end");
         }
         super.onPause();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onNewIntent(android.content.Intent)
+     */
+    @Override
+    protected final void onNewIntent(final Intent intent) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onNewIntent.start");
+        }
+        super.onNewIntent(intent);
+
+        // if intent asks for a specific zoom level, its values overrides the ones
+        // saved when the activity was paused
+        final int newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
+        // same thing with the map center
+        final int newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenterLatitudeE6());
+        final int newLon = intent.getIntExtra(INTENT_SET_MAP_LON, map.getMapCenterLongitudeE6());
+        if (LOGGER.isDebugEnabled()) {
+            if (map.getZoomLevel() != newZoom) {
+                LOGGER.debug("intent requested a new zoom level : old={}, new={}",
+                        map.getZoomLevel(), newZoom);
+            }
+            if (map.getMapCenterLatitudeE6() != newLat) {
+                LOGGER.debug("intent requested a new latitude : old={}, new={}",
+                        map.getMapCenterLatitudeE6(), newLat);
+            }
+            if (map.getMapCenterLongitudeE6() != newLon) {
+                LOGGER.debug("intent requested a new longitude : old={}, new={}",
+                        map.getMapCenterLongitudeE6(), newLon);
+            }
+        }
+        map.getController().setZoom(newZoom);
+        map.getController().setCenter(new GeoPoint(newLat, newLon));
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onNewIntent.end");
+        }
     }
 
     /**

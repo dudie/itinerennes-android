@@ -48,7 +48,7 @@ public class BookmarksActivity extends ITRContext implements BookmarksColumns {
         setContentView(R.layout.activity_bookmarks);
 
         // retrieve all bookmarks
-        final Cursor c = getDatabaseHelper().getReadableDatabase().query(BOOKMARKS_TABLE_NAME,
+        final Cursor c = getDatabaseHelper().getWritableDatabase().query(BOOKMARKS_TABLE_NAME,
                 new String[] { "_id", LABEL, TYPE, ID }, null, null, null, null, null);
 
         // creates the list adapter
@@ -70,6 +70,7 @@ public class BookmarksActivity extends ITRContext implements BookmarksColumns {
                 try {
                     final GeoPoint location = findBookmarkLocation(favType, favId);
                     final Intent i = new Intent(BookmarksActivity.this, MapActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra(MapActivity.INTENT_SELECT_BOOKMARK_ID, favId);
                     i.putExtra(MapActivity.INTENT_SELECT_BOOKMARK_TYPE, favType);
                     i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);

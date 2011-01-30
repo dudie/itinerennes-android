@@ -3,7 +3,11 @@ package fr.itinerennes.ui.activity;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.oba.TripSchedule;
+import fr.itinerennes.model.oba.TripStopTime;
 import fr.itinerennes.ui.adapter.BusRouteStopsAdapter;
 
 /**
@@ -81,6 +86,20 @@ public class BusRouteActivity extends ITRContext {
                 schedule.getStopTimes());
         listRouteStops.setAdapter(routeStopsAdapter);
         listRouteStops.setSelectionFromTop(routeStopsAdapter.getIndexForStopId(stopId), 50);
+        listRouteStops.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(final AdapterView<?> parent, final View view,
+                    final int position, final long id) {
+
+                final TripStopTime stopTime = routeStopsAdapter.getItem(position);
+                final Intent i = new Intent(view.getContext(), BusStationActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.putExtra(BusStationActivity.INTENT_STOP_ID, stopTime.getStop().getId());
+                i.putExtra(BusStationActivity.INTENT_STOP_NAME, stopTime.getStop().getName());
+                view.getContext().startActivity(i);
+            }
+        });
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");

@@ -105,7 +105,7 @@ public class CacheRelationProvider<T extends Cacheable> extends AbstractService 
      */
     public final List<T> load(final String relationKeyId) {
 
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, relationKeyId });
         List<T> values = null;
