@@ -11,7 +11,7 @@ import android.widget.ToggleButton;
 import fr.itinerennes.R;
 import fr.itinerennes.model.SubwayStation;
 import fr.itinerennes.ui.activity.ITRContext;
-import fr.itinerennes.ui.views.ToggleStarListener;
+import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.SelectableMarker;
 
 /**

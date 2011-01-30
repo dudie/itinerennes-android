@@ -29,7 +29,7 @@ public final class SubwayService extends AbstractKeolisStationProvider<SubwaySta
     private static final KeolisService keolisService = new KeolisService();
 
     /**
-     * Creates a bike service.
+     * Creates a subway service.
      * 
      * @param dbHelper
      *            the database helper

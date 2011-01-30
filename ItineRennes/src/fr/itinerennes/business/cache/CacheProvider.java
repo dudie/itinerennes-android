@@ -11,6 +11,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 
 import fr.itinerennes.business.service.AbstractService;
 import fr.itinerennes.database.Columns.MetadataColumns;
@@ -271,4 +272,18 @@ public class CacheProvider<T extends Cacheable> extends AbstractService implemen
         return contains;
     }
 
+    /**
+     * Gets the oldest entry update time.
+     * 
+     * @return the oldest entry update time
+     */
+    public final long getOldestEntryUpdateTime() {
+
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
+        final SQLiteStatement stmt = database.compileStatement(String.format(
+                "SELECT min(%s) FROM %s", LAST_UPDATE, METADATA_TABLE_NAME));
+        final long result = stmt.simpleQueryForLong();
+        stmt.close();
+        return result;
+    }
 }

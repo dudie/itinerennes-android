@@ -56,6 +56,7 @@ public class LineIconService extends AbstractService {
 
         super(dbHelper);
         iconCache = new CacheProvider<LineIcon>(dbHelper, new LineIconCacheEntryHandler(dbHelper));;
+        lastGlobalUpdate = iconCache.getOldestEntryUpdateTime();
     }
 
     /**
@@ -72,11 +73,6 @@ public class LineIconService extends AbstractService {
         }
 
         BitmapDrawable image = null;
-
-        // TOBO a virer quand l'api keolis fournira les icones de ces lignes...
-        if (line.equalsIgnoreCase("158")) {
-            return null;
-        }
 
         LineIcon lineIcon = null;
         CacheEntry<LineIcon> cachedLineIcon = iconCache.load(line);

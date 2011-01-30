@@ -22,7 +22,7 @@ import fr.itinerennes.model.BusRoute;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.ui.activity.BusStationActivity;
 import fr.itinerennes.ui.activity.ITRContext;
-import fr.itinerennes.ui.views.ToggleStarListener;
+import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.SelectableMarker;
 
 /**
