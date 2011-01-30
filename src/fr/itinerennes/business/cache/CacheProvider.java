@@ -11,12 +11,14 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteStatement;
 
 import fr.itinerennes.business.service.AbstractService;
 import fr.itinerennes.database.Columns.MetadataColumns;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.Cacheable;
+import fr.itinerennes.utils.DateUtils;
 
 /**
  * Manages a cache of data. Uses a database to store metadata information about saved entries.
@@ -281,9 +283,15 @@ public class CacheProvider<T extends Cacheable> extends AbstractService implemen
 
         final SQLiteDatabase database = dbHelper.getWritableDatabase();
         final SQLiteStatement stmt = database.compileStatement(String.format(
-                "SELECT min(%s) FROM %s", LAST_UPDATE, METADATA_TABLE_NAME));
-        final long result = stmt.simpleQueryForLong();
+                "SELECT min(%s) FROM %s WHERE %s = ?", LAST_UPDATE, METADATA_TABLE_NAME, TYPE));
+        stmt.bindString(1, type);
+        long result;
+        try {
+            result = stmt.simpleQueryForLong();
+        } catch (final SQLiteDoneException done) {
+            result = 0;
+        }
         stmt.close();
-        return result;
+        return DateUtils.toSeconds(result);
     }
 }
