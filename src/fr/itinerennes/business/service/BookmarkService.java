@@ -1,5 +1,7 @@
 package fr.itinerennes.business.service;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
@@ -7,8 +9,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import fr.itinerennes.business.event.IBookmarkModificationListener;
 import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.database.DatabaseHelper;
+import fr.itinerennes.ui.activity.ITRContext;
 
 /**
  * A service to manage user bookmarks.
@@ -20,8 +24,13 @@ public class BookmarkService implements BookmarksColumns {
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BookmarkService.class);
 
+    private final ITRContext context;
+
     /** The database helper. */
     private final DatabaseHelper dbHelper;
+
+    /** A list of listeners on bookmarks modifications. */
+    private ArrayList<IBookmarkModificationListener> listeners = null;
 
     /**
      * Creates the bookmark service.
@@ -32,6 +41,18 @@ public class BookmarkService implements BookmarksColumns {
     public BookmarkService(final DatabaseHelper dbHelper) {
 
         this.dbHelper = dbHelper;
+        context = null;
+    }
+
+    public final void addListener(final IBookmarkModificationListener listener) {
+
+        if (null == listener) {
+            throw new NullPointerException("Can't bind a null listener");
+        }
+        if (listeners == null) {
+            listeners = new ArrayList<IBookmarkModificationListener>(1);
+        }
+        listeners.add(listener);
     }
 
     /**
@@ -59,6 +80,16 @@ public class BookmarkService implements BookmarksColumns {
         database.insert(BOOKMARKS_TABLE_NAME, null, values);
 
         if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("notifying {} listeners for bookmark addition", null == listeners ? 0
+                    : listeners.size());
+        }
+        if (listeners != null) {
+            for (final IBookmarkModificationListener l : listeners) {
+                l.onBookmarkAddition(type, id, label);
+            }
+        }
+
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("setStarred.end");
         }
     }
@@ -82,6 +113,16 @@ public class BookmarkService implements BookmarksColumns {
 
         final SQLiteDatabase database = dbHelper.getWritableDatabase();
         database.delete(BOOKMARKS_TABLE_NAME, where, whereArgs);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("notifying {} listeners for bookmark removal", null == listeners ? 0
+                    : listeners.size());
+        }
+        if (listeners != null) {
+            for (final IBookmarkModificationListener l : listeners) {
+                l.onBookmarkRemoval(type, id);
+            }
+        }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("setNotStarred.end");

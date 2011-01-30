@@ -1,4 +1,4 @@
-package fr.itinerennes.business.http;
+package fr.itinerennes.business.event;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
