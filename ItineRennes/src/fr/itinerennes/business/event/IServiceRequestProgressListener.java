@@ -1,4 +1,4 @@
-package fr.itinerennes.business.service;
+package fr.itinerennes.business.event;
 
 
 /**

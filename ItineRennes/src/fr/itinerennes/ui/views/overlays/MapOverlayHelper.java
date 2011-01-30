@@ -111,6 +111,11 @@ public class MapOverlayHelper implements OverlayConstants {
             busStationOverlay.setLocalizedName(context.getString(R.string.overlay_bus));
             busStationOverlay.setEnabled(false);
             getGroupSelectOverlay().addOverlay(busStationOverlay);
+
+            final BookmarkItemizedOverlay<BusStation> busBookmarksOverlay = new BookmarkItemizedOverlay<BusStation>(
+                    context, map);
+            map.getOverlays().add(busBookmarksOverlay);
+            busStationOverlay.setOnItemizedOverlayUpdateListener(busBookmarksOverlay);
         }
 
         return busStationOverlay;
@@ -134,6 +139,11 @@ public class MapOverlayHelper implements OverlayConstants {
             bikeStationOverlay.setLocalizedName(context.getString(R.string.overlay_bike));
             bikeStationOverlay.setEnabled(false);
             getGroupSelectOverlay().addOverlay(bikeStationOverlay);
+
+            final BookmarkItemizedOverlay<BikeStation> bikeBookmarksOverlay = new BookmarkItemizedOverlay<BikeStation>(
+                    context, map);
+            map.getOverlays().add(bikeBookmarksOverlay);
+            bikeStationOverlay.setOnItemizedOverlayUpdateListener(bikeBookmarksOverlay);
         }
 
         return bikeStationOverlay;
@@ -157,6 +167,11 @@ public class MapOverlayHelper implements OverlayConstants {
             subwayStationOverlay.setLocalizedName(context.getString(R.string.overlay_subway));
             subwayStationOverlay.setEnabled(false);
             getGroupSelectOverlay().addOverlay(subwayStationOverlay);
+
+            final BookmarkItemizedOverlay<SubwayStation> subwayBookmarksOverlay = new BookmarkItemizedOverlay<SubwayStation>(
+                    context, map);
+            map.getOverlays().add(subwayBookmarksOverlay);
+            subwayStationOverlay.setOnItemizedOverlayUpdateListener(subwayBookmarksOverlay);
         }
 
         return subwayStationOverlay;

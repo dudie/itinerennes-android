@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import fr.itinerennes.business.event.IHttpRequestProgressListener;
 import fr.itinerennes.exceptions.GenericException;
 
 /**
