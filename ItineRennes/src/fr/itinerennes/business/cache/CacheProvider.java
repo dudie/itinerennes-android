@@ -208,7 +208,7 @@ public class CacheProvider<T extends Cacheable> extends AbstractService implemen
      */
     public final CacheEntry<T> load(final String id) {
 
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, id });
         CacheEntry<T> entry = null;
 
@@ -233,7 +233,7 @@ public class CacheProvider<T extends Cacheable> extends AbstractService implemen
      */
     public final List<CacheEntry<T>> load(final BoundingBoxE6 bbox) {
 
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
         final List<T> values = handler.load(type, bbox);
         final List<CacheEntry<T>> entries = new ArrayList<CacheEntry<T>>(values == null ? 0
                 : values.size());
@@ -264,7 +264,7 @@ public class CacheProvider<T extends Cacheable> extends AbstractService implemen
      */
     public final boolean contains(final String id) {
 
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, id });
         final boolean contains = c.getCount() > 0;
         c.close();

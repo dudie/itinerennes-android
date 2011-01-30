@@ -209,6 +209,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
                     final Intent i = new Intent(getBaseContext(), BusRouteActivity.class);
                     final ScheduleStopTime departure = (ScheduleStopTime) parent.getAdapter()
                             .getItem(position);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra(BusRouteActivity.INTENT_STOP_ID, stopId);
                     i.putExtra(BusRouteActivity.INTENT_ROUTE_HEADSIGN,
                             departure.getSimpleHeadsign());

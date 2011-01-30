@@ -9,6 +9,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.util.CharArrayBuffer;
 import org.apache.http.util.EntityUtils;
@@ -88,11 +89,12 @@ public abstract class HttpResponseHandler<T> implements ResponseHandler<T> {
         if (isHttpSuccess(response)) {
             try {
                 result = handleContent(toString(response.getEntity()));
-            } catch (final ParseException e) {
-                LOGGER.error(e.getMessage(), e);
             } catch (final GenericException e) {
-                LOGGER.error(e.getMessage(), e);
+                throw new ClientProtocolException("unable to handle response content", e);
             }
+        } else {
+            throw new HttpResponseException(response.getStatusLine().getStatusCode(), response
+                    .getStatusLine().getReasonPhrase());
         }
 
         if (LOGGER.isDebugEnabled()) {

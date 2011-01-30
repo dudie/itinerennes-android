@@ -117,7 +117,7 @@ public class BikeStationCacheEntryHandler extends AbstractDatabaseCacheEntryHand
             LOGGER.debug("load.start - type={}, identifier={}", type, id);
         }
 
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, AVAILABLE_BIKES,
                 AVAILABLE_SLOTS, DISTRICT_NAME, IS_ACTIVE, IS_POS, LAST_UPDATE, STREET_NAME };
@@ -165,7 +165,7 @@ public class BikeStationCacheEntryHandler extends AbstractDatabaseCacheEntryHand
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, bbox={}", type, bbox.toString());
         }
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, AVAILABLE_BIKES,
                 AVAILABLE_SLOTS, DISTRICT_NAME, IS_ACTIVE, IS_POS, LAST_UPDATE, STREET_NAME };

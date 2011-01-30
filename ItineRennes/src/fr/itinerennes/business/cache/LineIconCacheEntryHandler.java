@@ -110,7 +110,7 @@ public class LineIconCacheEntryHandler extends AbstractDatabaseCacheEntryHandler
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, identifier={}", type, lineId);
         }
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final String[] columns = new String[] { LINE_ID, URL, ICON };
         final String[] selectionArgs = new String[] { lineId };
