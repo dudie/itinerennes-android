@@ -153,9 +153,9 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
                 lineIcon.setImageDrawable(icon);
                 iconsView.addView(imageContainer);
             }
+            // set the list of routes icons visible only if it contains icons
+            view.findViewById(R.id.line_icon_container).setVisibility(View.VISIBLE);
         }
-        // set the list of routes icons visible
-        view.findViewById(R.id.line_icon_container).setVisibility(View.VISIBLE);
     }
 
     /**
