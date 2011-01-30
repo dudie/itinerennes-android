@@ -45,6 +45,18 @@ public final class DateUtils {
     }
 
     /**
+     * Gets a unix timestamp in seconds from a timestamp in milliseconds.
+     * 
+     * @param milliseconds
+     *            the timestamp in milliseconds
+     * @return seconds the timestamp in seconds
+     */
+    public static long toSeconds(final long milliseconds) {
+
+        return milliseconds / ONE_SECOND_IN_MILLISECONDS;
+    }
+
+    /**
      * Is the given TTL expired at the given date for the current time.
      * 
      * @param date
