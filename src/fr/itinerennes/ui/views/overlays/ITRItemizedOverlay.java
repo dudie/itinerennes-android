@@ -20,7 +20,6 @@ import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.tasks.UpdateOverlayTask;
 import fr.itinerennes.ui.views.ITRMapView;
 import fr.itinerennes.ui.views.MapListenerWrapper;
-import fr.itinerennes.ui.views.overlays.event.OnItemizedOverlayUpdateListener;
 
 /**
  * An enhanced itemized overlay which can use an {@link ItemizedOverlayAdapter} to update itself
@@ -63,9 +62,6 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
 
     /** The localized name of the overlay. */
     private String localizedName;
-
-    /** A reference to a object which listen for item updates in this overlay. */
-    private OnItemizedOverlayUpdateListener updateListener;
 
     /**
      * The map on which this overlay is displayed. Used to attach a listener on map moves when this
@@ -296,17 +292,5 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("setEnabled.end - overlay={}, enabled={}", localizedName, enabled);
         }
-    }
-
-    /**
-     * Sets listener for item updates.
-     * 
-     * @param updateListener
-     *            the listener to set
-     */
-    public final void setOnItemizedOverlayUpdateListener(
-            final OnItemizedOverlayUpdateListener updateListener) {
-
-        this.updateListener = updateListener;
     }
 }
