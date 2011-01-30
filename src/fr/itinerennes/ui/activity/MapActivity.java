@@ -84,9 +84,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     /** The my location overlay. */
     private LocationOverlay myLocation;
 
-    /** Shared preferences. */
-    private SharedPreferences sharedPreferences;
-
     /** Location manager. */
     private LocationManager locationManager;
 
@@ -106,7 +103,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         }
         super.onCreate(savedInstanceState);
 
-        sharedPreferences = getSharedPreferences(ITRPrefs.PREFS_NAME, MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getITRPreferences();
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         setContentView(R.layout.main_map);
@@ -149,6 +146,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             LOGGER.debug("onResume.start");
         }
 
+        final SharedPreferences sharedPreferences = getITRPreferences();
         // if a location provider is enabled and follow location is activated in preferences, the
         // follow location feature is enabled
         if (sharedPreferences.getBoolean(ITRPrefs.MAP_SHOW_LOCATION, true)
@@ -188,7 +186,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         }
 
         // saving in preferences the state of the map (center, follow location and zoom)
-        final SharedPreferences.Editor edit = sharedPreferences.edit();
+        final SharedPreferences.Editor edit = getITRPreferences().edit();
         edit.putInt(ITRPrefs.MAP_CENTER_LAT, map.getMapCenterLatitudeE6());
         edit.putInt(ITRPrefs.MAP_CENTER_LON, map.getMapCenterLongitudeE6());
         edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, map.getZoomLevel());

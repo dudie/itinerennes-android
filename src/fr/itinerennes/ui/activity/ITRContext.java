@@ -4,7 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 
+import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.business.http.oba.OneBusAwayService;
 import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.business.service.BookmarkService;
@@ -27,23 +29,26 @@ public abstract class ITRContext extends Activity {
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ITRContext.class);
 
+    /** The itinerennes shared preferences. */
+    private SharedPreferences sharedPreferences;
+
     /** The default exception handler. */
-    private static ExceptionHandler exceptionHandler;
+    private final ExceptionHandler exceptionHandler = new DefaultExceptionHandler(this);
 
     /** The database helper. */
-    private static DatabaseHelper databaseHelper;
+    private DatabaseHelper databaseHelper;
 
     /** The bus service. */
-    private static BusService busService;
+    private BusService busService;
 
     /** The bike service. */
-    private static BikeService bikeService;
+    private BikeService bikeService;
 
     /** The subway service. */
-    private static SubwayService subwayService;
+    private SubwayService subwayService;
 
     /** The bus route service. */
-    private static BusRouteService busRouteService;
+    private BusRouteService busRouteService;
 
     /** The bus departure service. */
     private BusDepartureService busDepartureService;
@@ -73,15 +78,25 @@ public abstract class ITRContext extends Activity {
     }
 
     /**
+     * Gets the itinerennes shared preferences.
+     * 
+     * @return a shared preferences
+     */
+    public final SharedPreferences getITRPreferences() {
+
+        if (sharedPreferences == null) {
+            sharedPreferences = getSharedPreferences(ITRPrefs.PREFS_NAME, MODE_PRIVATE);
+        }
+        return sharedPreferences;
+    }
+
+    /**
      * Gets the exception handler.
      * 
      * @return the current exception handler
      */
     public final ExceptionHandler getExceptionHandler() {
 
-        if (exceptionHandler == null) {
-            exceptionHandler = new DefaultExceptionHandler(this);
-        }
         return exceptionHandler;
     }
 

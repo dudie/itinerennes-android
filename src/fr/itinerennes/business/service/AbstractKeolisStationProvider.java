@@ -51,6 +51,7 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
 
         super(dbHelper);
         this.cache = cache;
+        lastGlobalUpdate = cache.getOldestEntryUpdateTime();
     }
 
     /**

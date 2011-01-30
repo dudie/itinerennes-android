@@ -13,7 +13,7 @@ import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.ui.activity.ITRContext;
-import fr.itinerennes.ui.views.ToggleStarListener;
+import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.SelectableMarker;
 
 /**

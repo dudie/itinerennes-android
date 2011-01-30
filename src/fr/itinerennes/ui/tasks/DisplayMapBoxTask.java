@@ -3,9 +3,9 @@ package fr.itinerennes.ui.tasks;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import android.os.AsyncTask;
 import android.view.View;
 
-import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.views.MapBoxView;
@@ -15,7 +15,7 @@ import fr.itinerennes.ui.views.MapBoxView;
  *            the type of the bundled data with the item
  * @author Jérémie Huchet
  */
-public class DisplayMapBoxTask<D> extends SafeAsyncTask<Void, Void, Void> {
+public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, Void> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -48,7 +48,7 @@ public class DisplayMapBoxTask<D> extends SafeAsyncTask<Void, Void, Void> {
     public DisplayMapBoxTask(final ITRContext context, final MapBoxView boxView,
             final MapBoxAdapter<D> adapter, final D data) {
 
-        super(context);
+        super();
         this.context = context;
         this.boxView = boxView;
         this.adapter = adapter;
@@ -61,7 +61,7 @@ public class DisplayMapBoxTask<D> extends SafeAsyncTask<Void, Void, Void> {
      * @see android.os.AsyncTask#onPreExecute()
      */
     @Override
-    protected void onPreExecute() {
+    protected final void onPreExecute() {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPreExecute.start - data={}", data);
@@ -85,7 +85,7 @@ public class DisplayMapBoxTask<D> extends SafeAsyncTask<Void, Void, Void> {
      * @see android.os.AsyncTask#doInBackground(Params[])
      */
     @Override
-    protected final Void doInBackgroundSafely(final Void... params) throws GenericException {
+    protected final Void doInBackground(final Void... params) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("doInBackground.start - data={}", data);
@@ -107,7 +107,7 @@ public class DisplayMapBoxTask<D> extends SafeAsyncTask<Void, Void, Void> {
      * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
      */
     @Override
-    protected final void onCustomPostExecute(final Void nothing) {
+    protected final void onPostExecute(final Void nothing) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPostExecute.start - data={}", data);
@@ -118,6 +118,16 @@ public class DisplayMapBoxTask<D> extends SafeAsyncTask<Void, Void, Void> {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPostExecute.end - data={}", data);
+        }
+    }
+
+    @Override
+    protected void onCancelled() {
+
+        super.onCancelled();
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onCancelled.start/stop - isCancelled={}", isCancelled());
         }
     }
 }

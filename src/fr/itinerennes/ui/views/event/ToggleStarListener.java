@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.views;
+package fr.itinerennes.ui.views.event;
 
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
