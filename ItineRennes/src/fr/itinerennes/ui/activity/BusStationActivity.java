@@ -1,7 +1,7 @@
 package fr.itinerennes.ui.activity;
 
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
@@ -25,8 +25,9 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.BusDeparture;
-import fr.itinerennes.model.BusRoute;
+import fr.itinerennes.model.oba.Route;
+import fr.itinerennes.model.oba.ScheduleStopTime;
+import fr.itinerennes.model.oba.StopSchedule;
 import fr.itinerennes.ui.adapter.BusTimeAdapter;
 
 /**
@@ -68,6 +69,9 @@ public class BusStationActivity extends ITRContext implements Runnable {
     /** The intial size of the progress bar. */
     private static final int INITIAL_PROGRESS_MAX = 30;
 
+    /** Size of the gap between the top and the list and the selection. */
+    private static final int SELECTION_FROM_TOP = 50;
+
     /** The identifier of the displayed station. */
     private String stopId;
 
@@ -80,14 +84,11 @@ public class BusStationActivity extends ITRContext implements Runnable {
     /** The progress bar displayed in the progress dialog. */
     private ProgressBar progressBar;
 
-    /** The list of routes for this station. */
-    private List<BusRoute> busRoutes;
+    /** The complete schedule for this station. */
+    private StopSchedule schedule;
 
     /** The list of route icon. */
     private final HashMap<String, Drawable> routesIcon = new HashMap<String, Drawable>();
-
-    /** The list of departures for those routes. */
-    private List<BusDeparture> departures;
 
     /** Handler for messages from thread which fetch information from the cache or the network. */
     private Handler handler;
@@ -100,6 +101,9 @@ public class BusStationActivity extends ITRContext implements Runnable {
      * <li>Set up a message handler to trigger actions when loading</li>
      * <li></li>
      * </ul>
+     * <p>
+     * {@inheritDoc}
+     * </p>
      * 
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
@@ -174,11 +178,12 @@ public class BusStationActivity extends ITRContext implements Runnable {
      */
     private void updateUI() {
 
-        /* Displaying routes icons. */
-        if (busRoutes != null) {
+        if (schedule != null) {
+            /* Displaying routes icons. */
+
             final ViewGroup lineList = (ViewGroup) findViewById(R.id.line_icon_container);
             lineList.removeAllViews();
-            for (final BusRoute busRoute : busRoutes) {
+            for (final Route busRoute : schedule.getStop().getRoutes()) {
                 final View imageContainer = getLayoutInflater().inflate(R.layout.line_icon, null);
                 final ImageView lineIcon = (ImageView) imageContainer
                         .findViewById(R.station.bus_line_icon);
@@ -188,12 +193,13 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
                 LOGGER.debug("Showing icon for line {}.", busRoute.getShortName());
             }
-        }
 
-        /* Displaying departures dates. */
-        if (departures != null) {
+            /* Displaying departures dates. */
+
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
-            listTimes.setAdapter(new BusTimeAdapter(this, stopId, departures, routesIcon));
+            final BusTimeAdapter adapter = new BusTimeAdapter(this, schedule, routesIcon);
+            listTimes.setAdapter(adapter);
+            listTimes.setSelectionFromTop(adapter.getIndexForNow(), SELECTION_FROM_TOP);
             listTimes.setOnItemClickListener(new OnItemClickListener() {
 
                 @Override
@@ -201,18 +207,19 @@ public class BusStationActivity extends ITRContext implements Runnable {
                         final int position, final long id) {
 
                     final Intent i = new Intent(getBaseContext(), BusRouteActivity.class);
-                    final BusDeparture departure = (BusDeparture) parent.getAdapter().getItem(
-                            position);
+                    final ScheduleStopTime departure = (ScheduleStopTime) parent.getAdapter()
+                            .getItem(position);
                     i.putExtra(BusRouteActivity.INTENT_STOP_ID, stopId);
                     i.putExtra(BusRouteActivity.INTENT_ROUTE_HEADSIGN,
                             departure.getSimpleHeadsign());
-                    i.putExtra(BusRouteActivity.INTENT_ROUTE_SHORT_NAME,
-                            departure.getRouteShortName());
+                    i.putExtra(BusRouteActivity.INTENT_ROUTE_SHORT_NAME, departure.getRoute()
+                            .getShortName());
                     i.putExtra(BusRouteActivity.INTENT_TRIP_ID, departure.getTripId());
                     startActivity(i);
                 }
             });
         }
+
     }
 
     @Override
@@ -220,38 +227,25 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         int returnCode = MESSAGE_SUCCESS;
 
-        // TJHU substring '1_' temporairement le temps de modifier les appels vers OTP
-        final String stationId = getIntent().getExtras().getString(INTENT_STOP_ID)
-                .replaceFirst("^1_", "");
+        final String stationId = getIntent().getExtras().getString(INTENT_STOP_ID);
 
         try {
-            /* Fetching routes informations for this station from the cache or the network. */
-            busRoutes = getBusRouteService().getStationRoutes(stationId);
-            handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
-        } catch (final GenericException e) {
-            LOGGER.debug(
-                    String.format("Can't load routes informations for the station %s.", stationId),
-                    e);
-            returnCode = MESSAGE_FAILURE;
-        }
+            /* Fetching stop informations for this station from the network. */
+            schedule = getOneBusAwayService().getScheduleForStop(stationId, new Date());
 
-        try {
-            /* Fetching departures informations from the network. */
-            departures = getBusDepartureService().getStationDepartures(stationId);
             handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
         } catch (final GenericException e) {
-            LOGGER.debug(String.format("Can't load departures informations for the station %s.",
-                    stationId), e);
+            LOGGER.debug(String.format("Can't load informations for the station %s.", stationId), e);
             returnCode = MESSAGE_FAILURE;
         }
 
         /* Fetching line icons. */
-        if (busRoutes != null) {
+        if (schedule != null) {
             final int increment = (progressBar.getMax() - progressBar.getProgress())
-                    / busRoutes.size();
-            for (final BusRoute busRoute : busRoutes) {
-                routesIcon.put(busRoute.getShortName(),
-                        getLineIconService().getIconOrDefault(this, busRoute.getShortName()));
+                    / schedule.getStop().getRoutes().size();
+            for (final Route route : schedule.getStop().getRoutes()) {
+                routesIcon.put(route.getShortName(),
+                        getLineIconService().getIconOrDefault(this, route.getShortName()));
                 handler.sendMessage(handler.obtainMessage(MESSAGE_INCREMENT_PROGRESS, increment, 0));
             }
         }

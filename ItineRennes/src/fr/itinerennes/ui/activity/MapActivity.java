@@ -91,9 +91,10 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     private LocationManager locationManager;
 
     /**
-     * Called when activity starts.
+     * Called when activity starts. Displays the view.
      * <p>
-     * Displays the view.
+     * {@inheritDoc}
+     * </p>
      * 
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */

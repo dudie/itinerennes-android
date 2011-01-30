@@ -3,7 +3,6 @@ package fr.itinerennes.ui.adapter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
@@ -18,12 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
-import fr.itinerennes.business.service.BusDepartureService;
-import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.BusDeparture;
-import fr.itinerennes.ui.activity.BusStationActivity;
+import fr.itinerennes.model.oba.ScheduleStopTime;
+import fr.itinerennes.model.oba.StopSchedule;
 import fr.itinerennes.ui.activity.ITRContext;
-import fr.itinerennes.ui.tasks.SafeAsyncTask;
 
 /**
  * @author Jérémie Huchet
@@ -36,48 +32,33 @@ public class BusTimeAdapter extends BaseAdapter {
     /** The android context. */
     private final ITRContext context;
 
-    /** Bus time data. */
-    private final List<BusDeparture> data;
+    /** Stop complete schedule. */
+    private final StopSchedule data;
 
     /** Map containing icons for routes. */
     private final HashMap<String, Drawable> routesIcons;
 
-    /** View to add to the list when data is loading. */
-    private View pendingView = null;
-
-    /**
-     * Flag to indicate if the list should be extended again. Needed when the departures service
-     * returns no more results, for example when requesting departures for the next day. TOBO to
-     * delete when the issue ITR-19 will be fixed.
-     */
-    private boolean continueAppending = true;
-
     /** Global instance of Layout inflater. */
     private LayoutInflater inflater = null;
-
-    /** The identifier of the bus station displayed in the activity. */
-    private final String stopId;
 
     /**
      * Constructor.
      * 
      * @param c
      *            The android context
-     * @param stopId
-     *            the identifier of the displayed station
-     * @param departures
+     * @param schedule
      *            departures to display in the list
      * @param routesIcons
      *            list of routes icons
      */
-    public BusTimeAdapter(final ITRContext c, final String stopId,
-            final List<BusDeparture> departures, final HashMap<String, Drawable> routesIcons) {
+    public BusTimeAdapter(final ITRContext c, final StopSchedule schedule,
+            final HashMap<String, Drawable> routesIcons) {
 
-        this.data = departures;
+        this.data = schedule;
         this.context = c;
-        this.stopId = stopId;
         this.routesIcons = routesIcons;
         this.inflater = LayoutInflater.from(context);
+
     }
 
     /**
@@ -88,12 +69,7 @@ public class BusTimeAdapter extends BaseAdapter {
     @Override
     public final int getCount() {
 
-        if (!continueAppending) {
-            // return the real size of data list
-            return data.size();
-        }
-        // return one more line to show the pending view
-        return data.size() + 1;
+        return data.getStopTimes().size();
     }
 
     /**
@@ -102,9 +78,9 @@ public class BusTimeAdapter extends BaseAdapter {
      * @see android.widget.Adapter#getItem(int)
      */
     @Override
-    public final BusDeparture getItem(final int position) {
+    public final ScheduleStopTime getItem(final int position) {
 
-        return data.get(position);
+        return data.getStopTimes().get(position);
     }
 
     /**
@@ -126,44 +102,30 @@ public class BusTimeAdapter extends BaseAdapter {
     @Override
     public final View getView(final int position, final View convertView, final ViewGroup parent) {
 
-        View view = null;
+        final View busTimeView = inflater.inflate(R.layout.bus_time, null);
 
-        if (position == data.size()) {
-            if (pendingView == null) {
-                pendingView = inflater.inflate(R.layout.bus_time_pending, null);
-            }
+        final ImageView departureLineIconeView = (ImageView) busTimeView
+                .findViewById(R.station.bus_icon_line_departure);
+        departureLineIconeView.setImageDrawable(routesIcons.get(data.getStopTimes().get(position)
+                .getRoute().getShortName()));
 
-            new AppendDeparturesTask(context).execute();
-            view = pendingView;
+        final TextView departureHeadsignView = (TextView) busTimeView
+                .findViewById(R.station.bus_headsign_departure);
+        departureHeadsignView.setText(data.getStopTimes().get(position).getSimpleHeadsign());
 
-        } else {
+        final TextView departureDateView = (TextView) busTimeView
+                .findViewById(R.station.bus_date_departure);
+        departureDateView.setText(formatDepartureDate(data.getStopTimes().get(position)
+                .getDepartureTime()));
 
-            final View busTimeView = inflater.inflate(R.layout.bus_time, null);
+        final TextView timeBeforeDepartureView = (TextView) busTimeView
+                .findViewById(R.station.bus_time_before_departure);
 
-            final ImageView departureLineIconeView = (ImageView) busTimeView
-                    .findViewById(R.station.bus_icon_line_departure);
-            departureLineIconeView.setImageDrawable(routesIcons.get(data.get(position)
-                    .getRouteShortName()));
+        timeBeforeDepartureView.setText(DateUtils.getRelativeTimeSpanString(data.getStopTimes()
+                .get(position).getDepartureTime().getTime(), System.currentTimeMillis(),
+                DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
 
-            final TextView departureHeadsignView = (TextView) busTimeView
-                    .findViewById(R.station.bus_headsign_departure);
-            departureHeadsignView.setText(data.get(position).getSimpleHeadsign());
-
-            final TextView departureDateView = (TextView) busTimeView
-                    .findViewById(R.station.bus_date_departure);
-            departureDateView.setText(formatDepartureDate(data.get(position).getDepartureDate()));
-
-            final TextView timeBeforeDepartureView = (TextView) busTimeView
-                    .findViewById(R.station.bus_time_before_departure);
-
-            timeBeforeDepartureView.setText(DateUtils.getRelativeTimeSpanString(data.get(position)
-                    .getDepartureDate().getTime(), System.currentTimeMillis(),
-                    DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
-
-            view = busTimeView;
-        }
-
-        return view;
+        return busTimeView;
     }
 
     /**
@@ -189,7 +151,7 @@ public class BusTimeAdapter extends BaseAdapter {
      *            a date to format
      * @return the date formatted
      */
-    private final String formatDepartureDate(final Date date) {
+    private String formatDepartureDate(final Date date) {
 
         final Calendar c = Calendar.getInstance();
         c.set(Calendar.MILLISECOND, 0);
@@ -211,77 +173,21 @@ public class BusTimeAdapter extends BaseAdapter {
     }
 
     /**
-     * Takes a list of @link {@link BusDeparture} and add them to the ListView.
+     * Gets the index of the list corresponding to the current time.
      * 
-     * @param departures
-     *            departures to append to the ListView
+     * @return index of the view for the current time
      */
-    private final void addDepartures(final List<BusDeparture> departures) {
+    public final int getIndexForNow() {
 
-        if (departures != null) {
+        final Date now = new Date();
+        final int length = data.getStopTimes().size();
 
-            data.addAll(departures);
-        } else {
-            continueAppending = false;
+        for (int i = 0; i < length; i++) {
+            if (data.getStopTimes().get(i).getDepartureTime().compareTo(now) > 0) {
+                return i;
+            }
         }
-        notifyDataSetChanged();
-    }
-
-    /**
-     * Class used to fetch departures in background and append them to the ListView on the @link
-     * {@link BusStationActivity}.
-     * 
-     * @author Olivier Boudet
-     */
-    private final class AppendDeparturesTask extends SafeAsyncTask<Void, Void, List<BusDeparture>> {
-
-        /**
-         * Creates the task which will display departures information.
-         * 
-         * @param context
-         *            the itinerennes application context
-         */
-        public AppendDeparturesTask(final ITRContext context) {
-
-            super(context);
-        }
-
-        /**
-         * Load next departures informations in background.
-         * <p>
-         * {@inheritDoc}
-         * </p>
-         * 
-         * @throws GenericException
-         * @see fr.itinerennes.ui.tasks.SafeAsyncTask#doInBackgroundSafely(Params[])
-         */
-        @Override
-        protected List<BusDeparture> doInBackgroundSafely(final Void... params)
-                throws GenericException {
-
-            final BusDepartureService busDepartureService = context.getBusDepartureService();
-            List<BusDeparture> departures = null;
-
-            departures = busDepartureService.getStationDepartures(stopId, data.get(data.size() - 1)
-                    .getDepartureDate());
-
-            return departures;
-        }
-
-        /**
-         * Appends fetched departures to the list and notify the adapter that data changed.
-         * <p>
-         * {@inheritDoc}
-         * </p>
-         * 
-         * @see fr.itinerennes.ui.tasks.SafeAsyncTask#onCustomPostExecute(java.lang.Object)
-         */
-        @Override
-        protected void onCustomPostExecute(final List<BusDeparture> departures) {
-
-            addDepartures(departures);
-
-        }
+        return 0;
     }
 
 }

@@ -34,12 +34,12 @@ public class Stop {
     /** Code of the stop. */
     private int code;
 
-    /** All route ids serving this stop. */
-    private final List<String> routeIds;
+    /** All route serving this stop. */
+    private final List<Route> routes;
 
     public Stop() {
 
-        routeIds = new ArrayList<String>();
+        routes = new ArrayList<Route>();
     }
 
     /**
@@ -169,13 +169,13 @@ public class Stop {
     }
 
     /**
-     * Gets the routeIds of the stop.
+     * Gets the routes of the stop.
      * 
-     * @return the routeIds
+     * @return the routes
      */
-    public List<String> getRouteIds() {
+    public List<Route> getRoutes() {
 
-        return routeIds;
+        return routes;
     }
 
 }

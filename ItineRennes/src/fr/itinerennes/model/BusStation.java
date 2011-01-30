@@ -137,7 +137,7 @@ public class BusStation implements Station {
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString() {
+    public final String toString() {
 
         final StringBuilder builder = new StringBuilder();
         builder.append("BusStation [id=");
@@ -158,7 +158,7 @@ public class BusStation implements Station {
      * @see fr.itinerennes.model.Station#getIconDrawableId()
      */
     @Override
-    public int getIconDrawableId() {
+    public final int getIconDrawableId() {
 
         return R.drawable.bus_marker_icon_focusable;
     }

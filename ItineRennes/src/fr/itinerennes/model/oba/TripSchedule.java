@@ -8,17 +8,20 @@ import java.util.List;
  * 
  * @author Olivier Boudet
  */
-public class Schedule {
+public class TripSchedule {
 
-    private final List<StopTime> stopTimes;
+    /** List of stop times. */
+    private final List<TripStopTime> stopTimes;
 
+    /** Id of the previous trip; */
     private String previousTripId;
 
+    /** Id of the next trip. */
     private String nextTripId;
 
-    public Schedule() {
+    public TripSchedule() {
 
-        stopTimes = new ArrayList<StopTime>();
+        stopTimes = new ArrayList<TripStopTime>();
     }
 
     /**
@@ -26,7 +29,7 @@ public class Schedule {
      * 
      * @return the stopTimes
      */
-    public List<StopTime> getStopTimes() {
+    public List<TripStopTime> getStopTimes() {
 
         return stopTimes;
     }
