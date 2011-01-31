@@ -1,11 +1,12 @@
 package fr.itinerennes.ui.activity;
 
+import java.util.List;
+
 import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
 import android.view.View;
@@ -16,9 +17,9 @@ import android.widget.Toast;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.model.Bookmark;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.SubwayStation;
 import fr.itinerennes.ui.adapter.BookmarksAdapter;
@@ -28,7 +29,7 @@ import fr.itinerennes.ui.adapter.BookmarksAdapter;
  * 
  * @author Jérémie Huchet
  */
-public class BookmarksActivity extends ITRContext implements BookmarksColumns {
+public class BookmarksActivity extends ITRContext {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -47,12 +48,10 @@ public class BookmarksActivity extends ITRContext implements BookmarksColumns {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmarks);
 
-        // retrieve all bookmarks
-        final Cursor c = getDatabaseHelper().getWritableDatabase().query(BOOKMARKS_TABLE_NAME,
-                new String[] { "_id", LABEL, TYPE, ID }, null, null, null, null, null);
+        final List<Bookmark> allBookmarks = getBookmarksService().getAllBookmarks();
 
         // creates the list adapter
-        final BookmarksAdapter favAdapter = new BookmarksAdapter(this, c);
+        final BookmarksAdapter favAdapter = new BookmarksAdapter(this, allBookmarks);
         // set up the list view
         final ListView list = (ListView) findViewById(R.id.bookmark_list);
         list.setAdapter(favAdapter);
@@ -79,9 +78,9 @@ public class BookmarksActivity extends ITRContext implements BookmarksColumns {
                     BookmarksActivity.this.startActivity(i);
                 } catch (final GenericException e) {
                     // bookmark is not found, remove it
+                    getBookmarksService().setNotStarred(favType, favId);
                     Toast.makeText(BookmarksActivity.this,
                             getString(R.string.delete_bookmark_not_found, favLabel), 5000).show();
-                    getBookmarksService().setNotStarred(favType, favId);
                     list.invalidate();
                 }
 

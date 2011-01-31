@@ -1,26 +1,30 @@
 package fr.itinerennes.ui.adapter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Context;
-import android.database.Cursor;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import fr.itinerennes.R;
-import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.model.Bookmark;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.SubwayStation;
 
 /**
  * @author Jérémie Huchet
  */
-public class BookmarksAdapter extends SimpleCursorAdapter implements BookmarksColumns {
+public class BookmarksAdapter extends BaseAdapter {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BookmarksAdapter.class);
@@ -33,35 +37,76 @@ public class BookmarksAdapter extends SimpleCursorAdapter implements BookmarksCo
         ICONS.put(SubwayStation.class.getName(), R.drawable.subway_activity_title_icon);
     }
 
+    /** The layout inflater. */
+    private final LayoutInflater inflater;
+
+    /** The bookmarks. */
+    private final List<Bookmark> bookmarks;
+
     /**
      * Creates the bookmarks adapter.
      * 
      * @param context
      *            the application context
      */
-    public BookmarksAdapter(final Context context, final Cursor cursor) {
+    public BookmarksAdapter(final Context context, final List<Bookmark> bookmarks) {
 
-        super(context, R.layout.row_bookmark, cursor, new String[] { LABEL, TYPE }, new int[] {
-                R.id.bookmark_label, R.id.bookmark_type_icon });
+        inflater = LayoutInflater.from(context);
+        this.bookmarks = bookmarks;
     }
 
     /**
-     * Binds the given value from the cursor to the given image view. Uses {@link #ICONS} to find
-     * the drawable identifier to set to the image view.
+     * {@inheritDoc}
      * 
-     * @param view
-     *            ImageView to receive an image
-     * @param type
-     *            the value retrieved from the cursor
-     * @see android.widget.SimpleCursorAdapter#setViewImage(android.widget.ImageView,
-     *      java.lang.String)
+     * @see android.widget.Adapter#getCount()
      */
     @Override
-    public final void setViewImage(final ImageView view, final String type) {
+    public final int getCount() {
 
-        final Integer iconResId = ICONS.get(type);
+        return bookmarks.size();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.widget.Adapter#getItem(int)
+     */
+    @Override
+    public final Bookmark getItem(final int position) {
+
+        return bookmarks.get(position);
+    }
+
+    /**
+     * Returns the item position in the list.
+     * <p>
+     * {@inheritDoc}
+     * 
+     * @see android.widget.Adapter#getItemId(int)
+     */
+    @Override
+    public final long getItemId(final int position) {
+
+        return position;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
+     */
+    @Override
+    public final View getView(final int position, final View convertView, final ViewGroup parent) {
+
+        final Bookmark bm = bookmarks.get(position);
+
+        final View row = inflater.inflate(R.layout.row_bookmark, null);
+
+        ((TextView) row.findViewById(R.id.bookmark_label)).setText(bm.getLabel());
+        final Integer iconResId = ICONS.get(bm.getType());
         if (null != iconResId) {
-            view.setImageResource(iconResId);
+            ((ImageView) row.findViewById(R.id.bookmark_type_icon)).setImageResource(iconResId);
         }
+        return null;
     }
 }
