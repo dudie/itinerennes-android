@@ -115,15 +115,10 @@ public class BusStationActivity extends ITRContext implements Runnable {
         }
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bus_station);
 
         // retrieve intent parameters
         stopId = getIntent().getStringExtra(INTENT_STOP_ID);
         stopName = getIntent().getStringExtra(INTENT_STOP_NAME);
-
-        /* Sets the station name. */
-        final TextView name = (TextView) findViewById(R.station.name);
-        name.setText(stopName);
 
         handler = new Handler() {
 
@@ -165,6 +160,12 @@ public class BusStationActivity extends ITRContext implements Runnable {
     protected final void onResume() {
 
         super.onResume();
+
+        setContentView(R.layout.bus_station);
+
+        /* Sets the station name. */
+        final TextView name = (TextView) findViewById(R.station.name);
+        name.setText(stopName);
 
         showDialog(PROGRESS_DIALOG);
 
@@ -228,15 +229,13 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         int returnCode = MESSAGE_SUCCESS;
 
-        final String stationId = getIntent().getExtras().getString(INTENT_STOP_ID);
-
         try {
             /* Fetching stop informations for this station from the network. */
-            schedule = getOneBusAwayService().getScheduleForStop(stationId, new Date());
+            schedule = getOneBusAwayService().getScheduleForStop(stopId, new Date());
 
             handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
         } catch (final GenericException e) {
-            LOGGER.debug(String.format("Can't load informations for the station %s.", stationId), e);
+            LOGGER.debug(String.format("Can't load informations for the station %s.", stopId), e);
             returnCode = MESSAGE_FAILURE;
         }
 
@@ -295,6 +294,27 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         default:
             break;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onNewIntent(android.content.Intent)
+     */
+    @Override
+    protected final void onNewIntent(final Intent intent) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onNewIntent.start");
+        }
+
+        // retrieve intent parameters
+        stopId = intent.getStringExtra(INTENT_STOP_ID);
+        stopName = intent.getStringExtra(INTENT_STOP_NAME);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onNewIntent.end");
         }
     }
 }
