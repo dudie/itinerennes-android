@@ -155,22 +155,24 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             myLocation.enableFollowLocation();
         }
 
-        // restore previous displayed overlays
-        final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
-        if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, true)) {
-            moh.getBusStationOverlay().setEnabled(true);
+        // restore previous displayed overlays (only if not displaying preload dialog)
+        if (!sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
+            final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
+            if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, true)) {
+                moh.getBusStationOverlay().setEnabled(true);
+            }
+            if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, true)) {
+                moh.getBikeStationOverlay().setEnabled(true);
+            }
+            if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, true)) {
+                moh.getSubwayStationOverlay().setEnabled(true);
+            }
         }
-        if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, true)) {
-            moh.getBikeStationOverlay().setEnabled(true);
-        }
-        if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, true)) {
-            moh.getSubwayStationOverlay().setEnabled(true);
-        }
+        super.onResume();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onResume.end");
         }
-        super.onResume();
     }
 
     /**
