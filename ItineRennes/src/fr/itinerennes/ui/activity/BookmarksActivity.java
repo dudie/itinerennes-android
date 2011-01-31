@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -61,10 +60,10 @@ public class BookmarksActivity extends ITRContext {
             public void onItemClick(final AdapterView<?> parent, final View view,
                     final int position, final long id) {
 
-                final SQLiteCursor c = (SQLiteCursor) list.getAdapter().getItem(position);
-                final String favType = c.getString(2);
-                final String favId = c.getString(3);
-                final String favLabel = c.getString(1);
+                final Bookmark bm = favAdapter.getItem(position);
+                final String favType = bm.getType();
+                final String favId = bm.getId();
+                final String favLabel = bm.getLabel();
 
                 try {
                     final GeoPoint location = findBookmarkLocation(favType, favId);

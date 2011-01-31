@@ -107,6 +107,6 @@ public class BookmarksAdapter extends BaseAdapter {
         if (null != iconResId) {
             ((ImageView) row.findViewById(R.id.bookmark_type_icon)).setImageResource(iconResId);
         }
-        return null;
+        return row;
     }
 }

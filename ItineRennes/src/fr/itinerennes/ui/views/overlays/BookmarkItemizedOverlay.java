@@ -12,6 +12,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.graphics.drawable.Drawable;
 
 import fr.itinerennes.R;
+import fr.itinerennes.business.event.IBookmarkModificationListener;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.model.Station;
 import fr.itinerennes.ui.activity.ITRContext;
@@ -21,7 +22,7 @@ import fr.itinerennes.ui.views.overlays.event.OnItemizedOverlayUpdateListener;
  * @author Jérémie Huchet
  */
 public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOverlay<OverlayItem>
-        implements OnItemizedOverlayUpdateListener<D> {
+        implements OnItemizedOverlayUpdateListener<D>, IBookmarkModificationListener {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -36,19 +37,25 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
     /** The map view on which this overlay is displayed. */
     private final MapView osmView;
 
+    /** The overlay for which this overlay is displaying favorites icons. */
+    private final SelectableItemizedOverlay<SelectableMarker<D>, D> overlay;
+
     /**
      * Creates the bookmark overlay.
      * 
      * @param context
      *            the itinerennes context
      */
-    public BookmarkItemizedOverlay(final ITRContext context, final MapView osmView) {
+    public BookmarkItemizedOverlay(final ITRContext context, final MapView osmView,
+            final SelectableItemizedOverlay<SelectableMarker<D>, D> overlay) {
 
         super(context, new ArrayList<OverlayItem>(), getStarOverlayDrawable(context), null, null,
                 null, null);
         this.context = context;
         this.bookmarkService = context.getBookmarksService();
+        bookmarkService.addListener(this);
         this.osmView = osmView;
+        this.overlay = overlay;
     }
 
     /**
@@ -79,5 +86,29 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
             }
         }
         osmView.postInvalidate();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.event.IBookmarkModificationListener#onBookmarkRemoval(java.lang.String,
+     *      java.lang.String)
+     */
+    @Override
+    public void onBookmarkRemoval(final String type, final String id) {
+
+        overlay.updateOverlay(osmView);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.event.IBookmarkModificationListener#onBookmarkAddition(java.lang.String,
+     *      java.lang.String, java.lang.String)
+     */
+    @Override
+    public void onBookmarkAddition(final String type, final String id, final String label) {
+
+        overlay.updateOverlay(osmView);
     }
 }

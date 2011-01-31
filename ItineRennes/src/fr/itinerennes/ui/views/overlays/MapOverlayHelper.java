@@ -113,7 +113,7 @@ public class MapOverlayHelper implements OverlayConstants {
             getGroupSelectOverlay().addOverlay(busStationOverlay);
 
             final BookmarkItemizedOverlay<BusStation> busBookmarksOverlay = new BookmarkItemizedOverlay<BusStation>(
-                    context, map);
+                    context, map, busStationOverlay);
             map.getOverlays().add(busBookmarksOverlay);
             busStationOverlay.setOnItemizedOverlayUpdateListener(busBookmarksOverlay);
         }
@@ -141,7 +141,7 @@ public class MapOverlayHelper implements OverlayConstants {
             getGroupSelectOverlay().addOverlay(bikeStationOverlay);
 
             final BookmarkItemizedOverlay<BikeStation> bikeBookmarksOverlay = new BookmarkItemizedOverlay<BikeStation>(
-                    context, map);
+                    context, map, bikeStationOverlay);
             map.getOverlays().add(bikeBookmarksOverlay);
             bikeStationOverlay.setOnItemizedOverlayUpdateListener(bikeBookmarksOverlay);
         }
@@ -169,7 +169,7 @@ public class MapOverlayHelper implements OverlayConstants {
             getGroupSelectOverlay().addOverlay(subwayStationOverlay);
 
             final BookmarkItemizedOverlay<SubwayStation> subwayBookmarksOverlay = new BookmarkItemizedOverlay<SubwayStation>(
-                    context, map);
+                    context, map, subwayStationOverlay);
             map.getOverlays().add(subwayBookmarksOverlay);
             subwayStationOverlay.setOnItemizedOverlayUpdateListener(subwayBookmarksOverlay);
         }
