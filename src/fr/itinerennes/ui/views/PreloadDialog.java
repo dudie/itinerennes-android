@@ -15,6 +15,7 @@ import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.views.overlays.MapOverlayHelper;
 
 /**
  * @author Jérémie Huchet
@@ -101,5 +102,11 @@ public class PreloadDialog extends AlertDialog {
         final SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, false);
         edit.commit();
+
+        final ITRMapView map = (ITRMapView) context.findViewById(R.id.map);
+        final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
+        moh.getBikeStationOverlay().setEnabled(true);
+        moh.getBusStationOverlay().setEnabled(true);
+        moh.getSubwayStationOverlay().setEnabled(true);
     }
 }
