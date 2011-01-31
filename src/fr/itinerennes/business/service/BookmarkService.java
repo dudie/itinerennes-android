@@ -1,6 +1,7 @@
 package fr.itinerennes.business.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
@@ -12,22 +13,17 @@ import android.database.sqlite.SQLiteDatabase;
 import fr.itinerennes.business.event.IBookmarkModificationListener;
 import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.database.DatabaseHelper;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.model.Bookmark;
 
 /**
  * A service to manage user bookmarks.
  * 
  * @author Jérémie Huchet
  */
-public class BookmarkService implements BookmarksColumns {
+public class BookmarkService extends AbstractService implements BookmarksColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BookmarkService.class);
-
-    private final ITRContext context;
-
-    /** The database helper. */
-    private final DatabaseHelper dbHelper;
 
     /** A list of listeners on bookmarks modifications. */
     private ArrayList<IBookmarkModificationListener> listeners = null;
@@ -40,8 +36,7 @@ public class BookmarkService implements BookmarksColumns {
      */
     public BookmarkService(final DatabaseHelper dbHelper) {
 
-        this.dbHelper = dbHelper;
-        context = null;
+        super(dbHelper);
     }
 
     public final void addListener(final IBookmarkModificationListener listener) {
@@ -143,7 +138,6 @@ public class BookmarkService implements BookmarksColumns {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("isStarred.start - type={}, id={}", type, id);
         }
-
         final SQLiteDatabase database = dbHelper.getWritableDatabase();
         final String selection = String.format("%s = ? AND %s = ?", TYPE, ID);
         final String[] selectionArgs = new String[] { type, id };
@@ -157,5 +151,38 @@ public class BookmarkService implements BookmarksColumns {
             LOGGER.debug("isStarred.end - isStarred={}", hasResult);
         }
         return hasResult;
+    }
+
+    /**
+     * Gets all bookmarks.
+     * 
+     * @return all bookmarks
+     */
+    public final List<Bookmark> getAllBookmarks() {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getAllBookmarks.start");
+        }
+
+        final ArrayList<Bookmark> allBookmarks = new ArrayList<Bookmark>();
+
+        // retrieve all bookmarks
+        final Cursor c = dbHelper.getWritableDatabase().query(BOOKMARKS_TABLE_NAME,
+                new String[] { LABEL, TYPE, ID }, null, null, null, null, null);
+
+        while (c.moveToNext()) {
+            final Bookmark bm = new Bookmark();
+            bm.setLabel(c.getString(0));
+            bm.setType(c.getString(1));
+            bm.setId(c.getString(2));
+            allBookmarks.add(bm);
+        }
+
+        c.close();
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getAllBookmarks.end - {} bookmarks", allBookmarks.size());
+        }
+        return allBookmarks;
     }
 }
