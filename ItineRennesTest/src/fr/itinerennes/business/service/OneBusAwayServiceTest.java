@@ -14,6 +14,7 @@ import fr.itinerennes.business.http.oba.OneBusAwayService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.oba.ArrivalAndDeparture;
 import fr.itinerennes.model.oba.ScheduleStopTime;
+import fr.itinerennes.model.oba.Stop;
 import fr.itinerennes.model.oba.StopSchedule;
 import fr.itinerennes.model.oba.TripSchedule;
 
@@ -40,17 +41,17 @@ public class OneBusAwayServiceTest extends AndroidTestCase {
 
         TripSchedule schedule = null;
         try {
-            schedule = obaService.getTripDetails("10000");
+            schedule = obaService.getTripDetails("1_10000");
         } catch (final GenericException e) {
             LOGGER.error("GenericException", e);
             fail(e.getMessage());
         }
 
         assertNotNull("no schedule returned by the api", schedule);
-        assertEquals("33 stop times should be returned by the api", 33, schedule.getStopTimes()
+        assertEquals("22 stop times should be returned by the api", 22, schedule.getStopTimes()
                 .size());
-        assertEquals("the first stop of this trip should be Grand Quartier", "Grand Quartier",
-                schedule.getStopTimes().get(0).getStop().getName());
+        assertEquals("the first stop of this trip should be Timonière", "Timonière", schedule
+                .getStopTimes().get(0).getStop().getName());
 
         LOGGER.info("testGetTripDetails.end");
     }
@@ -73,6 +74,31 @@ public class OneBusAwayServiceTest extends AndroidTestCase {
         assertNotNull("no arrivals and departures returned by the api", arrivalsAndDepartures);
 
         LOGGER.info("testGetArrivalsAndDeparturesForStop.end");
+    }
+
+    /**
+     * Test method for {@link OneBusAwayService#getStop(String)}.
+     */
+    public final void testGetStop() {
+
+        LOGGER.info("testGetStop.start");
+
+        Stop stop = null;
+        try {
+            stop = obaService.getStop("1_repbottb");
+        } catch (final GenericException e) {
+            LOGGER.error("GenericException", e);
+            fail(e.getMessage());
+        }
+
+        assertNotNull("no stop returned by the api", stop);
+        assertEquals("5 routes should be returned for the stop repbottb", 5, stop.getRoutes()
+                .size());
+        assertEquals("the name of the stop repbottb should be République Pré Botté",
+                "République Pré Botté", stop.getName());
+        assertEquals("the code of the stop repbottb should be 1167", 1167, stop.getCode());
+
+        LOGGER.info("testGetStop.end");
     }
 
     /**
