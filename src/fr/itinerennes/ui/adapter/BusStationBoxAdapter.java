@@ -18,8 +18,9 @@ import android.widget.ToggleButton;
 
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.BusRoute;
 import fr.itinerennes.model.BusStation;
+import fr.itinerennes.model.oba.Route;
+import fr.itinerennes.model.oba.Stop;
 import fr.itinerennes.ui.activity.BusStationActivity;
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
@@ -41,7 +42,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
     private final LayoutInflater inflater;
 
     /** The bus station for which informations are displayed. */
-    private BusStation station = null;
+    private Stop station = null;
 
     /** The icons for each route stopping at this stop. */
     private List<Drawable> routesIcons;
@@ -116,10 +117,11 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
         station = null;
         routesIcons = new ArrayList<Drawable>();
         try {
-            station = context.getBusService().getStation(item.getData().getId());
-            final List<BusRoute> busRoutes = context.getBusRouteService().getStationRoutes(
-                    item.getData().getId());
-            for (final BusRoute route : busRoutes) {
+            // TOBO on ajoute '1_' temporairement il faut utiliser le agencyId a la place
+            final String stopId = String.format("1_%s", item.getData().getId());
+            station = context.getOneBusAwayService().getStop(stopId);
+            final List<Route> busRoutes = station.getRoutes();
+            for (final Route route : busRoutes) {
                 routesIcons.add(context.getLineIconService().getIconOrDefault(context,
                         route.getShortName()));
             }
