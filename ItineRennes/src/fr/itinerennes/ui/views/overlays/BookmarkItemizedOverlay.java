@@ -9,6 +9,7 @@ import org.osmdroid.views.overlay.OverlayItem;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 
 import fr.itinerennes.R;
@@ -40,6 +41,10 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
     /** The overlay for which this overlay is displaying favorites icons. */
     private final SelectableItemizedOverlay<SelectableMarker<D>, D> overlay;
 
+    private final Drawable starDrawable;
+
+    private final Point starHostspot;
+
     /**
      * Creates the bookmark overlay.
      * 
@@ -56,6 +61,9 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
         bookmarkService.addListener(this);
         this.osmView = osmView;
         this.overlay = overlay;
+        starDrawable = getStarOverlayDrawable(context);
+        starHostspot = new Point(starDrawable.getIntrinsicWidth() * 4 / 5,
+                starDrawable.getIntrinsicHeight() * 4 / 5);
     }
 
     /**
@@ -69,6 +77,17 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
     }
 
     /**
+     * Gets the star overlay drawable marker hotspot.
+     * 
+     * @return the star overlay drawable marker hotspot
+     */
+    // private static Point getStarOverlayDrawableHotspot(final ITRContext context) {
+    //
+    // final Drawable d = context.getResources().getDrawable(R.drawable.marker_overlay_star);
+    // return new Point(d.getIntrinsicWidth() / 2, d.getIntrinsicHeight() / 2);
+    // }
+
+    /**
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.ui.views.overlays.event.OnItemizedOverlayUpdateListener#onContentUpdated(java.util.List)
@@ -79,9 +98,13 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
         super.mItemList.clear();
         for (final I item : items) {
             final D bus = item.getData();
+            LOGGER.warn("lon=" + bus.getGeoPoint().getLongitudeE6() + ", lat="
+                    + bus.getGeoPoint().getLatitudeE6());
             if (bookmarkService.isStarred(bus.getClass().getName(), bus.getId())) {
                 final OverlayItem i = new OverlayItem(bus.getClass().getName(), bus.getId(),
-                        item.getPoint());
+                        bus.getGeoPoint());
+                i.setMarker(starDrawable);
+                i.setMarkerHotspot(starHostspot);
                 super.mItemList.add(i);
             }
         }
