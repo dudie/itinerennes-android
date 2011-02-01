@@ -35,8 +35,8 @@ public class BusRouteService extends AbstractService implements RouteProvider {
 
         super(dbHelper);
         otpService = new OTPService();
-        routeCache = new CacheRelationProvider<BusRoute>(dbHelper, new BusRouteCacheEntryHandler(
-                dbHelper), BusRoute.TTL);
+        routeCache = new CacheRelationProvider<BusRoute>(dbHelper, new BusRouteCacheEntryHandler(),
+                BusRoute.TTL);
     }
 
     @Override

@@ -36,8 +36,8 @@ public final class BikeService extends AbstractKeolisStationProvider<BikeStation
      */
     public BikeService(final DatabaseHelper dbHelper) {
 
-        super(dbHelper, new CacheProvider<BikeStation>(dbHelper, new BikeStationCacheEntryHandler(
-                dbHelper)));
+        super(dbHelper,
+                new CacheProvider<BikeStation>(dbHelper, new BikeStationCacheEntryHandler()));
     }
 
     /**

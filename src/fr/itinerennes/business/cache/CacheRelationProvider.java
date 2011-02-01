@@ -77,7 +77,8 @@ public class CacheRelationProvider<T extends Cacheable> extends AbstractService 
     /**
      * Saves or updates the given value to the cache. A metadata is inserted (or updated) in the
      * metadata table ( {@value CacheProvider#METADATA_TABLE_NAME} ) and
-     * {@link CacheEntryHandler#replace(String, String, Object)} is called to store the value.
+     * {@link CacheEntryHandler#replace(String, String, Object, SQLiteDatabase)} is called to store
+     * the value.
      * 
      * @param value
      *            the value to store
@@ -93,7 +94,7 @@ public class CacheRelationProvider<T extends Cacheable> extends AbstractService 
 
         database.replace(METADATA_TABLE_NAME, null, metadata);
 
-        handler.replace(type, value.getId(), value, relationKey);
+        handler.replace(type, value.getId(), value, relationKey, database);
     }
 
     /**
@@ -110,7 +111,7 @@ public class CacheRelationProvider<T extends Cacheable> extends AbstractService 
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, relationKeyId });
         List<T> values = null;
         if (c.moveToFirst() && ttl > (System.currentTimeMillis() - c.getLong(3)) / 1000) {
-            values = handler.load(type, relationKeyId);
+            values = handler.load(type, relationKeyId, database);
         }
 
         c.close();

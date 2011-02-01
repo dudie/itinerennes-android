@@ -13,7 +13,6 @@ import android.database.sqlite.SQLiteDatabase;
 import fr.itinerennes.database.Columns.BusRouteColumns;
 import fr.itinerennes.database.Columns.BusStationRouteColumns;
 import fr.itinerennes.database.Columns.StationColumns;
-import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.BusRoute;
 import fr.itinerennes.model.BusStation;
 
@@ -22,8 +21,8 @@ import fr.itinerennes.model.BusStation;
  * 
  * @author Olivier Boudet
  */
-public class BusRouteCacheEntryHandler extends AbstractDatabaseCacheEntryHandler implements
-        CacheRelationEntryHandler<BusRoute>, BusRouteColumns, BusStationRouteColumns {
+public class BusRouteCacheEntryHandler implements CacheRelationEntryHandler<BusRoute>,
+        BusRouteColumns, BusStationRouteColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -42,33 +41,19 @@ public class BusRouteCacheEntryHandler extends AbstractDatabaseCacheEntryHandler
     private static final String WHERE_CLAUSE_ID = String.format("%s = ? ", STATION_ID);
 
     /**
-     * Creates a bus route cache entry handler.
-     * 
-     * @param dbHelper
-     *            the database helper
-     */
-    public BusRouteCacheEntryHandler(final DatabaseHelper dbHelper) {
-
-        super(dbHelper);
-    }
-
-    /**
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.business.cache.CacheRelationEntryHandler#replace(java.lang.String,
-     *      java.lang.String, java.lang.Object, java.lang.String)
+     *      java.lang.String, java.lang.Object, java.lang.String,
+     *      android.database.sqlite.SQLiteDatabase)
      */
     @Override
-    public void replace(final String type, final String id, final BusRoute route,
-            final String stationId) {
+    public final void replace(final String type, final String id, final BusRoute route,
+            final String stationId, final SQLiteDatabase database) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("replace.start - type={}, identifier={}", type, id);
-            if (LOGGER.isTraceEnabled()) {
-                LOGGER.trace("replace {}", route.toString());
-            }
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("replace - {}", route.toString());
         }
-        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues(4);
         values.put(ID, id);
@@ -91,33 +76,33 @@ public class BusRouteCacheEntryHandler extends AbstractDatabaseCacheEntryHandler
         } finally {
             database.endTransaction();
         }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("replace.end");
-        }
-
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.cache.CacheRelationEntryHandler#delete(java.lang.String,
+     *      java.lang.String, android.database.sqlite.SQLiteDatabase)
+     */
     @Override
-    public void delete(final String type, final String id) {
+    public void delete(final String type, final String id, final SQLiteDatabase database) {
 
-        // TOBO Auto-generated method stub
-
+        // not used
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.business.cache.CacheRelationEntryHandler#load(java.lang.String,
+     *      java.lang.String, android.database.sqlite.SQLiteDatabase)
+     */
     @Override
-    public final Class<BusRoute> getHandledClass() {
-
-        return BusRoute.class;
-    }
-
-    @Override
-    public final List<BusRoute> load(final String type, final String id) {
+    public final List<BusRoute> load(final String type, final String id,
+            final SQLiteDatabase database) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, identifier={}", type, id);
         }
-        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         List<BusRoute> routes = new ArrayList<BusRoute>();
 
@@ -151,5 +136,11 @@ public class BusRouteCacheEntryHandler extends AbstractDatabaseCacheEntryHandler
             LOGGER.debug("load.end - resultNotNull={}", null != routes);
         }
         return routes;
+    }
+
+    @Override
+    public final Class<BusRoute> getHandledClass() {
+
+        return BusRoute.class;
     }
 }
