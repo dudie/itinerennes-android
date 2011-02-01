@@ -79,6 +79,12 @@ public class ItineRennesConstants {
     /** OneBusAway API version. */
     public static final String OBA_API_KEY = "web";
 
+    /**
+     * Agency id prefix used by OneBusAway
+     */
+    // TOBO this should be temporary and be retrieve from api queries.
+    public static final String OBA_AGENCY_ID_PREFIX = "1_";
+
     /*
      * Database constantes.
      */
