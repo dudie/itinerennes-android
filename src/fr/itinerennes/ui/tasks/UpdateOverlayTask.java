@@ -84,7 +84,7 @@ public class UpdateOverlayTask<T extends Marker<?>> extends AsyncTask<BoundingBo
         } catch (final Exception e) {
             // TJHU pas bien mais c'est pour éviter de planter à cause d'une async task perdue
             if (LOGGER.isInfoEnabled()) {
-                LOGGER.error("async task failed : {}", e.getMessage());
+                LOGGER.error("async task failed", e);
             }
             items = new ArrayList<T>();
         }
