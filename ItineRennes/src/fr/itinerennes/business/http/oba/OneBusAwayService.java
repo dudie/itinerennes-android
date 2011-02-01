@@ -15,6 +15,7 @@ import fr.itinerennes.business.http.GenericHttpService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.oba.ArrivalAndDeparture;
+import fr.itinerennes.model.oba.Stop;
 import fr.itinerennes.model.oba.StopSchedule;
 import fr.itinerennes.model.oba.TripSchedule;
 
@@ -200,5 +201,33 @@ public class OneBusAwayService {
             LOGGER.debug("getScheduleForStop.end");
         }
         return schedule;
+    }
+
+    /**
+     * Gets schedule for a stop.
+     * 
+     * @param stopId
+     *            id of the stop to retrieve
+     * @return the stop with routes
+     * @throws GenericException
+     */
+    public final Stop getStop(final String stopId) throws GenericException {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getStop.start - stopId={}", stopId);
+        }
+        final String urlCall = String.format(ItineRennesConstants.OBA_API_URL, "stop", stopId);
+
+        final List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(1);
+        params.add(new BasicNameValuePair(OBA_INCLUDE_REFERENCE, "true"));
+
+        final HttpGet request = createOBARequest(urlCall, params);
+
+        final Stop stop = httpService.execute(request, new StopHttpResponseHandler());
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getStop.end");
+        }
+        return stop;
     }
 }
