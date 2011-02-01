@@ -47,8 +47,7 @@ public class BusService extends AbstractService implements MarkerProvider<BusSta
 
         super(dbHelper);
         wfsService = new WFSService();
-        busCache = new CacheProvider<BusStation>(dbHelper,
-                new BusStationCacheEntryHandler(dbHelper));
+        busCache = new CacheProvider<BusStation>(dbHelper, new BusStationCacheEntryHandler());
         geoCache = GeoCacheProvider.getInstance(dbHelper);
     }
 

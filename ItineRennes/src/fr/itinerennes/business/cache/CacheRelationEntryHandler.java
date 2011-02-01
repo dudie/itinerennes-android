@@ -2,6 +2,8 @@ package fr.itinerennes.business.cache;
 
 import java.util.List;
 
+import android.database.sqlite.SQLiteDatabase;
+
 /**
  * * Implementing this interface defines how a {@link CacheRelationProvider} will handle the values
  * it has to cache.
@@ -26,8 +28,10 @@ public interface CacheRelationEntryHandler<T> {
      *            the value to save
      * @param relationKey
      *            identifier of the relation key
+     * @param database
+     *            the database
      */
-    void replace(String type, String id, T value, String relationKey);
+    void replace(String type, String id, T value, String relationKey, SQLiteDatabase database);
 
     /**
      * Tells the handler to delete the given value.
@@ -36,8 +40,10 @@ public interface CacheRelationEntryHandler<T> {
      *            the metadata type
      * @param id
      *            the metadata identifier
+     * @param database
+     *            the database
      */
-    void delete(String type, String id);
+    void delete(String type, String id, final SQLiteDatabase database);
 
     /**
      * Ask the handler to retrieve the cached value for the given type/identifier.
@@ -46,9 +52,11 @@ public interface CacheRelationEntryHandler<T> {
      *            the metadata type
      * @param id
      *            the metadata identifier
+     * @param database
+     *            the database
      * @return the value
      */
-    List<T> load(String type, String id);
+    List<T> load(String type, String id, final SQLiteDatabase database);
 
     /**
      * Ask the handler to get the class of cached entries.

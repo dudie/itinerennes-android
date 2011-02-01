@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
 
+import android.database.sqlite.SQLiteDatabase;
+
 /**
  * Implementing this interface defines how a {@link CacheProvider} will handle the values it has to
  * cache.
@@ -26,8 +28,10 @@ public interface CacheEntryHandler<T> {
      *            the metadata identifier
      * @param value
      *            the value to save
+     * @param database
+     *            the database
      */
-    void replace(String type, String id, T value);
+    void replace(String type, String id, T value, SQLiteDatabase database);
 
     /**
      * Tells the handler to delete the given value.
@@ -36,8 +40,10 @@ public interface CacheEntryHandler<T> {
      *            the metadata type
      * @param id
      *            the metadata identifier
+     * @param database
+     *            the database
      */
-    void delete(String type, String id);
+    void delete(String type, String id, SQLiteDatabase database);
 
     /**
      * Ask the handler to retrieve the cached value for the given type/identifier.
@@ -46,9 +52,11 @@ public interface CacheEntryHandler<T> {
      *            the metadata type
      * @param id
      *            the metadata identifier
+     * @param database
+     *            the database
      * @return the value
      */
-    T load(String type, String id);
+    T load(String type, String id, SQLiteDatabase database);
 
     /**
      * Ask the handler to retrieve the cached value of the given type located in the given bouding
@@ -58,9 +66,11 @@ public interface CacheEntryHandler<T> {
      *            the metadata type
      * @param bbox
      *            a bounding box
+     * @param database
+     *            the database
      * @return a list of values located in the given bounding box
      */
-    List<T> load(String type, BoundingBoxE6 bbox);
+    List<T> load(String type, BoundingBoxE6 bbox, SQLiteDatabase database);
 
     /**
      * Ask the handler to get the class of cached entries.

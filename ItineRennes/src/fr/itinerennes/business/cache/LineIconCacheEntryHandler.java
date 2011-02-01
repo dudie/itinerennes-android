@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import fr.itinerennes.database.Columns.LineIconColumns;
-import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.LineIcon;
 
 /**
@@ -19,8 +18,7 @@ import fr.itinerennes.model.LineIcon;
  * 
  * @author Jérémie Huchet
  */
-public class LineIconCacheEntryHandler extends AbstractDatabaseCacheEntryHandler implements
-        CacheEntryHandler<LineIcon>, LineIconColumns {
+public class LineIconCacheEntryHandler implements CacheEntryHandler<LineIcon>, LineIconColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -36,32 +34,18 @@ public class LineIconCacheEntryHandler extends AbstractDatabaseCacheEntryHandler
     private static final String WHERE_CLAUSE_ID = String.format("%s = ? ", LINE_ID);
 
     /**
-     * Creates a line icon cache entry handler.
-     * 
-     * @param dbHelper
-     *            the database helper
-     */
-    public LineIconCacheEntryHandler(final DatabaseHelper dbHelper) {
-
-        super(dbHelper);
-    }
-
-    /**
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.business.cache.CacheEntryHandler#replace(java.lang.String,
-     *      java.lang.String, java.lang.Object)
+     *      java.lang.String, java.lang.Object, SQLiteDatabase)
      */
     @Override
-    public final void replace(final String type, final String id, final LineIcon icon) {
+    public final void replace(final String type, final String id, final LineIcon icon,
+            final SQLiteDatabase database) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("replace.start - type={}, identifier={}", type, id);
-            if (LOGGER.isTraceEnabled()) {
-                LOGGER.trace("replace {}", icon.toString());
-            }
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("replace {}", icon.toString());
         }
-        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final ContentValues values = new ContentValues(4);
         values.put(LINE_ID, id);
@@ -82,15 +66,14 @@ public class LineIconCacheEntryHandler extends AbstractDatabaseCacheEntryHandler
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.business.cache.CacheEntryHandler#delete(java.lang.String,
-     *      java.lang.String)
+     *      java.lang.String, SQLiteDatabase)
      */
     @Override
-    public final void delete(final String type, final String lineId) {
+    public final void delete(final String type, final String lineId, final SQLiteDatabase database) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("delete.start - type={}, line_identifier={}", type, lineId);
         }
-        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final int delCount = database.delete(LINE_ICONS_TABLE_NAME, WHERE_CLAUSE_ID,
                 new String[] { lineId });
@@ -102,15 +85,11 @@ public class LineIconCacheEntryHandler extends AbstractDatabaseCacheEntryHandler
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.cache.CacheEntryHandler#load(java.lang.String, java.lang.String)
+     * @see fr.itinerennes.business.cache.CacheEntryHandler#load(java.lang.String, java.lang.String,
+     *      SQLiteDatabase)
      */
     @Override
-    public final LineIcon load(final String type, final String lineId) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("load.start - type={}, identifier={}", type, lineId);
-        }
-        final SQLiteDatabase database = dbHelper.getWritableDatabase();
+    public final LineIcon load(final String type, final String lineId, final SQLiteDatabase database) {
 
         final String[] columns = new String[] { LINE_ID, URL, ICON };
         final String[] selectionArgs = new String[] { lineId };
@@ -128,11 +107,8 @@ public class LineIconCacheEntryHandler extends AbstractDatabaseCacheEntryHandler
         }
         c.close();
 
-        if (LOGGER.isDebugEnabled()) {
-            if (LOGGER.isTraceEnabled()) {
-                LOGGER.trace("loaded {}", icon.toString());
-            }
-            LOGGER.debug("load.end - resultNotNull={}", null != icon);
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("loaded {}", icon.toString());
         }
         return icon;
     }
@@ -142,11 +118,12 @@ public class LineIconCacheEntryHandler extends AbstractDatabaseCacheEntryHandler
      * 
      * @deprecated not applicable
      * @see fr.itinerennes.business.cache.CacheEntryHandler#load(java.lang.String,
-     *      org.andnav.osm.util.BoundingBoxE6)
+     *      org.andnav.osm.util.BoundingBoxE6, SQLiteDatabase)
      */
     @Deprecated
     @Override
-    public final List<LineIcon> load(final String type, final BoundingBoxE6 bbox) {
+    public final List<LineIcon> load(final String type, final BoundingBoxE6 bbox,
+            final SQLiteDatabase database) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start");

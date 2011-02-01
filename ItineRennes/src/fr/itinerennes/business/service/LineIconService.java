@@ -55,7 +55,7 @@ public class LineIconService extends AbstractService {
     public LineIconService(final DatabaseHelper dbHelper) {
 
         super(dbHelper);
-        iconCache = new CacheProvider<LineIcon>(dbHelper, new LineIconCacheEntryHandler(dbHelper));;
+        iconCache = new CacheProvider<LineIcon>(dbHelper, new LineIconCacheEntryHandler());
         lastGlobalUpdate = iconCache.getOldestEntryUpdateTime();
     }
 

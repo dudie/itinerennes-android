@@ -14,7 +14,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import fr.itinerennes.database.Columns.BikeStationColumns;
 import fr.itinerennes.database.Columns.StationColumns;
-import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.utils.DateUtils;
 
@@ -23,8 +22,8 @@ import fr.itinerennes.utils.DateUtils;
  * 
  * @author Jérémie Huchet
  */
-public class BikeStationCacheEntryHandler extends AbstractDatabaseCacheEntryHandler implements
-        CacheEntryHandler<BikeStation>, BikeStationColumns {
+public class BikeStationCacheEntryHandler implements CacheEntryHandler<BikeStation>,
+        BikeStationColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
@@ -37,32 +36,18 @@ public class BikeStationCacheEntryHandler extends AbstractDatabaseCacheEntryHand
     private static final String WHERE_CLAUSE_ID = String.format("%s = ? ", ID);
 
     /**
-     * Creates a bike station cache entry handler.
-     * 
-     * @param dbHelper
-     *            the database helper
-     */
-    public BikeStationCacheEntryHandler(final DatabaseHelper dbHelper) {
-
-        super(dbHelper);
-    }
-
-    /**
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.business.cache.CacheEntryHandler#replace(java.lang.String,
-     *      java.lang.String, java.lang.Object)
+     *      java.lang.String, java.lang.Object, android.database.sqlite.SQLiteDatabase)
      */
     @Override
-    public final void replace(final String type, final String id, final BikeStation station) {
+    public final void replace(final String type, final String id, final BikeStation station,
+            final SQLiteDatabase database) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("replace.start - type={}, identifier={}", type, id);
-            if (LOGGER.isTraceEnabled()) {
-                LOGGER.trace("replace {}", station.toString());
-            }
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("replace {}", station.toString());
         }
-        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final ContentValues values = new ContentValues(11);
         values.put(ID, id);
@@ -80,44 +65,32 @@ public class BikeStationCacheEntryHandler extends AbstractDatabaseCacheEntryHand
         if (-1 == rowId) {
             LOGGER.error("station was not successfully replaced : {}", station.toString());
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("replace.end");
-        }
     }
 
     /**
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.business.cache.CacheEntryHandler#delete(java.lang.String,
-     *      java.lang.String)
+     *      java.lang.String, android.database.sqlite.SQLiteDatabase)
      */
     @Override
-    public final void delete(final String type, final String id) {
+    public final void delete(final String type, final String id, final SQLiteDatabase database) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("delete.start - type={}, identifier={}", type, id);
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("delete - type={}, identifier={}", type, id);
         }
-        final SQLiteDatabase database = dbHelper.getWritableDatabase();
         final int delCount = database.delete(BIKE_STATION_TABLE_NAME, WHERE_CLAUSE_ID,
                 new String[] { id });
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("delete.end - {} rows deleted", delCount);
-        }
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.business.cache.CacheEntryHandler#load(java.lang.String, java.lang.String)
+     * @see fr.itinerennes.business.cache.CacheEntryHandler#load(java.lang.String, java.lang.String,
+     *      android.database.sqlite.SQLiteDatabase)
      */
     @Override
-    public final BikeStation load(final String type, final String id) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("load.start - type={}, identifier={}", type, id);
-        }
-
-        final SQLiteDatabase database = dbHelper.getWritableDatabase();
+    public final BikeStation load(final String type, final String id, final SQLiteDatabase database) {
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, AVAILABLE_BIKES,
                 AVAILABLE_SLOTS, DISTRICT_NAME, IS_ACTIVE, IS_POS, LAST_UPDATE, STREET_NAME };
@@ -144,11 +117,8 @@ public class BikeStationCacheEntryHandler extends AbstractDatabaseCacheEntryHand
         }
         c.close();
 
-        if (LOGGER.isDebugEnabled()) {
-            if (LOGGER.isTraceEnabled()) {
-                LOGGER.trace("loaded {}", station.toString());
-            }
-            LOGGER.debug("load.end - resultNotNull={}", null != station);
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("load - {}", station.toString());
         }
         return station;
     }
@@ -157,15 +127,14 @@ public class BikeStationCacheEntryHandler extends AbstractDatabaseCacheEntryHand
      * {@inheritDoc}
      * 
      * @see fr.itinerennes.business.cache.CacheEntryHandler#load(java.lang.String,
-     *      org.andnav.osm.util.BoundingBoxE6)
+     *      org.andnav.osm.util.BoundingBoxE6, SQLiteDatabase)
      */
     @Override
-    public final List<BikeStation> load(final String type, final BoundingBoxE6 bbox) {
+    public final List<BikeStation> load(final String type, final BoundingBoxE6 bbox, SQLiteDatabase database) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("load.start - type={}, bbox={}", type, bbox.toString());
         }
-        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         final String[] columns = new String[] { ID, NAME, LONGITUDE, LATITUDE, AVAILABLE_BIKES,
                 AVAILABLE_SLOTS, DISTRICT_NAME, IS_ACTIVE, IS_POS, LAST_UPDATE, STREET_NAME };

@@ -161,36 +161,45 @@ public class CacheProvider<T extends Cacheable> extends AbstractService implemen
     /**
      * Saves or updates the given value to the cache. A metadata is inserted (or updated) in the
      * metadata table ( {@value CacheProvider#METADATA_TABLE_NAME} ) and
-     * {@link CacheEntryHandler#replace(String, String, Object)} is called to store the value.
+     * {@link CacheEntryHandler#replace(String, String, Object, SQLiteDatabase)} is called to store
+     * the value.
      * 
      * @param value
      *            the value to store
      */
-    public final synchronized void replace(final T value) {
+    public final void replace(final T value) {
 
         final SQLiteDatabase database = dbHelper.getWritableDatabase();
+        database.beginTransaction();
+
         final ContentValues metadata = new ContentValues(3);
         metadata.put(TYPE, value.getClass().getName());
         metadata.put(ID, value.getId());
         metadata.put(LAST_UPDATE, System.currentTimeMillis());
 
-        database.replace(METADATA_TABLE_NAME, null, metadata);
-        handler.replace(type, value.getId(), value);
+        try {
+            database.replace(METADATA_TABLE_NAME, null, metadata);
+            handler.replace(type, value.getId(), value, database);
+            database.setTransactionSuccessful();
+        } finally {
+            database.endTransaction();
+        }
     }
 
     /**
      * Saves or updates the list of given values to the cache. A metadata is inserted (or updated)
      * for each value in the metadata table ( {@value CacheProvider#METADATA_TABLE_NAME} ) and
-     * {@link CacheEntryHandler#replace(String, String, Object)} is called to store the value.
+     * {@link CacheEntryHandler#replace(String, String, Object, SQLiteDatabase)} is called to store
+     * the value.
      * 
      * @param values
      *            the list of values to store
      */
-    public final synchronized void replace(final List<T> values) {
+    public final void replace(final List<T> values) {
 
         final SQLiteDatabase database = dbHelper.getWritableDatabase();
-
         database.beginTransaction();
+
         try {
             for (final T value : values) {
                 replace(value);
@@ -212,13 +221,14 @@ public class CacheProvider<T extends Cacheable> extends AbstractService implemen
     public final CacheEntry<T> load(final String id) {
 
         final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
         final Cursor c = database.rawQuery(QUERY_METADATA, new String[] { type, id });
         CacheEntry<T> entry = null;
 
         if (c.moveToFirst()) {
             entry = new CacheEntry<T>();
             entry.setLastUpdate(new Date(c.getLong(0)));
-            entry.setValue(handler.load(type, id));
+            entry.setValue(handler.load(type, id, database));
         }
 
         c.close();
@@ -237,7 +247,8 @@ public class CacheProvider<T extends Cacheable> extends AbstractService implemen
     public final List<CacheEntry<T>> load(final BoundingBoxE6 bbox) {
 
         final SQLiteDatabase database = dbHelper.getWritableDatabase();
-        final List<T> values = handler.load(type, bbox);
+
+        final List<T> values = handler.load(type, bbox, database);
         final List<CacheEntry<T>> entries = new ArrayList<CacheEntry<T>>(values == null ? 0
                 : values.size());
 

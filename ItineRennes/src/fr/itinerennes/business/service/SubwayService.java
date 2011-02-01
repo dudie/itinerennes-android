@@ -37,7 +37,7 @@ public final class SubwayService extends AbstractKeolisStationProvider<SubwaySta
     public SubwayService(final DatabaseHelper dbHelper) {
 
         super(dbHelper, new CacheProvider<SubwayStation>(dbHelper,
-                new SubwayStationCacheEntryHandler(dbHelper)));
+                new SubwayStationCacheEntryHandler()));
     }
 
     /**
