@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.business.http.oba.OneBusAwayService;
+import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.business.service.BusDepartureService;
@@ -61,6 +62,9 @@ public abstract class ITRContext extends Activity {
 
     /** The bookmarks service. */
     private BookmarkService bookmarksService;
+
+    /** The accessibility service. */
+    private AccessibilityService accessibilityService;
 
     /**
      * Close the database helper. If this method is derived, you must ensure to call
@@ -210,5 +214,18 @@ public abstract class ITRContext extends Activity {
             bookmarksService = new BookmarkService(getDatabaseHelper());
         }
         return bookmarksService;
+    }
+
+    /**
+     * Gets a reference to the AccessibilityService.
+     * 
+     * @return a reference to the {@link AccessibilityService}
+     */
+    public final AccessibilityService getBusStationAccessibilityService() {
+
+        if (accessibilityService == null) {
+            accessibilityService = new AccessibilityService(getDatabaseHelper());
+        }
+        return accessibilityService;
     }
 }

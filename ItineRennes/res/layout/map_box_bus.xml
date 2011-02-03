@@ -34,6 +34,14 @@
 	        android:visibility="gone"
 	        style="@android:style/Widget.ProgressBar.Small" />
 	
+	   <ImageView android:id="@+id/map_box_wheelchair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:gravity="right"
+            android:background="@drawable/handistar_icon"
+            android:visibility="gone"/>
+            
 	    <ToggleButton android:id="@+id/map_box_toggle_bookmark"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"

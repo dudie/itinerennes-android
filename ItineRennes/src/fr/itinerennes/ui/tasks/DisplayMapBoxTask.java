@@ -91,7 +91,14 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, Void> {
             LOGGER.debug("doInBackground.start - data={}", data);
         }
 
-        adapter.doInBackground(boxView.getContentView(), data);
+        try {
+            adapter.doInBackground(boxView.getContentView(), data);
+        } catch (final Exception e) {
+            // TJHU pas bien mais c'est pour éviter de planter à cause d'une async task perdue
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.error("async task failed", e);
+            }
+        }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("doInBackground.end - data={}", data);

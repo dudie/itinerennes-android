@@ -58,9 +58,6 @@ public class ItineRennesConstants {
     /** OTP Extended API URL. */
     public static final String OTP_API_URL = "http://otp.itinerennes.fr/opentripplanner-api-extended/";
 
-    // public static final String OTP_API_URL =
-    // "http://10.0.2.2:8080/itr-opentripplanner-api-extended/";
-
     /** Path to append to the Extended API URL to get stop informations. */
     public static final String OTP_API_STOP_PATH = "stop";
 
@@ -79,18 +76,12 @@ public class ItineRennesConstants {
     /** OneBusAway API version. */
     public static final String OBA_API_KEY = "web";
 
-    /**
-     * Agency id prefix used by OneBusAway
-     */
-    // TOBO this should be temporary and be retrieve from api queries.
-    public static final String OBA_AGENCY_ID_PREFIX = "1_";
-
     /*
      * Database constantes.
      */
 
     /** The database schema version. */
-    public static final int DATABASE_VERSION = 22;
+    public static final int DATABASE_VERSION = 23;
 
     /** The database name. */
     public static final String DATABASE_NAME = "fr.itinerennes";
@@ -103,6 +94,9 @@ public class ItineRennesConstants {
 
     /** The database update script URI. */
     public static final String DATABASE_UPDATE_SCRIPT_URI = "/fr/itinerennes/database/update_database.sql";
+
+    /** The database insert script URI for bus station wheelchair accessibility. */
+    public static final String DATABASE_INSERT_ACCESSIBILITY_SCRIPT_URI = "/fr/itinerennes/database/accessibility.sql";
 
     /*
      * Cache life time values.

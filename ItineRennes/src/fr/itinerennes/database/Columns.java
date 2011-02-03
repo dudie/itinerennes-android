@@ -409,4 +409,40 @@ public final class Columns {
          */
         String ID = "id";
     }
+
+    /**
+     * Columns for accessibility attributes.
+     * 
+     * @author Olivier Boudet
+     */
+    public interface AccessibilityColumns extends BaseColumns {
+
+        /** The name of the accessibility table. */
+        String ACCESSIBILITY_TABLE_NAME = "accessibility";
+
+        /**
+         * The id of the ressource.
+         * <P>
+         * Type: STRING
+         * </P>
+         */
+        String ID = "id";
+
+        /**
+         * The type of the resource.
+         * <P>
+         * Type: STRING
+         * </P>
+         */
+        String TYPE = "type";
+
+        /**
+         * The flag indicating if a ressource is accessible for wheelchairs.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String WHEELCHAIR = "wheelchair";
+
+    }
 }
