@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
@@ -78,10 +77,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
             public void onClick(final View v) {
 
                 final Intent i = new Intent(context, BusStationActivity.class);
-                // TOBO on ajoute '1_' temporairement il faut utiliser le agencyId a la place
-                final String stopId = String.format("%s%s",
-                        ItineRennesConstants.OBA_AGENCY_ID_PREFIX, item.getData().getId());
-                i.putExtra(BusStationActivity.INTENT_STOP_ID, stopId);
+                i.putExtra(BusStationActivity.INTENT_STOP_ID, item.getData().getId());
                 i.putExtra(BusStationActivity.INTENT_STOP_NAME, item.getData().getName());
                 context.startActivity(i);
             }
@@ -93,6 +89,11 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
         star.setOnCheckedChangeListener(new ToggleStarListener(context, BusStation.class.getName(),
                 item.getData().getId(), item.getData().getName()));
 
+        final ImageView handistar = (ImageView) busView.findViewById(R.id.map_box_wheelchair);
+        if (context.getBusStationAccessibilityService().isAccessible(item.getData().getId(),
+                BusStation.class.getName())) {
+            handistar.setVisibility(View.VISIBLE);
+        }
         return busView;
     }
 
@@ -119,10 +120,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
         station = null;
         routesIcons = new ArrayList<Drawable>();
         try {
-            // TOBO on ajoute '1_' temporairement il faut utiliser le agencyId a la place
-            final String stopId = String.format("%s%s", ItineRennesConstants.OBA_AGENCY_ID_PREFIX,
-                    item.getData().getId());
-            station = context.getOneBusAwayService().getStop(stopId);
+            station = context.getOneBusAwayService().getStop(item.getData().getId());
             final List<Route> busRoutes = station.getRoutes();
             for (final Route route : busRoutes) {
                 routesIcons.add(context.getLineIconService().getIconOrDefault(context,

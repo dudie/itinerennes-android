@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.oba.Route;
 import fr.itinerennes.model.oba.ScheduleStopTime;
 import fr.itinerennes.model.oba.StopSchedule;
@@ -161,7 +162,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         super.onResume();
 
-        setContentView(R.layout.bus_station);
+        setContentView(R.layout.activity_bus_station);
 
         /* Sets the station name. */
         final TextView name = (TextView) findViewById(R.station.name);
@@ -180,6 +181,13 @@ public class BusStationActivity extends ITRContext implements Runnable {
     private void updateUI() {
 
         if (schedule != null) {
+            /* Display handistar icon if necessary. */
+            final ImageView handistar = (ImageView) findViewById(R.station.bus_activity_wheelchair_icon);
+            if (getBusStationAccessibilityService()
+                    .isAccessible(stopId, BusStation.class.getName())) {
+                handistar.setVisibility(View.VISIBLE);
+            }
+
             /* Displaying routes icons. */
 
             final ViewGroup lineList = (ViewGroup) findViewById(R.id.line_icon_container);

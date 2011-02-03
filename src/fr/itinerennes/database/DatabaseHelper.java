@@ -50,6 +50,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 FileUtils.read(getClass().getResourceAsStream(
                         ItineRennesConstants.DATABASE_CREATE_SCRIPT_URI)));
 
+        // insert accessibility informations into the database
+        execScript(
+                db,
+                FileUtils.read(getClass().getResourceAsStream(
+                        ItineRennesConstants.DATABASE_INSERT_ACCESSIBILITY_SCRIPT_URI)));
     }
 
     /**
@@ -73,6 +78,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db,
                 FileUtils.read(getClass().getResourceAsStream(
                         ItineRennesConstants.DATABASE_CREATE_SCRIPT_URI)));
+
+        // insert accessibility informations into the database
+        execScript(
+                db,
+                FileUtils.read(getClass().getResourceAsStream(
+                        ItineRennesConstants.DATABASE_INSERT_ACCESSIBILITY_SCRIPT_URI)));
     }
 
     /**
@@ -86,11 +97,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         final String[] statements = script.replaceAll("[\r\n]*", "").replaceAll("[\n\r]*\\s*$", "")
                 .split(";");
-        for (final String statement : statements) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("execute SQL : [{}]", statement);
+
+        try {
+            db.beginTransaction();
+            for (final String statement : statements) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("execute SQL : [{}]", statement);
+                }
+                db.execSQL(statement);
+
             }
-            db.execSQL(statement);
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
         }
     }
 }

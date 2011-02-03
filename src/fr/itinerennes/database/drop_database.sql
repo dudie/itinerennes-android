@@ -20,3 +20,5 @@ DROP TABLE IF EXISTS "line_icons";
 DROP TABLE IF EXISTS "index_unique_line_id";
 DROP TABLE IF EXISTS "geo_explore";
 DROP INDEX IF EXISTS "geo_explore_coords_idx";
+DROP TABLE IF EXISTS "accessibility";
+DROP INDEX IF EXISTS "accessibility_idx";
