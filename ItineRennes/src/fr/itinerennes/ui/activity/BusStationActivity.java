@@ -183,8 +183,9 @@ public class BusStationActivity extends ITRContext implements Runnable {
         if (schedule != null) {
             /* Display handistar icon if necessary. */
             final ImageView handistar = (ImageView) findViewById(R.station.bus_activity_wheelchair_icon);
-            if (getBusStationAccessibilityService()
-                    .isAccessible(stopId, BusStation.class.getName())) {
+            boolean isAccessible = getBusStationAccessibilityService().isAccessible(stopId,
+                    BusStation.class.getName());
+            if (isAccessible) {
                 handistar.setVisibility(View.VISIBLE);
             }
 
@@ -206,7 +207,8 @@ public class BusStationActivity extends ITRContext implements Runnable {
             /* Displaying departures dates. */
 
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
-            final BusTimeAdapter adapter = new BusTimeAdapter(this, schedule, routesIcon);
+            final BusTimeAdapter adapter = new BusTimeAdapter(this, schedule, routesIcon,
+                    isAccessible);
             listTimes.setAdapter(adapter);
             listTimes.setSelectionFromTop(adapter.getIndexForNow(), SELECTION_FROM_TOP);
             listTimes.setOnItemClickListener(new OnItemClickListener() {
