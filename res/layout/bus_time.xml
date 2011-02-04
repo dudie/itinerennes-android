@@ -10,7 +10,7 @@
     android:paddingBottom="2dp">
     
     <ImageView
-        android:id="@+station/bus_icon_line_departure"
+        android:id="@+station/bus_departure_line_icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_margin="5dp"/>
@@ -22,11 +22,26 @@
         android:orientation="vertical"
         android:gravity="center_vertical">
         
-        <TextView
-            android:id="@+station/bus_headsign_departure"
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:orientation="horizontal">
+            
+	        <TextView
+	            android:id="@+station/bus_departure_headsign"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textStyle="bold"/>
+	        
+	        <ImageView android:id="@+station/bus_departure_wheelchair"
+	            android:layout_width="24dp"
+	            android:layout_height="24dp"
+	            android:layout_marginRight="5dp"
+	            android:gravity="right"
+	            android:background="@drawable/handistar_icon"
+	            android:visibility="gone"/>
+        </LinearLayout>
         
 	    <LinearLayout
 	        android:layout_width="fill_parent"
@@ -34,14 +49,14 @@
 	        android:orientation="horizontal">
         
 	        <TextView
-	            android:id="@+station/bus_date_departure"
+	            android:id="@+station/bus_departure_date"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="left"
 	            android:layout_weight="1"/>
 	            
 	        <TextView
-	            android:id="@+station/bus_time_before_departure"
+	            android:id="@+station/bus_departure_time_before"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="right"

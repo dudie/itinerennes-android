@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
+import fr.itinerennes.model.oba.Route;
 import fr.itinerennes.model.oba.ScheduleStopTime;
 import fr.itinerennes.model.oba.StopSchedule;
 import fr.itinerennes.ui.activity.ITRContext;
@@ -42,6 +43,12 @@ public class BusTimeAdapter extends BaseAdapter {
     private LayoutInflater inflater = null;
 
     /**
+     * Is the stop accessible ? Determines if the handistar icon should be displayed for accessible
+     * routes.
+     */
+    private final boolean stopIsAccessible;
+
+    /**
      * Constructor.
      * 
      * @param c
@@ -50,14 +57,16 @@ public class BusTimeAdapter extends BaseAdapter {
      *            departures to display in the list
      * @param routesIcons
      *            list of routes icons
+     * @param stopIsAccessible
      */
     public BusTimeAdapter(final ITRContext c, final StopSchedule schedule,
-            final HashMap<String, Drawable> routesIcons) {
+            final HashMap<String, Drawable> routesIcons, boolean stopIsAccessible) {
 
         this.data = schedule;
         this.context = c;
         this.routesIcons = routesIcons;
         this.inflater = LayoutInflater.from(context);
+        this.stopIsAccessible = stopIsAccessible;
 
     }
 
@@ -105,26 +114,38 @@ public class BusTimeAdapter extends BaseAdapter {
         final View busTimeView = inflater.inflate(R.layout.bus_time, null);
 
         final ImageView departureLineIconeView = (ImageView) busTimeView
-                .findViewById(R.station.bus_icon_line_departure);
+                .findViewById(R.station.bus_departure_line_icon);
         departureLineIconeView.setImageDrawable(routesIcons.get(data.getStopTimes().get(position)
                 .getRoute().getShortName()));
 
         final TextView departureHeadsignView = (TextView) busTimeView
-                .findViewById(R.station.bus_headsign_departure);
+                .findViewById(R.station.bus_departure_headsign);
         departureHeadsignView.setText(data.getStopTimes().get(position).getSimpleHeadsign());
 
         final TextView departureDateView = (TextView) busTimeView
-                .findViewById(R.station.bus_date_departure);
+                .findViewById(R.station.bus_departure_date);
         departureDateView.setText(formatDepartureDate(data.getStopTimes().get(position)
                 .getDepartureTime()));
 
         final TextView timeBeforeDepartureView = (TextView) busTimeView
-                .findViewById(R.station.bus_time_before_departure);
+                .findViewById(R.station.bus_departure_time_before);
 
         timeBeforeDepartureView.setText(DateUtils.getRelativeTimeSpanString(data.getStopTimes()
                 .get(position).getDepartureTime().getTime(), System.currentTimeMillis(),
                 DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
 
+        if (stopIsAccessible) {
+            // TOBO est ce que c'est nécessaire de mettre dans une map les attributs déjà récupérés
+            // pour éviter de faire toujours les mêmes requêtes lorsque l'utilisateur scroll ?
+
+            /* Display handistar icon if current stop and current route are accessible. */
+            final ImageView handistar = (ImageView) busTimeView
+                    .findViewById(R.station.bus_departure_wheelchair);
+            if (context.getBusStationAccessibilityService().isAccessible(
+                    data.getStopTimes().get(position).getRoute().getId(), Route.class.getName())) {
+                handistar.setVisibility(View.VISIBLE);
+            }
+        }
         return busTimeView;
     }
 
