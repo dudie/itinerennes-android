@@ -28,7 +28,6 @@ import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.views.ITRMapView;
-import fr.itinerennes.ui.views.PreloadDialog;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.ui.views.overlays.MapOverlayHelper;
 import fr.itinerennes.ui.views.overlays.OverlayConstants;
@@ -126,7 +125,8 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         // if first start of the application, open the preload dialog
         if (sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
-            showDialog(Dialogs.PRELOAD);
+            final Intent i = new Intent(this, PreloadActivity.class);
+            startActivity(i);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -186,6 +186,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPause.start");
         }
+        super.onPause();
 
         // saving in preferences the state of the map (center, follow location and zoom)
         final SharedPreferences.Editor edit = getITRPreferences().edit();
@@ -208,7 +209,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPause.end");
         }
-        super.onPause();
     }
 
     /**
@@ -284,6 +284,13 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         favourites.setIcon(android.R.drawable.btn_star);
         final Intent favActivityIntent = new Intent(this, BookmarksActivity.class);
         favourites.setIntent(favActivityIntent);
+
+        // RE-PRELOAD
+        final MenuItem rePreload = menu.add(Menu.NONE, MenuOptions.PRELOAD, Menu.NONE,
+                R.string.menu_preload);
+        // favourites.setIcon(android.R.drawable.btn_star);
+        final Intent rePreloadIntent = new Intent(this, PreloadActivity.class);
+        rePreload.setIntent(rePreloadIntent);
 
         // ABOUT
         final MenuItem about = menu.add(Menu.NONE, MenuOptions.ABOUT, Menu.NONE,
@@ -379,9 +386,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             aboutBuilder.setIcon(android.R.drawable.ic_dialog_info);
             dialog = aboutBuilder.create();
             break;
-        case Dialogs.PRELOAD:
-            dialog = new PreloadDialog(this);
-            break;
         default:
             dialog = null;
         }
@@ -427,6 +431,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         /** "Layers" menu option. */
         private static final int LAYERS = 2;
+
+        /** "Re-Preload" menu option. */
+        private static final int PRELOAD = 3;
     }
 
     /**
@@ -441,9 +448,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         /** "About" dialog box. */
         private static final int ABOUT = 1;
-
-        /** Preload data dialog. */
-        private static final int PRELOAD = 2;
     }
 
 }

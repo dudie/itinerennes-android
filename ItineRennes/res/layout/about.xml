@@ -65,25 +65,32 @@
 
         <TextView android:text="@string/credits"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/white"/>
   
+        <TextView android:text="@string/free_mind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"/>
+  
         <TextView android:text="@string/about_keolis"
-            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/light_grey"/>
 
         <TextView android:text="@string/about_openstreetmap_data"
-            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/light_grey"/>
 		    
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
@@ -100,13 +107,13 @@
 		</LinearLayout>
 		    
 		<TextView android:text="@string/about_osmdroid"
-            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:textColor="@color/light_grey"/>
 		   
 		<TextView android:text="@string/about_mapquest"
-            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:textColor="@color/light_grey"/>

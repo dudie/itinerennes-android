@@ -3,4 +3,5 @@
     <string name="menu_about">About</string>
     <string name="menu_bookmarks">Bookmarks</string>
     <string name="menu_layers">Layers</string>
+    <string name="menu_preload">Preload data</string>
 </resources>

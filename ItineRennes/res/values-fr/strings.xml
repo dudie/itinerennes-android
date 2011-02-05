@@ -3,11 +3,15 @@
     <string name="version_dots">Version :\u0020</string>
     <string name="error_network">Certaines informations n\'ont pas pu être récupérées. Merci de vérifier votre réseau.</string>
     <string name="select_layer">Sélectionnez des claques</string>
-    <string name="loading">Chargement... Merci de patienter.</string>
+    <string name="loading">Chargement...</string>
     <string name="location_service_disabled">Le service de localisation n\'est pas activé. Activez le dans les paramètres du système.</string>
     <string name="preload_dialog_title">Premier démarrage</string>
-    <string name="advice_preload_data">Vous utilisez ItinéRennes pour la première fois, nous vous recommandons de patienter pendant le chargement de quelques données. Vous pouvez passer cette étape, l\'application sera entièrement fonctionnelle, cependant vous subirez quelques lenteurs lors de l\'utilisation de la carte.</string>
+    <string name="do_preload">Précharger les stations</string>
+    <string name="dont_preload">Charger à la demande</string>
+    <string name="explanations_preload"><b>(Recommandé)</b> Les positions des arrêts et stations vont être téléchargés, ce traitement durera quelques secondes en 3G ou quelques minutes en Edge. La navigation sur la carte sera plus fluide et agréable. Notez que l\'application aura toujous besoin d\'un accès internet pour fonctionner pleinement.</string>
+    <string name="explanations_no_preload">Les positions des arrêts et stations seront téléchargés \"en live\", en fonction d\'où vous vous déplacerez sur la carte. A chaque mouvement sur la carte il faudra patienter quelques instants le temps que les arrêts et stations se chargent.</string>
     <string name="ok">Ok</string>
+    <string name="continuer">Continuer</string>
     <!-- dates -->
     <string name="date_today_at">aujourd\'hui à %0$s</string>
     <string name="date_tomorrow_at">demain à %0$s</string>

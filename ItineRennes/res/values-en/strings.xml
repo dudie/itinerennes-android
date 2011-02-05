@@ -3,11 +3,15 @@
     <string name="version_dots">Version:\u0020</string>
     <string name="error_network">Some informations can not be fetched. Please verify your network.</string>
     <string name="select_layer">Select layers</string>
-    <string name="loading">Loading... Please wait.</string>
+    <string name="loading">Loading...</string>
     <string name="location_service_disabled">The location service is disabled. Enable it in system parameters.</string>
     <string name="preload_dialog_title">First start</string>
-    <string name="advice_preload_data">You are starting ItinéRennes for the first time, its recommened to load some data before using it. You can skip this step, the app will be fully functional, but you will issue some latencies during map scrolling.</string>
+    <string name="do_preload">Précharger les stations</string>
+    <string name="dont_preload">Charger à la demande</string>
+    <string name="explanations_preload"><b>(Recommandé)</b> Les positions des arrêts et stations vont être téléchargés, ce traitement durera quelques secondes en 3G ou quelques minutes en Edge. La navigation sur la carte sera plus fluide et agréable. Notez que l\'application aura toujous besoin d\'un accès internet pour fonctionner pleinement.</string>
+    <string name="explanations_no_preload">Les positions des arrêts et stations seront téléchargés \"en live\", en fonction d\'où vous vous déplacerez sur la carte. A chaque mouvement sur la carte il faudra patienter quelques instants le temps que les arrêts et stations se chargent.</string>
     <string name="ok">Ok</string>
+    <string name="continuer">Continue</string>
     <!-- dates -->
     <string name="date_today_at">today at %s</string>
     <string name="date_tomorrow_at">tomorrow at %s</string>

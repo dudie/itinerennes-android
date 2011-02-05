@@ -16,8 +16,24 @@
         
     <TextView
         android:id="@+id/bookmark_label"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textStyle="bold"/>
+        
+    <EditText
+        android:id="@+id/bookmark_editable_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:editable="true"
+        android:visibility="gone"/>
+        
+    <Button
+        android:id="@+id/bookmark_btn_save_label"
+        android:text="@string/ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 </LinearLayout>
