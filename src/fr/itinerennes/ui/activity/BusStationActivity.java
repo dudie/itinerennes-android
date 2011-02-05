@@ -94,6 +94,9 @@ public class BusStationActivity extends ITRContext implements Runnable {
     /** Handler for messages from thread which fetch information from the cache or the network. */
     private Handler handler;
 
+    /** flag indicating if this stop is accessible or not. */
+    private boolean isAccessible = false;
+
     /**
      * Creates the activity.
      * <ul>
@@ -168,6 +171,14 @@ public class BusStationActivity extends ITRContext implements Runnable {
         final TextView name = (TextView) findViewById(R.station.name);
         name.setText(stopName);
 
+        /* Display handistar icon if necessary. */
+        final ImageView handistar = (ImageView) findViewById(R.station.bus_activity_wheelchair_icon);
+        isAccessible = getBusStationAccessibilityService().isAccessible(stopId,
+                BusStation.class.getName());
+        if (isAccessible) {
+            handistar.setVisibility(View.VISIBLE);
+        }
+
         showDialog(PROGRESS_DIALOG);
 
         final Thread thread = new Thread(this);
@@ -181,13 +192,6 @@ public class BusStationActivity extends ITRContext implements Runnable {
     private void updateUI() {
 
         if (schedule != null) {
-            /* Display handistar icon if necessary. */
-            final ImageView handistar = (ImageView) findViewById(R.station.bus_activity_wheelchair_icon);
-            boolean isAccessible = getBusStationAccessibilityService().isAccessible(stopId,
-                    BusStation.class.getName());
-            if (isAccessible) {
-                handistar.setVisibility(View.VISIBLE);
-            }
 
             /* Displaying routes icons. */
 
