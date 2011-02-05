@@ -9,9 +9,14 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import fr.itinerennes.ErrorCodeConstants;
@@ -83,6 +88,35 @@ public class BookmarksActivity extends ITRContext {
                     list.invalidate();
                 }
 
+            }
+        });
+        list.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(final AdapterView<?> parent, final View view,
+                    final int position, final long id) {
+
+                final TextView label = (TextView) view.findViewById(R.id.bookmark_label);
+                label.setVisibility(View.GONE);
+
+                final EditText edit = (EditText) view.findViewById(R.id.bookmark_editable_label);
+                edit.setVisibility(View.VISIBLE);
+                edit.setText(label.getText());
+
+                final Button valid = (Button) view.findViewById(R.id.bookmark_btn_save_label);
+                valid.setVisibility(View.VISIBLE);
+                valid.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(final View v) {
+
+                        label.setVisibility(View.VISIBLE);
+                        edit.setVisibility(View.GONE);
+                        valid.setVisibility(View.GONE);
+                    }
+                });
+
+                return true;
             }
         });
     }

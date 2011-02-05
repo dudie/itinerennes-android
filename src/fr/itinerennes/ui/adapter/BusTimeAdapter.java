@@ -60,7 +60,7 @@ public class BusTimeAdapter extends BaseAdapter {
      * @param stopIsAccessible
      */
     public BusTimeAdapter(final ITRContext c, final StopSchedule schedule,
-            final HashMap<String, Drawable> routesIcons, boolean stopIsAccessible) {
+            final HashMap<String, Drawable> routesIcons, final boolean stopIsAccessible) {
 
         this.data = schedule;
         this.context = c;
@@ -112,26 +112,26 @@ public class BusTimeAdapter extends BaseAdapter {
     public final View getView(final int position, final View convertView, final ViewGroup parent) {
 
         final View busTimeView = inflater.inflate(R.layout.bus_time, null);
+        final ScheduleStopTime stopTime = data.getStopTimes().get(position);
 
         final ImageView departureLineIconeView = (ImageView) busTimeView
                 .findViewById(R.station.bus_departure_line_icon);
-        departureLineIconeView.setImageDrawable(routesIcons.get(data.getStopTimes().get(position)
-                .getRoute().getShortName()));
+        departureLineIconeView
+                .setImageDrawable(routesIcons.get(stopTime.getRoute().getShortName()));
 
         final TextView departureHeadsignView = (TextView) busTimeView
                 .findViewById(R.station.bus_departure_headsign);
-        departureHeadsignView.setText(data.getStopTimes().get(position).getSimpleHeadsign());
+        departureHeadsignView.setText(stopTime.getSimpleHeadsign());
 
         final TextView departureDateView = (TextView) busTimeView
                 .findViewById(R.station.bus_departure_date);
-        departureDateView.setText(formatDepartureDate(data.getStopTimes().get(position)
-                .getDepartureTime()));
+        departureDateView.setText(formatDepartureDate(stopTime.getDepartureTime()));
 
         final TextView timeBeforeDepartureView = (TextView) busTimeView
                 .findViewById(R.station.bus_departure_time_before);
 
-        timeBeforeDepartureView.setText(DateUtils.getRelativeTimeSpanString(data.getStopTimes()
-                .get(position).getDepartureTime().getTime(), System.currentTimeMillis(),
+        timeBeforeDepartureView.setText(DateUtils.getRelativeTimeSpanString(stopTime
+                .getDepartureTime().getTime(), System.currentTimeMillis(),
                 DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
 
         if (stopIsAccessible) {
@@ -145,6 +145,22 @@ public class BusTimeAdapter extends BaseAdapter {
                     data.getStopTimes().get(position).getRoute().getId(), Route.class.getName())) {
                 handistar.setVisibility(View.VISIBLE);
             }
+        }
+
+        // TJHU affichage du marqueur pour montrer l'entrée initiale
+        // If the current view is the view on which a marker is needed
+        // sets a blue drawable on the left
+        // if (initialStopId.equals(stopTime.getStop().getId())) {
+        // ((ImageView) view.findViewById(R.trip_time.listview_separator))
+        // .setImageResource(R.drawable.listview_separator);
+        // }
+
+        // if the current view represents a stop where the bus is already passed
+        // sets the font color to grey
+        if (stopTime.getDepartureTime().before(new Date())) {
+            departureHeadsignView.setTextColor(R.color.light_grey);
+            departureDateView.setTextColor(R.color.light_grey);
+            timeBeforeDepartureView.setTextColor(R.color.light_grey);
         }
         return busTimeView;
     }

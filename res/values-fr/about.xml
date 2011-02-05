@@ -3,9 +3,10 @@
     <string name="credits">Crédits</string>
     <string name="app_name_long">ItinéRennes pour Android™</string>
     <string name="visit_our_website">Visitez notre page web www.itinerennes.fr</string>
-    <string name="about_keolis">Keolis</string>
-    <string name="about_openstreetmap_data">© contributeurs OpenStreetMap, CC-BY-SA</string>
+    <string name="free_mind">Parce qu\'avoir l\'esprit libre c\'est important</string>
+    <string name="about_keolis">Données sur les transports fournies par Keolis</string>
+    <string name="about_openstreetmap_data">Données gégraphiques © contributeurs OpenStreetMap, CC-BY-SA</string>
     <string name="about_openstreetmap_logo">© logo OpenStreetMap, CC-BY-SA</string>
-    <string name="about_osmdroid">Osmdroid</string>
-    <string name="about_mapquest">Mapquest</string>
+    <string name="about_osmdroid">Librairie pour l\'affichaque de la carte : Osmdroid</string>
+    <string name="about_mapquest">Tuiles de carte par Mapquest</string>
 </resources>

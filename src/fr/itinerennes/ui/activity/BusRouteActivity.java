@@ -247,11 +247,13 @@ public class BusRouteActivity extends ITRContext {
      */
     private void onReceiveTripSchedule(final TripSchedule schedule) {
 
-        final BusRouteStopsAdapter routeStopsAdapter = new BusRouteStopsAdapter(this,
+        final String stopId = getIntent().getExtras().getString(INTENT_STOP_ID);
+
+        final BusRouteStopsAdapter routeStopsAdapter = new BusRouteStopsAdapter(this, stopId,
                 schedule.getStopTimes());
         listRouteStops.setAdapter(routeStopsAdapter);
-        final String stopId = getIntent().getExtras().getString(INTENT_STOP_ID);
-        listRouteStops.setSelectionFromTop(routeStopsAdapter.getIndexForStopId(stopId), 50);
+        final int idx = routeStopsAdapter.getIndexForStopId(stopId);
+        listRouteStops.setSelectionFromTop(idx, 50);
     }
 
     /**

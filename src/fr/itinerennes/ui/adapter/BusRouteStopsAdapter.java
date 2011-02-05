@@ -1,5 +1,6 @@
 package fr.itinerennes.ui.adapter;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -32,6 +34,9 @@ public class BusRouteStopsAdapter extends BaseAdapter {
     /** A reference to the layout inflater. */
     private final LayoutInflater inflater;
 
+    /** The initial stop identifier on which set a marker. */
+    private final String initialStopId;
+
     /** The list of arrival times and departure times of the bus for each stop of the trip. */
     private final List<TripStopTime> arrivalAndDepartures;
 
@@ -40,14 +45,18 @@ public class BusRouteStopsAdapter extends BaseAdapter {
      * 
      * @param context
      *            The android context
+     * @param initialStopId
+     *            the stop id where to set a marker
      * @param arrivalAndDepartures
      *            the list of arrival times and departure times of the bus for each stop of the trip
      */
-    public BusRouteStopsAdapter(final Context context, final List<TripStopTime> arrivalAndDepartures) {
+    public BusRouteStopsAdapter(final Context context, final String initialStopId,
+            final List<TripStopTime> arrivalAndDepartures) {
 
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.arrivalAndDepartures = arrivalAndDepartures;
+        this.initialStopId = initialStopId;
     }
 
     /**
@@ -106,6 +115,21 @@ public class BusRouteStopsAdapter extends BaseAdapter {
         relativeTime.setText(DateUtils.getRelativeTimeSpanString(stopTime.getDepartureTime()
                 .getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS,
                 DateUtils.FORMAT_ABBREV_RELATIVE));
+
+        // If the current view is the view on which a marker is needed
+        // sets a blue drawable on the left
+        if (initialStopId.equals(stopTime.getStop().getId())) {
+            ((ImageView) view.findViewById(R.trip_time.listview_separator))
+                    .setImageResource(R.drawable.listview_separator);
+        }
+
+        // if the current view represents a stop where the bus is already passed
+        // sets the font color to grey
+        if (stopTime.getDepartureTime().before(new Date())) {
+            stopName.setTextColor(R.color.light_grey);
+            departureTime.setTextColor(R.color.light_grey);
+            relativeTime.setTextColor(R.color.light_grey);
+        }
 
         final ProgressBar progressBar = (ProgressBar) view.findViewById(R.trip_time.progress_bar);
 
