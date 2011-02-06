@@ -19,7 +19,7 @@ import fr.itinerennes.ui.views.MapBoxView;
 /**
  * An enhanced {@link OpenStreetMapViewItemizedOverlay} to handle focus of one of its elements.
  * 
- * @param <T>
+ * @param <D>
  *            the type of the items of this overlay
  * @author Jérémie Huchet
  * @author Olivier Boudet
@@ -183,36 +183,10 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
 
         final Rect rect = new Rect();
         getItemBoundingRetangle(item, rect, curScreenCoords);
+        marker.setBounds(rect);
         marker.draw(canvas);
 
         // restore original state
         marker.setState(originalState);
-    }
-
-    /**
-     * <strong>from OSMDROID</strong> Finds the bounding rectangle for the object in current
-     * projection.
-     * 
-     * @param item
-     * @param rect
-     * @return
-     */
-    private Rect getItemBoundingRetangle(final T item, final Rect rect, final Point ctr) {
-
-        final Drawable marker = (item.getMarker(0) == null) ? this.mDefaultItem.getMarker(0) : item
-                .getMarker(0);
-        final Point markerHotspot = (item.getMarkerHotspot(0) == null) ? this.mDefaultItem
-                .getMarkerHotspot(0) : item.getMarkerHotspot(0);
-
-        // calculate bounding rectangle
-        final int markerWidth = marker.getIntrinsicWidth();
-        final int markerHeight = marker.getIntrinsicHeight();
-        final int left = ctr.x - markerHotspot.x;
-        final int right = left + markerWidth;
-        final int top = ctr.y - markerHotspot.y;
-        final int bottom = top + markerHeight;
-
-        rect.set(left, top, right, bottom);
-        return rect;
     }
 }

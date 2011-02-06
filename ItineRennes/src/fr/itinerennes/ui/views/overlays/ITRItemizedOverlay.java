@@ -11,7 +11,10 @@ import org.osmdroid.views.overlay.ItemizedOverlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
+import android.graphics.Canvas;
 import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 
 import fr.itinerennes.R;
@@ -320,5 +323,63 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
             final OnItemizedOverlayUpdateListener updateListener) {
 
         this.updateListener = updateListener;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.osmdroid.views.overlay.ItemizedOverlay#onDrawItem(android.graphics.Canvas, int,
+     *      android.graphics.Point)
+     */
+    @Override
+    protected void onDrawItem(final Canvas canvas, final int index, final Point curScreenCoords) {
+
+        // get this item's preferred marker & hotspot
+        final T item = super.mItemList.get(index);
+
+        final Drawable marker = item.getDrawable();
+        final int[] originalState = marker.getState();
+        if (map.getZoomLevel() < 17) {
+            marker.setState(new int[] { R.attr.state_low_zoom });
+        }
+
+        final Rect rect = new Rect();
+        getItemBoundingRetangle(item, rect, curScreenCoords);
+        marker.setBounds(rect);
+        marker.draw(canvas);
+
+        // restore original state
+        marker.setState(originalState);
+    }
+
+    /**
+     * <strong>from OSMDROID</strong> Finds the bounding rectangle for the object in current
+     * projection.
+     * 
+     * @param item
+     *            the item to draw
+     * @param rect
+     *            the rectangle where to set bounds
+     * @param ctr
+     *            the center
+     * @return the bounding rectangle for the item's drawable
+     */
+    protected Rect getItemBoundingRetangle(final T item, final Rect rect, final Point ctr) {
+
+        final Drawable marker = (item.getMarker(0) == null) ? this.mDefaultItem.getMarker(0) : item
+                .getMarker(0);
+        final Point markerHotspot = (item.getMarkerHotspot(0) == null) ? this.mDefaultItem
+                .getMarkerHotspot(0) : item.getMarkerHotspot(0);
+
+        // calculate bounding rectangle
+        final int markerWidth = marker.getIntrinsicWidth();
+        final int markerHeight = marker.getIntrinsicHeight();
+        final int left = ctr.x - markerHotspot.x;
+        final int right = left + markerWidth;
+        final int top = ctr.y - markerHotspot.y;
+        final int bottom = top + markerHeight;
+
+        rect.set(left, top, right, bottom);
+        return rect;
     }
 }
