@@ -2,7 +2,7 @@
 <resources>
     <string name="credits">Credits</string>
     <string name="app_name_long">ItinéRennes for Android™</string>
-    <string name="visit_our_website">Please visit our website at http://www.itinerennes.fr/</string>
+    <string name="visit_our_website">Please visit our website at www.itinerennes.fr</string>
     <string name="free_mind">Because it\'s important to have a free mind</string>
     <string name="about_keolis">Transports data by Keolis</string>
 	<string name="about_openstreetmap_data">Geographical data  by © OpenStreetMap contributors, CC-BY-SA</string>
