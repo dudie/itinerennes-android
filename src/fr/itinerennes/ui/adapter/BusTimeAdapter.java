@@ -227,4 +227,15 @@ public class BusTimeAdapter extends BaseAdapter {
         return 0;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.widget.BaseAdapter#isEmpty()
+     */
+    @Override
+    public final boolean isEmpty() {
+
+        return getCount() == 0;
+    }
+
 }

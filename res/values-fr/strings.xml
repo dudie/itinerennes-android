@@ -12,11 +12,11 @@
     <string name="explanations_no_preload">Les positions des arrêts et stations seront téléchargés \"en live\", en fonction d\'où vous vous déplacerez sur la carte. A chaque mouvement sur la carte il faudra patienter quelques instants le temps que les arrêts et stations se chargent.</string>
     <string name="ok">Ok</string>
     <string name="continuer">Continuer</string>
+    <string name="no_departure">Aucun départ ce jour.</string>
     <!-- dates -->
     <string name="date_today_at">aujourd\'hui à %0$s</string>
     <string name="date_tomorrow_at">demain à %0$s</string>
     <string name="date_in_x_days_at">dans %0$s jours à %1$s</string>
-    
     <!-- bookmarks -->
     <string name="added_to_bookmarks"><i>%s</i> ajouté aux favoris</string>
     <string name="removed_from_bookmarks"><i>%s</i> retiré des favoris</string>
@@ -26,4 +26,7 @@
     <string name="overlay_bus">Arrêts de bus</string>
     <string name="overlay_subway">Stations de métro</string>
     <string name="overlay_bike">Stations de vélo</string>
+    <!-- Trip planner -->
+    <string name="select_start_point_on_map">Cliquez sur la carte pour choisir un point de départ.</string>
+    <string name="select_end_point_on_map">Cliquez sur la carte pour choisir un point de d\'arrivée.</string>
 </resources>

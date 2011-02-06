@@ -12,6 +12,7 @@
     <string name="explanations_no_preload">Stops and stations positions will be downloaded on the fly depending on where you move the map. Every scroll on the map will require a few seconds for the stops and stations to be loaded. </string>
     <string name="ok">Ok</string>
     <string name="continuer">Continue</string>
+    <string name="no_departure">No departure for this day.</string>
     <!-- dates -->
     <string name="date_today_at">today at %s</string>
     <string name="date_tomorrow_at">tomorrow at %s</string>
@@ -25,4 +26,7 @@
     <string name="overlay_bus">Bus stops</string>
     <string name="overlay_subway">Subway stations</string>
     <string name="overlay_bike">Bike stations</string>
+    <!-- Trip planner -->
+    <string name="select_start_point_on_map">Click on the map to choose a start point.</string>
+    <string name="select_end_point_on_map">Click on the map to choose an end point.</string>
 </resources>
