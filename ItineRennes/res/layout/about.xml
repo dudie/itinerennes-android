@@ -111,12 +111,18 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:textColor="@color/light_grey"/>
-		   
-		<TextView android:text="@string/about_mapquest"
+           
+        <TextView android:text="@string/about_mapquest"
             android:layout_marginTop="10dp"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:textColor="@color/light_grey"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_grey"/>
+           
+        <TextView android:text="@string/about_onebusaway"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_grey"/>
 
     </LinearLayout>
 

@@ -9,4 +9,5 @@
     <string name="about_openstreetmap_logo">© logo OpenStreetMap, CC-BY-SA</string>
     <string name="about_osmdroid">Librairie pour l\'affichaque de la carte : Osmdroid</string>
     <string name="about_mapquest">Tuiles de carte par Mapquest</string>
+    <string name="about_onebusaway">OneBusAway pour les API serveur</string>
 </resources>
