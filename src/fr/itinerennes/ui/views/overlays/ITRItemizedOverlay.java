@@ -294,11 +294,15 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
             LOGGER.debug("setEnabled.start - overlay={}, enabled={}", localizedName, enabled);
         }
         super.setEnabled(enabled);
+
         if (enabled) {
             map.getListeners().add(this);
             updateOverlay(map);
         } else {
             map.getListeners().remove(this);
+            if (null != overlayUpdater) {
+                overlayUpdater.cancel(true);
+            }
             onClearOverlay(map);
         }
         if (LOGGER.isDebugEnabled()) {
