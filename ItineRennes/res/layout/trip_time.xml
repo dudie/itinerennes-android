@@ -46,7 +46,15 @@
 	        android:layout_weight="1" />
 
 	</LinearLayout>
-	        
+	
+	<ImageView android:id="@+trip_time/stop_wheelchair"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:gravity="right"
+                android:src="@drawable/handistar_icon"
+                android:visibility="gone"/>
+                     
     <ProgressBar android:id="@+trip_time/progress_bar"
        android:layout_height="wrap_content" 
        android:layout_width="wrap_content"

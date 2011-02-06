@@ -6,7 +6,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.impl.ItinerennesLoggerFactory;
 
-import android.content.Context;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
+import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.oba.TripStopTime;
+import fr.itinerennes.ui.activity.ITRContext;
 
 /**
  * @author Jérémie Huchet
@@ -28,8 +29,8 @@ public class BusRouteStopsAdapter extends BaseAdapter {
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(BusRouteStopsAdapter.class);
 
-    /** The android context. */
-    private final Context context;
+    /** The itinérennes context. */
+    private final ITRContext context;
 
     /** A reference to the layout inflater. */
     private final LayoutInflater inflater;
@@ -41,6 +42,12 @@ public class BusRouteStopsAdapter extends BaseAdapter {
     private final List<TripStopTime> arrivalAndDepartures;
 
     /**
+     * Is the route accessible ? Determines if the handistar icon should be displayed for accessible
+     * stops in the list.
+     */
+    private final boolean routeIsAccessible;
+
+    /**
      * Constructor.
      * 
      * @param context
@@ -50,13 +57,14 @@ public class BusRouteStopsAdapter extends BaseAdapter {
      * @param arrivalAndDepartures
      *            the list of arrival times and departure times of the bus for each stop of the trip
      */
-    public BusRouteStopsAdapter(final Context context, final String initialStopId,
-            final List<TripStopTime> arrivalAndDepartures) {
+    public BusRouteStopsAdapter(final ITRContext context, final String initialStopId,
+            final List<TripStopTime> arrivalAndDepartures, final boolean routeIsAccessible) {
 
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.arrivalAndDepartures = arrivalAndDepartures;
         this.initialStopId = initialStopId;
+        this.routeIsAccessible = routeIsAccessible;
     }
 
     /**
@@ -132,6 +140,15 @@ public class BusRouteStopsAdapter extends BaseAdapter {
         }
 
         final ProgressBar progressBar = (ProgressBar) view.findViewById(R.trip_time.progress_bar);
+
+        if (routeIsAccessible) {
+            /* Display handistar icon if current stop and current route are accessible. */
+            final ImageView handistar = (ImageView) view.findViewById(R.trip_time.stop_wheelchair);
+            if (context.getAccessibilityService().isAccessible(stopTime.getStop().getId(),
+                    BusStation.class.getName())) {
+                handistar.setVisibility(View.VISIBLE);
+            }
+        }
 
         return view;
     }

@@ -90,7 +90,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
                 item.getData().getId(), item.getData().getName()));
 
         final ImageView handistar = (ImageView) busView.findViewById(R.id.map_box_wheelchair);
-        if (context.getBusStationAccessibilityService().isAccessible(item.getData().getId(),
+        if (context.getAccessibilityService().isAccessible(item.getData().getId(),
                 BusStation.class.getName())) {
             handistar.setVisibility(View.VISIBLE);
         }
