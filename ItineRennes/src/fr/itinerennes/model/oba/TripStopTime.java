@@ -10,9 +10,6 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
  */
 public class TripStopTime {
 
-    /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(TripStopTime.class);
-
     /** Stop. */
     private Stop stop;
 

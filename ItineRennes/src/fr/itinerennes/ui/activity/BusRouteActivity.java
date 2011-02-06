@@ -104,10 +104,10 @@ public class BusRouteActivity extends ITRContext {
                 break;
             case MSG_DOWNLOAD_END:
                 progressBar.setProgress(2);
-                dismissDialog(DIALOG_LOADING);
+                dismissDialogIfDisplayed(DIALOG_LOADING);
                 break;
             case MSG_DOWNLOAD_ERROR:
-                removeDialog(DIALOG_LOADING);
+                dismissDialogIfDisplayed(DIALOG_LOADING);
                 showDialog(DIALOG_FAILURE);
                 break;
 

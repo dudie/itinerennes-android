@@ -65,6 +65,27 @@ public abstract class ITRContext extends Activity {
     private AccessibilityService accessibilityService;
 
     /**
+     * Tries to dismiss a displayed dialog but catch the exception throws by the original
+     * implementation if the dialog was not displayed.
+     * 
+     * @param id
+     *            the identifier of the dialog to dismiss
+     * @return true if a dialog has been dismissed
+     * @see #dismissDialog(int)
+     */
+    public final boolean dismissDialogIfDisplayed(final int id) {
+
+        boolean dismissed = false;
+        try {
+            super.dismissDialog(id);
+            dismissed = true;
+        } catch (final IllegalArgumentException e) {
+            dismissed = false;
+        }
+        return dismissed;
+    }
+
+    /**
      * Gets the itinerennes shared preferences.
      * 
      * @return a shared preferences
