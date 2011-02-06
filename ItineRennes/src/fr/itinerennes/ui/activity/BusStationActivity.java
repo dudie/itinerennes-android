@@ -279,7 +279,8 @@ public class BusStationActivity extends ITRContext implements Runnable {
                         @Override
                         public void onClick(final DialogInterface dialog, final int id) {
 
-                            dialog.cancel();
+                            dialog.dismiss();
+                            finish();
                         }
                     });
             return builder.create();
@@ -288,7 +289,15 @@ public class BusStationActivity extends ITRContext implements Runnable {
             progressBuilder.setTitle(R.string.loading);
             final View progressView = getLayoutInflater().inflate(R.layout.progress_dialog, null);
             progressBuilder.setView(progressView);
-            progressBuilder.setCancelable(false);
+            progressBuilder.setCancelable(true);
+            progressBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                @Override
+                public void onCancel(final DialogInterface dialog) {
+
+                    finish();
+                }
+            });
             progressDialog = progressBuilder.create();
 
             return progressDialog;

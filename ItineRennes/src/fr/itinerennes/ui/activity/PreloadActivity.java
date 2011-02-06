@@ -7,7 +7,6 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -75,10 +74,9 @@ public class PreloadActivity extends ITRContext {
                 dialogProgressBar.setProgress(dialogProgressBar.getProgress() + (Integer) msg.obj);
                 break;
             case MSG_DOWNLOAD_SUCCESS:
-                final Intent i = new Intent(PreloadActivity.this, MapActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 dismissDialog(DIALOG_PRELOAD);
-                startActivity(i);
+                setResult(RESULT_OK);
+                finish();
                 break;
             case MSG_DOWNLOAD_FAILED:
                 dialogProgressBar.setIndeterminate(true);
@@ -145,9 +143,8 @@ public class PreloadActivity extends ITRContext {
     public final void onDoOrDontPreload(final View target) {
 
         if (radioDontPreload.isChecked()) {
-            final Intent i = new Intent(this, MapActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
+            setResult(RESULT_CANCELED);
+            finish();
         } else {
             showDialog(DIALOG_PRELOAD);
             new DataPreloader(handler).start();
