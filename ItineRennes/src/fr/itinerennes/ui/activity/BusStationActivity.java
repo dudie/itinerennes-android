@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -370,20 +371,43 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         handler.sendMessage(handler.obtainMessage(MESSAGE_DISPLAY_DIALOG_LOAD_STATION));
 
-        final Intent i = new Intent(this, MapActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
+        final AsyncTask<Void, Void, BusStation> task = new AsyncTask<Void, Void, BusStation>() {
 
-        try {
-            final BusStation busStation = getBusService().getStation(stopId);
-            i.putExtra(MapActivity.INTENT_SET_MAP_LON, busStation.getLongitude());
-            i.putExtra(MapActivity.INTENT_SET_MAP_LAT, busStation.getLatitude());
-            startActivity(i);
-        } catch (final GenericException e) {
-            Toast.makeText(this, getString(R.string.error_loading_bus_station_position, stopName),
-                    5000);
-        }
+            @Override
+            protected BusStation doInBackground(final Void... params) {
 
-        dismissDialogIfDisplayed(DIALOG_LOAD_STATION);
+                BusStation busStation = null;
+
+                try {
+                    busStation = getBusService().getStation(stopId);
+                } catch (final GenericException e) {
+                    LOGGER.debug("Can't get station information.", e);
+                }
+
+                return busStation;
+            }
+
+            @Override
+            protected void onPostExecute(final BusStation busStation) {
+
+                if (busStation == null) {
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.error_loading_bus_station_position, stopName), 5000);
+                } else {
+                    final Intent i = new Intent(getApplicationContext(), MapActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
+                    i.putExtra(MapActivity.INTENT_SET_MAP_LON, busStation.getLongitude());
+                    i.putExtra(MapActivity.INTENT_SET_MAP_LAT, busStation.getLatitude());
+                    startActivity(i);
+
+                }
+
+                dismissDialogIfDisplayed(DIALOG_LOAD_STATION);
+            }
+
+        };
+        task.execute();
+
     }
 }

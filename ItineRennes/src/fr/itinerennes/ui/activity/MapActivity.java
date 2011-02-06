@@ -252,6 +252,13 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         map.getController().setZoom(newZoom);
         map.getController().setCenter(new GeoPoint(newLat, newLon));
 
+        // disable follow location in preferences because we are explicitly centering the map on a
+        // location.
+        // if not, it will be activated again in onResume().
+        final SharedPreferences.Editor edit = getITRPreferences().edit();
+        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, false);
+        edit.commit();
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.end");
         }
