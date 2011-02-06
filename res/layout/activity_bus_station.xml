@@ -8,6 +8,8 @@
 		android:layout_height="wrap_content" 
 		android:gravity="center_vertical" 
 		android:padding="5dp"
+		android:focusable="true"
+		android:background="@drawable/title_background_clickable"
 		android:onClick="onStopTitleClick">
 
 		<ImageView android:src="@drawable/bus_activity_title_icon"
@@ -33,12 +35,20 @@
             android:visibility="gone">
         </ImageView>
 
+        <ImageView android:src="@drawable/center_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageView>
+
 	</LinearLayout>
 
     <include layout="@layout/line_icon_list" />
 	
-	<ListView android:id="@+station/list_bus" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:orientation="vertical">
+	<ListView 
+	    android:id="@+station/list_bus" 
+	    android:layout_width="fill_parent"
+		android:layout_height="fill_parent" 
+		android:orientation="vertical">
 	</ListView>
 
 </LinearLayout>
