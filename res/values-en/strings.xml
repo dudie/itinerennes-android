@@ -6,10 +6,10 @@
     <string name="loading">Loading...</string>
     <string name="location_service_disabled">The location service is disabled. Enable it in system parameters.</string>
     <string name="preload_dialog_title">First start</string>
-    <string name="do_preload">Précharger les stations</string>
-    <string name="dont_preload">Charger à la demande</string>
-    <string name="explanations_preload"><b>(Recommandé)</b> Les positions des arrêts et stations vont être téléchargés, ce traitement durera quelques secondes en 3G ou quelques minutes en Edge. La navigation sur la carte sera plus fluide et agréable. Notez que l\'application aura toujous besoin d\'un accès internet pour fonctionner pleinement.</string>
-    <string name="explanations_no_preload">Les positions des arrêts et stations seront téléchargés \"en live\", en fonction d\'où vous vous déplacerez sur la carte. A chaque mouvement sur la carte il faudra patienter quelques instants le temps que les arrêts et stations se chargent.</string>
+    <string name="do_preload">Preload stations</string>
+    <string name="dont_preload">Load on the fly</string>
+    <string name="explanations_preload"><b>(Recommended)</b> Stops and stations positions will be downloaded in advance, this operation will take a few seconds using 3G network or a few minutes using Edge. Then, map navigation will be smoother and quicker. Please note the application will still need an Internet access to work properly.</string>
+    <string name="explanations_no_preload">Stops and stations positions will be downloaded on the fly depending on where you move the map. Every scroll on the map will require a few seconds for the stops and stations to be loaded. </string>
     <string name="ok">Ok</string>
     <string name="continuer">Continue</string>
     <!-- dates -->
