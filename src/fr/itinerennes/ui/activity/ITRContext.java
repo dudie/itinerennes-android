@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 
 import fr.itinerennes.ITRPrefs;
+import fr.itinerennes.ItineRennes;
 import fr.itinerennes.business.http.oba.OneBusAwayService;
 import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BikeService;
@@ -36,9 +37,6 @@ public abstract class ITRContext extends Activity {
     /** The default exception handler. */
     private final ExceptionHandler exceptionHandler = new DefaultExceptionHandler(this);
 
-    /** The database helper. */
-    private DatabaseHelper databaseHelper;
-
     /** The bus service. */
     private BusService busService;
 
@@ -65,21 +63,6 @@ public abstract class ITRContext extends Activity {
 
     /** The accessibility service. */
     private AccessibilityService accessibilityService;
-
-    /**
-     * Close the database helper. If this method is derived, you must ensure to call
-     * <code>super.onDestroy()</code>.
-     * 
-     * @see android.app.Activity#onDestroy()
-     */
-    @Override
-    protected void onDestroy() {
-
-        super.onDestroy();
-        if (databaseHelper != null) {
-            databaseHelper.close();
-        }
-    }
 
     /**
      * Gets the itinerennes shared preferences.
@@ -111,10 +94,7 @@ public abstract class ITRContext extends Activity {
      */
     public final DatabaseHelper getDatabaseHelper() {
 
-        if (databaseHelper == null) {
-            databaseHelper = new DatabaseHelper(getBaseContext());
-        }
-        return databaseHelper;
+        return ((ItineRennes) getApplicationContext()).getDatabaseHelper();
     }
 
     /**

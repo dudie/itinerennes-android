@@ -71,6 +71,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     public static final String INTENT_SELECT_BOOKMARK_ID = String.format("s.selectBookmarkId",
             MapActivity.class.getName());
 
+    /** Activity request code for preload. */
+    public static final int ACTIVITY_REQUEST_PRELOAD = 0;
+
     /** Duration of toast messages. */
     private static final int TOAST_DURATION = 300;
 
@@ -126,7 +129,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         // if first start of the application, open the preload dialog
         if (sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
             final Intent i = new Intent(this, PreloadActivity.class);
-            startActivity(i);
+            startActivityForResult(i, ACTIVITY_REQUEST_PRELOAD);
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -249,6 +252,26 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.end");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+     */
+    @Override
+    protected final void onActivityResult(final int requestCode, final int resultCode,
+            final Intent data) {
+
+        if (RESULT_CANCELED == resultCode) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("CANCELED requestCode={}, resultCode={}", requestCode, resultCode);
+            }
+        } else {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("NOT CANCELED requestCode={}, resultCode={}", requestCode, resultCode);
+            }
         }
     }
 

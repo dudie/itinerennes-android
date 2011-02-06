@@ -213,7 +213,15 @@ public class BusRouteActivity extends ITRContext {
             final View progressView = getLayoutInflater().inflate(R.layout.progress_dialog, null);
             progressBar = (ProgressBar) progressView.findViewById(R.id.progress_bar);
             progressBuilder.setView(progressView);
-            progressBuilder.setCancelable(false);
+            progressBuilder.setCancelable(true);
+            progressBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                @Override
+                public void onCancel(final DialogInterface dialog) {
+
+                    finish();
+                }
+            });
             d = progressBuilder.create();
             break;
 
@@ -228,6 +236,7 @@ public class BusRouteActivity extends ITRContext {
                 public void onClick(final DialogInterface dialog, final int id) {
 
                     dialog.dismiss();
+                    finish();
                 }
             });
             d = builder.create();
