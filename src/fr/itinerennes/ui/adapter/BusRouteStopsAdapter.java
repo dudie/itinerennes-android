@@ -126,9 +126,9 @@ public class BusRouteStopsAdapter extends BaseAdapter {
         // if the current view represents a stop where the bus is already passed
         // sets the font color to grey
         if (stopTime.getDepartureTime().before(new Date())) {
-            stopName.setTextColor(R.color.light_grey);
-            departureTime.setTextColor(R.color.light_grey);
-            relativeTime.setTextColor(R.color.light_grey);
+            stopName.setTextAppearance(context, R.style.text_grey_bold);
+            departureTime.setTextAppearance(context, R.style.text_grey_bold);
+            relativeTime.setTextAppearance(context, R.style.text_grey);
         }
 
         final ProgressBar progressBar = (ProgressBar) view.findViewById(R.trip_time.progress_bar);

@@ -158,9 +158,9 @@ public class BusTimeAdapter extends BaseAdapter {
         // if the current view represents a stop where the bus is already passed
         // sets the font color to grey
         if (stopTime.getDepartureTime().before(new Date())) {
-            departureHeadsignView.setTextColor(R.color.light_grey);
-            departureDateView.setTextColor(R.color.light_grey);
-            timeBeforeDepartureView.setTextColor(R.color.light_grey);
+            departureHeadsignView.setTextAppearance(context, R.style.text_grey_bold);
+            departureDateView.setTextAppearance(context, R.style.text_grey);
+            timeBeforeDepartureView.setTextAppearance(context, R.style.text_grey_bold);
         }
         return busTimeView;
     }

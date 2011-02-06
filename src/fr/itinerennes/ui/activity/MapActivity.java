@@ -14,13 +14,13 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -264,14 +264,30 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     protected final void onActivityResult(final int requestCode, final int resultCode,
             final Intent data) {
 
-        if (RESULT_CANCELED == resultCode) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("CANCELED requestCode={}, resultCode={}", requestCode, resultCode);
+        switch (requestCode) {
+        case ACTIVITY_REQUEST_PRELOAD:
+            if (RESULT_CANCELED == resultCode) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Preload canceled");
+                }
+            } else {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Preload done");
+                }
+                final Editor edit = getITRPreferences().edit();
+                edit.putBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, false);
+                edit.commit();
+
+                // active overlays when receive prelod result
+                final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
+                moh.getSubwayStationOverlay().setEnabled(true);
+                moh.getBusStationOverlay().setEnabled(true);
+                moh.getBikeStationOverlay().setEnabled(true);
             }
-        } else {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("NOT CANCELED requestCode={}, resultCode={}", requestCode, resultCode);
-            }
+            break;
+
+        default:
+            break;
         }
     }
 
@@ -413,30 +429,6 @@ public class MapActivity extends ITRContext implements OverlayConstants {
             dialog = null;
         }
         return dialog;
-    }
-
-    /**
-     * An event listener which will display the dialog box to ask the user which layers he wants to
-     * show.
-     * 
-     * @author Jérémie Huchet
-     */
-    private class LayersClickListener implements OnClickListener {
-
-        /**
-         * Displays a dialog box with a list of displayable and selectable layers.
-         * 
-         * @param button
-         *            the view that was clicked
-         */
-        @Override
-        public void onClick(final View button) {
-
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("layers.button.click");
-            }
-            showDialog(Dialogs.SELECT_LAYERS);
-        }
     }
 
     /**
