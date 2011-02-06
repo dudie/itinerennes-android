@@ -90,8 +90,7 @@ public class UpdateOverlayTask<T extends Marker<?>> extends AsyncTask<BoundingBo
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("doInBackground.end - {} stations", Thread.currentThread().getName(),
-                    null != items ? items.size() : 0);
+            LOGGER.debug("doInBackground.end - {} stations", null != items ? items.size() : 0);
         }
 
         return items;
