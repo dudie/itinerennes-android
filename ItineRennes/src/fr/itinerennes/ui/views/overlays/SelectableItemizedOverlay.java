@@ -183,7 +183,6 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
 
         final Rect rect = new Rect();
         getItemBoundingRetangle(item, rect, curScreenCoords);
-        marker.setBounds(rect);
         marker.draw(canvas);
 
         // restore original state
