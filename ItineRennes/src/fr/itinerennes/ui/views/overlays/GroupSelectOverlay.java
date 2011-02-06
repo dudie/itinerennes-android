@@ -99,6 +99,7 @@ public class GroupSelectOverlay<T extends SelectableOverlay<?>> extends GroupOve
             }
         }
 
+        osmView.postInvalidate();
         return stopSingleTapUpPropagation;
     }
 

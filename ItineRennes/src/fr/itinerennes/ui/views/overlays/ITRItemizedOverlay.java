@@ -105,7 +105,6 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
             prevFocusedItemIndex = focusedItemIndex;
             focusedItemIndex = NOT_SET;
         }
-        mapView.postInvalidate();
         return handled;
     }
 

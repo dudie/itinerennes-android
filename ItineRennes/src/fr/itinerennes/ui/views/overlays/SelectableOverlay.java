@@ -1,6 +1,5 @@
 package fr.itinerennes.ui.views.overlays;
 
-
 /**
  * Classes implementing this interface may receive events from a {@link GroupSelectOverlay} when an
  * item is focused.
@@ -31,7 +30,7 @@ public interface SelectableOverlay<D> extends WrappableOverlay {
      * 
      * @param selected
      *            true if selected
-     * @return
+     * @return true to stop the propagation of the event
      */
     boolean onSelectStateChanged(boolean selected);
 
