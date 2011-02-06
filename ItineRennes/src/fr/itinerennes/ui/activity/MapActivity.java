@@ -266,6 +266,12 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         switch (requestCode) {
         case ACTIVITY_REQUEST_PRELOAD:
+            // active overlays when receive prelod result
+            final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
+            moh.getSubwayStationOverlay().setEnabled(true);
+            moh.getBusStationOverlay().setEnabled(true);
+            moh.getBikeStationOverlay().setEnabled(true);
+
             if (RESULT_CANCELED == resultCode) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Preload canceled");
@@ -274,15 +280,10 @@ public class MapActivity extends ITRContext implements OverlayConstants {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Preload done");
                 }
+                // register a preference on preload success
                 final Editor edit = getITRPreferences().edit();
                 edit.putBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, false);
                 edit.commit();
-
-                // active overlays when receive prelod result
-                final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
-                moh.getSubwayStationOverlay().setEnabled(true);
-                moh.getBusStationOverlay().setEnabled(true);
-                moh.getBikeStationOverlay().setEnabled(true);
             }
             break;
 
