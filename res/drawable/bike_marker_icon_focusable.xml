@@ -11,6 +11,13 @@
             </item>
         </layer-list>
     </item>
+    
+    <!-- LOW ZOOMED -->
+    <item itr:state_low_zoom="true">
+        <bitmap android:gravity="center" android:src="@drawable/bike_marker_icon_lite" />
+    </item>
+    
+    <!-- default -->
     <item>
         <bitmap android:gravity="center" android:src="@drawable/bike_marker_icon" />
     </item>
