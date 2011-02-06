@@ -24,15 +24,12 @@ import fr.itinerennes.ui.views.MapBoxView;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
+public abstract class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
         ITRItemizedOverlay<T> implements SelectableOverlay<D> {
 
     /** The event logger. */
     private static final Logger LOGGER = ItinerennesLoggerFactory
             .getLogger(SelectableItemizedOverlay.class);
-
-    /** The adapter to use to display the focused item. */
-    private final MapBoxAdapter<T> boxDisplayAdaper;
 
     /** The target view where additional informations are displayed when an item is selected. */
     private final MapBoxView additionalInformationView;
@@ -44,16 +41,13 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
      *            the itinerennes application context
      * @param itemProviderAdapter
      *            the provider to use to populate the overlay
-     * @param boxDisplayAdaper
-     *            the adapter to use to display selected marker information
      */
     public SelectableItemizedOverlay(final ITRContext context, final ITRMapView map,
             final ItemizedOverlayAdapter<T> itemProviderAdapter,
-            final MapBoxAdapter<T> boxDisplayAdaper, final MapBoxView additionalInformationView) {
+            final MapBoxView additionalInformationView) {
 
         // items are set using setItems() / addItem() / removeItem()
         super(context, map, itemProviderAdapter);
-        this.boxDisplayAdaper = boxDisplayAdaper;
         this.additionalInformationView = additionalInformationView;
     }
 
@@ -69,7 +63,7 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
             if (focusedItemIndex != NOT_SET) {
                 final T item = mItemList.get(focusedItemIndex);
                 if (null != item) {
-                    additionalInformationView.updateInBackground(boxDisplayAdaper, item);
+                    additionalInformationView.updateInBackground(newAdapterInstance(), item);
                     item.onSelectStateChange(selected);
                 }
             }
@@ -188,4 +182,11 @@ public class SelectableItemizedOverlay<T extends SelectableMarker<D>, D> extends
         // restore original state
         marker.setState(originalState);
     }
+
+    /**
+     * Creates a new instance of the adapter to use to fill the map box.
+     * 
+     * @return the adapter to use to display selected marker information
+     */
+    public abstract MapBoxAdapter<T> newAdapterInstance();
 }
