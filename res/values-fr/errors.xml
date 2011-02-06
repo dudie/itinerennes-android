@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="error_network_connectivity">Plus de connexion réseau</string>
+    <string name="error_loading_bus_station_position">Impossible de récupérer la position de l\'arrêt %s</string>
 </resources>

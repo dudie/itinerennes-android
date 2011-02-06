@@ -8,6 +8,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
@@ -61,11 +63,17 @@ public class BusStationActivity extends ITRContext implements Runnable {
     /** Message to send to handler to increment the progress dialog. */
     private static final int MESSAGE_INCREMENT_PROGRESS = 3;
 
+    /** Message sent to handler to display the loading dialog when the station is being retrieved. */
+    private static final int MESSAGE_DISPLAY_DIALOG_LOAD_STATION = 4;
+
     /** Id for the progress dialog. */
     private static final int PROGRESS_DIALOG = 0;
 
     /** Id for the failure dialog. */
     private static final int FAILURE_DIALOG = 1;
+
+    /** Dialog displayed when bus station is loading from bus service. */
+    private static final int DIALOG_LOAD_STATION = 2;
 
     /** The intial size of the progress bar. */
     private static final int INITIAL_PROGRESS_MAX = 30;
@@ -141,7 +149,10 @@ public class BusStationActivity extends ITRContext implements Runnable {
                     break;
                 case MESSAGE_INCREMENT_PROGRESS:
                     progressBar.incrementProgressBy(msg.arg1 > 0 ? msg.arg1 : 1);
-
+                    break;
+                case MESSAGE_DISPLAY_DIALOG_LOAD_STATION:
+                    showDialog(DIALOG_LOAD_STATION);
+                    break;
                 default:
                     break;
                 }
@@ -270,6 +281,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
     @Override
     protected final Dialog onCreateDialog(final int id) {
 
+        Dialog d = null;
         switch (id) {
         case FAILURE_DIALOG:
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -283,7 +295,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
                             finish();
                         }
                     });
-            return builder.create();
+            d = builder.create();
         case PROGRESS_DIALOG:
             final AlertDialog.Builder progressBuilder = new AlertDialog.Builder(this);
             progressBuilder.setTitle(R.string.loading);
@@ -298,12 +310,18 @@ public class BusStationActivity extends ITRContext implements Runnable {
                     finish();
                 }
             });
-            progressDialog = progressBuilder.create();
+            d = progressDialog = progressBuilder.create();
+            break;
 
-            return progressDialog;
+        case DIALOG_LOAD_STATION:
+            final ProgressDialog loadStation = new ProgressDialog(this);
+            loadStation.setTitle(R.string.loading);
+            loadStation.setCancelable(false);
+            d = loadStation;
         default:
-            return null;
+            break;
         }
+        return d;
     }
 
     @Override
@@ -314,7 +332,6 @@ public class BusStationActivity extends ITRContext implements Runnable {
             progressBar = (ProgressBar) progressDialog.findViewById(R.id.progress_bar);
             progressBar.setProgress(0);
             progressBar.setMax(INITIAL_PROGRESS_MAX);
-
         default:
             break;
         }
@@ -339,5 +356,33 @@ public class BusStationActivity extends ITRContext implements Runnable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.end");
         }
+    }
+
+    /**
+     * Triggered when user clicks on the stop name at the top of the layout.
+     * 
+     * @param target
+     *            should be a linear layout containing the icon "bus", the name of the stop and
+     *            eventually a wheelchair icon.
+     */
+    public final void onStopTitleClick(final View target) {
+
+        handler.sendMessage(handler.obtainMessage(MESSAGE_DISPLAY_DIALOG_LOAD_STATION));
+
+        final Intent i = new Intent(this, MapActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
+
+        try {
+            final BusStation busStation = getBusService().getStation(stopId);
+            i.putExtra(MapActivity.INTENT_SET_MAP_LON, busStation.getLongitude());
+            i.putExtra(MapActivity.INTENT_SET_MAP_LAT, busStation.getLatitude());
+            startActivity(i);
+        } catch (final GenericException e) {
+            Toast.makeText(this, getString(R.string.error_loading_bus_station_position, stopName),
+                    5000);
+        }
+
+        dismissDialogIfDisplayed(DIALOG_LOAD_STATION);
     }
 }

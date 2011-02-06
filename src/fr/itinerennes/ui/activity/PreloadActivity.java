@@ -74,13 +74,13 @@ public class PreloadActivity extends ITRContext {
                 dialogProgressBar.setProgress(dialogProgressBar.getProgress() + (Integer) msg.obj);
                 break;
             case MSG_DOWNLOAD_SUCCESS:
-                dismissDialog(DIALOG_PRELOAD);
+                dismissDialogIfDisplayed(DIALOG_PRELOAD);
                 setResult(RESULT_OK);
                 finish();
                 break;
             case MSG_DOWNLOAD_FAILED:
                 dialogProgressBar.setIndeterminate(true);
-                dismissDialog(DIALOG_PRELOAD);
+                dismissDialogIfDisplayed(DIALOG_PRELOAD);
                 showDialog(DIALOG_FAILURE);
                 break;
 
