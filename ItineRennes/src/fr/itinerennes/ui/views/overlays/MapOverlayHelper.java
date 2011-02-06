@@ -14,6 +14,7 @@ import fr.itinerennes.model.SubwayStation;
 import fr.itinerennes.ui.activity.ITRContext;
 import fr.itinerennes.ui.adapter.BikeStationBoxAdapter;
 import fr.itinerennes.ui.adapter.BusStationBoxAdapter;
+import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.adapter.MarkerItemizedOverlayAdapter;
 import fr.itinerennes.ui.adapter.SubwayStationBoxAdapter;
 import fr.itinerennes.ui.views.ITRMapView;
@@ -116,10 +117,16 @@ public class MapOverlayHelper implements OverlayConstants {
         if (null == busStationOverlay) {
             final MarkerItemizedOverlayAdapter<BusStation> busItemAdapter = new MarkerItemizedOverlayAdapter<BusStation>(
                     context, context.getBusService());
-            final BusStationBoxAdapter busDisplayAdaper = new BusStationBoxAdapter(context);
 
             busStationOverlay = new SelectableItemizedOverlay<SelectableMarker<BusStation>, BusStation>(
-                    context, map, busItemAdapter, busDisplayAdaper, getMapBoxView());
+                    context, map, busItemAdapter, getMapBoxView()) {
+
+                @Override
+                public MapBoxAdapter<SelectableMarker<BusStation>> newAdapterInstance() {
+
+                    return new BusStationBoxAdapter(context);
+                }
+            };
 
             busStationOverlay.setLocalizedName(context.getString(R.string.overlay_bus));
             busStationOverlay.setEnabled(false);
@@ -144,10 +151,16 @@ public class MapOverlayHelper implements OverlayConstants {
         if (null == bikeStationOverlay) {
             final MarkerItemizedOverlayAdapter<BikeStation> bikeItemAdapter = new MarkerItemizedOverlayAdapter<BikeStation>(
                     context, context.getBikeService());
-            final BikeStationBoxAdapter bikeDisplayAdaper = new BikeStationBoxAdapter(context);
 
             bikeStationOverlay = new SelectableItemizedOverlay<SelectableMarker<BikeStation>, BikeStation>(
-                    context, map, bikeItemAdapter, bikeDisplayAdaper, getMapBoxView());
+                    context, map, bikeItemAdapter, getMapBoxView()) {
+
+                @Override
+                public MapBoxAdapter<SelectableMarker<BikeStation>> newAdapterInstance() {
+
+                    return new BikeStationBoxAdapter(context);
+                }
+            };
 
             bikeStationOverlay.setLocalizedName(context.getString(R.string.overlay_bike));
             bikeStationOverlay.setEnabled(false);
@@ -172,10 +185,16 @@ public class MapOverlayHelper implements OverlayConstants {
         if (null == subwayStationOverlay) {
             final MarkerItemizedOverlayAdapter<SubwayStation> subwayItemAdapter = new MarkerItemizedOverlayAdapter<SubwayStation>(
                     context, context.getSubwayService());
-            final SubwayStationBoxAdapter subwayDisplayAdaper = new SubwayStationBoxAdapter(context);
 
             subwayStationOverlay = new SelectableItemizedOverlay<SelectableMarker<SubwayStation>, SubwayStation>(
-                    context, map, subwayItemAdapter, subwayDisplayAdaper, getMapBoxView());
+                    context, map, subwayItemAdapter, getMapBoxView()) {
+
+                @Override
+                public MapBoxAdapter<SelectableMarker<SubwayStation>> newAdapterInstance() {
+
+                    return new SubwayStationBoxAdapter(context);
+                }
+            };
 
             subwayStationOverlay.setLocalizedName(context.getString(R.string.overlay_subway));
             subwayStationOverlay.setEnabled(false);
