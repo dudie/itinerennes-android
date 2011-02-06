@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.model.oba.Route;
 import fr.itinerennes.model.oba.TripSchedule;
 import fr.itinerennes.model.oba.TripStopTime;
 import fr.itinerennes.ui.adapter.BusRouteStopsAdapter;
@@ -54,6 +55,10 @@ public class BusRouteActivity extends ITRContext {
     public static final String INTENT_TRIP_ID = String.format("%s.tripId",
             BusRouteActivity.class.getName());
 
+    /** Intent parameter name for the route identifier. */
+    public static final String INTENT_ROUTE_ID = String.format("%s.routeId",
+            BusRouteActivity.class.getName());
+
     /** Constant identifying the "loading" dialog. */
     private static final int DIALOG_LOADING = 0;
 
@@ -86,6 +91,9 @@ public class BusRouteActivity extends ITRContext {
 
     /** The progress bar of the dialog box. */
     private ProgressBar progressBar;
+
+    /** flag indicating if this route is accessible or not. */
+    private boolean isAccessible;
 
     /** The handler to handle progress messages in the UI thread. */
     private final Handler handler = new Handler() {
@@ -169,9 +177,17 @@ public class BusRouteActivity extends ITRContext {
         final String routeHeadsign = getIntent().getExtras().getString(INTENT_ROUTE_HEADSIGN);
         final String routeShortName = getIntent().getExtras().getString(INTENT_ROUTE_SHORT_NAME);
         final String tripId = getIntent().getExtras().getString(INTENT_TRIP_ID);
+        final String routeId = getIntent().getExtras().getString(INTENT_ROUTE_ID);
 
         routeIcon.setImageDrawable(getLineIconService().getIconOrDefault(this, routeShortName));
         routeName.setText(routeHeadsign);
+
+        /* Display handistar icon if necessary. */
+        final ImageView handistar = (ImageView) findViewById(R.activity_bus_route.wheelchair_icon);
+        isAccessible = getAccessibilityService().isAccessible(routeId, Route.class.getName());
+        if (isAccessible) {
+            handistar.setVisibility(View.VISIBLE);
+        }
 
         listRouteStops.setOnItemClickListener(new OnItemClickListener() {
 
@@ -259,7 +275,7 @@ public class BusRouteActivity extends ITRContext {
         final String stopId = getIntent().getExtras().getString(INTENT_STOP_ID);
 
         final BusRouteStopsAdapter routeStopsAdapter = new BusRouteStopsAdapter(this, stopId,
-                schedule.getStopTimes());
+                schedule.getStopTimes(), isAccessible);
         listRouteStops.setAdapter(routeStopsAdapter);
         final int idx = routeStopsAdapter.getIndexForStopId(stopId);
         listRouteStops.setSelectionFromTop(idx, 50);

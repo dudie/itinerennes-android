@@ -50,5 +50,12 @@
 		android:layout_height="fill_parent" 
 		android:orientation="vertical">
 	</ListView>
-
+	
+	<TextView
+	    android:id="@+station/empty"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:visibility="gone"
+	    android:text="@string/no_departure" />
 </LinearLayout>

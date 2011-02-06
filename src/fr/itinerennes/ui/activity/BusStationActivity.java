@@ -184,8 +184,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
 
         /* Display handistar icon if necessary. */
         final ImageView handistar = (ImageView) findViewById(R.station.bus_activity_wheelchair_icon);
-        isAccessible = getBusStationAccessibilityService().isAccessible(stopId,
-                BusStation.class.getName());
+        isAccessible = getAccessibilityService().isAccessible(stopId, BusStation.class.getName());
         if (isAccessible) {
             handistar.setVisibility(View.VISIBLE);
         }
@@ -243,6 +242,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
                     i.putExtra(BusRouteActivity.INTENT_ROUTE_SHORT_NAME, departure.getRoute()
                             .getShortName());
                     i.putExtra(BusRouteActivity.INTENT_TRIP_ID, departure.getTripId());
+                    i.putExtra(BusRouteActivity.INTENT_ROUTE_ID, departure.getRoute().getId());
                     startActivity(i);
                 }
             });

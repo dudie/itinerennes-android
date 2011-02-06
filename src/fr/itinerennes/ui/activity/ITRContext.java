@@ -222,7 +222,7 @@ public abstract class ITRContext extends Activity {
      * 
      * @return a reference to the {@link AccessibilityService}
      */
-    public final AccessibilityService getBusStationAccessibilityService() {
+    public final AccessibilityService getAccessibilityService() {
 
         if (accessibilityService == null) {
             accessibilityService = new AccessibilityService(getDatabaseHelper());
