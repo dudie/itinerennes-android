@@ -282,11 +282,11 @@ public class MapActivity extends ITRContext implements OverlayConstants {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Preload done");
                 }
-                // register a preference on preload success
-                final Editor edit = getITRPreferences().edit();
-                edit.putBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, false);
-                edit.commit();
             }
+            // register a preference on preload success
+            final Editor edit = getITRPreferences().edit();
+            edit.putBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, false);
+            edit.commit();
             break;
 
         default:
