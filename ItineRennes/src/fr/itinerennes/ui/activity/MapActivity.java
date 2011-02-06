@@ -98,7 +98,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
     @Override
-    public final void onCreate(final Bundle savedInstanceState) {
+    protected final void onCreate(final Bundle savedInstanceState) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.start");
@@ -113,7 +113,9 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         this.map = (ITRMapView) findViewById(R.id.map);
         this.mapBox = findViewById(R.id.map_box);
 
-        this.myLocation = map.getController().getMapOverlayHelper().getLocationOverlay();
+        final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
+        moh.init();
+        this.myLocation = moh.getLocationOverlay();
 
         map.setMultiTouchControls(true);
 
@@ -379,7 +381,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
         switch (id) {
         case Dialogs.SELECT_LAYERS:
             final MapOverlayHelper overlayHelper = map.getController().getMapOverlayHelper();
-            final List<SelectableOverlay<?>> allOverlays = overlayHelper.getToggleableOVerlays();
+            final List<SelectableOverlay<?>> allOverlays = overlayHelper.getToggleableOverlays();
             final Map<String, SelectableOverlay<?>> namesToOverlays = new HashMap<String, SelectableOverlay<?>>();
             final String[] options = new String[allOverlays.size()];
             final boolean[] selections = new boolean[allOverlays.size()];

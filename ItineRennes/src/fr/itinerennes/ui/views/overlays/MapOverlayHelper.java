@@ -1,6 +1,5 @@
 package fr.itinerennes.ui.views.overlays;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -66,7 +65,21 @@ public class MapOverlayHelper implements OverlayConstants {
 
         this.context = context;
         this.map = map;
+    }
 
+    /**
+     * Inits the overlays and adds them in a particular order to ensure the render result is the
+     * same everytime.
+     * <p>
+     * <strong>This method must be called before any <code>get*Overlay()</code></strong> method.
+     */
+    public final void init() {
+
+        getGroupSelectOverlay();
+        getBusStationOverlay();
+        getBikeStationOverlay();
+        getSubwayStationOverlay();
+        getLocationOverlay();
     }
 
     /**
@@ -199,19 +212,8 @@ public class MapOverlayHelper implements OverlayConstants {
      * 
      * @return a list of all overlays that can be shown or hidden
      */
-    public final List<SelectableOverlay<?>> getToggleableOVerlays() {
+    public final List<SelectableOverlay<?>> getToggleableOverlays() {
 
-        final List<SelectableOverlay<?>> result = new ArrayList<SelectableOverlay<?>>();
-        result.addAll(getGroupSelectOverlay().getOverlays());
-        if (!result.contains(getBusStationOverlay())) {
-            result.add(getBusStationOverlay());
-        }
-        if (!result.contains(getBikeStationOverlay())) {
-            result.add(getBikeStationOverlay());
-        }
-        if (!result.contains(getSubwayStationOverlay())) {
-            result.add(getSubwayStationOverlay());
-        }
-        return result;
+        return getGroupSelectOverlay().getOverlays();
     }
 }
