@@ -222,6 +222,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
             /* Displaying departures dates. */
 
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
+            listTimes.setEmptyView(findViewById(R.station.empty));
             final BusTimeAdapter adapter = new BusTimeAdapter(this, schedule, routesIcon,
                     isAccessible);
             listTimes.setAdapter(adapter);
