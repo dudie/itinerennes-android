@@ -46,7 +46,7 @@ public class ItineRennesConstants {
      */
 
     /** Geoserver API URL. */
-    public static final String GEOSERVER_API_URL = "http://otp.itinerennes.fr/geoserver/ows/";
+    public static final String GEOSERVER_API_URL = "http://api.itinerennes.fr/geoserver/ows/";
 
     /** Geoserver stop feature prefix. */
     public static final String GEOSERVER_STOP_PREFIX = "stops.";
@@ -56,7 +56,7 @@ public class ItineRennesConstants {
      */
 
     /** OTP Extended API URL. */
-    public static final String OTP_API_URL = "http://otp.itinerennes.fr/opentripplanner-api-extended/";
+    public static final String OTP_API_URL = "http://api.itinerennes.fr/opentripplanner-api-extended/";
 
     /** Path to append to the Extended API URL to get stop informations. */
     public static final String OTP_API_STOP_PATH = "stop";
@@ -68,7 +68,7 @@ public class ItineRennesConstants {
      * OneBusAway constants.
      */
     /** OneBusAway API URL. */
-    public static final String OBA_API_URL = "http://otp.itinerennes.fr/onebusaway-api-webapp/api/where/%s/%s.json";
+    public static final String OBA_API_URL = "http://api.itinerennes.fr/onebusaway-api-webapp/api/where/%s/%s.json";
 
     /** OneBusAway API version. */
     public static final String OBA_API_VERSION = "2";
