@@ -298,6 +298,7 @@ public class BusStationActivity extends ITRContext implements Runnable {
                         }
                     });
             d = builder.create();
+            break;
         case PROGRESS_DIALOG:
             final AlertDialog.Builder progressBuilder = new AlertDialog.Builder(this);
             progressBuilder.setTitle(R.string.loading);
