@@ -98,8 +98,6 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
         super.mItemList.clear();
         for (final I item : items) {
             final D bus = item.getData();
-            LOGGER.warn("lon=" + bus.getGeoPoint().getLongitudeE6() + ", lat="
-                    + bus.getGeoPoint().getLatitudeE6());
             if (bookmarkService.isStarred(bus.getClass().getName(), bus.getId())) {
                 final OverlayItem i = new OverlayItem(bus.getClass().getName(), bus.getId(),
                         bus.getGeoPoint());
