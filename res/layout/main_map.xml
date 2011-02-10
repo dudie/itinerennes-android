@@ -16,14 +16,6 @@
 		tilesource="MapquestOSM"
 		/>
 
-    <fr.itinerennes.ui.views.ITRZoomControls
-        android:id="@+id/zoom_controls" 
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" 
-        itr:mapview="@+id/map"/>
-
     <ToggleButton
         android:id="@+id/mylocation_button"
         android:layout_width="40dp"
@@ -36,6 +28,14 @@
         android:textOff=""
         android:onClick="onMyLocationButtonClick"
         />
+        
+    <fr.itinerennes.ui.views.ITRZoomControls
+        android:id="@+id/zoom_controls" 
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" 
+        itr:mapview="@+id/map"/>
 
 	<fr.itinerennes.ui.views.MapBoxView
         android:id="@+id/map_box"
