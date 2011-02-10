@@ -1,13 +1,18 @@
 package fr.itinerennes;
 
-import android.util.Log;
-
 /**
  * Defines which log levels to enable / disable.
  * 
  * @author Jérémie Huchet
  */
 public final class LogLevelConstants {
+
+    /**
+     * Avoid instanciation.
+     */
+    private LogLevelConstants() {
+
+    }
 
     /** Enable/disable {@link Log#VERBOSE} level. */
     public static final boolean TRACE = true;
