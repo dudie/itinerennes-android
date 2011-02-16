@@ -319,31 +319,6 @@ public final class Columns {
     }
 
     /**
-     * Generic columns for a bus route.
-     * 
-     * @author Olivier Boudet
-     */
-    public interface BusStationRouteColumns {
-
-        /**
-         * The station id.
-         * <P>
-         * Type: TEXT (String)
-         * </P>
-         */
-        String STATION_ID = "station_id";
-
-        /**
-         * The route id which is available from the station.
-         * <P>
-         * Type: TEXT (String)
-         * </P>
-         */
-        String ROUTE_ID = "route_id";
-
-    }
-
-    /**
      * Generic columns for the icon of a transport line.
      * 
      * @author Jérémie Huchet
