@@ -24,4 +24,9 @@
     <style name="text_grey_bold" parent="text_grey">
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="text_credit">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:textColorLink">@color/white</item>
+    </style>
 </resources>
