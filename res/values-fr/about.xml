@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="credits">Crédits</string>
     <string name="app_name_long">ItinéRennes pour Android™</string>
+    <string name="rennes_metropole_application">Application \"Rennes Métropole en accès libre\"</string>
     <string name="visit_our_website">Visitez notre page web www.itinerennes.fr</string>
-    <string name="free_mind">Parce qu\'avoir l\'esprit libre c\'est important</string>
-    <string name="about_keolis">Données sur les transports fournies par Keolis (18/01/2011)</string>
+    <string name="about_keolis">Sources des données : Data Keolis Rennes (18/01/2011)</string>
     <string name="about_openstreetmap_data">Données gégraphiques © contributeurs OpenStreetMap, CC-BY-SA</string>
     <string name="about_openstreetmap_logo">© logo OpenStreetMap, CC-BY-SA</string>
-    <string name="about_osmdroid">Librairie pour l\'affichaque de la carte : Osmdroid</string>
+    <string name="about_osmdroid">Carte affichée grâce à Osmdroid</string>
     <string name="about_mapquest">Tuiles de carte par Mapquest</string>
     <string name="about_onebusaway">OneBusAway pour les API serveur</string>
 </resources>
