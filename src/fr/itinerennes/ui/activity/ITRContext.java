@@ -13,7 +13,6 @@ import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.business.service.BusDepartureService;
-import fr.itinerennes.business.service.BusRouteService;
 import fr.itinerennes.business.service.BusService;
 import fr.itinerennes.business.service.LineIconService;
 import fr.itinerennes.business.service.SubwayService;
@@ -45,9 +44,6 @@ public abstract class ITRContext extends Activity {
 
     /** The subway service. */
     private SubwayService subwayService;
-
-    /** The bus route service. */
-    private BusRouteService busRouteService;
 
     /** The bus departure service. */
     private BusDepartureService busDepartureService;
@@ -155,19 +151,6 @@ public abstract class ITRContext extends Activity {
             subwayService = new SubwayService(getDatabaseHelper());
         }
         return subwayService;
-    }
-
-    /**
-     * Gets a reference to the bus route service.
-     * 
-     * @return a reference to the bus route service
-     */
-    public final BusRouteService getBusRouteService() {
-
-        if (busRouteService == null) {
-            busRouteService = new BusRouteService(getDatabaseHelper());
-        }
-        return busRouteService;
     }
 
     /**
