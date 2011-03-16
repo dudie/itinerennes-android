@@ -12,9 +12,9 @@ import android.widget.ToggleButton;
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.SelectableMarker;
+import fr.itinerennes.ui.views.overlays.old.SelectableMarker;
 
 /**
  * @author Jérémie Huchet
@@ -26,7 +26,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<SelectableMarker<Bik
             .getLogger(BikeStationBoxAdapter.class);
 
     /** The itinerennes context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** The layout inflater. */
     private final LayoutInflater inflater;
@@ -40,7 +40,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<SelectableMarker<Bik
      * @param context
      *            the context
      */
-    public BikeStationBoxAdapter(final ITRContext context) {
+    public BikeStationBoxAdapter(final ItinerennesContext context) {
 
         this.context = context;
         inflater = context.getLayoutInflater();

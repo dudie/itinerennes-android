@@ -1,8 +1,8 @@
-package fr.itinerennes.ui.views.overlays.event;
+package fr.itinerennes.ui.views.overlays.old.event;
 
 import java.util.List;
 
-import fr.itinerennes.ui.views.overlays.Marker;
+import fr.itinerennes.ui.views.overlays.old.Marker;
 
 /**
  * @author Jérémie Huchet

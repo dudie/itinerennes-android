@@ -41,7 +41,7 @@ import fr.itinerennes.ui.adapter.BusTimeAdapter;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class BusStationActivity extends ITRContext implements Runnable {
+public class BusStationActivity extends ItinerennesContext implements Runnable {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory

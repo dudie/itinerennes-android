@@ -27,11 +27,11 @@ import android.widget.ToggleButton;
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.ui.views.ITRMapView;
-import fr.itinerennes.ui.views.overlays.LocationOverlay;
-import fr.itinerennes.ui.views.overlays.MapOverlayHelper;
-import fr.itinerennes.ui.views.overlays.OverlayConstants;
-import fr.itinerennes.ui.views.overlays.SelectableOverlay;
+import fr.itinerennes.ui.views.ItinerennesMapView;
+import fr.itinerennes.ui.views.overlays.old.LocationOverlay;
+import fr.itinerennes.ui.views.overlays.old.MapOverlayHelper;
+import fr.itinerennes.ui.views.overlays.old.OverlayConstants;
+import fr.itinerennes.ui.views.overlays.old.SelectableOverlay;
 
 /**
  * This is the main activity. Uses the <code>main_map.xml</code> layout and displays a menu bar on
@@ -40,7 +40,7 @@ import fr.itinerennes.ui.views.overlays.SelectableOverlay;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class MapActivity extends ITRContext implements OverlayConstants {
+public class MapActivity extends ItinerennesContext implements OverlayConstants {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(MapActivity.class);
@@ -78,7 +78,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
     private static final int TOAST_DURATION = 300;
 
     /** The map view. */
-    private ITRMapView map;
+    private ItinerennesMapView map;
 
     /** The map box view. */
     private View mapBox;
@@ -110,7 +110,7 @@ public class MapActivity extends ITRContext implements OverlayConstants {
 
         setContentView(R.layout.main_map);
 
-        this.map = (ITRMapView) findViewById(R.id.map);
+        this.map = (ItinerennesMapView) findViewById(R.id.map);
         this.mapBox = findViewById(R.id.map_box);
 
         final MapOverlayHelper moh = map.getController().getMapOverlayHelper();

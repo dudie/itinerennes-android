@@ -6,7 +6,7 @@ import org.slf4j.impl.AndroidLoggerFactory;
 import android.os.AsyncTask;
 import android.view.View;
 
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.views.MapBoxView;
 
@@ -22,7 +22,7 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, Void> {
             .getLogger(DisplayMapBoxTask.class);
 
     /** The application context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** The view where the additional informations are added. */
     private final MapBoxView boxView;
@@ -45,7 +45,7 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, Void> {
      * @param data
      *            the metadata of the marker displayed
      */
-    public DisplayMapBoxTask(final ITRContext context, final MapBoxView boxView,
+    public DisplayMapBoxTask(final ItinerennesContext context, final MapBoxView boxView,
             final MapBoxAdapter<D> adapter, final D data) {
 
         super();

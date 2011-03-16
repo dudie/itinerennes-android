@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.views.overlays;
+package fr.itinerennes.ui.views.overlays.old;
 
 /**
  * Classes implementing this interface may receive events from a {@link GroupSelectOverlay} when an

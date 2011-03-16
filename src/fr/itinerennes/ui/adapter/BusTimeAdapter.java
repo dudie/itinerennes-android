@@ -20,7 +20,7 @@ import fr.itinerennes.R;
 import fr.itinerennes.model.oba.Route;
 import fr.itinerennes.model.oba.ScheduleStopTime;
 import fr.itinerennes.model.oba.StopSchedule;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 
 /**
  * @author Jérémie Huchet
@@ -31,7 +31,7 @@ public class BusTimeAdapter extends BaseAdapter {
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusTimeAdapter.class);
 
     /** The android context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** Stop complete schedule. */
     private final StopSchedule data;
@@ -59,7 +59,7 @@ public class BusTimeAdapter extends BaseAdapter {
      *            list of routes icons
      * @param stopIsAccessible
      */
-    public BusTimeAdapter(final ITRContext c, final StopSchedule schedule,
+    public BusTimeAdapter(final ItinerennesContext c, final StopSchedule schedule,
             final HashMap<String, Drawable> routesIcons, final boolean stopIsAccessible) {
 
         this.data = schedule;

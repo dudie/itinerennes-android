@@ -22,9 +22,9 @@ import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.oba.Route;
 import fr.itinerennes.model.oba.Stop;
 import fr.itinerennes.ui.activity.BusStationActivity;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.SelectableMarker;
+import fr.itinerennes.ui.views.overlays.old.SelectableMarker;
 
 /**
  * @author Jérémie Huchet
@@ -36,7 +36,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
             .getLogger(BusStationBoxAdapter.class);
 
     /** The itinerennes context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** The layout inflater. */
     private final LayoutInflater inflater;
@@ -53,7 +53,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
      * @param context
      *            the context
      */
-    public BusStationBoxAdapter(final ITRContext context) {
+    public BusStationBoxAdapter(final ItinerennesContext context) {
 
         this.context = context;
         inflater = context.getLayoutInflater();

@@ -5,11 +5,11 @@ import java.util.List;
 import org.osmdroid.util.BoundingBoxE6;
 
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.ui.views.ITRMapView;
-import fr.itinerennes.ui.views.overlays.Marker;
+import fr.itinerennes.ui.views.ItinerennesMapView;
+import fr.itinerennes.ui.views.overlays.old.Marker;
 
 /**
- * Classes implementing this interface are bridges between a {@link ITRMapView} and the marker
+ * Classes implementing this interface are bridges between a {@link ItinerennesMapView} and the marker
  * displayed.
  * 
  * @param <T>

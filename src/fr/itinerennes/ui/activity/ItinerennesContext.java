@@ -25,10 +25,10 @@ import fr.itinerennes.exceptions.ExceptionHandler;
  * 
  * @author Jérémie Huchet
  */
-public abstract class ITRContext extends Activity {
+public abstract class ItinerennesContext extends Activity {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ITRContext.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItinerennesContext.class);
 
     /** The itinerennes shared preferences. */
     private SharedPreferences sharedPreferences;

@@ -11,10 +11,10 @@ import org.slf4j.impl.AndroidLoggerFactory;
 import android.os.AsyncTask;
 
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
-import fr.itinerennes.ui.views.overlays.ITRItemizedOverlay;
-import fr.itinerennes.ui.views.overlays.Marker;
+import fr.itinerennes.ui.views.overlays.old.ITRItemizedOverlay;
+import fr.itinerennes.ui.views.overlays.old.Marker;
 
 /**
  * A class derivating from ASyncTask to refresh an overlay in background.
@@ -29,7 +29,7 @@ public class UpdateOverlayTask<T extends Marker<?>> extends AsyncTask<BoundingBo
             .getLogger(UpdateOverlayTask.class);
 
     /** The itinerennes context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** The map view to redraw. */
     private final MapView osmView;
@@ -50,7 +50,7 @@ public class UpdateOverlayTask<T extends Marker<?>> extends AsyncTask<BoundingBo
      * @param mapMarkerAdapter
      *            the map marker adapter to use
      */
-    public UpdateOverlayTask(final ITRContext context, final MapView osmView,
+    public UpdateOverlayTask(final ItinerennesContext context, final MapView osmView,
             final ITRItemizedOverlay<T> overlay, final ItemizedOverlayAdapter<T> mapMarkerAdapter) {
 
         super();

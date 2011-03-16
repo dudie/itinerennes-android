@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import fr.itinerennes.R;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
 
@@ -33,7 +33,7 @@ public class MapBoxView extends LinearLayout {
      * @param context
      *            the context
      */
-    public MapBoxView(final ITRContext context) {
+    public MapBoxView(final ItinerennesContext context) {
 
         this(context, null);
     }
@@ -84,7 +84,7 @@ public class MapBoxView extends LinearLayout {
         if (null != mapBoxDisplayer) {
             mapBoxDisplayer.cancel(true);
         }
-        mapBoxDisplayer = new DisplayMapBoxTask<D>((ITRContext) getContext(), this, adapter, item);
+        mapBoxDisplayer = new DisplayMapBoxTask<D>((ItinerennesContext) getContext(), this, adapter, item);
         mapBoxDisplayer.execute();
     }
 

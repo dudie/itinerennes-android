@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.views.overlays;
+package fr.itinerennes.ui.views.overlays.old;
 
 import java.util.List;
 
@@ -11,13 +11,13 @@ import fr.itinerennes.R;
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.SubwayStation;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.adapter.BikeStationBoxAdapter;
 import fr.itinerennes.ui.adapter.BusStationBoxAdapter;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.adapter.MarkerItemizedOverlayAdapter;
 import fr.itinerennes.ui.adapter.SubwayStationBoxAdapter;
-import fr.itinerennes.ui.views.ITRMapView;
+import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.MapBoxView;
 
 /**
@@ -31,10 +31,10 @@ public class MapOverlayHelper implements OverlayConstants {
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(MapOverlayHelper.class);
 
     /** The itinerennes application context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** The map where overlays must be managed. */
-    private final ITRMapView map;
+    private final ItinerennesMapView map;
 
     /** Byte mask describing the current state of overlays. */
     private final int current = 0;
@@ -62,7 +62,7 @@ public class MapOverlayHelper implements OverlayConstants {
      * @param context
      *            the itinerennes application context
      */
-    public MapOverlayHelper(final ITRContext context, final ITRMapView map) {
+    public MapOverlayHelper(final ItinerennesContext context, final ItinerennesMapView map) {
 
         this.context = context;
         this.map = map;
