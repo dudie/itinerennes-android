@@ -2,7 +2,7 @@ package fr.itinerennes.ui.views.overlays;
 
 import org.osmdroid.views.MapView;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -28,7 +28,7 @@ public abstract class SelectableItemizedOverlay<T extends SelectableMarker<D>, D
         ITRItemizedOverlay<T> implements SelectableOverlay<D> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(SelectableItemizedOverlay.class);
 
     /** The target view where additional informations are displayed when an item is selected. */

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -23,7 +23,7 @@ import fr.itinerennes.model.Bookmark;
 public class BookmarkService extends AbstractService implements BookmarksColumns {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BookmarkService.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BookmarkService.class);
 
     /** A list of listeners on bookmarks modifications. */
     private ArrayList<IBookmarkModificationListener> listeners = null;

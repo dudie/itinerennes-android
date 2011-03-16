@@ -11,7 +11,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesConstants;
@@ -29,7 +29,7 @@ import fr.itinerennes.model.BusStation;
 public class WFSService {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(WFSService.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(WFSService.class);
 
     /** The HTTP client. */
     private final GenericHttpService httpService = new GenericHttpService();

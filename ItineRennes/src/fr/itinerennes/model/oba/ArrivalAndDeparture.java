@@ -3,7 +3,7 @@ package fr.itinerennes.model.oba;
 import java.util.Date;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 /**
  * Class representing ArrivalAndDeparture OneBusAway object.
@@ -13,7 +13,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 public class ArrivalAndDeparture {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(ArrivalAndDeparture.class);
 
     /** The route id for the arriving vehicle. */

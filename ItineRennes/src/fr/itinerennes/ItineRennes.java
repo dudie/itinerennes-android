@@ -3,7 +3,7 @@ package fr.itinerennes;
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.Application;
 
@@ -16,7 +16,7 @@ import fr.itinerennes.database.DatabaseHelper;
 public class ItineRennes extends Application {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ItineRennes.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItineRennes.class);
 
     /** The database helper. */
     private DatabaseHelper databaseHelper;

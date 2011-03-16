@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -21,7 +21,7 @@ import fr.itinerennes.model.LineIcon;
 public class LineIconCacheEntryHandler implements CacheEntryHandler<LineIcon>, LineIconColumns {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(LineIconCacheEntryHandler.class);
 
     /** The database table name : {@value LineIconCacheEntryHandler#LINE_ICONS_TABLE_NAME} . */

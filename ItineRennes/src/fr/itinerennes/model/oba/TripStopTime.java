@@ -3,7 +3,7 @@ package fr.itinerennes.model.oba;
 import java.util.Date;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 /**
  * @author orgoz

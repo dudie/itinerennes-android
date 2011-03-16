@@ -7,7 +7,7 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -26,7 +26,7 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
         implements OnItemizedOverlayUpdateListener<D>, IBookmarkModificationListener {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(BookmarkItemizedOverlay.class);
 
     /** The itinerennes context. */

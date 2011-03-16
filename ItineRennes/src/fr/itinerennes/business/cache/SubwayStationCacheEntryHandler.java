@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -26,7 +26,7 @@ public class SubwayStationCacheEntryHandler implements CacheEntryHandler<SubwayS
         SubwayStationColumns {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(SubwayStationCacheEntryHandler.class);
 
     /** The database table name : {@value SubwayStationCacheEntryHandler#BIKE_STATION_TABLE_NAME}. */

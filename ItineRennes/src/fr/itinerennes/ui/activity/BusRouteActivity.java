@@ -1,7 +1,7 @@
 package fr.itinerennes.ui.activity;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -34,7 +34,7 @@ import fr.itinerennes.ui.adapter.BusRouteStopsAdapter;
 public class BusRouteActivity extends ITRContext {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BusRouteActivity.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusRouteActivity.class);
 
     /**
      * Intent parameter name for the stop identifier where to scroll in the list of displayed trip

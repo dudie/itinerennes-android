@@ -2,7 +2,7 @@ package fr.itinerennes.business.cache;
 
 import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -50,7 +50,7 @@ import fr.itinerennes.utils.DateUtils;
 public final class GeoCacheProvider extends AbstractService implements GeoExploreColumns {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(GeoCacheProvider.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(GeoCacheProvider.class);
 
     /** SQL selection to retrieve bounding box containing the given one. */
     private static final String CONTAINS_BBOX_W_N_E_S_T = String.format(

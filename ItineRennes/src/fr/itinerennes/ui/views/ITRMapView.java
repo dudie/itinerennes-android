@@ -3,7 +3,7 @@ package fr.itinerennes.ui.views;
 import org.osmdroid.events.DelayedMapListener;
 import org.osmdroid.views.MapView;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -22,7 +22,7 @@ public class ITRMapView extends MapView {
     private static final long MAP_LISTENER_DELAY = 800;
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ITRMapView.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ITRMapView.class);
 
     /** The map controller. */
     private final MapViewController controller;

@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.business.http.HttpResponseHandler;
@@ -56,7 +56,7 @@ import fr.itinerennes.model.BusDeparture;
 public final class DeparturesHttpResponseHandler extends HttpResponseHandler<List<BusDeparture>> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(DeparturesHttpResponseHandler.class);
 
     /**

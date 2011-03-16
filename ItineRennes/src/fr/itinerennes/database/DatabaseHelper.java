@@ -1,7 +1,7 @@
 package fr.itinerennes.database;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,7 +18,7 @@ import fr.itinerennes.utils.FileUtils;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(DatabaseHelper.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(DatabaseHelper.class);
 
     /**
      * Creates the database helper.

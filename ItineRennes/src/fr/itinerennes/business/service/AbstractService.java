@@ -1,7 +1,7 @@
 package fr.itinerennes.business.service;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.database.DatabaseHelper;
 
@@ -13,7 +13,7 @@ import fr.itinerennes.database.DatabaseHelper;
 public abstract class AbstractService {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(AbstractService.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(AbstractService.class);
 
     /** The database helper to use to open the database. */
     protected final DatabaseHelper dbHelper;

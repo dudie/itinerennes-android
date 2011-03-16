@@ -3,7 +3,7 @@ package fr.itinerennes.business.service;
 import java.util.List;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.business.cache.BikeStationCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheProvider;
@@ -23,7 +23,7 @@ import fr.itinerennes.model.BikeStation;
 public final class BikeService extends AbstractKeolisStationProvider<BikeStation> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BikeService.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BikeService.class);
 
     /** The keolis service. */
     private static final KeolisService keolisService = new KeolisService();

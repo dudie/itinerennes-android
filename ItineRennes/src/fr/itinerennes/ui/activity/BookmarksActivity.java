@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +31,7 @@ import fr.itinerennes.ui.adapter.BookmarksAdapter;
 public class BookmarksActivity extends ITRContext {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(BookmarksActivity.class);
 
     /**

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.business.http.HttpResponseHandler;
 import fr.itinerennes.exceptions.GenericException;
@@ -18,7 +18,7 @@ import fr.itinerennes.model.BusStation;
 public class StopsForRouteHttpResponseHandler extends HttpResponseHandler {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(StopsForRouteHttpResponseHandler.class);
 
     /**

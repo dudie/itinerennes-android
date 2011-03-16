@@ -7,7 +7,7 @@ import java.io.Reader;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 /**
  * Some file utilities.
@@ -17,7 +17,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 public final class FileUtils {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(FileUtils.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(FileUtils.class);
 
     /** Char buffer length for input reads. */
     private static final int CHAR_BUF_SIZE = 512;

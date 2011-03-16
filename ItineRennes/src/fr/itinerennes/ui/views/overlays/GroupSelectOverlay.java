@@ -2,7 +2,7 @@ package fr.itinerennes.ui.views.overlays;
 
 import org.osmdroid.views.MapView;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Context;
 import android.view.MotionEvent;
@@ -20,7 +20,7 @@ import android.view.MotionEvent;
 public class GroupSelectOverlay<T extends SelectableOverlay<?>> extends GroupOverlay<T> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(GroupSelectOverlay.class);
 
     /**

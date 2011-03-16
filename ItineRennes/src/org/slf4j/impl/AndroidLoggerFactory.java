@@ -13,7 +13,7 @@ import android.util.Log;
  * 
  * @author Jérémie Huchet
  */
-public final class ItinerennesLoggerFactory implements ILoggerFactory {
+public final class AndroidLoggerFactory implements ILoggerFactory {
 
     /** The base string to remove from log tags. */
     private static final String PKG_BASE = "fr.itinerennes.";
@@ -25,9 +25,9 @@ public final class ItinerennesLoggerFactory implements ILoggerFactory {
     private static final int MAX_TAG_LENGTH = 23;
 
     /**
-     * Private constructor to avoid instantiation.
+     * Constructor to avoid instantiation from anywhere.
      */
-    private ItinerennesLoggerFactory() {
+    AndroidLoggerFactory() {
 
     }
 
@@ -113,7 +113,7 @@ public final class ItinerennesLoggerFactory implements ILoggerFactory {
         }
 
         if (Log.isLoggable(PREFIX + "LoggerFactory", Log.INFO)) {
-            Log.i(ItinerennesLoggerFactory.class.getSimpleName(), "Log tag " + PREFIX + packageName
+            Log.i(AndroidLoggerFactory.class.getSimpleName(), "Log tag " + PREFIX + packageName
                     + " is longer than 23 characters, using " + truncatedName.toString()
                     + " instead");
         }

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -27,7 +27,7 @@ import fr.itinerennes.model.SubwayStation;
 public class BookmarksAdapter extends BaseAdapter {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BookmarksAdapter.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BookmarksAdapter.class);
 
     /** A map containing icons to use for each type of bookmarks. */
     private static final Map<String, Integer> ICONS = new HashMap<String, Integer>();

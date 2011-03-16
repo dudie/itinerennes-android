@@ -14,7 +14,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.util.CharArrayBuffer;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.business.event.IHttpRequestProgressListener;
 import fr.itinerennes.exceptions.GenericException;
@@ -29,7 +29,7 @@ import fr.itinerennes.exceptions.GenericException;
 public abstract class HttpResponseHandler<T> implements ResponseHandler<T> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(HttpResponseHandler.class);
 
     /** The HTTP success result code. */

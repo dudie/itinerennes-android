@@ -9,7 +9,7 @@ import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedOverlay;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -41,7 +41,7 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
         MapListener, ItemizedOverlay.OnItemGestureListener<T> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ItemizedOverlay.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItemizedOverlay.class);
 
     /** The itinerennes application context. */
     private final ITRContext context;
