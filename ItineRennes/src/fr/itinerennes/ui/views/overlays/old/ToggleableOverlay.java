@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.views.overlays;
+package fr.itinerennes.ui.views.overlays.old;
 
 /**
  * Overlays implementing this interface may be shown and hidden.

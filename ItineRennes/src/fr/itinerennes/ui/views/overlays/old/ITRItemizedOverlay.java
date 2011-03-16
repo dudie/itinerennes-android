@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.views.overlays;
+package fr.itinerennes.ui.views.overlays.old;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +18,12 @@ import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 
 import fr.itinerennes.R;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.tasks.UpdateOverlayTask;
-import fr.itinerennes.ui.views.ITRMapView;
+import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.MapListenerWrapper;
-import fr.itinerennes.ui.views.overlays.event.OnItemizedOverlayUpdateListener;
+import fr.itinerennes.ui.views.overlays.old.event.OnItemizedOverlayUpdateListener;
 
 /**
  * An enhanced itemized overlay which can use an {@link ItemizedOverlayAdapter} to update itself
@@ -44,7 +44,7 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItemizedOverlay.class);
 
     /** The itinerennes application context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** The index of the current focused item. <code>NOT_SET</code> if not item is focused. */
     protected int focusedItemIndex = NOT_SET;
@@ -74,7 +74,7 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
      * The map on which this overlay is displayed. Used to attach a listener on map moves when this
      * overlay is enabled and detach it when disabled.
      */
-    private final ITRMapView map;
+    private final ItinerennesMapView map;
 
     /**
      * Creates the itemized overlay.
@@ -84,7 +84,7 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
      * @param adapter
      *            the adapter this overlay should use to update its content when the map moves
      */
-    public ITRItemizedOverlay(final ITRContext context, final ITRMapView map,
+    public ITRItemizedOverlay(final ItinerennesContext context, final ItinerennesMapView map,
             final ItemizedOverlayAdapter<T> adapter) {
 
         super(context, new ArrayList<T>(), null);
@@ -212,7 +212,7 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
     }
 
     /**
-     * When this overlay is linked to a {@link ITRMapView}, this method is triggered when the map
+     * When this overlay is linked to a {@link ItinerennesMapView}, this method is triggered when the map
      * scrolls.
      * <p>
      * When it occurs, the overlay use its adapter and update its content.
@@ -229,7 +229,7 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
     }
 
     /**
-     * When this overlay is linked to a {@link ITRMapView}, this method is triggered when the map
+     * When this overlay is linked to a {@link ItinerennesMapView}, this method is triggered when the map
      * zoom changes.
      * <p>
      * When it occurs, the overlay use its adapter and update its content.
@@ -277,7 +277,7 @@ public class ITRItemizedOverlay<T extends Marker<?>> extends ItemizedOverlay<T> 
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.ToggleableOverlay#getLocalizedName()
+     * @see fr.itinerennes.ui.views.overlays.old.ToggleableOverlay#getLocalizedName()
      */
     public final String getLocalizedName() {
 

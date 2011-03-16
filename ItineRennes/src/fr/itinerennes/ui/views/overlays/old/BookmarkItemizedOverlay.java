@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.views.overlays;
+package fr.itinerennes.ui.views.overlays.old;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,8 @@ import fr.itinerennes.R;
 import fr.itinerennes.business.event.IBookmarkModificationListener;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.model.Station;
-import fr.itinerennes.ui.activity.ITRContext;
-import fr.itinerennes.ui.views.overlays.event.OnItemizedOverlayUpdateListener;
+import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.views.overlays.old.event.OnItemizedOverlayUpdateListener;
 
 /**
  * @author Jérémie Huchet
@@ -30,7 +30,7 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
             .getLogger(BookmarkItemizedOverlay.class);
 
     /** The itinerennes context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** The bookmark service. */
     private final BookmarkService bookmarkService;
@@ -51,7 +51,7 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
      * @param context
      *            the itinerennes context
      */
-    public BookmarkItemizedOverlay(final ITRContext context, final MapView osmView,
+    public BookmarkItemizedOverlay(final ItinerennesContext context, final MapView osmView,
             final SelectableItemizedOverlay<SelectableMarker<D>, D> overlay) {
 
         super(context, new ArrayList<OverlayItem>(), getStarOverlayDrawable(context), null, null,
@@ -71,7 +71,7 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
      * 
      * @return the star overlay drawable
      */
-    private static Drawable getStarOverlayDrawable(final ITRContext context) {
+    private static Drawable getStarOverlayDrawable(final ItinerennesContext context) {
 
         return context.getResources().getDrawable(R.drawable.marker_overlay_star);
     }
@@ -90,7 +90,7 @@ public final class BookmarkItemizedOverlay<D extends Station> extends ItemizedOv
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.event.OnItemizedOverlayUpdateListener#onContentUpdated(java.util.List)
+     * @see fr.itinerennes.ui.views.overlays.old.event.OnItemizedOverlayUpdateListener#onContentUpdated(java.util.List)
      */
     @Override
     public final <I extends Marker<D>> void onContentUpdated(final List<I> items) {

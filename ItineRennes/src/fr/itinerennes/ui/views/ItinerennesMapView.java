@@ -8,7 +8,7 @@ import org.slf4j.impl.AndroidLoggerFactory;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 
 /**
  * The map view.
@@ -16,19 +16,19 @@ import fr.itinerennes.ui.activity.ITRContext;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class ITRMapView extends MapView {
+public class ItinerennesMapView extends MapView {
 
     /** Map listener event delayed listener constant value. */
     private static final long MAP_LISTENER_DELAY = 800;
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ITRMapView.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItinerennesMapView.class);
 
     /** The map controller. */
     private final MapViewController controller;
 
     /** The android context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** The list of map listeners. */
     private final MapListenerWrapper mapListeners;
@@ -36,7 +36,7 @@ public class ITRMapView extends MapView {
     /**
      * @param context
      */
-    public ITRMapView(final ITRContext context) {
+    public ItinerennesMapView(final ItinerennesContext context) {
 
         this(context, null);
     }
@@ -45,10 +45,10 @@ public class ITRMapView extends MapView {
      * @param context
      * @param attrs
      */
-    public ITRMapView(final Context context, final AttributeSet attrs) {
+    public ItinerennesMapView(final Context context, final AttributeSet attrs) {
 
         super(context, attrs);
-        this.context = (ITRContext) context;
+        this.context = (ItinerennesContext) context;
         this.controller = new MapViewController(this.context, this);
 
         mapListeners = new MapListenerWrapper(3);

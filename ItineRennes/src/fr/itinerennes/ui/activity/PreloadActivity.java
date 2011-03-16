@@ -19,7 +19,7 @@ import fr.itinerennes.exceptions.GenericException;
 /**
  * @author Jérémie Huchet
  */
-public class PreloadActivity extends ITRContext {
+public class PreloadActivity extends ItinerennesContext {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(PreloadActivity.class);

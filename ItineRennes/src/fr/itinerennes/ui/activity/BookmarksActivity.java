@@ -28,7 +28,7 @@ import fr.itinerennes.ui.adapter.BookmarksAdapter;
  * 
  * @author Jérémie Huchet
  */
-public class BookmarksActivity extends ITRContext {
+public class BookmarksActivity extends ItinerennesContext {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory

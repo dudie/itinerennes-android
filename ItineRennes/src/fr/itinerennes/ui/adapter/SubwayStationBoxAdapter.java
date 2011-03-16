@@ -10,9 +10,9 @@ import android.widget.ToggleButton;
 
 import fr.itinerennes.R;
 import fr.itinerennes.model.SubwayStation;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.SelectableMarker;
+import fr.itinerennes.ui.views.overlays.old.SelectableMarker;
 
 /**
  * @author Jérémie Huchet
@@ -24,7 +24,7 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SelectableMarker<S
             .getLogger(SubwayStationBoxAdapter.class);
 
     /** The itinerennes context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** The layout inflater. */
     private final LayoutInflater inflater;
@@ -35,7 +35,7 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SelectableMarker<S
      * @param context
      *            the context
      */
-    public SubwayStationBoxAdapter(final ITRContext context) {
+    public SubwayStationBoxAdapter(final ItinerennesContext context) {
 
         this.context = context;
         inflater = context.getLayoutInflater();

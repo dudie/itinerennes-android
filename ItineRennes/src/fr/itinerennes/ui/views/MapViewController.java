@@ -2,8 +2,8 @@ package fr.itinerennes.ui.views;
 
 import org.osmdroid.views.MapController;
 
-import fr.itinerennes.ui.activity.ITRContext;
-import fr.itinerennes.ui.views.overlays.MapOverlayHelper;
+import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.views.overlays.old.MapOverlayHelper;
 
 /**
  * A controller for {@link ITRMapView}. Provides convenience methods to manipulates the map
@@ -21,7 +21,7 @@ public class MapViewController extends MapController {
      * @param map
      *            the map view to which associate the controller
      */
-    public MapViewController(final ITRContext context, final ITRMapView map) {
+    public MapViewController(final ItinerennesContext context, final ItinerennesMapView map) {
 
         super(map);
 

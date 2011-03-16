@@ -31,7 +31,7 @@ import fr.itinerennes.ui.adapter.BusRouteStopsAdapter;
  * 
  * @author Jérémie Huchet
  */
-public class BusRouteActivity extends ITRContext {
+public class BusRouteActivity extends ItinerennesContext {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusRouteActivity.class);

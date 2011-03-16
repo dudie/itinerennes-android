@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.views.overlays;
+package fr.itinerennes.ui.views.overlays.old;
 
 import org.osmdroid.views.MapView;
 import org.slf4j.Logger;
@@ -10,10 +10,10 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.adapter.ItemizedOverlayAdapter;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
-import fr.itinerennes.ui.views.ITRMapView;
+import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.MapBoxView;
 
 /**
@@ -42,7 +42,7 @@ public abstract class SelectableItemizedOverlay<T extends SelectableMarker<D>, D
      * @param itemProviderAdapter
      *            the provider to use to populate the overlay
      */
-    public SelectableItemizedOverlay(final ITRContext context, final ITRMapView map,
+    public SelectableItemizedOverlay(final ItinerennesContext context, final ItinerennesMapView map,
             final ItemizedOverlayAdapter<T> itemProviderAdapter,
             final MapBoxView additionalInformationView) {
 
@@ -54,7 +54,7 @@ public abstract class SelectableItemizedOverlay<T extends SelectableMarker<D>, D
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#onSelectStateChanged(boolean)
+     * @see fr.itinerennes.ui.views.overlays.old.SelectableOverlay#onSelectStateChanged(boolean)
      */
     @Override
     public final boolean onSelectStateChanged(final boolean selected) {
@@ -85,7 +85,7 @@ public abstract class SelectableItemizedOverlay<T extends SelectableMarker<D>, D
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#hasFocus()
+     * @see fr.itinerennes.ui.views.overlays.old.SelectableOverlay#hasFocus()
      */
     @Override
     public final boolean hasFocus() {
@@ -96,7 +96,7 @@ public abstract class SelectableItemizedOverlay<T extends SelectableMarker<D>, D
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.views.overlays.SelectableOverlay#setSelected(boolean)
+     * @see fr.itinerennes.ui.views.overlays.old.SelectableOverlay#setSelected(boolean)
      */
     @Override
     public final void setSelected(final boolean hasFocus) {
@@ -112,7 +112,7 @@ public abstract class SelectableItemizedOverlay<T extends SelectableMarker<D>, D
     /**
      * Workaround <code>onDraw()</code> method.
      * 
-     * @see fr.itinerennes.ui.views.overlays.WrappableOverlay#onDrawOverlayFinished(android.graphics.Canvas,
+     * @see fr.itinerennes.ui.views.overlays.old.WrappableOverlay#onDrawOverlayFinished(android.graphics.Canvas,
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override
@@ -124,7 +124,7 @@ public abstract class SelectableItemizedOverlay<T extends SelectableMarker<D>, D
     /**
      * Workaround <code>onDrawFinished()</code> method.
      * 
-     * @see fr.itinerennes.ui.views.overlays.WrappableOverlay#onDrawOverlayFinished(android.graphics.Canvas,
+     * @see fr.itinerennes.ui.views.overlays.old.WrappableOverlay#onDrawOverlayFinished(android.graphics.Canvas,
      *      org.andnav.osm.views.OpenStreetMapView)
      */
     @Override

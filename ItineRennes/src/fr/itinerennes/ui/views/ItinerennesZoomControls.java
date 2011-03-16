@@ -8,15 +8,15 @@ import android.widget.LinearLayout;
 import android.widget.ZoomControls;
 
 import fr.itinerennes.R;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 
-public class ITRZoomControls extends ZoomControls {
+public class ItinerennesZoomControls extends ZoomControls {
 
     private final int mapResId;
 
-    private ITRMapView map;
+    private ItinerennesMapView map;
 
-    public ITRZoomControls(final Context context, final AttributeSet attr) {
+    public ItinerennesZoomControls(final Context context, final AttributeSet attr) {
 
         super(context, attr);
 
@@ -59,7 +59,7 @@ public class ITRZoomControls extends ZoomControls {
 
     public final void tryInitZoomControls() {
 
-        map = (ITRMapView) ((ITRContext) getContext()).findViewById(mapResId);
+        map = (ItinerennesMapView) ((ItinerennesContext) getContext()).findViewById(mapResId);
         if (null != map) {
             map.setBuiltInZoomControls(false);
         }

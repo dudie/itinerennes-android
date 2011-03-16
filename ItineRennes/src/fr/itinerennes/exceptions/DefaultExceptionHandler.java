@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import fr.itinerennes.R;
-import fr.itinerennes.ui.activity.ITRContext;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 
 /**
  * A simple exception handler which logs exceptions and displays a toast message to the user.
@@ -24,7 +24,7 @@ public class DefaultExceptionHandler extends Handler implements ExceptionHandler
     private static final int ERROR_TOAST_DURATION = 15;
 
     /** The context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /**
      * Creates the defautl exception handler.
@@ -32,7 +32,7 @@ public class DefaultExceptionHandler extends Handler implements ExceptionHandler
      * @param context
      *            the context
      */
-    public DefaultExceptionHandler(final ITRContext context) {
+    public DefaultExceptionHandler(final ItinerennesContext context) {
 
         this.context = context;
     }

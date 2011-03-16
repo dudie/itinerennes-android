@@ -10,8 +10,8 @@ import org.slf4j.impl.AndroidLoggerFactory;
 import fr.itinerennes.business.service.MarkerProvider;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.Station;
-import fr.itinerennes.ui.activity.ITRContext;
-import fr.itinerennes.ui.views.overlays.SelectableMarker;
+import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.views.overlays.old.SelectableMarker;
 
 /**
  * @author Jérémie Huchet
@@ -24,7 +24,7 @@ public class MarkerItemizedOverlayAdapter<T extends Station> implements
             .getLogger(MarkerItemizedOverlayAdapter.class);
 
     /** The itinerennes application context. */
-    private final ITRContext context;
+    private final ItinerennesContext context;
 
     /** The station provider. */
     private final MarkerProvider<T> stationProvider;
@@ -38,7 +38,7 @@ public class MarkerItemizedOverlayAdapter<T extends Station> implements
      * @param stationProvider
      *            the station provider to use
      */
-    public MarkerItemizedOverlayAdapter(final ITRContext context,
+    public MarkerItemizedOverlayAdapter(final ItinerennesContext context,
             final MarkerProvider<T> stationProvider) {
 
         this.context = context;
