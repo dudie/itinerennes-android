@@ -3,7 +3,7 @@ package fr.itinerennes.business.http.wfs;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.exceptions.GenericException;
@@ -16,7 +16,7 @@ import fr.itinerennes.exceptions.GenericException;
 public final class WFSUtils {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(WFSUtils.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(WFSUtils.class);
 
     /**
      * Checks the response code of the WFS API and return the JSON Object representinf the data.

@@ -1,7 +1,7 @@
 package fr.itinerennes.ui.tasks;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.os.AsyncTask;
 import android.view.View;
@@ -18,7 +18,7 @@ import fr.itinerennes.ui.views.MapBoxView;
 public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, Void> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(DisplayMapBoxTask.class);
 
     /** The application context. */

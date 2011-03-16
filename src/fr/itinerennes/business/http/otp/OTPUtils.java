@@ -7,7 +7,7 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.exceptions.GenericException;
@@ -20,7 +20,7 @@ import fr.itinerennes.exceptions.GenericException;
 public class OTPUtils {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(OTPUtils.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(OTPUtils.class);
 
     /** The date format to parse OTP responses. */
     private static final SimpleDateFormat OTP_DATE_FORMAT = new SimpleDateFormat(

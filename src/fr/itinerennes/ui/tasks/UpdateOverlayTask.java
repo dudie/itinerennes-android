@@ -6,7 +6,7 @@ import java.util.List;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.views.MapView;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.os.AsyncTask;
 
@@ -25,7 +25,7 @@ import fr.itinerennes.ui.views.overlays.Marker;
 public class UpdateOverlayTask<T extends Marker<?>> extends AsyncTask<BoundingBoxE6, Void, List<T>> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(UpdateOverlayTask.class);
 
     /** The itinerennes context. */

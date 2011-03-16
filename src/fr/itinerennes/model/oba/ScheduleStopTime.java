@@ -3,7 +3,7 @@ package fr.itinerennes.model.oba;
 import java.util.Date;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 /**
  * @author orgoz
@@ -11,7 +11,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 public class ScheduleStopTime implements Comparable<ScheduleStopTime> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ScheduleStopTime.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ScheduleStopTime.class);
 
     /** Arrival time. */
     private Date arrivalTime;

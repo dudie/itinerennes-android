@@ -3,7 +3,7 @@ package fr.itinerennes.ui.views.overlays;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MyLocationOverlay;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Context;
 import android.os.SystemClock;
@@ -17,7 +17,7 @@ import fr.itinerennes.ui.views.ITRMapView;
 public class LocationOverlay extends MyLocationOverlay {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(LocationOverlay.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(LocationOverlay.class);
 
     private final ITRContext context;
 

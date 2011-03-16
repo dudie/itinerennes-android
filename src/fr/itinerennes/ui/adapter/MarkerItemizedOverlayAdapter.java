@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.business.service.MarkerProvider;
 import fr.itinerennes.exceptions.GenericException;
@@ -20,7 +20,7 @@ public class MarkerItemizedOverlayAdapter<T extends Station> implements
         ItemizedOverlayAdapter<SelectableMarker<T>> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(MarkerItemizedOverlayAdapter.class);
 
     /** The itinerennes application context. */

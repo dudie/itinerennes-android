@@ -6,7 +6,7 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.MapView.Projection;
 import org.osmdroid.views.overlay.Overlay;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -42,7 +42,7 @@ public class DebugOverlay extends Overlay {
     }
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(DebugOverlay.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(DebugOverlay.class);
 
     /**
      * {@inheritDoc}

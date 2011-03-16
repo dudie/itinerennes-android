@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -43,7 +43,7 @@ import fr.itinerennes.ui.views.overlays.SelectableOverlay;
 public class MapActivity extends ITRContext implements OverlayConstants {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapActivity.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(MapActivity.class);
 
     /** Intent parameter name to pass the map zoom level to set. */
     public static final String INTENT_SET_MAP_ZOOM = String.format("%s.setMapZoom",

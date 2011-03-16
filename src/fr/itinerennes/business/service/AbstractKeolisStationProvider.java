@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.cache.CacheProvider;
@@ -27,7 +27,7 @@ public abstract class AbstractKeolisStationProvider<T extends Station> extends A
         implements MarkerProvider<T> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(AbstractKeolisStationProvider.class);
 
     /**

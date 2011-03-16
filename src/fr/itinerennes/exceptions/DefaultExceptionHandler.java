@@ -1,7 +1,7 @@
 package fr.itinerennes.exceptions;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.os.Handler;
 import android.widget.Toast;
@@ -17,7 +17,7 @@ import fr.itinerennes.ui.activity.ITRContext;
 public class DefaultExceptionHandler extends Handler implements ExceptionHandler {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(DefaultExceptionHandler.class);
 
     /** The duration of the displayed toast message when an error occurs. */

@@ -15,7 +15,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesConstants;
@@ -34,7 +34,7 @@ import fr.itinerennes.utils.FileUtils;
 public class KeolisService {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(KeolisService.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(KeolisService.class);
 
     /** The HTTP client. */
     private final GenericHttpService httpService = new GenericHttpService();

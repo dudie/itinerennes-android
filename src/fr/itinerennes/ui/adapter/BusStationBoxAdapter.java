@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -32,7 +32,7 @@ import fr.itinerennes.ui.views.overlays.SelectableMarker;
 public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusStation>> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(BusStationBoxAdapter.class);
 
     /** The itinerennes context. */

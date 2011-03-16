@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -37,7 +37,7 @@ import fr.itinerennes.utils.DateUtils;
 public class CacheProvider<T extends Cacheable> extends AbstractService implements MetadataColumns {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(CacheProvider.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(CacheProvider.class);
 
     /** The name of the metadata table. */
     private static final String METADATA_TABLE_NAME = "cache_metadata";

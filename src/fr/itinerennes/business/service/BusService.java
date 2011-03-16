@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.business.cache.BusStationCacheEntryHandler;
 import fr.itinerennes.business.cache.CacheProvider;
@@ -26,7 +26,7 @@ import fr.itinerennes.model.BusStation;
 public class BusService extends AbstractService implements MarkerProvider<BusStation> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(BusService.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusService.class);
 
     /** The cache for bus stations. */
     private final CacheProvider<BusStation> busCache;

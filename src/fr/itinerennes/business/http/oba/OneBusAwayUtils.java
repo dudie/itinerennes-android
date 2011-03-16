@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.exceptions.GenericException;
@@ -21,7 +21,7 @@ import fr.itinerennes.model.oba.Stop;
 public final class OneBusAwayUtils {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(OneBusAwayUtils.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(OneBusAwayUtils.class);
 
     private final static int RESPONSE_CODE_SUCCESS = 200;
 

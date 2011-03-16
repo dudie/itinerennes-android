@@ -3,7 +3,7 @@ package fr.itinerennes.ui.views.overlays;
 import java.util.List;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.widget.ToggleButton;
 
@@ -28,7 +28,7 @@ import fr.itinerennes.ui.views.MapBoxView;
 public class MapOverlayHelper implements OverlayConstants {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(MapOverlayHelper.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(MapOverlayHelper.class);
 
     /** The itinerennes application context. */
     private final ITRContext context;

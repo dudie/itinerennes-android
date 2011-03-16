@@ -1,7 +1,7 @@
 package fr.itinerennes.ui.adapter;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +22,7 @@ import fr.itinerennes.ui.views.overlays.SelectableMarker;
 public class BikeStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BikeStation>> {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(BikeStationBoxAdapter.class);
 
     /** The itinerennes context. */

@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -26,7 +26,7 @@ import fr.itinerennes.ui.activity.ITRContext;
 public class BusRouteStopsAdapter extends BaseAdapter {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(BusRouteStopsAdapter.class);
 
     /** The itinérennes context. */

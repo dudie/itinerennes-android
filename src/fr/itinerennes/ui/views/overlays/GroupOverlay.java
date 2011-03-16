@@ -6,7 +6,7 @@ import java.util.List;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Overlay;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -24,7 +24,7 @@ import android.view.MotionEvent;
 public class GroupOverlay<T extends WrappableOverlay> extends Overlay {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(GroupOverlay.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(GroupOverlay.class);
 
     /** A list of focusable overlays. */
     protected final List<T> overlays;

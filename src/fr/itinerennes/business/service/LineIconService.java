@@ -3,7 +3,7 @@ package fr.itinerennes.business.service;
 import java.util.List;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -35,7 +35,7 @@ import fr.itinerennes.utils.DateUtils;
 public class LineIconService extends AbstractService {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(LineIconService.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(LineIconService.class);
 
     /** The Keolis service. */
     private final KeolisService keolisService = new KeolisService();

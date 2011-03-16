@@ -1,7 +1,7 @@
 package fr.itinerennes.ui.activity;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -28,7 +28,7 @@ import fr.itinerennes.exceptions.ExceptionHandler;
 public abstract class ITRContext extends Activity {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(ITRContext.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ITRContext.class);
 
     /** The itinerennes shared preferences. */
     private SharedPreferences sharedPreferences;

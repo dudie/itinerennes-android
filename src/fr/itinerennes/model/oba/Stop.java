@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 /**
  * Class representing a OneBusAway stop element.
@@ -14,7 +14,7 @@ import org.slf4j.impl.ItinerennesLoggerFactory;
 public class Stop {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory.getLogger(Stop.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(Stop.class);
 
     /** Id of the stop. */
     private String id;

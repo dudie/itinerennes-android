@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.business.http.GenericHttpService;
@@ -27,7 +27,7 @@ import fr.itinerennes.model.oba.TripSchedule;
 public class OneBusAwayService {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(OneBusAwayService.class);
 
     /** Parameter used by OneBusAway API to include references or not. */

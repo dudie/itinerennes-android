@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.ItinerennesLoggerFactory;
+import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -44,7 +44,7 @@ import fr.itinerennes.ui.adapter.BusTimeAdapter;
 public class BusStationActivity extends ITRContext implements Runnable {
 
     /** The event logger. */
-    private static final Logger LOGGER = ItinerennesLoggerFactory
+    private static final Logger LOGGER = AndroidLoggerFactory
             .getLogger(BusStationActivity.class);
 
     /** Intent parameter name for the station identifier. */
