@@ -3,6 +3,8 @@ package fr.itinerennes.ui.adapter;
 import java.util.Date;
 import java.util.List;
 
+import model.TripStopTime;
+
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -17,7 +19,6 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.model.BusStation;
-import fr.itinerennes.model.oba.TripStopTime;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 
 /**

@@ -20,6 +20,7 @@ import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.model.Bookmark;
 import fr.itinerennes.model.BusStation;
+import fr.itinerennes.model.Marker;
 import fr.itinerennes.model.SubwayStation;
 import fr.itinerennes.ui.adapter.BookmarksAdapter;
 
@@ -103,7 +104,7 @@ public class BookmarksActivity extends ItinerennesContext {
 
         GeoPoint location = null;
         if (BusStation.class.getName().equals(type)) {
-            final BusStation bus = getBusService().getStation(id);
+            final Marker bus = getMarkerService().getMarker(id);
             if (bus != null) {
                 location = bus.getGeoPoint();
             }

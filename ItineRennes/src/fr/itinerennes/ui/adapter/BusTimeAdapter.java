@@ -4,6 +4,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import model.Route;
+import model.ScheduleStopTime;
+import model.StopSchedule;
+
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -17,9 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
-import fr.itinerennes.model.oba.Route;
-import fr.itinerennes.model.oba.ScheduleStopTime;
-import fr.itinerennes.model.oba.StopSchedule;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 
 /**

@@ -1,7 +1,12 @@
 package fr.itinerennes.ui.activity;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+
+import model.Route;
+import model.ScheduleStopTime;
+import model.StopSchedule;
 
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
@@ -26,12 +31,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
-import fr.itinerennes.model.oba.Route;
-import fr.itinerennes.model.oba.ScheduleStopTime;
-import fr.itinerennes.model.oba.StopSchedule;
+import fr.itinerennes.model.Marker;
+import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
+import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.ui.adapter.BusTimeAdapter;
 
 /**
@@ -44,8 +49,7 @@ import fr.itinerennes.ui.adapter.BusTimeAdapter;
 public class BusStationActivity extends ItinerennesContext implements Runnable {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(BusStationActivity.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusStationActivity.class);
 
     /** Intent parameter name for the station identifier. */
     public static final String INTENT_STOP_ID = String.format("%s.stopId",
@@ -106,6 +110,8 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
     /** flag indicating if this stop is accessible or not. */
     private boolean isAccessible = false;
 
+    private IOneBusAwayClient obaClient;
+
     /**
      * Creates the activity.
      * <ul>
@@ -128,6 +134,9 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
         }
 
         super.onCreate(savedInstanceState);
+
+        obaClient = new JsonOneBusAwayClient(getHttpClient(), ItineRennesConstants.OBA_API_URL,
+                ItineRennesConstants.OBA_API_KEY);
 
         // retrieve intent parameters
         stopId = getIntent().getStringExtra(INTENT_STOP_ID);
@@ -258,10 +267,10 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
 
         try {
             /* Fetching stop informations for this station from the network. */
-            schedule = getOneBusAwayService().getScheduleForStop(stopId, new Date());
+            schedule = obaClient.getScheduleForStop(stopId, new Date());
 
             handler.sendEmptyMessage(MESSAGE_INCREMENT_PROGRESS);
-        } catch (final GenericException e) {
+        } catch (final IOException e) {
             LOGGER.debug(String.format("Can't load informations for the station %s.", stopId), e);
             returnCode = MESSAGE_FAILURE;
         }
@@ -372,24 +381,20 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
 
         handler.sendMessage(handler.obtainMessage(MESSAGE_DISPLAY_DIALOG_LOAD_STATION));
 
-        final AsyncTask<Void, Void, BusStation> task = new AsyncTask<Void, Void, BusStation>() {
+        final AsyncTask<Void, Void, Marker> task = new AsyncTask<Void, Void, Marker>() {
 
             @Override
-            protected BusStation doInBackground(final Void... params) {
+            protected Marker doInBackground(final Void... params) {
 
-                BusStation busStation = null;
+                Marker busStation = null;
 
-                try {
-                    busStation = getBusService().getStation(stopId);
-                } catch (final GenericException e) {
-                    LOGGER.debug("Can't get station information.", e);
-                }
+                busStation = getMarkerService().getMarker(stopId);
 
                 return busStation;
             }
 
             @Override
-            protected void onPostExecute(final BusStation busStation) {
+            protected void onPostExecute(final Marker busStation) {
 
                 if (busStation == null) {
                     Toast.makeText(getApplicationContext(),

@@ -68,7 +68,7 @@ public class ItineRennesConstants {
      * OneBusAway constants.
      */
     /** OneBusAway API URL. */
-    public static final String OBA_API_URL = "http://api.itinerennes.fr/onebusaway-api-webapp/api/where/%s/%s.json";
+    public static final String OBA_API_URL = "http://api.itinerennes.fr/onebusaway-api-webapp/api/";
 
     /** OneBusAway API version. */
     public static final String OBA_API_VERSION = "2";
@@ -81,7 +81,7 @@ public class ItineRennesConstants {
      */
 
     /** The database schema version. */
-    public static final int DATABASE_VERSION = 23;
+    public static final int DATABASE_VERSION = 24;
 
     /** The database name. */
     public static final String DATABASE_NAME = "fr.itinerennes";
