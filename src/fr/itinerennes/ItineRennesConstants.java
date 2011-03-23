@@ -52,19 +52,6 @@ public class ItineRennesConstants {
     public static final String GEOSERVER_STOP_PREFIX = "stops.";
 
     /*
-     * OpenTripPlanner constants.
-     */
-
-    /** OTP Extended API URL. */
-    public static final String OTP_API_URL = "http://api.itinerennes.fr/opentripplanner-api-extended/";
-
-    /** Path to append to the Extended API URL to get stop informations. */
-    public static final String OTP_API_STOP_PATH = "stop";
-
-    /** Path to append to the Extended API URL to get departures informations. */
-    public static final String OTP_API_DEPARTURES_PATH = "departures";
-
-    /*
      * OneBusAway constants.
      */
     /** OneBusAway API URL. */
