@@ -103,6 +103,57 @@ public final class Columns {
     /**
      * Generic columns for a station.
      * 
+     * @author Olivier Boudet
+     */
+    public interface MarkersColumns extends BaseColumns {
+
+        /** The name of the markers table. */
+        String MARKERS_TABLE_NAME = "markers";
+
+        /**
+         * The unique ID for a station.
+         * <P>
+         * Type: TEXT (String)
+         * </P>
+         */
+        String ID = "id";
+
+        /**
+         * The type of a station.
+         * <P>
+         * Type: TEXT (String)
+         * </P>
+         */
+        String TYPE = "type";
+
+        /**
+         * The name for a station.
+         * <P>
+         * Type: TEXT (String)
+         * </P>
+         */
+        String LABEL = "label";
+
+        /**
+         * The latitude for a marker.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String LATITUDE = "lat";
+
+        /**
+         * The latitude for a marker.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String LONGITUDE = "lon";
+    }
+
+    /**
+     * Generic columns for a station.
+     * 
      * @author Jérémie Huchet
      */
     public interface StationColumns extends BaseColumns {

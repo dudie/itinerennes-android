@@ -1,5 +1,10 @@
 package fr.itinerennes.ui.activity;
 
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.impl.conn.SingleClientConnManager;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -8,17 +13,17 @@ import android.content.SharedPreferences;
 
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennes;
-import fr.itinerennes.business.http.oba.OneBusAwayService;
 import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.business.service.BookmarkService;
-import fr.itinerennes.business.service.BusDepartureService;
 import fr.itinerennes.business.service.BusService;
 import fr.itinerennes.business.service.LineIconService;
+import fr.itinerennes.business.service.MarkersService;
 import fr.itinerennes.business.service.SubwayService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
 import fr.itinerennes.exceptions.ExceptionHandler;
+import fr.itinerennes.http.client.ProgressHttpClient;
 
 /**
  * An abstract activity providing common functionalities such as automatic.
@@ -36,6 +41,9 @@ public abstract class ItinerennesContext extends Activity {
     /** The default exception handler. */
     private final ExceptionHandler exceptionHandler = new DefaultExceptionHandler(this);
 
+    /** The marker service. */
+    private MarkersService markerService;
+
     /** The bus service. */
     private BusService busService;
 
@@ -45,20 +53,17 @@ public abstract class ItinerennesContext extends Activity {
     /** The subway service. */
     private SubwayService subwayService;
 
-    /** The bus departure service. */
-    private BusDepartureService busDepartureService;
-
     /** The line icon service. */
     private LineIconService lineIconService;
-
-    /** The OneBusAway service. */
-    private OneBusAwayService oneBusAwayService;
 
     /** The bookmarks service. */
     private BookmarkService bookmarksService;
 
     /** The accessibility service. */
     private AccessibilityService accessibilityService;
+
+    /** The Progress Http Client */
+    private ProgressHttpClient httpClient;
 
     /**
      * Tries to dismiss a displayed dialog but catch the exception throws by the original
@@ -154,19 +159,6 @@ public abstract class ItinerennesContext extends Activity {
     }
 
     /**
-     * Gets a reference to the bus route service.
-     * 
-     * @return a reference to the bus route service
-     */
-    public final BusDepartureService getBusDepartureService() {
-
-        if (busDepartureService == null) {
-            busDepartureService = new BusDepartureService(getDatabaseHelper());
-        }
-        return busDepartureService;
-    }
-
-    /**
      * Gets a reference to the line icon service.
      * 
      * @return a reference to the line icon service
@@ -177,19 +169,6 @@ public abstract class ItinerennesContext extends Activity {
             lineIconService = new LineIconService(getDatabaseHelper());
         }
         return lineIconService;
-    }
-
-    /**
-     * Gets a reference to the OneBusAway service.
-     * 
-     * @return a reference to the OneBusAway service
-     */
-    public final OneBusAwayService getOneBusAwayService() {
-
-        if (oneBusAwayService == null) {
-            oneBusAwayService = new OneBusAwayService();
-        }
-        return oneBusAwayService;
     }
 
     public final BookmarkService getBookmarksService() {
@@ -211,5 +190,31 @@ public abstract class ItinerennesContext extends Activity {
             accessibilityService = new AccessibilityService(getDatabaseHelper());
         }
         return accessibilityService;
+    }
+
+    /**
+     * Gets a reference to the MarkerService.
+     * 
+     * @return a reference to the {@link MarkerService}
+     */
+    public final MarkersService getMarkerService() {
+
+        if (markerService == null) {
+            markerService = new MarkersService(getDatabaseHelper());
+        }
+        return markerService;
+    }
+
+    public final ProgressHttpClient getHttpClient() {
+
+        if (httpClient == null) {
+            final SchemeRegistry registry = new SchemeRegistry();
+            registry.register(new Scheme("http", new PlainSocketFactory(), 80));
+            final ClientConnectionManager connexionManager = new SingleClientConnManager(null,
+                    registry);
+            httpClient = new ProgressHttpClient(connexionManager, null);
+        }
+
+        return httpClient;
     }
 }

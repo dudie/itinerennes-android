@@ -1,7 +1,11 @@
 package fr.itinerennes.ui.adapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.Route;
+import model.Stop;
 
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
@@ -16,11 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BusStation;
-import fr.itinerennes.model.oba.Route;
-import fr.itinerennes.model.oba.Stop;
+import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
+import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.ui.activity.BusStationActivity;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
@@ -32,8 +36,7 @@ import fr.itinerennes.ui.views.overlays.old.SelectableMarker;
 public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusStation>> {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(BusStationBoxAdapter.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusStationBoxAdapter.class);
 
     /** The itinerennes context. */
     private final ItinerennesContext context;
@@ -120,13 +123,17 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
         station = null;
         routesIcons = new ArrayList<Drawable>();
         try {
-            station = context.getOneBusAwayService().getStop(item.getData().getId());
+
+            final IOneBusAwayClient obaClient = new JsonOneBusAwayClient(context.getHttpClient(),
+                    ItineRennesConstants.OBA_API_URL, ItineRennesConstants.OBA_API_KEY);
+
+            station = obaClient.getStop(item.getData().getId());
             final List<Route> busRoutes = station.getRoutes();
             for (final Route route : busRoutes) {
                 routesIcons.add(context.getLineIconService().getIconOrDefault(context,
                         route.getShortName()));
             }
-        } catch (final GenericException e) {
+        } catch (final IOException e) {
             context.getExceptionHandler().handleException(e);
         }
     }

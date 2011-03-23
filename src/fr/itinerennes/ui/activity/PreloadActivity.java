@@ -1,5 +1,10 @@
 package fr.itinerennes.ui.activity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
@@ -7,6 +12,8 @@ import org.slf4j.impl.AndroidLoggerFactory;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.database.DatabaseUtils.InsertHelper;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,12 +21,12 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 
 import fr.itinerennes.R;
-import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.database.Columns.MarkersColumns;
 
 /**
  * @author Jérémie Huchet
  */
-public class PreloadActivity extends ItinerennesContext {
+public class PreloadActivity extends ItinerennesContext implements MarkersColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(PreloadActivity.class);
@@ -60,10 +67,6 @@ public class PreloadActivity extends ItinerennesContext {
 
         @Override
         public void handleMessage(final android.os.Message msg) {
-
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("handleMessage - msg={}", msg.what);
-            }
 
             switch (msg.what) {
             case MSG_DOWNLOAD_START:
@@ -232,18 +235,59 @@ public class PreloadActivity extends ItinerennesContext {
                 LOGGER.debug("run.start");
             }
 
-            handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_START, 5));
+            final SQLiteDatabase db = getDatabaseHelper().getWritableDatabase();
+            final InsertHelper insertHelper = new InsertHelper(db, MARKERS_TABLE_NAME);
+            final int idColumn = insertHelper.getColumnIndex("id");
+            final int typeColumn = insertHelper.getColumnIndex("type");
+            final int latColumn = insertHelper.getColumnIndex("lat");
+            final int lonColumn = insertHelper.getColumnIndex("lon");
+            final int labelColumn = insertHelper.getColumnIndex("label");
+
+            final InputStream is = getResources().openRawResource(R.raw.markers);
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+
+            LOGGER.debug("Inserting markers in database...");
+            final long debut = System.currentTimeMillis();
+
+            db.beginTransaction();
             try {
-                getBusService().getStations(BBOX_WORLD);
-                handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_PROGRESS, 3));
-                getBikeService().getStations(BBOX_WORLD);
-                handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_PROGRESS, 1));
-                getSubwayService().getStations(BBOX_WORLD);
-                handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_PROGRESS, 1));
-            } catch (final GenericException e) {
+                String line = reader.readLine();
+                final int count = Integer.parseInt(line);
+
+                handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_START, count));
+
+                while ((line = reader.readLine()) != null) {
+                    final String[] fields = line.split(";");
+
+                    insertHelper.prepareForInsert();
+
+                    insertHelper.bind(typeColumn, fields[0]);
+                    insertHelper.bind(idColumn, fields[1]);
+                    insertHelper.bind(latColumn, (int) Double.parseDouble(fields[2]) * 1E6);
+                    insertHelper.bind(lonColumn, (int) Double.parseDouble(fields[3]) * 1E6);
+                    insertHelper.bind(labelColumn, fields[4]);
+
+                    insertHelper.execute();
+                    handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_PROGRESS, 1));
+                }
+                db.setTransactionSuccessful();
+            } catch (final IOException e) {
+                try {
+                    is.close();
+                } catch (final IOException e1) {
+                    getExceptionHandler().handleException(e);
+                    handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_FAILED));
+                }
                 getExceptionHandler().handleException(e);
                 handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_FAILED));
+                e.printStackTrace();
+            } finally {
+                db.endTransaction();
             }
+
+            final long fin = System.currentTimeMillis();
+            LOGGER.debug(String.format("Markers inserted... Took %s ms", (fin - debut)));
+
             handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_SUCCESS));
 
             if (LOGGER.isDebugEnabled()) {

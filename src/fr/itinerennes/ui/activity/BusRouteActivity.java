@@ -1,5 +1,11 @@
 package fr.itinerennes.ui.activity;
 
+import java.io.IOException;
+
+import model.Route;
+import model.TripSchedule;
+import model.TripStopTime;
+
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -18,11 +24,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.oba.Route;
-import fr.itinerennes.model.oba.TripSchedule;
-import fr.itinerennes.model.oba.TripStopTime;
+import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
+import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.ui.adapter.BusRouteStopsAdapter;
 
 /**
@@ -318,10 +323,15 @@ public class BusRouteActivity extends ItinerennesContext {
 
             handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_START));
             try {
-                final TripSchedule schedule = getOneBusAwayService().getTripDetails(tripId);
+
+                final IOneBusAwayClient obaClient = new JsonOneBusAwayClient(getHttpClient(),
+                        ItineRennesConstants.OBA_API_URL, ItineRennesConstants.OBA_API_KEY);
+
+                final TripSchedule schedule = obaClient.getTripDetails(tripId);
+
                 handler.sendMessage(handler.obtainMessage(MSG_SET_ADAPTER, schedule));
                 handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_END));
-            } catch (final GenericException e) {
+            } catch (final IOException e) {
                 handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_ERROR));
             }
         }

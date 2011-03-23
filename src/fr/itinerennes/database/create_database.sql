@@ -1,3 +1,12 @@
+CREATE TABLE "markers" (
+    "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "id" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "label" TEXT NOT NULL,
+    "lon" INTEGER NOT NULL,
+    "lat" INTEGER NOT NULL
+);
+
 CREATE TABLE "bike_stations" (
     "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     "id" TEXT NOT NULL,
