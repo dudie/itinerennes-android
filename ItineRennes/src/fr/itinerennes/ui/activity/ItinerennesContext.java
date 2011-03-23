@@ -166,7 +166,7 @@ public abstract class ItinerennesContext extends Activity {
     public final LineIconService getLineIconService() {
 
         if (lineIconService == null) {
-            lineIconService = new LineIconService(getDatabaseHelper());
+            lineIconService = new LineIconService(this, getDatabaseHelper());
         }
         return lineIconService;
     }
