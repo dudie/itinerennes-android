@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.AsyncTask;
+import android.view.MotionEvent;
 
 /**
  * @author Jérémie Huchet
@@ -18,51 +20,66 @@ public class MarkerOverlay extends LazyOverlay {
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkerOverlay.class);
 
+    /** The list containing visible types of markers. */
     private final List<String> visibleMarkerTypes = new ArrayList<String>(3);
 
-    private List<Marker> markers;
+    /** The async task in charge of updating the map box informations. */
+    private AsyncTask<?, ?, ?> mapBoxDisplayer;
 
-    public MarkerOverlay(final Context ctx) {
+    /** The list of all displayed markers. */
+    private List<MarkerOverlayItem> markers;
 
-        super(ctx);
+    /**
+     * Creates the marker overlay.
+     * 
+     * @param context
+     *            the context
+     */
+    public MarkerOverlay(final Context context) {
+
+        super(context);
         // TJHU Auto-generated constructor stub
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see org.osmdroid.views.overlay.Overlay#onDraw(android.graphics.Canvas,
-     *      org.osmdroid.views.MapView)
+     * @see fr.itinerennes.ui.views.overlays.LazyOverlay#onMapMove(org.osmdroid.views.MapView)
      */
     @Override
-    protected void onDraw(final Canvas c, final MapView osmv) {
+    protected void onMapMove(final MapView source) {
 
-        // TJHU Auto-generated method stub
-
+        // TOBO rafraichir la liste de marqueurs
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see org.osmdroid.views.overlay.Overlay#onDrawFinished(android.graphics.Canvas,
+     * @see org.osmdroid.views.overlay.Overlay#onSingleTapUp(android.view.MotionEvent,
      *      org.osmdroid.views.MapView)
      */
     @Override
-    protected void onDrawFinished(final Canvas c, final MapView osmv) {
+    public final boolean onSingleTapUp(final MotionEvent e, final MapView mapView) {
 
-        // TJHU Auto-generated method stub
-
+        // TOBO voir si un marqueur a été touché
+        // si touché, déléguer vers onSingleMarkerTapUp() et retourner true
+        return false;
     }
 
-    @Override
-    public void onZoom() {
+    public final void onSingleTapUpMarker(final MarkerOverlayItem marker, final MapView mapView) {
 
-        // TJHU Auto-generated method stub
-
+        // TOBO marquer le marqueur comme sélectionné + lancer la tâche d'affichage des infos dans
+        // la mapbox
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.osmdroid.views.overlay.Overlay#draw(android.graphics.Canvas,
+     *      org.osmdroid.views.MapView, boolean)
+     */
     @Override
-    public void onScroll() {
+    protected void draw(final Canvas c, final MapView osmv, final boolean shadow) {
 
         // TJHU Auto-generated method stub
 

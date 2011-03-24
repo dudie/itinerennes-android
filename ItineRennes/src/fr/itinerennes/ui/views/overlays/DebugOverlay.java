@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.views.overlays.old;
+package fr.itinerennes.ui.views.overlays;
 
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
@@ -47,11 +47,11 @@ public class DebugOverlay extends Overlay {
     /**
      * {@inheritDoc}
      * 
-     * @see org.andnav.osm.views.overlay.OpenStreetMapViewOverlay#onDraw(android.graphics.Canvas,
-     *      org.andnav.osm.views.OpenStreetMapView)
+     * @see org.osmdroid.views.overlay.Overlay#draw(android.graphics.Canvas,
+     *      org.osmdroid.views.MapView, boolean)
      */
     @Override
-    protected void onDraw(final Canvas c, final MapView osmv) {
+    protected final void draw(final Canvas c, final MapView osmv, final boolean shadow) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onDraw.start");
@@ -61,10 +61,10 @@ public class DebugOverlay extends Overlay {
 
         final Point start = new Point(), end = new Point();
 
-        final int north = osmv.getMapCenterLatitudeE6() + osmv.getLatitudeSpan() / 2;
-        final int south = osmv.getMapCenterLatitudeE6() - osmv.getLatitudeSpan() / 2;
-        final int east = osmv.getMapCenterLongitudeE6() + osmv.getLongitudeSpan() / 2;
-        final int west = osmv.getMapCenterLongitudeE6() - osmv.getLongitudeSpan() / 2;
+        final int north = osmv.getMapCenter().getLatitudeE6() + osmv.getLatitudeSpan() / 2;
+        final int south = osmv.getMapCenter().getLatitudeE6() - osmv.getLatitudeSpan() / 2;
+        final int east = osmv.getMapCenter().getLongitudeE6() + osmv.getLongitudeSpan() / 2;
+        final int west = osmv.getMapCenter().getLongitudeE6() - osmv.getLongitudeSpan() / 2;
 
         final BoundingBoxE6 screenBbox = GeoCacheProvider.normalize(new BoundingBoxE6(north, east,
                 south, west));
@@ -89,20 +89,6 @@ public class DebugOverlay extends Overlay {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onDraw.end");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.andnav.osm.views.overlay.OpenStreetMapViewOverlay#onDrawFinished(android.graphics.Canvas,
-     *      org.andnav.osm.views.OpenStreetMapView)
-     */
-    @Override
-    protected void onDrawFinished(final Canvas arg0, final MapView arg1) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onDrawFinished.start/end");
         }
     }
 }

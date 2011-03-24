@@ -6,6 +6,7 @@ import org.slf4j.impl.AndroidLoggerFactory;
 import android.os.AsyncTask;
 import android.view.View;
 
+import fr.itinerennes.keolis.model.BikeStation;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
 import fr.itinerennes.ui.views.MapBoxView;
@@ -15,11 +16,10 @@ import fr.itinerennes.ui.views.MapBoxView;
  *            the type of the bundled data with the item
  * @author Jérémie Huchet
  */
-public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, Void> {
+public class DisplayMapBoxTask<D> extends AsyncTask<Void, BikeStation, Void> {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(DisplayMapBoxTask.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(DisplayMapBoxTask.class);
 
     /** The application context. */
     private final ItinerennesContext context;
@@ -85,7 +85,7 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, Void> {
      * @see android.os.AsyncTask#doInBackground(Params[])
      */
     @Override
-    protected final Void doInBackground(final Void... params) {
+    protected final BikeStation doInBackground(final Void... params) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("doInBackground.start - data={}", data);
@@ -103,7 +103,7 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, Void> {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("doInBackground.end - data={}", data);
         }
-        return null;
+        return data;
     }
 
     /**
@@ -114,12 +114,12 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, Void> {
      * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
      */
     @Override
-    protected final void onPostExecute(final Void nothing) {
+    protected final void onPostExecute(final BikeStation station) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onPostExecute.start - data={}", data);
+            LOGGER.debug("onPostExecute.start - data={}", station);
         }
-        adapter.updateView(boxView.getContentView(), data);
+        adapter.updateView(boxView.getContentView(), station);
         adapter.onStopLoading(boxView.getContentView());
         boxView.postInvalidate();
 
