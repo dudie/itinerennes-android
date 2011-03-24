@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.views.overlays.old;
+package fr.itinerennes.ui.views.overlays;
 
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MyLocationOverlay;
@@ -43,7 +43,7 @@ public class LocationOverlay extends MyLocationOverlay {
      */
     public void toggleFollowLocation() {
 
-        if (isLocationFollowEnabled()) {
+        if (isFollowLocationEnabled()) {
             disableFollowLocation();
         } else {
             enableFollowLocation();
@@ -53,9 +53,10 @@ public class LocationOverlay extends MyLocationOverlay {
     /**
      * Disable FollowLocation and EnableMyLocation flags for the MyLocationOverlay.
      */
-    public void disableFollowLocation() {
+    @Override
+    public final void disableFollowLocation() {
 
-        followLocation(false);
+        disableFollowLocation();
         disableMyLocation();
         myLocationButton.setChecked(false);
 
@@ -64,10 +65,11 @@ public class LocationOverlay extends MyLocationOverlay {
     /**
      * Enable FollowLocation and EnableMyLocation flags for the MyLocationOverlay.
      */
+    @Override
     public void enableFollowLocation() {
 
         enableMyLocation();
-        followLocation(true);
+        enableFollowLocation();
         myLocationButton.setChecked(true);
         map.getController().setZoom(ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
 
@@ -79,9 +81,8 @@ public class LocationOverlay extends MyLocationOverlay {
         if (event.getAction() == MotionEvent.ACTION_MOVE
                 && (SystemClock.uptimeMillis() - event.getDownTime() >= MAP_MOVE_DELAY)) {
 
-            final LocationOverlay overlay = ((ItinerennesMapView) mapView).getController()
-                    .getMapOverlayHelper().getLocationOverlay();
-            if (overlay.isLocationFollowEnabled()) {
+            final LocationOverlay overlay = ((ItinerennesMapView) mapView).getMyLocationOverlay();
+            if (overlay.isFollowLocationEnabled()) {
 
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Disabling follow location because of a touch event on the map");

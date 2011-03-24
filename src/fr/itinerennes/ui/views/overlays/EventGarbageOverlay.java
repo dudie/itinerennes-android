@@ -25,24 +25,11 @@ public class EventGarbageOverlay extends Overlay {
     /**
      * {@inheritDoc}
      * 
-     * @see org.osmdroid.views.overlay.Overlay#onDraw(android.graphics.Canvas,
-     *      org.osmdroid.views.MapView)
+     * @see org.osmdroid.views.overlay.Overlay#draw(android.graphics.Canvas,
+     *      org.osmdroid.views.MapView, boolean)
      */
     @Override
-    protected void onDraw(final Canvas c, final MapView osmv) {
-
-        // TJHU Auto-generated method stub
-
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.osmdroid.views.overlay.Overlay#onDrawFinished(android.graphics.Canvas,
-     *      org.osmdroid.views.MapView)
-     */
-    @Override
-    protected void onDrawFinished(final Canvas c, final MapView osmv) {
+    protected void draw(final Canvas c, final MapView osmView, final boolean shadow) {
 
         // TJHU Auto-generated method stub
 

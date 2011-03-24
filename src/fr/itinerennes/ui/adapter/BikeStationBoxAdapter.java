@@ -14,12 +14,12 @@ import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.old.SelectableMarker;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
  * @author Jérémie Huchet
  */
-public class BikeStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BikeStation>> {
+public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory
@@ -30,9 +30,6 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<SelectableMarker<Bik
 
     /** The layout inflater. */
     private final LayoutInflater inflater;
-
-    /** The bike station with data refreshed less than 1 minute ago. */
-    private BikeStation upToDateStation;
 
     /**
      * Creates the bus station adapter for map box.
@@ -52,17 +49,17 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<SelectableMarker<Bik
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getView(java.lang.Object)
      */
     @Override
-    public final View getView(final SelectableMarker<BikeStation> item) {
+    public final View getView(final MarkerOverlayItem item) {
 
         final View bikeView = inflater.inflate(R.layout.map_box_bike, null);
-        ((TextView) bikeView.findViewById(R.id.map_box_title)).setText(item.getData().getName());
+        ((TextView) bikeView.findViewById(R.id.map_box_title)).setText(item.getLabel());
 
         final ToggleButton star = (ToggleButton) bikeView
                 .findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getBookmarksService().isStarred(BikeStation.class.getName(),
-                item.getData().getId()));
+                item.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context,
-                BikeStation.class.getName(), item.getData().getId(), item.getData().getName()));
+                BikeStation.class.getName(), item.getId(), item.getLabel()));
 
         return bikeView;
     }
@@ -85,12 +82,13 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<SelectableMarker<Bik
      *      java.lang.Object)
      */
     @Override
-    public final void doInBackground(final View view, final SelectableMarker<BikeStation> item) {
+    public final BikeStation doInBackground(final View view, final MarkerOverlayItem item) {
 
         try {
-            upToDateStation = context.getBikeService().getFreshStation(item.getData().getId());
+            return context.getBikeService().getFreshStation(item.getId());
         } catch (final GenericException e) {
             context.getExceptionHandler().handleException(e);
+            return null;
         }
     }
 
@@ -100,7 +98,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<SelectableMarker<Bik
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateView(android.view.View, java.lang.Object)
      */
     @Override
-    public final void updateView(final View view, final SelectableMarker<BikeStation> item) {
+    public final void updateView(final View view, final BikeStation upToDateStation) {
 
         final View bikeStationDetails = view.findViewById(R.id.map_box_bike_details);
 

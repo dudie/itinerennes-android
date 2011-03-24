@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.views.overlays.old;
+package fr.itinerennes.ui.views.overlays;
 
 import java.util.List;
 

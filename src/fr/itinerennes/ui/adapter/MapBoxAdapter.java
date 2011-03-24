@@ -3,17 +3,18 @@ package fr.itinerennes.ui.adapter;
 import android.view.View;
 
 import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
  * Common base interface of implementation for an adapter that can be used to fill the MapBox.
  * <p>
  * See {@link DisplayMapBoxTask} for other details about the box loading.
  * 
- * @param <T>
+ * @param <R>
  *            the type of data the adapter uses
  * @author Jérémie Huchet
  */
-public interface MapBoxAdapter<T> {
+public interface MapBoxAdapter<R> {
 
     /**
      * This method should initializes the view displaying additional informations for the given
@@ -23,7 +24,7 @@ public interface MapBoxAdapter<T> {
      *            the item for which the view must be generated
      * @return the view to display in the map box
      */
-    View getView(T item);
+    View getView(MarkerOverlayItem item);
 
     /**
      * Called before the {@link #doInBackground(View, Object)} begins.
@@ -42,7 +43,7 @@ public interface MapBoxAdapter<T> {
      * @param item
      *            the item for which this adapter generates a view
      */
-    void doInBackground(View view, T item);
+    R doInBackground(View view, MarkerOverlayItem item);
 
     /**
      * This method is called after the method {@link #doInBackground(View, Object)} finished.
@@ -52,7 +53,7 @@ public interface MapBoxAdapter<T> {
      * @param item
      *            the item for which this adapter generates a view
      */
-    void updateView(View view, T item);
+    void updateView(View view, R item);
 
     /**
      * Called after the {@link #updateView(View, Object)}.
