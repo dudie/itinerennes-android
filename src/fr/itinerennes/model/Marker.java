@@ -2,6 +2,9 @@ package fr.itinerennes.model;
 
 import org.osmdroid.util.GeoPoint;
 
+import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.R;
+
 /**
  * Bean representing a marker.
  * 
@@ -137,6 +140,26 @@ public class Marker {
     public final GeoPoint getGeoPoint() {
 
         return new GeoPoint(this.latitude, this.longitude);
+    }
+
+    /**
+     * Gets the id of the drawable icon
+     * 
+     * @return id of the drawable to use to draw the marker icon on the map
+     */
+    public int getIconDrawableId() {
+
+        // TOBO est ce que ca n'aurait pas une meilleure place qu'ici ?
+        if (type.equals(ItineRennesConstants.MARKER_TYPE_BIKE)) {
+            return R.drawable.bike_marker_icon_focusable;
+        } else if (type.equals(ItineRennesConstants.MARKER_TYPE_BUS)) {
+            return R.drawable.bus_marker_icon_focusable;
+        } else if (type.equals(ItineRennesConstants.MARKER_TYPE_SUBWAY)) {
+            return R.drawable.subway_marker_icon_focusable;
+        }
+
+        return 0;
+
     }
 
     /**

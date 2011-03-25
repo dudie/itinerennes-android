@@ -1,10 +1,13 @@
 package fr.itinerennes.ui.activity;
 
-import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.impl.conn.SingleClientConnManager;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -210,8 +213,14 @@ public abstract class ItinerennesContext extends Activity {
         if (httpClient == null) {
             final SchemeRegistry registry = new SchemeRegistry();
             registry.register(new Scheme("http", new PlainSocketFactory(), 80));
-            final ClientConnectionManager connexionManager = new SingleClientConnManager(null,
-                    registry);
+
+            final HttpParams params = new BasicHttpParams();
+
+            ConnManagerParams.setMaxTotalConnections(params, 5);
+            HttpConnectionParams.setConnectionTimeout(params, 60000);
+
+            final ThreadSafeClientConnManager connexionManager = new ThreadSafeClientConnManager(
+                    params, registry);
             httpClient = new ProgressHttpClient(connexionManager, null);
         }
 

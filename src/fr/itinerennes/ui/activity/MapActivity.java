@@ -75,9 +75,6 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
     /** The map view. */
     private ItinerennesMapView map;
 
-    /** The map box view. */
-    private View mapBox;
-
     /** The my location overlay. */
     private LocationOverlay myLocation;
 
@@ -106,7 +103,6 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         setContentView(R.layout.main_map);
 
         this.map = (ItinerennesMapView) findViewById(R.id.map);
-        this.mapBox = findViewById(R.id.map_box);
 
         this.myLocation = map.getMyLocationOverlay();
 

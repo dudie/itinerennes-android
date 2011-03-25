@@ -9,15 +9,15 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import fr.itinerennes.R;
-import fr.itinerennes.model.SubwayStation;
+import fr.itinerennes.keolis.model.SubwayStation;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.old.SelectableMarker;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
  * @author Jérémie Huchet
  */
-public class SubwayStationBoxAdapter implements MapBoxAdapter<SelectableMarker<SubwayStation>> {
+public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory
@@ -47,17 +47,17 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SelectableMarker<S
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getView(java.lang.Object)
      */
     @Override
-    public final View getView(final SelectableMarker<SubwayStation> item) {
+    public final View getView(final MarkerOverlayItem item) {
 
         final View subwayView = inflater.inflate(R.layout.map_box_subway, null);
-        ((TextView) subwayView.findViewById(R.id.map_box_title)).setText(item.getData().getName());
+        ((TextView) subwayView.findViewById(R.id.map_box_title)).setText(item.getLabel());
 
         final ToggleButton star = (ToggleButton) subwayView
                 .findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getBookmarksService().isStarred(SubwayStation.class.getName(),
-                item.getData().getId()));
+                item.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context, SubwayStation.class
-                .getName(), item.getData().getId(), item.getData().getName()));
+                .getName(), item.getId(), item.getLabel()));
 
         return subwayView;
     }
@@ -80,9 +80,9 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SelectableMarker<S
      *      java.lang.Object)
      */
     @Override
-    public final void doInBackground(final View view, final SelectableMarker<SubwayStation> item) {
+    public final SubwayStation doInBackground(final View view, final MarkerOverlayItem item) {
 
-        // nothing to load
+        return null;
     }
 
     /**
@@ -91,7 +91,7 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SelectableMarker<S
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateView(android.view.View, java.lang.Object)
      */
     @Override
-    public final void updateView(final View view, final SelectableMarker<SubwayStation> item) {
+    public final void updateView(final View view, final SubwayStation item) {
 
         // nothing to load
     }

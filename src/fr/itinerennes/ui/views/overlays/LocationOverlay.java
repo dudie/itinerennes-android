@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.widget.ToggleButton;
 
 import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 
@@ -21,20 +22,16 @@ public class LocationOverlay extends MyLocationOverlay {
 
     private final ItinerennesContext context;
 
-    /** Toggle Button to toogle the follow location feature. */
-    private final ToggleButton myLocationButton;
-
     /** The map on which this location overlay is attached. */
     private final ItinerennesMapView map;
 
     /** Delay for desactivate follow location on map move event. */
     private static final long MAP_MOVE_DELAY = 500;
 
-    public LocationOverlay(final Context ctx, final MapView mapView, final ToggleButton button) {
+    public LocationOverlay(final Context ctx, final MapView mapView) {
 
         super(ctx, mapView);
         this.context = (ItinerennesContext) ctx;
-        this.myLocationButton = button;
         this.map = (ItinerennesMapView) mapView;
     }
 
@@ -56,9 +53,9 @@ public class LocationOverlay extends MyLocationOverlay {
     @Override
     public final void disableFollowLocation() {
 
-        disableFollowLocation();
+        super.disableFollowLocation();
         disableMyLocation();
-        myLocationButton.setChecked(false);
+        ((ToggleButton) this.context.findViewById(R.id.mylocation_button)).setChecked(false);
 
     }
 
@@ -69,8 +66,8 @@ public class LocationOverlay extends MyLocationOverlay {
     public void enableFollowLocation() {
 
         enableMyLocation();
-        enableFollowLocation();
-        myLocationButton.setChecked(true);
+        super.enableFollowLocation();
+        ((ToggleButton) this.context.findViewById(R.id.mylocation_button)).setChecked(true);
         map.getController().setZoom(ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
 
     }
@@ -81,13 +78,12 @@ public class LocationOverlay extends MyLocationOverlay {
         if (event.getAction() == MotionEvent.ACTION_MOVE
                 && (SystemClock.uptimeMillis() - event.getDownTime() >= MAP_MOVE_DELAY)) {
 
-            final LocationOverlay overlay = ((ItinerennesMapView) mapView).getMyLocationOverlay();
-            if (overlay.isFollowLocationEnabled()) {
+            if (isFollowLocationEnabled()) {
 
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Disabling follow location because of a touch event on the map");
                 }
-                overlay.disableFollowLocation();
+                disableFollowLocation();
             }
         }
         return false;

@@ -35,6 +35,7 @@ public abstract class LazyOverlay extends Overlay implements MapListener {
     public final boolean onScroll(final ScrollEvent e) {
 
         onMapMove(e.getSource());
+        e.getSource().postInvalidate();
         return false;
     }
 
@@ -47,6 +48,7 @@ public abstract class LazyOverlay extends Overlay implements MapListener {
     public final boolean onZoom(final ZoomEvent e) {
 
         onMapMove(e.getSource());
+        e.getSource().postInvalidate();
         return false;
     }
 

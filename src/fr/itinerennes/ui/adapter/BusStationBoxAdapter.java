@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Route;
-import model.Stop;
-
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -25,15 +22,17 @@ import fr.itinerennes.R;
 import fr.itinerennes.model.BusStation;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
+import fr.itinerennes.onebusaway.model.Route;
+import fr.itinerennes.onebusaway.model.Stop;
 import fr.itinerennes.ui.activity.BusStationActivity;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.old.SelectableMarker;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
  * @author Jérémie Huchet
  */
-public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusStation>> {
+public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusStationBoxAdapter.class);
@@ -68,10 +67,10 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getView(java.lang.Object)
      */
     @Override
-    public final View getView(final SelectableMarker<BusStation> item) {
+    public final View getView(final MarkerOverlayItem item) {
 
         final View busView = inflater.inflate(R.layout.map_box_bus, null);
-        ((TextView) busView.findViewById(R.id.map_box_title)).setText(item.getData().getName());
+        ((TextView) busView.findViewById(R.id.map_box_title)).setText(item.getLabel());
         busView.findViewById(R.id.line_icon_container).setVisibility(View.GONE);
 
         busView.setOnClickListener(new OnClickListener() {
@@ -80,21 +79,21 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
             public void onClick(final View v) {
 
                 final Intent i = new Intent(context, BusStationActivity.class);
-                i.putExtra(BusStationActivity.INTENT_STOP_ID, item.getData().getId());
-                i.putExtra(BusStationActivity.INTENT_STOP_NAME, item.getData().getName());
+                i.putExtra(BusStationActivity.INTENT_STOP_ID, item.getId());
+                i.putExtra(BusStationActivity.INTENT_STOP_NAME, item.getLabel());
                 context.startActivity(i);
             }
         });
 
         final ToggleButton star = (ToggleButton) busView.findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getBookmarksService().isStarred(BusStation.class.getName(),
-                item.getData().getId()));
+                item.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context, BusStation.class.getName(),
-                item.getData().getId(), item.getData().getName()));
+                item.getId(), item.getLabel()));
 
         final ImageView handistar = (ImageView) busView.findViewById(R.id.map_box_wheelchair);
-        if (context.getAccessibilityService().isAccessible(item.getData().getId(),
-                BusStation.class.getName())) {
+        if (context.getAccessibilityService()
+                .isAccessible(item.getId(), BusStation.class.getName())) {
             handistar.setVisibility(View.VISIBLE);
         }
         return busView;
@@ -114,11 +113,12 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
     /**
      * {@inheritDoc}
      * 
+     * @return
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#doInBackground(android.view.View,
      *      java.lang.Object)
      */
     @Override
-    public final void doInBackground(final View view, final SelectableMarker<BusStation> item) {
+    public final Stop doInBackground(final View view, final MarkerOverlayItem item) {
 
         station = null;
         routesIcons = new ArrayList<Drawable>();
@@ -127,15 +127,13 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
             final IOneBusAwayClient obaClient = new JsonOneBusAwayClient(context.getHttpClient(),
                     ItineRennesConstants.OBA_API_URL, ItineRennesConstants.OBA_API_KEY);
 
-            station = obaClient.getStop(item.getData().getId());
-            final List<Route> busRoutes = station.getRoutes();
-            for (final Route route : busRoutes) {
-                routesIcons.add(context.getLineIconService().getIconOrDefault(context,
-                        route.getShortName()));
-            }
+            station = obaClient.getStop(item.getId());
+
         } catch (final IOException e) {
             context.getExceptionHandler().handleException(e);
         }
+
+        return station;
     }
 
     /**
@@ -144,28 +142,30 @@ public class BusStationBoxAdapter implements MapBoxAdapter<SelectableMarker<BusS
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateView(android.view.View, java.lang.Object)
      */
     @Override
-    public final void updateView(final View view, final SelectableMarker<BusStation> item) {
+    public final void updateView(final View view, final Stop item) {
 
         // updates the station name just to be sure
         if (station != null) {
             ((TextView) view.findViewById(R.id.map_box_title)).setText(station.getName());
         }
-        // if some routes stop at this station (there should be at least one route)
-        if (!routesIcons.isEmpty()) {
-            // finds the icons container (an horizontal scrollable list)
-            final LinearLayout iconsView = (LinearLayout) view
-                    .findViewById(R.id.line_icon_container);
-            // adds the icon for each route
-            for (final Drawable icon : routesIcons) {
+
+        final LinearLayout iconsView = (LinearLayout) view.findViewById(R.id.line_icon_container);
+
+        final List<Route> busRoutes = station.getRoutes();
+        if (!busRoutes.isEmpty()) {
+            for (final Route route : busRoutes) {
+
                 final View imageContainer = inflater.inflate(R.layout.line_icon, null);
                 final ImageView lineIcon = (ImageView) imageContainer
                         .findViewById(R.station.bus_line_icon);
-                lineIcon.setImageDrawable(icon);
+                lineIcon.setImageDrawable(context.getLineIconService().getIconOrDefault(context,
+                        route.getShortName()));
                 iconsView.addView(imageContainer);
             }
             // set the list of routes icons visible only if it contains icons
             view.findViewById(R.id.line_icon_container).setVisibility(View.VISIBLE);
         }
+
     }
 
     /**

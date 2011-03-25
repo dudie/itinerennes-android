@@ -9,12 +9,10 @@ import org.osmdroid.views.overlay.Overlay;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
+import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ToggleButton;
 
-import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ItinerennesContext;
-import fr.itinerennes.ui.activity.MapActivity;
 import fr.itinerennes.ui.views.overlays.EventGarbageOverlay;
 import fr.itinerennes.ui.views.overlays.LazyOverlay;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
@@ -55,10 +53,13 @@ public class ItinerennesMapView extends MapView {
     /** The next index to use to add the next overlay. */
     private final int nextOverlayIndex;
 
+    /** The map box controller. */
+    private final MapBoxController mapBoxController;
+
     /**
      * @param context
      */
-    public ItinerennesMapView(final MapActivity context) {
+    public ItinerennesMapView(final ItinerennesContext context) {
 
         this(context, null);
     }
@@ -67,19 +68,20 @@ public class ItinerennesMapView extends MapView {
      * @param context
      * @param attrs
      */
-    public ItinerennesMapView(final MapActivity context, final AttributeSet attrs) {
+    public ItinerennesMapView(final Context context, final AttributeSet attrs) {
 
         super(context, attrs);
-        this.context = context;
+        this.context = (ItinerennesContext) context;
         this.controller = new MapViewController(this.context, this);
+
+        this.mapBoxController = new MapBoxController(this.context);
 
         mapListeners = new MapListenerWrapper(3);
         super.setMapListener(new DelayedMapListener(mapListeners, MAP_LISTENER_DELAY));
 
-        garbageOverlay = new EventGarbageOverlay(context);
-        markerOverlay = new MarkerOverlay(context);
-        myLocationOverlay = new LocationOverlay(context, this,
-                (ToggleButton) context.findViewById(R.id.mylocation_button));
+        garbageOverlay = new EventGarbageOverlay(this.context);
+        markerOverlay = new MarkerOverlay(this.context, this);
+        myLocationOverlay = new LocationOverlay(this.context, this);
 
         super.getOverlays().add(garbageOverlay);
         this.addOverlay(markerOverlay);
@@ -201,4 +203,15 @@ public class ItinerennesMapView extends MapView {
 
         return null;
     }
+
+    /**
+     * Gets the mapBoxController.
+     * 
+     * @return the mapBoxController
+     */
+    public MapBoxController getMapBoxController() {
+
+        return mapBoxController;
+    }
+
 }

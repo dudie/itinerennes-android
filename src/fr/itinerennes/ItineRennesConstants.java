@@ -19,8 +19,11 @@ public class ItineRennesConstants {
     /** Longitude of city Rennes. */
     public static final int CONFIG_RENNES_LON = -1679200;
 
-    /** Minimum zoom level displaying overlay items. */
-    public static final int CONFIG_MINIMUM_ZOOM_ITEMS = 15;
+    /**
+     * Minimum zoom level displaying detailed overlay items. On higher zoom, a simple circle will be
+     * displayed.
+     */
+    public static final int CONFIG_MINIMUM_ZOOM_ITEMS = 17;
 
     /** Minimum zoom level for the map. */
     public static final int CONFIG_MINIMUM_ZOOM_MAP = 6;
@@ -97,5 +100,12 @@ public class ItineRennesConstants {
 
     /** The time to live of an explored bounding box : {@value #GEO_CACHE_TTL}. */
     public static final int GEO_CACHE_TTL = 7776000; // 3 months
+
+    /** Map constants */
+    public static final String MARKER_TYPE_BIKE = "BIKE";
+
+    public static final String MARKER_TYPE_BUS = "BUS";
+
+    public static final String MARKER_TYPE_SUBWAY = "SUBWAY";
 
 }

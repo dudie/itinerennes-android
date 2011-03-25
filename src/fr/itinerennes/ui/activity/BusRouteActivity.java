@@ -2,10 +2,6 @@ package fr.itinerennes.ui.activity;
 
 import java.io.IOException;
 
-import model.Route;
-import model.TripSchedule;
-import model.TripStopTime;
-
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -28,6 +24,9 @@ import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
+import fr.itinerennes.onebusaway.model.Route;
+import fr.itinerennes.onebusaway.model.TripSchedule;
+import fr.itinerennes.onebusaway.model.TripStopTime;
 import fr.itinerennes.ui.adapter.BusRouteStopsAdapter;
 
 /**

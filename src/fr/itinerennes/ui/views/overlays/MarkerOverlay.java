@@ -4,13 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.MapView.Projection;
+import org.osmdroid.views.overlay.Overlay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.content.Context;
 import android.graphics.Canvas;
-import android.os.AsyncTask;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
+
+import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.R;
+import fr.itinerennes.model.Marker;
+import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.views.ItinerennesMapView;
 
 /**
  * @author Jérémie Huchet
@@ -20,14 +29,17 @@ public class MarkerOverlay extends LazyOverlay {
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkerOverlay.class);
 
+    /** The MapActivity context. */
+    private final ItinerennesContext context;
+
+    /** The map view containing this overlay. */
+    private final ItinerennesMapView map;
+
     /** The list containing visible types of markers. */
     private final List<String> visibleMarkerTypes = new ArrayList<String>(3);
 
-    /** The async task in charge of updating the map box informations. */
-    private AsyncTask<?, ?, ?> mapBoxDisplayer;
-
     /** The list of all displayed markers. */
-    private List<MarkerOverlayItem> markers;
+    private final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>(20);
 
     /**
      * Creates the marker overlay.
@@ -35,10 +47,15 @@ public class MarkerOverlay extends LazyOverlay {
      * @param context
      *            the context
      */
-    public MarkerOverlay(final Context context) {
+    public MarkerOverlay(final ItinerennesContext context, final ItinerennesMapView map) {
 
         super(context);
+        this.context = context;
+        this.map = map;
         // TJHU Auto-generated constructor stub
+        visibleMarkerTypes.add(ItineRennesConstants.MARKER_TYPE_BIKE);
+        visibleMarkerTypes.add(ItineRennesConstants.MARKER_TYPE_BUS);
+        visibleMarkerTypes.add(ItineRennesConstants.MARKER_TYPE_SUBWAY);
     }
 
     /**
@@ -47,9 +64,25 @@ public class MarkerOverlay extends LazyOverlay {
      * @see fr.itinerennes.ui.views.overlays.LazyOverlay#onMapMove(org.osmdroid.views.MapView)
      */
     @Override
-    protected void onMapMove(final MapView source) {
+    protected synchronized void onMapMove(final MapView source) {
 
-        // TOBO rafraichir la liste de marqueurs
+        markers.clear();
+
+        for (final String type : visibleMarkerTypes) {
+            final List<Marker> markersElements = this.context.getMarkerService().getMarkers(
+                    source.getBoundingBox(), type);
+            for (final Marker marker : markersElements) {
+                final MarkerOverlayItem overlayItem = new MarkerOverlayItem();
+                overlayItem.setId(marker.getId());
+                overlayItem.setLabel(marker.getLabel());
+                overlayItem.setLocation(marker.getGeoPoint());
+                overlayItem.setType(type);
+                overlayItem.setIcon(this.context.getResources().getDrawable(
+                        marker.getIconDrawableId()));
+
+                markers.add(overlayItem);
+            }
+        }
     }
 
     /**
@@ -61,15 +94,49 @@ public class MarkerOverlay extends LazyOverlay {
     @Override
     public final boolean onSingleTapUp(final MotionEvent e, final MapView mapView) {
 
-        // TOBO voir si un marqueur a été touché
-        // si touché, déléguer vers onSingleMarkerTapUp() et retourner true
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onSingleTapUp.start");
+        }
+
+        final MarkerOverlayItem marker = checkItemPresence(e, mapView);
+        if (marker != null) {
+            onSingleTapUpMarker(marker, mapView);
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("onSingleTapUp.end");
+            }
+
+            return true;
+        } else {
+            ((ItinerennesMapView) mapView).getMapBoxController().hide();
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onSingleTapUp.end");
+        }
+
         return false;
     }
 
+    /**
+     * Called when an item is single tapped up on the overlay.
+     * 
+     * @param marker
+     *            the marker tapped up
+     * @param mapView
+     *            the map view containing the overlay
+     */
     public final void onSingleTapUpMarker(final MarkerOverlayItem marker, final MapView mapView) {
 
-        // TOBO marquer le marqueur comme sélectionné + lancer la tâche d'affichage des infos dans
-        // la mapbox
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(String.format("onSingleTapUpMarker.start - %s", marker));
+        }
+
+        ((ItinerennesMapView) mapView).getMapBoxController().show(marker);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(String.format("onSingleTapUpMarker.end - %s", marker));
+        }
     }
 
     /**
@@ -79,9 +146,80 @@ public class MarkerOverlay extends LazyOverlay {
      *      org.osmdroid.views.MapView, boolean)
      */
     @Override
-    protected void draw(final Canvas c, final MapView osmv, final boolean shadow) {
+    protected final void draw(final Canvas c, final MapView osmv, final boolean shadow) {
 
-        // TJHU Auto-generated method stub
+        final Projection pj = osmv.getProjection();
 
+        /* Draw in backward cycle, so the items with the least index are on the front. */
+        for (final MarkerOverlayItem marker : markers) {
+            final Point point = pj.toMapPixels(marker.getLocation(), null);
+
+            drawItem(c, marker, point);
+        }
+
+    }
+
+    /**
+     * Draws an item located at the provided screen coordinates to the canvas.
+     * 
+     * @param canvas
+     *            what the item is drawn upon
+     * @param item
+     *            the item to be drawn
+     * @param curScreenCoords
+     *            the screen coordinates of the item
+     */
+    protected final void drawItem(final Canvas canvas, final MarkerOverlayItem item,
+            final Point curScreenCoords) {
+
+        final Drawable drawable = item.getIcon();
+
+        final int[] originalState = drawable.getState();
+        if (map.getZoomLevel() < ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
+            drawable.setState(new int[] { R.attr.state_low_zoom });
+        }
+
+        final int left_right = drawable.getIntrinsicWidth() / 2;
+        final int top_bottom = drawable.getIntrinsicHeight() / 2;
+        final Rect bounds = new Rect(-left_right, -top_bottom, left_right, top_bottom);
+        drawable.setBounds(bounds);
+
+        // draw it
+        Overlay.drawAt(canvas, drawable, curScreenCoords.x, curScreenCoords.y, false);
+
+        // restore original state
+        drawable.setState(originalState);
+    }
+
+    /**
+     * Check if an touched point of the screen is over an item of this overlay.
+     * 
+     * @param event
+     *            event triggered
+     * @param mapView
+     *            map view containing the overlay
+     * @return if found, the MarkerOverlayItem under the touch point
+     */
+    private MarkerOverlayItem checkItemPresence(final MotionEvent event, final MapView mapView) {
+
+        final Projection pj = mapView.getProjection();
+        final int eventX = (int) event.getX();
+        final int eventY = (int) event.getY();
+
+        final Point touchPoint = pj.fromMapPixels(eventX, eventY, null);
+
+        final Point itemPoint = new Point();
+        for (final MarkerOverlayItem marker : markers) {
+            final Drawable drawable = marker.getIcon();
+
+            pj.toPixels(marker.getLocation(), itemPoint);
+
+            if (drawable.getBounds().contains(touchPoint.x - itemPoint.x,
+                    touchPoint.y - itemPoint.y)) {
+                return marker;
+            }
+
+        }
+        return null;
     }
 }

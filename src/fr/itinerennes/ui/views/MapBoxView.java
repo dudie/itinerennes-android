@@ -7,8 +7,6 @@ import android.widget.LinearLayout;
 
 import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ItinerennesContext;
-import fr.itinerennes.ui.adapter.MapBoxAdapter;
-import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
 
 /**
  * The map box view component is a simple {@link LinearLayout} with common functionalities to handle
@@ -23,9 +21,6 @@ public class MapBoxView extends LinearLayout {
 
     /** The content view. */
     private View contentView = null;
-
-    /** The task used to fill the map box view with additional information in background. */
-    private DisplayMapBoxTask<?> mapBoxDisplayer = null;
 
     /**
      * Creates the map box view.
@@ -50,42 +45,6 @@ public class MapBoxView extends LinearLayout {
 
         super(context, attrs);
         setClickable(true);
-    }
-
-    /**
-     * When visibility switch to {@link View#GONE} we must cancel the running map box displayer
-     * task.
-     * <p>
-     * {@inheritDoc}
-     * 
-     * @see android.view.View#setVisibility(int)
-     */
-    @Override
-    public final void setVisibility(final int visibility) {
-
-        if (GONE == visibility && mapBoxDisplayer != null) {
-            mapBoxDisplayer.cancel(true);
-        }
-        super.setVisibility(visibility);
-    }
-
-    /**
-     * Updates the content of the map box view with the given adapter for the given item.
-     * 
-     * @param <D>
-     *            the type of data of the item bundle
-     * @param adapter
-     *            the adapter to use to update the view
-     * @param item
-     *            the item to be displayed
-     */
-    public final <D> void updateInBackground(final MapBoxAdapter<D> adapter, final D item) {
-
-        if (null != mapBoxDisplayer) {
-            mapBoxDisplayer.cancel(true);
-        }
-        mapBoxDisplayer = new DisplayMapBoxTask<D>((ItinerennesContext) getContext(), this, adapter, item);
-        mapBoxDisplayer.execute();
     }
 
     /**

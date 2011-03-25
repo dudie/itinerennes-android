@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS "markers";
 DROP TABLE IF EXISTS "bike_stations";
 DROP INDEX IF EXISTS "bike_station_id_idx";
 DROP INDEX IF EXISTS "bike_station_lon_idx";
