@@ -3,6 +3,20 @@ package fr.itinerennes.ui.views;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.os.AsyncTask.Status;
+import android.view.View;
+
+import fr.itinerennes.R;
+import fr.itinerennes.keolis.model.BikeStation;
+import fr.itinerennes.keolis.model.SubwayStation;
+import fr.itinerennes.onebusaway.model.Stop;
+import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.adapter.BikeStationBoxAdapter;
+import fr.itinerennes.ui.adapter.BusStationBoxAdapter;
+import fr.itinerennes.ui.adapter.SubwayStationBoxAdapter;
+import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+
 /**
  * Manage displaying of the map box additional informations view.
  * 
@@ -15,15 +29,82 @@ public class MapBoxController {
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(MapBoxController.class);
 
-    private void show(final String type, final String id) {
+    /** The itinerennes context. */
+    private final ItinerennesContext context;
 
-        // TJHU Auto-generated method stub
+    /** The map box view. */
+    private MapBoxView mapBox;
+
+    /**
+     * The task used to fill the map box view with additional information in background for a bike
+     * station.
+     */
+    private DisplayMapBoxTask<BikeStation> bikeMapBoxDisplayer = null;
+
+    /**
+     * The task used to fill the map box view with additional information in background for a bus
+     * station.
+     */
+    private DisplayMapBoxTask<Stop> busMapBoxDisplayer = null;
+
+    /**
+     * The task used to fill the map box view with additional information in background for a bus
+     * station.
+     */
+    private DisplayMapBoxTask<SubwayStation> subwayMapBoxDisplayer = null;
+
+    /**
+     * @param mapBox
+     */
+    public MapBoxController(final ItinerennesContext context) {
+
+        this.context = context;
 
     }
 
-    private void hide() {
+    public void show(final MarkerOverlayItem item) {
 
-        // TJHU Auto-generated method stub
+        if (this.mapBox == null) {
+            this.mapBox = (MapBoxView) this.context.findViewById(R.id.map_box);
+        }
+        
+        cancelAll();
 
+        if (item.getType().equals("BIKE")) {
+            bikeMapBoxDisplayer = new DisplayMapBoxTask<BikeStation>(mapBox,
+                    new BikeStationBoxAdapter(context), item);
+            bikeMapBoxDisplayer.execute();
+        } else if (item.getType().equals("BUS")) {
+            busMapBoxDisplayer = new DisplayMapBoxTask<Stop>(mapBox, new BusStationBoxAdapter(
+                    context), item);
+            busMapBoxDisplayer.execute();
+        } else if (item.getType().equals("SUBWAY")) {
+            subwayMapBoxDisplayer = new DisplayMapBoxTask<SubwayStation>(mapBox,
+                    new SubwayStationBoxAdapter(context), item);
+            subwayMapBoxDisplayer.execute();
+        }
+
+    }
+
+    public void hide() {
+
+        cancelAll();
+
+        this.mapBox.setVisibility(View.GONE);
+    }
+
+    private void cancelAll() {
+
+        if (bikeMapBoxDisplayer != null && bikeMapBoxDisplayer.getStatus() != Status.FINISHED) {
+            bikeMapBoxDisplayer.cancel(true);
+        }
+
+        if (busMapBoxDisplayer != null && busMapBoxDisplayer.getStatus() != Status.FINISHED) {
+            busMapBoxDisplayer.cancel(true);
+        }
+
+        if (subwayMapBoxDisplayer != null && subwayMapBoxDisplayer.getStatus() != Status.FINISHED) {
+            subwayMapBoxDisplayer.cancel(true);
+        }
     }
 }

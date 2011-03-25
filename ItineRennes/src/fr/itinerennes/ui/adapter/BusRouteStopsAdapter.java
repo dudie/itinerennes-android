@@ -3,8 +3,6 @@ package fr.itinerennes.ui.adapter;
 import java.util.Date;
 import java.util.List;
 
-import model.TripStopTime;
-
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -19,6 +17,7 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.model.BusStation;
+import fr.itinerennes.onebusaway.model.TripStopTime;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 
 /**
@@ -27,8 +26,7 @@ import fr.itinerennes.ui.activity.ItinerennesContext;
 public class BusRouteStopsAdapter extends BaseAdapter {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(BusRouteStopsAdapter.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusRouteStopsAdapter.class);
 
     /** The itinérennes context. */
     private final ItinerennesContext context;

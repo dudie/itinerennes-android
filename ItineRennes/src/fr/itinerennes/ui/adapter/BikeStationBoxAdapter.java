@@ -1,5 +1,7 @@
 package fr.itinerennes.ui.adapter;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -9,9 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.keolis.client.JsonKeolisClient;
+import fr.itinerennes.keolis.model.BikeStation;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
@@ -30,6 +33,9 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
 
     /** The layout inflater. */
     private final LayoutInflater inflater;
+
+    /** Keolis Client. */
+    private JsonKeolisClient keolisClient;
 
     /**
      * Creates the bus station adapter for map box.
@@ -85,8 +91,10 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
     public final BikeStation doInBackground(final View view, final MarkerOverlayItem item) {
 
         try {
-            return context.getBikeService().getFreshStation(item.getId());
-        } catch (final GenericException e) {
+            keolisClient = new JsonKeolisClient(context.getHttpClient(),
+                    ItineRennesConstants.KEOLIS_API_URL, ItineRennesConstants.KEOLIS_API_KEY);
+            return keolisClient.getBikeStation(item.getId());
+        } catch (final IOException e) {
             context.getExceptionHandler().handleException(e);
             return null;
         }

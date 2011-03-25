@@ -263,8 +263,8 @@ public class PreloadActivity extends ItinerennesContext implements MarkersColumn
 
                     insertHelper.bind(typeColumn, fields[0]);
                     insertHelper.bind(idColumn, fields[1]);
-                    insertHelper.bind(latColumn, (int) Double.parseDouble(fields[2]) * 1E6);
-                    insertHelper.bind(lonColumn, (int) Double.parseDouble(fields[3]) * 1E6);
+                    insertHelper.bind(latColumn, (int) (Double.parseDouble(fields[2]) * 1E6));
+                    insertHelper.bind(lonColumn, (int) (Double.parseDouble(fields[3]) * 1E6));
                     insertHelper.bind(labelColumn, fields[4]);
 
                     insertHelper.execute();

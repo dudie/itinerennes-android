@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 
-import model.Route;
-import model.ScheduleStopTime;
-import model.StopSchedule;
-
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -37,6 +33,9 @@ import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.Marker;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
+import fr.itinerennes.onebusaway.model.Route;
+import fr.itinerennes.onebusaway.model.ScheduleStopTime;
+import fr.itinerennes.onebusaway.model.StopSchedule;
 import fr.itinerennes.ui.adapter.BusTimeAdapter;
 
 /**

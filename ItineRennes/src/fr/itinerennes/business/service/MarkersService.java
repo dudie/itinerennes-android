@@ -40,21 +40,24 @@ public class MarkersService extends AbstractService implements MarkersColumns {
      * 
      * @param bbox
      *            the bounding box in which fetch markers
+     * @param type
+     *            the type of markers to retrieve
      * @return the list of Marker
      */
-    public final List<Marker> getMarkers(final BoundingBoxE6 bbox) {
+    public final List<Marker> getMarkers(final BoundingBoxE6 bbox, final String type) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getMarkers.start - bbox={}", bbox);
         }
         final SQLiteDatabase database = dbHelper.getReadableDatabase();
 
-        final String[] columns = new String[] { ID, LABEL, LONGITUDE, LATITUDE };
+        final String[] columns = new String[] { ID, TYPE, LABEL, LONGITUDE, LATITUDE };
 
-        final String selection = String.format("%s >= ? AND %s <= ? AND %s >= ? AND %s <= ?",
-                LONGITUDE, LONGITUDE, LATITUDE, LATITUDE);
+        final String selection = String.format(
+                "%s = ? AND %s >= ? AND %s <= ? AND %s >= ? AND %s <= ?", TYPE, LONGITUDE,
+                LONGITUDE, LATITUDE, LATITUDE);
 
-        final String[] selectionArgs = new String[] { String.valueOf(bbox.getLonWestE6()),
+        final String[] selectionArgs = new String[] { type, String.valueOf(bbox.getLonWestE6()),
                 String.valueOf(bbox.getLonEastE6()), String.valueOf(bbox.getLatSouthE6()),
                 String.valueOf(bbox.getLatNorthE6()) };
 
@@ -65,9 +68,10 @@ public class MarkersService extends AbstractService implements MarkersColumns {
         while (c.moveToNext()) {
             final Marker marker = new Marker();
             marker.setId(c.getString(0));
-            marker.setName(c.getString(1));
-            marker.setLongitude(c.getInt(2));
-            marker.setLatitude(c.getInt(3));
+            marker.setType(c.getString(1));
+            marker.setName(c.getString(2));
+            marker.setLongitude(c.getInt(3));
+            marker.setLatitude(c.getInt(4));
 
             markers.add(marker);
         }
@@ -94,7 +98,7 @@ public class MarkersService extends AbstractService implements MarkersColumns {
         }
         final SQLiteDatabase database = dbHelper.getReadableDatabase();
 
-        final String[] columns = new String[] { ID, LABEL, LONGITUDE, LATITUDE };
+        final String[] columns = new String[] { ID, TYPE, LABEL, LONGITUDE, LATITUDE };
 
         final String selection = String.format("%s = ?", ID);
 
@@ -103,12 +107,15 @@ public class MarkersService extends AbstractService implements MarkersColumns {
         final Cursor c = database.query(MARKERS_TABLE_NAME, columns, selection, selectionArgs,
                 null, null, null);
 
-        final Marker marker = new Marker();
-        marker.setId(c.getString(0));
-        marker.setName(c.getString(1));
-        marker.setLongitude(c.getInt(2));
-        marker.setLatitude(c.getInt(3));
-
+        Marker marker = null;
+        if (c.moveToNext()) {
+            marker = new Marker();
+            marker.setId(c.getString(0));
+            marker.setType(c.getString(1));
+            marker.setName(c.getString(2));
+            marker.setLongitude(c.getInt(3));
+            marker.setLatitude(c.getInt(4));
+        }
         c.close();
 
         if (LOGGER.isDebugEnabled()) {
