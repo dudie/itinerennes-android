@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
-
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -19,9 +16,9 @@ import android.widget.ToggleButton;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.model.BusStation;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
+import fr.itinerennes.onebusaway.model.BusStation;
 import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.Stop;
 import fr.itinerennes.ui.activity.BusStationActivity;
@@ -33,9 +30,6 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
  * @author Jérémie Huchet
  */
 public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
-
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusStationBoxAdapter.class);
 
     /** The itinerennes context. */
     private final ItinerennesContext context;
@@ -88,8 +82,8 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
         final ToggleButton star = (ToggleButton) busView.findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getBookmarksService().isStarred(BusStation.class.getName(),
                 item.getId()));
-        star.setOnCheckedChangeListener(new ToggleStarListener(context, BusStation.class.getName(),
-                item.getId(), item.getLabel()));
+        star.setOnCheckedChangeListener(new ToggleStarListener(context,
+                ItineRennesConstants.MARKER_TYPE_BUS, item.getId(), item.getLabel()));
 
         final ImageView handistar = (ImageView) busView.findViewById(R.id.map_box_wheelchair);
         if (context.getAccessibilityService()

@@ -5,8 +5,6 @@ import org.osmdroid.events.ScrollEvent;
 import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Overlay;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 
@@ -16,9 +14,6 @@ import android.content.Context;
  * @author Jérémie Huchet
  */
 public abstract class LazyOverlay extends Overlay implements MapListener {
-
-    /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(LazyOverlay.class);
 
     public LazyOverlay(final Context ctx) {
 

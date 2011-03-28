@@ -1,10 +1,9 @@
 package fr.itinerennes.ui.activity;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.osmdroid.util.GeoPoint;
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,13 +14,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import fr.itinerennes.ErrorCodeConstants;
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.keolis.model.BikeStation;
+import fr.itinerennes.keolis.model.SubwayStation;
 import fr.itinerennes.model.Bookmark;
-import fr.itinerennes.model.BusStation;
 import fr.itinerennes.model.Marker;
-import fr.itinerennes.model.SubwayStation;
 import fr.itinerennes.ui.adapter.BookmarksAdapter;
 
 /**
@@ -30,10 +29,6 @@ import fr.itinerennes.ui.adapter.BookmarksAdapter;
  * @author Jérémie Huchet
  */
 public class BookmarksActivity extends ItinerennesContext {
-
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(BookmarksActivity.class);
 
     /**
      * Loads the bookmarks and display them in a list view.
@@ -82,6 +77,12 @@ public class BookmarksActivity extends ItinerennesContext {
                     Toast.makeText(BookmarksActivity.this,
                             getString(R.string.delete_bookmark_not_found, favLabel), 5000).show();
                     list.invalidate();
+                } catch (final IOException e) {
+                    // station is not found, remove it
+                    getBookmarksService().setNotStarred(favType, favId);
+                    Toast.makeText(BookmarksActivity.this,
+                            getString(R.string.delete_bookmark_not_found, favLabel), 5000).show();
+                    list.invalidate();
                 }
 
             }
@@ -98,25 +99,28 @@ public class BookmarksActivity extends ItinerennesContext {
      * @return a geopoint
      * @throws GenericException
      *             the bookmark may be not found
+     * @throws IOException
+     *             station not found
      */
     private GeoPoint findBookmarkLocation(final String type, final String id)
-            throws GenericException {
+            throws GenericException, IOException {
 
         GeoPoint location = null;
-        if (BusStation.class.getName().equals(type)) {
+        if (ItineRennesConstants.MARKER_TYPE_BUS.equals(type)) {
             final Marker bus = getMarkerService().getMarker(id);
             if (bus != null) {
                 location = bus.getGeoPoint();
             }
-        } else if (BikeStation.class.getName().equals(type)) {
-            final BikeStation bike = getBikeService().getStation(id);
+        } else if (ItineRennesConstants.MARKER_TYPE_BIKE.equals(type)) {
+            final BikeStation bike = getBikeService().getBikeStation(id);
             if (bike != null) {
-                location = bike.getGeoPoint();
+
+                location = new GeoPoint(bike.getLatitude(), bike.getLongitude());
             }
-        } else if (SubwayStation.class.getName().equals(type)) {
-            final SubwayStation subway = getSubwayService().getStation(id);
+        } else if (ItineRennesConstants.MARKER_TYPE_SUBWAY.equals(type)) {
+            final SubwayStation subway = getSubwayService().getSubwayStation(id);
             if (subway != null) {
-                location = subway.getGeoPoint();
+                location = new GeoPoint(subway.getLatitude(), subway.getLongitude());
             }
         }
 

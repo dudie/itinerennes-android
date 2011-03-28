@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.osmdroid.events.MapListener;
 import org.osmdroid.events.ScrollEvent;
 import org.osmdroid.events.ZoomEvent;
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
 
 /**
  * A listener which propagates events to others.
@@ -14,10 +12,6 @@ import org.slf4j.impl.AndroidLoggerFactory;
  * @author Jérémie Huchet
  */
 public class MapListenerWrapper implements MapListener {
-
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(MapListenerWrapper.class);
 
     /** The listeners which wants to receive events. */
     private final ArrayList<MapListener> mapListeners;

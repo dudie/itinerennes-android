@@ -3,9 +3,6 @@ package fr.itinerennes.ui.adapter;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
-
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.model.BusStation;
 import fr.itinerennes.onebusaway.model.TripStopTime;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 
@@ -24,9 +21,6 @@ import fr.itinerennes.ui.activity.ItinerennesContext;
  * @author Jérémie Huchet
  */
 public class BusRouteStopsAdapter extends BaseAdapter {
-
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusRouteStopsAdapter.class);
 
     /** The itinérennes context. */
     private final ItinerennesContext context;
@@ -144,7 +138,7 @@ public class BusRouteStopsAdapter extends BaseAdapter {
             /* Display handistar icon if current stop and current route are accessible. */
             final ImageView handistar = (ImageView) view.findViewById(R.trip_time.stop_wheelchair);
             if (context.getAccessibilityService().isAccessible(stopTime.getStop().getId(),
-                    BusStation.class.getName())) {
+                    ItineRennesConstants.MARKER_TYPE_BUS)) {
                 handistar.setVisibility(View.VISIBLE);
             }
         }

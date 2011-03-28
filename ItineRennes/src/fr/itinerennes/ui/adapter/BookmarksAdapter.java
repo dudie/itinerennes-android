@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,26 +12,21 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.model.BikeStation;
 import fr.itinerennes.model.Bookmark;
-import fr.itinerennes.model.BusStation;
-import fr.itinerennes.model.SubwayStation;
 
 /**
  * @author Jérémie Huchet
  */
 public class BookmarksAdapter extends BaseAdapter {
 
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BookmarksAdapter.class);
-
     /** A map containing icons to use for each type of bookmarks. */
     private static final Map<String, Integer> ICONS = new HashMap<String, Integer>();
     static {
-        ICONS.put(BikeStation.class.getName(), R.drawable.bike_activity_title_icon);
-        ICONS.put(BusStation.class.getName(), R.drawable.bus_activity_title_icon);
-        ICONS.put(SubwayStation.class.getName(), R.drawable.subway_activity_title_icon);
+        ICONS.put(ItineRennesConstants.MARKER_TYPE_BIKE, R.drawable.bike_activity_title_icon);
+        ICONS.put(ItineRennesConstants.MARKER_TYPE_BUS, R.drawable.bus_activity_title_icon);
+        ICONS.put(ItineRennesConstants.MARKER_TYPE_SUBWAY, R.drawable.subway_activity_title_icon);
     }
 
     /** The layout inflater. */
