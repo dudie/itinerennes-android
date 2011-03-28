@@ -69,4 +69,5 @@ public class MapBoxView extends LinearLayout {
         this.contentView = contentView;
         addView(contentView);
     }
+
 }

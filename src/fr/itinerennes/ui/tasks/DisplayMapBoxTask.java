@@ -65,7 +65,6 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
         boxView.setContentView(adapter.getView(item));
         adapter.onStartLoading(boxView.getContentView());
         boxView.setVisibility(View.VISIBLE);
-        boxView.postInvalidate();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPreExecute.end - item={}", item);
@@ -118,7 +117,6 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
         }
         adapter.updateView(boxView.getContentView(), data);
         adapter.onStopLoading(boxView.getContentView());
-        boxView.postInvalidate();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPostExecute.end - data={}", data);

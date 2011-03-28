@@ -130,4 +130,27 @@ public class MarkerOverlayItem {
 
         this.location = location;
     }
+
+    /**
+     * (non-javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+
+        final StringBuilder builder = new StringBuilder();
+        builder.append("MarkerOverlayItem [type=");
+        builder.append(type);
+        builder.append(", id=");
+        builder.append(id);
+        builder.append(", label=");
+        builder.append(label);
+        builder.append(", icon=");
+        builder.append(icon);
+        builder.append(", location=");
+        builder.append(location);
+        builder.append("]");
+        return builder.toString();
+    }
 }

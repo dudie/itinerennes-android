@@ -35,6 +35,9 @@ public class MapBoxController {
     /** The map box view. */
     private MapBoxView mapBox;
 
+    /** The current selected item. */
+    private MarkerOverlayItem selectedItem;
+
     /**
      * The task used to fill the map box view with additional information in background for a bike
      * station.
@@ -67,7 +70,7 @@ public class MapBoxController {
         if (this.mapBox == null) {
             this.mapBox = (MapBoxView) this.context.findViewById(R.id.map_box);
         }
-        
+
         cancelAll();
 
         if (item.getType().equals("BIKE")) {
@@ -84,13 +87,18 @@ public class MapBoxController {
             subwayMapBoxDisplayer.execute();
         }
 
+        selectedItem = item;
+
     }
 
     public void hide() {
 
         cancelAll();
+        selectedItem = null;
 
-        this.mapBox.setVisibility(View.GONE);
+        if (this.mapBox != null) {
+            this.mapBox.setVisibility(View.GONE);
+        }
     }
 
     private void cancelAll() {
@@ -106,5 +114,15 @@ public class MapBoxController {
         if (subwayMapBoxDisplayer != null && subwayMapBoxDisplayer.getStatus() != Status.FINISHED) {
             subwayMapBoxDisplayer.cancel(true);
         }
+    }
+
+    /**
+     * Gets the selected item.
+     * 
+     * @return the selected item
+     */
+    public MarkerOverlayItem getSelectedItem() {
+
+        return selectedItem;
     }
 }
