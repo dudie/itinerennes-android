@@ -1,13 +1,11 @@
 package fr.itinerennes.ui.adapter;
 
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.keolis.model.SubwayStation;
 import fr.itinerennes.ui.activity.ItinerennesContext;
@@ -18,10 +16,6 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
  * @author Jérémie Huchet
  */
 public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
-
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(SubwayStationBoxAdapter.class);
 
     /** The itinerennes context. */
     private final ItinerennesContext context;
@@ -56,8 +50,8 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
                 .findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getBookmarksService().isStarred(SubwayStation.class.getName(),
                 item.getId()));
-        star.setOnCheckedChangeListener(new ToggleStarListener(context, SubwayStation.class
-                .getName(), item.getId(), item.getLabel()));
+        star.setOnCheckedChangeListener(new ToggleStarListener(context,
+                ItineRennesConstants.MARKER_TYPE_SUBWAY, item.getId(), item.getLabel()));
 
         return subwayView;
     }

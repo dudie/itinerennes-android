@@ -2,9 +2,6 @@ package fr.itinerennes.ui.adapter;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -23,10 +20,6 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
  * @author Jérémie Huchet
  */
 public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
-
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(BikeStationBoxAdapter.class);
 
     /** The itinerennes context. */
     private final ItinerennesContext context;
@@ -65,7 +58,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
         star.setChecked(context.getBookmarksService().isStarred(BikeStation.class.getName(),
                 item.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context,
-                BikeStation.class.getName(), item.getId(), item.getLabel()));
+                ItineRennesConstants.MARKER_TYPE_BIKE, item.getId(), item.getLabel()));
 
         return bikeView;
     }

@@ -1,8 +1,5 @@
 package fr.itinerennes.ui.views;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.os.AsyncTask.Status;
 import android.view.View;
 
@@ -23,11 +20,6 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
  * @author Jérémie Huchet
  */
 public class MapBoxController {
-
-    // TJHU attacher une instance de cette classe dans le contexte de mapactivity
-
-    /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MapBoxController.class);
 
     /** The itinerennes context. */
     private final ItinerennesContext context;

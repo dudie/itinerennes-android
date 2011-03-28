@@ -3,18 +3,12 @@ package fr.itinerennes.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
-
 /**
  * Some String function utilities.
  * 
  * @author Jérémie Huchet
  */
 public final class StringUtils {
-
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(StringUtils.class);
 
     /**
      * Private constructor to avoid instantiation.

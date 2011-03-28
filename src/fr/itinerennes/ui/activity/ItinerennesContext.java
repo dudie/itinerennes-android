@@ -19,7 +19,6 @@ import fr.itinerennes.ItineRennes;
 import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.business.service.BookmarkService;
-import fr.itinerennes.business.service.BusService;
 import fr.itinerennes.business.service.LineIconService;
 import fr.itinerennes.business.service.MarkersService;
 import fr.itinerennes.business.service.SubwayService;
@@ -46,9 +45,6 @@ public abstract class ItinerennesContext extends Activity {
 
     /** The marker service. */
     private MarkersService markerService;
-
-    /** The bus service. */
-    private BusService busService;
 
     /** The bike service. */
     private BikeService bikeService;
@@ -123,19 +119,6 @@ public abstract class ItinerennesContext extends Activity {
     }
 
     /**
-     * Gets a reference to the bus service.
-     * 
-     * @return a reference to the bus service
-     */
-    public final BusService getBusService() {
-
-        if (busService == null) {
-            busService = new BusService(getDatabaseHelper());
-        }
-        return busService;
-    }
-
-    /**
      * Gets a reference to the bike service.
      * 
      * @return a reference to the bike service
@@ -143,7 +126,7 @@ public abstract class ItinerennesContext extends Activity {
     public final BikeService getBikeService() {
 
         if (bikeService == null) {
-            bikeService = new BikeService(getDatabaseHelper());
+            bikeService = new BikeService(this);
         }
         return bikeService;
     }
@@ -156,7 +139,7 @@ public abstract class ItinerennesContext extends Activity {
     public final SubwayService getSubwayService() {
 
         if (subwayService == null) {
-            subwayService = new SubwayService(getDatabaseHelper());
+            subwayService = new SubwayService(this);
         }
         return subwayService;
     }

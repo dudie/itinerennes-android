@@ -1,16 +1,12 @@
 package fr.itinerennes.business.service;
 
-import java.util.List;
+import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
-
-import fr.itinerennes.business.cache.BikeStationCacheEntryHandler;
-import fr.itinerennes.business.cache.CacheProvider;
-import fr.itinerennes.business.http.keolis.KeolisService;
-import fr.itinerennes.database.DatabaseHelper;
-import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.BikeStation;
+import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.keolis.client.JsonKeolisClient;
+import fr.itinerennes.keolis.client.KeolisClient;
+import fr.itinerennes.keolis.model.BikeStation;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 
 /**
  * Service to consult informations about the bike transport service.
@@ -20,24 +16,18 @@ import fr.itinerennes.model.BikeStation;
  * 
  * @author Jérémie Huchet
  */
-public final class BikeService extends AbstractKeolisStationProvider<BikeStation> {
-
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BikeService.class);
+public final class BikeService {
 
     /** The keolis service. */
-    private static final KeolisService keolisService = new KeolisService();
+    private static KeolisClient keolisClient;
 
     /**
      * Creates a bike service.
-     * 
-     * @param dbHelper
-     *            the database helper
      */
-    public BikeService(final DatabaseHelper dbHelper) {
+    public BikeService(final ItinerennesContext context) {
 
-        super(dbHelper,
-                new CacheProvider<BikeStation>(dbHelper, new BikeStationCacheEntryHandler()));
+        keolisClient = new JsonKeolisClient(context.getHttpClient(),
+                ItineRennesConstants.KEOLIS_API_URL, ItineRennesConstants.KEOLIS_API_KEY);
     }
 
     /**
@@ -46,27 +36,12 @@ public final class BikeService extends AbstractKeolisStationProvider<BikeStation
      * @param id
      *            the identifier of the station
      * @return the bike station
-     * @throws GenericException
+     * @throws IOException
      *             an error occurred
-     * @see fr.itinerennes.business.service.AbstractKeolisStationProvider#retrieveFreshStation(java.lang.String)
      */
-    @Override
-    protected BikeStation retrieveFreshStation(final String id) throws GenericException {
+    public BikeStation getBikeStation(final String id) throws IOException {
 
-        return keolisService.getBikeStation(id);
+        return keolisClient.getBikeStation(id);
     }
 
-    /**
-     * Retrieves all bike stations from the keolis network service.
-     * 
-     * @return all the bike stations
-     * @throws GenericException
-     *             an error occurred
-     * @see fr.itinerennes.business.service.AbstractKeolisStationProvider#retrieveAllStations()
-     */
-    @Override
-    protected List<BikeStation> retrieveAllStations() throws GenericException {
-
-        return keolisService.getAllBikeStations();
-    }
 }

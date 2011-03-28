@@ -1,16 +1,12 @@
 package fr.itinerennes.business.service;
 
-import java.util.List;
+import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
-
-import fr.itinerennes.business.cache.CacheProvider;
-import fr.itinerennes.business.cache.SubwayStationCacheEntryHandler;
-import fr.itinerennes.business.http.keolis.KeolisService;
-import fr.itinerennes.database.DatabaseHelper;
-import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.model.SubwayStation;
+import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.keolis.client.JsonKeolisClient;
+import fr.itinerennes.keolis.client.KeolisClient;
+import fr.itinerennes.keolis.model.SubwayStation;
+import fr.itinerennes.ui.activity.ItinerennesContext;
 
 /**
  * Service to consult informations about the subway transport service.
@@ -20,13 +16,10 @@ import fr.itinerennes.model.SubwayStation;
  * 
  * @author Jérémie Huchet
  */
-public final class SubwayService extends AbstractKeolisStationProvider<SubwayStation> {
+public final class SubwayService {
 
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(SubwayService.class);
-
-    /** The Keolis service. */
-    private static final KeolisService keolisService = new KeolisService();
+    /** The keolis service. */
+    private static KeolisClient keolisClient;
 
     /**
      * Creates a subway service.
@@ -34,10 +27,10 @@ public final class SubwayService extends AbstractKeolisStationProvider<SubwaySta
      * @param dbHelper
      *            the database helper
      */
-    public SubwayService(final DatabaseHelper dbHelper) {
+    public SubwayService(final ItinerennesContext context) {
 
-        super(dbHelper, new CacheProvider<SubwayStation>(dbHelper,
-                new SubwayStationCacheEntryHandler()));
+        keolisClient = new JsonKeolisClient(context.getHttpClient(),
+                ItineRennesConstants.KEOLIS_API_URL, ItineRennesConstants.KEOLIS_API_KEY);
     }
 
     /**
@@ -46,28 +39,12 @@ public final class SubwayService extends AbstractKeolisStationProvider<SubwaySta
      * @param id
      *            the station identifier
      * @return the subway station
-     * @throws GenericException
+     * @throws IOException
      *             an error occurred
-     * @see fr.itinerennes.business.service.AbstractKeolisStationProvider#retrieveFreshStation(java.lang.String)
      */
-    @Override
-    protected SubwayStation retrieveFreshStation(final String id) throws GenericException {
+    public SubwayStation getSubwayStation(final String id) throws IOException {
 
-        return keolisService.getSubwayStation(id);
-    }
-
-    /**
-     * Retrieves all subway stations from the keolis network service.
-     * 
-     * @return all the subway stations
-     * @throws GenericException
-     *             an error occurred
-     * @see fr.itinerennes.business.service.AbstractKeolisStationProvider#retrieveAllStations()
-     */
-    @Override
-    protected List<SubwayStation> retrieveAllStations() throws GenericException {
-
-        return keolisService.getAllSubwayStations();
+        return keolisClient.getSubwayStation(id);
     }
 
 }

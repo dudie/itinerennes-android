@@ -6,8 +6,6 @@ import org.osmdroid.events.DelayedMapListener;
 import org.osmdroid.events.MapListener;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Overlay;
-import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -28,9 +26,6 @@ public class ItinerennesMapView extends MapView {
 
     /** Map listener event delayed listener constant value. */
     private static final long MAP_LISTENER_DELAY = 800;
-
-    /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItinerennesMapView.class);
 
     /** The map controller. */
     private final MapViewController controller;
