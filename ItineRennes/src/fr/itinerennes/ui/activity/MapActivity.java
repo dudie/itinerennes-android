@@ -108,15 +108,6 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
 
         map.setMultiTouchControls(true);
 
-        final int zoomToRestore = sharedPreferences.getInt(ITRPrefs.MAP_ZOOM_LEVEL,
-                ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
-        map.getController().setZoom(zoomToRestore);
-        final int latToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LAT,
-                ItineRennesConstants.CONFIG_RENNES_LAT);
-        final int lonToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LON,
-                ItineRennesConstants.CONFIG_RENNES_LON);
-        map.getController().setCenter(new GeoPoint(latToRestore, lonToRestore));
-
         // if first start of the application, open the preload dialog
         if (sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
             final Intent i = new Intent(this, PreloadActivity.class);
@@ -141,6 +132,15 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         }
 
         final SharedPreferences sharedPreferences = getITRPreferences();
+        final int zoomToRestore = sharedPreferences.getInt(ITRPrefs.MAP_ZOOM_LEVEL,
+                ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
+        map.getController().setZoom(zoomToRestore);
+        final int latToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LAT,
+                ItineRennesConstants.CONFIG_RENNES_LAT);
+        final int lonToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LON,
+                ItineRennesConstants.CONFIG_RENNES_LON);
+        map.getController().setCenter(new GeoPoint(latToRestore, lonToRestore));
+
         // if a location provider is enabled and follow location is activated in preferences, the
         // follow location feature is enabled
         if (sharedPreferences.getBoolean(ITRPrefs.MAP_SHOW_LOCATION, true)
