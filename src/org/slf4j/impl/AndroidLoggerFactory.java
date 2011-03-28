@@ -42,7 +42,23 @@ public final class AndroidLoggerFactory implements ILoggerFactory {
     @Override
     public Logger getLogger(final String name) {
 
-        return new ItinerennesLogger(getTag(name), getName(name));
+        Class<?> clazz = null;
+        final String packageName, classSimpleName;
+        try {
+            clazz = Class.forName(name);
+        } catch (final ClassNotFoundException e) {
+            // nothing to do, the logger name will be used
+        }
+
+        if (clazz == null) {
+            packageName = name;
+            classSimpleName = name;
+        } else {
+            packageName = clazz.getPackage().getName();
+            classSimpleName = clazz.getSimpleName();
+        }
+
+        return new ItinerennesLogger(getTag(packageName), getName(classSimpleName));
     }
 
     /**
