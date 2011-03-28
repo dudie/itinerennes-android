@@ -95,29 +95,29 @@ public class MarkerOverlay extends LazyOverlay {
     public final boolean onSingleTapUp(final MotionEvent e, final MapView mapView) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onSingleTapUp.start");
+            LOGGER.debug("onSingleTapUp.start - event={}", e);
         }
+
+        final boolean eventHandled;
 
         final MarkerOverlayItem marker = checkItemPresence(e, mapView);
         if (marker != null) {
             onSingleTapUpMarker(marker, mapView);
             mapView.postInvalidate();
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("onSingleTapUp.end");
-            }
-
-            return true;
+            eventHandled = true;
         } else {
             ((ItinerennesMapView) mapView).getMapBoxController().hide();
             mapView.postInvalidate();
+
+            eventHandled = false;
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onSingleTapUp.end");
+            LOGGER.debug("onSingleTapUp.end - eventHandled={}", eventHandled);
         }
 
-        return false;
+        return eventHandled;
     }
 
     /**
@@ -157,11 +157,21 @@ public class MarkerOverlay extends LazyOverlay {
         // on dessine les items seulement s'il ne s'agit pas du mode shadow
         if (!shadow) {
             final Projection pj = osmv.getProjection();
+            final Point point = new Point();
 
+            // first draw markers
             for (final MarkerOverlayItem marker : markers) {
-                final Point point = pj.toMapPixels(marker.getLocation(), null);
+                pj.toMapPixels(marker.getLocation(), point);
 
                 drawItem(c, marker, point, osmv);
+            }
+
+            // then if a marker is selected draw if over the others
+            final MarkerOverlayItem selectedItem = ((ItinerennesMapView) osmv)
+                    .getMapBoxController().getSelectedItem();
+            if (null != selectedItem) {
+                pj.toMapPixels(selectedItem.getLocation(), point);
+                drawItem(c, selectedItem, point, osmv);
             }
         }
 
