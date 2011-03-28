@@ -101,6 +101,7 @@ public class MarkerOverlay extends LazyOverlay {
         final MarkerOverlayItem marker = checkItemPresence(e, mapView);
         if (marker != null) {
             onSingleTapUpMarker(marker, mapView);
+            mapView.postInvalidate();
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("onSingleTapUp.end");
@@ -109,6 +110,7 @@ public class MarkerOverlay extends LazyOverlay {
             return true;
         } else {
             ((ItinerennesMapView) mapView).getMapBoxController().hide();
+            mapView.postInvalidate();
         }
 
         if (LOGGER.isDebugEnabled()) {
@@ -148,13 +150,23 @@ public class MarkerOverlay extends LazyOverlay {
     @Override
     protected final void draw(final Canvas c, final MapView osmv, final boolean shadow) {
 
-        final Projection pj = osmv.getProjection();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(String.format("draw.start"));
+        }
 
-        /* Draw in backward cycle, so the items with the least index are on the front. */
-        for (final MarkerOverlayItem marker : markers) {
-            final Point point = pj.toMapPixels(marker.getLocation(), null);
+        // on dessine les items seulement s'il ne s'agit pas du mode shadow
+        if (!shadow) {
+            final Projection pj = osmv.getProjection();
 
-            drawItem(c, marker, point);
+            for (final MarkerOverlayItem marker : markers) {
+                final Point point = pj.toMapPixels(marker.getLocation(), null);
+
+                drawItem(c, marker, point, osmv);
+            }
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(String.format("draw.end"));
         }
 
     }
@@ -168,15 +180,25 @@ public class MarkerOverlay extends LazyOverlay {
      *            the item to be drawn
      * @param curScreenCoords
      *            the screen coordinates of the item
+     * @param mapView
+     *            the map view
      */
     protected final void drawItem(final Canvas canvas, final MarkerOverlayItem item,
-            final Point curScreenCoords) {
+            final Point curScreenCoords, final MapView mapView) {
 
         final Drawable drawable = item.getIcon();
 
         final int[] originalState = drawable.getState();
+
         if (map.getZoomLevel() < ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
             drawable.setState(new int[] { R.attr.state_low_zoom });
+        }
+
+        final MarkerOverlayItem selectedItem = ((ItinerennesMapView) mapView).getMapBoxController()
+                .getSelectedItem();
+        if (selectedItem != null && selectedItem.getId().equals(item.getId())) {
+
+            drawable.setState(new int[] { android.R.attr.state_pressed });
         }
 
         final int left_right = drawable.getIntrinsicWidth() / 2;
