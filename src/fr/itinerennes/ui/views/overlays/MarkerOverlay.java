@@ -79,6 +79,7 @@ public class MarkerOverlay extends LazyOverlay {
                 overlayItem.setType(type);
                 overlayItem.setIcon(this.context.getResources().getDrawable(
                         marker.getIconDrawableId()));
+                overlayItem.setBookmarked(marker.isBookmarked());
 
                 markers.add(overlayItem);
             }
@@ -200,16 +201,25 @@ public class MarkerOverlay extends LazyOverlay {
 
         final int[] originalState = drawable.getState();
 
+        final int[] states = new int[3];
+        int index = 0;
+
         if (map.getZoomLevel() < ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
-            drawable.setState(new int[] { R.attr.state_low_zoom });
+            states[index++] = R.attr.state_low_zoom;
         }
 
         final MarkerOverlayItem selectedItem = ((ItinerennesMapView) mapView).getMapBoxController()
                 .getSelectedItem();
         if (selectedItem != null && selectedItem.getId().equals(item.getId())) {
 
-            drawable.setState(new int[] { android.R.attr.state_pressed });
+            states[index++] = android.R.attr.state_pressed;
         }
+
+        if (item.isBookmarked()) {
+            states[index++] = R.attr.state_bookmarked;
+        }
+
+        drawable.setState(states);
 
         final int left_right = drawable.getIntrinsicWidth() / 2;
         final int top_bottom = drawable.getIntrinsicHeight() / 2;

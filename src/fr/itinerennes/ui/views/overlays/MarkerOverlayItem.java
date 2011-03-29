@@ -26,6 +26,9 @@ public class MarkerOverlayItem {
     /** The marker position. */
     private GeoPoint location;
 
+    /** Is this marker bookmarked ? */
+    private boolean bookmarked;
+
     /**
      * Gets the type.
      * 
@@ -132,6 +135,27 @@ public class MarkerOverlayItem {
     }
 
     /**
+     * Gets the bookmarked.
+     * 
+     * @return the bookmarked
+     */
+    public boolean isBookmarked() {
+
+        return bookmarked;
+    }
+
+    /**
+     * Sets the bookmarked.
+     * 
+     * @param bookmarked
+     *            the bookmarked to set
+     */
+    public void setBookmarked(final boolean bookmarked) {
+
+        this.bookmarked = bookmarked;
+    }
+
+    /**
      * (non-javadoc)
      * 
      * @see java.lang.Object#toString()
@@ -150,7 +174,10 @@ public class MarkerOverlayItem {
         builder.append(icon);
         builder.append(", location=");
         builder.append(location);
+        builder.append(", bookmarked=");
+        builder.append(bookmarked);
         builder.append("]");
         return builder.toString();
     }
+
 }
