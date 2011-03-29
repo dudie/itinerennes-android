@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.onebusaway.model.TripStopTime;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 
@@ -138,7 +138,7 @@ public class BusRouteStopsAdapter extends BaseAdapter {
             /* Display handistar icon if current stop and current route are accessible. */
             final ImageView handistar = (ImageView) view.findViewById(R.trip_time.stop_wheelchair);
             if (context.getAccessibilityService().isAccessible(stopTime.getStop().getId(),
-                    ItineRennesConstants.MARKER_TYPE_BUS)) {
+                    TypeConstants.TYPE_BUS)) {
                 handistar.setVisibility(View.VISIBLE);
             }
         }

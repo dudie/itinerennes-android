@@ -10,6 +10,7 @@ import android.widget.ToggleButton;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.keolis.client.JsonKeolisClient;
 import fr.itinerennes.keolis.model.BikeStation;
 import fr.itinerennes.ui.activity.ItinerennesContext;
@@ -55,10 +56,10 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
 
         final ToggleButton star = (ToggleButton) bikeView
                 .findViewById(R.id.map_box_toggle_bookmark);
-        star.setChecked(context.getBookmarksService().isStarred(
-                ItineRennesConstants.MARKER_TYPE_BIKE, item.getId()));
-        star.setOnCheckedChangeListener(new ToggleStarListener(context,
-                ItineRennesConstants.MARKER_TYPE_BIKE, item.getId(), item.getLabel()));
+        star.setChecked(context.getBookmarksService().isStarred(TypeConstants.TYPE_BIKE,
+                item.getId()));
+        star.setOnCheckedChangeListener(new ToggleStarListener(context, TypeConstants.TYPE_BIKE,
+                item.getId(), item.getLabel()));
 
         return bikeView;
     }

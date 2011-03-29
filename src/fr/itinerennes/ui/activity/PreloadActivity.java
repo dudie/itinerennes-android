@@ -21,12 +21,14 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 
 import fr.itinerennes.R;
+import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 
 /**
  * @author Jérémie Huchet
  */
-public class PreloadActivity extends ItinerennesContext implements MarkersColumns {
+public class PreloadActivity extends ItinerennesContext implements MarkersColumns,
+        AccessibilityColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(PreloadActivity.class);
@@ -236,52 +238,99 @@ public class PreloadActivity extends ItinerennesContext implements MarkersColumn
             }
 
             final SQLiteDatabase db = getDatabaseHelper().getWritableDatabase();
-            final InsertHelper insertHelper = new InsertHelper(db, MARKERS_TABLE_NAME);
-            final int idColumn = insertHelper.getColumnIndex("id");
-            final int typeColumn = insertHelper.getColumnIndex("type");
-            final int latColumn = insertHelper.getColumnIndex("lat");
-            final int lonColumn = insertHelper.getColumnIndex("lon");
-            final int labelColumn = insertHelper.getColumnIndex("label");
 
-            final InputStream is = getResources().openRawResource(R.raw.markers);
-            final BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            // insert helper for markers
+            final InsertHelper insertMarkerHelper = new InsertHelper(db, MARKERS_TABLE_NAME);
+            final int idMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.ID);
+            final int typeMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.TYPE);
+            final int latMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LATITUDE);
+            final int lonMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LONGITUDE);
+            final int labelMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LABEL);
+
+            // insert helper for accessibility informations
+            final InsertHelper insertAccessibilityHelper = new InsertHelper(db,
+                    ACCESSIBILITY_TABLE_NAME);
+            final int idAccessibilityColumn = insertAccessibilityHelper
+                    .getColumnIndex(AccessibilityColumns.ID);
+            final int typeAccessibilityColumn = insertAccessibilityHelper
+                    .getColumnIndex(AccessibilityColumns.TYPE);
+            final int wheelchairAccessibilityColumn = insertAccessibilityHelper
+                    .getColumnIndex(AccessibilityColumns.WHEELCHAIR);
+
+            // file reader for markers
+            final InputStream isMarker = getResources().openRawResource(R.raw.markers);
+            final BufferedReader readerMarkers = new BufferedReader(new InputStreamReader(isMarker));
+
+            // file reader for accessibility informations
+            final InputStream isAccessibility = getResources().openRawResource(R.raw.accessibility);
+            final BufferedReader readerAccessibility = new BufferedReader(new InputStreamReader(
+                    isAccessibility));
 
             LOGGER.debug("Inserting markers in database...");
             final long debut = System.currentTimeMillis();
 
             db.beginTransaction();
             try {
-                String line = reader.readLine();
-                final int count = Integer.parseInt(line);
+
+                String line = readerMarkers.readLine();
+                int count = Integer.parseInt(line);
+
+                line = readerAccessibility.readLine();
+                count += Integer.parseInt(line);
 
                 handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_START, count));
 
-                while ((line = reader.readLine()) != null) {
+                // walking through markers file
+                while ((line = readerMarkers.readLine()) != null) {
                     final String[] fields = line.split(";");
 
-                    insertHelper.prepareForInsert();
+                    insertMarkerHelper.prepareForInsert();
 
-                    insertHelper.bind(typeColumn, fields[0]);
-                    insertHelper.bind(idColumn, fields[1]);
-                    insertHelper.bind(latColumn, (int) (Double.parseDouble(fields[2]) * 1E6));
-                    insertHelper.bind(lonColumn, (int) (Double.parseDouble(fields[3]) * 1E6));
-                    insertHelper.bind(labelColumn, fields[4]);
+                    insertMarkerHelper.bind(typeMarkerColumn, fields[0]);
+                    insertMarkerHelper.bind(idMarkerColumn, fields[1]);
+                    insertMarkerHelper.bind(latMarkerColumn,
+                            (int) (Double.parseDouble(fields[2]) * 1E6));
+                    insertMarkerHelper.bind(lonMarkerColumn,
+                            (int) (Double.parseDouble(fields[3]) * 1E6));
+                    insertMarkerHelper.bind(labelMarkerColumn, fields[4]);
 
-                    insertHelper.execute();
+                    insertMarkerHelper.execute();
                     handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_PROGRESS, 1));
                 }
+
+                // walking through accessibility file
+                while ((line = readerAccessibility.readLine()) != null) {
+                    final String[] fields = line.split(";");
+
+                    insertAccessibilityHelper.prepareForInsert();
+
+                    insertAccessibilityHelper.bind(idAccessibilityColumn, fields[0]);
+                    insertAccessibilityHelper.bind(typeAccessibilityColumn, fields[1]);
+                    insertAccessibilityHelper.bind(wheelchairAccessibilityColumn, 1);
+
+                    insertAccessibilityHelper.execute();
+                    handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_PROGRESS, 1));
+                }
+
                 db.setTransactionSuccessful();
             } catch (final IOException e) {
                 try {
-                    is.close();
+                    isMarker.close();
+                    isAccessibility.close();
                 } catch (final IOException e1) {
                     getExceptionHandler().handleException(e);
                     handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_FAILED));
                 }
                 getExceptionHandler().handleException(e);
                 handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_FAILED));
-                e.printStackTrace();
             } finally {
+                try {
+                    isMarker.close();
+                    isAccessibility.close();
+                } catch (final IOException e) {
+                    LOGGER.debug("Can't close file input stream !", e);
+                }
+
                 db.endTransaction();
             }
 

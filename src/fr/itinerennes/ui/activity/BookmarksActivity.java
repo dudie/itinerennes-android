@@ -14,8 +14,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import fr.itinerennes.ErrorCodeConstants;
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.keolis.model.BikeStation;
 import fr.itinerennes.keolis.model.SubwayStation;
@@ -106,18 +106,18 @@ public class BookmarksActivity extends ItinerennesContext {
             throws GenericException, IOException {
 
         GeoPoint location = null;
-        if (ItineRennesConstants.MARKER_TYPE_BUS.equals(type)) {
+        if (TypeConstants.TYPE_BUS.equals(type)) {
             final Marker bus = getMarkerService().getMarker(id);
             if (bus != null) {
                 location = bus.getGeoPoint();
             }
-        } else if (ItineRennesConstants.MARKER_TYPE_BIKE.equals(type)) {
+        } else if (TypeConstants.TYPE_BIKE.equals(type)) {
             final BikeStation bike = getBikeService().getBikeStation(id);
             if (bike != null) {
 
                 location = new GeoPoint(bike.getLatitude(), bike.getLongitude());
             }
-        } else if (ItineRennesConstants.MARKER_TYPE_SUBWAY.equals(type)) {
+        } else if (TypeConstants.TYPE_SUBWAY.equals(type)) {
             final SubwayStation subway = getSubwayService().getSubwayStation(id);
             if (subway != null) {
                 location = new GeoPoint(subway.getLatitude(), subway.getLongitude());
