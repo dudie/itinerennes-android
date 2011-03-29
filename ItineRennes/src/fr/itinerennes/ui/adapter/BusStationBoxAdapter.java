@@ -18,7 +18,6 @@ import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
-import fr.itinerennes.onebusaway.model.BusStation;
 import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.Stop;
 import fr.itinerennes.ui.activity.BusStationActivity;
@@ -80,14 +79,14 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
         });
 
         final ToggleButton star = (ToggleButton) busView.findViewById(R.id.map_box_toggle_bookmark);
-        star.setChecked(context.getBookmarksService().isStarred(BusStation.class.getName(),
-                item.getId()));
+        star.setChecked(context.getBookmarksService().isStarred(
+                ItineRennesConstants.MARKER_TYPE_BUS, item.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context,
                 ItineRennesConstants.MARKER_TYPE_BUS, item.getId(), item.getLabel()));
 
         final ImageView handistar = (ImageView) busView.findViewById(R.id.map_box_wheelchair);
-        if (context.getAccessibilityService()
-                .isAccessible(item.getId(), BusStation.class.getName())) {
+        if (context.getAccessibilityService().isAccessible(item.getId(),
+                ItineRennesConstants.MARKER_TYPE_BUS)) {
             handistar.setVisibility(View.VISIBLE);
         }
         return busView;
