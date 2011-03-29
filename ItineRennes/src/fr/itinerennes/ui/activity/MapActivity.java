@@ -221,14 +221,22 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         }
         super.onNewIntent(intent);
 
+        final SharedPreferences.Editor edit = getITRPreferences().edit();
+
         // if intent asks for a specific zoom level, its values overrides the ones
-        // saved when the activity was paused
+        // saved in preferences
+
         final int newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
         // same thing with the map center
         final int newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter()
                 .getLatitudeE6());
         final int newLon = intent.getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter()
                 .getLongitudeE6());
+
+        edit.putInt(ITRPrefs.MAP_CENTER_LAT, newLat);
+        edit.putInt(ITRPrefs.MAP_CENTER_LON, newLon);
+        edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, newZoom);
+
         if (LOGGER.isDebugEnabled()) {
             if (map.getZoomLevel() != newZoom) {
                 LOGGER.debug("intent requested a new zoom level : old={}, new={}",
@@ -243,14 +251,12 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
                         .getMapCenter().getLongitudeE6(), newLon);
             }
         }
-        map.getController().setZoom(newZoom);
-        map.getController().setCenter(new GeoPoint(newLat, newLon));
 
         // disable follow location in preferences because we are explicitly centering the map on a
         // location.
         // if not, it will be activated again in onResume().
-        final SharedPreferences.Editor edit = getITRPreferences().edit();
         edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, false);
+
         edit.commit();
 
         if (LOGGER.isDebugEnabled()) {

@@ -5,6 +5,9 @@
     <declare-styleable name="LowZoomedState">
         <attr name="state_low_zoom" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="BookmarkedState">
+        <attr name="state_bookmarked" format="boolean"/>
+    </declare-styleable>
 	<declare-styleable name="ITRZoomControls">
 	    <attr name="mapview" format="integer"/>
 	</declare-styleable>

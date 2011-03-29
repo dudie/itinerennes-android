@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 
+import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.Marker;
@@ -51,18 +53,24 @@ public class MarkersService extends AbstractService implements MarkersColumns {
         }
         final SQLiteDatabase database = dbHelper.getReadableDatabase();
 
-        final String[] columns = new String[] { ID, TYPE, LABEL, LONGITUDE, LATITUDE };
+        final SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
-        final String selection = String.format(
-                "%s = ? AND %s >= ? AND %s <= ? AND %s >= ? AND %s <= ?", TYPE, LONGITUDE,
+        builder.setTables(String.format("%s m left join %s b on m.%s=b.%s", MARKERS_TABLE_NAME,
+                Columns.BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, Columns.BookmarksColumns.ID));
+
+        final String[] columns = new String[] { String.format("m.%s", ID),
+                String.format("m.%s", TYPE), String.format("m.%s", LABEL), LONGITUDE, LATITUDE,
+                String.format("b.%s is not null", ID) };
+
+        final String where = String.format(
+                "m.%s = ? AND %s >= ? AND %s <= ? AND %s >= ? AND %s <= ?", TYPE, LONGITUDE,
                 LONGITUDE, LATITUDE, LATITUDE);
 
         final String[] selectionArgs = new String[] { type, String.valueOf(bbox.getLonWestE6()),
                 String.valueOf(bbox.getLonEastE6()), String.valueOf(bbox.getLatSouthE6()),
                 String.valueOf(bbox.getLatNorthE6()) };
 
-        final Cursor c = database.query(MARKERS_TABLE_NAME, columns, selection, selectionArgs,
-                null, null, null);
+        final Cursor c = builder.query(database, columns, where, selectionArgs, null, null, null);
 
         final List<Marker> markers = new ArrayList<Marker>();
         while (c.moveToNext()) {
@@ -72,6 +80,7 @@ public class MarkersService extends AbstractService implements MarkersColumns {
             marker.setName(c.getString(2));
             marker.setLongitude(c.getInt(3));
             marker.setLatitude(c.getInt(4));
+            marker.setBookmarked((c.getInt(5) != 0));
 
             markers.add(marker);
         }
@@ -98,14 +107,20 @@ public class MarkersService extends AbstractService implements MarkersColumns {
         }
         final SQLiteDatabase database = dbHelper.getReadableDatabase();
 
-        final String[] columns = new String[] { ID, TYPE, LABEL, LONGITUDE, LATITUDE };
+        final SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
-        final String selection = String.format("%s = ?", ID);
+        builder.setTables(String.format("%s m left join %s b on m.%s=b.%s", MARKERS_TABLE_NAME,
+                Columns.BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, Columns.BookmarksColumns.ID));
+
+        final String[] columns = new String[] { String.format("m.%s", ID),
+                String.format("m.%s", TYPE), String.format("m.%s", LABEL), LONGITUDE, LATITUDE,
+                String.format("b.%s is not null", ID) };
+
+        final String where = String.format("m.%s = ?", ID);
 
         final String[] selectionArgs = new String[] { id };
 
-        final Cursor c = database.query(MARKERS_TABLE_NAME, columns, selection, selectionArgs,
-                null, null, null);
+        final Cursor c = builder.query(database, columns, where, selectionArgs, null, null, null);
 
         Marker marker = null;
         if (c.moveToNext()) {
@@ -115,6 +130,7 @@ public class MarkersService extends AbstractService implements MarkersColumns {
             marker.setName(c.getString(2));
             marker.setLongitude(c.getInt(3));
             marker.setLatitude(c.getInt(4));
+            marker.setBookmarked((c.getInt(5) != 0));
         }
         c.close();
 

@@ -2,6 +2,20 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes">
 
+    <!-- PRESSED and BOOKMARKED -->
+    <item android:state_pressed="true" itr:state_bookmarked="true">
+        <layer-list>
+            <item android:drawable="@drawable/marker_selected_border"/>
+            <item>
+                <bitmap android:gravity="center" android:src="@drawable/subway_marker_icon" />
+            </item>
+            <item
+                android:drawable="@drawable/marker_overlay_star"
+                android:bottom="15dp"
+                android:left="15dp"/>
+        </layer-list>
+    </item>
+    
     <!-- PRESSED -->
     <item android:state_pressed="true">
         <layer-list>
@@ -12,9 +26,35 @@
         </layer-list>
     </item>
     
+    <!-- LOW ZOOMED and BOOKMARKED -->
+    <item itr:state_low_zoom="true" itr:state_bookmarked="true">
+        <layer-list>
+            <item>
+                <bitmap android:gravity="center" android:src="@drawable/subway_marker_icon_lite" />
+            </item>
+            <item
+                android:drawable="@drawable/marker_overlay_star"
+                android:bottom="15dp"
+                android:left="15dp"/>
+        </layer-list>
+    </item>
+    
     <!-- LOW ZOOMED -->
     <item itr:state_low_zoom="true">
         <bitmap android:gravity="center" android:src="@drawable/subway_marker_icon_lite" />
+    </item>
+    
+    <!-- BOOKMARKED -->
+    <item itr:state_bookmarked="true">
+        <layer-list>
+            <item>
+                <bitmap android:gravity="center" android:src="@drawable/subway_marker_icon" />
+            </item>
+            <item
+                android:drawable="@drawable/marker_overlay_star"
+                android:bottom="15dp"
+                android:left="15dp"/>
+        </layer-list>
     </item>
     
     <item>

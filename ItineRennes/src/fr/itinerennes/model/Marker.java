@@ -27,6 +27,9 @@ public class Marker {
     /** The longitude of the marker. */
     private int longitude;
 
+    /** Is this marker bookmarked ?. */
+    private boolean bookmarked;
+
     /**
      * Gets the identifier of the marker.
      * 
@@ -163,8 +166,28 @@ public class Marker {
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the bookmarked.
      * 
+     * @return the bookmarked
+     */
+    public boolean isBookmarked() {
+
+        return bookmarked;
+    }
+
+    /**
+     * Sets the bookmarked.
+     * 
+     * @param bookmarked
+     *            the bookmarked to set
+     */
+    public void setBookmarked(final boolean bookmarked) {
+
+        this.bookmarked = bookmarked;
+    }
+
+    /*
+     * (non-javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
@@ -173,12 +196,16 @@ public class Marker {
         final StringBuilder builder = new StringBuilder();
         builder.append("Marker [id=");
         builder.append(id);
+        builder.append(", type=");
+        builder.append(type);
         builder.append(", label=");
         builder.append(label);
         builder.append(", latitude=");
         builder.append(latitude);
         builder.append(", longitude=");
         builder.append(longitude);
+        builder.append(", bookmarked=");
+        builder.append(bookmarked);
         builder.append("]");
         return builder.toString();
     }
