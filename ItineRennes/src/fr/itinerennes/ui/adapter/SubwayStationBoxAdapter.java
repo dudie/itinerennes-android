@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.keolis.model.SubwayStation;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
@@ -48,10 +48,10 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
 
         final ToggleButton star = (ToggleButton) subwayView
                 .findViewById(R.id.map_box_toggle_bookmark);
-        star.setChecked(context.getBookmarksService().isStarred(
-                ItineRennesConstants.MARKER_TYPE_SUBWAY, item.getId()));
-        star.setOnCheckedChangeListener(new ToggleStarListener(context,
-                ItineRennesConstants.MARKER_TYPE_SUBWAY, item.getId(), item.getLabel()));
+        star.setChecked(context.getBookmarksService().isStarred(TypeConstants.TYPE_SUBWAY,
+                item.getId()));
+        star.setOnCheckedChangeListener(new ToggleStarListener(context, TypeConstants.TYPE_SUBWAY,
+                item.getId(), item.getLabel()));
 
         return subwayView;
     }

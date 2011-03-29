@@ -50,11 +50,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 FileUtils.read(getClass().getResourceAsStream(
                         ItineRennesConstants.DATABASE_CREATE_SCRIPT_URI)));
 
-        // insert accessibility informations into the database
-        execScript(
-                db,
-                FileUtils.read(getClass().getResourceAsStream(
-                        ItineRennesConstants.DATABASE_INSERT_ACCESSIBILITY_SCRIPT_URI)));
     }
 
     /**
@@ -79,11 +74,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 FileUtils.read(getClass().getResourceAsStream(
                         ItineRennesConstants.DATABASE_CREATE_SCRIPT_URI)));
 
-        // insert accessibility informations into the database
-        execScript(
-                db,
-                FileUtils.read(getClass().getResourceAsStream(
-                        ItineRennesConstants.DATABASE_INSERT_ACCESSIBILITY_SCRIPT_URI)));
     }
 
     /**

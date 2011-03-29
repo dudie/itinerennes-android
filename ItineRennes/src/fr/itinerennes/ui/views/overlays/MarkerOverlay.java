@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.model.Marker;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.ItinerennesMapView;
@@ -53,9 +54,9 @@ public class MarkerOverlay extends LazyOverlay {
         this.context = context;
         this.map = map;
         // TJHU Auto-generated constructor stub
-        visibleMarkerTypes.add(ItineRennesConstants.MARKER_TYPE_BIKE);
-        visibleMarkerTypes.add(ItineRennesConstants.MARKER_TYPE_BUS);
-        visibleMarkerTypes.add(ItineRennesConstants.MARKER_TYPE_SUBWAY);
+        visibleMarkerTypes.add(TypeConstants.TYPE_BIKE);
+        visibleMarkerTypes.add(TypeConstants.TYPE_BUS);
+        visibleMarkerTypes.add(TypeConstants.TYPE_SUBWAY);
     }
 
     /**

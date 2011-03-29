@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
-import fr.itinerennes.onebusaway.model.Route;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.onebusaway.model.ScheduleStopTime;
 import fr.itinerennes.onebusaway.model.StopSchedule;
 import fr.itinerennes.ui.activity.ItinerennesContext;
@@ -136,7 +136,8 @@ public class BusTimeAdapter extends BaseAdapter {
             final ImageView handistar = (ImageView) busTimeView
                     .findViewById(R.station.bus_departure_wheelchair);
             if (context.getAccessibilityService().isAccessible(
-                    data.getStopTimes().get(position).getRoute().getId(), Route.class.getName())) {
+                    data.getStopTimes().get(position).getRoute().getId(),
+                    TypeConstants.TYPE_BUS_ROUTE)) {
                 handistar.setVisibility(View.VISIBLE);
             }
         }

@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.model.Marker;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
@@ -192,8 +193,7 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
 
         /* Display handistar icon if necessary. */
         final ImageView handistar = (ImageView) findViewById(R.station.bus_activity_wheelchair_icon);
-        isAccessible = getAccessibilityService().isAccessible(stopId,
-                ItineRennesConstants.MARKER_TYPE_BUS);
+        isAccessible = getAccessibilityService().isAccessible(stopId, TypeConstants.TYPE_BUS);
         if (isAccessible) {
             handistar.setVisibility(View.VISIBLE);
         }

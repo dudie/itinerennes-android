@@ -60,14 +60,4 @@ public class ItineRennesConstants {
     /** The database drop script URI. */
     public static final String DATABASE_DROP_SCRIPT_URI = "/fr/itinerennes/database/drop_database.sql";
 
-    /** The database insert script URI for bus station wheelchair accessibility. */
-    public static final String DATABASE_INSERT_ACCESSIBILITY_SCRIPT_URI = "/fr/itinerennes/database/accessibility.sql";
-
-    /** Map constants */
-    public static final String MARKER_TYPE_BIKE = "BIKE";
-
-    public static final String MARKER_TYPE_BUS = "BUS";
-
-    public static final String MARKER_TYPE_SUBWAY = "SUBWAY";
-
 }
