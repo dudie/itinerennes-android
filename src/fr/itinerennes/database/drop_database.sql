@@ -17,8 +17,6 @@ DROP TABLE IF EXISTS "accessibility";
 DROP INDEX IF EXISTS "accessibility_idx";
 
 
--- suppression des anciennes tables
--- ce code devrait être supprimé plus tard
 DROP TABLE IF EXISTS "bus_stations";
 DROP INDEX IF EXISTS "bus_stations_id_idx";
 DROP INDEX IF EXISTS "bus_stations_lon_idx";
