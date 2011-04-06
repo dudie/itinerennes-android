@@ -20,8 +20,8 @@ import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.keolis.model.BikeStation;
 import fr.itinerennes.keolis.model.SubwayStation;
 import fr.itinerennes.model.Bookmark;
-import fr.itinerennes.model.Marker;
 import fr.itinerennes.ui.adapter.BookmarksAdapter;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
  * This activity displays bookmarks items the user starred.
@@ -107,9 +107,9 @@ public class BookmarksActivity extends ItinerennesContext {
 
         GeoPoint location = null;
         if (TypeConstants.TYPE_BUS.equals(type)) {
-            final Marker bus = getMarkerService().getMarker(id);
+            final MarkerOverlayItem bus = getMarkerService().getMarker(id);
             if (bus != null) {
-                location = bus.getGeoPoint();
+                location = bus.getLocation();
             }
         } else if (TypeConstants.TYPE_BIKE.equals(type)) {
             final BikeStation bike = getBikeService().getBikeStation(id);

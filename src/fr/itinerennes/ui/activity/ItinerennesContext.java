@@ -20,7 +20,7 @@ import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BikeService;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.business.service.LineIconService;
-import fr.itinerennes.business.service.MarkersService;
+import fr.itinerennes.business.service.MarkerOverlayService;
 import fr.itinerennes.business.service.SubwayService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
@@ -44,7 +44,7 @@ public abstract class ItinerennesContext extends Activity {
     private final ExceptionHandler exceptionHandler = new DefaultExceptionHandler(this);
 
     /** The marker service. */
-    private MarkersService markerService;
+    private MarkerOverlayService markerService;
 
     /** The bike service. */
     private BikeService bikeService;
@@ -183,10 +183,10 @@ public abstract class ItinerennesContext extends Activity {
      * 
      * @return a reference to the {@link MarkerService}
      */
-    public final MarkersService getMarkerService() {
+    public final MarkerOverlayService getMarkerService() {
 
         if (markerService == null) {
-            markerService = new MarkersService(getDatabaseHelper());
+            markerService = new MarkerOverlayService(this, getDatabaseHelper());
         }
         return markerService;
     }

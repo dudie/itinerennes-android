@@ -13,12 +13,12 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.view.MotionEvent;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.model.Marker;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 
@@ -41,6 +41,9 @@ public class MarkerOverlay extends LazyOverlay {
 
     /** The list of all displayed markers. */
     private final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>(20);
+
+    /** This property references the task currently loading the current displayed bounding box. */
+    private AsyncTask<Void, Void, List<MarkerOverlayItem>> refreshTask = null;
 
     /**
      * Creates the marker overlay.
@@ -65,26 +68,40 @@ public class MarkerOverlay extends LazyOverlay {
      * @see fr.itinerennes.ui.views.overlays.LazyOverlay#onMapMove(org.osmdroid.views.MapView)
      */
     @Override
-    protected synchronized void onMapMove(final MapView source) {
+    protected final void onMapMove(final MapView source) {
 
-        markers.clear();
+        refreshTask = new AsyncTask<Void, Void, List<MarkerOverlayItem>>() {
 
-        for (final String type : visibleMarkerTypes) {
-            final List<Marker> markersElements = this.context.getMarkerService().getMarkers(
-                    source.getBoundingBox(), type);
-            for (final Marker marker : markersElements) {
-                final MarkerOverlayItem overlayItem = new MarkerOverlayItem();
-                overlayItem.setId(marker.getId());
-                overlayItem.setLabel(marker.getLabel());
-                overlayItem.setLocation(marker.getGeoPoint());
-                overlayItem.setType(type);
-                overlayItem.setIcon(this.context.getResources().getDrawable(
-                        marker.getIconDrawableId()));
-                overlayItem.setBookmarked(marker.isBookmarked());
+            /**
+             * Retrieves the markers for the currently displayed bounding boxes.
+             * 
+             * @see android.os.AsyncTask#doInBackground(Params[])
+             */
+            @Override
+            protected List<MarkerOverlayItem> doInBackground(final Void... params) {
 
-                markers.add(overlayItem);
+                final List<MarkerOverlayItem> newMarkers = new ArrayList<MarkerOverlayItem>();
+                for (final String type : visibleMarkerTypes) {
+                    newMarkers.addAll(context.getMarkerService().getMarkers(
+                            source.getBoundingBox(), type));
+                }
+                return newMarkers;
             }
-        }
+
+            @Override
+            protected void onPostExecute(final List<MarkerOverlayItem> newMarkers) {
+
+                if (refreshTask == this) {
+                    LOGGER.debug("refreshing map");
+                    markers.clear();
+                    markers.addAll(newMarkers);
+                    source.postInvalidate();
+                } else {
+                    LOGGER.debug("NOT refreshing map");
+                }
+            }
+        };
+        refreshTask.execute();
     }
 
     /**
