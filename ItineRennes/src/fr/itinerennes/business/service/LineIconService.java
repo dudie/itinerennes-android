@@ -17,6 +17,7 @@ import android.widget.TextView;
 import fr.itinerennes.R;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
+import fr.itinerennes.utils.ResourceResolver;
 
 /**
  * Methods to get an icon representing a transport line.
@@ -61,8 +62,7 @@ public class LineIconService extends AbstractService {
         final String resName = String.format("line_icon_%s",
                 line.toLowerCase().replaceAll("[^a-z0-9_.]", "_"));
 
-        final int id = context.getResources().getIdentifier(resName, "drawable",
-                context.getPackageName());
+        final int id = ResourceResolver.getDrawableId(context, resName, 0);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("icon resource : name={}, id={}", resName, id);

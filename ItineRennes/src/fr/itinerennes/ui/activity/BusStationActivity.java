@@ -30,13 +30,13 @@ import android.widget.Toast;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.model.Marker;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.ScheduleStopTime;
 import fr.itinerennes.onebusaway.model.StopSchedule;
 import fr.itinerennes.ui.adapter.BusTimeAdapter;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
  * This activity uses the <code>bus_station.xml</code> layout and displays a window with
@@ -380,12 +380,12 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
 
         handler.sendMessage(handler.obtainMessage(MESSAGE_DISPLAY_DIALOG_LOAD_STATION));
 
-        final AsyncTask<Void, Void, Marker> task = new AsyncTask<Void, Void, Marker>() {
+        final AsyncTask<Void, Void, MarkerOverlayItem> task = new AsyncTask<Void, Void, MarkerOverlayItem>() {
 
             @Override
-            protected Marker doInBackground(final Void... params) {
+            protected MarkerOverlayItem doInBackground(final Void... params) {
 
-                Marker busStation = null;
+                MarkerOverlayItem busStation = null;
 
                 busStation = getMarkerService().getMarker(stopId);
 
@@ -393,7 +393,7 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
             }
 
             @Override
-            protected void onPostExecute(final Marker busStation) {
+            protected void onPostExecute(final MarkerOverlayItem busStation) {
 
                 if (busStation == null) {
                     Toast.makeText(getApplicationContext(),
@@ -402,8 +402,10 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
                     final Intent i = new Intent(getApplicationContext(), MapActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
-                    i.putExtra(MapActivity.INTENT_SET_MAP_LON, busStation.getLongitude());
-                    i.putExtra(MapActivity.INTENT_SET_MAP_LAT, busStation.getLatitude());
+                    i.putExtra(MapActivity.INTENT_SET_MAP_LON, busStation.getLocation()
+                            .getLongitudeE6());
+                    i.putExtra(MapActivity.INTENT_SET_MAP_LAT, busStation.getLocation()
+                            .getLatitudeE6());
                     startActivity(i);
 
                 }
