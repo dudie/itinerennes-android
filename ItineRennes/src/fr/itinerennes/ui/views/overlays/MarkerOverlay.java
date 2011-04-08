@@ -188,7 +188,7 @@ public class MarkerOverlay extends LazyOverlay {
             // then if a marker is selected draw if over the others
             final MarkerOverlayItem selectedItem = ((ItinerennesMapView) osmv)
                     .getMapBoxController().getSelectedItem();
-            if (null != selectedItem) {
+            if (null != selectedItem && markers.contains(selectedItem)) {
                 pj.toMapPixels(selectedItem.getLocation(), point);
                 drawItem(c, selectedItem, point, osmv);
             }
