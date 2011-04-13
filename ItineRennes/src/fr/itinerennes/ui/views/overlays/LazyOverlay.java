@@ -53,5 +53,5 @@ public abstract class LazyOverlay extends Overlay implements MapListener {
      * @param source
      *            the map view which generated this event
      */
-    protected abstract void onMapMove(MapView source);
+    public abstract void onMapMove(MapView source);
 }

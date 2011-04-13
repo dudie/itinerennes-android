@@ -1,6 +1,7 @@
 package fr.itinerennes.ui.views.overlays;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.osmdroid.views.MapView;
@@ -39,6 +40,9 @@ public class MarkerOverlay extends LazyOverlay {
     /** The list containing visible types of markers. */
     private final List<String> visibleMarkerTypes = new ArrayList<String>(3);
 
+    /** The map containing labels for types of markers. */
+    private final HashMap<String, String> markerTypesLabel = new HashMap<String, String>(3);
+
     /** The list of all displayed markers. */
     private final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>(20);
 
@@ -56,10 +60,14 @@ public class MarkerOverlay extends LazyOverlay {
         super(context);
         this.context = context;
         this.map = map;
-        // TJHU Auto-generated constructor stub
+
         visibleMarkerTypes.add(TypeConstants.TYPE_BIKE);
         visibleMarkerTypes.add(TypeConstants.TYPE_BUS);
         visibleMarkerTypes.add(TypeConstants.TYPE_SUBWAY);
+
+        markerTypesLabel.put(TypeConstants.TYPE_BUS, context.getString(R.string.overlay_bus));
+        markerTypesLabel.put(TypeConstants.TYPE_BIKE, context.getString(R.string.overlay_bike));
+        markerTypesLabel.put(TypeConstants.TYPE_SUBWAY, context.getString(R.string.overlay_subway));
     }
 
     /**
@@ -68,7 +76,7 @@ public class MarkerOverlay extends LazyOverlay {
      * @see fr.itinerennes.ui.views.overlays.LazyOverlay#onMapMove(org.osmdroid.views.MapView)
      */
     @Override
-    protected final void onMapMove(final MapView source) {
+    public final void onMapMove(final MapView source) {
 
         refreshTask = new AsyncTask<Void, Void, List<MarkerOverlayItem>>() {
 
@@ -80,11 +88,8 @@ public class MarkerOverlay extends LazyOverlay {
             @Override
             protected List<MarkerOverlayItem> doInBackground(final Void... params) {
 
-                final List<MarkerOverlayItem> newMarkers = new ArrayList<MarkerOverlayItem>();
-                for (final String type : visibleMarkerTypes) {
-                    newMarkers.addAll(context.getMarkerService().getMarkers(
-                            source.getBoundingBox(), type));
-                }
+                final List<MarkerOverlayItem> newMarkers = context.getMarkerService().getMarkers(
+                        source.getBoundingBox(), visibleMarkerTypes);
                 return newMarkers;
             }
 
@@ -94,7 +99,10 @@ public class MarkerOverlay extends LazyOverlay {
                 if (refreshTask == this) {
                     LOGGER.debug("refreshing map");
                     markers.clear();
-                    markers.addAll(newMarkers);
+                    if (newMarkers != null) {
+                        markers.addAll(newMarkers);
+                    }
+
                     source.postInvalidate();
                 } else {
                     LOGGER.debug("NOT refreshing map");
@@ -281,5 +289,52 @@ public class MarkerOverlay extends LazyOverlay {
 
         }
         return null;
+    }
+
+    /**
+     * Gets the markerTypesLabel.
+     * 
+     * @return the markerTypesLabel
+     */
+    public HashMap<String, String> getMarkerTypesLabel() {
+
+        return markerTypesLabel;
+    }
+
+    /**
+     * Is a marker type visible ?
+     * 
+     * @param type
+     * @return true if the marker type is visible
+     */
+    public boolean isMarkerTypeVisible(final String type) {
+
+        return visibleMarkerTypes.contains(type);
+    }
+
+    /**
+     * Show markers of a given type.
+     * 
+     * @param type
+     *            type to show
+     */
+    public void show(final String type) {
+
+        if (!visibleMarkerTypes.contains(type)) {
+            visibleMarkerTypes.add(type);
+        }
+
+    }
+
+    /**
+     * Hide markers of a given type.
+     * 
+     * @param type
+     *            type to hide
+     */
+    public void hide(final String type) {
+
+        visibleMarkerTypes.remove(type);
+
     }
 }

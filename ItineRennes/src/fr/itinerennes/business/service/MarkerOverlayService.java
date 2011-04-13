@@ -51,15 +51,22 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
      * 
      * @param bbox
      *            the bounding box in which fetch markers
-     * @param type
-     *            the type of markers to retrieve
+     * @param types
+     *            the types of markers to retrieve
      * @return the list of Marker
      */
-    public final List<MarkerOverlayItem> getMarkers(final BoundingBoxE6 bbox, final String type) {
+    public final List<MarkerOverlayItem> getMarkers(final BoundingBoxE6 bbox,
+            final List<String> types) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getMarkers.start - bbox={}", bbox);
         }
+
+        if (types.size() == 0) {
+            // no visible marker type is selected, we return nothing at all
+            return null;
+        }
+
         final SQLiteDatabase database = dbHelper.getReadableDatabase();
 
         final SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
@@ -71,11 +78,16 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
                 String.format("m.%s", TYPE), String.format("m.%s", LABEL), LONGITUDE, LATITUDE,
                 String.format("b.%s is not null", ID) };
 
-        final String where = String.format(
-                "m.%s = ? AND %s >= ? AND %s <= ? AND %s >= ? AND %s <= ?", TYPE, LONGITUDE,
-                LONGITUDE, LATITUDE, LATITUDE);
+        final String where = String.format("%s >= ? AND %s <= ? AND %s >= ? AND %s <= ?",
+                LONGITUDE, LONGITUDE, LATITUDE, LATITUDE);
 
-        final String[] selectionArgs = new String[] { type, String.valueOf(bbox.getLonWestE6()),
+        // filter on visible types
+        for (int i = 0; i < types.size(); i++) {
+            builder.appendWhere(String.format(" %s m.%s = '%s'", (i > 0) ? "OR" : "", TYPE,
+                    types.get(i)));
+        }
+
+        final String[] selectionArgs = new String[] { String.valueOf(bbox.getLonWestE6()),
                 String.valueOf(bbox.getLonEastE6()), String.valueOf(bbox.getLatSouthE6()),
                 String.valueOf(bbox.getLatNorthE6()) };
 
