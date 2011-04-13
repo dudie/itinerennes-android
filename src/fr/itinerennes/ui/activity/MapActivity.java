@@ -1,7 +1,9 @@
 package fr.itinerennes.ui.activity;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.util.constants.OverlayConstants;
@@ -10,6 +12,7 @@ import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -25,6 +28,7 @@ import android.widget.ToggleButton;
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 
@@ -151,17 +155,15 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
 
         // restore previous displayed overlays (only if not displaying preload dialog)
         if (!sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
-            // TOBO réactivation des overlays à l'état avant la fermeture de l'application
-            // final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
-            // if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, true)) {
-            // moh.getBusStationOverlay().setEnabled(true);
-            // }
-            // if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, true)) {
-            // moh.getBikeStationOverlay().setEnabled(true);
-            // }
-            // if (sharedPreferences.getBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, true)) {
-            // moh.getSubwayStationOverlay().setEnabled(true);
-            // }
+            if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, true)) {
+                map.getMarkerOverlay().hide(TypeConstants.TYPE_BUS);
+            }
+            if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, true)) {
+                map.getMarkerOverlay().hide(TypeConstants.TYPE_BIKE);
+            }
+            if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, true)) {
+                map.getMarkerOverlay().hide(TypeConstants.TYPE_SUBWAY);
+            }
         }
         super.onResume();
 
@@ -191,14 +193,14 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, myLocation.isMyLocationEnabled());
 
         // save current displayed overlays
-        // TOBO sauvegarde de l'état des overlays
-        // final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
-        // edit.putBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, moh.getBusStationOverlay().isEnabled());
-        // edit.putBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED,
-        // moh.getBikeStationOverlay().isEnabled());
-        // edit.putBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, moh.getSubwayStationOverlay()
-        // .isEnabled());
-        // valid modifications
+        edit.putBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED,
+                map.getMarkerOverlay().isMarkerTypeVisible(TypeConstants.TYPE_BUS));
+        edit.putBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, map.getMarkerOverlay()
+                .isMarkerTypeVisible(TypeConstants.TYPE_BIKE));
+        edit.putBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, map.getMarkerOverlay()
+                .isMarkerTypeVisible(TypeConstants.TYPE_SUBWAY));
+
+        // save modifications
         edit.commit();
 
         myLocation.disableFollowLocation();
@@ -275,12 +277,6 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
 
         switch (requestCode) {
         case ACTIVITY_REQUEST_PRELOAD:
-            // active overlays when receive prelod result
-            // TOBO active les overlays au premier démarrage
-            // final MapOverlayHelper moh = map.getController().getMapOverlayHelper();
-            // moh.getSubwayStationOverlay().setEnabled(true);
-            // moh.getBusStationOverlay().setEnabled(true);
-            // moh.getBikeStationOverlay().setEnabled(true);
 
             if (RESULT_CANCELED == resultCode) {
                 if (LOGGER.isDebugEnabled()) {
@@ -388,45 +384,57 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         AlertDialog dialog;
         switch (id) {
         case Dialogs.SELECT_LAYERS:
-            // TOBO menu pour sélectionner les layers
-            // final MapOverlayHelper overlayHelper = map.getController().getMapOverlayHelper();
-            // final List<SelectableOverlay<?>> allOverlays = overlayHelper.getToggleableOverlays();
-            // final Map<String, SelectableOverlay<?>> namesToOverlays = new HashMap<String,
-            // SelectableOverlay<?>>();
-            // final String[] options = new String[allOverlays.size()];
-            // final boolean[] selections = new boolean[allOverlays.size()];
 
-            // for (int i = 0; i < options.length; i++) {
-            // options[i] = allOverlays.get(i).getLocalizedName();
-            // selections[i] = allOverlays.get(i).isEnabled();
-            // namesToOverlays.put(options[i], allOverlays.get(i));
-            // }
+            final HashMap<String, String> markerLabels = map.getMarkerOverlay()
+                    .getMarkerTypesLabel();
+            final String[] options = new String[markerLabels.size()];
+            final boolean[] selections = new boolean[markerLabels.size()];
+            final HashMap<String, String> labelstoType = new HashMap<String, String>(
+                    markerLabels.size());
+
+            final Iterator<Entry<String, String>> it = markerLabels.entrySet().iterator();
+            int i = 0;
+            while (it.hasNext()) {
+                final Entry<String, String> entry = it.next();
+                options[i] = entry.getValue();
+                selections[i] = map.getMarkerOverlay().isMarkerTypeVisible(entry.getKey());
+                labelstoType.put(entry.getValue(), entry.getKey());
+                i++;
+            }
 
             final Map<String, Boolean> results = new HashMap<String, Boolean>();
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.select_layer);
             // TJHU faire une icone calque builder.setIcon(id);
-            // builder.setMultiChoiceItems(options, selections,
-            // new DialogInterface.OnMultiChoiceClickListener() {
-            //
-            // @Override
-            // public void onClick(final DialogInterface dialog, final int which,
-            // final boolean isChecked) {
-            //
-            // results.put(options[which], isChecked);
-            // }
-            // });
-            // builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            //
-            // @Override
-            // public void onClick(final DialogInterface dialog, final int which) {
-            //
-            // for (final Entry<String, Boolean> userInput : results.entrySet()) {
-            // namesToOverlays.get(userInput.getKey()).setEnabled(userInput.getValue());
-            // }
-            // }
-            // });
+
+            builder.setMultiChoiceItems(options, selections,
+                    new DialogInterface.OnMultiChoiceClickListener() {
+
+                        @Override
+                        public void onClick(final DialogInterface dialog, final int which,
+                                final boolean isChecked) {
+
+                            results.put(options[which], isChecked);
+                        }
+                    });
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(final DialogInterface dialog, final int which) {
+
+                    for (final Entry<String, Boolean> userInput : results.entrySet()) {
+                        if (userInput.getValue()) {
+                            map.getMarkerOverlay().show(labelstoType.get(userInput.getKey()));
+                        } else {
+                            map.getMarkerOverlay().hide(labelstoType.get(userInput.getKey()));
+                        }
+
+                    }
+                    map.getMarkerOverlay().onMapMove(map);
+                }
+
+            });
 
             dialog = builder.create();
             break;
