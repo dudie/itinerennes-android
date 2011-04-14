@@ -3,91 +3,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
-    android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:gravity="center_vertical" android:orientation="vertical">
 
-	<ScrollView 
-	    android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_weight="1">
-
-	    <LinearLayout android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:gravity="center_vertical"
-	        android:orientation="vertical">
-	
-			<LinearLayout android:layout_width="fill_parent"
-				android:layout_height="wrap_content" 
-				android:gravity="center"
-				android:orientation="horizontal">
-		
-				<ImageView android:src="@drawable/itr_icon_big"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginRight="20dp" />
-		
-				<TextView android:text="@string/app_name"
-				    android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textSize="24sp"
-					android:textStyle="bold"
-					android:textColor="@color/white" />
-	    
-	        </LinearLayout>
-	        
-	        <RadioGroup android:checkedButton="@+id/activity_preload_radio_preload"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_gravity="center"
-	                android:layout_margin="10dp">
-	        
-		        <RadioButton android:id="@+id/activity_preload_radio_preload"
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:text="@string/do_preload"
-	                android:textSize="20sp"/>
-		        
-	            <TextView android:text="@string/explanations_preload"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:clickable="true"
-	                android:textColor="@color/state_white"
-	                android:onClick="onSelectRadioPreload" />
-	                
-		        <RadioButton android:id="@+id/activity_preload_radio_dont_preload"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:text="@string/dont_preload"
-	                android:textSize="20sp"
-	                android:layout_marginTop="20dp"/>
-	            
-	            <TextView android:text="@string/explanations_no_preload"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-                    android:textColor="@color/state_white"
-	                android:clickable="true"
-	                android:onClick="onSelectRadioNoPreload" />
-		            
-	        </RadioGroup>
-	        
-	    </LinearLayout>
-    
-    </ScrollView>
-    
-    <LinearLayout 
-        android:layout_width="fill_parent"
+    <ImageView android:src="@drawable/itr_icon_big"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="right">
-    
-		<Button 
-		   android:layout_width="wrap_content" 
-		   android:layout_height="wrap_content" 
-		   android:layout_margin="10dp"
-           android:textSize="20sp"
-		   android:gravity="center"
-		   android:text="@string/continuer"
-		   android:onClick="onDoOrDontPreload" />
-    
-    </LinearLayout>
+        android:layout_gravity="center"/>
+                    
+	<ProgressBar android:id="@+id/activity_preload_progress_bar"
+            android:layout_width="fill_parent" 
+            android:layout_margin="10dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_height="20dp"/>
         
 </LinearLayout>
