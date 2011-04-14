@@ -5,20 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.osmdroid.util.BoundingBoxE6;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.database.DatabaseUtils.InsertHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 
 import fr.itinerennes.R;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
@@ -51,18 +45,8 @@ public class PreloadActivity extends ItinerennesContext implements MarkersColumn
     /** Handler message specifying the preload has failed. */
     private static final int MSG_DOWNLOAD_FAILED = -1;
 
-    /** The bounding box containing the whole world. */
-    private static final BoundingBoxE6 BBOX_WORLD = new BoundingBoxE6(180000000, 180000000,
-            -180000000, -180000000);
-
-    /** The radio button the user checks to do the preload. */
-    private RadioButton radioPreload;
-
-    /** The radio button the user checks to don't preload. */
-    private RadioButton radioDontPreload;
-
-    /** The progress bar displaying the prelod progression state. */
-    private ProgressBar dialogProgressBar;
+    /** The progress bar displaying the preload progression state. */
+    private ProgressBar progressBar;
 
     /** The handler to handle progress messages in the UI thread. */
     private final Handler handler = new Handler() {
@@ -72,11 +56,11 @@ public class PreloadActivity extends ItinerennesContext implements MarkersColumn
 
             switch (msg.what) {
             case MSG_DOWNLOAD_START:
-                dialogProgressBar.setProgress(0);
-                dialogProgressBar.setMax((Integer) msg.obj);
+                progressBar.setProgress(0);
+                progressBar.setMax((Integer) msg.obj);
                 break;
             case MSG_DOWNLOAD_PROGRESS:
-                dialogProgressBar.setProgress(dialogProgressBar.getProgress() + (Integer) msg.obj);
+                progressBar.setProgress(progressBar.getProgress() + (Integer) msg.obj);
                 break;
             case MSG_DOWNLOAD_SUCCESS:
                 dismissDialogIfDisplayed(DIALOG_PRELOAD);
@@ -84,7 +68,7 @@ public class PreloadActivity extends ItinerennesContext implements MarkersColumn
                 finish();
                 break;
             case MSG_DOWNLOAD_FAILED:
-                dialogProgressBar.setIndeterminate(true);
+                progressBar.setIndeterminate(true);
                 dismissDialogIfDisplayed(DIALOG_PRELOAD);
                 showDialog(DIALOG_FAILURE);
                 break;
@@ -109,99 +93,13 @@ public class PreloadActivity extends ItinerennesContext implements MarkersColumn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preload);
 
-        radioPreload = (RadioButton) findViewById(R.id.activity_preload_radio_preload);
-        radioDontPreload = (RadioButton) findViewById(R.id.activity_preload_radio_dont_preload);
+        progressBar = (ProgressBar) findViewById(R.id.activity_preload_progress_bar);
+
+        new DataPreloader(handler).start();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
         }
-    }
-
-    /**
-     * Triggered when user clicks on the text describing the preload function.
-     * 
-     * @param target
-     *            the clicked view
-     */
-    public final void onSelectRadioPreload(final View target) {
-
-        radioPreload.setChecked(true);
-    }
-
-    /**
-     * Triggered when user clicks on the text describing the don't preload function.
-     * 
-     * @param target
-     *            the clicked view
-     */
-    public final void onSelectRadioNoPreload(final View target) {
-
-        radioDontPreload.setChecked(true);
-    }
-
-    /**
-     * Triggered when user clicks on the 'continue' button.
-     * 
-     * @param target
-     *            the clicked view
-     */
-    public final void onDoOrDontPreload(final View target) {
-
-        if (radioDontPreload.isChecked()) {
-            setResult(RESULT_CANCELED);
-            finish();
-        } else {
-            showDialog(DIALOG_PRELOAD);
-            new DataPreloader(handler).start();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onCreateDialog(int)
-     */
-    @Override
-    protected final Dialog onCreateDialog(final int id) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCreateDialog.start - id={}", id);
-        }
-        Dialog d = null;
-        switch (id) {
-        // the preload dialog
-        case DIALOG_PRELOAD:
-            final AlertDialog.Builder progressBuilder = new AlertDialog.Builder(this);
-            progressBuilder.setTitle(R.string.loading);
-            final View progressView = getLayoutInflater().inflate(R.layout.progress_dialog, null);
-            dialogProgressBar = (ProgressBar) progressView.findViewById(R.id.progress_bar);
-            progressBuilder.setView(progressView);
-            progressBuilder.setCancelable(false);
-            d = progressBuilder.create();
-            break;
-
-        // the failure dialog
-        case DIALOG_FAILURE:
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.error_network);
-            builder.setCancelable(true);
-            builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(final DialogInterface dialog, final int id) {
-
-                    dialog.dismiss();
-                }
-            });
-            d = builder.create();
-            break;
-        default:
-            break;
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCreateDialog.end - id={}", id);
-        }
-        return d;
     }
 
     /**
