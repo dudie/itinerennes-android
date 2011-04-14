@@ -331,13 +331,6 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         final Intent favActivityIntent = new Intent(this, BookmarksActivity.class);
         favourites.setIntent(favActivityIntent);
 
-        // RE-PRELOAD
-        final MenuItem rePreload = menu.add(Menu.NONE, MenuOptions.PRELOAD, Menu.NONE,
-                R.string.menu_preload);
-        // favourites.setIcon(android.R.drawable.btn_star);
-        final Intent rePreloadIntent = new Intent(this, PreloadActivity.class);
-        rePreload.setIntent(rePreloadIntent);
-
         // ABOUT
         final MenuItem about = menu.add(Menu.NONE, MenuOptions.ABOUT, Menu.NONE,
                 R.string.menu_about);
@@ -468,8 +461,6 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         /** "Layers" menu option. */
         private static final int LAYERS = 2;
 
-        /** "Re-Preload" menu option. */
-        private static final int PRELOAD = 3;
     }
 
     /**
