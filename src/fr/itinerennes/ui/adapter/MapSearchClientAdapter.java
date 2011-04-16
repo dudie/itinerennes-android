@@ -2,7 +2,10 @@ package fr.itinerennes.ui.adapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,6 +111,9 @@ public class MapSearchClientAdapter extends BaseAdapter implements Filterable {
 
         return new Filter() {
 
+            /** A map caching the history results. */
+            private final Map<String, List<SearchResult>> cache = new HashMap<String, List<SearchResult>>();
+
             /**
              * {@inheritDoc}
              * 
@@ -118,26 +124,52 @@ public class MapSearchClientAdapter extends BaseAdapter implements Filterable {
 
                 LOGGER.debug("FILTER CONSTRAINT = " + constraint);
 
-                final FilterResults results = new FilterResults();
+                final String query = String.valueOf(constraint).toLowerCase();
+                List<SearchResult> searchRes = null;
 
                 // do not start a search query for a input string lower than 3 characters
-                if (constraint != null && constraint.length() >= 3) {
-                    try {
-                        final List<SearchResult> searchRes = searchClient.search(String.valueOf(
-                                constraint).toLowerCase());
-                        results.values = searchRes;
-                        results.count = searchRes.size();
-                    } catch (final IOException e) {
-                        // TJHU Auto-generated catch block
-                        e.printStackTrace();
+                if (query != null && query.length() >= 3) {
+
+                    searchRes = cache.get(query);
+
+                    if (searchRes == null) {
+                        LOGGER.debug("making new search");
+                        try {
+                            searchRes = searchClient.search(query);
+                        } catch (final IOException e) {
+                            // TJHU Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    } else {
+                        LOGGER.debug("using cached result list");
                     }
                 }
 
                 // if there was an error, we reinitialize the result list
-                if (results.values == null) {
-                    results.values = new ArrayList<SearchResult>(0);
-                    results.count = 0;
+                if (searchRes == null) {
+                    searchRes = new ArrayList<SearchResult>(0);
                 }
+
+                // cache the new result if needed
+                if (!cache.containsKey(query)) {
+                    LOGGER.debug("caching new search result list ({} results)", searchRes.size());
+                    cache.put(query, searchRes);
+                }
+
+                // clear the search history cache (if the user uses backspace, then the previous
+                // result needs to be removed to free memory)
+                final Iterator<String> i = cache.keySet().iterator();
+                while (i.hasNext()) {
+                    final String histQ = i.next();
+                    if (!query.startsWith(histQ)) {
+                        LOGGER.debug("remove obsolete cached result list for query={}", histQ);
+                        i.remove();
+                    }
+                }
+
+                final FilterResults results = new FilterResults();
+                results.values = searchRes;
+                results.count = searchRes.size();
 
                 return results;
             }

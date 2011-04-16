@@ -177,9 +177,9 @@ public class MarkerOverlay extends LazyOverlay {
     @Override
     protected final void draw(final Canvas c, final MapView osmv, final boolean shadow) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(String.format("draw.start"));
-        }
+        // if (LOGGER.isDebugEnabled()) {
+        // LOGGER.debug(String.format("draw.start"));
+        // }
 
         // on dessine les items seulement s'il ne s'agit pas du mode shadow
         if (!shadow) {
@@ -202,10 +202,9 @@ public class MarkerOverlay extends LazyOverlay {
             }
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(String.format("draw.end"));
-        }
-
+        // if (LOGGER.isDebugEnabled()) {
+        // LOGGER.debug(String.format("draw.end"));
+        // }
     }
 
     /**
