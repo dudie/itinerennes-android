@@ -18,10 +18,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -29,6 +31,7 @@ import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.ui.adapter.MapSearchClientAdapter;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 
@@ -296,6 +299,36 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         default:
             break;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onKeyDown(int, android.view.KeyEvent)
+     */
+    @Override
+    public final boolean onKeyDown(final int keyCode, final KeyEvent event) {
+
+        final boolean result;
+        if (KeyEvent.KEYCODE_SEARCH == keyCode) {
+            // when search key is pressed, the search engine view is displayed / hidden
+            final View search = findViewById(R.id.map_search_layout);
+            if (View.VISIBLE == search.getVisibility()) {
+                search.setVisibility(View.GONE);
+            } else {
+                final AutoCompleteTextView autoCompField = (AutoCompleteTextView) search
+                        .findViewById(R.id.map_search_field);
+                if (autoCompField.getAdapter() == null) {
+                    autoCompField.setAdapter(new MapSearchClientAdapter(this, getSearchClient()));
+                }
+                search.setVisibility(View.VISIBLE);
+            }
+            result = true;
+        } else {
+            // default result
+            result = super.onKeyDown(keyCode, event);
+        }
+        return result;
     }
 
     /**
