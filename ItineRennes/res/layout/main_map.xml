@@ -46,5 +46,20 @@
 		android:layout_margin="5dp">
 	</fr.itinerennes.ui.views.MapBoxView>
 	
+	<LinearLayout 
+        android:id="@+id/map_search_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#95000000"
+        android:visibility="gone">
+        
+		<AutoCompleteTextView 
+		    android:id="@+id/map_search_field"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_margin="10dp"
+		    android:hint="@string/search_field_hint" />
+		    
+	</LinearLayout>
 	
 </RelativeLayout>
