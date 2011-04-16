@@ -58,6 +58,7 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_margin="10dp"
+            android:completionThreshold="4"
 		    android:hint="@string/search_field_hint" />
 		    
 	</LinearLayout>
