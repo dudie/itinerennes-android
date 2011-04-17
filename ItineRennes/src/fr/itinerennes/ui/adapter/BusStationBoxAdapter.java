@@ -137,26 +137,27 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
     @Override
     public final void updateView(final View view, final Stop item) {
 
-        // updates the station name just to be sure
         if (station != null) {
+            // updates the station name just to be sure
             ((TextView) view.findViewById(R.id.map_box_title)).setText(station.getName());
-        }
 
-        final LinearLayout iconsView = (LinearLayout) view.findViewById(R.id.line_icon_container);
+            final LinearLayout iconsView = (LinearLayout) view
+                    .findViewById(R.id.line_icon_container);
 
-        final List<Route> busRoutes = station.getRoutes();
-        if (!busRoutes.isEmpty()) {
-            for (final Route route : busRoutes) {
+            final List<Route> busRoutes = station.getRoutes();
+            if (!busRoutes.isEmpty()) {
+                for (final Route route : busRoutes) {
 
-                final View imageContainer = inflater.inflate(R.layout.line_icon, null);
-                final ImageView lineIcon = (ImageView) imageContainer
-                        .findViewById(R.station.bus_line_icon);
-                lineIcon.setImageDrawable(context.getLineIconService().getIconOrDefault(context,
-                        route.getShortName()));
-                iconsView.addView(imageContainer);
+                    final View imageContainer = inflater.inflate(R.layout.line_icon, null);
+                    final ImageView lineIcon = (ImageView) imageContainer
+                            .findViewById(R.station.bus_line_icon);
+                    lineIcon.setImageDrawable(context.getLineIconService().getIconOrDefault(
+                            context, route.getShortName()));
+                    iconsView.addView(imageContainer);
+                }
+                // set the list of routes icons visible only if it contains icons
+                view.findViewById(R.id.line_icon_container).setVisibility(View.VISIBLE);
             }
-            // set the list of routes icons visible only if it contains icons
-            view.findViewById(R.id.line_icon_container).setVisibility(View.VISIBLE);
         }
 
     }
