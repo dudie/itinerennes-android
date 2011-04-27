@@ -121,7 +121,7 @@ public class BusRouteStopsAdapter extends BaseAdapter {
         // sets a blue drawable on the left
         if (initialStopId.equals(stopTime.getStop().getId())) {
             ((ImageView) view.findViewById(R.trip_time.listview_separator))
-                    .setImageResource(R.drawable.listview_separator);
+                    .setImageResource(R.drawable.misc_listview_separator);
         }
 
         // if the current view represents a stop where the bus is already passed

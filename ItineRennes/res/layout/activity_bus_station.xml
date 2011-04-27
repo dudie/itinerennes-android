@@ -9,10 +9,10 @@
 		android:gravity="center_vertical" 
 		android:padding="5dp"
 		android:focusable="true"
-		android:background="@drawable/title_background_clickable"
+		android:background="@drawable/bg_activity_title_clickable"
 		android:onClick="onStopTitleClick">
 
-		<ImageView android:src="@drawable/bus_activity_title_icon"
+		<ImageView android:src="@drawable/ic_activity_title_bus"
 		    android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 		</ImageView>
@@ -27,7 +27,7 @@
 		</TextView>
 		
 		<ImageView android:id="@+station/bus_activity_wheelchair_icon"
-		    android:src="@drawable/handistar_icon"
+		    android:src="@drawable/misc_handistar_icon"
 		    android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
@@ -35,7 +35,7 @@
             android:visibility="gone">
         </ImageView>
 
-        <ImageView android:src="@drawable/center_map"
+        <ImageView android:src="@drawable/ic_osm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </ImageView>

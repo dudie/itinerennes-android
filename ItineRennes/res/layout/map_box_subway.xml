@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="5dp"
-    android:background="@drawable/map_box_background">
+    android:background="@drawable/bg_mapbox">
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	       android:orientation="horizontal"
@@ -12,7 +12,7 @@
 	       android:layout_height="wrap_content"
 	       android:gravity="center_vertical">
 	       
-	    <ImageView android:src="@drawable/subway_marker_icon"
+	    <ImageView android:src="@drawable/ic_marker_subway"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:paddingRight="10dp"/>

@@ -103,7 +103,7 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
             marker.setBookmarked((c.getInt(5) != 0));
             // TJHU set the default marker resource identifier
             final int iconId = ResourceResolver.getDrawableId(context,
-                    String.format("marker_icon_%s", marker.getType()), 0);
+                    String.format("icx_marker_%s", marker.getType()), 0);
             marker.setIcon(context.getResources().getDrawable(iconId));
             markers.add(marker);
         }
@@ -155,7 +155,7 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
             marker.setBookmarked((c.getInt(5) != 0));
             // TJHU set the default marker resource identifier
             final int iconId = ResourceResolver.getDrawableId(context,
-                    String.format("marker_icon_%s", marker.getType()), 0);
+                    String.format("icx_marker_%s", marker.getType()), 0);
             marker.setIcon(context.getResources().getDrawable(iconId));
         }
         c.close();

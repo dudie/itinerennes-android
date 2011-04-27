@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="5dp"
-    android:background="@drawable/map_box_background">
+    android:background="@drawable/bg_mapbox">
 
     <!-- BIKE ICON, TITLE and STAR -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,7 +13,7 @@
            android:layout_height="wrap_content"
            android:gravity="center_vertical">
            
-        <ImageView android:src="@drawable/bike_marker_icon"
+        <ImageView android:src="@drawable/ic_marker_bike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="10dp"/>
@@ -52,7 +52,7 @@
 	       android:layout_height="wrap_content"
 	       android:id="@+id/map_box_bike_details">
 	
-	    <ImageView android:src="@drawable/bike"
+	    <ImageView android:src="@drawable/misc_bike"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"/>
 	
@@ -81,7 +81,7 @@
 	        android:text="-"
 	        style="@style/WhiteText"/>
 	
-	    <ImageView android:src="@drawable/slot"
+	    <ImageView android:src="@drawable/misc_slot"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"/>
 	

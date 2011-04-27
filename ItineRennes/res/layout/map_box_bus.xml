@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:padding="5dp"
     android:paddingBottom="0dp"
-    android:background="@drawable/map_box_background_clickable">
+    android:background="@drawable/bg_mapbox_clickable">
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	       android:orientation="horizontal"
@@ -13,7 +13,7 @@
 	       android:layout_height="wrap_content"
 	       android:gravity="center_vertical">
 	       
-	    <ImageView android:src="@drawable/bus_marker_icon"
+	    <ImageView android:src="@drawable/ic_marker_bus"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:paddingRight="10dp"/>
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:gravity="right"
-            android:background="@drawable/handistar_icon"
+            android:background="@drawable/misc_handistar_icon"
             android:visibility="gone"/>
             
 	    <ToggleButton android:id="@+id/map_box_toggle_bookmark"
@@ -51,7 +51,7 @@
 	        android:textOn=""
 	        android:textOff="" />
 	        
-	    <ImageView android:src="@drawable/arrow_right"
+	    <ImageView android:src="@drawable/misc_arrow_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"

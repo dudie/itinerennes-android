@@ -24,9 +24,9 @@ public class BookmarksAdapter extends BaseAdapter {
     /** A map containing icons to use for each type of bookmarks. */
     private static final Map<String, Integer> ICONS = new HashMap<String, Integer>();
     static {
-        ICONS.put(TypeConstants.TYPE_BIKE, R.drawable.bike_activity_title_icon);
-        ICONS.put(TypeConstants.TYPE_BUS, R.drawable.bus_activity_title_icon);
-        ICONS.put(TypeConstants.TYPE_SUBWAY, R.drawable.subway_activity_title_icon);
+        ICONS.put(TypeConstants.TYPE_BIKE, R.drawable.ic_activity_title_bike);
+        ICONS.put(TypeConstants.TYPE_BUS, R.drawable.ic_activity_title_bus);
+        ICONS.put(TypeConstants.TYPE_SUBWAY, R.drawable.ic_activity_title_subway);
     }
 
     /** The layout inflater. */
