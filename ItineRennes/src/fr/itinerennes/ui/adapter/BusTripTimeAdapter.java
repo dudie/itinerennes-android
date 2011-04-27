@@ -20,7 +20,7 @@ import fr.itinerennes.ui.activity.ItinerennesContext;
 /**
  * @author Jérémie Huchet
  */
-public class BusRouteStopsAdapter extends BaseAdapter {
+public class BusTripTimeAdapter extends BaseAdapter {
 
     /** The itinérennes context. */
     private final ItinerennesContext context;
@@ -50,7 +50,7 @@ public class BusRouteStopsAdapter extends BaseAdapter {
      * @param arrivalAndDepartures
      *            the list of arrival times and departure times of the bus for each stop of the trip
      */
-    public BusRouteStopsAdapter(final ItinerennesContext context, final String initialStopId,
+    public BusTripTimeAdapter(final ItinerennesContext context, final String initialStopId,
             final List<TripStopTime> arrivalAndDepartures, final boolean routeIsAccessible) {
 
         this.context = context;
@@ -101,7 +101,7 @@ public class BusRouteStopsAdapter extends BaseAdapter {
     @Override
     public final View getView(final int position, final View convertView, final ViewGroup parent) {
 
-        final View view = inflater.inflate(R.layout.trip_time, null);
+        final View view = inflater.inflate(R.layout.li_trip_time_bus, null);
 
         final TripStopTime stopTime = arrivalAndDepartures.get(position);
 

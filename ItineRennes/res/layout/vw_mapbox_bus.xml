@@ -60,6 +60,6 @@
 	
 	</LinearLayout>
 
-    <include layout="@layout/line_icon_list" />
+    <include layout="@layout/ul_line_icon" />
 
 </LinearLayout>

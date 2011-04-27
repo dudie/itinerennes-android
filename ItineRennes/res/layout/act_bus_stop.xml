@@ -42,7 +42,7 @@
 
 	</LinearLayout>
 
-    <include layout="@layout/line_icon_list" />
+    <include layout="@layout/ul_line_icon" />
 	
 	<ListView 
 	    android:id="@+station/list_bus" 

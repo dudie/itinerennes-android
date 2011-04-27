@@ -92,7 +92,7 @@ public class BookmarksAdapter extends BaseAdapter {
 
         final Bookmark bm = bookmarks.get(position);
 
-        final View row = inflater.inflate(R.layout.row_bookmark, null);
+        final View row = inflater.inflate(R.layout.li_bookmark, null);
 
         ((TextView) row.findViewById(R.id.bookmark_label)).setText(bm.getLabel());
         final Integer iconResId = ICONS.get(bm.getType());

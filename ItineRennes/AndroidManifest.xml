@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".ui.activity.BusStationActivity"
+        <activity android:name=".ui.activity.BusStopActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleTop"
                   android:configChanges="orientation" >
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".ui.activity.BusRouteActivity"
+        <activity android:name=".ui.activity.BusTripActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleTop"
                   android:configChanges="orientation" >
