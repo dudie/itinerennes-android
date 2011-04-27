@@ -21,7 +21,7 @@ import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.Stop;
-import fr.itinerennes.ui.activity.BusStationActivity;
+import fr.itinerennes.ui.activity.BusStopActivity;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
@@ -63,7 +63,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
     @Override
     public final View getView(final MarkerOverlayItem item) {
 
-        final View busView = inflater.inflate(R.layout.map_box_bus, null);
+        final View busView = inflater.inflate(R.layout.vw_mapbox_bus, null);
         ((TextView) busView.findViewById(R.id.map_box_title)).setText(item.getLabel());
         busView.findViewById(R.id.line_icon_container).setVisibility(View.GONE);
 
@@ -72,9 +72,9 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
             @Override
             public void onClick(final View v) {
 
-                final Intent i = new Intent(context, BusStationActivity.class);
-                i.putExtra(BusStationActivity.INTENT_STOP_ID, item.getId());
-                i.putExtra(BusStationActivity.INTENT_STOP_NAME, item.getLabel());
+                final Intent i = new Intent(context, BusStopActivity.class);
+                i.putExtra(BusStopActivity.INTENT_STOP_ID, item.getId());
+                i.putExtra(BusStopActivity.INTENT_STOP_NAME, item.getLabel());
                 context.startActivity(i);
             }
         });
@@ -148,7 +148,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
             if (!busRoutes.isEmpty()) {
                 for (final Route route : busRoutes) {
 
-                    final View imageContainer = inflater.inflate(R.layout.line_icon, null);
+                    final View imageContainer = inflater.inflate(R.layout.li_line_icon, null);
                     final ImageView lineIcon = (ImageView) imageContainer
                             .findViewById(R.station.bus_line_icon);
                     lineIcon.setImageDrawable(context.getLineIconService().getIconOrDefault(

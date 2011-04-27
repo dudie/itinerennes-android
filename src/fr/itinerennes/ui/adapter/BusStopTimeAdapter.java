@@ -22,7 +22,7 @@ import fr.itinerennes.ui.activity.ItinerennesContext;
 /**
  * @author Jérémie Huchet
  */
-public class BusTimeAdapter extends BaseAdapter {
+public class BusStopTimeAdapter extends BaseAdapter {
 
     /** The android context. */
     private final ItinerennesContext context;
@@ -53,7 +53,7 @@ public class BusTimeAdapter extends BaseAdapter {
      *            list of routes icons
      * @param stopIsAccessible
      */
-    public BusTimeAdapter(final ItinerennesContext c, final StopSchedule schedule,
+    public BusStopTimeAdapter(final ItinerennesContext c, final StopSchedule schedule,
             final HashMap<String, Drawable> routesIcons, final boolean stopIsAccessible) {
 
         this.data = schedule;
@@ -105,7 +105,7 @@ public class BusTimeAdapter extends BaseAdapter {
     @Override
     public final View getView(final int position, final View convertView, final ViewGroup parent) {
 
-        final View busTimeView = inflater.inflate(R.layout.bus_time, null);
+        final View busTimeView = inflater.inflate(R.layout.li_stop_time_bus, null);
         final ScheduleStopTime stopTime = data.getStopTimes().get(position);
 
         final ImageView departureLineIconeView = (ImageView) busTimeView

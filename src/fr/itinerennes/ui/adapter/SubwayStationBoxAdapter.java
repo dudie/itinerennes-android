@@ -43,7 +43,7 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
     @Override
     public final View getView(final MarkerOverlayItem item) {
 
-        final View subwayView = inflater.inflate(R.layout.map_box_subway, null);
+        final View subwayView = inflater.inflate(R.layout.vw_mapbox_subway, null);
         ((TextView) subwayView.findViewById(R.id.map_box_title)).setText(item.getLabel());
 
         final ToggleButton star = (ToggleButton) subwayView

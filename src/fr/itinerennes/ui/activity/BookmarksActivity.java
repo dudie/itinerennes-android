@@ -41,7 +41,7 @@ public class BookmarksActivity extends ItinerennesContext {
     protected final void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bookmarks);
+        setContentView(R.layout.act_bookmarks);
 
         final List<Bookmark> allBookmarks = getBookmarksService().getAllBookmarks();
 

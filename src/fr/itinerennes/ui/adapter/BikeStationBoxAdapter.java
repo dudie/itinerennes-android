@@ -51,7 +51,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
     @Override
     public final View getView(final MarkerOverlayItem item) {
 
-        final View bikeView = inflater.inflate(R.layout.map_box_bike, null);
+        final View bikeView = inflater.inflate(R.layout.vw_mapbox_bike, null);
         ((TextView) bikeView.findViewById(R.id.map_box_title)).setText(item.getLabel());
 
         final ToggleButton star = (ToggleButton) bikeView

@@ -107,7 +107,7 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         final SharedPreferences sharedPreferences = getITRPreferences();
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        setContentView(R.layout.main_map);
+        setContentView(R.layout.act_map);
 
         this.map = (ItinerennesMapView) findViewById(R.id.map);
 
@@ -467,7 +467,7 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         case Dialogs.ABOUT:
             final AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
             aboutBuilder.setTitle(R.string.menu_about).setCancelable(true);
-            final View aboutView = getLayoutInflater().inflate(R.layout.about, null);
+            final View aboutView = getLayoutInflater().inflate(R.layout.act_about, null);
             aboutBuilder.setView(aboutView);
             aboutBuilder.setIcon(android.R.drawable.ic_dialog_info);
             dialog = aboutBuilder.create();

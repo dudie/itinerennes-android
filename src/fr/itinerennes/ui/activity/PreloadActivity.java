@@ -91,7 +91,7 @@ public class PreloadActivity extends ItinerennesContext implements MarkersColumn
             LOGGER.debug("onCreate.start");
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preload);
+        setContentView(R.layout.act_preload);
 
         progressBar = (ProgressBar) findViewById(R.id.activity_preload_progress_bar);
 

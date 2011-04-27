@@ -35,7 +35,7 @@ import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.ScheduleStopTime;
 import fr.itinerennes.onebusaway.model.StopSchedule;
-import fr.itinerennes.ui.adapter.BusTimeAdapter;
+import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
@@ -45,18 +45,18 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class BusStationActivity extends ItinerennesContext implements Runnable {
+public class BusStopActivity extends ItinerennesContext implements Runnable {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusStationActivity.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusStopActivity.class);
 
     /** Intent parameter name for the station identifier. */
     public static final String INTENT_STOP_ID = String.format("%s.stopId",
-            BusStationActivity.class.getName());
+            BusStopActivity.class.getName());
 
     /** Intent parameter name for the station name. */
     public static final String INTENT_STOP_NAME = String.format("%s.stopName",
-            BusStationActivity.class.getName());
+            BusStopActivity.class.getName());
 
     /** Message to send to handler in case of a successful download of informations. */
     private static final int MESSAGE_SUCCESS = 0;
@@ -185,7 +185,7 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
 
         super.onResume();
 
-        setContentView(R.layout.activity_bus_station);
+        setContentView(R.layout.act_bus_stop);
 
         /* Sets the station name. */
         final TextView name = (TextView) findViewById(R.station.name);
@@ -217,7 +217,8 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
             final ViewGroup lineList = (ViewGroup) findViewById(R.id.line_icon_container);
             lineList.removeAllViews();
             for (final Route busRoute : schedule.getStop().getRoutes()) {
-                final View imageContainer = getLayoutInflater().inflate(R.layout.line_icon, null);
+                final View imageContainer = getLayoutInflater()
+                        .inflate(R.layout.li_line_icon, null);
                 final ImageView lineIcon = (ImageView) imageContainer
                         .findViewById(R.station.bus_line_icon);
                 lineIcon.setImageDrawable(routesIcon.get(busRoute.getShortName()));
@@ -231,7 +232,7 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
 
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
             listTimes.setEmptyView(findViewById(R.station.empty));
-            final BusTimeAdapter adapter = new BusTimeAdapter(this, schedule, routesIcon,
+            final BusStopTimeAdapter adapter = new BusStopTimeAdapter(this, schedule, routesIcon,
                     isAccessible);
             listTimes.setAdapter(adapter);
             listTimes.setSelectionFromTop(adapter.getIndexForNow(), SELECTION_FROM_TOP);
@@ -241,17 +242,17 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
                 public void onItemClick(final AdapterView<?> parent, final View view,
                         final int position, final long id) {
 
-                    final Intent i = new Intent(getBaseContext(), BusRouteActivity.class);
+                    final Intent i = new Intent(getBaseContext(), BusTripActivity.class);
                     final ScheduleStopTime departure = (ScheduleStopTime) parent.getAdapter()
                             .getItem(position);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.putExtra(BusRouteActivity.INTENT_STOP_ID, stopId);
-                    i.putExtra(BusRouteActivity.INTENT_ROUTE_HEADSIGN,
+                    i.putExtra(BusTripActivity.INTENT_STOP_ID, stopId);
+                    i.putExtra(BusTripActivity.INTENT_ROUTE_HEADSIGN,
                             departure.getSimpleHeadsign());
-                    i.putExtra(BusRouteActivity.INTENT_ROUTE_SHORT_NAME, departure.getRoute()
+                    i.putExtra(BusTripActivity.INTENT_ROUTE_SHORT_NAME, departure.getRoute()
                             .getShortName());
-                    i.putExtra(BusRouteActivity.INTENT_TRIP_ID, departure.getTripId());
-                    i.putExtra(BusRouteActivity.INTENT_ROUTE_ID, departure.getRoute().getId());
+                    i.putExtra(BusTripActivity.INTENT_TRIP_ID, departure.getTripId());
+                    i.putExtra(BusTripActivity.INTENT_ROUTE_ID, departure.getRoute().getId());
                     startActivity(i);
                 }
             });
@@ -310,7 +311,7 @@ public class BusStationActivity extends ItinerennesContext implements Runnable {
         case PROGRESS_DIALOG:
             final AlertDialog.Builder progressBuilder = new AlertDialog.Builder(this);
             progressBuilder.setTitle(R.string.loading);
-            final View progressView = getLayoutInflater().inflate(R.layout.progress_dialog, null);
+            final View progressView = getLayoutInflater().inflate(R.layout.dial_progress, null);
             progressBuilder.setView(progressView);
             progressBuilder.setCancelable(true);
             progressBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {

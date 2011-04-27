@@ -27,7 +27,7 @@ import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.TripSchedule;
 import fr.itinerennes.onebusaway.model.TripStopTime;
-import fr.itinerennes.ui.adapter.BusRouteStopsAdapter;
+import fr.itinerennes.ui.adapter.BusTripTimeAdapter;
 
 /**
  * This activity uses the <code>activity/bus_route.xml</code> layout and displays a window with stop
@@ -35,33 +35,33 @@ import fr.itinerennes.ui.adapter.BusRouteStopsAdapter;
  * 
  * @author Jérémie Huchet
  */
-public class BusRouteActivity extends ItinerennesContext {
+public class BusTripActivity extends ItinerennesContext {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusRouteActivity.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusTripActivity.class);
 
     /**
      * Intent parameter name for the stop identifier where to scroll in the list of displayed trip
      * departures.
      */
     public static final String INTENT_STOP_ID = String.format("%s.stopId",
-            BusRouteActivity.class.getName());
+            BusTripActivity.class.getName());
 
     /** Intent parameter name for the route headsign. */
     public static final String INTENT_ROUTE_HEADSIGN = String.format("%s.routeHeadsign",
-            BusRouteActivity.class.getName());
+            BusTripActivity.class.getName());
 
     /** Intent parameter name for the route short name. */
     public static final String INTENT_ROUTE_SHORT_NAME = String.format("%s.routeShortName",
-            BusRouteActivity.class.getName());
+            BusTripActivity.class.getName());
 
     /** Intent parameter name for the trip identifier. */
     public static final String INTENT_TRIP_ID = String.format("%s.tripId",
-            BusRouteActivity.class.getName());
+            BusTripActivity.class.getName());
 
     /** Intent parameter name for the route identifier. */
     public static final String INTENT_ROUTE_ID = String.format("%s.routeId",
-            BusRouteActivity.class.getName());
+            BusTripActivity.class.getName());
 
     /** Constant identifying the "loading" dialog. */
     private static final int DIALOG_LOADING = 0;
@@ -153,7 +153,7 @@ public class BusRouteActivity extends ItinerennesContext {
             LOGGER.debug("onCreate.start");
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_route);
+        setContentView(R.layout.act_bus_trip);
 
         routeIcon = (ImageView) findViewById(R.activity_bus_route.route_icon);
         routeName = (TextView) findViewById(R.activity_bus_route.route_name);
@@ -200,10 +200,10 @@ public class BusRouteActivity extends ItinerennesContext {
                     final int position, final long id) {
 
                 final TripStopTime stopTime = (TripStopTime) parent.getItemAtPosition(position);
-                final Intent i = new Intent(view.getContext(), BusStationActivity.class);
+                final Intent i = new Intent(view.getContext(), BusStopActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.putExtra(BusStationActivity.INTENT_STOP_ID, stopTime.getStop().getId());
-                i.putExtra(BusStationActivity.INTENT_STOP_NAME, stopTime.getStop().getName());
+                i.putExtra(BusStopActivity.INTENT_STOP_ID, stopTime.getStop().getId());
+                i.putExtra(BusStopActivity.INTENT_STOP_NAME, stopTime.getStop().getName());
                 view.getContext().startActivity(i);
             }
         });
@@ -230,7 +230,7 @@ public class BusRouteActivity extends ItinerennesContext {
         case DIALOG_LOADING:
             final AlertDialog.Builder progressBuilder = new AlertDialog.Builder(this);
             progressBuilder.setTitle(R.string.loading);
-            final View progressView = getLayoutInflater().inflate(R.layout.progress_dialog, null);
+            final View progressView = getLayoutInflater().inflate(R.layout.dial_progress, null);
             progressBar = (ProgressBar) progressView.findViewById(R.id.progress_bar);
             progressBuilder.setView(progressView);
             progressBuilder.setCancelable(true);
@@ -278,7 +278,7 @@ public class BusRouteActivity extends ItinerennesContext {
 
         final String stopId = getIntent().getExtras().getString(INTENT_STOP_ID);
 
-        final BusRouteStopsAdapter routeStopsAdapter = new BusRouteStopsAdapter(this, stopId,
+        final BusTripTimeAdapter routeStopsAdapter = new BusTripTimeAdapter(this, stopId,
                 schedule.getStopTimes(), isAccessible);
         listRouteStops.setAdapter(routeStopsAdapter);
         final int idx = routeStopsAdapter.getIndexForStopId(stopId);
