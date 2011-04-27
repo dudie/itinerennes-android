@@ -17,7 +17,7 @@
                 android:bottom="6dp"
                 android:right="6dp"
                 android:left="6dp">
-                <bitmap android:src="@drawable/toolbar_mylocation_icon" />
+                <bitmap android:src="@drawable/btn_mylocation" />
             </item>
             <item>
                 <shape android:shape="rectangle">
@@ -44,7 +44,7 @@
                 android:bottom="6dp"
 	            android:right="6dp"
 	            android:left="6dp">
-                <bitmap android:src="@drawable/toolbar_mylocation_icon" />
+                <bitmap android:src="@drawable/btn_mylocation" />
             </item>
         </layer-list>
     </item>
@@ -64,7 +64,7 @@
                 android:bottom="6dp"
                 android:right="6dp"
                 android:left="6dp">
-                <bitmap android:src="@drawable/toolbar_mylocation_icon" />
+                <bitmap android:src="@drawable/btn_mylocation" />
             </item>
             <item>
                 <shape android:shape="rectangle">
@@ -91,7 +91,7 @@
                 android:bottom="6dp"
                 android:right="6dp"
                 android:left="6dp">
-                <bitmap android:src="@drawable/toolbar_mylocation_icon" />
+                <bitmap android:src="@drawable/btn_mylocation" />
             </item>
         </layer-list>
     </item>

@@ -19,9 +19,9 @@
 	    android:gravity="center_vertical">
 
         <ImageView
-            android:src="@drawable/itr_icon_big"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:src="@drawable/ic_itinerennes_200"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:gravity="center"/>
 	
 		<RelativeLayout
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
                 
-            <ImageView android:src="@drawable/osm_logo"
+            <ImageView android:src="@drawable/ic_osm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
                 

@@ -4,7 +4,7 @@
 	android:minWidth="24dp" 
 	android:minHeight="24dp"
 	android:padding="2dp"
-	android:background="@drawable/default_line_icon"
+	android:background="@drawable/misc_default_line_icon"
 	android:textColor="@color/white"
     android:gravity="center">
 </TextView>

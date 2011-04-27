@@ -21,7 +21,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="10dp"
-        android:background="@drawable/mylocation_button_background"
+        android:background="@drawable/bg_btn_mylocation"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:textOn=""

@@ -59,7 +59,7 @@ public class LineIconService extends AbstractService {
             LOGGER.debug("getIcon.start - line={}", line);
         }
 
-        final String resName = String.format("line_icon_%s",
+        final String resName = String.format("z_ic_line_%s",
                 line.toLowerCase().replaceAll("[^a-z0-9_.]", "_"));
 
         final int id = ResourceResolver.getDrawableId(context, resName, 0);
@@ -117,7 +117,7 @@ public class LineIconService extends AbstractService {
                 LayoutParams.FILL_PARENT);
 
         final Bitmap iconBackground = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.default_line_icon);
+                R.drawable.misc_default_line_icon);
 
         final TextView text = new TextView(context);
         text.setBackgroundDrawable(new BitmapDrawable(iconBackground));

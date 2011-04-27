@@ -6,21 +6,21 @@
             <!-- PRESSED -->
             <item android:state_pressed="true">
                 <layer-list>
-                    <item android:drawable="@drawable/marker_selected_border"/>
+                    <item android:drawable="@drawable/ic_marker_selected_border"/>
                     <item>
-                        <bitmap android:gravity="center" android:src="@drawable/bus_marker_icon" />
+                        <bitmap android:gravity="center" android:src="@drawable/ic_marker_bus" />
                     </item>
                 </layer-list>
             </item>
 
             <!-- LOW ZOOMED -->
             <item itr:state_low_zoom="true">
-                <bitmap android:gravity="center" android:src="@drawable/bus_marker_icon_lite" />
+                <bitmap android:gravity="center" android:src="@drawable/ic_marker_bus_lite" />
             </item>
    
             <!--  default -->
             <item>
-                <bitmap android:gravity="center" android:src="@drawable/bus_marker_icon" />
+                <bitmap android:gravity="center" android:src="@drawable/ic_marker_bus" />
             </item>
         </selector>
     </item>
@@ -29,7 +29,7 @@
         android:left="15dp">
         <selector>
             <item itr:state_bookmarked="true"
-                android:drawable="@drawable/marker_overlay_star"/>
+                android:drawable="@drawable/ic_marker_star_small"/>
         </selector>
     </item>
 </layer-list>
