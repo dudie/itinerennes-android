@@ -65,14 +65,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             LOGGER.debug(String.format("database upgrade - name=%s, oldVersion=%d, newVersion=%d",
                     ItineRennesConstants.DATABASE_NAME, oldVersion, newVersion));
         }
-        execScript(
-                db,
-                FileUtils.read(getClass().getResourceAsStream(
-                        ItineRennesConstants.DATABASE_DROP_SCRIPT_URI)));
-        execScript(
-                db,
-                FileUtils.read(getClass().getResourceAsStream(
-                        ItineRennesConstants.DATABASE_CREATE_SCRIPT_URI)));
+
+        for (int i = oldVersion; i < newVersion; i++) {
+            final String script = String.format(ItineRennesConstants.DATABASE_UPGRADE_SCRIPT_URI,
+                    i, i + 1);
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(String.format("executing database upgrade script : %s", script));
+            }
+
+            if (getClass().getResourceAsStream(script) != null) {
+                execScript(db, FileUtils.read(getClass().getResourceAsStream(script)));
+            } else {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(String.format("database upgrade script %s does not exist", script));
+                }
+            }
+        }
 
     }
 

@@ -15,7 +15,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -104,7 +103,6 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         }
         super.onCreate(savedInstanceState);
 
-        final SharedPreferences sharedPreferences = getITRPreferences();
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         setContentView(R.layout.act_map);
@@ -114,12 +112,6 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         this.myLocation = map.getMyLocationOverlay();
 
         map.setMultiTouchControls(true);
-
-        // if first start of the application, open the preload dialog
-        if (sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
-            final Intent i = new Intent(this, PreloadActivity.class);
-            startActivityForResult(i, ACTIVITY_REQUEST_PRELOAD);
-        }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
@@ -156,18 +148,16 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
             myLocation.enableFollowLocation();
         }
 
-        // restore previous displayed overlays (only if not displaying preload dialog)
-        if (!sharedPreferences.getBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, true)) {
-            if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, true)) {
-                map.getMarkerOverlay().hide(TypeConstants.TYPE_BUS);
-            }
-            if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, true)) {
-                map.getMarkerOverlay().hide(TypeConstants.TYPE_BIKE);
-            }
-            if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, true)) {
-                map.getMarkerOverlay().hide(TypeConstants.TYPE_SUBWAY);
-            }
+        if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, true)) {
+            map.getMarkerOverlay().hide(TypeConstants.TYPE_BUS);
         }
+        if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, true)) {
+            map.getMarkerOverlay().hide(TypeConstants.TYPE_BIKE);
+        }
+        if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, true)) {
+            map.getMarkerOverlay().hide(TypeConstants.TYPE_SUBWAY);
+        }
+
         super.onResume();
 
         if (LOGGER.isDebugEnabled()) {
@@ -266,38 +256,6 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.end");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
-     */
-    @Override
-    protected final void onActivityResult(final int requestCode, final int resultCode,
-            final Intent data) {
-
-        switch (requestCode) {
-        case ACTIVITY_REQUEST_PRELOAD:
-
-            if (RESULT_CANCELED == resultCode) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Preload canceled");
-                }
-            } else {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Preload done");
-                }
-            }
-            // register a preference on preload success
-            final Editor edit = getITRPreferences().edit();
-            edit.putBoolean(ITRPrefs.DISPLAY_CACHE_ADVICE, false);
-            edit.commit();
-            break;
-
-        default:
-            break;
         }
     }
 
