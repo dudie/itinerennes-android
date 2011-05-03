@@ -60,4 +60,7 @@ public class ItineRennesConstants {
     /** The database drop script URI. */
     public static final String DATABASE_DROP_SCRIPT_URI = "/fr/itinerennes/database/drop_database.sql";
 
+    /** The database upgrade script URI. */
+    public static final String DATABASE_UPGRADE_SCRIPT_URI = "/fr/itinerennes/database/upgrade_database_%s_to_%s.sql";
+
 }

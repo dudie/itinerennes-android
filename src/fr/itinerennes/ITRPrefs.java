@@ -23,10 +23,6 @@ public final class ITRPrefs {
     public static final String MAP_SHOW_LOCATION = String.format("%s.%s", PREFS_NAME,
             "followLocation");
 
-    /** Preference attribute name defining if the preload dialog should be displayed. */
-    public static final String DISPLAY_CACHE_ADVICE = String.format("%s.%s", PREFS_NAME,
-            "displayCacheAdvice");
-
     /** Preference attribute name defining if the bus overlay should be displayed on startup. */
     public static final String OVERLAY_BUS_ACTIVATED = String.format("%s.%s", PREFS_NAME,
             "displayBusOverlayOnStartup");
