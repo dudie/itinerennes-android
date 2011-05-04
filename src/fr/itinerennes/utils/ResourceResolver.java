@@ -4,6 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.LightingColorFilter;
+import android.graphics.drawable.Drawable;
 
 /**
  * Helper class to load resources by name.
@@ -49,5 +52,20 @@ public final class ResourceResolver {
         }
 
         return resId;
+    }
+
+    /**
+     * Resolves the given drawable resource id and applies a filter to make it more consistent with
+     * Android UI guidelines for dialog icons.
+     * 
+     * @param drawableResourceId
+     *            a drawable resource identifier
+     * @return a drawable representing the given resource but a little more lightened
+     */
+    public static Drawable fromMenuToDialogIcon(final Context context, final int drawableResourceId) {
+
+        final Drawable drawable = context.getResources().getDrawable(drawableResourceId);
+        drawable.setColorFilter(new LightingColorFilter(Color.WHITE, Color.DKGRAY));
+        return drawable;
     }
 }
