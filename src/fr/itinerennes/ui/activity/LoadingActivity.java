@@ -106,6 +106,7 @@ public class LoadingActivity extends ItinerennesContext implements MarkersColumn
      * Thread intended to preload the data.
      * 
      * @author Jérémie Huchet
+     * @author Olivier Boudet
      */
     private class DataPreloader extends Thread {
 
@@ -166,7 +167,11 @@ public class LoadingActivity extends ItinerennesContext implements MarkersColumn
                 line = readerAccessibility.readLine();
                 count += Integer.parseInt(line);
 
-                handler.sendMessage(handler.obtainMessage(MSG_PRELOAD_START, count));
+                // si l'une ou l'autre des tables de markers ou d'accessibility est vide, on affiche
+                // la barre de progression
+                if (markersCount <= 0 || accessibilityCount <= 0) {
+                    handler.sendMessage(handler.obtainMessage(MSG_PRELOAD_START, count));
+                }
 
                 // si la table de markers est vide, on la remplit
                 if (markersCount <= 0) {
