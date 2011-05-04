@@ -14,7 +14,6 @@
             android:layout_width="fill_parent" 
             android:layout_margin="10dp"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_height="20dp"
-            android:visibility="gone"/>
+            android:layout_height="20dp"/>
         
 </LinearLayout>

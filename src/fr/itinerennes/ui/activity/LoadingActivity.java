@@ -13,7 +13,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.ProgressBar;
 
 import fr.itinerennes.R;
@@ -55,7 +54,9 @@ public class LoadingActivity extends ItinerennesContext implements MarkersColumn
 
             switch (msg.what) {
             case MSG_PRELOAD_START:
-                progressBar.setVisibility(View.VISIBLE);
+                setContentView(R.layout.act_loading);
+
+                progressBar = (ProgressBar) findViewById(R.id.activity_preload_progress_bar);
                 progressBar.setProgress(0);
                 progressBar.setMax((Integer) msg.obj);
                 break;
@@ -93,9 +94,6 @@ public class LoadingActivity extends ItinerennesContext implements MarkersColumn
         new DataPreloader(handler).start();
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_loading);
-
-        progressBar = (ProgressBar) findViewById(R.id.activity_preload_progress_bar);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
