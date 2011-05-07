@@ -4,43 +4,50 @@
 	android:layout_height="fill_parent" android:orientation="vertical"
 	xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" 
-		android:gravity="center_vertical" 
-		android:padding="5dp"
-		android:focusable="true"
-		android:background="@drawable/bg_activity_title_clickable"
-		android:onClick="onStopTitleClick">
-
-		<ImageView android:src="@drawable/ic_activity_title_bus"
-		    android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-		</ImageView>
-
-		<TextView android:id="@+station/name"
-		    android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:textSize="20sp"
-			android:paddingLeft="5dp"
-            style="@style/BusStationHeader">
-		</TextView>
-		
-		<ImageView android:id="@+station/bus_activity_wheelchair_icon"
-		    android:src="@drawable/misc_handistar_icon"
-		    android:layout_width="wrap_content"
+    <!-- START TITLE BAR -->
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@android:drawable/title_bar_tall"
+        android:gravity="center_vertical">
+        
+        <ImageView android:src="@drawable/ic_activity_title_bus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageView>
+        
+       <include layout="@layout/misc_toolbar_separator"/>
+        
+        <ImageView android:id="@+station/bus_activity_wheelchair_icon"
+            android:src="@drawable/misc_handistar_icon"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:gravity="right"
             android:visibility="gone">
         </ImageView>
-
+            
+        <TextView android:id="@+station/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:paddingLeft="5dp"
+            style="@style/BusStationHeader"
+            android:onClick="onStopTitleClick">
+        </TextView>
+        
+        <include layout="@layout/misc_toolbar_separator"/>
+            
         <ImageView android:src="@drawable/ic_osm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </ImageView>
-
-	</LinearLayout>
+        
+        <include layout="@layout/misc_toolbar_separator"/>
+            
+        <ImageView android:src="@android:drawable/ic_menu_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <!-- END TITLE BAR -->
 
     <include layout="@layout/ul_line_icon" />
 	
