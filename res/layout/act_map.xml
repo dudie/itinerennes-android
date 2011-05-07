@@ -2,9 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:id="@+id/main_layout">
+	android:layout_height="fill_parent">
 	
+    <!-- START TITLE BAR -->
+    <LinearLayout android:id="@+id/toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@android:drawable/title_bar_tall"
+        android:gravity="center_vertical">
+        
+        <EditText android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"/>
+        
+        <include layout="@layout/misc_toolbar_separator"/>
+        
+        <ImageView android:src="@android:drawable/ic_menu_search"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"/>
+            
+        <include layout="@layout/misc_toolbar_separator"/>
+        
+        <ToggleButton
+            android:id="@+id/mylocation_button"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:layout_margin="2dp"
+            android:background="@drawable/btn_mylocation"
+            android:textOn=""
+            android:textOff=""
+            android:onClick="onMyLocationButtonClick"
+        />
+    </LinearLayout>
+    <!-- END TITLE BAR -->
+    
 	<fr.itinerennes.ui.views.ItinerennesMapView
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/map"
@@ -12,23 +43,10 @@
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:clickable="true"
-		android:layout_below="@+id/main_layout"
+		android:layout_below="@+id/toolbar"
 		tilesource="MapquestOSM"
 		/>
 
-    <ToggleButton
-        android:id="@+id/mylocation_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/bg_btn_mylocation"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:textOn=""
-        android:textOff=""
-        android:onClick="onMyLocationButtonClick"
-        />
-        
     <fr.itinerennes.ui.views.ItinerennesZoomControls
         android:id="@+id/zoom_controls" 
         android:layout_width="100dp"
@@ -43,7 +61,10 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
 		android:visibility="gone"
-		android:layout_margin="5dp">
+		android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="@dimen/mapbox_top_margin">
 	</fr.itinerennes.ui.views.MapBoxView>
 	
 	<LinearLayout 
