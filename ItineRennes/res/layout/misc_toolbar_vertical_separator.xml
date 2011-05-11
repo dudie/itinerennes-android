@@ -4,8 +4,8 @@
     android:layout_height="fill_parent">
     <ImageView android:layout_width="1dp"
         android:layout_height="fill_parent"
-        android:src="@drawable/misc_toolbar_separator_dark"/>
+        android:src="@drawable/misc_toolbar_vertical_separator_dark"/>
     <ImageView android:layout_width="1dp"
         android:layout_height="fill_parent"
-        android:src="@drawable/misc_toolbar_separator_light" />
+        android:src="@drawable/misc_toolbar_vertical_separator_light" />
 </LinearLayout>

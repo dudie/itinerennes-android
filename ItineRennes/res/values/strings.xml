@@ -9,6 +9,8 @@
     <string name="continuer">Continue</string>
     <string name="no_departure">No departure for this day.</string>
     <string name="search_field_hint">Keywords</string>
+    <string name="activity_title_bus_stop">Bus stop</string>
+    <string name="activity_title_bus_trip">Bus trip</string>
     <!-- dates -->
     <string name="date_today_at">today at %s</string>
     <string name="date_tomorrow_at">tomorrow at %s</string>

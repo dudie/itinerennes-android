@@ -9,6 +9,8 @@
     <string name="continuer">Continuer</string>
     <string name="no_departure">Aucun départ ce jour.</string>
     <string name="search_field_hint">Mots-clés</string>
+    <string name="activity_title_bus_stop">Arrêt de bus</string>
+    <string name="activity_title_bus_trip">Horaires d\'un trajet</string>
     <!-- dates -->
     <string name="date_today_at">aujourd\'hui à %0$s</string>
     <string name="date_tomorrow_at">demain à %0$s</string>

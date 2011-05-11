@@ -22,9 +22,9 @@ import android.widget.TextView;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
-import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.TripSchedule;
 import fr.itinerennes.onebusaway.model.TripStopTime;
 import fr.itinerennes.ui.adapter.BusTripTimeAdapter;
@@ -188,7 +188,8 @@ public class BusTripActivity extends ItinerennesContext {
 
         /* Display handistar icon if necessary. */
         final ImageView handistar = (ImageView) findViewById(R.activity_bus_route.wheelchair_icon);
-        isAccessible = getAccessibilityService().isAccessible(routeId, Route.class.getName());
+        isAccessible = getAccessibilityService()
+                .isAccessible(routeId, TypeConstants.TYPE_BUS_ROUTE);
         if (isAccessible) {
             handistar.setVisibility(View.VISIBLE);
         }
