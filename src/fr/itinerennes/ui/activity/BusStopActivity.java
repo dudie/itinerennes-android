@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
@@ -36,6 +37,7 @@ import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.ScheduleStopTime;
 import fr.itinerennes.onebusaway.model.StopSchedule;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
+import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
@@ -198,6 +200,12 @@ public class BusStopActivity extends ItinerennesContext implements Runnable {
             handistar.setVisibility(View.VISIBLE);
         }
 
+        /* Sets bookmarked icon. */
+        final ToggleButton star = (ToggleButton) findViewById(R.station.toggle_bookmark);
+        star.setChecked(getBookmarksService().isStarred(TypeConstants.TYPE_BUS, stopId));
+        star.setOnCheckedChangeListener(new ToggleStarListener(this, TypeConstants.TYPE_BUS,
+                stopId, stopName));
+
         showDialog(PROGRESS_DIALOG);
 
         final Thread thread = new Thread(this);
@@ -247,8 +255,7 @@ public class BusStopActivity extends ItinerennesContext implements Runnable {
                             .getItem(position);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra(BusTripActivity.INTENT_STOP_ID, stopId);
-                    i.putExtra(BusTripActivity.INTENT_ROUTE_HEADSIGN,
-                            departure.getSimpleHeadsign());
+                    i.putExtra(BusTripActivity.INTENT_ROUTE_HEADSIGN, departure.getSimpleHeadsign());
                     i.putExtra(BusTripActivity.INTENT_ROUTE_SHORT_NAME, departure.getRoute()
                             .getShortName());
                     i.putExtra(BusTripActivity.INTENT_TRIP_ID, departure.getTripId());
@@ -371,13 +378,12 @@ public class BusStopActivity extends ItinerennesContext implements Runnable {
     }
 
     /**
-     * Triggered when user clicks on the stop name at the top of the layout.
+     * Triggered when user clicks on the map button in the toolbar.
      * 
      * @param target
-     *            should be a linear layout containing the icon "bus", the name of the stop and
-     *            eventually a wheelchair icon.
+     *            should be an image view.
      */
-    public final void onStopTitleClick(final View target) {
+    public final void onMapButtonClick(final View target) {
 
         handler.sendMessage(handler.obtainMessage(MESSAGE_DISPLAY_DIALOG_LOAD_STATION));
 
