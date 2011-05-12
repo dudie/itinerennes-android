@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 import fr.itinerennes.database.Columns;
@@ -67,8 +66,6 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
             return null;
         }
 
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
-
         final SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
         builder.setTables(String.format("%s m left join %s b on m.%s=b.%s", MARKERS_TABLE_NAME,
@@ -91,7 +88,8 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
                 String.valueOf(bbox.getLonEastE6()), String.valueOf(bbox.getLatSouthE6()),
                 String.valueOf(bbox.getLatNorthE6()) };
 
-        final Cursor c = builder.query(database, columns, where, selectionArgs, null, null, null);
+        final Cursor c = builder.query(dbHelper.getReadableDatabase(), columns, where,
+                selectionArgs, null, null, null);
 
         final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>();
         while (c.moveToNext()) {
@@ -128,7 +126,6 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getMarker.start - id={}", id);
         }
-        final SQLiteDatabase database = dbHelper.getReadableDatabase();
 
         final SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
@@ -143,7 +140,8 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
 
         final String[] selectionArgs = new String[] { id };
 
-        final Cursor c = builder.query(database, columns, where, selectionArgs, null, null, null);
+        final Cursor c = builder.query(dbHelper.getReadableDatabase(), columns, where,
+                selectionArgs, null, null, null);
 
         MarkerOverlayItem marker = null;
         if (c.moveToNext()) {
