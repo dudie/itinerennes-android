@@ -49,8 +49,20 @@
 		android:layout_height="fill_parent"
 		android:clickable="true"
 		android:layout_below="@+id/toolbar"
-		tilesource="MapquestOSM"
-		/>
+		tilesource="MapquestOSM">
+        
+        <fr.itinerennes.ui.views.MapBoxView
+            android:id="@+id/map_box"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="@dimen/mapbox_top_margin"/>
+        
+    </fr.itinerennes.ui.views.ItinerennesMapView>
 
     <fr.itinerennes.ui.views.ItinerennesZoomControls
         android:id="@+id/zoom_controls" 
@@ -59,18 +71,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true" 
         itr:mapview="@+id/map"/>
-
-	<fr.itinerennes.ui.views.MapBoxView
-        android:id="@+id/map_box"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:visibility="gone"
-		android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="@dimen/mapbox_top_margin">
-	</fr.itinerennes.ui.views.MapBoxView>
 	
 	<LinearLayout 
         android:id="@+id/map_search_layout"

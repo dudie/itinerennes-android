@@ -1,5 +1,6 @@
 package fr.itinerennes.ui.tasks;
 
+import org.osmdroid.views.MapView.LayoutParams;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -61,6 +62,13 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPreExecute.start - item={}", item);
         }
+
+        final int offsetY = item.getIcon().getIntrinsicHeight() / 2 + 1;
+
+        final LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT, item.getLocation(), LayoutParams.BOTTOM_CENTER, 0,
+                -offsetY);
+        boxView.setLayoutParams(params);
 
         boxView.setContentView(adapter.getView(item));
         adapter.onStartLoading(boxView.getContentView());

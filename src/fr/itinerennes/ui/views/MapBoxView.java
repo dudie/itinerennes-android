@@ -3,6 +3,8 @@ package fr.itinerennes.ui.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import fr.itinerennes.R;
@@ -21,6 +23,12 @@ public class MapBoxView extends LinearLayout {
 
     /** The content view. */
     private View contentView = null;
+
+    /** On display animation. */
+    private final Animation fadeIn;
+
+    /** On hide animation. */
+    private final Animation fadeOut;
 
     /**
      * Creates the map box view.
@@ -45,6 +53,9 @@ public class MapBoxView extends LinearLayout {
 
         super(context, attrs);
         setClickable(true);
+
+        fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+        fadeOut = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
     }
 
     /**
@@ -68,6 +79,26 @@ public class MapBoxView extends LinearLayout {
         removeAllViews();
         this.contentView = contentView;
         addView(contentView);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.view.View#setVisibility(int)
+     */
+    @Override
+    public void setVisibility(final int visibility) {
+
+        if (View.VISIBLE == getVisibility() && View.GONE == visibility) {
+            // if map box is visible and asked to be gone
+            setAnimation(fadeOut);
+            getAnimation().start();
+        } else if (View.GONE == getVisibility() && View.VISIBLE == visibility) {
+            // if map box is gone and asked to be visible
+            setAnimation(fadeIn);
+            getAnimation().start();
+        }
+        super.setVisibility(visibility);
     }
 
 }
