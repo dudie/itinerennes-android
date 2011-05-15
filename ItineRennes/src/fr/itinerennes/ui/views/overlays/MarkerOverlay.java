@@ -88,8 +88,8 @@ public class MarkerOverlay extends LazyOverlay {
             @Override
             protected List<MarkerOverlayItem> doInBackground(final Void... params) {
 
-                final List<MarkerOverlayItem> newMarkers = context.getMarkerService().getMarkers(
-                        source.getBoundingBox(), visibleMarkerTypes);
+                final List<MarkerOverlayItem> newMarkers = context.getApplicationContext()
+                        .getMarkerService().getMarkers(source.getBoundingBox(), visibleMarkerTypes);
                 return newMarkers;
             }
 

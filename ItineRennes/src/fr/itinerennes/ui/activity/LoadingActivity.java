@@ -134,7 +134,8 @@ public class LoadingActivity extends ItinerennesContext implements MarkersColumn
                 LOGGER.debug("run.start");
             }
 
-            final SQLiteDatabase db = getDatabaseHelper().getWritableDatabase();
+            final SQLiteDatabase db = getApplicationContext().getDatabaseHelper()
+                    .getWritableDatabase();
 
             SQLiteStatement statement = db.compileStatement(String.format(
                     "SELECT count(%s) FROM %s", MarkersColumns.ID, MARKERS_TABLE_NAME));
@@ -185,7 +186,7 @@ public class LoadingActivity extends ItinerennesContext implements MarkersColumn
                     db.setTransactionSuccessful();
                 }
             } catch (final IOException e) {
-                getExceptionHandler().handleException(e);
+                getApplicationContext().getExceptionHandler().handleException(e);
                 handler.sendMessage(handler.obtainMessage(MSG_PRELOAD_FAILED));
             } finally {
                 try {

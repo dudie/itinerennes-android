@@ -135,9 +135,11 @@ public class BusStopTimeAdapter extends BaseAdapter {
             /* Display handistar icon if current stop and current route are accessible. */
             final ImageView handistar = (ImageView) busTimeView
                     .findViewById(R.station.bus_departure_wheelchair);
-            if (context.getAccessibilityService().isAccessible(
-                    data.getStopTimes().get(position).getRoute().getId(),
-                    TypeConstants.TYPE_BUS_ROUTE)) {
+            if (context
+                    .getApplicationContext()
+                    .getAccessibilityService()
+                    .isAccessible(data.getStopTimes().get(position).getRoute().getId(),
+                            TypeConstants.TYPE_BUS_ROUTE)) {
                 handistar.setVisibility(View.VISIBLE);
             }
         }

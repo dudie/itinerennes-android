@@ -134,7 +134,7 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
             LOGGER.debug("onResume.start");
         }
 
-        final SharedPreferences sharedPreferences = getITRPreferences();
+        final SharedPreferences sharedPreferences = getApplicationContext().getITRPreferences();
         final int zoomToRestore = sharedPreferences.getInt(ITRPrefs.MAP_ZOOM_LEVEL,
                 ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
         map.getController().setZoom(zoomToRestore);
@@ -183,7 +183,7 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         super.onPause();
 
         // saving in preferences the state of the map (center, follow location and zoom)
-        final SharedPreferences.Editor edit = getITRPreferences().edit();
+        final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences().edit();
         edit.putInt(ITRPrefs.MAP_CENTER_LAT, map.getMapCenter().getLatitudeE6());
         edit.putInt(ITRPrefs.MAP_CENTER_LON, map.getMapCenter().getLongitudeE6());
         edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, map.getZoomLevel());
@@ -225,7 +225,8 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         }
 
         else {
-            final SharedPreferences.Editor edit = getITRPreferences().edit();
+            final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
+                    .edit();
 
             // if intent asks for a specific zoom level, its values overrides the ones
             // saved in preferences

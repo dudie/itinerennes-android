@@ -48,8 +48,8 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
 
         final ToggleButton star = (ToggleButton) subwayView
                 .findViewById(R.id.map_box_toggle_bookmark);
-        star.setChecked(context.getBookmarksService().isStarred(TypeConstants.TYPE_SUBWAY,
-                item.getId()));
+        star.setChecked(context.getApplicationContext().getBookmarksService()
+                .isStarred(TypeConstants.TYPE_SUBWAY, item.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context, TypeConstants.TYPE_SUBWAY,
                 item.getId(), item.getLabel()));
 

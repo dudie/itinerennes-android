@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import fr.itinerennes.ItineRennes;
 import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.DatabaseHelper;
 
@@ -74,9 +75,16 @@ public class SearchMarkersProvider extends ContentProvider {
     @Override
     public final boolean onCreate() {
 
-        // TOBO Récupérer celui de l'application ?
-        dbHelper = new DatabaseHelper(getContext());
-        return true;
+        final boolean initialized;
+        if (getContext() instanceof ItineRennes) {
+            dbHelper = ((ItineRennes) getContext()).getDatabaseHelper();
+            initialized = true;
+        } else {
+            LOGGER.error("Bad application context type, expected {} but was {}", ItineRennes.class,
+                    getContext().getClass());
+            initialized = false;
+        }
+        return initialized;
     }
 
     /**

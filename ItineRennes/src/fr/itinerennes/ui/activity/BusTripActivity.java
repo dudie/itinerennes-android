@@ -20,11 +20,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
-import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.onebusaway.model.TripSchedule;
 import fr.itinerennes.onebusaway.model.TripStopTime;
 import fr.itinerennes.ui.adapter.BusTripTimeAdapter;
@@ -183,13 +181,14 @@ public class BusTripActivity extends ItinerennesContext {
         final String tripId = getIntent().getExtras().getString(INTENT_TRIP_ID);
         final String routeId = getIntent().getExtras().getString(INTENT_ROUTE_ID);
 
-        routeIcon.setImageDrawable(getLineIconService().getIconOrDefault(this, routeShortName));
+        routeIcon.setImageDrawable(getApplicationContext().getLineIconService().getIconOrDefault(
+                this, routeShortName));
         routeName.setText(routeHeadsign);
 
         /* Display handistar icon if necessary. */
         final ImageView handistar = (ImageView) findViewById(R.activity_bus_route.wheelchair_icon);
-        isAccessible = getAccessibilityService()
-                .isAccessible(routeId, TypeConstants.TYPE_BUS_ROUTE);
+        isAccessible = getApplicationContext().getAccessibilityService().isAccessible(routeId,
+                TypeConstants.TYPE_BUS_ROUTE);
         if (isAccessible) {
             handistar.setVisibility(View.VISIBLE);
         }
@@ -324,8 +323,7 @@ public class BusTripActivity extends ItinerennesContext {
             handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_START));
             try {
 
-                final IOneBusAwayClient obaClient = new JsonOneBusAwayClient(getHttpClient(),
-                        ItineRennesConstants.OBA_API_URL, ItineRennesConstants.OBA_API_KEY);
+                final IOneBusAwayClient obaClient = getApplicationContext().getOneBusAwayClient();
 
                 final TripSchedule schedule = obaClient.getTripDetails(tripId);
 

@@ -1,31 +1,11 @@
 package fr.itinerennes.ui.activity;
 
-import org.apache.http.conn.params.ConnManagerParams;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 
-import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennes;
-import fr.itinerennes.business.service.AccessibilityService;
-import fr.itinerennes.business.service.BikeService;
-import fr.itinerennes.business.service.BookmarkService;
-import fr.itinerennes.business.service.LineIconService;
-import fr.itinerennes.business.service.MarkerOverlayService;
-import fr.itinerennes.business.service.SubwayService;
-import fr.itinerennes.database.DatabaseHelper;
-import fr.itinerennes.exceptions.DefaultExceptionHandler;
-import fr.itinerennes.exceptions.ExceptionHandler;
-import fr.itinerennes.http.client.ProgressHttpClient;
 
 /**
  * An abstract activity providing common functionalities such as automatic.
@@ -36,33 +16,6 @@ public abstract class ItinerennesContext extends Activity {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItinerennesContext.class);
-
-    /** The itinerennes shared preferences. */
-    private SharedPreferences sharedPreferences;
-
-    /** The default exception handler. */
-    private final ExceptionHandler exceptionHandler = new DefaultExceptionHandler(this);
-
-    /** The marker service. */
-    private MarkerOverlayService markerService;
-
-    /** The bike service. */
-    private BikeService bikeService;
-
-    /** The subway service. */
-    private SubwayService subwayService;
-
-    /** The line icon service. */
-    private LineIconService lineIconService;
-
-    /** The bookmarks service. */
-    private BookmarkService bookmarksService;
-
-    /** The accessibility service. */
-    private AccessibilityService accessibilityService;
-
-    /** The Progress Http Client. */
-    private ProgressHttpClient httpClient;
 
     /**
      * Tries to dismiss a displayed dialog but catch the exception throws by the original
@@ -86,137 +39,13 @@ public abstract class ItinerennesContext extends Activity {
     }
 
     /**
-     * Gets the itinerennes shared preferences.
+     * {@inheritDoc}
      * 
-     * @return a shared preferences
+     * @see android.content.ContextWrapper#getApplicationContext()
      */
-    public final SharedPreferences getITRPreferences() {
+    @Override
+    public ItineRennes getApplicationContext() {
 
-        if (sharedPreferences == null) {
-            sharedPreferences = getSharedPreferences(ITRPrefs.PREFS_NAME, MODE_PRIVATE);
-        }
-        return sharedPreferences;
-    }
-
-    /**
-     * Gets the exception handler.
-     * 
-     * @return the current exception handler
-     */
-    public final ExceptionHandler getExceptionHandler() {
-
-        return exceptionHandler;
-    }
-
-    /**
-     * Gets a reference to the database helper.
-     * 
-     * @return a reference to the database helper
-     */
-    public final DatabaseHelper getDatabaseHelper() {
-
-        return ((ItineRennes) getApplicationContext()).getDatabaseHelper();
-    }
-
-    /**
-     * Gets a reference to the bike service.
-     * 
-     * @return a reference to the bike service
-     */
-    public final BikeService getBikeService() {
-
-        if (bikeService == null) {
-            bikeService = new BikeService(this);
-        }
-        return bikeService;
-    }
-
-    /**
-     * Gets a reference to the subway service.
-     * 
-     * @return a reference to the subway service
-     */
-    public final SubwayService getSubwayService() {
-
-        if (subwayService == null) {
-            subwayService = new SubwayService(this);
-        }
-        return subwayService;
-    }
-
-    /**
-     * Gets a reference to the line icon service.
-     * 
-     * @return a reference to the line icon service
-     */
-    public final LineIconService getLineIconService() {
-
-        if (lineIconService == null) {
-            lineIconService = new LineIconService(this, getDatabaseHelper());
-        }
-        return lineIconService;
-    }
-
-    /**
-     * Gets a reference to the BookmarkService.
-     * 
-     * @return a reference to the {@link BookmarkService}
-     */
-    public final BookmarkService getBookmarksService() {
-
-        if (bookmarksService == null) {
-            bookmarksService = new BookmarkService(getDatabaseHelper());
-        }
-        return bookmarksService;
-    }
-
-    /**
-     * Gets a reference to the AccessibilityService.
-     * 
-     * @return a reference to the {@link AccessibilityService}
-     */
-    public final AccessibilityService getAccessibilityService() {
-
-        if (accessibilityService == null) {
-            accessibilityService = new AccessibilityService(getDatabaseHelper());
-        }
-        return accessibilityService;
-    }
-
-    /**
-     * Gets a reference to the MarkerService.
-     * 
-     * @return a reference to the {@link MarkerService}
-     */
-    public final MarkerOverlayService getMarkerService() {
-
-        if (markerService == null) {
-            markerService = new MarkerOverlayService(this, getDatabaseHelper());
-        }
-        return markerService;
-    }
-
-    /**
-     * Gets a reference to the HttpClient.
-     * 
-     * @return a reference to the {@link ProgressHttpClient}
-     */
-    public final ProgressHttpClient getHttpClient() {
-
-        if (httpClient == null) {
-            final SchemeRegistry registry = new SchemeRegistry();
-            registry.register(new Scheme("http", new PlainSocketFactory(), 80));
-
-            final HttpParams params = new BasicHttpParams();
-
-            ConnManagerParams.setMaxTotalConnections(params, 5);
-            HttpConnectionParams.setConnectionTimeout(params, 60000);
-
-            final ThreadSafeClientConnManager connexionManager = new ThreadSafeClientConnManager(
-                    params, registry);
-            httpClient = new ProgressHttpClient(connexionManager, null);
-        }
-
-        return httpClient;
+        return (ItineRennes) super.getApplicationContext();
     }
 }
