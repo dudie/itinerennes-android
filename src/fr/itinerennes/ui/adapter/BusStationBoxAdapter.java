@@ -14,11 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
-import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.Stop;
 import fr.itinerennes.ui.activity.BusStopActivity;
@@ -80,13 +78,14 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
         });
 
         final ToggleButton star = (ToggleButton) busView.findViewById(R.id.map_box_toggle_bookmark);
-        star.setChecked(context.getBookmarksService().isStarred(TypeConstants.TYPE_BUS,
-                item.getId()));
+        star.setChecked(context.getApplicationContext().getBookmarksService()
+                .isStarred(TypeConstants.TYPE_BUS, item.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context, TypeConstants.TYPE_BUS,
                 item.getId(), item.getLabel()));
 
         final ImageView handistar = (ImageView) busView.findViewById(R.id.map_box_wheelchair);
-        if (context.getAccessibilityService().isAccessible(item.getId(), TypeConstants.TYPE_BUS)) {
+        if (context.getApplicationContext().getAccessibilityService()
+                .isAccessible(item.getId(), TypeConstants.TYPE_BUS)) {
             handistar.setVisibility(View.VISIBLE);
         }
         return busView;
@@ -117,13 +116,13 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
         routesIcons = new ArrayList<Drawable>();
         try {
 
-            final IOneBusAwayClient obaClient = new JsonOneBusAwayClient(context.getHttpClient(),
-                    ItineRennesConstants.OBA_API_URL, ItineRennesConstants.OBA_API_KEY);
+            final IOneBusAwayClient obaClient = context.getApplicationContext()
+                    .getOneBusAwayClient();
 
             station = obaClient.getStop(item.getId());
 
         } catch (final IOException e) {
-            context.getExceptionHandler().handleException(e);
+            context.getApplicationContext().getExceptionHandler().handleException(e);
         }
 
         return station;
@@ -151,8 +150,8 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
                     final View imageContainer = inflater.inflate(R.layout.li_line_icon, null);
                     final ImageView lineIcon = (ImageView) imageContainer
                             .findViewById(R.station.bus_line_icon);
-                    lineIcon.setImageDrawable(context.getLineIconService().getIconOrDefault(
-                            context, route.getShortName()));
+                    lineIcon.setImageDrawable(context.getApplicationContext().getLineIconService()
+                            .getIconOrDefault(context, route.getShortName()));
                     iconsView.addView(imageContainer);
                 }
                 // set the list of routes icons visible only if it contains icons

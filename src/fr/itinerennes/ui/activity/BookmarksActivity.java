@@ -14,8 +14,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import fr.itinerennes.ErrorCodeConstants;
+import fr.itinerennes.ItineRennes;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.keolis.model.BikeStation;
 import fr.itinerennes.keolis.model.SubwayStation;
@@ -43,7 +45,8 @@ public class BookmarksActivity extends ItinerennesContext {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_bookmarks);
 
-        final List<Bookmark> allBookmarks = getBookmarksService().getAllBookmarks();
+        final BookmarkService bookmarksService = getApplicationContext().getBookmarksService();
+        final List<Bookmark> allBookmarks = bookmarksService.getAllBookmarks();
 
         // creates the list adapter
         final BookmarksAdapter favAdapter = new BookmarksAdapter(this, allBookmarks);
@@ -73,13 +76,13 @@ public class BookmarksActivity extends ItinerennesContext {
                     BookmarksActivity.this.startActivity(i);
                 } catch (final GenericException e) {
                     // bookmark is not found, remove it
-                    getBookmarksService().setNotStarred(favType, favId);
+                    bookmarksService.setNotStarred(favType, favId);
                     Toast.makeText(BookmarksActivity.this,
                             getString(R.string.delete_bookmark_not_found, favLabel), 5000).show();
                     list.invalidate();
                 } catch (final IOException e) {
                     // station is not found, remove it
-                    getBookmarksService().setNotStarred(favType, favId);
+                    bookmarksService.setNotStarred(favType, favId);
                     Toast.makeText(BookmarksActivity.this,
                             getString(R.string.delete_bookmark_not_found, favLabel), 5000).show();
                     list.invalidate();
@@ -105,20 +108,21 @@ public class BookmarksActivity extends ItinerennesContext {
     private GeoPoint findBookmarkLocation(final String type, final String id)
             throws GenericException, IOException {
 
+        final ItineRennes appCtx = getApplicationContext();
         GeoPoint location = null;
+
         if (TypeConstants.TYPE_BUS.equals(type)) {
-            final MarkerOverlayItem bus = getMarkerService().getMarker(id);
+            final MarkerOverlayItem bus = appCtx.getMarkerService().getMarker(id);
             if (bus != null) {
                 location = bus.getLocation();
             }
         } else if (TypeConstants.TYPE_BIKE.equals(type)) {
-            final BikeStation bike = getBikeService().getBikeStation(id);
+            final BikeStation bike = appCtx.getKeolisClient().getBikeStation(id);
             if (bike != null) {
-
                 location = new GeoPoint(bike.getLatitude(), bike.getLongitude());
             }
         } else if (TypeConstants.TYPE_SUBWAY.equals(type)) {
-            final SubwayStation subway = getSubwayService().getSubwayStation(id);
+            final SubwayStation subway = appCtx.getKeolisClient().getSubwayStation(id);
             if (subway != null) {
                 location = new GeoPoint(subway.getLatitude(), subway.getLongitude());
             }

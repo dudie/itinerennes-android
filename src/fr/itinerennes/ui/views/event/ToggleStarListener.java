@@ -5,6 +5,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 
 import fr.itinerennes.R;
+import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 
 /**
@@ -16,6 +17,9 @@ public class ToggleStarListener implements OnCheckedChangeListener {
 
     /** The itinerennes context. */
     private final ItinerennesContext context;
+
+    /** The bookmarks service. */
+    private final BookmarkService bookmarks;
 
     /** The type of the resources (ex: fr.itinerennes.model.BusStation). */
     private final String type;
@@ -45,6 +49,7 @@ public class ToggleStarListener implements OnCheckedChangeListener {
             final String label) {
 
         this.context = context;
+        this.bookmarks = context.getApplicationContext().getBookmarksService();
         this.type = type;
         this.id = id;
         this.label = label;
@@ -65,11 +70,11 @@ public class ToggleStarListener implements OnCheckedChangeListener {
 
         notification.cancel();
         if (isChecked) {
-            context.getBookmarksService().setStarred(type, id, label);
+            bookmarks.setStarred(type, id, label);
             notification.setText(context.getString(R.string.added_to_bookmarks, label));
             notification.show();
         } else {
-            context.getBookmarksService().setNotStarred(type, id);
+            bookmarks.setNotStarred(type, id);
             notification.setText(context.getString(R.string.removed_from_bookmarks, label));
             notification.show();
         }

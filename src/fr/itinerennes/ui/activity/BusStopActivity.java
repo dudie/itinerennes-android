@@ -28,11 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
-import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.ScheduleStopTime;
 import fr.itinerennes.onebusaway.model.StopSchedule;
@@ -136,8 +134,7 @@ public class BusStopActivity extends ItinerennesContext implements Runnable {
 
         super.onCreate(savedInstanceState);
 
-        obaClient = new JsonOneBusAwayClient(getHttpClient(), ItineRennesConstants.OBA_API_URL,
-                ItineRennesConstants.OBA_API_KEY);
+        obaClient = getApplicationContext().getOneBusAwayClient();
 
         // retrieve intent parameters
         stopId = getIntent().getStringExtra(INTENT_STOP_ID);
@@ -195,14 +192,16 @@ public class BusStopActivity extends ItinerennesContext implements Runnable {
 
         /* Display handistar icon if necessary. */
         final ImageView handistar = (ImageView) findViewById(R.station.bus_activity_wheelchair_icon);
-        isAccessible = getAccessibilityService().isAccessible(stopId, TypeConstants.TYPE_BUS);
+        isAccessible = getApplicationContext().getAccessibilityService().isAccessible(stopId,
+                TypeConstants.TYPE_BUS);
         if (isAccessible) {
             handistar.setVisibility(View.VISIBLE);
         }
 
         /* Sets bookmarked icon. */
         final ToggleButton star = (ToggleButton) findViewById(R.station.toggle_bookmark);
-        star.setChecked(getBookmarksService().isStarred(TypeConstants.TYPE_BUS, stopId));
+        star.setChecked(getApplicationContext().getBookmarksService().isStarred(
+                TypeConstants.TYPE_BUS, stopId));
         star.setOnCheckedChangeListener(new ToggleStarListener(this, TypeConstants.TYPE_BUS,
                 stopId, stopName));
 
@@ -287,8 +286,8 @@ public class BusStopActivity extends ItinerennesContext implements Runnable {
             final int increment = (progressBar.getMax() - progressBar.getProgress())
                     / schedule.getStop().getRoutes().size();
             for (final Route route : schedule.getStop().getRoutes()) {
-                routesIcon.put(route.getShortName(),
-                        getLineIconService().getIconOrDefault(this, route.getShortName()));
+                routesIcon.put(route.getShortName(), getApplicationContext().getLineIconService()
+                        .getIconOrDefault(this, route.getShortName()));
                 handler.sendMessage(handler.obtainMessage(MESSAGE_INCREMENT_PROGRESS, increment, 0));
             }
         }
@@ -394,7 +393,7 @@ public class BusStopActivity extends ItinerennesContext implements Runnable {
 
                 MarkerOverlayItem busStation = null;
 
-                busStation = getMarkerService().getMarker(stopId);
+                busStation = getApplicationContext().getMarkerService().getMarker(stopId);
 
                 return busStation;
             }

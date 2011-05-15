@@ -8,10 +8,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.keolis.client.JsonKeolisClient;
+import fr.itinerennes.keolis.client.KeolisClient;
 import fr.itinerennes.keolis.model.BikeStation;
 import fr.itinerennes.ui.activity.ItinerennesContext;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
@@ -27,9 +26,6 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
 
     /** The layout inflater. */
     private final LayoutInflater inflater;
-
-    /** Keolis Client. */
-    private JsonKeolisClient keolisClient;
 
     /**
      * Creates the bus station adapter for map box.
@@ -56,8 +52,8 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
 
         final ToggleButton star = (ToggleButton) bikeView
                 .findViewById(R.id.map_box_toggle_bookmark);
-        star.setChecked(context.getBookmarksService().isStarred(TypeConstants.TYPE_BIKE,
-                item.getId()));
+        star.setChecked(context.getApplicationContext().getBookmarksService()
+                .isStarred(TypeConstants.TYPE_BIKE, item.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context, TypeConstants.TYPE_BIKE,
                 item.getId(), item.getLabel()));
 
@@ -84,12 +80,11 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
     @Override
     public final BikeStation doInBackground(final View view, final MarkerOverlayItem item) {
 
+        final KeolisClient keolisClient = context.getApplicationContext().getKeolisClient();
         try {
-            keolisClient = new JsonKeolisClient(context.getHttpClient(),
-                    ItineRennesConstants.KEOLIS_API_URL, ItineRennesConstants.KEOLIS_API_KEY);
             return keolisClient.getBikeStation(item.getId());
         } catch (final IOException e) {
-            context.getExceptionHandler().handleException(e);
+            context.getApplicationContext().getExceptionHandler().handleException(e);
             return null;
         }
     }
