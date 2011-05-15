@@ -8,7 +8,8 @@
     <string name="ok">Ok</string>
     <string name="continuer">Continuer</string>
     <string name="no_departure">Aucun départ ce jour.</string>
-    <string name="search_field_hint">Mots-clés</string>
+    <string name="search_field_hint">Cherchez une adresse ou un arrêt</string>
+    <string name="no_results">Pas de résultat pour \"%s\"</string>
     <string name="activity_title_bus_stop">Arrêt de bus</string>
     <string name="activity_title_bus_trip">Horaires d\'un trajet</string>
     <!-- dates -->

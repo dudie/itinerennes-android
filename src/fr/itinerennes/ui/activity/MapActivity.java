@@ -12,18 +12,19 @@ import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -31,7 +32,8 @@ import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.ui.adapter.MapSearchClientAdapter;
+import fr.itinerennes.database.Columns;
+import fr.itinerennes.provider.SearchMarkersProvider;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.utils.ResourceResolver;
@@ -216,79 +218,135 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.start");
         }
-        super.onNewIntent(intent);
 
-        final SharedPreferences.Editor edit = getITRPreferences().edit();
-
-        // if intent asks for a specific zoom level, its values overrides the ones
-        // saved in preferences
-
-        final int newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
-        // same thing with the map center
-        final int newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter()
-                .getLatitudeE6());
-        final int newLon = intent.getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter()
-                .getLongitudeE6());
-
-        edit.putInt(ITRPrefs.MAP_CENTER_LAT, newLat);
-        edit.putInt(ITRPrefs.MAP_CENTER_LON, newLon);
-        edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, newZoom);
-
-        if (LOGGER.isDebugEnabled()) {
-            if (map.getZoomLevel() != newZoom) {
-                LOGGER.debug("intent requested a new zoom level : old={}, new={}",
-                        map.getZoomLevel(), newZoom);
-            }
-            if (map.getMapCenter().getLatitudeE6() != newLat) {
-                LOGGER.debug("intent requested a new latitude : old={}, new={}", map.getMapCenter()
-                        .getLatitudeE6(), newLat);
-            }
-            if (map.getMapCenter().getLongitudeE6() != newLon) {
-                LOGGER.debug("intent requested a new longitude : old={}, new={}", map
-                        .getMapCenter().getLongitudeE6(), newLon);
-            }
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            final String query = intent.getStringExtra(SearchManager.QUERY);
+            search(query);
         }
 
-        // disable follow location in preferences because we are explicitly centering the map on a
-        // location.
-        // if not, it will be activated again in onResume().
-        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, false);
+        else {
+            final SharedPreferences.Editor edit = getITRPreferences().edit();
 
-        edit.commit();
+            // if intent asks for a specific zoom level, its values overrides the ones
+            // saved in preferences
 
+            final int newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
+            // same thing with the map center
+            final int newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter()
+                    .getLatitudeE6());
+            final int newLon = intent.getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter()
+                    .getLongitudeE6());
+
+            edit.putInt(ITRPrefs.MAP_CENTER_LAT, newLat);
+            edit.putInt(ITRPrefs.MAP_CENTER_LON, newLon);
+            edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, newZoom);
+
+            if (LOGGER.isDebugEnabled()) {
+                if (map.getZoomLevel() != newZoom) {
+                    LOGGER.debug("intent requested a new zoom level : old={}, new={}",
+                            map.getZoomLevel(), newZoom);
+                }
+                if (map.getMapCenter().getLatitudeE6() != newLat) {
+                    LOGGER.debug("intent requested a new latitude : old={}, new={}", map
+                            .getMapCenter().getLatitudeE6(), newLat);
+                }
+                if (map.getMapCenter().getLongitudeE6() != newLon) {
+                    LOGGER.debug("intent requested a new longitude : old={}, new={}", map
+                            .getMapCenter().getLongitudeE6(), newLon);
+                }
+            }
+
+            // disable follow location in preferences because we are explicitly centering the map on
+            // a
+            // location.
+            // if not, it will be activated again in onResume().
+            edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, false);
+
+            edit.commit();
+        }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.end");
         }
     }
 
     /**
+     * Searches the database and displays results for the given query.
+     * 
+     * @param query
+     *            The search query
+     */
+    private void search(final String query) {
+
+        final Cursor cursor = managedQuery(SearchMarkersProvider.CONTENT_URI, null, null, null,
+                null);
+
+        if (cursor == null || cursor.getCount() == 0) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("No result").setCancelable(true)
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(final DialogInterface dialog, final int id) {
+
+                            dialog.cancel();
+                        }
+                    });
+            final AlertDialog alert = builder.create();
+            alert.show();
+
+        } else {
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Try with : ");
+
+            final String[] from = new String[] { Columns.MarkersColumns.TYPE,
+                    Columns.MarkersColumns.LABEL };
+
+            final int[] to = new int[] { R.id.type, R.id.label };
+
+            final SimpleCursorAdapter results = new SimpleCursorAdapter(this,
+                    R.layout.li_search_result, cursor, from, to);
+
+            builder.setAdapter(results, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(final DialogInterface dialog, final int item) {
+
+                    Toast.makeText(getApplicationContext(),
+                            ((Cursor) results.getItem(item)).getString(3), Toast.LENGTH_SHORT)
+                            .show();
+                }
+            });
+            final AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
+
+    /**
      * {@inheritDoc}
      * 
-     * @see android.app.Activity#onKeyDown(int, android.view.KeyEvent)
+     * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
      */
     @Override
-    public final boolean onKeyDown(final int keyCode, final KeyEvent event) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
 
-        final boolean result;
-        if (KeyEvent.KEYCODE_SEARCH == keyCode) {
-            // when search key is pressed, the search engine view is displayed / hidden
-            final View search = findViewById(R.id.map_search_layout);
-            if (View.VISIBLE == search.getVisibility()) {
-                search.setVisibility(View.GONE);
-            } else {
-                final AutoCompleteTextView autoCompField = (AutoCompleteTextView) search
-                        .findViewById(R.id.map_search_field);
-                if (autoCompField.getAdapter() == null) {
-                    autoCompField.setAdapter(new MapSearchClientAdapter(this, getSearchClient()));
-                }
-                search.setVisibility(View.VISIBLE);
-            }
-            result = true;
-        } else {
-            // default result
-            result = super.onKeyDown(keyCode, event);
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.menu_layers:
+            showDialog(Dialogs.SELECT_LAYERS);
+            return true;
+        case R.id.menu_bookmarks:
+            startActivity(new Intent(this, BookmarksActivity.class));
+            return true;
+        case R.id.menu_about:
+            showDialog(Dialogs.ABOUT);
+            return true;
+        case R.id.menu_search:
+            onSearchRequested();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
         }
-        return result;
     }
 
     /**
@@ -304,39 +362,8 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
     @Override
     public final boolean onCreateOptionsMenu(final Menu menu) {
 
-        // LAYERS
-        final MenuItem layers = menu.add(Menu.NONE, MenuOptions.LAYERS, Menu.NONE,
-                R.string.menu_layers);
-        layers.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(final MenuItem item) {
-
-                showDialog(Dialogs.SELECT_LAYERS);
-                return true;
-            }
-        });
-
-        // BOOKMARKS
-        final MenuItem favourites = menu.add(Menu.NONE, MenuOptions.BOOKMARKS, Menu.NONE,
-                R.string.menu_bookmarks);
-        favourites.setIcon(android.R.drawable.btn_star);
-        final Intent favActivityIntent = new Intent(this, BookmarksActivity.class);
-        favourites.setIntent(favActivityIntent);
-
-        // ABOUT
-        final MenuItem about = menu.add(Menu.NONE, MenuOptions.ABOUT, Menu.NONE,
-                R.string.menu_about);
-        about.setIcon(android.R.drawable.ic_menu_help);
-        about.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(final MenuItem item) {
-
-                showDialog(Dialogs.ABOUT);
-                return true;
-            }
-        });
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.map_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -438,24 +465,6 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
             dialog = null;
         }
         return dialog;
-    }
-
-    /**
-     * Class containing menu constants.
-     * 
-     * @author Jérémie Huchet
-     */
-    private static final class MenuOptions {
-
-        /** "About" menu option. */
-        private static final int ABOUT = 0;
-
-        /** "Favourites" menu option. */
-        private static final int BOOKMARKS = 1;
-
-        /** "Layers" menu option. */
-        private static final int LAYERS = 2;
-
     }
 
     /**
