@@ -4,5 +4,6 @@
     android:hint="@string/search_field_hint"
     android:searchSuggestAuthority="fr.itinerennes.provider.searchmarkersprovider"
     android:searchSuggestIntentAction="android.intent.action.VIEW"
-    android:searchSuggestSelection=" ?" >
+    android:searchSuggestSelection=" ?" 
+    android:includeInGlobalSearch="true" >
 </searchable>
