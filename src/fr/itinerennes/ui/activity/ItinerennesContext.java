@@ -26,8 +26,6 @@ import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
 import fr.itinerennes.exceptions.ExceptionHandler;
 import fr.itinerennes.http.client.ProgressHttpClient;
-import fr.itinerennes.search.client.JsonSearchClient;
-import fr.itinerennes.search.client.SearchClient;
 
 /**
  * An abstract activity providing common functionalities such as automatic.
@@ -65,9 +63,6 @@ public abstract class ItinerennesContext extends Activity {
 
     /** The Progress Http Client. */
     private ProgressHttpClient httpClient;
-
-    /** The search client. */
-    private SearchClient searchClient;
 
     /**
      * Tries to dismiss a displayed dialog but catch the exception throws by the original
@@ -223,18 +218,5 @@ public abstract class ItinerennesContext extends Activity {
         }
 
         return httpClient;
-    }
-
-    /**
-     * Gets a reference to the SearchClient.
-     * 
-     * @return a reference to the {@link SearchClient}
-     */
-    public final SearchClient getSearchClient() {
-
-        if (searchClient == null) {
-            searchClient = new JsonSearchClient(getHttpClient());
-        }
-        return searchClient;
     }
 }
