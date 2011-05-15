@@ -277,13 +277,14 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
      */
     private void search(final String query) {
 
-        final Cursor cursor = managedQuery(SearchMarkersProvider.CONTENT_URI, null, null, null,
-                null);
+        final Cursor cursor = managedQuery(SearchMarkersProvider.CONTENT_URI, null,
+                String.format("%s LIKE ?", Columns.MarkersColumns.LABEL), new String[] { "%"
+                        + query + "%" }, null);
 
         if (cursor == null || cursor.getCount() == 0) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("No result").setCancelable(true)
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            builder.setMessage(getString(R.string.no_results, query)).setCancelable(true)
+                    .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(final DialogInterface dialog, final int id) {
@@ -297,7 +298,7 @@ public class MapActivity extends ItinerennesContext implements OverlayConstants 
         } else {
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Try with : ");
+            builder.setTitle(R.string.try_with);
 
             final String[] from = new String[] { Columns.MarkersColumns.TYPE,
                     Columns.MarkersColumns.LABEL };

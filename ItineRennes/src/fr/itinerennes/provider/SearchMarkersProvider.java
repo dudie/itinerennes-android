@@ -94,13 +94,11 @@ public class SearchMarkersProvider extends ContentProvider {
         qb.setTables(Columns.MarkersColumns.MARKERS_TABLE_NAME);
 
         String[] columns = null;
-        String where = null;
-        String[] params = null;
+        String where = selection;
+        String[] params = selectionArgs;
 
         switch (URI_MATCHER.match(uri)) {
         case MARKERS:
-            where = String.format("%s LIKE ?", Columns.MarkersColumns.LABEL);
-            params = new String[] { "%" + selectionArgs[0] + "%" };
 
             columns = new String[] { BaseColumns._ID, Columns.MarkersColumns.ID,
                     Columns.MarkersColumns.TYPE, Columns.MarkersColumns.LABEL,
