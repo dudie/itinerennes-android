@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import fr.itinerennes.R;
 import fr.itinerennes.business.service.BookmarkService;
-import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
 
 /**
  * A listener for toggle button which changes the bookmark state of a resource.
@@ -16,7 +16,7 @@ import fr.itinerennes.ui.activity.ItinerennesContext;
 public class ToggleStarListener implements OnCheckedChangeListener {
 
     /** The itinerennes context. */
-    private final ItinerennesContext context;
+    private final ItineRennesActivity context;
 
     /** The bookmarks service. */
     private final BookmarkService bookmarks;
@@ -45,7 +45,7 @@ public class ToggleStarListener implements OnCheckedChangeListener {
      * @param label
      *            the label of the bookmark
      */
-    public ToggleStarListener(final ItinerennesContext context, final String type, final String id,
+    public ToggleStarListener(final ItineRennesActivity context, final String type, final String id,
             final String label) {
 
         this.context = context;

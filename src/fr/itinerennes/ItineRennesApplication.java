@@ -33,10 +33,10 @@ import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
  * @author Jérémie Huchet
  */
 @ReportsCrashes(formKey = "dHVwTGY1ZTBOcEQ5SzdXT2dEN2diY3c6MQ")
-public class ItineRennes extends Application {
+public class ItineRennesApplication extends Application {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItineRennes.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItineRennesApplication.class);
 
     /** The database helper. */
     private DatabaseHelper databaseHelper;

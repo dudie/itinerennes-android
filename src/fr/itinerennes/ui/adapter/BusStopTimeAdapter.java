@@ -17,7 +17,7 @@ import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.onebusaway.model.ScheduleStopTime;
 import fr.itinerennes.onebusaway.model.StopSchedule;
-import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
 
 /**
  * @author Jérémie Huchet
@@ -25,7 +25,7 @@ import fr.itinerennes.ui.activity.ItinerennesContext;
 public class BusStopTimeAdapter extends BaseAdapter {
 
     /** The android context. */
-    private final ItinerennesContext context;
+    private final ItineRennesActivity context;
 
     /** Stop complete schedule. */
     private final StopSchedule data;
@@ -53,7 +53,7 @@ public class BusStopTimeAdapter extends BaseAdapter {
      *            list of routes icons
      * @param stopIsAccessible
      */
-    public BusStopTimeAdapter(final ItinerennesContext c, final StopSchedule schedule,
+    public BusStopTimeAdapter(final ItineRennesActivity c, final StopSchedule schedule,
             final HashMap<String, Drawable> routesIcons, final boolean stopIsAccessible) {
 
         this.data = schedule;

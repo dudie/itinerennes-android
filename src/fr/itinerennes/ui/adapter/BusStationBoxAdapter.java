@@ -20,7 +20,7 @@ import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.Stop;
 import fr.itinerennes.ui.activity.BusStopActivity;
-import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
@@ -30,7 +30,7 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
 
     /** The itinerennes context. */
-    private final ItinerennesContext context;
+    private final ItineRennesActivity context;
 
     /** The layout inflater. */
     private final LayoutInflater inflater;
@@ -47,7 +47,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
      * @param context
      *            the context
      */
-    public BusStationBoxAdapter(final ItinerennesContext context) {
+    public BusStationBoxAdapter(final ItineRennesActivity context) {
 
         this.context = context;
         inflater = context.getLayoutInflater();

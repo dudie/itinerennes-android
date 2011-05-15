@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import fr.itinerennes.R;
-import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
 
 /**
  * The map box view component is a simple {@link LinearLayout} with common functionalities to handle
@@ -36,7 +36,7 @@ public class MapBoxView extends LinearLayout {
      * @param context
      *            the context
      */
-    public MapBoxView(final ItinerennesContext context) {
+    public MapBoxView(final ItineRennesActivity context) {
 
         this(context, null);
     }

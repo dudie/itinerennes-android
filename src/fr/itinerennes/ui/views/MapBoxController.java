@@ -7,7 +7,7 @@ import fr.itinerennes.R;
 import fr.itinerennes.keolis.model.BikeStation;
 import fr.itinerennes.keolis.model.SubwayStation;
 import fr.itinerennes.onebusaway.model.Stop;
-import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.adapter.BikeStationBoxAdapter;
 import fr.itinerennes.ui.adapter.BusStationBoxAdapter;
 import fr.itinerennes.ui.adapter.SubwayStationBoxAdapter;
@@ -22,7 +22,7 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 public class MapBoxController {
 
     /** The itinerennes context. */
-    private final ItinerennesContext context;
+    private final ItineRennesActivity context;
 
     /** The map box view. */
     private MapBoxView mapBox;
@@ -51,7 +51,7 @@ public class MapBoxController {
     /**
      * @param mapBox
      */
-    public MapBoxController(final ItinerennesContext context) {
+    public MapBoxController(final ItineRennesActivity context) {
 
         this.context = context;
 

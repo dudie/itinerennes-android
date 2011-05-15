@@ -12,7 +12,7 @@ import android.widget.ToggleButton;
 
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
-import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 
 public class LocationOverlay extends MyLocationOverlay {
@@ -20,7 +20,7 @@ public class LocationOverlay extends MyLocationOverlay {
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(LocationOverlay.class);
 
-    private final ItinerennesContext context;
+    private final ItineRennesActivity context;
 
     /** The map on which this location overlay is attached. */
     private final ItinerennesMapView map;
@@ -31,7 +31,7 @@ public class LocationOverlay extends MyLocationOverlay {
     public LocationOverlay(final Context ctx, final MapView mapView) {
 
         super(ctx, mapView);
-        this.context = (ItinerennesContext) ctx;
+        this.context = (ItineRennesActivity) ctx;
         this.map = (ItinerennesMapView) mapView;
     }
 

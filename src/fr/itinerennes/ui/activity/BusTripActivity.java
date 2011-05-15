@@ -33,7 +33,7 @@ import fr.itinerennes.ui.adapter.BusTripTimeAdapter;
  * 
  * @author Jérémie Huchet
  */
-public class BusTripActivity extends ItinerennesContext {
+public class BusTripActivity extends ItineRennesActivity {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusTripActivity.class);
