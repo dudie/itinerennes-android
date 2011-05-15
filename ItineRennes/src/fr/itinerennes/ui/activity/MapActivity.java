@@ -45,7 +45,7 @@ import fr.itinerennes.utils.ResourceResolver;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class MapActivity extends ItinerennesContext implements OverlayConstants {
+public class MapActivity extends ItineRennesActivity implements OverlayConstants {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(MapActivity.class);

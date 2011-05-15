@@ -15,7 +15,7 @@ import android.widget.TextView;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.onebusaway.model.TripStopTime;
-import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
 
 /**
  * @author Jérémie Huchet
@@ -23,7 +23,7 @@ import fr.itinerennes.ui.activity.ItinerennesContext;
 public class BusTripTimeAdapter extends BaseAdapter {
 
     /** The itinérennes context. */
-    private final ItinerennesContext context;
+    private final ItineRennesActivity context;
 
     /** A reference to the layout inflater. */
     private final LayoutInflater inflater;
@@ -50,7 +50,7 @@ public class BusTripTimeAdapter extends BaseAdapter {
      * @param arrivalAndDepartures
      *            the list of arrival times and departure times of the bus for each stop of the trip
      */
-    public BusTripTimeAdapter(final ItinerennesContext context, final String initialStopId,
+    public BusTripTimeAdapter(final ItineRennesActivity context, final String initialStopId,
             final List<TripStopTime> arrivalAndDepartures, final boolean routeIsAccessible) {
 
         this.context = context;

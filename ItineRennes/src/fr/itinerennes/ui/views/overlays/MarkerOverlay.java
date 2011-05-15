@@ -20,7 +20,7 @@ import android.view.MotionEvent;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 
 /**
@@ -32,7 +32,7 @@ public class MarkerOverlay extends LazyOverlay {
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkerOverlay.class);
 
     /** The MapActivity context. */
-    private final ItinerennesContext context;
+    private final ItineRennesActivity context;
 
     /** The map view containing this overlay. */
     private final ItinerennesMapView map;
@@ -55,7 +55,7 @@ public class MarkerOverlay extends LazyOverlay {
      * @param context
      *            the context
      */
-    public MarkerOverlay(final ItinerennesContext context, final ItinerennesMapView map) {
+    public MarkerOverlay(final ItineRennesActivity context, final ItinerennesMapView map) {
 
         super(context);
         this.context = context;

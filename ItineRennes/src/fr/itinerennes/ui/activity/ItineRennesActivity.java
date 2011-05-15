@@ -5,17 +5,17 @@ import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.Activity;
 
-import fr.itinerennes.ItineRennes;
+import fr.itinerennes.ItineRennesApplication;
 
 /**
  * An abstract activity providing common functionalities such as automatic.
  * 
  * @author Jérémie Huchet
  */
-public abstract class ItinerennesContext extends Activity {
+public abstract class ItineRennesActivity extends Activity {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItinerennesContext.class);
+    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItineRennesActivity.class);
 
     /**
      * Tries to dismiss a displayed dialog but catch the exception throws by the original
@@ -44,8 +44,8 @@ public abstract class ItinerennesContext extends Activity {
      * @see android.content.ContextWrapper#getApplicationContext()
      */
     @Override
-    public ItineRennes getApplicationContext() {
+    public ItineRennesApplication getApplicationContext() {
 
-        return (ItineRennes) super.getApplicationContext();
+        return (ItineRennesApplication) super.getApplicationContext();
     }
 }

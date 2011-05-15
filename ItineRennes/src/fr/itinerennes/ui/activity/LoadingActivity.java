@@ -22,7 +22,7 @@ import fr.itinerennes.database.Columns.MarkersColumns;
 /**
  * @author Jérémie Huchet
  */
-public class LoadingActivity extends ItinerennesContext implements MarkersColumns,
+public class LoadingActivity extends ItineRennesActivity implements MarkersColumns,
         AccessibilityColumns {
 
     /** The event logger. */

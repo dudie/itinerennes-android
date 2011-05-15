@@ -45,7 +45,7 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class BusStopActivity extends ItinerennesContext implements Runnable {
+public class BusStopActivity extends ItineRennesActivity implements Runnable {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusStopActivity.class);

@@ -8,7 +8,7 @@ import android.widget.ToggleButton;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.keolis.model.SubwayStation;
-import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
@@ -18,7 +18,7 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
 
     /** The itinerennes context. */
-    private final ItinerennesContext context;
+    private final ItineRennesActivity context;
 
     /** The layout inflater. */
     private final LayoutInflater inflater;
@@ -29,7 +29,7 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
      * @param context
      *            the context
      */
-    public SubwayStationBoxAdapter(final ItinerennesContext context) {
+    public SubwayStationBoxAdapter(final ItineRennesActivity context) {
 
         this.context = context;
         inflater = context.getLayoutInflater();

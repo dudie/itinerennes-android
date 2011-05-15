@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import fr.itinerennes.ErrorCodeConstants;
-import fr.itinerennes.ItineRennes;
+import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.business.service.BookmarkService;
@@ -30,7 +30,7 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
  * 
  * @author Jérémie Huchet
  */
-public class BookmarksActivity extends ItinerennesContext {
+public class BookmarksActivity extends ItineRennesActivity {
 
     /**
      * Loads the bookmarks and display them in a list view.
@@ -108,7 +108,7 @@ public class BookmarksActivity extends ItinerennesContext {
     private GeoPoint findBookmarkLocation(final String type, final String id)
             throws GenericException, IOException {
 
-        final ItineRennes appCtx = getApplicationContext();
+        final ItineRennesApplication appCtx = getApplicationContext();
         GeoPoint location = null;
 
         if (TypeConstants.TYPE_BUS.equals(type)) {

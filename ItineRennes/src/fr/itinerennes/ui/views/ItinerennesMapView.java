@@ -10,7 +10,7 @@ import org.osmdroid.views.overlay.Overlay;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import fr.itinerennes.ui.activity.ItinerennesContext;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.overlays.EventGarbageOverlay;
 import fr.itinerennes.ui.views.overlays.LazyOverlay;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
@@ -31,7 +31,7 @@ public class ItinerennesMapView extends MapView {
     private final MapViewController controller;
 
     /** The android context. */
-    private final ItinerennesContext context;
+    private final ItineRennesActivity context;
 
     /** The list of map listeners. */
     private final MapListenerWrapper mapListeners;
@@ -54,7 +54,7 @@ public class ItinerennesMapView extends MapView {
     /**
      * @param context
      */
-    public ItinerennesMapView(final ItinerennesContext context) {
+    public ItinerennesMapView(final ItineRennesActivity context) {
 
         this(context, null);
     }
@@ -66,7 +66,7 @@ public class ItinerennesMapView extends MapView {
     public ItinerennesMapView(final Context context, final AttributeSet attrs) {
 
         super(context, attrs);
-        this.context = (ItinerennesContext) context;
+        this.context = (ItineRennesActivity) context;
         this.controller = new MapViewController(this.context, this);
 
         this.mapBoxController = new MapBoxController(this.context);
