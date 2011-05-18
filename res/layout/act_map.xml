@@ -24,7 +24,8 @@
         <ImageView android:src="@drawable/btn_search"
             android:layout_width="@dimen/toolbar_button_size"
             android:layout_height="@dimen/toolbar_button_size"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"
+            android:onClick="onSearchButtonClick"/>
             
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         

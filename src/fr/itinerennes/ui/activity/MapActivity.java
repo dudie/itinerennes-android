@@ -36,6 +36,7 @@ import fr.itinerennes.database.Columns;
 import fr.itinerennes.provider.SearchMarkersProvider;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 import fr.itinerennes.utils.ResourceResolver;
 
 /**
@@ -222,42 +223,43 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             final String query = intent.getStringExtra(SearchManager.QUERY);
             search(query);
-        }
+        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 
-        else {
             final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
                     .edit();
 
             // if intent asks for a specific zoom level, its values overrides the ones
             // saved in preferences
 
-            final int newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
-            // same thing with the map center
-            final int newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter()
-                    .getLatitudeE6());
-            final int newLon = intent.getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter()
-                    .getLongitudeE6());
+            int newZoom;
+            int newLat;
+            int newLon;
+            if (intent.hasExtra(INTENT_SET_MAP_LAT) && intent.hasExtra(INTENT_SET_MAP_LON)) {
+                // center coordinates are send in the intent
+                newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
+                newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter().getLatitudeE6());
+                newLon = intent
+                        .getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter().getLongitudeE6());
+            } else if (intent.getData() != null) {
+                // we come from a search suggestion click, so we get in database the item clicked
+                final MarkerOverlayItem item = getApplicationContext().getMarkerService()
+                        .getMarker(intent.getData().getLastPathSegment());
+
+                newZoom = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
+                newLat = item.getLocation().getLatitudeE6();
+                newLon = item.getLocation().getLongitudeE6();
+            } else {
+                newZoom = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
+                newLat = ItineRennesConstants.CONFIG_RENNES_LAT;
+                newLon = ItineRennesConstants.CONFIG_RENNES_LON;
+            }
 
             edit.putInt(ITRPrefs.MAP_CENTER_LAT, newLat);
             edit.putInt(ITRPrefs.MAP_CENTER_LON, newLon);
             edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, newZoom);
 
-            if (LOGGER.isDebugEnabled()) {
-                if (map.getZoomLevel() != newZoom) {
-                    LOGGER.debug("intent requested a new zoom level : old={}, new={}",
-                            map.getZoomLevel(), newZoom);
-                }
-                if (map.getMapCenter().getLatitudeE6() != newLat) {
-                    LOGGER.debug("intent requested a new latitude : old={}, new={}", map
-                            .getMapCenter().getLatitudeE6(), newLat);
-                }
-                if (map.getMapCenter().getLongitudeE6() != newLon) {
-                    LOGGER.debug("intent requested a new longitude : old={}, new={}", map
-                            .getMapCenter().getLongitudeE6(), newLon);
-                }
-            }
-
-            // disable follow location in preferences because we are explicitly centering the map on
+            // disable follow location in preferences because we are explicitly centering the
+            // map on
             // a
             // location.
             // if not, it will be activated again in onResume().
@@ -385,6 +387,18 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         } else {
             myLocation.toggleFollowLocation();
         }
+
+    }
+
+    /**
+     * Click method handler invoked when a click event is detected on the search button.
+     * 
+     * @param button
+     *            the button view on which the event was detected
+     */
+    public final void onSearchButtonClick(final View button) {
+
+        onSearchRequested();
 
     }
 

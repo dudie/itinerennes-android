@@ -393,7 +393,8 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
 
                 MarkerOverlayItem busStation = null;
 
-                busStation = getApplicationContext().getMarkerService().getMarker(stopId);
+                busStation = getApplicationContext().getMarkerService().getMarker(stopId,
+                        TypeConstants.TYPE_BUS);
 
                 return busStation;
             }
@@ -406,6 +407,7 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
                             getString(R.string.error_loading_bus_station_position, stopName), 5000);
                 } else {
                     final Intent i = new Intent(getApplicationContext(), MapActivity.class);
+                    i.setAction(Intent.ACTION_VIEW);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
                     i.putExtra(MapActivity.INTENT_SET_MAP_LON, busStation.getLocation()

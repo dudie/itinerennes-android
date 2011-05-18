@@ -16,11 +16,8 @@ import android.widget.Toast;
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
-import fr.itinerennes.TypeConstants;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.keolis.model.BikeStation;
-import fr.itinerennes.keolis.model.SubwayStation;
 import fr.itinerennes.model.Bookmark;
 import fr.itinerennes.ui.adapter.BookmarksAdapter;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
@@ -111,22 +108,8 @@ public class BookmarksActivity extends ItineRennesActivity {
         final ItineRennesApplication appCtx = getApplicationContext();
         GeoPoint location = null;
 
-        if (TypeConstants.TYPE_BUS.equals(type)) {
-            final MarkerOverlayItem bus = appCtx.getMarkerService().getMarker(id);
-            if (bus != null) {
-                location = bus.getLocation();
-            }
-        } else if (TypeConstants.TYPE_BIKE.equals(type)) {
-            final BikeStation bike = appCtx.getKeolisClient().getBikeStation(id);
-            if (bike != null) {
-                location = new GeoPoint(bike.getLatitude(), bike.getLongitude());
-            }
-        } else if (TypeConstants.TYPE_SUBWAY.equals(type)) {
-            final SubwayStation subway = appCtx.getKeolisClient().getSubwayStation(id);
-            if (subway != null) {
-                location = new GeoPoint(subway.getLatitude(), subway.getLongitude());
-            }
-        }
+        final MarkerOverlayItem item = appCtx.getMarkerService().getMarker(id, type);
+        location = item.getLocation();
 
         if (location == null) {
             throw new GenericException(ErrorCodeConstants.BOOKMARK_NOT_FOUND, String.format(
