@@ -29,7 +29,7 @@
             
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         
-        <ToggleButton
+        <ToggleButton 
             android:id="@+id/mylocation_button"
             android:layout_width="@dimen/toolbar_button_size"
             android:layout_height="@dimen/toolbar_button_size"
@@ -58,10 +58,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="@dimen/mapbox_top_margin"/>
+            android:background="@drawable/bg_mapbox"
+            android:paddingTop="15dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:minWidth="240dp"/>
         
     </fr.itinerennes.ui.views.ItinerennesMapView>
 

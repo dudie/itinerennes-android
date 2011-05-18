@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" 
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="5dp"
-    android:background="@drawable/bg_mapbox">
+    android:layout_height="fill_parent">
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	       android:orientation="horizontal"
@@ -12,10 +10,9 @@
 	       android:layout_height="wrap_content"
 	       android:gravity="center_vertical">
 	       
-	    <ImageView android:src="@drawable/ic_marker_subway"
+	    <ImageView android:src="@drawable/ic_mapbox_subway"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:paddingRight="10dp"/>
+	        android:layout_height="wrap_content"/>
 	    
 	    <TextView android:id="@+id/map_box_title"
 	        android:layout_width="wrap_content"
@@ -28,7 +25,6 @@
 	    <ToggleButton android:id="@+id/map_box_toggle_bookmark"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_marginRight="10dp"
 	        android:gravity="right"
 	        android:background="@drawable/btn_toggle_star"
 	        android:textOn=""
