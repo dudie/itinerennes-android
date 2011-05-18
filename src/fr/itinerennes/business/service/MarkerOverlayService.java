@@ -90,7 +90,7 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
                 String.valueOf(bbox.getLatNorthE6()) };
 
         final Cursor c = builder.query(dbHelper.getReadableDatabase(), columns, where,
-                selectionArgs, null, null, null);
+                selectionArgs, null, null, "m.TYPE ASC");
 
         final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>();
         while (c.moveToNext()) {
@@ -101,8 +101,7 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
             marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
             marker.setBookmarked((c.getInt(5) != 0));
             // TJHU set the default marker resource identifier
-            final int iconId = ResourceResolver.getDrawableId(context,
-                    String.format("icx_marker_%s", marker.getType()), 0);
+            final int iconId = ResourceResolver.getMarkerIconId(context, marker.getType());
             marker.setIcon(context.getResources().getDrawable(iconId));
             markers.add(marker);
         }
