@@ -4,6 +4,7 @@ import android.os.AsyncTask.Status;
 import android.view.View;
 
 import fr.itinerennes.R;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.keolis.model.BikeStation;
 import fr.itinerennes.keolis.model.SubwayStation;
 import fr.itinerennes.onebusaway.model.Stop;
@@ -19,7 +20,7 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
  * 
  * @author Jérémie Huchet
  */
-public class MapBoxController {
+public final class MapBoxController {
 
     /** The itinerennes context. */
     private final ItineRennesActivity context;
@@ -65,15 +66,15 @@ public class MapBoxController {
 
         cancelAll();
 
-        if (item.getType().equals("BIKE")) {
+        if (item.getType().equals(TypeConstants.TYPE_BIKE)) {
             bikeMapBoxDisplayer = new DisplayMapBoxTask<BikeStation>(mapBox,
                     new BikeStationBoxAdapter(context), item);
             bikeMapBoxDisplayer.execute();
-        } else if (item.getType().equals("BUS")) {
+        } else if (item.getType().equals(TypeConstants.TYPE_BUS)) {
             busMapBoxDisplayer = new DisplayMapBoxTask<Stop>(mapBox, new BusStationBoxAdapter(
                     context), item);
             busMapBoxDisplayer.execute();
-        } else if (item.getType().equals("SUBWAY")) {
+        } else if (item.getType().equals(TypeConstants.TYPE_SUBWAY)) {
             subwayMapBoxDisplayer = new DisplayMapBoxTask<SubwayStation>(mapBox,
                     new SubwayStationBoxAdapter(context), item);
             subwayMapBoxDisplayer.execute();
