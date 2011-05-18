@@ -63,7 +63,7 @@
             </intent-filter>
         </activity>
         
-        <provider android:authorities="fr.itinerennes.provider.searchmarkersprovider" android:name=".provider.SearchMarkersProvider">
+        <provider android:authorities="fr.itinerennes.provider.searchMarkersProvider" android:name=".provider.SearchMarkersProvider">
         </provider>
     
     </application>

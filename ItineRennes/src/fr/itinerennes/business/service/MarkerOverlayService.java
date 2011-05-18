@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.provider.BaseColumns;
 
 import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.Columns.MarkersColumns;
@@ -115,16 +116,68 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
     }
 
     /**
-     * Fetch a single MarkerOverlayItem from the database.
+     * Fetch a single MarkerOverlayItem from the database based on an unique android id.
      * 
      * @param id
-     *            if of the marker
+     *            unique id of the marker
      * @return the Marker
      */
     public final MarkerOverlayItem getMarker(final String id) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getMarker.start - id={}", id);
+        }
+
+        final SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        builder.setTables(String.format("%s m left join %s b on m.%s=b.%s", MARKERS_TABLE_NAME,
+                Columns.BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, Columns.BookmarksColumns.ID));
+
+        final String[] columns = new String[] { String.format("m.%s", ID),
+                String.format("m.%s", TYPE), String.format("m.%s", LABEL), LONGITUDE, LATITUDE,
+                String.format("b.%s is not null", ID) };
+
+        final String where = String.format("m.%s = ?", BaseColumns._ID);
+
+        final String[] selectionArgs = new String[] { id };
+
+        final Cursor c = builder.query(dbHelper.getReadableDatabase(), columns, where,
+                selectionArgs, null, null, null);
+
+        MarkerOverlayItem marker = null;
+        if (c.moveToNext()) {
+            marker = new MarkerOverlayItem();
+            marker.setId(c.getString(0));
+            marker.setType(c.getString(1));
+            marker.setLabel(c.getString(2));
+            marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
+            marker.setBookmarked((c.getInt(5) != 0));
+            // TJHU set the default marker resource identifier
+            final int iconId = ResourceResolver.getDrawableId(context,
+                    String.format("icx_marker_%s", marker.getType()), 0);
+            marker.setIcon(context.getResources().getDrawable(iconId));
+        }
+        c.close();
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getMarkers.end - marker={}", marker);
+        }
+        return marker;
+    }
+
+    /**
+     * Fetch a single MarkerOverlayItem from the database based on a stop id and his type.
+     * 
+     * @param id
+     *            id of the marker
+     * @param type
+     *            type of the marker
+     * @return the Marker
+     */
+    public final MarkerOverlayItem getMarker(final String id, final String type) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getMarker.start - id={}, type={}", id, type);
         }
 
         final SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
