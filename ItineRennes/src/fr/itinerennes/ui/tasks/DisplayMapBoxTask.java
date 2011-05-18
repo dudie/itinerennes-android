@@ -33,8 +33,6 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
     /**
      * Creates the task which will display the map box.
      * 
-     * @param context
-     *            the itinerennes application context
      * @param boxView
      *            the view where the additional informations are added
      * @param adapter
@@ -63,7 +61,7 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
             LOGGER.debug("onPreExecute.start - item={}", item);
         }
 
-        final int offsetY = item.getIcon().getIntrinsicHeight() / 2 + 1;
+        final int offsetY = 0;// item.getIcon().getIntrinsicHeight() / 2 + 1;
 
         final LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT, item.getLocation(), LayoutParams.BOTTOM_CENTER, 0,

@@ -4,6 +4,5 @@
     <dimen name="toolbar_button_size">26dp</dimen>
     <dimen name="toolbar_text_size">18sp</dimen>
     <dimen name="ic_activity_title_size">28dp</dimen>
-    <dimen name="mapbox_top_margin">45dp</dimen>
 	<dimen name="line_icon_max_size">32dp</dimen>
 </resources>
