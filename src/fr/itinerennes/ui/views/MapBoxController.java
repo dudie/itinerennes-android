@@ -58,6 +58,12 @@ public final class MapBoxController {
 
     }
 
+    /**
+     * Displays a map box containing informations about the given item.
+     * 
+     * @param item
+     *            the item
+     */
     public void show(final MarkerOverlayItem item) {
 
         if (this.mapBox == null) {
@@ -65,6 +71,9 @@ public final class MapBoxController {
         }
 
         cancelAll();
+        if (View.GONE != mapBox.getVisibility()) {
+            mapBox.setVisibility(View.GONE);
+        }
 
         if (item.getType().equals(TypeConstants.TYPE_BIKE)) {
             bikeMapBoxDisplayer = new DisplayMapBoxTask<BikeStation>(mapBox,
@@ -84,6 +93,9 @@ public final class MapBoxController {
 
     }
 
+    /**
+     * Hides the map box.
+     */
     public void hide() {
 
         cancelAll();
@@ -94,6 +106,9 @@ public final class MapBoxController {
         }
     }
 
+    /**
+     * Cancel all current loading tasks not finished.
+     */
     private void cancelAll() {
 
         if (bikeMapBoxDisplayer != null && bikeMapBoxDisplayer.getStatus() != Status.FINISHED) {

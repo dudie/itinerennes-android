@@ -61,11 +61,8 @@ public class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
             LOGGER.debug("onPreExecute.start - item={}", item);
         }
 
-        final int offsetY = 0;// item.getIcon().getIntrinsicHeight() / 2 + 1;
-
         final LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT, item.getLocation(), LayoutParams.BOTTOM_CENTER, 0,
-                -offsetY);
+                LayoutParams.WRAP_CONTENT, item.getLocation(), LayoutParams.BOTTOM_CENTER, 0, 0);
         boxView.setLayoutParams(params);
 
         boxView.setContentView(adapter.getView(item));
