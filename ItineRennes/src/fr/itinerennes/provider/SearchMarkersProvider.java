@@ -15,8 +15,10 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import fr.itinerennes.ItineRennesApplication;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.DatabaseHelper;
+import fr.itinerennes.utils.ResourceResolver;
 
 /**
  * Content provider to handle search markers queries and suggestion markers queries.
@@ -63,10 +65,10 @@ public class SearchMarkersProvider extends ContentProvider {
         PROJECTION_MAP.put(Columns.MarkersColumns.LABEL, Columns.MarkersColumns.LABEL);
         PROJECTION_MAP.put(Columns.MarkersColumns.LONGITUDE, Columns.MarkersColumns.LONGITUDE);
         PROJECTION_MAP.put(Columns.MarkersColumns.LATITUDE, Columns.MarkersColumns.LATITUDE);
-        PROJECTION_MAP.put(SearchManager.SUGGEST_COLUMN_TEXT_1, Columns.MarkersColumns.TYPE
+        PROJECTION_MAP
+                .put(SearchManager.SUGGEST_COLUMN_ICON_1, SearchManager.SUGGEST_COLUMN_ICON_1);
+        PROJECTION_MAP.put(SearchManager.SUGGEST_COLUMN_TEXT_1, Columns.MarkersColumns.LABEL
                 + " AS " + SearchManager.SUGGEST_COLUMN_TEXT_1);
-        PROJECTION_MAP.put(SearchManager.SUGGEST_COLUMN_TEXT_2, Columns.MarkersColumns.LABEL
-                + " AS " + SearchManager.SUGGEST_COLUMN_TEXT_2);
         PROJECTION_MAP.put(SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID, BaseColumns._ID + " AS "
                 + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID);
 
@@ -152,8 +154,23 @@ public class SearchMarkersProvider extends ContentProvider {
             where = String.format("%s LIKE ?", Columns.MarkersColumns.LABEL);
             params = new String[] { "%" + selectionArgs[0] + "%" };
 
-            columns = new String[] { BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1,
-                    SearchManager.SUGGEST_COLUMN_TEXT_2,
+            // building select clause part for the suggest_icon_id column
+            StringBuffer suggest_icon_id_column = new StringBuffer();
+
+            suggest_icon_id_column.append(String.format("CASE WHEN %s = '%s' THEN '%s' ",
+                    Columns.MarkersColumns.TYPE, TypeConstants.TYPE_BUS,
+                    ResourceResolver.getMarkerIconId(getContext(), TypeConstants.TYPE_BUS)));
+            suggest_icon_id_column.append(String.format("WHEN %s = '%s' THEN '%s' ",
+                    Columns.MarkersColumns.TYPE, TypeConstants.TYPE_BIKE,
+                    ResourceResolver.getMarkerIconId(getContext(), TypeConstants.TYPE_BIKE)));
+            suggest_icon_id_column.append(String.format("WHEN %s = '%s' THEN '%s' ",
+                    Columns.MarkersColumns.TYPE, TypeConstants.TYPE_SUBWAY,
+                    ResourceResolver.getMarkerIconId(getContext(), TypeConstants.TYPE_SUBWAY)));
+            suggest_icon_id_column.append(String.format("END AS %s",
+                    SearchManager.SUGGEST_COLUMN_ICON_1));
+
+            columns = new String[] { BaseColumns._ID, suggest_icon_id_column.toString(),
+                    SearchManager.SUGGEST_COLUMN_TEXT_1,
                     SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID };
             break;
 
