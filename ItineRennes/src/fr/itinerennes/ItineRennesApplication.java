@@ -19,7 +19,7 @@ import android.content.SharedPreferences;
 import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.business.service.LineIconService;
-import fr.itinerennes.business.service.MarkerOverlayService;
+import fr.itinerennes.business.service.MarkerService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
 import fr.itinerennes.exceptions.ExceptionHandler;
@@ -36,7 +36,8 @@ import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 public class ItineRennesApplication extends Application {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItineRennesApplication.class);
+    private static final Logger LOGGER = AndroidLoggerFactory
+            .getLogger(ItineRennesApplication.class);
 
     /** The database helper. */
     private DatabaseHelper databaseHelper;
@@ -48,7 +49,7 @@ public class ItineRennesApplication extends Application {
     private final ExceptionHandler exceptionHandler = new DefaultExceptionHandler(this);
 
     /** The marker service. */
-    private MarkerOverlayService markerService;
+    private MarkerService markerService;
 
     /** The line icon service. */
     private LineIconService lineIconService;
@@ -189,10 +190,10 @@ public class ItineRennesApplication extends Application {
      * 
      * @return a reference to the {@link MarkerService}
      */
-    public final MarkerOverlayService getMarkerService() {
+    public final MarkerService getMarkerService() {
 
         if (markerService == null) {
-            markerService = new MarkerOverlayService(this, getDatabaseHelper());
+            markerService = new MarkerService(this);
         }
         return markerService;
     }

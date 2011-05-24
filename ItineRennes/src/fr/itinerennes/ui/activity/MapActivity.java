@@ -36,7 +36,6 @@ import fr.itinerennes.database.Columns;
 import fr.itinerennes.provider.SearchMarkersProvider;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 import fr.itinerennes.utils.ResourceResolver;
 
 /**
@@ -231,9 +230,10 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             // if intent asks for a specific zoom level, its values overrides the ones
             // saved in preferences
 
-            int newZoom;
-            int newLat;
-            int newLon;
+            int newZoom = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
+            int newLat = ItineRennesConstants.CONFIG_RENNES_LAT;
+            int newLon = ItineRennesConstants.CONFIG_RENNES_LON;
+
             if (intent.hasExtra(INTENT_SET_MAP_LAT) && intent.hasExtra(INTENT_SET_MAP_LON)) {
                 // center coordinates are send in the intent
                 newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
@@ -242,16 +242,17 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                         .getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter().getLongitudeE6());
             } else if (intent.getData() != null) {
                 // we come from a search suggestion click, so we get in database the item clicked
-                final MarkerOverlayItem item = getApplicationContext().getMarkerService()
-                        .getMarker(intent.getData().getLastPathSegment());
+                final Cursor c = getApplicationContext().getMarkerService().getMarker(
+                        intent.getData().getLastPathSegment());
 
-                newZoom = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
-                newLat = item.getLocation().getLatitudeE6();
-                newLon = item.getLocation().getLongitudeE6();
-            } else {
-                newZoom = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
-                newLat = ItineRennesConstants.CONFIG_RENNES_LAT;
-                newLon = ItineRennesConstants.CONFIG_RENNES_LON;
+                if (c != null && c.moveToFirst()) {
+                    newLat = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE));
+                    newLon = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE));
+                    newZoom = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
+
+                    c.close();
+                }
+
             }
 
             edit.putInt(ITRPrefs.MAP_CENTER_LAT, newLat);

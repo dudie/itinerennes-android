@@ -6,6 +6,7 @@ import java.util.List;
 import org.osmdroid.util.GeoPoint;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,10 +18,10 @@ import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.business.service.BookmarkService;
+import fr.itinerennes.database.Columns;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.Bookmark;
 import fr.itinerennes.ui.adapter.BookmarksAdapter;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
  * This activity displays bookmarks items the user starred.
@@ -108,8 +109,13 @@ public class BookmarksActivity extends ItineRennesActivity {
         final ItineRennesApplication appCtx = getApplicationContext();
         GeoPoint location = null;
 
-        final MarkerOverlayItem item = appCtx.getMarkerService().getMarker(id, type);
-        location = item.getLocation();
+        final Cursor c = appCtx.getMarkerService().getMarker(id, type);
+        if (c != null && c.moveToFirst()) {
+            location = new GeoPoint(c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE)),
+                    c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE)));
+
+            c.close();
+        }
 
         if (location == null) {
             throw new GenericException(ErrorCodeConstants.BOOKMARK_NOT_FOUND, String.format(
