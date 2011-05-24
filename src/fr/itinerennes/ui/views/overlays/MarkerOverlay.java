@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.MapView.Projection;
 import org.osmdroid.views.overlay.Overlay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -22,6 +24,7 @@ import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.ItinerennesMapView;
+import fr.itinerennes.utils.ResourceResolver;
 
 /**
  * @author Jérémie Huchet
@@ -88,9 +91,28 @@ public class MarkerOverlay extends LazyOverlay {
             @Override
             protected List<MarkerOverlayItem> doInBackground(final Void... params) {
 
-                final List<MarkerOverlayItem> newMarkers = context.getApplicationContext()
-                        .getMarkerService().getMarkers(source.getBoundingBox(), visibleMarkerTypes);
-                return newMarkers;
+                final Cursor c = context.getApplicationContext().getMarkerService()
+                        .getMarkers(source.getBoundingBox(), visibleMarkerTypes);
+
+                final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>();
+                while (c.moveToNext()) {
+                    // TOBO faire une méthode réutilisable pour transformer une ligne de Cursor en
+                    // MarkerOverlayItem
+                    final MarkerOverlayItem marker = new MarkerOverlayItem();
+                    marker.setId(c.getString(0));
+                    marker.setType(c.getString(1));
+                    marker.setLabel(c.getString(2));
+                    marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
+                    marker.setBookmarked((c.getInt(5) != 0));
+                    // TJHU set the default marker resource identifier
+                    final int iconId = ResourceResolver.getMarkerIconId(context, marker.getType());
+                    marker.setIcon(context.getResources().getDrawable(iconId));
+                    markers.add(marker);
+                }
+
+                c.close();
+
+                return markers;
             }
 
             @Override

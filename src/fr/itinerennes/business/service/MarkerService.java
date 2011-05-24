@@ -1,10 +1,8 @@
 package fr.itinerennes.business.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
-import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,37 +11,40 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
 
+import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.database.DatabaseHelper;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
-import fr.itinerennes.utils.ResourceResolver;
 
 /**
  * Fetch markers from the database.
  * 
  * @author Olivier Boudet
  */
-public class MarkerOverlayService extends AbstractService implements MarkersColumns {
+public class MarkerService implements MarkersColumns {
 
     /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MarkerOverlayService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MarkerService.class);
 
-    /** The activity context. */
-    private final Context context;
+    /** The itinerennes context. */
+    private final ItineRennesApplication context;
+
+    /** The database helper. */
+    private final DatabaseHelper dbHelper;
 
     /**
      * Constructor.
      * 
      * @param context
-     *            the activity context
+     *            the itinerennes context
      * @param dbHelper
      *            The Database Helper
      */
-    public MarkerOverlayService(final Context context, final DatabaseHelper dbHelper) {
+    public MarkerService(final Context context) {
 
-        super(dbHelper);
-        this.context = context;
+        this.context = (ItineRennesApplication) context;
+        dbHelper = ((ItineRennesApplication) context).getDatabaseHelper();
+
     }
 
     /**
@@ -55,8 +56,7 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
      *            the types of markers to retrieve
      * @return the list of Marker
      */
-    public final List<MarkerOverlayItem> getMarkers(final BoundingBoxE6 bbox,
-            final List<String> types) {
+    public final Cursor getMarkers(final BoundingBoxE6 bbox, final List<String> types) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getMarkers.start - bbox={}", bbox);
@@ -92,26 +92,10 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
         final Cursor c = builder.query(dbHelper.getReadableDatabase(), columns, where,
                 selectionArgs, null, null, "m.TYPE ASC");
 
-        final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>();
-        while (c.moveToNext()) {
-            final MarkerOverlayItem marker = new MarkerOverlayItem();
-            marker.setId(c.getString(0));
-            marker.setType(c.getString(1));
-            marker.setLabel(c.getString(2));
-            marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
-            marker.setBookmarked((c.getInt(5) != 0));
-            // TJHU set the default marker resource identifier
-            final int iconId = ResourceResolver.getMarkerIconId(context, marker.getType());
-            marker.setIcon(context.getResources().getDrawable(iconId));
-            markers.add(marker);
-        }
-
-        c.close();
-
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getMarkers.end - markers={}", markers);
+            LOGGER.debug("getMarkers.end - count={}", c.getCount());
         }
-        return markers;
+        return c;
     }
 
     /**
@@ -121,7 +105,7 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
      *            unique id of the marker
      * @return the Marker
      */
-    public final MarkerOverlayItem getMarker(final String id) {
+    public final Cursor getMarker(final String id) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getMarker.start - id={}", id);
@@ -143,25 +127,10 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
         final Cursor c = builder.query(dbHelper.getReadableDatabase(), columns, where,
                 selectionArgs, null, null, null);
 
-        MarkerOverlayItem marker = null;
-        if (c.moveToNext()) {
-            marker = new MarkerOverlayItem();
-            marker.setId(c.getString(0));
-            marker.setType(c.getString(1));
-            marker.setLabel(c.getString(2));
-            marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
-            marker.setBookmarked((c.getInt(5) != 0));
-            // TJHU set the default marker resource identifier
-            final int iconId = ResourceResolver.getDrawableId(context,
-                    String.format("icx_marker_%s", marker.getType()), 0);
-            marker.setIcon(context.getResources().getDrawable(iconId));
-        }
-        c.close();
-
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getMarkers.end - marker={}", marker);
+            LOGGER.debug("getMarkers.end - count={}", c.getCount());
         }
-        return marker;
+        return c;
     }
 
     /**
@@ -173,7 +142,7 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
      *            type of the marker
      * @return the Marker
      */
-    public final MarkerOverlayItem getMarker(final String id, final String type) {
+    public final Cursor getMarker(final String id, final String type) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getMarker.start - id={}, type={}", id, type);
@@ -195,24 +164,10 @@ public class MarkerOverlayService extends AbstractService implements MarkersColu
         final Cursor c = builder.query(dbHelper.getReadableDatabase(), columns, where,
                 selectionArgs, null, null, null);
 
-        MarkerOverlayItem marker = null;
-        if (c.moveToNext()) {
-            marker = new MarkerOverlayItem();
-            marker.setId(c.getString(0));
-            marker.setType(c.getString(1));
-            marker.setLabel(c.getString(2));
-            marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
-            marker.setBookmarked((c.getInt(5) != 0));
-            // TJHU set the default marker resource identifier
-            final int iconId = ResourceResolver.getDrawableId(context,
-                    String.format("icx_marker_%s", marker.getType()), 0);
-            marker.setIcon(context.getResources().getDrawable(iconId));
-        }
-        c.close();
-
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getMarkers.end - marker={}", marker);
+            LOGGER.debug("getMarkers.end - count={}", c.getCount());
         }
-        return marker;
+        return c;
     }
+
 }

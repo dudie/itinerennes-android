@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -12,6 +13,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ import fr.itinerennes.onebusaway.model.StopSchedule;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+import fr.itinerennes.utils.ResourceResolver;
 
 /**
  * This activity uses the <code>bus_station.xml</code> layout and displays a window with
@@ -393,8 +396,25 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
 
                 MarkerOverlayItem busStation = null;
 
-                busStation = getApplicationContext().getMarkerService().getMarker(stopId,
+                final Cursor c = getApplicationContext().getMarkerService().getMarker(stopId,
                         TypeConstants.TYPE_BUS);
+                if (c != null && c.moveToFirst()) {
+
+                    // TOBO faire une méthode réutilisable pour transformer une ligne de Cursor en
+                    // MarkerOverlayItem
+                    busStation = new MarkerOverlayItem();
+                    busStation.setId(c.getString(0));
+                    busStation.setType(c.getString(1));
+                    busStation.setLabel(c.getString(2));
+                    busStation.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
+                    busStation.setBookmarked((c.getInt(5) != 0));
+                    // TJHU set the default marker resource identifier
+                    final int iconId = ResourceResolver.getMarkerIconId(getApplicationContext(),
+                            busStation.getType());
+                    busStation.setIcon(getApplicationContext().getResources().getDrawable(iconId));
+
+                    c.close();
+                }
 
                 return busStation;
             }
