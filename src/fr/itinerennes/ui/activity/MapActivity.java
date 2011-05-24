@@ -281,9 +281,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
      */
     private void search(final String query) {
 
-        final Cursor cursor = managedQuery(SearchMarkersProvider.CONTENT_URI, null,
-                String.format("%s LIKE ?", Columns.MarkersColumns.LABEL), new String[] { "%"
-                        + query + "%" }, null);
+        final Cursor cursor = managedQuery(SearchMarkersProvider.CONTENT_URI, null, null,
+                new String[] { "%" + query + "%" }, null);
 
         if (cursor == null || cursor.getCount() == 0) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -333,7 +332,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
      * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
      */
     @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    public final boolean onOptionsItemSelected(final MenuItem item) {
 
         // Handle item selection
         switch (item.getItemId()) {
