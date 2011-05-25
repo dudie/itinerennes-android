@@ -55,7 +55,7 @@ public final class Columns {
         String LATITUDE = "lat";
 
         /**
-         * The latitude for a marker.
+         * The longitude for a marker.
          * <P>
          * Type: INTEGER
          * </P>
@@ -131,6 +131,43 @@ public final class Columns {
          * </P>
          */
         String WHEELCHAIR = "wheelchair";
+    }
 
+    /**
+     * Columns for nominatim address.
+     * 
+     * @author Jérémie Huchet
+     */
+    public interface NominatimColumns /* extends BaseColumns */{
+
+        // no base columns as it is not really used in database
+
+        // no table name
+        // /** The name of the nominatim table. */
+        // String NOMINATIM_TABLE_NAME = "nominatim";
+
+        /**
+         * The address display name.
+         * <P>
+         * Type: STRING
+         * </P>
+         */
+        String DISPLAY_NAME = "display_name";
+
+        /**
+         * The latitude of the address.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String LATITUDE = "lat";
+
+        /**
+         * The longitude of the address.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String LONGITUDE = "lon";
     }
 }

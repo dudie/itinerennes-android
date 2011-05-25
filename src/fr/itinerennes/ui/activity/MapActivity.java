@@ -12,7 +12,6 @@ import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -218,11 +217,9 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         }
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            final String query = intent.getStringExtra(SearchManager.QUERY);
-
-            final Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
-            i.putExtra(SearchResultsActivity.INTENT_QUERY, query);
-            startActivity(i);
+            // forward to SearchResultsActivity
+            intent.setClass(getApplicationContext(), SearchResultsActivity.class);
+            startActivity(intent);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 
             final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()

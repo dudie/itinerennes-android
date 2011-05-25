@@ -22,7 +22,6 @@
             </intent-filter>
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
-            
         </activity>
         
         <activity android:name=".ui.activity.BusStopActivity"
@@ -46,24 +45,37 @@
         <activity android:name=".ui.activity.BookmarksActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleTop"
-                  android:configChanges="orientation" >
+                  android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         
-        
-        <activity android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:configChanges="orientation" 
-            android:theme="@android:style/Theme.Black.NoTitleBar" android:name=".ui.activity.LoadingActivity">
+        <activity android:name=".ui.activity.LoadingActivity"
+                  android:label="@string/app_name"
+                  android:launchMode="singleTop"
+                  android:configChanges="orientation" 
+                  android:theme="@android:style/Theme.Black.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="android.intent.category.LAUNCHER"></category>
             </intent-filter>
         </activity>
         
-        <provider android:authorities="fr.itinerennes.provider.searchMarkersProvider" android:name=".provider.SearchMarkersProvider">
+        <activity android:name=".ui.activity.SearchResultsActivity"
+                  android:label="@string/app_name"
+                  android:launchMode="singleTop"
+                  android:configChanges="orientation" 
+                  android:theme="@android:style/Theme.Light.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+        
+        <provider android:authorities="fr.itinerennes.provider.searchMarkersProvider" 
+            android:name=".provider.SearchMarkersProvider">
         </provider>
     
     </application>
