@@ -1,6 +1,5 @@
 package fr.itinerennes.business.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
@@ -14,11 +13,11 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
 
 import fr.itinerennes.ItineRennesApplication;
+import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.database.DatabaseHelper;
-import fr.itinerennes.utils.ResourceResolver;
 
 /**
  * Fetch markers from the database.
@@ -35,29 +34,6 @@ public class MarkerService implements MarkersColumns {
 
     /** The database helper. */
     private final DatabaseHelper dbHelper;
-
-    /** Projection map for queries. */
-    private static final HashMap<String, String> PROJECTION_MAP = new HashMap<String, String>();
-
-    static {
-
-        PROJECTION_MAP.put("m." + BaseColumns._ID, "m." + BaseColumns._ID);
-        PROJECTION_MAP.put("m." + Columns.MarkersColumns.ID, "m." + Columns.MarkersColumns.ID);
-        PROJECTION_MAP.put("m." + Columns.MarkersColumns.TYPE, "m." + Columns.MarkersColumns.TYPE);
-        PROJECTION_MAP
-                .put("m." + Columns.MarkersColumns.LABEL, "m." + Columns.MarkersColumns.LABEL);
-        PROJECTION_MAP.put(Columns.MarkersColumns.LONGITUDE, Columns.MarkersColumns.LONGITUDE);
-        PROJECTION_MAP.put(Columns.MarkersColumns.LATITUDE, Columns.MarkersColumns.LATITUDE);
-        PROJECTION_MAP.put("b." + Columns.BookmarksColumns.ID, "b." + Columns.BookmarksColumns.ID);
-        PROJECTION_MAP.put("bookmarked", "bookmarked");
-        PROJECTION_MAP
-                .put(SearchManager.SUGGEST_COLUMN_ICON_1, SearchManager.SUGGEST_COLUMN_ICON_1);
-        PROJECTION_MAP.put(SearchManager.SUGGEST_COLUMN_TEXT_1, "m." + Columns.MarkersColumns.LABEL
-                + " AS " + SearchManager.SUGGEST_COLUMN_TEXT_1);
-        PROJECTION_MAP.put(SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID, "m." + BaseColumns._ID
-                + " AS " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID);
-
-    }
 
     /**
      * Constructor.
@@ -225,31 +201,46 @@ public class MarkerService implements MarkersColumns {
             LOGGER.debug("getSuggestions.start - query={}", query);
         }
 
-        final String selection = String.format("m.%s LIKE ?", Columns.MarkersColumns.LABEL);
         final String[] selectionArgs = new String[] { "%" + query + "%" };
 
+        final StringBuffer sql = new StringBuffer();
+
+        sql.append(String.format("SELECT 'B', %s,", BaseColumns._ID));
+
         // building select clause part for the suggest_icon_id column
-        final StringBuffer suggestIconIdColumn = new StringBuffer();
+        sql.append(String.format(" CASE WHEN %s = '%s' THEN '%s'", Columns.MarkersColumns.TYPE,
+                TypeConstants.TYPE_BUS, R.drawable.ic_mapbox_bus));
+        sql.append(String.format(" WHEN %s = '%s' THEN '%s'", Columns.MarkersColumns.TYPE,
+                TypeConstants.TYPE_BIKE, R.drawable.ic_mapbox_bike));
+        sql.append(String.format(" WHEN %s = '%s' THEN '%s'", Columns.MarkersColumns.TYPE,
+                TypeConstants.TYPE_SUBWAY, R.drawable.ic_mapbox_subway));
+        sql.append(String.format(" END AS %s,", SearchManager.SUGGEST_COLUMN_ICON_1));
 
-        suggestIconIdColumn.append(String.format("CASE WHEN m.%s = '%s' THEN '%s' ",
-                Columns.MarkersColumns.TYPE, TypeConstants.TYPE_BUS,
-                ResourceResolver.getMarkerIconId(context, TypeConstants.TYPE_BUS)));
-        suggestIconIdColumn.append(String.format("WHEN m.%s = '%s' THEN '%s' ",
-                Columns.MarkersColumns.TYPE, TypeConstants.TYPE_BIKE,
-                ResourceResolver.getMarkerIconId(context, TypeConstants.TYPE_BIKE)));
-        suggestIconIdColumn.append(String.format("WHEN m.%s = '%s' THEN '%s' ",
-                Columns.MarkersColumns.TYPE, TypeConstants.TYPE_SUBWAY,
-                ResourceResolver.getMarkerIconId(context, TypeConstants.TYPE_SUBWAY)));
-        suggestIconIdColumn.append(String.format("END AS %s", SearchManager.SUGGEST_COLUMN_ICON_1));
+        sql.append(String.format(" %s AS %s,", Columns.MarkersColumns.LABEL,
+                SearchManager.SUGGEST_COLUMN_TEXT_1));
+        sql.append(String.format(" %s AS %s", BaseColumns._ID,
+                SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID));
 
-        final String[] columns = new String[] { "m." + BaseColumns._ID,
-                suggestIconIdColumn.toString(), SearchManager.SUGGEST_COLUMN_TEXT_1,
-                SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID };
+        sql.append(String.format(" FROM %s", MARKERS_TABLE_NAME));
 
-        final Cursor c = query(selection, selectionArgs, columns);
+        sql.append(String.format(" WHERE %s LIKE ?", Columns.MarkersColumns.LABEL));
+
+        sql.append(String.format(
+                " UNION ALL select 'A', 'nominatim','%s' as %s,'%s','nominatim' as %s",
+                R.drawable.ic_osm, SearchManager.SUGGEST_COLUMN_ICON_1, context.getResources()
+                        .getString(R.string.search_address),
+                SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID));
+
+        sql.append(String.format(" ORDER BY 1,%s", Columns.MarkersColumns.LABEL));
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getSuggestions.end - query={}");
+            LOGGER.debug(String.format("Marker query : %s", sql));
+        }
+
+        final Cursor c = dbHelper.getReadableDatabase().rawQuery(sql.toString(), selectionArgs);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getSuggestions.end");
         }
         return c;
     }
@@ -289,8 +280,6 @@ public class MarkerService implements MarkersColumns {
             final String[] columns, final String orderBy) {
 
         final SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-
-        builder.setProjectionMap(PROJECTION_MAP);
 
         builder.setTables(String.format("%s m left join %s b on m.%s=b.%s", MARKERS_TABLE_NAME,
                 Columns.BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, Columns.BookmarksColumns.ID));

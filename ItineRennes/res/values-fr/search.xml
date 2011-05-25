@@ -1,0 +1,6 @@
+<resources>
+    <string name="search_field_hint">Cherchez une adresse ou un arrêt</string>
+    <string name="no_results">Pas de résultat pour \"%s\"</string>
+    <string name="try_with">Essayez avec</string>
+    <string name="search_address">Rechercher une adresse...</string>
+</resources>
