@@ -1,9 +1,6 @@
 package fr.itinerennes.database;
 
-import android.net.Uri;
 import android.provider.BaseColumns;
-
-import fr.itinerennes.provider.SearchMarkersProvider;
 
 /**
  * Contains database columns names constants.
@@ -22,9 +19,6 @@ public final class Columns {
 
         /** The name of the markers table. */
         String MARKERS_TABLE_NAME = "markers";
-
-        public static final Uri CONTENT_URI = Uri.parse("content://"
-                + SearchMarkersProvider.AUTHORITY + "/markers");
 
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.itinerennes.markers";
 
