@@ -32,14 +32,13 @@ import android.widget.ToggleButton;
 
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.database.Columns;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.model.Route;
 import fr.itinerennes.onebusaway.model.ScheduleStopTime;
 import fr.itinerennes.onebusaway.model.StopSchedule;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
-import fr.itinerennes.utils.ResourceResolver;
 
 /**
  * This activity uses the <code>bus_station.xml</code> layout and displays a window with
@@ -88,6 +87,9 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
     /** Size of the gap between the top and the list and the selection. */
     private static final int SELECTION_FROM_TOP = 50;
 
+    /** Duration of toast messages. */
+    private static final int TOAST_DURATION = 5000;
+
     /** The identifier of the displayed station. */
     private String stopId;
 
@@ -112,6 +114,7 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
     /** flag indicating if this stop is accessible or not. */
     private boolean isAccessible = false;
 
+    /** The OneBusAway client. */
     private IOneBusAwayClient obaClient;
 
     /**
@@ -389,51 +392,40 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
 
         handler.sendMessage(handler.obtainMessage(MESSAGE_DISPLAY_DIALOG_LOAD_STATION));
 
-        final AsyncTask<Void, Void, MarkerOverlayItem> task = new AsyncTask<Void, Void, MarkerOverlayItem>() {
+        final AsyncTask<Void, Void, GeoPoint> task = new AsyncTask<Void, Void, GeoPoint>() {
 
             @Override
-            protected MarkerOverlayItem doInBackground(final Void... params) {
-
-                MarkerOverlayItem busStation = null;
+            protected GeoPoint doInBackground(final Void... params) {
 
                 final Cursor c = getApplicationContext().getMarkerDao().getMarker(stopId,
                         TypeConstants.TYPE_BUS);
+                GeoPoint point = null;
                 if (c != null && c.moveToFirst()) {
 
-                    // TOBO faire une méthode réutilisable pour transformer une ligne de Cursor en
-                    // MarkerOverlayItem
-                    busStation = new MarkerOverlayItem();
-                    busStation.setId(c.getString(0));
-                    busStation.setType(c.getString(1));
-                    busStation.setLabel(c.getString(2));
-                    busStation.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
-                    busStation.setBookmarked((c.getInt(5) != 0));
-                    // TJHU set the default marker resource identifier
-                    final int iconId = ResourceResolver.getMarkerIconId(getApplicationContext(),
-                            busStation.getType());
-                    busStation.setIcon(getApplicationContext().getResources().getDrawable(iconId));
+                    point = new GeoPoint(
+                            c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE)), c.getInt(c
+                                    .getColumnIndex(Columns.MarkersColumns.LONGITUDE)));
 
                     c.close();
                 }
 
-                return busStation;
+                return point;
             }
 
             @Override
-            protected void onPostExecute(final MarkerOverlayItem busStation) {
+            protected void onPostExecute(final GeoPoint point) {
 
-                if (busStation == null) {
+                if (point == null) {
                     Toast.makeText(getApplicationContext(),
-                            getString(R.string.error_loading_bus_station_position, stopName), 5000);
+                            getString(R.string.error_loading_bus_station_position, stopName),
+                            TOAST_DURATION);
                 } else {
                     final Intent i = new Intent(getApplicationContext(), MapActivity.class);
                     i.setAction(Intent.ACTION_VIEW);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
-                    i.putExtra(MapActivity.INTENT_SET_MAP_LON, busStation.getLocation()
-                            .getLongitudeE6());
-                    i.putExtra(MapActivity.INTENT_SET_MAP_LAT, busStation.getLocation()
-                            .getLatitudeE6());
+                    i.putExtra(MapActivity.INTENT_SET_MAP_LON, point.getLongitudeE6());
+                    i.putExtra(MapActivity.INTENT_SET_MAP_LAT, point.getLatitudeE6());
                     startActivity(i);
 
                 }

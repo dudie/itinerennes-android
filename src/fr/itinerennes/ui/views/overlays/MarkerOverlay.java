@@ -96,8 +96,7 @@ public class MarkerOverlay extends LazyOverlay {
 
                 final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>();
                 while (c.moveToNext()) {
-                    // TOBO faire une méthode réutilisable pour transformer une ligne de Cursor en
-                    // MarkerOverlayItem
+
                     final MarkerOverlayItem marker = new MarkerOverlayItem();
                     marker.setId(c.getString(0));
                     marker.setType(c.getString(1));
