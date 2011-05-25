@@ -95,22 +95,25 @@ public class MarkerOverlay extends LazyOverlay {
                         .getMarkers(source.getBoundingBox(), visibleMarkerTypes);
 
                 final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>();
-                while (c.moveToNext()) {
+                if (c != null && c.moveToFirst()) {
+                    while (!c.isAfterLast()) {
 
-                    final MarkerOverlayItem marker = new MarkerOverlayItem();
-                    marker.setId(c.getString(0));
-                    marker.setType(c.getString(1));
-                    marker.setLabel(c.getString(2));
-                    marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
-                    marker.setBookmarked((c.getInt(5) != 0));
-                    // TJHU set the default marker resource identifier
-                    final int iconId = ResourceResolver.getDrawableId(context,
-                            String.format("icx_marker_%s", marker.getType()), 0);
-                    marker.setIcon(context.getResources().getDrawable(iconId));
-                    markers.add(marker);
+                        final MarkerOverlayItem marker = new MarkerOverlayItem();
+                        marker.setId(c.getString(0));
+                        marker.setType(c.getString(1));
+                        marker.setLabel(c.getString(2));
+                        marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
+                        marker.setBookmarked((c.getInt(5) != 0));
+                        // TJHU set the default marker resource identifier
+                        final int iconId = ResourceResolver.getDrawableId(context,
+                                String.format("icx_marker_%s", marker.getType()), 0);
+                        marker.setIcon(context.getResources().getDrawable(iconId));
+                        markers.add(marker);
+
+                        c.moveToNext();
+                    }
+                    c.close();
                 }
-
-                c.close();
 
                 return markers;
             }
