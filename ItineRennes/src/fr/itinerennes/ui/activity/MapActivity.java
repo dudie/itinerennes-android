@@ -12,6 +12,7 @@ import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +32,7 @@ import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.database.Columns;
+import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.utils.ResourceResolver;
@@ -238,19 +240,33 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                 newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter().getLatitudeE6());
                 newLon = intent
                         .getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter().getLongitudeE6());
-            } else if (intent.getData() != null) {
-                // we come from a search suggestion click, so we get in database the item clicked
-                final Cursor c = getApplicationContext().getMarkerDao().getMarker(
-                        intent.getData().getLastPathSegment());
+            } else if (intent.hasExtra(SearchManager.USER_QUERY)) {
+                // we come from a search suggestion click
+                // if the last path segment is "nominatim", so the user has clicked the link to
+                // search in nominatim
+                if (intent.getData().getLastPathSegment() != null
+                        && intent.getData().getLastPathSegment()
+                                .equals(MarkerDao.NOMINATIM_INTENT_DATA_ID)) {
+                    final Intent i = new Intent(getApplicationContext(),
+                            SearchResultsActivity.class);
+                    if (intent.hasExtra(SearchManager.USER_QUERY)) {
+                        i.putExtra(SearchManager.QUERY,
+                                intent.getStringExtra(SearchManager.USER_QUERY));
+                    }
+                    startActivity(i);
+                } else {
+                    // we fetch from database the item clicked
+                    final Cursor c = getApplicationContext().getMarkerDao().getMarker(
+                            intent.getData().getLastPathSegment());
 
-                if (c != null && c.moveToFirst()) {
-                    newLat = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE));
-                    newLon = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE));
-                    newZoom = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
+                    if (c != null && c.moveToFirst()) {
+                        newLat = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE));
+                        newLon = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE));
+                        newZoom = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
 
-                    c.close();
+                        c.close();
+                    }
                 }
-
             }
 
             edit.putInt(ITRPrefs.MAP_CENTER_LAT, newLat);
