@@ -19,8 +19,8 @@ import android.content.SharedPreferences;
 import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.business.service.LineIconService;
-import fr.itinerennes.business.service.MarkerService;
 import fr.itinerennes.database.DatabaseHelper;
+import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
 import fr.itinerennes.exceptions.ExceptionHandler;
 import fr.itinerennes.http.client.ProgressHttpClient;
@@ -48,8 +48,8 @@ public class ItineRennesApplication extends Application {
     /** The default exception handler. */
     private final ExceptionHandler exceptionHandler = new DefaultExceptionHandler(this);
 
-    /** The marker service. */
-    private MarkerService markerService;
+    /** The marker DAO. */
+    private MarkerDao markerDao;
 
     /** The line icon service. */
     private LineIconService lineIconService;
@@ -186,16 +186,16 @@ public class ItineRennesApplication extends Application {
     }
 
     /**
-     * Gets a reference to the MarkerService.
+     * Gets a reference to the MarkerDao.
      * 
-     * @return a reference to the {@link MarkerService}
+     * @return a reference to the {@link MarkerDao}
      */
-    public final MarkerService getMarkerService() {
+    public final MarkerDao getMarkerDao() {
 
-        if (markerService == null) {
-            markerService = new MarkerService(this);
+        if (markerDao == null) {
+            markerDao = new MarkerDao(this);
         }
-        return markerService;
+        return markerDao;
     }
 
     /**

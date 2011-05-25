@@ -11,8 +11,8 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import fr.itinerennes.ItineRennesApplication;
-import fr.itinerennes.business.service.MarkerService;
 import fr.itinerennes.database.Columns;
+import fr.itinerennes.database.MarkerDao;
 
 /**
  * Content provider to handle search markers queries and suggestion markers queries.
@@ -53,7 +53,7 @@ public class SearchMarkersProvider extends ContentProvider {
     }
 
     /** The Marker service to retrieve markers from the database. */
-    private MarkerService markerService;
+    private MarkerDao markerService;
 
     /**
      * {@inheritDoc}
@@ -66,7 +66,7 @@ public class SearchMarkersProvider extends ContentProvider {
         final boolean initialized;
         if (getContext() instanceof ItineRennesApplication) {
 
-            markerService = ((ItineRennesApplication) getContext()).getMarkerService();
+            markerService = ((ItineRennesApplication) getContext()).getMarkerDao();
             initialized = true;
         } else {
             LOGGER.error("Bad application context type, expected {} but was {}",
