@@ -8,9 +8,6 @@
     <string name="ok">Ok</string>
     <string name="continuer">Continue</string>
     <string name="no_departure">No departure for this day.</string>
-    <string name="search_field_hint">Search an address or stop</string>
-    <string name="no_results">No results found for \"%s\"</string>
-    <string name="try_with">Try with</string>
     <string name="activity_title_bus_stop">Bus stop</string>
     <string name="activity_title_bus_trip">Bus trip</string>
     <!-- dates -->
