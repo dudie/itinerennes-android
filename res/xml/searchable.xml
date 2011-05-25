@@ -5,6 +5,6 @@
     android:searchSuggestAuthority="fr.itinerennes.provider.searchMarkersProvider"
     android:searchSuggestIntentAction="android.intent.action.VIEW"
     android:searchSuggestSelection=" ?" 
-    android:searchSuggestIntentData="content://fr.itinerennes.provider.searchMarkersProvider/markers"
+    android:searchSuggestIntentData="content://fr.itinerennes.provider.searchMarkersProvider"
     android:includeInGlobalSearch="true" >
 </searchable>

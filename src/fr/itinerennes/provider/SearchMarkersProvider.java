@@ -29,7 +29,7 @@ public class SearchMarkersProvider extends ContentProvider {
     public static final String AUTHORITY = "fr.itinerennes.provider.searchMarkersProvider";
 
     /** URI to access this content provider. */
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/markers");
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
     /** URI matcher to dispatch accesses of this content provider. */
     private static final UriMatcher URI_MATCHER;
@@ -46,8 +46,8 @@ public class SearchMarkersProvider extends ContentProvider {
     static {
 
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-        URI_MATCHER.addURI(AUTHORITY, "markers", GET_MARKERS);
-        URI_MATCHER.addURI(AUTHORITY, "markers/#", GET_MARKER);
+        URI_MATCHER.addURI(AUTHORITY, "/", GET_MARKERS);
+        URI_MATCHER.addURI(AUTHORITY, "/#", GET_MARKER);
         URI_MATCHER.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_QUERY, GET_SUGGEST);
 
     }

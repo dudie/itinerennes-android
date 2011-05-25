@@ -33,6 +33,9 @@ public class MarkerDao implements MarkersColumns {
     /** The database helper. */
     private final DatabaseHelper dbHelper;
 
+    /** Intent data id used when the line "search an address" is clicked in suggestions. */
+    public static final String NOMINATIM_INTENT_DATA_ID = "nominatim";
+
     /**
      * Constructor.
      * 
@@ -119,7 +122,7 @@ public class MarkerDao implements MarkersColumns {
         final Cursor c = query(selection, selectionArgs, columns);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getMarkers.end - count={}", c.getCount());
+            LOGGER.debug("getMarkers.end - count={}", (c != null) ? c.getCount() : 0);
         }
         return c;
     }
@@ -150,7 +153,7 @@ public class MarkerDao implements MarkersColumns {
         final Cursor c = query(selection, selectionArgs, columns);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getMarkers.end - count={}", c.getCount());
+            LOGGER.debug("getMarkers.end - count={}", (c != null) ? c.getCount() : 0);
         }
 
         return c;
@@ -223,10 +226,9 @@ public class MarkerDao implements MarkersColumns {
 
         sql.append(String.format(" WHERE %s LIKE ?", Columns.MarkersColumns.LABEL));
 
-        sql.append(String.format(
-                " UNION ALL select 'A', 'nominatim','%s' as %s,'%s','nominatim' as %s",
+        sql.append(String.format(" UNION ALL select 'A', 'nominatim','%s' as %s,'%s','%s' as %s",
                 R.drawable.ic_osm, SearchManager.SUGGEST_COLUMN_ICON_1, context.getResources()
-                        .getString(R.string.search_address),
+                        .getString(R.string.search_address), NOMINATIM_INTENT_DATA_ID,
                 SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID));
 
         sql.append(String.format(" ORDER BY 1,%s", Columns.MarkersColumns.LABEL));
