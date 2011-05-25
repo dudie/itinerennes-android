@@ -242,7 +242,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                         .getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter().getLongitudeE6());
             } else if (intent.getData() != null) {
                 // we come from a search suggestion click, so we get in database the item clicked
-                final Cursor c = getApplicationContext().getMarkerService().getMarker(
+                final Cursor c = getApplicationContext().getMarkerDao().getMarker(
                         intent.getData().getLastPathSegment());
 
                 if (c != null && c.moveToFirst()) {

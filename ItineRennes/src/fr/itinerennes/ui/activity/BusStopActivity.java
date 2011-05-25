@@ -396,7 +396,7 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
 
                 MarkerOverlayItem busStation = null;
 
-                final Cursor c = getApplicationContext().getMarkerService().getMarker(stopId,
+                final Cursor c = getApplicationContext().getMarkerDao().getMarker(stopId,
                         TypeConstants.TYPE_BUS);
                 if (c != null && c.moveToFirst()) {
 

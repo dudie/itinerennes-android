@@ -109,7 +109,7 @@ public class BookmarksActivity extends ItineRennesActivity {
         final ItineRennesApplication appCtx = getApplicationContext();
         GeoPoint location = null;
 
-        final Cursor c = appCtx.getMarkerService().getMarker(id, type);
+        final Cursor c = appCtx.getMarkerDao().getMarker(id, type);
         if (c != null && c.moveToFirst()) {
             location = new GeoPoint(c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE)),
                     c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE)));

@@ -91,7 +91,7 @@ public class MarkerOverlay extends LazyOverlay {
             @Override
             protected List<MarkerOverlayItem> doInBackground(final Void... params) {
 
-                final Cursor c = context.getApplicationContext().getMarkerService()
+                final Cursor c = context.getApplicationContext().getMarkerDao()
                         .getMarkers(source.getBoundingBox(), visibleMarkerTypes);
 
                 final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>();

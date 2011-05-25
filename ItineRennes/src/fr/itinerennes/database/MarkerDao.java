@@ -1,4 +1,4 @@
-package fr.itinerennes.business.service;
+package fr.itinerennes.database;
 
 import java.util.List;
 
@@ -15,19 +15,17 @@ import android.provider.BaseColumns;
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.Columns.MarkersColumns;
-import fr.itinerennes.database.DatabaseHelper;
 
 /**
  * Fetch markers from the database.
  * 
  * @author Olivier Boudet
  */
-public class MarkerService implements MarkersColumns {
+public class MarkerDao implements MarkersColumns {
 
     /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MarkerService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MarkerDao.class);
 
     /** The itinerennes context. */
     private final ItineRennesApplication context;
@@ -41,7 +39,7 @@ public class MarkerService implements MarkersColumns {
      * @param context
      *            the itinerennes context
      */
-    public MarkerService(final Context context) {
+    public MarkerDao(final Context context) {
 
         this.context = (ItineRennesApplication) context;
         dbHelper = ((ItineRennesApplication) context).getDatabaseHelper();
