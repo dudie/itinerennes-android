@@ -87,10 +87,10 @@ public class MarkerDao implements MarkersColumns {
                 String.valueOf(bbox.getLonEastE6()), String.valueOf(bbox.getLatSouthE6()),
                 String.valueOf(bbox.getLatNorthE6()) };
 
-        final Cursor c = query(selection.toString(), selectionArgs, columns, "m.TYPE ASC");
+        final Cursor c = query(selection.toString(), selectionArgs, columns, "m._id ASC");
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getMarkers.end - count={}", c.getCount());
+            LOGGER.debug("getMarkers.end - count={}", (c != null) ? c.getCount() : 0);
         }
         return c;
     }

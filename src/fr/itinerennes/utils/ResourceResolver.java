@@ -26,22 +26,6 @@ public final class ResourceResolver {
     }
 
     /**
-     * Gets the identifier of the given marker icon.
-     * 
-     * @param context
-     *            the context
-     * @param type
-     *            the type of the marker to get icon id
-     * @return the found drawable id
-     */
-    public static int getMarkerIconId(final Context context, final String type) {
-
-        final String typeWithoutOrder = type.split("_")[1];
-
-        return getDrawableId(context, String.format("icx_marker_%s", typeWithoutOrder), 0);
-    }
-
-    /**
      * Gets the identifier of the given drawable name. Returns the given default drawable identifier
      * if no resource matched the given name.
      * 
