@@ -75,7 +75,7 @@ public class MarkerDao implements MarkersColumns {
         selection.append(String.format("%s >= ? AND %s <= ? AND %s >= ? AND %s <= ?", LONGITUDE,
                 LONGITUDE, LATITUDE, LATITUDE));
 
-        selection.append("AND ( ");
+        selection.append(" AND ( ");
         // filter on visible types
         for (int i = 0; i < types.size(); i++) {
             selection.append(String.format(" %s m.%s = '%s'", (i > 0) ? "OR" : "", TYPE,
