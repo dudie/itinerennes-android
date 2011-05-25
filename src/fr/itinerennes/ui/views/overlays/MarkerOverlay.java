@@ -2,6 +2,7 @@ package fr.itinerennes.ui.views.overlays;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osmdroid.util.GeoPoint;
@@ -47,10 +48,11 @@ public class MarkerOverlay extends LazyOverlay {
     private final HashMap<String, String> markerTypesLabel = new HashMap<String, String>(3);
 
     /** The list of all displayed markers. */
-    private final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>(20);
+    private final LinkedHashMap<String, MarkerOverlayItem> markers = new LinkedHashMap<String, MarkerOverlayItem>(
+            20);
 
     /** This property references the task currently loading the current displayed bounding box. */
-    private AsyncTask<Void, Void, List<MarkerOverlayItem>> refreshTask = null;
+    private AsyncTask<Void, Void, LinkedHashMap<String, MarkerOverlayItem>> refreshTask = null;
 
     /**
      * Creates the marker overlay.
@@ -81,7 +83,7 @@ public class MarkerOverlay extends LazyOverlay {
     @Override
     public final void onMapMove(final MapView source) {
 
-        refreshTask = new AsyncTask<Void, Void, List<MarkerOverlayItem>>() {
+        refreshTask = new AsyncTask<Void, Void, LinkedHashMap<String, MarkerOverlayItem>>() {
 
             /**
              * Retrieves the markers for the currently displayed bounding boxes.
@@ -89,12 +91,12 @@ public class MarkerOverlay extends LazyOverlay {
              * @see android.os.AsyncTask#doInBackground(Params[])
              */
             @Override
-            protected List<MarkerOverlayItem> doInBackground(final Void... params) {
+            protected LinkedHashMap<String, MarkerOverlayItem> doInBackground(final Void... params) {
 
                 final Cursor c = context.getApplicationContext().getMarkerDao()
                         .getMarkers(source.getBoundingBox(), visibleMarkerTypes);
 
-                final List<MarkerOverlayItem> markers = new ArrayList<MarkerOverlayItem>();
+                final LinkedHashMap<String, MarkerOverlayItem> markers = new LinkedHashMap<String, MarkerOverlayItem>();
                 if (c != null && c.moveToFirst()) {
                     while (!c.isAfterLast()) {
 
@@ -108,7 +110,7 @@ public class MarkerOverlay extends LazyOverlay {
                         final int iconId = ResourceResolver.getDrawableId(context,
                                 String.format("icx_marker_%s", marker.getType()), 0);
                         marker.setIcon(context.getResources().getDrawable(iconId));
-                        markers.add(marker);
+                        markers.put(marker.getId(), marker);
 
                         c.moveToNext();
                     }
@@ -119,13 +121,13 @@ public class MarkerOverlay extends LazyOverlay {
             }
 
             @Override
-            protected void onPostExecute(final List<MarkerOverlayItem> newMarkers) {
+            protected void onPostExecute(final LinkedHashMap<String, MarkerOverlayItem> newMarkers) {
 
                 if (refreshTask == this) {
                     LOGGER.debug("refreshing map");
                     markers.clear();
                     if (newMarkers != null) {
-                        markers.addAll(newMarkers);
+                        markers.putAll(newMarkers);
                     }
 
                     source.postInvalidate();
@@ -212,16 +214,16 @@ public class MarkerOverlay extends LazyOverlay {
             final Point point = new Point();
 
             // first draw markers
-            for (final MarkerOverlayItem marker : markers) {
+            for (final MarkerOverlayItem marker : markers.values()) {
                 pj.toMapPixels(marker.getLocation(), point);
 
                 drawItem(c, marker, point, osmv);
             }
 
-            // then if a marker is selected draw if over the others
+            // then if a marker is selected draw it over the others
             final MarkerOverlayItem selectedItem = ((ItinerennesMapView) osmv)
                     .getMapBoxController().getSelectedItem();
-            if (null != selectedItem && markers.contains(selectedItem)) {
+            if (null != selectedItem && markers.containsKey(selectedItem.getId())) {
                 pj.toMapPixels(selectedItem.getLocation(), point);
                 drawItem(c, selectedItem, point, osmv);
             }
@@ -301,7 +303,7 @@ public class MarkerOverlay extends LazyOverlay {
         final Point touchPoint = pj.fromMapPixels(eventX, eventY, null);
 
         final Point itemPoint = new Point();
-        for (final MarkerOverlayItem marker : markers) {
+        for (final MarkerOverlayItem marker : markers.values()) {
             final Drawable drawable = marker.getIcon();
 
             pj.toPixels(marker.getLocation(), itemPoint);
