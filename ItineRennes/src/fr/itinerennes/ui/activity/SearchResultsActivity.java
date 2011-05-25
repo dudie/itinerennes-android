@@ -78,9 +78,9 @@ public final class SearchResultsActivity extends ItineRennesActivity {
         markersAdapter.setViewBinder(viewBinder);
 
         // prepare adapter to show nominatim results, it is initially empty
-        // final SimpleCursorAdapter nominatimAdapter = new SimpleCursorAdapter(this,
-        // R.layout.li_search_result_, cols, from, to);
-        // nominatimAdapter.setViewBinder(viewBinder);
+        final SimpleCursorAdapter nominatimAdapter = new SimpleCursorAdapter(this,
+                R.layout.li_search_result_nominatim, null, null, null);
+        nominatimAdapter.setViewBinder(viewBinder);
 
         // wrap the marker and the nominatim adapters and set them to the list view
         final WrapperAdapter wrapper = new WrapperAdapter(
