@@ -104,7 +104,8 @@ public class MarkerOverlay extends LazyOverlay {
                     marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
                     marker.setBookmarked((c.getInt(5) != 0));
                     // TJHU set the default marker resource identifier
-                    final int iconId = ResourceResolver.getMarkerIconId(context, marker.getType());
+                    final int iconId = ResourceResolver.getDrawableId(context,
+                            String.format("icx_marker_%s", marker.getType()), 0);
                     marker.setIcon(context.getResources().getDrawable(iconId));
                     markers.add(marker);
                 }

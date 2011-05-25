@@ -24,7 +24,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -33,7 +32,6 @@ import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.database.Columns;
-import fr.itinerennes.provider.SearchMarkersProvider;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.utils.ResourceResolver;
@@ -221,7 +219,10 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             final String query = intent.getStringExtra(SearchManager.QUERY);
-            search(query);
+
+            final Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
+            i.putExtra(SearchResultsActivity.INTENT_QUERY, query);
+            startActivity(i);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 
             final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
@@ -270,59 +271,6 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.end");
-        }
-    }
-
-    /**
-     * Searches the database and displays results for the given query.
-     * 
-     * @param query
-     *            The search query
-     */
-    private void search(final String query) {
-
-        final Cursor cursor = managedQuery(SearchMarkersProvider.CONTENT_URI, null, null,
-                new String[] { "%" + query + "%" }, null);
-
-        if (cursor == null || cursor.getCount() == 0) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(getString(R.string.no_results, query)).setCancelable(true)
-                    .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(final DialogInterface dialog, final int id) {
-
-                            dialog.cancel();
-                        }
-                    });
-            final AlertDialog alert = builder.create();
-            alert.show();
-
-        } else {
-
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.try_with);
-
-            final String[] from = new String[] { Columns.MarkersColumns.TYPE,
-                    Columns.MarkersColumns.LABEL };
-
-            final int[] to = new int[] { R.id.type, R.id.label };
-
-            final SimpleCursorAdapter results = new SimpleCursorAdapter(this,
-                    R.layout.li_search_result, cursor, from, to);
-
-            builder.setAdapter(results, new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(final DialogInterface dialog, final int item) {
-
-                    Toast.makeText(getApplicationContext(),
-                            ((Cursor) results.getItem(item)).getString(3), Toast.LENGTH_SHORT)
-                            .show();
-                }
-            });
-            final AlertDialog alert = builder.create();
-            alert.show();
         }
     }
 
