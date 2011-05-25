@@ -405,6 +405,11 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                             map.getMarkerOverlay().show(labelstoType.get(userInput.getKey()));
                         } else {
                             map.getMarkerOverlay().hide(labelstoType.get(userInput.getKey()));
+                            if (map.getMapBoxController().getSelectedItem() != null
+                                    && map.getMapBoxController().getSelectedItem().getType()
+                                            .equals(labelstoType.get(userInput.getKey()))) {
+                                map.getMapBoxController().hide();
+                            }
                         }
 
                     }
