@@ -26,4 +26,6 @@
     <!-- Trip planner -->
     <string name="select_start_point_on_map">Cliquez sur la carte pour choisir un point de départ.</string>
     <string name="select_end_point_on_map">Cliquez sur la carte pour choisir un point de d\'arrivée.</string>
+    <!-- Activity search results -->
+    <string name="activity_title_search_results">Résultats de recherche</string>
 </resources>
