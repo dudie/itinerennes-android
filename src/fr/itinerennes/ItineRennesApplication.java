@@ -193,7 +193,7 @@ public class ItineRennesApplication extends Application {
     public final MarkerDao getMarkerDao() {
 
         if (markerDao == null) {
-            markerDao = new MarkerDao(this);
+            markerDao = new MarkerDao(getApplicationContext(), getDatabaseHelper());
         }
         return markerDao;
     }
