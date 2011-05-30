@@ -12,9 +12,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
 
-import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 
 /**
@@ -27,11 +27,14 @@ public class MarkerDao implements MarkersColumns {
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkerDao.class);
 
-    /** The itinerennes context. */
-    private final ItineRennesApplication context;
+    /** The context. */
+    private final Context context;
 
     /** The database helper. */
     private final DatabaseHelper dbHelper;
+
+    /** SQL query used to fetch suggestions from the database. */
+    private String getSuggestionsStatement;
 
     /** Intent data id used when the line "search an address" is clicked in suggestions. */
     public static final String NOMINATIM_INTENT_DATA_ID = "nominatim";
@@ -39,13 +42,13 @@ public class MarkerDao implements MarkersColumns {
     /**
      * Constructor.
      * 
-     * @param context
+     * @param databaseHelper
      *            the itinerennes context
      */
-    public MarkerDao(final Context context) {
+    public MarkerDao(final Context context, final DatabaseHelper databaseHelper) {
 
-        this.context = (ItineRennesApplication) context;
-        dbHelper = ((ItineRennesApplication) context).getDatabaseHelper();
+        this.context = context;
+        dbHelper = databaseHelper;
 
     }
 
@@ -204,45 +207,66 @@ public class MarkerDao implements MarkersColumns {
 
         final String[] selectionArgs = new String[] { "%" + query + "%" };
 
-        final StringBuffer sql = new StringBuffer();
+        if (getSuggestionsStatement == null) {
 
-        sql.append(String.format("SELECT 'B', %s,", BaseColumns._ID));
-
-        // building select clause part for the suggest_icon_id column
-        sql.append(String.format(" CASE WHEN %s = '%s' THEN '%s'", Columns.MarkersColumns.TYPE,
-                TypeConstants.TYPE_BUS, R.drawable.ic_mapbox_bus));
-        sql.append(String.format(" WHEN %s = '%s' THEN '%s'", Columns.MarkersColumns.TYPE,
-                TypeConstants.TYPE_BIKE, R.drawable.ic_mapbox_bike));
-        sql.append(String.format(" WHEN %s = '%s' THEN '%s'", Columns.MarkersColumns.TYPE,
-                TypeConstants.TYPE_SUBWAY, R.drawable.ic_mapbox_subway));
-        sql.append(String.format(" END AS %s,", SearchManager.SUGGEST_COLUMN_ICON_1));
-
-        sql.append(String.format(" %s AS %s,", Columns.MarkersColumns.LABEL,
-                SearchManager.SUGGEST_COLUMN_TEXT_1));
-        sql.append(String.format(" %s AS %s", BaseColumns._ID,
-                SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID));
-
-        sql.append(String.format(" FROM %s", MARKERS_TABLE_NAME));
-
-        sql.append(String.format(" WHERE %s LIKE ?", Columns.MarkersColumns.LABEL));
-
-        sql.append(String.format(" UNION ALL select 'A', 'nominatim','%s' as %s,'%s','%s' as %s",
-                R.drawable.ic_osm, SearchManager.SUGGEST_COLUMN_ICON_1, context.getResources()
-                        .getString(R.string.search_address), NOMINATIM_INTENT_DATA_ID,
-                SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID));
-
-        sql.append(String.format(" ORDER BY 1,%s", Columns.MarkersColumns.LABEL));
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(String.format("Marker query : %s", sql));
+            getSuggestionsStatement = buildSuggestionsQuery();
         }
 
-        final Cursor c = dbHelper.getReadableDatabase().rawQuery(sql.toString(), selectionArgs);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(String.format("Marker query : %s", getSuggestionsStatement));
+        }
+
+        final Cursor c = dbHelper.getReadableDatabase().rawQuery(getSuggestionsStatement,
+                selectionArgs);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getSuggestions.end");
         }
         return c;
+    }
+
+    /**
+     * This method creates a select statement used to fetch suggestions data from the database.
+     * 
+     * @return string representing the sql select statement.
+     */
+    private String buildSuggestionsQuery() {
+
+        final StringBuffer sql = new StringBuffer();
+
+        sql.append(String.format("SELECT 'B', m.%s as %s,", BaseColumns._ID, BaseColumns._ID));
+
+        // building select clause part for the suggest_icon_id column
+        sql.append(String.format(" CASE WHEN m.%s = '%s' THEN '%s'", Columns.MarkersColumns.TYPE,
+                TypeConstants.TYPE_BUS, R.drawable.ic_mapbox_bus));
+        sql.append(String.format(" WHEN m.%s = '%s' THEN '%s'", Columns.MarkersColumns.TYPE,
+                TypeConstants.TYPE_BIKE, R.drawable.ic_mapbox_bike));
+        sql.append(String.format(" WHEN m.%s = '%s' THEN '%s'", Columns.MarkersColumns.TYPE,
+                TypeConstants.TYPE_SUBWAY, R.drawable.ic_mapbox_subway));
+        sql.append(String.format(" END AS %s,", SearchManager.SUGGEST_COLUMN_ICON_1));
+
+        sql.append(String.format(" m.%s AS %s,", Columns.MarkersColumns.LABEL,
+                SearchManager.SUGGEST_COLUMN_TEXT_1));
+        sql.append(String.format(" m.%s AS %s", BaseColumns._ID,
+                SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID));
+
+        sql.append(String.format(" ,CASE WHEN b.%s is not null = 1 THEN '%s' END AS %s", ID,
+                android.R.drawable.btn_star_big_on, SearchManager.SUGGEST_COLUMN_ICON_2));
+
+        sql.append(String.format(" FROM %s m LEFT JOIN %s b ON m.%s=b.%s", MARKERS_TABLE_NAME,
+                BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, BookmarksColumns.ID));
+
+        sql.append(String.format(" WHERE m.%s LIKE ?", Columns.MarkersColumns.LABEL));
+
+        sql.append(String.format(
+                " UNION ALL select 'A', 'nominatim','%s' as %s,'%s','%s' as %s,''",
+                R.drawable.ic_osm, SearchManager.SUGGEST_COLUMN_ICON_1, context.getResources()
+                        .getString(R.string.search_address), NOMINATIM_INTENT_DATA_ID,
+                SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID));
+
+        sql.append(String.format(" ORDER BY 1,m.%s", Columns.MarkersColumns.LABEL));
+
+        return sql.toString();
     }
 
     /**
