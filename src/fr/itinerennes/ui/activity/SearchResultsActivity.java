@@ -1,5 +1,8 @@
 package fr.itinerennes.ui.activity;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,6 +10,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
@@ -17,7 +21,10 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 
 import fr.itinerennes.R;
 import fr.itinerennes.database.Columns.MarkersColumns;
+import fr.itinerennes.database.Columns.NominatimColumns;
+import fr.itinerennes.nominatim.model.Address;
 import fr.itinerennes.ui.adapter.WrapperAdapter;
+import fr.itinerennes.utils.NominatimTranslator;
 import fr.itinerennes.utils.ResourceResolver;
 
 /**
@@ -70,24 +77,53 @@ public final class SearchResultsActivity extends ItineRennesActivity {
         final ViewBinder viewBinder = new SearchResultsListItemViewBinder(this);
 
         // prepare adapter to show marker results
-        final String[] from = new String[] { MarkersColumns.TYPE, MarkersColumns.LABEL };
-        final int[] to = new int[] { R.id.search_result_marker_icon,
-                R.id.search_result_marker_label };
+        String[] from = new String[] { MarkersColumns.TYPE, MarkersColumns.LABEL };
+        int[] to = new int[] { R.id.search_result_marker_icon, R.id.search_result_marker_label };
         final SimpleCursorAdapter markersAdapter = new SimpleCursorAdapter(this,
                 R.layout.li_search_result_marker, cMarkers, from, to);
         markersAdapter.setViewBinder(viewBinder);
 
         // prepare adapter to show nominatim results, it is initially empty
+        from = new String[] { NominatimColumns.DISPLAY_NAME };
+        to = new int[] { R.id.search_result_nominatim_label };
         final SimpleCursorAdapter nominatimAdapter = new SimpleCursorAdapter(this,
-                R.layout.li_search_result_nominatim, null, null, null);
+                R.layout.li_search_result_nominatim, NominatimTranslator.emptyCursor(), from, to);
         nominatimAdapter.setViewBinder(viewBinder);
 
         // wrap the marker and the nominatim adapters and set them to the list view
-        final WrapperAdapter wrapper = new WrapperAdapter(
-                new Adapter[] { markersAdapter /* nominatimAdapter */});
+        final WrapperAdapter wrapper = new WrapperAdapter(new Adapter[] { markersAdapter,
+                nominatimAdapter });
 
         final ListView resultsList = (ListView) findViewById(R.id.search_results_list);
         resultsList.setAdapter(wrapper);
+
+        // search for the nominatim results in background
+        new AsyncTask<Void, Void, Cursor>() {
+
+            @Override
+            protected Cursor doInBackground(final Void... params) {
+
+                Cursor c = null;
+                try {
+                    final List<Address> results = getApplicationContext().getNominatimClient()
+                            .search(String.valueOf(query));
+                    c = NominatimTranslator.toCursor(results);
+                } catch (final IOException e) {
+                    // TJHU Handle Nominatim IO exception
+                    getApplicationContext().getExceptionHandler().handleException(e);
+                }
+                if (null == c) {
+                    c = NominatimTranslator.emptyCursor();
+                }
+                return c;
+            }
+
+            @Override
+            protected void onPostExecute(final Cursor result) {
+
+                nominatimAdapter.changeCursor(result);
+            }
+        }.execute((Void) null);
     }
 
     /**

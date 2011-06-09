@@ -26,6 +26,8 @@ import fr.itinerennes.exceptions.ExceptionHandler;
 import fr.itinerennes.http.client.ProgressHttpClient;
 import fr.itinerennes.keolis.client.JsonKeolisClient;
 import fr.itinerennes.keolis.client.KeolisClient;
+import fr.itinerennes.nominatim.client.JsonNominatimClient;
+import fr.itinerennes.nominatim.client.NominatimClient;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 
@@ -65,6 +67,9 @@ public class ItineRennesApplication extends Application {
 
     /** The OneBusAway client. */
     private IOneBusAwayClient oneBusAwayClient;
+
+    /** The Nominatim client. */
+    private NominatimClient nominatimClient;
 
     /** The Progress Http Client. */
     private ProgressHttpClient httpClient;
@@ -254,5 +259,19 @@ public class ItineRennesApplication extends Application {
                     ItineRennesConstants.OBA_API_URL, ItineRennesConstants.OBA_API_KEY);
         }
         return oneBusAwayClient;
+    }
+
+    /**
+     * Gets a reference to the Nominatim client.
+     * 
+     * @return a nominatim client
+     */
+    public NominatimClient getNominatimClient() {
+
+        if (null == nominatimClient) {
+            nominatimClient = new JsonNominatimClient(getHttpClient(), getResources().getString(
+                    R.string.contact_mail));
+        }
+        return nominatimClient;
     }
 }
