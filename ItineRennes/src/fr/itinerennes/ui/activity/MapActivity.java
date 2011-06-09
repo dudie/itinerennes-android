@@ -224,63 +224,23 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             startActivity(intent);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 
-            final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
-                    .edit();
-
             // if intent asks for a specific zoom level, its values overrides the ones
             // saved in preferences
 
-            int newZoom = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
-            int newLat = ItineRennesConstants.CONFIG_RENNES_LAT;
-            int newLon = ItineRennesConstants.CONFIG_RENNES_LON;
-
             if (intent.hasExtra(INTENT_SET_MAP_LAT) && intent.hasExtra(INTENT_SET_MAP_LON)) {
                 // center coordinates are send in the intent
-                newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
-                newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter().getLatitudeE6());
-                newLon = intent
-                        .getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter().getLongitudeE6());
+                final int newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
+                final int newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter()
+                        .getLatitudeE6());
+                final int newLon = intent.getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter()
+                        .getLongitudeE6());
+
+                saveMapCenterInPreferences(newLat, newLon, newZoom);
+
             } else if (intent.hasExtra(SearchManager.USER_QUERY)) {
-                // we come from a search suggestion click
-                // if the last path segment is "nominatim", so the user has clicked the link to
-                // search in nominatim
-                if (intent.getData().getLastPathSegment() != null
-                        && intent.getData().getLastPathSegment()
-                                .equals(MarkerDao.NOMINATIM_INTENT_DATA_ID)) {
-                    final Intent i = new Intent(getApplicationContext(),
-                            SearchResultsActivity.class);
-                    if (intent.hasExtra(SearchManager.USER_QUERY)) {
-                        i.putExtra(SearchManager.QUERY,
-                                intent.getStringExtra(SearchManager.USER_QUERY));
-                    }
-                    startActivity(i);
-                } else {
-                    // we fetch from database the item clicked
-                    final Cursor c = getApplicationContext().getMarkerDao().getMarker(
-                            intent.getData().getLastPathSegment());
-
-                    if (c != null && c.moveToFirst()) {
-                        newLat = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE));
-                        newLon = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE));
-                        newZoom = ItineRennesConstants.CONFIG_DEFAULT_ZOOM;
-
-                        c.close();
-                    }
-                }
+                onSuggestionClick(intent);
             }
 
-            edit.putInt(ITRPrefs.MAP_CENTER_LAT, newLat);
-            edit.putInt(ITRPrefs.MAP_CENTER_LON, newLon);
-            edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, newZoom);
-
-            // disable follow location in preferences because we are explicitly centering the
-            // map on
-            // a
-            // location.
-            // if not, it will be activated again in onResume().
-            edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, false);
-
-            edit.commit();
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.end");
@@ -447,6 +407,84 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             dialog = null;
         }
         return dialog;
+    }
+
+    /**
+     * Writes in preferences the map center and zoom level.
+     * 
+     * @param latitude
+     *            latitude to write in preferences
+     * @param longitude
+     *            longitude to write in preferences
+     * @param zoom
+     *            zoom level to write in preferences
+     */
+    private void saveMapCenterInPreferences(final int latitude, final int longitude, final int zoom) {
+
+        final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences().edit();
+
+        edit.putInt(ITRPrefs.MAP_CENTER_LAT, (latitude != 0) ? latitude
+                : ItineRennesConstants.CONFIG_RENNES_LAT);
+        edit.putInt(ITRPrefs.MAP_CENTER_LON, (longitude != 0) ? longitude
+                : ItineRennesConstants.CONFIG_RENNES_LAT);
+        edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, (zoom != 0) ? zoom
+                : ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
+
+        // disable follow location in preferences because we are explicitly centering the
+        // map on
+        // a
+        // location.
+        // if not, it will be activated again in onResume().
+        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, false);
+
+        edit.commit();
+
+    }
+
+    /**
+     * Handles actions to do when a suggestion is clicked in the search dialog.
+     * 
+     * @param intent
+     *            intent sent by the search framework when a user clicks on a suggestion
+     */
+    private void onSuggestionClick(final Intent intent) {
+
+        // we come from a search suggestion click
+        // if the last path segment is "nominatim", so the user has clicked the link to
+        // search in nominatim
+        if (intent.getData().getLastPathSegment() != null
+                && intent.getData().getLastPathSegment().equals(MarkerDao.NOMINATIM_INTENT_DATA_ID)) {
+            final Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
+            if (intent.hasExtra(SearchManager.USER_QUERY)) {
+                i.putExtra(SearchManager.QUERY, intent.getStringExtra(SearchManager.USER_QUERY));
+            }
+            startActivity(i);
+        } else {
+            // we fetch from database all items having the same label than the item clicked
+            // because search suggestions show only one row when multiple stops have the
+            // same label
+
+            final Cursor c = getApplicationContext().getMarkerDao().getMarkersWithSameLabel(
+                    intent.getData().getLastPathSegment());
+
+            if (c != null && c.moveToFirst()) {
+                int newLat = 0;
+                int newLon = 0;
+
+                while (!c.isAfterLast()) {
+                    newLat += c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE));
+                    newLon += c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE));
+
+                    c.moveToNext();
+                }
+                newLat = newLat / c.getCount();
+                newLon = newLon / c.getCount();
+
+                c.close();
+
+                saveMapCenterInPreferences(newLat, newLon, 0);
+            }
+        }
     }
 
     /**

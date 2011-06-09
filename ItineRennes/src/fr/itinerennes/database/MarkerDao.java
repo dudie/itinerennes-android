@@ -163,6 +163,38 @@ public class MarkerDao implements MarkersColumns {
     }
 
     /**
+     * Fetch all markers from the database having the same label than the marker identified by its
+     * unique android id .
+     * 
+     * @param id
+     *            unique id of the marker
+     * @return all markers with same label
+     */
+    public final Cursor getMarkersWithSameLabel(final String id) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getMarkersWithSameLabel.start - id={}", id);
+        }
+
+        final String[] selectionArgs = new String[] { id, id };
+
+        final Cursor c = dbHelper
+                .getReadableDatabase()
+                .rawQuery(
+                        String.format(
+                                "SELECT * FROM %s WHERE label=(SELECT %s FROM %s where %s = ?) AND type=(SELECT %s FROM %s WHERE %s = ?)",
+                                MarkersColumns.MARKERS_TABLE_NAME, MarkersColumns.LABEL,
+                                MarkersColumns.MARKERS_TABLE_NAME, MarkersColumns._ID,
+                                MarkersColumns.TYPE, MarkersColumns.MARKERS_TABLE_NAME,
+                                MarkersColumns._ID), selectionArgs);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getMarkersWithSameLabel.end - count={}", (c != null) ? c.getCount() : 0);
+        }
+        return c;
+    }
+
+    /**
      * Search markers containing the given string.
      * 
      * @param query
@@ -257,6 +289,8 @@ public class MarkerDao implements MarkersColumns {
                 BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, BookmarksColumns.ID));
 
         sql.append(String.format(" WHERE m.%s LIKE ?", Columns.MarkersColumns.LABEL));
+
+        sql.append(" GROUP BY suggest_text_1, m.type, suggest_icon_2");
 
         sql.append(String.format(
                 " UNION ALL select 'A', 'nominatim','%s' as %s,'%s','%s' as %s,''",
