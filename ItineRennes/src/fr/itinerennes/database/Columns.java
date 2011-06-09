@@ -138,9 +138,7 @@ public final class Columns {
      * 
      * @author Jérémie Huchet
      */
-    public interface NominatimColumns /* extends BaseColumns */{
-
-        // no base columns as it is not really used in database
+    public interface NominatimColumns extends BaseColumns {
 
         // no table name
         // /** The name of the nominatim table. */
