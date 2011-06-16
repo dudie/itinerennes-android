@@ -3,11 +3,15 @@ package fr.itinerennes.ui.adapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.content.Context;
 import android.database.DataSetObserver;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.BaseAdapter;
+
+import fr.itinerennes.R;
 
 /**
  * An adapter to wrap other adapters and displays multiple.
@@ -19,20 +23,34 @@ public final class WrapperAdapter extends BaseAdapter {
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(WrapperAdapter.class);
 
+    /** The layout inflater. */
+    private final LayoutInflater inflater;
+
     /** The wrapped adapters. */
     private final Adapter[] adapters;
 
     /**
+     * A boolean value for each {@link #adapters} to determine whether or not a<em>loading</em> view
+     * should be rendered.
+     */
+    private final boolean[] isLoading;
+
+    /**
      * Creates a wrapper adapter.
      * 
+     * @param context
+     *            the context
      * @param adapters
      *            the adapters to wrap
      */
-    public WrapperAdapter(final Adapter[] adapters) {
+    public WrapperAdapter(final Context context, final Adapter[] adapters) {
 
+        this.inflater = LayoutInflater.from(context);
         this.adapters = adapters;
-        for (final Adapter a : this.adapters) {
-            a.registerDataSetObserver(new WrappedAdapterDataSetObserver());
+        this.isLoading = new boolean[this.adapters.length];
+        for (int i = 0; i < this.adapters.length; i++) {
+            this.adapters[i].registerDataSetObserver(new WrappedAdapterDataSetObserver());
+            this.isLoading[i] = false;
         }
     }
 
@@ -57,6 +75,46 @@ public final class WrapperAdapter extends BaseAdapter {
     }
 
     /**
+     * Set whether of not a <em>loading view</em> should be rendered at the bottom of the given
+     * adapter.
+     * 
+     * @param adapter
+     *            an adapter wrapped into this wrapper adapter
+     * @param isLoading
+     *            <code>true</code> if a <em>loading view</em> should be rendered
+     */
+    public void setLoading(final Adapter adapter, final boolean isLoading) {
+
+        final int i = indexOf(adapters, adapter);
+        this.isLoading[i] = isLoading;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Gets the index of the given adapter in the given array of adapters.
+     * 
+     * @param adaptersList
+     *            an array of adapters
+     * @param adapter
+     *            the adapter you search the index
+     * @return the index of the adapter or <code>-1</code> if the array doesn't contain it
+     */
+    public static int indexOf(final Adapter[] adaptersList, final Adapter adapter) {
+
+        int index = -1;
+
+        if (null != adapter) {
+            for (int i = 0; index == -1 && i < adaptersList.length; i++) {
+                if (adapter.equals(adaptersList[i])) {
+                    index = i;
+                }
+            }
+        }
+
+        return index;
+    }
+
+    /**
      * Gets the total count of items adapted by all the wrapped adapters.
      * 
      * @return the item count
@@ -66,8 +124,14 @@ public final class WrapperAdapter extends BaseAdapter {
     public int getCount() {
 
         int count = 0;
-        for (final Adapter a : adapters) {
-            count += a.getCount();
+        for (int i = 0; i < adapters.length; i++) {
+            // cumul the adapters count
+            count += adapters[i].getCount();
+
+            // add one item if a loading view has to be rendered
+            if (isLoading[i]) {
+                count++;
+            }
         }
         return count;
     }
@@ -90,8 +154,10 @@ public final class WrapperAdapter extends BaseAdapter {
             minPosition += maxPosition;
             maxPosition += adapters[i].getCount();
 
-            if (position <= maxPosition) {
+            if (position < maxPosition) {
                 item = adapters[i].getItem(position - minPosition);
+            } else if (isLoading[i] && position == maxPosition++) {
+                break;
             }
         }
         return item;
@@ -116,10 +182,14 @@ public final class WrapperAdapter extends BaseAdapter {
     @Override
     public int getViewTypeCount() {
 
-        return adapters.length;
+        // +1 for the loading view
+        return adapters.length + 1;
     }
 
     /**
+     * <strong>We do not reuse the convertView parameter because view may be rendered anywhere in
+     * the listview.</strong>
+     * <p>
      * {@inheritDoc}
      * 
      * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
@@ -138,15 +208,9 @@ public final class WrapperAdapter extends BaseAdapter {
             maxPosition += adapters[i].getCount();
 
             if (adapters[i].getCount() > 0 && position < maxPosition) {
-                // convertView may be a view generated by any of the adapters wrapped by this class,
-                // if underlying adapters tries to reuse it, they may fail because they don't find
-                // the subview they expected
-                // then if an error occurs, we retry without the convertView
-                // try {
-                // view = adapters[i].getView(position - minPosition, convertView, parent);
-                // } catch (final Throwable e) {
                 view = adapters[i].getView(position - minPosition, null, parent);
-                // }
+            } else if (isLoading[i] && position == maxPosition++) {
+                view = inflater.inflate(R.layout.li_loading, parent, false);
             }
         }
 

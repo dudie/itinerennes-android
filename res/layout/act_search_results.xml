@@ -26,4 +26,22 @@
 	<ListView android:id="@+id/search_results_list" 
         android:layout_width="fill_parent" 
         android:layout_height="fill_parent" />
+        
+    <!-- "No search result results" - initial visibility=GONE -->
+    <LinearLayout android:id="@+id/search_results_none"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone">
+        
+        <ImageView android:src="@drawable/ic_no_results"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_margin="5dp"/>
+    
+        <TextView android:id="@+id/search_results_no_results"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            
+    </LinearLayout>
 </LinearLayout>
