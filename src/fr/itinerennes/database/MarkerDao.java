@@ -343,8 +343,8 @@ public class MarkerDao implements MarkersColumns {
                 Columns.BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, Columns.BookmarksColumns.ID));
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(String.format("Marker query : %s",
-                    builder.buildQuery(columns, selection, selectionArgs, null, null, null, null)));
+            LOGGER.debug(String.format("Marker query : %s", builder.buildQuery(columns, selection,
+                    selectionArgs, null, null, orderBy, null)));
         }
 
         final Cursor c = builder.query(dbHelper.getReadableDatabase(), columns, selection,

@@ -16,6 +16,7 @@ import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
@@ -181,22 +182,16 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         }
         super.onPause();
 
-        // saving in preferences the state of the map (center, follow location and zoom)
         final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences().edit();
-        edit.putInt(ITRPrefs.MAP_CENTER_LAT, map.getMapCenter().getLatitudeE6());
-        edit.putInt(ITRPrefs.MAP_CENTER_LON, map.getMapCenter().getLongitudeE6());
-        edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, map.getZoomLevel());
-        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, myLocation.isMyLocationEnabled());
+
+        // saving in preferences the state of the map (center, follow location and zoom)
+        saveMapCenterInPreferences(edit, map.getMapCenter().getLatitudeE6(), map.getMapCenter()
+                .getLongitudeE6(), map.getZoomLevel());
 
         // save current displayed overlays
-        edit.putBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED,
-                map.getMarkerOverlay().isMarkerTypeVisible(TypeConstants.TYPE_BUS));
-        edit.putBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, map.getMarkerOverlay()
-                .isMarkerTypeVisible(TypeConstants.TYPE_BIKE));
-        edit.putBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, map.getMarkerOverlay()
-                .isMarkerTypeVisible(TypeConstants.TYPE_SUBWAY));
+        saveVisibleOverlaysInPreferences(edit);
 
-        // save modifications
+        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, myLocation.isMyLocationEnabled());
         edit.commit();
 
         myLocation.disableFollowLocation();
@@ -226,6 +221,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
             // if intent asks for a specific zoom level, its values overrides the ones
             // saved in preferences
+            myLocation.disableFollowLocation();
 
             if (intent.hasExtra(INTENT_SET_MAP_LAT) && intent.hasExtra(INTENT_SET_MAP_LON)) {
                 // center coordinates are send in the intent
@@ -235,7 +231,10 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                 final int newLon = intent.getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter()
                         .getLongitudeE6());
 
-                saveMapCenterInPreferences(newLat, newLon, newZoom);
+                final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
+                        .edit();
+                saveMapCenterInPreferences(edit, newLat, newLon, newZoom);
+                edit.commit();
 
             } else if (intent.hasExtra(SearchManager.USER_QUERY)) {
                 onSuggestionClick(intent);
@@ -412,6 +411,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     /**
      * Writes in preferences the map center and zoom level.
      * 
+     * @param edit
+     *            editor to use to write preferences
      * @param latitude
      *            latitude to write in preferences
      * @param longitude
@@ -419,9 +420,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
      * @param zoom
      *            zoom level to write in preferences
      */
-    private void saveMapCenterInPreferences(final int latitude, final int longitude, final int zoom) {
-
-        final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences().edit();
+    private void saveMapCenterInPreferences(final Editor edit, final int latitude,
+            final int longitude, final int zoom) {
 
         edit.putInt(ITRPrefs.MAP_CENTER_LAT, (latitude != 0) ? latitude
                 : ItineRennesConstants.CONFIG_RENNES_LAT);
@@ -430,14 +430,22 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, (zoom != 0) ? zoom
                 : ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
 
-        // disable follow location in preferences because we are explicitly centering the
-        // map on
-        // a
-        // location.
-        // if not, it will be activated again in onResume().
-        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, false);
+    }
 
-        edit.commit();
+    /**
+     * Writes in preferences the visible overlays.
+     * 
+     * @param edit
+     *            editor to use to write preferences
+     */
+    private void saveVisibleOverlaysInPreferences(final Editor edit) {
+
+        edit.putBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED,
+                map.getMarkerOverlay().isMarkerTypeVisible(TypeConstants.TYPE_BUS));
+        edit.putBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, map.getMarkerOverlay()
+                .isMarkerTypeVisible(TypeConstants.TYPE_BIKE));
+        edit.putBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, map.getMarkerOverlay()
+                .isMarkerTypeVisible(TypeConstants.TYPE_SUBWAY));
 
     }
 
@@ -467,7 +475,19 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             final Cursor c = getApplicationContext().getMarkerDao().getMarkersWithSameLabel(
                     intent.getData().getLastPathSegment());
 
+            // calculate a pseudo-center point to center the map on it
             if (c != null && c.moveToFirst()) {
+                // check if marker type is visible, and add it if not visible
+                final String type = c.getString(c.getColumnIndex(Columns.MarkersColumns.TYPE));
+                if (!map.getMarkerOverlay().isMarkerTypeVisible(type)) {
+                    map.getMarkerOverlay().show(type);
+
+                    final SharedPreferences.Editor edit = getApplicationContext()
+                            .getITRPreferences().edit();
+                    saveVisibleOverlaysInPreferences(edit);
+                    edit.commit();
+                }
+
                 int newLat = 0;
                 int newLon = 0;
 
@@ -480,10 +500,15 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                 newLat = newLat / c.getCount();
                 newLon = newLon / c.getCount();
 
+                final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
+                        .edit();
+                saveMapCenterInPreferences(edit, newLat, newLon, 0);
+                edit.commit();
+
                 c.close();
 
-                saveMapCenterInPreferences(newLat, newLon, 0);
             }
+
         }
     }
 
