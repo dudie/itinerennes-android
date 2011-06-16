@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/search_result_list_item_height"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/search_result_list_item_height"
         android:gravity="center_vertical">
 
     <ImageView
@@ -12,7 +13,6 @@
             android:layout_margin="5dp"/>
     <TextView
             android:id="@+id/search_result_nominatim_label"
-            android:singleLine="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" 
             android:layout_margin="5dp"/>

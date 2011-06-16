@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
+import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.database.Columns.MarkersColumns;
@@ -37,11 +38,23 @@ public final class SearchResultsActivity extends ItineRennesActivity {
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchResultsActivity.class);
 
-    // /**
-    // * Initialized in {@link #onCreate(Bundle)}, a reference to the list view displaying search
-    // * results.
-    // */
-    // private ListView resultsList;
+    /**
+     * Initialized in {@link #onCreate(Bundle)}, a reference to the list view displaying search
+     * results.
+     */
+    private ListView resultsList;
+
+    /**
+     * Initialized in {@link #onCreate(Bundle)}, a reference to the view displaying "no search
+     * results".
+     */
+    private View noResultsView;
+
+    /**
+     * Initialized in {@link #onCreate(Bundle)}, a reference to the textview displaying "no search
+     * results for query '%s'".
+     */
+    private TextView noResultsLabel;
 
     /**
      * {@inheritDoc}
@@ -53,6 +66,10 @@ public final class SearchResultsActivity extends ItineRennesActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_search_results);
+
+        resultsList = (ListView) findViewById(R.id.search_results_list);
+        noResultsView = findViewById(R.id.search_results_none);
+        noResultsLabel = (TextView) noResultsView.findViewById(R.id.search_results_no_results);
 
         onNewIntent(getIntent());
     }
@@ -91,10 +108,10 @@ public final class SearchResultsActivity extends ItineRennesActivity {
         nominatimAdapter.setViewBinder(viewBinder);
 
         // wrap the marker and the nominatim adapters and set them to the list view
-        final WrapperAdapter wrapper = new WrapperAdapter(new Adapter[] { markersAdapter,
+        final WrapperAdapter wrapper = new WrapperAdapter(this, new Adapter[] { markersAdapter,
                 nominatimAdapter });
+        wrapper.setLoading(nominatimAdapter, true);
 
-        final ListView resultsList = (ListView) findViewById(R.id.search_results_list);
         resultsList.setAdapter(wrapper);
 
         // search for the nominatim results in background
@@ -115,13 +132,24 @@ public final class SearchResultsActivity extends ItineRennesActivity {
                 if (null == c) {
                     c = NominatimTranslator.emptyCursor();
                 }
+
                 return c;
             }
 
             @Override
             protected void onPostExecute(final Cursor result) {
 
+                wrapper.setLoading(nominatimAdapter, false);
                 nominatimAdapter.changeCursor(result);
+
+                if (markersAdapter.isEmpty() && nominatimAdapter.isEmpty()) {
+                    resultsList.setVisibility(View.GONE);
+                    noResultsView.setVisibility(View.VISIBLE);
+                    noResultsLabel.setText(getString(R.string.no_results, query));
+                } else {
+                    resultsList.setVisibility(View.VISIBLE);
+                    noResultsView.setVisibility(View.GONE);
+                }
             }
         }.execute((Void) null);
     }
