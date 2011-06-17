@@ -21,22 +21,18 @@
         
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         
-        <ImageView android:src="@drawable/btn_search"
-            android:layout_width="@dimen/toolbar_button_size"
-            android:layout_height="@dimen/toolbar_button_size"
-            android:layout_margin="5dp"
+        <ImageView android:background="@drawable/btnx_mylocation"
+            android:layout_width="@dimen/toolbar_button_width"
+            android:layout_height="fill_parent"
             android:onClick="onSearchButtonClick"/>
             
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         
-        <ToggleButton 
+        <ImageView 
             android:id="@+id/mylocation_button"
-            android:layout_width="@dimen/toolbar_button_size"
-            android:layout_height="@dimen/toolbar_button_size"
-            android:layout_margin="5dp"
-            android:background="@drawable/btn_mylocation"
-            android:textOn=""
-            android:textOff=""
+            android:layout_width="@dimen/toolbar_button_width"
+            android:layout_height="fill_parent"
+            android:background="@drawable/btnx_mylocation"
             android:onClick="onMyLocationButtonClick"
         />
     </LinearLayout>
