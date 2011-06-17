@@ -21,18 +21,19 @@
         
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         
-        <ImageView android:background="@drawable/btnx_mylocation"
+        <fr.itinerennes.ui.views.ToolbarButton
+            itr:drawable="@drawable/btn_search"
             android:layout_width="@dimen/toolbar_button_width"
             android:layout_height="fill_parent"
             android:onClick="onSearchButtonClick"/>
             
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         
-        <ImageView 
+        <fr.itinerennes.ui.views.ToolbarButton
             android:id="@+id/mylocation_button"
+            itr:drawable="@drawable/btn_mylocation"
             android:layout_width="@dimen/toolbar_button_width"
             android:layout_height="fill_parent"
-            android:background="@drawable/btnx_mylocation"
             android:onClick="onMyLocationButtonClick"
         />
     </LinearLayout>
