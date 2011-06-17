@@ -65,6 +65,7 @@ public class BookmarksActivity extends ItineRennesActivity {
                 try {
                     final GeoPoint location = findBookmarkLocation(favType, favId);
                     final Intent i = new Intent(BookmarksActivity.this, MapActivity.class);
+                    i.setAction(Intent.ACTION_VIEW);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra(MapActivity.INTENT_SELECT_BOOKMARK_ID, favId);
                     i.putExtra(MapActivity.INTENT_SELECT_BOOKMARK_TYPE, favType);
