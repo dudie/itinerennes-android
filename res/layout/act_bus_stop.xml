@@ -38,19 +38,17 @@
             <include layout="@layout/misc_toolbar_vertical_separator"/>
             
             <ToggleButton android:id="@+station/toggle_bookmark"
-                android:layout_width="@dimen/toolbar_button_size"
-                android:layout_height="@dimen/toolbar_button_size"
+                android:layout_width="@dimen/toolbar_button_width"
+                android:layout_height="fill_parent"
                 android:background="@drawable/btn_toggle_star"
-                android:layout_margin="5dp"
                 android:textOn=""
                 android:textOff=""/>
             
             <include layout="@layout/misc_toolbar_vertical_separator"/>
             
             <Button android:background="@android:drawable/ic_dialog_map"
-                android:layout_width="@dimen/toolbar_button_size"
-                android:layout_height="@dimen/toolbar_button_size"
-                android:layout_margin="5dp"
+                android:layout_width="@dimen/toolbar_button_width"
+                android:layout_height="fill_parent"
                 android:onClick="onMapButtonClick">
             </Button>
         </LinearLayout>  

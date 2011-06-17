@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <selector>
+            <!--  pressed -->
+            <item android:state_pressed="true">
+                <shape>
+                    <solid android:color="#ff0000"/>
+                </shape>
+            </item>
+            
+            <!--  default -->
+            <item>
+                <shape>
+                    <solid android:color="@android:color/transparent"/>
+                </shape>
+            </item>
+        </selector>
+    </item>
+    <item>
+        <bitmap android:gravity="center" android:src="@drawable/btn_mylocation" />
+    </item>
+</layer-list>
