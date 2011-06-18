@@ -11,11 +11,35 @@ import android.provider.BaseColumns;
 public final class Columns {
 
     /**
+     * Generic columns for a geographic positioned element.
+     * 
+     * @author Jérémie Huchet
+     */
+    public interface LocationColumns extends BaseColumns {
+
+        /**
+         * The latitude for a marker.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String LATITUDE = "lat";
+
+        /**
+         * The longitude for a marker.
+         * <P>
+         * Type: INTEGER
+         * </P>
+         */
+        String LONGITUDE = "lon";
+    }
+
+    /**
      * Generic columns for a station.
      * 
      * @author Olivier Boudet
      */
-    public interface MarkersColumns extends BaseColumns {
+    public interface MarkersColumns extends LocationColumns {
 
         /** The name of the markers table. */
         String MARKERS_TABLE_NAME = "markers";
@@ -45,22 +69,6 @@ public final class Columns {
          * </P>
          */
         String LABEL = "label";
-
-        /**
-         * The latitude for a marker.
-         * <P>
-         * Type: INTEGER
-         * </P>
-         */
-        String LATITUDE = "lat";
-
-        /**
-         * The longitude for a marker.
-         * <P>
-         * Type: INTEGER
-         * </P>
-         */
-        String LONGITUDE = "lon";
     }
 
     /**
@@ -138,7 +146,7 @@ public final class Columns {
      * 
      * @author Jérémie Huchet
      */
-    public interface NominatimColumns extends BaseColumns {
+    public interface NominatimColumns extends LocationColumns {
 
         // no table name
         // /** The name of the nominatim table. */
@@ -151,21 +159,5 @@ public final class Columns {
          * </P>
          */
         String DISPLAY_NAME = "display_name";
-
-        /**
-         * The latitude of the address.
-         * <P>
-         * Type: INTEGER
-         * </P>
-         */
-        String LATITUDE = "lat";
-
-        /**
-         * The longitude of the address.
-         * <P>
-         * Type: INTEGER
-         * </P>
-         */
-        String LONGITUDE = "lon";
     }
 }
