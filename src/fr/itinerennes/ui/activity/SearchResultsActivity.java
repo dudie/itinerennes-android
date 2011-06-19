@@ -97,7 +97,6 @@ public final class SearchResultsActivity extends ItineRennesActivity {
         // wrap the marker and the nominatim adapters and set them to the list view
         resultsListAdapter = new WrapperAdapter(this, new Adapter[] { markersAdapter,
                 nominatimAdapter });
-        resultsListAdapter.setLoading(nominatimAdapter, true);
 
         resultsList.setAdapter(resultsListAdapter);
 
@@ -172,10 +171,20 @@ public final class SearchResultsActivity extends ItineRennesActivity {
 
         // search for markers
         final Cursor cMarkers = getApplicationContext().getMarkerDao().searchMarkers(query);
-        markersAdapter.changeCursor(cMarkers);
 
         // search for the nominatim results in background
         final AsyncTask<Void, Void, Cursor> nominatimSearchTask = new AsyncTask<Void, Void, Cursor>() {
+
+            /**
+             * Set the nominatim adapter "loading" flag to display a loading message.
+             * 
+             * @see android.os.AsyncTask#onPreExecute()
+             */
+            @Override
+            protected void onPreExecute() {
+
+                resultsListAdapter.setLoading(nominatimAdapter, true);
+            }
 
             /**
              * Executes a search through nominatim in background.
@@ -233,6 +242,15 @@ public final class SearchResultsActivity extends ItineRennesActivity {
                 }
             }
         };
+
+        // update/clear the current list
+        markersAdapter.changeCursor(cMarkers);
+        nominatimAdapter.changeCursor(null);
+
+        // refresh the UI: make the result list visible and hide "no result" label
+        resultsList.setVisibility(View.VISIBLE);
+        noResultsView.setVisibility(View.GONE);
+
         // starts task to executes nominatim search
         nominatimSearchTask.execute((Void) null);
 
