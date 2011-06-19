@@ -28,6 +28,7 @@ import fr.itinerennes.keolis.client.JsonKeolisClient;
 import fr.itinerennes.keolis.client.KeolisClient;
 import fr.itinerennes.nominatim.client.JsonNominatimClient;
 import fr.itinerennes.nominatim.client.NominatimClient;
+import fr.itinerennes.nominatim.model.BoundingBox;
 import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
 import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 
@@ -266,11 +267,16 @@ public class ItineRennesApplication extends Application {
      * 
      * @return a nominatim client
      */
-    public NominatimClient getNominatimClient() {
+    public final NominatimClient getNominatimClient() {
 
         if (null == nominatimClient) {
+            final BoundingBox bounds = new BoundingBox();
+            bounds.setWestE6(ItineRennesConstants.CONFIG_RENNES_LON - 10000);
+            bounds.setEastE6(ItineRennesConstants.CONFIG_RENNES_LON + 10000);
+            bounds.setNorthE6(ItineRennesConstants.CONFIG_RENNES_LAT - 10000);
+            bounds.setSouthE6(ItineRennesConstants.CONFIG_RENNES_LAT + 10000);
             nominatimClient = new JsonNominatimClient(getHttpClient(), getResources().getString(
-                    R.string.contact_mail));
+                    R.string.contact_mail), bounds, true);
         }
         return nominatimClient;
     }

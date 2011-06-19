@@ -4,7 +4,14 @@ package fr.itinerennes;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class ItineRennesConstants {
+public final class ItineRennesConstants {
+
+    /**
+     * Private constructor to avoid instantiation.
+     */
+    private ItineRennesConstants() {
+
+    }
 
     /*
      * Default config values.
