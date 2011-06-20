@@ -26,6 +26,9 @@ public final class ItineRennesConstants {
     /** Longitude of city Rennes. */
     public static final int CONFIG_RENNES_LON = -1679200;
 
+    /** Nominatim search bounding box offset. */
+    public static final int CONFIG_NOMINATIM_SEARCH_OFFSET = 150000;
+
     /**
      * Minimum zoom level displaying detailed overlay items. On higher zoom, a simple circle will be
      * displayed.
