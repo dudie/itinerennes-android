@@ -10,14 +10,27 @@ import android.widget.ImageView;
 import fr.itinerennes.R;
 
 /**
+ * An image view which changes its background when clicked and focused.
+ * 
  * @author Olivier Boudet
+ * @author Jérémie Huchet
  */
-public class ToolbarButton extends ImageView {
+public final class ToolbarButton extends ImageView {
 
-    private final LayerDrawable ld;
+    /** The final image used to make the button. */
+    private final LayerDrawable buttonImage;
 
+    /** The original drawable to make the button. */
     private final Drawable drawable;
 
+    /**
+     * Constructor from XML.
+     * 
+     * @param context
+     *            the context
+     * @param attrs
+     *            the view attributes
+     */
     public ToolbarButton(final Context context, final AttributeSet attrs) {
 
         super(context, attrs);
@@ -27,16 +40,20 @@ public class ToolbarButton extends ImageView {
 
         drawable = array.getDrawable(R.styleable.ToolbarButton_drawable);
 
-        ld = new LayerDrawable(new Drawable[] {
-                context.getResources().getDrawable(R.drawable.bg_toolbar_button), drawable });
+        if (null == drawable) {
+            throw new IllegalArgumentException("Attribute android:drawable is mandatory");
+        }
 
-        setBackgroundDrawable(ld);
+        final Drawable bg = getContext().getResources().getDrawable(R.drawable.bg_toolbar_button);
+        buttonImage = new LayerDrawable(new Drawable[] { bg, drawable });
 
-        array.recycle();
+        setBackgroundDrawable(buttonImage);
+        setFocusable(true);
     }
 
-    /*
-     * (non-javadoc)
+    /**
+     * {@inheritDoc}
+     * 
      * @see android.view.View#onLayout(boolean, int, int, int, int)
      */
     @Override
@@ -46,10 +63,11 @@ public class ToolbarButton extends ImageView {
         final int height = getHeight();
         final int width = getWidth();
 
-        ld.setLayerInset(1, (width - drawable.getMinimumWidth()) / 2,
+        buttonImage.setLayerInset(1, (width - drawable.getMinimumWidth()) / 2,
                 (height - drawable.getMinimumHeight()) / 2,
                 (width - drawable.getMinimumWidth()) / 2,
                 (height - drawable.getMinimumHeight()) / 2);
+
         super.onLayout(changed, left, top, right, bottom);
     }
 

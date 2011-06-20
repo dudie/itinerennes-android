@@ -8,7 +8,8 @@
     <color name="blue">#007fff</color>
     <color name="green">#00cc00</color>
     <color name="orange">#ff7400</color>
-    <color name="orange_translucent">#99ff7400</color>
+    <color name="orange_translucent_20">#ccff7400</color>
+    <color name="orange_translucent_40">#99ff7400</color>
     <color name="grey_10">#e6e6e6</color>
     <color name="grey_20">#cccccc</color>
     <color name="grey_30">#b3b3b3</color>
