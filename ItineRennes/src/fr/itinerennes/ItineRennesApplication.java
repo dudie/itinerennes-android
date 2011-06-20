@@ -271,10 +271,14 @@ public class ItineRennesApplication extends Application {
 
         if (null == nominatimClient) {
             final BoundingBox bounds = new BoundingBox();
-            bounds.setWestE6(ItineRennesConstants.CONFIG_RENNES_LON - 10000);
-            bounds.setEastE6(ItineRennesConstants.CONFIG_RENNES_LON + 10000);
-            bounds.setNorthE6(ItineRennesConstants.CONFIG_RENNES_LAT - 10000);
-            bounds.setSouthE6(ItineRennesConstants.CONFIG_RENNES_LAT + 10000);
+            bounds.setWestE6(ItineRennesConstants.CONFIG_RENNES_LON
+                    - ItineRennesConstants.CONFIG_NOMINATIM_SEARCH_OFFSET);
+            bounds.setEastE6(ItineRennesConstants.CONFIG_RENNES_LON
+                    + ItineRennesConstants.CONFIG_NOMINATIM_SEARCH_OFFSET);
+            bounds.setNorthE6(ItineRennesConstants.CONFIG_RENNES_LAT
+                    + ItineRennesConstants.CONFIG_NOMINATIM_SEARCH_OFFSET);
+            bounds.setSouthE6(ItineRennesConstants.CONFIG_RENNES_LAT
+                    - ItineRennesConstants.CONFIG_NOMINATIM_SEARCH_OFFSET);
             nominatimClient = new JsonNominatimClient(getHttpClient(), getResources().getString(
                     R.string.contact_mail), bounds, true);
         }
