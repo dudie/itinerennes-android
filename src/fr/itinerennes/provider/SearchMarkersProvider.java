@@ -99,9 +99,13 @@ public class SearchMarkersProvider extends ContentProvider {
             return markerService.searchMarkers(selectionArgs[0]);
         case GET_SUGGEST:
 
-            if (selectionArgs == null) {
+            if (selectionArgs == null || selectionArgs.length < 1) {
                 throw new IllegalArgumentException("selectionArgs must be provided for the Uri: "
                         + uri);
+            }
+
+            if (selectionArgs[0] == null || selectionArgs[0].length() < 3) {
+                return null;
             }
 
             return markerService.getSuggestions(selectionArgs[0]);
