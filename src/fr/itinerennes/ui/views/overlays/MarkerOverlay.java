@@ -209,7 +209,7 @@ public class MarkerOverlay extends LazyOverlay {
         // }
 
         // on dessine les items seulement s'il ne s'agit pas du mode shadow
-        if (!shadow) {
+        if (!shadow && markers.size() > 0) {
             final Projection pj = osmv.getProjection();
             final Point point = new Point();
 
@@ -258,13 +258,6 @@ public class MarkerOverlay extends LazyOverlay {
 
         if (map.getZoomLevel() < ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
             states[index++] = R.attr.state_low_zoom;
-        }
-
-        final MarkerOverlayItem selectedItem = ((ItinerennesMapView) mapView).getMapBoxController()
-                .getSelectedItem();
-        if (selectedItem != null && selectedItem.getId().equals(item.getId())) {
-
-            states[index++] = android.R.attr.state_pressed;
         }
 
         if (item.isBookmarked()) {
