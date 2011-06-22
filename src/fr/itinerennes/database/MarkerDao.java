@@ -72,6 +72,9 @@ public class MarkerDao implements MarkersColumns {
             return null;
         }
 
+        final String tables = String.format("%s m left join %s b on m.%s=b.%s", MARKERS_TABLE_NAME,
+                Columns.BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, Columns.BookmarksColumns.ID);
+
         final String[] columns = new String[] { String.format("m.%s", ID),
                 String.format("m.%s", TYPE), String.format("m.%s", LABEL), LONGITUDE, LATITUDE,
                 String.format("b.%s is not null  AS bookmarked", ID) };
@@ -93,7 +96,8 @@ public class MarkerDao implements MarkersColumns {
                 String.valueOf(bbox.getLonEastE6()), String.valueOf(bbox.getLatSouthE6()),
                 String.valueOf(bbox.getLatNorthE6()) };
 
-        final Cursor c = query(selection.toString(), selectionArgs, columns, "m._id ASC");
+        final Cursor c = query(tables, selection.toString(), selectionArgs, columns, null,
+                "m._id ASC");
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getMarkers.end - count={}", (c != null) ? c.getCount() : 0);
@@ -207,15 +211,17 @@ public class MarkerDao implements MarkersColumns {
             LOGGER.debug("searchMarkers.start - query={}", query);
         }
 
-        final String selection = String.format("m.%s LIKE ?", Columns.MarkersColumns.LABEL);
-        final String[] columns = new String[] { "m." + BaseColumns._ID,
-                "m." + Columns.MarkersColumns.ID, "m." + Columns.MarkersColumns.TYPE,
-                "m." + Columns.MarkersColumns.LABEL, Columns.MarkersColumns.LONGITUDE,
-                Columns.MarkersColumns.LATITUDE };
+        final String selection = String.format("%s LIKE ?", Columns.MarkersColumns.LABEL);
+        final String[] columns = new String[] { BaseColumns._ID, Columns.MarkersColumns.ID,
+                Columns.MarkersColumns.TYPE, Columns.MarkersColumns.LABEL,
+                Columns.MarkersColumns.LONGITUDE, Columns.MarkersColumns.LATITUDE };
 
         final String[] selectionArgs = new String[] { "%" + query + "%" };
 
-        final Cursor c = query(selection, selectionArgs, columns);
+        final String groupBy = String.format("%s, %s", Columns.MarkersColumns.LABEL,
+                Columns.MarkersColumns.TYPE);
+
+        final Cursor c = query(MARKERS_TABLE_NAME, selection, selectionArgs, columns, groupBy, null);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("searchMarkers.end - query={}");
@@ -317,13 +323,18 @@ public class MarkerDao implements MarkersColumns {
     private Cursor query(final String selection, final String[] selectionArgs,
             final String[] columns) {
 
-        return query(selection, selectionArgs, columns, null);
+        final String tables = String.format("%s m left join %s b on m.%s=b.%s", MARKERS_TABLE_NAME,
+                Columns.BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, Columns.BookmarksColumns.ID);
+
+        return query(tables, selection, selectionArgs, columns, null, null);
 
     }
 
     /**
      * Queries the database.
      * 
+     * @param tables
+     *            the from clause
      * @param selection
      *            the where clause
      * @param selectionArgs
@@ -334,13 +345,12 @@ public class MarkerDao implements MarkersColumns {
      *            order by clause
      * @return results
      */
-    private Cursor query(final String selection, final String[] selectionArgs,
-            final String[] columns, final String orderBy) {
+    private Cursor query(final String tables, final String selection, final String[] selectionArgs,
+            final String[] columns, final String groupBy, final String orderBy) {
 
         final SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
-        builder.setTables(String.format("%s m left join %s b on m.%s=b.%s", MARKERS_TABLE_NAME,
-                Columns.BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, Columns.BookmarksColumns.ID));
+        builder.setTables(tables);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(String.format("Marker query : %s", builder.buildQuery(columns, selection,
@@ -348,7 +358,7 @@ public class MarkerDao implements MarkersColumns {
         }
 
         final Cursor c = builder.query(dbHelper.getReadableDatabase(), columns, selection,
-                selectionArgs, null, null, orderBy);
+                selectionArgs, groupBy, null, orderBy);
 
         if (c == null) {
             return null;
