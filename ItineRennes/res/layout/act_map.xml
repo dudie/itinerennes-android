@@ -29,12 +29,14 @@
             
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         
-        <fr.itinerennes.ui.views.ToolbarButton
+        <ToggleButton 
             android:id="@+id/mylocation_button"
-            itr:drawable="@drawable/btn_mylocation"
+            android:background="@drawable/btnx_mylocation"
             android:layout_width="@dimen/toolbar_button_width"
             android:layout_height="fill_parent"
-            android:onClick="onMyLocationButtonClick"/>
+            android:onClick="onMyLocationButtonClick"
+            android:textOn=""
+            android:textOff=""/>
             
     </LinearLayout>
     <!-- END TITLE BAR -->
