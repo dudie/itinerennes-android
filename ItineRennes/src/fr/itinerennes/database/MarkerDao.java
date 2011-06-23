@@ -199,7 +199,8 @@ public class MarkerDao implements MarkersColumns {
     }
 
     /**
-     * Search markers containing the given string.
+     * Search markers containing the given string. This method returns only one row with same label
+     * and same type.
      * 
      * @param query
      *            string to search in markers' label

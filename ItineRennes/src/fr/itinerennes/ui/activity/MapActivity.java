@@ -35,6 +35,7 @@ import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
+import fr.itinerennes.utils.MapUtils;
 import fr.itinerennes.utils.ResourceResolver;
 
 /**
@@ -75,8 +76,13 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     public static final String INTENT_SELECT_BOOKMARK_ID = String.format("s.selectBookmarkId",
             MapActivity.class.getName());
 
-    /** Activity request code for preload. */
-    public static final int ACTIVITY_REQUEST_PRELOAD = 0;
+    /** Intent name to use to center the map on a marker. */
+    public static final String INTENT_CENTER_ON_MARKER = String.format("%s.CENTER_ON_MARKER",
+            MapActivity.class.getName());
+
+    /** Intent parameter name to set the marker unique id on which center the map. */
+    public static final String INTENT_MARKER_UNIQUE_ID = String.format("%s.markerId",
+            MapActivity.class.getName());
 
     /** Duration of toast messages. */
     private static final int TOAST_DURATION = 300;
@@ -190,10 +196,9 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         // save current displayed overlays
         saveVisibleOverlaysInPreferences(edit);
 
-        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, myLocation.isMyLocationEnabled());
         edit.commit();
 
-        myLocation.disableFollowLocation();
+        myLocation.disableMyLocation();
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onPause.end");
@@ -212,15 +217,14 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             LOGGER.debug("onNewIntent.start");
         }
 
+        myLocation.disableFollowLocation();
+
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             // forward to SearchResultsActivity
             intent.setClass(getApplicationContext(), SearchResultsActivity.class);
             startActivity(intent);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-
-            // if intent asks for a specific zoom level, its values overrides the ones
-            // saved in preferences
-            myLocation.disableFollowLocation();
+            // center on the latitude and longitude sent in the intent
 
             if (intent.hasExtra(INTENT_SET_MAP_LAT) && intent.hasExtra(INTENT_SET_MAP_LON)) {
                 // center coordinates are send in the intent
@@ -235,10 +239,25 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                 saveMapCenterInPreferences(edit, newLat, newLon, newZoom);
                 edit.commit();
 
-            } else if (intent.hasExtra(SearchManager.USER_QUERY)) {
-                onSuggestionClick(intent);
             }
 
+        } else if (INTENT_CENTER_ON_MARKER.equals(intent.getAction())) {
+            // center on a marker sent in the intent (or a group of center based on the label of the
+            // given marker)
+            // this intent can be sent by suggestion click or an item from SearchResultsActivity
+
+            myLocation.disableFollowLocation();
+
+            String id = null;
+            if (intent.hasExtra(SearchManager.USER_QUERY)) {
+                id = intent.getData().getLastPathSegment();
+            } else if (intent.hasExtra(INTENT_MARKER_UNIQUE_ID)) {
+                id = intent.getStringExtra(INTENT_MARKER_UNIQUE_ID);
+            }
+
+            if (id != null) {
+                onSearchResultClick(id, intent);
+            }
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.end");
@@ -428,6 +447,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, (zoom != 0) ? zoom
                 : ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
 
+        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, myLocation.isMyLocationEnabled());
     }
 
     /**
@@ -448,18 +468,18 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     }
 
     /**
-     * Handles actions to do when a suggestion is clicked in the search dialog.
+     * Handles actions to do when a suggestion or a search result is clicked.
      * 
+     * @param id
+     *            id of the clicked result
      * @param intent
      *            intent sent by the search framework when a user clicks on a suggestion
      */
-    private void onSuggestionClick(final Intent intent) {
+    private void onSearchResultClick(final String id, final Intent intent) {
 
-        // we come from a search suggestion click
         // if the last path segment is "nominatim", so the user has clicked the link to
         // search in nominatim
-        if (intent.getData().getLastPathSegment() != null
-                && intent.getData().getLastPathSegment().equals(MarkerDao.NOMINATIM_INTENT_DATA_ID)) {
+        if (id.equals(MarkerDao.NOMINATIM_INTENT_DATA_ID)) {
             final Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
             if (intent.hasExtra(SearchManager.USER_QUERY)) {
                 i.putExtra(SearchManager.QUERY, intent.getStringExtra(SearchManager.USER_QUERY));
@@ -470,10 +490,9 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             // because search suggestions show only one row when multiple stops have the
             // same label
 
-            final Cursor c = getApplicationContext().getMarkerDao().getMarkersWithSameLabel(
-                    intent.getData().getLastPathSegment());
+            final Cursor c = getApplicationContext().getMarkerDao().getMarkersWithSameLabel(id);
 
-            // calculate a pseudo-center point to center the map on it
+            // calculate the barycenter to center the map on it
             if (c != null && c.moveToFirst()) {
                 // check if marker type is visible, and add it if not visible
                 final String type = c.getString(c.getColumnIndex(Columns.MarkersColumns.TYPE));
@@ -486,22 +505,15 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                     edit.commit();
                 }
 
-                int newLat = 0;
-                int newLon = 0;
+                final GeoPoint barycentre = MapUtils.getBarycenter(c);
 
-                while (!c.isAfterLast()) {
-                    newLat += c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE));
-                    newLon += c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE));
-
-                    c.moveToNext();
+                if (barycentre != null) {
+                    final SharedPreferences.Editor edit = getApplicationContext()
+                            .getITRPreferences().edit();
+                    saveMapCenterInPreferences(edit, barycentre.getLatitudeE6(),
+                            barycentre.getLongitudeE6(), 0);
+                    edit.commit();
                 }
-                newLat = newLat / c.getCount();
-                newLon = newLon / c.getCount();
-
-                final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
-                        .edit();
-                saveMapCenterInPreferences(edit, newLat, newLon, 0);
-                edit.commit();
 
                 c.close();
 

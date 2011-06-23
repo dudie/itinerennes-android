@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -125,21 +126,30 @@ public final class SearchResultsActivity extends ItineRennesActivity {
 
                 final Cursor item = (Cursor) resultsListAdapter.getItem(position);
                 if (null != item) {
-                    final int latE6 = item.getInt(item.getColumnIndex(LocationColumns.LATITUDE));
-                    final int lonE6 = item.getInt(item.getColumnIndex(LocationColumns.LONGITUDE));
-
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(
-                                "preparing intent to display map centered on (lon=%s; lat=%s)",
-                                lonE6, latE6);
-                    }
-
                     final Intent i = new Intent(getBaseContext(), MapActivity.class);
-                    i.setAction(Intent.ACTION_VIEW);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
-                    i.putExtra(MapActivity.INTENT_SET_MAP_LON, lonE6);
-                    i.putExtra(MapActivity.INTENT_SET_MAP_LAT, latE6);
+
+                    if (item.getColumnIndex(BaseColumns._ID) != -1) {
+                        i.setAction(MapActivity.INTENT_CENTER_ON_MARKER);
+                        i.putExtra(MapActivity.INTENT_MARKER_UNIQUE_ID,
+                                item.getString(item.getColumnIndex(BaseColumns._ID)));
+                    } else {
+                        final int latE6 = item.getInt(item.getColumnIndex(LocationColumns.LATITUDE));
+                        final int lonE6 = item.getInt(item
+                                .getColumnIndex(LocationColumns.LONGITUDE));
+
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug(
+                                    "preparing intent to display map centered on (lon=%s; lat=%s)",
+                                    lonE6, latE6);
+                        }
+
+                        i.setAction(Intent.ACTION_VIEW);
+
+                        i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
+                        i.putExtra(MapActivity.INTENT_SET_MAP_LON, lonE6);
+                        i.putExtra(MapActivity.INTENT_SET_MAP_LAT, latE6);
+                    }
                     startActivity(i);
                 }
             }
