@@ -2,7 +2,6 @@ package fr.itinerennes.ui.adapter;
 
 import android.view.View;
 
-import fr.itinerennes.ui.tasks.DisplayMapBoxTask;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
@@ -42,6 +41,7 @@ public interface MapBoxAdapter<R> {
      *            the view you returned in {@link #getView(Object)}
      * @param item
      *            the item for which this adapter generates a view
+     * @return some data helping you to fill the view
      */
     R doInBackground(View view, MarkerOverlayItem item);
 

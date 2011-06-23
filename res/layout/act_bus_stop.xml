@@ -2,7 +2,8 @@
 
 <LinearLayout android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:orientation="vertical"
-	xmlns:android="http://schemas.android.com/apk/res/android" >
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes">
 
     <!-- START TITLE BAR -->
     <LinearLayout android:layout_width="fill_parent"
@@ -43,14 +44,15 @@
                 android:background="@drawable/btn_toggle_star"
                 android:textOn=""
                 android:textOff=""/>
-            
+                
             <include layout="@layout/misc_toolbar_vertical_separator"/>
             
-            <Button android:background="@android:drawable/ic_dialog_map"
+            <fr.itinerennes.ui.views.ToolbarButton
+                itr:drawable="@android:drawable/ic_dialog_map"
                 android:layout_width="@dimen/toolbar_button_width"
                 android:layout_height="fill_parent"
-                android:onClick="onMapButtonClick">
-            </Button>
+                android:onClick="onMapButtonClick"/>
+                
         </LinearLayout>  
         
         <ImageView android:src="@drawable/misc_toolbar_horizontal_separator"

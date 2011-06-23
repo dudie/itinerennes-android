@@ -412,7 +412,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         case Dialogs.ABOUT:
             final AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
             aboutBuilder.setTitle(R.string.menu_about).setCancelable(true);
-            final View aboutView = getLayoutInflater().inflate(R.layout.act_about, null);
+            final View aboutView = getLayoutInflater().inflate(R.layout.dial_about, null);
             aboutBuilder.setView(aboutView);
             final Drawable icDialogHelp = ResourceResolver.fromMenuToDialogIcon(this,
                     android.R.drawable.ic_menu_help);
