@@ -34,8 +34,8 @@
             itr:drawable="@drawable/btn_mylocation"
             android:layout_width="@dimen/toolbar_button_width"
             android:layout_height="fill_parent"
-            android:onClick="onMyLocationButtonClick"
-        />
+            android:onClick="onMyLocationButtonClick"/>
+            
     </LinearLayout>
     <!-- END TITLE BAR -->
     
@@ -47,22 +47,7 @@
 		android:layout_height="fill_parent"
 		android:clickable="true"
 		android:layout_below="@+id/toolbar"
-		tilesource="MapquestOSM">
-        
-        <fr.itinerennes.ui.views.MapBoxView
-            android:id="@+id/map_box"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:background="@drawable/bg_mapbox"
-            android:paddingTop="15dp"
-            android:paddingBottom="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:minWidth="240dp"/>
-        
-    </fr.itinerennes.ui.views.ItinerennesMapView>
+		tilesource="MapquestOSM"/>
 
     <fr.itinerennes.ui.views.ItinerennesZoomControls
         android:id="@+id/zoom_controls" 

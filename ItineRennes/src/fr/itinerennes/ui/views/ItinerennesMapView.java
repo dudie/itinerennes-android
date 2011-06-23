@@ -69,7 +69,7 @@ public class ItinerennesMapView extends MapView {
         this.context = (ItineRennesActivity) context;
         this.controller = new MapViewController(this.context, this);
 
-        this.mapBoxController = new MapBoxController(this.context);
+        this.mapBoxController = new MapBoxController(this);
 
         mapListeners = new MapListenerWrapper(3);
         super.setMapListener(new DelayedMapListener(mapListeners, MAP_LISTENER_DELAY));
