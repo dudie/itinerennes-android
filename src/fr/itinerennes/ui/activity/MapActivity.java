@@ -26,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesConstants;
@@ -321,6 +322,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             Toast.makeText(this, R.string.location_service_disabled, TOAST_DURATION).show();
+            ((ToggleButton) button).setChecked(false);
         } else {
             myLocation.toggleFollowLocation();
         }

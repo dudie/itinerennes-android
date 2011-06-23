@@ -5,7 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
+import android.widget.Button;
 
 import fr.itinerennes.R;
 
@@ -15,7 +15,7 @@ import fr.itinerennes.R;
  * @author Olivier Boudet
  * @author Jérémie Huchet
  */
-public final class ToolbarButton extends ImageView {
+public final class ToolbarButton extends Button {
 
     /** The final image used to make the button. */
     private final LayerDrawable buttonImage;
@@ -70,5 +70,4 @@ public final class ToolbarButton extends ImageView {
 
         super.onLayout(changed, left, top, right, bottom);
     }
-
 }
