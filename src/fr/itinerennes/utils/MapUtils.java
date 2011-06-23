@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.osmdroid.util.GeoPoint;
 
+import android.database.Cursor;
+
+import fr.itinerennes.database.Columns;
+
 public final class MapUtils {
 
     /**
@@ -69,5 +73,33 @@ public final class MapUtils {
     public static List<GeoPoint> decodePolyline(final String encoded) {
 
         return decodePolyline(encoded, 10);
+    }
+
+    /**
+     * Calculates the barycentre of all markers in the given Cursor.
+     * 
+     * @param c
+     *            cursor containing markers
+     * @return the barycentre
+     */
+    public static GeoPoint getBarycenter(final Cursor c) {
+
+        if (c != null && c.moveToFirst()) {
+
+            int newLat = 0;
+            int newLon = 0;
+
+            while (!c.isAfterLast()) {
+                newLat += c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE));
+                newLon += c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE));
+
+                c.moveToNext();
+            }
+            newLat = newLat / c.getCount();
+            newLon = newLon / c.getCount();
+
+            return new GeoPoint(newLat, newLon);
+        }
+        return null;
     }
 }
