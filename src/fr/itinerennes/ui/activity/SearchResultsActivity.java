@@ -129,11 +129,14 @@ public final class SearchResultsActivity extends ItineRennesActivity {
                     final Intent i = new Intent(getBaseContext(), MapActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                    if (item.getColumnIndex(BaseColumns._ID) != -1) {
+                    if (item.getColumnIndex(MarkersColumns.TYPE) != -1
+                            && item.getColumnIndex(MarkersColumns.LABEL) != -1) {
+                        // item has a type and a label, it is a marker
                         i.setAction(MapActivity.INTENT_CENTER_ON_MARKER);
                         i.putExtra(MapActivity.INTENT_MARKER_UNIQUE_ID,
                                 item.getString(item.getColumnIndex(BaseColumns._ID)));
                     } else {
+                        // item does not have a type and a label, so it is a simple location
                         final int latE6 = item.getInt(item.getColumnIndex(LocationColumns.LATITUDE));
                         final int lonE6 = item.getInt(item
                                 .getColumnIndex(LocationColumns.LONGITUDE));
@@ -146,10 +149,12 @@ public final class SearchResultsActivity extends ItineRennesActivity {
 
                         i.setAction(Intent.ACTION_VIEW);
 
-                        i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
                         i.putExtra(MapActivity.INTENT_SET_MAP_LON, lonE6);
                         i.putExtra(MapActivity.INTENT_SET_MAP_LAT, latE6);
                     }
+
+                    i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
+
                     startActivity(i);
                 }
             }
