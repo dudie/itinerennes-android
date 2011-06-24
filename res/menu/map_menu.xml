@@ -7,7 +7,7 @@
           android:title="@string/menu_layers" />
     <item android:id="@+id/menu_bookmarks"
           android:title="@string/menu_bookmarks"
-          android:icon="@android:drawable/btn_star" />
+          android:icon="@drawable/ic_menu_star" />
     <item android:id="@+id/menu_about"
           android:title="@string/menu_about"
           android:icon="@android:drawable/ic_menu_help" />
