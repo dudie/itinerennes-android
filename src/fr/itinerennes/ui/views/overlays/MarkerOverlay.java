@@ -54,6 +54,8 @@ public class MarkerOverlay extends LazyOverlay {
     /** This property references the task currently loading the current displayed bounding box. */
     private AsyncTask<Void, Void, LinkedHashMap<String, MarkerOverlayItem>> refreshTask = null;
 
+    private final HashMap<String, Drawable> markerIcons = new HashMap<String, Drawable>();
+
     /**
      * Creates the marker overlay.
      * 
@@ -73,6 +75,7 @@ public class MarkerOverlay extends LazyOverlay {
         markerTypesLabel.put(TypeConstants.TYPE_BUS, context.getString(R.string.overlay_bus));
         markerTypesLabel.put(TypeConstants.TYPE_BIKE, context.getString(R.string.overlay_bike));
         markerTypesLabel.put(TypeConstants.TYPE_SUBWAY, context.getString(R.string.overlay_subway));
+
     }
 
     /**
@@ -106,10 +109,16 @@ public class MarkerOverlay extends LazyOverlay {
                         marker.setLabel(c.getString(2));
                         marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
                         marker.setBookmarked((c.getInt(5) != 0));
-                        // TJHU set the default marker resource identifier
-                        final int iconId = ResourceResolver.getDrawableId(context,
-                                String.format("icx_marker_%s", marker.getType()), 0);
-                        marker.setIcon(context.getResources().getDrawable(iconId));
+
+                        if (!markerIcons.containsKey(marker.getType())) {
+                            // TJHU set the default marker resource identifier
+                            final int iconId = ResourceResolver.getDrawableId(context,
+                                    String.format("icx_marker_%s", marker.getType()), 0);
+                            markerIcons.put(marker.getType(),
+                                    context.getResources().getDrawable(iconId));
+                        }
+
+                        marker.setIcon(markerIcons.get(marker.getType()));
                         markers.put(marker.getId(), marker);
 
                         c.moveToNext();
