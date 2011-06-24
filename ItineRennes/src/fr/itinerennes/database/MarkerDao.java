@@ -353,10 +353,10 @@ public class MarkerDao implements MarkersColumns {
 
         builder.setTables(tables);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(String.format("Marker query : %s", builder.buildQuery(columns, selection,
-                    selectionArgs, null, null, orderBy, null)));
-        }
+        // if (LOGGER.isDebugEnabled()) {
+        // LOGGER.debug(String.format("Marker query : %s", builder.buildQuery(columns, selection,
+        // selectionArgs, null, null, orderBy, null)));
+        // }
 
         final Cursor c = builder.query(dbHelper.getReadableDatabase(), columns, selection,
                 selectionArgs, groupBy, null, orderBy);
