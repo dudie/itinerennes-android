@@ -25,7 +25,7 @@ import fr.itinerennes.ui.views.overlays.MarkerOverlay;
 public class ItinerennesMapView extends MapView {
 
     /** Map listener event delayed listener constant value. */
-    private static final long MAP_LISTENER_DELAY = 800;
+    private static final long MAP_LISTENER_DELAY = 200;
 
     /** The map controller. */
     private final MapViewController controller;

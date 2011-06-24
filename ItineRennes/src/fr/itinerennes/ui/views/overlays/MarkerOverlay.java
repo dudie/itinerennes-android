@@ -259,21 +259,24 @@ public class MarkerOverlay extends LazyOverlay {
             final Point curScreenCoords, final MapView mapView) {
 
         final Drawable drawable = item.getIcon();
+        int[] originalState = null;
 
-        final int[] originalState = drawable.getState();
-
-        final int[] states = new int[3];
+        final int[] states = new int[2];
         int index = 0;
 
-        if (map.getZoomLevel() < ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
-            states[index++] = R.attr.state_low_zoom;
+        if (map.getZoomLevel() >= ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
+            states[index++] = R.attr.state_high_zoom;
         }
 
         if (item.isBookmarked()) {
             states[index++] = R.attr.state_bookmarked;
         }
 
-        drawable.setState(states);
+        if (index > 0) {
+            originalState = drawable.getState();
+            drawable.setState(states);
+
+        }
 
         final int left_right = drawable.getIntrinsicWidth() / 2;
         final int top_bottom = drawable.getIntrinsicHeight() / 2;
@@ -283,8 +286,10 @@ public class MarkerOverlay extends LazyOverlay {
         // draw it
         Overlay.drawAt(canvas, drawable, curScreenCoords.x, curScreenCoords.y, false);
 
-        // restore original state
-        drawable.setState(originalState);
+        if (originalState != null) {
+            // restore original state
+            drawable.setState(originalState);
+        }
     }
 
     /**
