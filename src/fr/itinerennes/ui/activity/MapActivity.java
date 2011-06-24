@@ -326,7 +326,17 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         } else {
             myLocation.toggleFollowLocation();
         }
+    }
 
+    /**
+     * Click method handler invoked when a click event is detected on the layers button.
+     * 
+     * @param button
+     *            the button view on which the event was detected
+     */
+    public final void onLayersButtonClick(final View button) {
+
+        showDialog(Dialogs.SELECT_LAYERS);
     }
 
     /**
@@ -338,7 +348,6 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     public final void onSearchButtonClick(final View button) {
 
         onSearchRequested();
-
     }
 
     /**

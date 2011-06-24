@@ -29,6 +29,14 @@
             
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         
+        <fr.itinerennes.ui.views.ToolbarButton
+            itr:drawable="@drawable/btn_layers"
+            android:layout_width="@dimen/toolbar_button_width"
+            android:layout_height="fill_parent"
+            android:onClick="onLayersButtonClick"/>
+            
+        <include layout="@layout/misc_toolbar_vertical_separator"/>
+        
         <ToggleButton 
             android:id="@+id/mylocation_button"
             android:background="@drawable/btnx_mylocation"
