@@ -3,15 +3,16 @@
             xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes">
     <item>
         <selector>
-            <!-- LOW ZOOMED -->
-            <item itr:state_low_zoom="true">
-                <bitmap android:gravity="center" android:src="@drawable/ic_marker_bike_lite" />
-            </item>
-   
-            <!--  default -->
-            <item>
+            <!-- HIGH ZOOMED -->
+            <item itr:state_high_zoom="true">
                 <bitmap android:gravity="center" android:src="@drawable/ic_marker_bike" />
             </item>
+            
+            <!--  default -->
+            <item>
+                <bitmap android:gravity="center" android:src="@drawable/ic_marker_bike_lite" />
+            </item>
+            
         </selector>
     </item>
     <item
