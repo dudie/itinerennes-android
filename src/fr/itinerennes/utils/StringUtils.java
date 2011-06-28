@@ -15,32 +15,37 @@ import org.slf4j.LoggerFactory;
 public final class StringUtils {
 
     /** The event logger. */
-    private final static Logger LOGGER = LoggerFactory.getLogger(StringUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class);
 
-    private final static Method normalizerNormalizeMethod;
+    /**
+     * The method
+     * <code>java.text.Normalizer#normalize(java.lang.String, java.text.Normalizer.Form)</code>.
+     */
+    private static final Method NORMALIZE;
 
-    private final static Object formNFDEnumValue;
+    /** The enum value <code>java.text.Normalizer.Form.NFD</code>. */
+    private static final Object NFD;
 
     /*
      * Load a java.text.Normalizer instance to normalize UTF8 string and then remove diachritics
      * characters.
      */
     static {
-        Method _normalizerNormalizeMethod = null;
-        Object _formNFDEnumValue = null;
+        Method normalizerNormalizeMethod = null;
+        Object formNFDEnumValue = null;
         try {
             final Class<?> normalizerClazz = Class.forName("java.text.Normalizer");
             final Class<?> formClazz = Class.forName("java.text.Normalizer$Form");
 
-            _normalizerNormalizeMethod = normalizerClazz.getMethod("normalize", CharSequence.class,
+            normalizerNormalizeMethod = normalizerClazz.getMethod("normalize", CharSequence.class,
                     formClazz);
 
-            _formNFDEnumValue = formClazz.getEnumConstants()[0];
+            formNFDEnumValue = formClazz.getEnumConstants()[0];
         } catch (final Throwable t) {
             LOGGER.info("No java.text.Normalizer instance found, UTF-8 string normalizing is not supported");
         }
-        normalizerNormalizeMethod = _normalizerNormalizeMethod;
-        formNFDEnumValue = _formNFDEnumValue;
+        NORMALIZE = normalizerNormalizeMethod;
+        NFD = formNFDEnumValue;
     }
 
     /**
@@ -83,7 +88,7 @@ public final class StringUtils {
      */
     public static boolean isNormalizeSupported() {
 
-        return null != normalizerNormalizeMethod && null != formNFDEnumValue;
+        return null != NORMALIZE && null != NFD;
     }
 
     /**
@@ -96,21 +101,78 @@ public final class StringUtils {
      */
     public static String normalize(final String s) {
 
+        if (null == s) {
+            return null;
+        }
+
         try {
-            return (String) normalizerNormalizeMethod.invoke(null, s, formNFDEnumValue);
+            return (String) NORMALIZE.invoke(null, s, NFD);
         } catch (final Exception e) {
             throw new UnsupportedOperationException(
                     "Unable to normalize the given string in this environment", e);
         }
     }
 
+    /**
+     * Remove accents from the given string.
+     * 
+     * @param s
+     *            the string you want to remove accents
+     * @return the given string without special characters if operation is supported, else the same
+     *         string as the given one
+     */
     public static String unaccent(final String s) {
 
-        if (isNormalizeSupported()) {
+        if (null != s && isNormalizeSupported()) {
             return normalize(s).replaceAll("[\u0300-\u036F]", "");
         } else {
             return s;
         }
+    }
+
+    /**
+     * Highlights the query in the given text using specified prefix and suffix.
+     * <ul>
+     * <li><b>text</b> Sample string where another string query must be highlighted</li>
+     * <li><b>query</b> string</li>
+     * <li><b>prefix</b> [p]</li>
+     * <li><b>suffix</b> [s]</li>
+     * </ul>
+     * The result will be <i>Sample [p]string[s] where another [p]string[s] query must be
+     * highlighted</i>.
+     * 
+     * @param text
+     *            the text where query must be highlighted
+     * @param query
+     *            the query to highlight in the text
+     * @param prefix
+     *            the prefix to use to highlight the text
+     * @param suffix
+     *            the suffix to use to highlight the text
+     */
+    public static String highlight(final String text, final String query, final String prefix,
+            final String suffix) {
+
+        if (null == text) {
+            return null;
+        }
+
+        final StringBuilder result = new StringBuilder();
+        final String unaccentText = unaccent(text).toLowerCase();
+        final String unaccentQuery = unaccent(query).toLowerCase().replaceAll("[^a-zA-Z0-9]", ".");
+
+        int start = 0;
+        int index;
+        while ((index = unaccentText.indexOf(unaccentQuery, start)) != -1) {
+            result.append(text.substring(start, index));
+            result.append(prefix);
+            result.append(text.substring(index, index + query.length()));
+            result.append(suffix);
+            start = index + query.length();
+        }
+        result.append(text.substring(start));
+
+        return result.toString();
     }
 
 }
