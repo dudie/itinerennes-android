@@ -18,7 +18,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,7 +36,6 @@ import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.utils.MapUtils;
-import fr.itinerennes.utils.ResourceResolver;
 
 /**
  * This is the main activity. Uses the <code>main_map.xml</code> layout and displays a menu bar on
@@ -425,9 +423,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             aboutBuilder.setTitle(R.string.menu_about).setCancelable(true);
             final View aboutView = getLayoutInflater().inflate(R.layout.dial_about, null);
             aboutBuilder.setView(aboutView);
-            final Drawable icDialogHelp = ResourceResolver.fromMenuToDialogIcon(this,
-                    android.R.drawable.ic_menu_help);
-            aboutBuilder.setIcon(icDialogHelp);
+            aboutBuilder.setIcon(R.drawable.ic_dialog_help);
             dialog = aboutBuilder.create();
             break;
         default:
