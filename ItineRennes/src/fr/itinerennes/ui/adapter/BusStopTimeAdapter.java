@@ -192,7 +192,7 @@ public class BusStopTimeAdapter extends BaseAdapter {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.HOUR_OF_DAY, 0);
-        final int days = fr.itinerennes.utils.DateUtils.getDayCount(date.getTime()
+        final int days = fr.itinerennes.commons.utils.DateUtils.getDayCount(date.getTime()
                 - c.getTimeInMillis());
         final String time = DateUtils.formatDateTime(context, date.getTime(),
                 DateUtils.FORMAT_24HOUR | DateUtils.FORMAT_SHOW_TIME);

@@ -25,6 +25,7 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
+import fr.itinerennes.commons.utils.StringUtils;
 import fr.itinerennes.database.Columns.LocationColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.database.Columns.NominatimColumns;
@@ -32,7 +33,6 @@ import fr.itinerennes.nominatim.model.Address;
 import fr.itinerennes.ui.adapter.WrapperAdapter;
 import fr.itinerennes.utils.NominatimTranslator;
 import fr.itinerennes.utils.ResourceResolver;
-import fr.itinerennes.utils.StringUtils;
 
 /**
  * Displays search results.
