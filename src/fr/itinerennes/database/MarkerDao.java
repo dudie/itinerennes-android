@@ -213,15 +213,16 @@ public class MarkerDao implements MarkersColumns {
             LOGGER.debug("searchMarkers.start - query={}", query);
         }
 
-        final String selection = String.format("%s LIKE ?", Columns.MarkersColumns.LABEL);
-        final String[] columns = new String[] { BaseColumns._ID, Columns.MarkersColumns.ID,
-                Columns.MarkersColumns.TYPE, Columns.MarkersColumns.LABEL,
-                Columns.MarkersColumns.LONGITUDE, Columns.MarkersColumns.LATITUDE };
+        final String selection = String.format("%s LIKE ? OR %s LIKE ?", MarkersColumns.LABEL,
+                MarkersColumns.SEARCH_LABEL);
+        final String[] columns = new String[] { BaseColumns._ID, MarkersColumns.ID,
+                MarkersColumns.TYPE, MarkersColumns.LABEL, MarkersColumns.LONGITUDE,
+                MarkersColumns.LATITUDE };
 
-        final String[] selectionArgs = new String[] { "%" + query + "%" };
+        final String[] selectionArgs = new String[] { "%" + query + "%",
+                "%" + StringUtils.searchLabel(query) + "%" };
 
-        final String groupBy = String.format("%s, %s", Columns.MarkersColumns.LABEL,
-                Columns.MarkersColumns.TYPE);
+        final String groupBy = String.format("%s, %s", MarkersColumns.LABEL, MarkersColumns.TYPE);
 
         final Cursor c = query(MARKERS_TABLE_NAME, selection, selectionArgs, columns, groupBy, null);
 
