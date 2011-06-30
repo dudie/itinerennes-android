@@ -14,6 +14,7 @@ import android.provider.BaseColumns;
 
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.commons.utils.StringUtils;
 import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 
@@ -244,7 +245,8 @@ public class MarkerDao implements MarkersColumns {
             LOGGER.debug("getSuggestions.start - query={}", query);
         }
 
-        final String[] selectionArgs = new String[] { "%" + query + "%" };
+        final String[] selectionArgs = new String[] { "%" + query + "%",
+                "%" + StringUtils.searchLabel(query) + "%" };
 
         if (getSuggestionsStatement == null) {
 
@@ -296,6 +298,7 @@ public class MarkerDao implements MarkersColumns {
                 BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, BookmarksColumns.ID));
 
         sql.append(String.format(" WHERE m.%s LIKE ?", Columns.MarkersColumns.LABEL));
+        sql.append(String.format(" OR m.%s LIKE ?", Columns.MarkersColumns.SEARCH_LABEL));
 
         sql.append(" GROUP BY suggest_text_1, m.type, suggest_icon_2");
 
