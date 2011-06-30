@@ -274,6 +274,8 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
             final int latMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LATITUDE);
             final int lonMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LONGITUDE);
             final int labelMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LABEL);
+            final int searchLabelMarkerColumn = insertMarkerHelper
+                    .getColumnIndex(MarkersColumns.SEARCH_LABEL);
 
             // walking through markers file
             String line = null;
@@ -292,6 +294,7 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
                 insertMarkerHelper.bind(lonMarkerColumn,
                         (int) (Double.parseDouble(fields[3]) * 1E6));
                 insertMarkerHelper.bind(labelMarkerColumn, fields[4]);
+                insertMarkerHelper.bind(searchLabelMarkerColumn, fields[5]);
 
                 insertMarkerHelper.execute();
                 handler.sendMessage(handler.obtainMessage(MSG_PRELOAD_PROGRESS, 1));

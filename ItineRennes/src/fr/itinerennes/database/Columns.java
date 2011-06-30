@@ -44,6 +44,7 @@ public final class Columns {
         /** The name of the markers table. */
         String MARKERS_TABLE_NAME = "markers";
 
+        /** ContentProvider type. */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.itinerennes.markers";
 
         /**
@@ -69,6 +70,14 @@ public final class Columns {
          * </P>
          */
         String LABEL = "label";
+
+        /**
+         * The name for a station.
+         * <P>
+         * Type: TEXT (String)
+         * </P>
+         */
+        String SEARCH_LABEL = "search_label";
     }
 
     /**

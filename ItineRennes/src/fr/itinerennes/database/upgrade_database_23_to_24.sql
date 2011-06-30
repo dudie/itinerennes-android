@@ -28,7 +28,8 @@ CREATE TABLE "markers" (
     "type" TEXT NOT NULL,
     "label" TEXT NOT NULL,
     "lon" INTEGER NOT NULL,
-    "lat" INTEGER NOT NULL
+    "lat" INTEGER NOT NULL,
+    "search_label" TEXT NOT NULL
 );
 CREATE UNIQUE INDEX "markers_idx" on markers (type ASC, id ASC);
 CREATE INDEX "markers_type_idx" on markers (type ASC);
