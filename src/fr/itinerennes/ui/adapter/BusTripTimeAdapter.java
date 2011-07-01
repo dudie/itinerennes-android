@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
@@ -131,8 +130,6 @@ public class BusTripTimeAdapter extends BaseAdapter {
             departureTime.setTextAppearance(context, R.style.text_grey_bold);
             relativeTime.setTextAppearance(context, R.style.text_grey);
         }
-
-        final ProgressBar progressBar = (ProgressBar) view.findViewById(R.trip_time.progress_bar);
 
         if (routeIsAccessible) {
             /* Display handistar icon if current stop and current route are accessible. */

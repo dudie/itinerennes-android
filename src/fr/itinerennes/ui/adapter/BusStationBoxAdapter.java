@@ -1,11 +1,9 @@
 package fr.itinerennes.ui.adapter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,9 +35,6 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
 
     /** The bus station for which informations are displayed. */
     private Stop station = null;
-
-    /** The icons for each route stopping at this stop. */
-    private List<Drawable> routesIcons;
 
     /**
      * Creates the bus station adapter for map box.
@@ -113,7 +108,6 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
     public final Stop doInBackground(final View view, final MarkerOverlayItem item) {
 
         station = null;
-        routesIcons = new ArrayList<Drawable>();
         try {
 
             final IOneBusAwayClient obaClient = context.getApplicationContext()
