@@ -23,10 +23,12 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:textSize="@dimen/toolbar_text_size"
                 android:paddingLeft="5dp"
                 android:textColor="@color/white"
-                android:text="@string/activity_title_bus_stop">
+                android:text="@string/activity_title_bus_stop"
+                android:background="@drawable/bg_toolbar_bugdroid_bus_station">
             </TextView>
             
             <ImageView android:id="@+station/bus_activity_wheelchair_icon"
