@@ -14,7 +14,7 @@ import android.provider.BaseColumns;
 
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.commons.utils.StringUtils;
+import fr.itinerennes.commons.utils.SearchUtils;
 import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 
@@ -220,7 +220,7 @@ public class MarkerDao implements MarkersColumns {
                 MarkersColumns.LATITUDE };
 
         final String[] selectionArgs = new String[] { "%" + query + "%",
-                "%" + StringUtils.searchLabel(query) + "%" };
+                "%" + SearchUtils.canonicalize(query) + "%" };
 
         final String groupBy = String.format("%s, %s", MarkersColumns.LABEL, MarkersColumns.TYPE);
 
@@ -247,7 +247,7 @@ public class MarkerDao implements MarkersColumns {
         }
 
         final String[] selectionArgs = new String[] { "%" + query + "%",
-                "%" + StringUtils.searchLabel(query) + "%" };
+                "%" + SearchUtils.canonicalize(query) + "%" };
 
         if (getSuggestionsStatement == null) {
 

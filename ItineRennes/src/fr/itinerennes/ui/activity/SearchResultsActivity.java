@@ -25,7 +25,7 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
-import fr.itinerennes.commons.utils.StringUtils;
+import fr.itinerennes.commons.utils.SearchUtils;
 import fr.itinerennes.database.Columns.LocationColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.database.Columns.NominatimColumns;
@@ -319,7 +319,7 @@ public final class SearchResultsActivity extends ItineRennesActivity {
                 handled = true;
             } else if (R.id.search_result_marker_label == view.getId()
                     || R.id.search_result_nominatim_label == view.getId()) {
-                final String html = StringUtils.highlight(cursor.getString(columnIndex), query,
+                final String html = SearchUtils.highlight(cursor.getString(columnIndex), query,
                         "<b>", "</b>");
                 ((TextView) view).setText(Html.fromHtml(html));
                 handled = true;
