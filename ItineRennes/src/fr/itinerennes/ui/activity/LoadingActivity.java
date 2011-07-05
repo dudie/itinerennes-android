@@ -416,14 +416,4 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
 
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
-     */
-    @Override
-    void onCustomNewIntent(final Intent intent) {
-
-    }
-
 }

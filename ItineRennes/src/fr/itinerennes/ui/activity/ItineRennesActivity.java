@@ -66,7 +66,7 @@ public abstract class ItineRennesActivity extends Activity {
      * @see android.app.Activity#onNewIntent(android.content.Intent)
      */
     @Override
-    protected void onNewIntent(final Intent intent) {
+    protected final void onNewIntent(final Intent intent) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.start");
@@ -122,7 +122,7 @@ public abstract class ItineRennesActivity extends Activity {
      * 
      * @return intent to open Itinerennes market page
      */
-    protected Intent buildMarkerIntent() {
+    protected final Intent buildMarkerIntent() {
 
         final Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://details?id=" + getPackageName()));
@@ -136,5 +136,7 @@ public abstract class ItineRennesActivity extends Activity {
      * @param intent
      *            The new intent that was started for the activity.
      */
-    abstract void onCustomNewIntent(final Intent intent);
+    protected void onCustomNewIntent(final Intent intent) {
+
+    }
 }

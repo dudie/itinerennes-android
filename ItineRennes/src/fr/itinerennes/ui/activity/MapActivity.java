@@ -490,7 +490,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
      * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
      */
     @Override
-    void onCustomNewIntent(final Intent intent) {
+    protected void onCustomNewIntent(final Intent intent) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCustomNewIntent.start");
