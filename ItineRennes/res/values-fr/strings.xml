@@ -5,7 +5,6 @@
     <string name="select_layer">Sélectionnez des claques</string>
     <string name="loading">Chargement</string>
     <string name="location_service_disabled">Le service de localisation n\'est pas activé. Activez le dans les paramètres du système.</string>
-    <string name="ok">Ok</string>
     <string name="continuer">Continuer</string>
     <string name="no_departure">Aucun départ ce jour.</string>
     <string name="activity_title_bus_stop">Arrêt de bus</string>

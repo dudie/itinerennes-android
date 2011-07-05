@@ -29,6 +29,9 @@ public final class ItineRennesConstants {
     /** Nominatim search bounding box offset. */
     public static final int CONFIG_NOMINATIM_SEARCH_OFFSET = 150000;
 
+    /** URL to get XML file describing Itinerennes versions. */
+    public static final String ITINERENNES_VERSION_URL = "http://api.itinerennes.fr/android/version.xml";
+
     /**
      * Minimum zoom level displaying detailed overlay items. On higher zoom, a simple circle will be
      * displayed.

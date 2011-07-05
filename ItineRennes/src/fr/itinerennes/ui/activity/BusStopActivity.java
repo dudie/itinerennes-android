@@ -362,27 +362,6 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onNewIntent(android.content.Intent)
-     */
-    @Override
-    protected final void onNewIntent(final Intent intent) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onNewIntent.start");
-        }
-
-        // retrieve intent parameters
-        stopId = intent.getStringExtra(INTENT_STOP_ID);
-        stopName = intent.getStringExtra(INTENT_STOP_NAME);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onNewIntent.end");
-        }
-    }
-
-    /**
      * Triggered when user clicks on the map button in the toolbar.
      * 
      * @param target
@@ -435,6 +414,28 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
 
         };
         task.execute();
+
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
+     */
+    @Override
+    void onCustomNewIntent(final Intent intent) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onCustomNewIntent.start");
+        }
+
+        // retrieve intent parameters
+        stopId = intent.getStringExtra(INTENT_STOP_ID);
+        stopName = intent.getStringExtra(INTENT_STOP_NAME);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onCustomNewIntent.end");
+        }
 
     }
 }

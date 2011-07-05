@@ -54,6 +54,7 @@ public class MarkerOverlay extends LazyOverlay {
     /** This property references the task currently loading the current displayed bounding box. */
     private AsyncTask<Void, Void, LinkedHashMap<String, MarkerOverlayItem>> refreshTask = null;
 
+    /** Simple cache of marker drawable to avoid inflating it each time. */
     private final HashMap<String, Drawable> markerIcons = new HashMap<String, Drawable>();
 
     /**
