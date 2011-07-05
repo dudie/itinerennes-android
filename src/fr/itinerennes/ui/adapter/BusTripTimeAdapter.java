@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
@@ -48,6 +49,8 @@ public class BusTripTimeAdapter extends BaseAdapter {
      *            the stop id where to set a marker
      * @param arrivalAndDepartures
      *            the list of arrival times and departure times of the bus for each stop of the trip
+     * @param routeIsAccessible
+     *            accessibility flag for the route
      */
     public BusTripTimeAdapter(final ItineRennesActivity context, final String initialStopId,
             final List<TripStopTime> arrivalAndDepartures, final boolean routeIsAccessible) {
@@ -119,8 +122,7 @@ public class BusTripTimeAdapter extends BaseAdapter {
         // If the current view is the view on which a marker is needed
         // sets a blue drawable on the left
         if (initialStopId.equals(stopTime.getStop().getId())) {
-            ((ImageView) view.findViewById(R.trip_time.listview_separator))
-                    .setImageResource(R.drawable.misc_listview_separator);
+            ((LinearLayout) view).setBackgroundResource(R.drawable.bg_li_emphasis);
         }
 
         // if the current view represents a stop where the bus is already passed

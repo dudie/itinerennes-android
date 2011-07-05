@@ -33,7 +33,7 @@ import fr.itinerennes.ui.adapter.BusTripTimeAdapter;
  * 
  * @author Jérémie Huchet
  */
-public class BusTripActivity extends ItineRennesActivity {
+public final class BusTripActivity extends ItineRennesActivity {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusTripActivity.class);
@@ -128,12 +128,12 @@ public class BusTripActivity extends ItineRennesActivity {
     };
 
     /**
-     * Creates the main screen.
+     * Creates the main screen. {@inheritDoc}
      * 
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
     @Override
-    protected final void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.start");
@@ -156,7 +156,7 @@ public class BusTripActivity extends ItineRennesActivity {
      * @see android.app.Activity#onResume()
      */
     @Override
-    protected final void onResume() {
+    protected void onResume() {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onResume.start");
@@ -210,7 +210,7 @@ public class BusTripActivity extends ItineRennesActivity {
      * @see android.app.Activity#onCreateDialog(int)
      */
     @Override
-    protected final Dialog onCreateDialog(final int id) {
+    protected Dialog onCreateDialog(final int id) {
 
         Dialog d = null;
         switch (id) {
@@ -329,7 +329,7 @@ public class BusTripActivity extends ItineRennesActivity {
      * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
      */
     @Override
-    void onCustomNewIntent(final Intent intent) {
+    protected void onCustomNewIntent(final Intent intent) {
 
         setIntent(intent);
     }

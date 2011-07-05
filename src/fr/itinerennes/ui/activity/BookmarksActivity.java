@@ -124,14 +124,4 @@ public class BookmarksActivity extends ItineRennesActivity {
         }
         return location;
     }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
-     */
-    @Override
-    void onCustomNewIntent(final Intent intent) {
-
-    }
 }
