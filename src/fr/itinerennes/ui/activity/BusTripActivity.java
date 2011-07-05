@@ -128,18 +128,6 @@ public class BusTripActivity extends ItineRennesActivity {
     };
 
     /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onNewIntent(android.content.Intent)
-     */
-    @Override
-    protected final void onNewIntent(final Intent intent) {
-
-        super.onNewIntent(intent);
-        setIntent(intent);
-    }
-
-    /**
      * Creates the main screen.
      * 
      * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -333,5 +321,16 @@ public class BusTripActivity extends ItineRennesActivity {
                 handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_ERROR));
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
+     */
+    @Override
+    void onCustomNewIntent(final Intent intent) {
+
+        setIntent(intent);
     }
 }

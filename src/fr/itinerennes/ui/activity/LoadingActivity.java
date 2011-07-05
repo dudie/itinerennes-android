@@ -3,21 +3,35 @@ package fr.itinerennes.ui.activity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.util.List;
 
+import org.acra.ErrorReporter;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.database.DatabaseUtils.InsertHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
+import fr.itinerennes.model.VersionCheck;
+import fr.itinerennes.utils.VersionUtils;
+import fr.itinerennes.utils.xml.XmlVersionParser;
 
 /**
  * @author Jérémie Huchet
@@ -64,6 +78,7 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
                 progressBar.setProgress(progressBar.getProgress() + (Integer) msg.obj);
                 break;
             case MSG_PRELOAD_SUCCESS:
+                checkVersion();
                 final Intent i = new Intent(getBaseContext(), MapActivity.class);
                 startActivity(i);
                 finish();
@@ -212,13 +227,14 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
         }
 
         /**
-         * Insert markers from a buffered reader into a database.
+         * Insert accessibility informations from a buffered reader into a database.
          * 
          * @param db
-         *            database in which insert markers
+         *            database in which insert accessibility
          * @param readerAccessibility
-         *            buffered reader on marker csv file
+         *            buffered reader on accessibility csv file
          * @throws IOException
+         *             if the accessibility file can not be read
          */
         private void insertAccessibility(final SQLiteDatabase db,
                 final BufferedReader readerAccessibility) throws IOException {
@@ -258,10 +274,10 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
          * @param readerMarkers
          *            buffered reader on marker csv file
          * @throws IOException
-         * @throws NumberFormatException
+         *             if the marker file can not be read
          */
         private void insertMarkers(final SQLiteDatabase db, final BufferedReader readerMarkers)
-                throws NumberFormatException, IOException {
+                throws IOException {
 
             if (!db.inTransaction()) {
                 db.beginTransaction();
@@ -302,4 +318,112 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
 
         }
     }
+
+    /**
+     * Fetches XML describing Itinerennes versions sends an intent to the current top activity in
+     * order to display an error message if necessary.
+     */
+    protected final void checkVersion() {
+
+        new AsyncTask<Void, Void, Intent>() {
+
+            @Override
+            protected Intent doInBackground(final Void... params) {
+
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("start checking version");
+                }
+
+                Intent i = null;
+                final HttpClient httpClient = getApplicationContext().getHttpClient();
+                final HttpGet request = new HttpGet();
+                try {
+                    request.setURI(new URI(ItineRennesConstants.ITINERENNES_VERSION_URL));
+                    final HttpResponse response = httpClient.execute(request);
+                    if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
+                        final XmlVersionParser parser = new XmlVersionParser();
+
+                        final VersionCheck versionCheck = parser.parse(response.getEntity()
+                                .getContent());
+
+                        final String currentVersion = getString(R.string.version_number);
+
+                        final int comparisonMinRequired = VersionUtils.compare(currentVersion,
+                                versionCheck.getMinRequired());
+                        final int comparisonLatest = VersionUtils.compare(currentVersion,
+                                versionCheck.getLatest());
+
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug(String
+                                    .format("Current version : %s - Latest version : %s - Minimum required version : %s",
+                                            currentVersion, versionCheck.getLatest(),
+                                            versionCheck.getMinRequired()));
+                        }
+
+                        if (comparisonMinRequired != 0 || comparisonLatest != 0) {
+
+                            i = new Intent();
+                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                            if (comparisonMinRequired < 0) {
+                                // minimum version required is greater than the current version
+
+                                i.setAction(ItineRennesActivity.INTENT_MANDATORY_UPGRADE);
+                            } else if (comparisonLatest < 0) {
+                                // the latest available version is greater than the current version
+                                i.setAction(ItineRennesActivity.INTENT_RECOMMENDED_UPGRADE);
+                            }
+                        }
+
+                    }
+
+                } catch (final Exception e) {
+                    ErrorReporter.getInstance().handleSilentException(e);
+                }
+
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("end checking version.");
+                }
+
+                return i;
+            }
+
+            @Override
+            protected void onPostExecute(final Intent intent) {
+
+                if (intent != null) {
+
+                    // get a list of running processes and iterate through them
+                    final ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+
+                    // get the info from the currently running task
+                    final List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+
+                    final ComponentName componentInfo = taskInfo.get(0).topActivity;
+
+                    try {
+                        intent.setClass(getApplication(),
+                                Class.forName(componentInfo.getClassName()));
+                        startActivity(intent);
+                    } catch (final ClassNotFoundException e) {
+                        ErrorReporter.getInstance().handleSilentException(e);
+                    }
+
+                }
+            }
+        }.execute();
+
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
+     */
+    @Override
+    void onCustomNewIntent(final Intent intent) {
+
+    }
+
 }

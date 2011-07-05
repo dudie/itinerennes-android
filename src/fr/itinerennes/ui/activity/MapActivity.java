@@ -207,65 +207,6 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     /**
      * {@inheritDoc}
      * 
-     * @see android.app.Activity#onNewIntent(android.content.Intent)
-     */
-    @Override
-    protected final void onNewIntent(final Intent intent) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onNewIntent.start");
-        }
-
-        myLocation.disableFollowLocation();
-
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            // forward to SearchResultsActivity
-            intent.setClass(getApplicationContext(), SearchResultsActivity.class);
-            startActivity(intent);
-        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            // center on the latitude and longitude sent in the intent
-
-            if (intent.hasExtra(INTENT_SET_MAP_LAT) && intent.hasExtra(INTENT_SET_MAP_LON)) {
-                // center coordinates are send in the intent
-                final int newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
-                final int newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter()
-                        .getLatitudeE6());
-                final int newLon = intent.getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter()
-                        .getLongitudeE6());
-
-                final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
-                        .edit();
-                saveMapCenterInPreferences(edit, newLat, newLon, newZoom);
-                edit.commit();
-
-            }
-
-        } else if (INTENT_CENTER_ON_MARKER.equals(intent.getAction())) {
-            // center on a marker sent in the intent (or a group of center based on the label of the
-            // given marker)
-            // this intent can be sent by suggestion click or an item from SearchResultsActivity
-
-            myLocation.disableFollowLocation();
-
-            String id = null;
-            if (intent.hasExtra(SearchManager.USER_QUERY)) {
-                id = intent.getData().getLastPathSegment();
-            } else if (intent.hasExtra(INTENT_MARKER_UNIQUE_ID)) {
-                id = intent.getStringExtra(INTENT_MARKER_UNIQUE_ID);
-            }
-
-            if (id != null) {
-                onSearchResultClick(id, intent);
-            }
-        }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onNewIntent.end");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
      * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
      */
     @Override
@@ -393,7 +334,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                             results.put(options[which], isChecked);
                         }
                     });
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(final DialogInterface dialog, final int which) {
@@ -541,6 +482,67 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
         /** "About" dialog box. */
         private static final int ABOUT = 1;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
+     */
+    @Override
+    void onCustomNewIntent(final Intent intent) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onCustomNewIntent.start");
+        }
+
+        myLocation.disableFollowLocation();
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            // forward to SearchResultsActivity
+            intent.setClass(getApplicationContext(), SearchResultsActivity.class);
+            startActivity(intent);
+        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            // center on the latitude and longitude sent in the intent
+
+            if (intent.hasExtra(INTENT_SET_MAP_LAT) && intent.hasExtra(INTENT_SET_MAP_LON)) {
+                // center coordinates are send in the intent
+                final int newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
+                final int newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter()
+                        .getLatitudeE6());
+                final int newLon = intent.getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter()
+                        .getLongitudeE6());
+
+                final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
+                        .edit();
+                saveMapCenterInPreferences(edit, newLat, newLon, newZoom);
+                edit.commit();
+
+            }
+
+        } else if (INTENT_CENTER_ON_MARKER.equals(intent.getAction())) {
+            // center on a marker sent in the intent (or a group of center based on the label of the
+            // given marker)
+            // this intent can be sent by suggestion click or an item from SearchResultsActivity
+
+            myLocation.disableFollowLocation();
+
+            String id = null;
+            if (intent.hasExtra(SearchManager.USER_QUERY)) {
+                id = intent.getData().getLastPathSegment();
+            } else if (intent.hasExtra(INTENT_MARKER_UNIQUE_ID)) {
+                id = intent.getStringExtra(INTENT_MARKER_UNIQUE_ID);
+            }
+
+            if (id != null) {
+                onSearchResultClick(id, intent);
+            }
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onCustomNewIntent.end");
+        }
+
     }
 
 }
