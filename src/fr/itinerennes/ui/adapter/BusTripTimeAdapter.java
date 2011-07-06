@@ -119,18 +119,27 @@ public class BusTripTimeAdapter extends BaseAdapter {
                 .getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS,
                 DateUtils.FORMAT_ABBREV_RELATIVE));
 
-        // If the current view is the view on which a marker is needed
-        // sets a blue drawable on the left
-        if (initialStopId.equals(stopTime.getStop().getId())) {
-            ((LinearLayout) view).setBackgroundResource(R.drawable.bg_li_emphasis);
-        }
+        final boolean isInPast = stopTime.getDepartureTime().before(new Date());
+        final boolean hasToBeHighlighted = initialStopId.equals(stopTime.getStop().getId());
 
         // if the current view represents a stop where the bus is already passed
         // sets the font color to grey
-        if (stopTime.getDepartureTime().before(new Date())) {
-            stopName.setTextAppearance(context, R.style.text_grey_bold);
-            departureTime.setTextAppearance(context, R.style.text_grey_bold);
-            relativeTime.setTextAppearance(context, R.style.text_grey);
+        if (isInPast) {
+            if (!hasToBeHighlighted) {
+                stopName.setTextAppearance(context, R.style.text_grey_20_bold);
+                departureTime.setTextAppearance(context, R.style.text_grey_20_bold);
+                relativeTime.setTextAppearance(context, R.style.text_grey_20);
+            } else {
+                stopName.setTextAppearance(context, R.style.text_grey_40_bold);
+                departureTime.setTextAppearance(context, R.style.text_grey_40_bold);
+                relativeTime.setTextAppearance(context, R.style.text_grey_40);
+            }
+        }
+
+        // If the current view is the view on which a marker is needed
+        // sets a blue drawable on the left
+        if (hasToBeHighlighted) {
+            ((LinearLayout) view).setBackgroundResource(R.drawable.bgx_li_emphasis);
         }
 
         if (routeIsAccessible) {

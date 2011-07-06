@@ -42,7 +42,7 @@ public final class BusTripActivity extends ItineRennesActivity {
      * Intent parameter name for the stop identifier where to scroll in the list of displayed trip
      * departures.
      */
-    public static final String INTENT_STOP_ID = String.format("%s.stopId",
+    public static final String INTENT_FROM_STOP_ID = String.format("%s.fromStopId",
             BusTripActivity.class.getName());
 
     /** Intent parameter name for the route headsign. */
@@ -192,6 +192,7 @@ public final class BusTripActivity extends ItineRennesActivity {
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.putExtra(BusStopActivity.INTENT_STOP_ID, stopTime.getStop().getId());
                 i.putExtra(BusStopActivity.INTENT_STOP_NAME, stopTime.getStop().getName());
+                i.putExtra(BusStopActivity.INTENT_FROM_TRIP_ID, tripId);
                 view.getContext().startActivity(i);
             }
         });
@@ -264,7 +265,7 @@ public final class BusTripActivity extends ItineRennesActivity {
      */
     private void onReceiveTripSchedule(final TripSchedule schedule) {
 
-        final String stopId = getIntent().getExtras().getString(INTENT_STOP_ID);
+        final String stopId = getIntent().getExtras().getString(INTENT_FROM_STOP_ID);
 
         final BusTripTimeAdapter routeStopsAdapter = new BusTripTimeAdapter(this, stopId,
                 schedule.getStopTimes(), isAccessible);
