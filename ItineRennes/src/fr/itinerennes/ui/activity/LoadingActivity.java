@@ -362,9 +362,6 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
                             i = new Intent();
                             i.setAction(NewVersionActivity.INTENT_UPGRADE);
 
-                            LOGGER.debug("comparisonMinRequired=" + comparisonMinRequired);
-                            LOGGER.debug("comparisonLatest=" + comparisonLatest);
-
                             if (comparisonMinRequired < 0) {
                                 // minimum version required is greater than the current version
                                 i.putExtra(NewVersionActivity.INTENT_EXTRA_MANDATORY_UPGRADE, true);
