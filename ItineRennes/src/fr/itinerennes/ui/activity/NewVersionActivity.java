@@ -15,7 +15,7 @@ import fr.itinerennes.R;
 /**
  * @author orgoz
  */
-public class NewVersionActivity extends Activity {
+public final class NewVersionActivity extends Activity {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(NewVersionActivity.class);
@@ -26,7 +26,6 @@ public class NewVersionActivity extends Activity {
 
     /** Intent parameter name to indication if the upgrade is mandatory or not. */
     public static final String INTENT_EXTRA_MANDATORY_UPGRADE = "MANDATORY_UPGRADE";
-    
 
     /**
      * {@inheritDoc}
@@ -38,6 +37,7 @@ public class NewVersionActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
+        // disable animation
         getWindow().setWindowAnimations(0);
 
         final Intent intent = getIntent();
@@ -88,7 +88,7 @@ public class NewVersionActivity extends Activity {
      * 
      * @return intent to open Itinerennes market page
      */
-    protected Intent buildMarketIntent() {
+    private Intent buildMarketIntent() {
 
         final Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://details?id=" + getPackageName()));
