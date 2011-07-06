@@ -70,6 +70,9 @@ public class MarkerDao implements MarkersColumns {
 
         if (types.size() == 0) {
             // no visible marker type is selected, we return nothing at all
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("No layer visible, no marker will be displayed.");
+            }
             return null;
         }
 
