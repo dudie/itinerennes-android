@@ -94,7 +94,15 @@ public final class NewVersionActivity extends Activity {
 
                         }
                     });
+            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
+                @Override
+                public void onCancel(final DialogInterface dialog) {
+
+                    finish();
+
+                }
+            });
             builder.create().show();
         }
     }
