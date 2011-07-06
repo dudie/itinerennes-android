@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -258,6 +259,7 @@ public final class BusStopActivity extends ItineRennesActivity implements Runnab
                     final Intent i = new Intent(getBaseContext(), BusTripActivity.class);
                     final ScheduleStopTime departure = (ScheduleStopTime) parent.getAdapter()
                             .getItem(position);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra(BusTripActivity.INTENT_FROM_STOP_ID, stopId);
                     i.putExtra(BusTripActivity.INTENT_ROUTE_HEADSIGN, departure.getSimpleHeadsign());
                     i.putExtra(BusTripActivity.INTENT_ROUTE_SHORT_NAME, departure.getRoute()
@@ -379,6 +381,7 @@ public final class BusStopActivity extends ItineRennesActivity implements Runnab
 
             final Intent i = new Intent(getApplicationContext(), MapActivity.class);
             i.setAction(Intent.ACTION_VIEW);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
             i.putExtra(MapActivity.INTENT_SET_MAP_LON, lon);
             i.putExtra(MapActivity.INTENT_SET_MAP_LAT, lat);
