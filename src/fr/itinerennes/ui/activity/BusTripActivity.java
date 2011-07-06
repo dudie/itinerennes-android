@@ -12,6 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -189,7 +192,6 @@ public final class BusTripActivity extends ItineRennesActivity {
 
                 final TripStopTime stopTime = (TripStopTime) parent.getItemAtPosition(position);
                 final Intent i = new Intent(view.getContext(), BusStopActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.putExtra(BusStopActivity.INTENT_STOP_ID, stopTime.getStop().getId());
                 i.putExtra(BusStopActivity.INTENT_STOP_NAME, stopTime.getStop().getName());
                 i.putExtra(BusStopActivity.INTENT_FROM_TRIP_ID, tripId);
@@ -333,5 +335,41 @@ public final class BusTripActivity extends ItineRennesActivity {
     protected void onNewIntent(final Intent intent) {
 
         setIntent(intent);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+     */
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.back_to_map_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+     */
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.menu_back_to_map:
+
+            final Intent i = new Intent(getApplicationContext(), MapActivity.class);
+            i.setAction(Intent.ACTION_VIEW);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 }
