@@ -77,6 +77,9 @@
                 android:resource="@xml/searchable"/>
         </activity>
         
+        <activity android:name=".ui.activity.NewVersionActivity"
+        	android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        
         <provider android:authorities="fr.itinerennes.provider.searchMarkersProvider" 
             android:name=".provider.SearchMarkersProvider">
         </provider>

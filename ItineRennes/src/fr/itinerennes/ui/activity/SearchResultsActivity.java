@@ -165,16 +165,15 @@ public final class SearchResultsActivity extends ItineRennesActivity {
     }
 
     /**
-     * Refreshes the search results list view.
-     * <p>
+     * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
+     * @see android.app.Activity#onNewIntent(android.content.Intent)
      */
     @Override
-    protected void onCustomNewIntent(final Intent intent) {
+    protected void onNewIntent(final Intent intent) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCustomNewIntent.start");
+            LOGGER.debug("onNewIntent.start");
         }
 
         final String query = intent.getStringExtra(SearchManager.QUERY);
@@ -270,7 +269,7 @@ public final class SearchResultsActivity extends ItineRennesActivity {
         nominatimSearchTask.execute((Void) null);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCustomNewIntent.end");
+            LOGGER.debug("onNewIntent.end");
         }
     }
 

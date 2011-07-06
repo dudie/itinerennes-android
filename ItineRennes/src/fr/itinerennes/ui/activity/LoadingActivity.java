@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
-import java.util.List;
 
-import org.acra.ErrorReporter;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -14,8 +12,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
-import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.database.DatabaseUtils.InsertHelper;
 import android.database.sqlite.SQLiteDatabase;
@@ -364,22 +360,21 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
                         if (comparisonMinRequired != 0 || comparisonLatest != 0) {
 
                             i = new Intent();
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.setAction(NewVersionActivity.INTENT_UPGRADE);
 
                             if (comparisonMinRequired < 0) {
                                 // minimum version required is greater than the current version
+                                i.putExtra(NewVersionActivity.INTENT_EXTRA_MANDATORY_UPGRADE, true);
 
-                                i.setAction(ItineRennesActivity.INTENT_MANDATORY_UPGRADE);
                             } else if (comparisonLatest < 0) {
                                 // the latest available version is greater than the current version
-                                i.setAction(ItineRennesActivity.INTENT_RECOMMENDED_UPGRADE);
+                                i.putExtra(NewVersionActivity.INTENT_EXTRA_MANDATORY_UPGRADE, false);
                             }
                         }
 
                     }
-
                 } catch (final Exception e) {
-                    ErrorReporter.getInstance().handleSilentException(e);
+                    LOGGER.warn("Can not get version informations.");
                 }
 
                 if (LOGGER.isDebugEnabled()) {
@@ -394,21 +389,7 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
 
                 if (intent != null) {
 
-                    // get a list of running processes and iterate through them
-                    final ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-
-                    // get the info from the currently running task
-                    final List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-
-                    final ComponentName componentInfo = taskInfo.get(0).topActivity;
-
-                    try {
-                        intent.setClass(getApplication(),
-                                Class.forName(componentInfo.getClassName()));
-                        startActivity(intent);
-                    } catch (final ClassNotFoundException e) {
-                        ErrorReporter.getInstance().handleSilentException(e);
-                    }
+                    sendBroadcast(intent);
 
                 }
             }

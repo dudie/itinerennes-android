@@ -425,13 +425,13 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
+     * @see android.app.Activity#onNewIntent(android.content.Intent)
      */
     @Override
-    protected void onCustomNewIntent(final Intent intent) {
+    protected void onNewIntent(final Intent intent) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCustomNewIntent.start");
+            LOGGER.debug("onNewIntent.start");
         }
 
         setIntent(intent);
@@ -441,7 +441,7 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
         stopName = intent.getStringExtra(INTENT_STOP_NAME);
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCustomNewIntent.end");
+            LOGGER.debug("onNewIntent.end");
         }
 
     }
