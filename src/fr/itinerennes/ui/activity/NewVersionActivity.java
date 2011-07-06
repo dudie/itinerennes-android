@@ -69,6 +69,8 @@ public final class NewVersionActivity extends Activity {
 
                         }
                     }).create().show();
+            builder.setCancelable(false);
+
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.error_recommended_upgrade);
@@ -92,7 +94,7 @@ public final class NewVersionActivity extends Activity {
 
                         }
                     });
-            builder.setCancelable(false);
+
             builder.create().show();
         }
     }
