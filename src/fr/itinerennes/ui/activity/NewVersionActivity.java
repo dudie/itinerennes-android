@@ -59,6 +59,7 @@ public final class NewVersionActivity extends Activity {
         if (intent.getBooleanExtra(INTENT_EXTRA_MANDATORY_UPGRADE, false)) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.error_mandatory_upgrade);
+            builder.setCancelable(false);
             builder.setPositiveButton(getString(android.R.string.ok),
                     new DialogInterface.OnClickListener() {
 
@@ -69,7 +70,6 @@ public final class NewVersionActivity extends Activity {
 
                         }
                     }).create().show();
-            builder.setCancelable(false);
 
         } else {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
