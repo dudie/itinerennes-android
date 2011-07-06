@@ -13,7 +13,9 @@ import android.os.Bundle;
 import fr.itinerennes.R;
 
 /**
- * @author orgoz
+ * Transparent activity showing a dialog in case of new version available.
+ * 
+ * @author Olivier Boudet
  */
 public final class NewVersionActivity extends Activity {
 
@@ -36,6 +38,18 @@ public final class NewVersionActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onResume()
+     */
+    @Override
+    protected void onResume() {
+
+        super.onResume();
 
         // disable animation
         getWindow().setWindowAnimations(0);
@@ -74,13 +88,13 @@ public final class NewVersionActivity extends Activity {
                         public void onClick(final DialogInterface dialog, final int which) {
 
                             dialog.cancel();
+                            finish();
 
                         }
                     });
             builder.setCancelable(false);
             builder.create().show();
         }
-
     }
 
     /**
