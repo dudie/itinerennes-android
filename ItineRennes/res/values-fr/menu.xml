@@ -4,4 +4,5 @@
     <string name="menu_bookmarks">Favoris</string>
     <string name="menu_layers">Calques</string>
     <string name="menu_search">Rechercher</string>
+    <string name="menu_back_to_map">Retour à la carte</string>
 </resources>

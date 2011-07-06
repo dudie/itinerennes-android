@@ -232,11 +232,6 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     }
 
     /**
-     * Creates the option menu with the following items.
-     * <ul>
-     * <li>about</li>
-     * </ul>
-     * <p>
      * {@inheritDoc}
      * 
      * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
@@ -15,10 +14,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -47,7 +48,7 @@ import fr.itinerennes.ui.views.event.ToggleStarListener;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class BusStopActivity extends ItineRennesActivity implements Runnable {
+public final class BusStopActivity extends ItineRennesActivity implements Runnable {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusStopActivity.class);
@@ -72,9 +73,6 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
 
     /** Message to send to handler to increment the progress dialog. */
     private static final int MESSAGE_INCREMENT_PROGRESS = 3;
-
-    /** Message sent to handler to display the loading dialog when the station is being retrieved. */
-    private static final int MESSAGE_DISPLAY_DIALOG_LOAD_STATION = 4;
 
     /** Id for the progress dialog. */
     private static final int PROGRESS_DIALOG = 0;
@@ -136,7 +134,7 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
     @Override
-    protected final void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.start");
@@ -168,9 +166,6 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
                 case MESSAGE_INCREMENT_PROGRESS:
                     progressBar.incrementProgressBy(msg.arg1 > 0 ? msg.arg1 : 1);
                     break;
-                case MESSAGE_DISPLAY_DIALOG_LOAD_STATION:
-                    showDialog(DIALOG_LOAD_STATION);
-                    break;
                 default:
                     break;
                 }
@@ -190,7 +185,7 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
      * @see android.app.Activity#onResume()
      */
     @Override
-    protected final void onResume() {
+    protected void onResume() {
 
         super.onResume();
 
@@ -263,7 +258,6 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
                     final Intent i = new Intent(getBaseContext(), BusTripActivity.class);
                     final ScheduleStopTime departure = (ScheduleStopTime) parent.getAdapter()
                             .getItem(position);
-                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.putExtra(BusTripActivity.INTENT_FROM_STOP_ID, stopId);
                     i.putExtra(BusTripActivity.INTENT_ROUTE_HEADSIGN, departure.getSimpleHeadsign());
                     i.putExtra(BusTripActivity.INTENT_ROUTE_SHORT_NAME, departure.getRoute()
@@ -278,7 +272,7 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
     }
 
     @Override
-    public final void run() {
+    public void run() {
 
         int returnCode = MESSAGE_SUCCESS;
 
@@ -307,7 +301,7 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
     }
 
     @Override
-    protected final Dialog onCreateDialog(final int id) {
+    protected Dialog onCreateDialog(final int id) {
 
         Dialog d = null;
         switch (id) {
@@ -354,7 +348,7 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
     }
 
     @Override
-    protected final void onPrepareDialog(final int id, final Dialog dialog) {
+    protected void onPrepareDialog(final int id, final Dialog dialog) {
 
         switch (id) {
         case PROGRESS_DIALOG:
@@ -374,52 +368,28 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
      */
     public final void onMapButtonClick(final View target) {
 
-        handler.sendMessage(handler.obtainMessage(MESSAGE_DISPLAY_DIALOG_LOAD_STATION));
+        final Cursor c = getApplicationContext().getMarkerDao().getMarker(stopId,
+                TypeConstants.TYPE_BUS);
+        if (c != null && c.moveToFirst()) {
 
-        final AsyncTask<Void, Void, GeoPoint> task = new AsyncTask<Void, Void, GeoPoint>() {
+            final int lat = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE));
+            final int lon = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE));
 
-            @Override
-            protected GeoPoint doInBackground(final Void... params) {
+            c.close();
 
-                final Cursor c = getApplicationContext().getMarkerDao().getMarker(stopId,
-                        TypeConstants.TYPE_BUS);
-                GeoPoint point = null;
-                if (c != null && c.moveToFirst()) {
+            final Intent i = new Intent(getApplicationContext(), MapActivity.class);
+            i.setAction(Intent.ACTION_VIEW);
+            i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
+            i.putExtra(MapActivity.INTENT_SET_MAP_LON, lon);
+            i.putExtra(MapActivity.INTENT_SET_MAP_LAT, lat);
+            startActivity(i);
 
-                    point = new GeoPoint(
-                            c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE)), c.getInt(c
-                                    .getColumnIndex(Columns.MarkersColumns.LONGITUDE)));
-
-                    c.close();
-                }
-
-                return point;
-            }
-
-            @Override
-            protected void onPostExecute(final GeoPoint point) {
-
-                if (point == null) {
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.error_loading_bus_station_position, stopName),
-                            TOAST_DURATION);
-                } else {
-                    final Intent i = new Intent(getApplicationContext(), MapActivity.class);
-                    i.setAction(Intent.ACTION_VIEW);
-                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
-                    i.putExtra(MapActivity.INTENT_SET_MAP_LON, point.getLongitudeE6());
-                    i.putExtra(MapActivity.INTENT_SET_MAP_LAT, point.getLatitudeE6());
-                    startActivity(i);
-
-                }
-
-                dismissDialogIfDisplayed(DIALOG_LOAD_STATION);
-            }
-
-        };
-        task.execute();
-
+        } else {
+            // TJHU gestion erreur qui ne doit pas arriver dans un cas normal
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.error_loading_bus_station_position, stopName),
+                    TOAST_DURATION);
+        }
     }
 
     /**
@@ -444,5 +414,41 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
             LOGGER.debug("onNewIntent.end");
         }
 
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+     */
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.back_to_map_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+     */
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.menu_back_to_map:
+
+            final Intent i = new Intent(getApplicationContext(), MapActivity.class);
+            i.setAction(Intent.ACTION_VIEW);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

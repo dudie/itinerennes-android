@@ -4,4 +4,5 @@
     <string name="menu_bookmarks">Bookmarks</string>
     <string name="menu_layers">Layers</string>
     <string name="menu_search">Search</string>
+    <string name="menu_back_to_map">Back to main map</string>
 </resources>
