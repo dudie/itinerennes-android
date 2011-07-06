@@ -327,10 +327,10 @@ public final class BusTripActivity extends ItineRennesActivity {
     /**
      * {@inheritDoc}
      * 
-     * @see fr.itinerennes.ui.activity.ItineRennesActivity#onCustomNewIntent(android.content.Intent)
+     * @see android.app.Activity#onNewIntent(android.content.Intent)
      */
     @Override
-    protected void onCustomNewIntent(final Intent intent) {
+    protected void onNewIntent(final Intent intent) {
 
         setIntent(intent);
     }
