@@ -56,6 +56,10 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
     public static final String INTENT_STOP_ID = String.format("%s.stopId",
             BusStopActivity.class.getName());
 
+    /** Intent parameter name for the trip identifier where to scroll in the schedule list. */
+    public static final String INTENT_FROM_TRIP_ID = String.format("%s.fromTripId",
+            BusTripActivity.class.getName());
+
     /** Intent parameter name for the station name. */
     public static final String INTENT_STOP_NAME = String.format("%s.stopName",
             BusStopActivity.class.getName());
@@ -242,13 +246,14 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
             }
 
             /* Displaying departures dates. */
-
+            // get, if available, the tripId of the previous BusTripActivity displayed
+            final String tripId = getIntent().getExtras().getString(INTENT_FROM_TRIP_ID);
             final ListView listTimes = (ListView) findViewById(R.station.list_bus);
             listTimes.setEmptyView(findViewById(R.station.empty));
-            final BusStopTimeAdapter adapter = new BusStopTimeAdapter(this, schedule, routesIcon,
+            final BusStopTimeAdapter adapter = new BusStopTimeAdapter(this, schedule, tripId,
                     isAccessible);
             listTimes.setAdapter(adapter);
-            listTimes.setSelectionFromTop(adapter.getIndexForNow(), SELECTION_FROM_TOP);
+            listTimes.setSelectionFromTop(adapter.getInitialIndex(), SELECTION_FROM_TOP);
             listTimes.setOnItemClickListener(new OnItemClickListener() {
 
                 @Override
@@ -259,7 +264,7 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
                     final ScheduleStopTime departure = (ScheduleStopTime) parent.getAdapter()
                             .getItem(position);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.putExtra(BusTripActivity.INTENT_STOP_ID, stopId);
+                    i.putExtra(BusTripActivity.INTENT_FROM_STOP_ID, stopId);
                     i.putExtra(BusTripActivity.INTENT_ROUTE_HEADSIGN, departure.getSimpleHeadsign());
                     i.putExtra(BusTripActivity.INTENT_ROUTE_SHORT_NAME, departure.getRoute()
                             .getShortName());
@@ -428,6 +433,8 @@ public class BusStopActivity extends ItineRennesActivity implements Runnable {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCustomNewIntent.start");
         }
+
+        setIntent(intent);
 
         // retrieve intent parameters
         stopId = intent.getStringExtra(INTENT_STOP_ID);

@@ -2,9 +2,7 @@ package fr.itinerennes.ui.adapter;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
-import android.graphics.drawable.Drawable;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,8 @@ import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.business.service.LineIconService;
+import fr.itinerennes.commons.utils.StringUtils;
 import fr.itinerennes.onebusaway.model.ScheduleStopTime;
 import fr.itinerennes.onebusaway.model.StopSchedule;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -27,14 +27,20 @@ public class BusStopTimeAdapter extends BaseAdapter {
     /** The android context. */
     private final ItineRennesActivity context;
 
+    /** The line icon service. */
+    private final LineIconService lineIconService;
+
     /** Stop complete schedule. */
     private final StopSchedule data;
 
-    /** Map containing icons for routes. */
-    private final HashMap<String, Drawable> routesIcons;
-
     /** Global instance of Layout inflater. */
-    private LayoutInflater inflater = null;
+    private final LayoutInflater inflater;
+
+    /**
+     * A trip identifier which must be highlighted in the schedule. May be null if there no trip to
+     * highlight.
+     */
+    private final String tripIdToHighlight;
 
     /**
      * Is the stop accessible ? Determines if the handistar icon should be displayed for accessible
@@ -45,21 +51,23 @@ public class BusStopTimeAdapter extends BaseAdapter {
     /**
      * Constructor.
      * 
-     * @param c
+     * @param context
      *            The android context
      * @param schedule
      *            departures to display in the list
-     * @param routesIcons
-     *            list of routes icons
+     * @param tripIdToHighlight
+     *            a trip id to highlight in the schedule, or null to not highlight any trip
      * @param stopIsAccessible
+     *            true if the stop of the given schedule is accessible
      */
-    public BusStopTimeAdapter(final ItineRennesActivity c, final StopSchedule schedule,
-            final HashMap<String, Drawable> routesIcons, final boolean stopIsAccessible) {
+    public BusStopTimeAdapter(final ItineRennesActivity context, final StopSchedule schedule,
+            final String tripIdToHighlight, final boolean stopIsAccessible) {
 
         this.data = schedule;
-        this.context = c;
-        this.routesIcons = routesIcons;
+        this.context = context;
+        this.lineIconService = context.getApplicationContext().getLineIconService();
         this.inflater = LayoutInflater.from(context);
+        this.tripIdToHighlight = tripIdToHighlight;
         this.stopIsAccessible = stopIsAccessible;
 
     }
@@ -110,8 +118,8 @@ public class BusStopTimeAdapter extends BaseAdapter {
 
         final ImageView departureLineIconeView = (ImageView) busTimeView
                 .findViewById(R.station.bus_departure_line_icon);
-        departureLineIconeView
-                .setImageDrawable(routesIcons.get(stopTime.getRoute().getShortName()));
+        departureLineIconeView.setImageDrawable(lineIconService.getIconOrDefault(context, stopTime
+                .getRoute().getShortName()));
 
         final TextView departureHeadsignView = (TextView) busTimeView
                 .findViewById(R.station.bus_departure_headsign);
@@ -144,20 +152,26 @@ public class BusStopTimeAdapter extends BaseAdapter {
             }
         }
 
-        // TJHU affichage du marqueur pour montrer l'entrée initiale
-        // If the current view is the view on which a marker is needed
-        // sets a blue drawable on the left
-        // if (initialStopId.equals(stopTime.getStop().getId())) {
-        // ((ImageView) view.findViewById(R.trip_time.listview_separator))
-        // .setImageResource(R.drawable.listview_separator);
-        // }
+        final boolean isInPast = stopTime.getDepartureTime().before(new Date());
+        final boolean hasToBeHighlighted = null != tripIdToHighlight
+                && tripIdToHighlight.equals(stopTime.getTripId());
 
         // if the current view represents a stop where the bus is already passed
         // sets the font color to grey
-        if (stopTime.getDepartureTime().before(new Date())) {
-            departureHeadsignView.setTextAppearance(context, R.style.text_grey_bold);
-            departureDateView.setTextAppearance(context, R.style.text_grey);
-            timeBeforeDepartureView.setTextAppearance(context, R.style.text_grey_bold);
+        if (isInPast) {
+            if (!hasToBeHighlighted) {
+                departureHeadsignView.setTextAppearance(context, R.style.text_grey_20_bold);
+                departureDateView.setTextAppearance(context, R.style.text_grey_20);
+                timeBeforeDepartureView.setTextAppearance(context, R.style.text_grey_20_bold);
+            } else {
+                departureHeadsignView.setTextAppearance(context, R.style.text_grey_40_bold);
+                departureDateView.setTextAppearance(context, R.style.text_grey_40);
+                timeBeforeDepartureView.setTextAppearance(context, R.style.text_grey_40_bold);
+            }
+        }
+
+        if (hasToBeHighlighted) {
+            busTimeView.setBackgroundResource(R.drawable.bgx_li_emphasis);
         }
         return busTimeView;
     }
@@ -233,6 +247,33 @@ public class BusStopTimeAdapter extends BaseAdapter {
     public final boolean isEmpty() {
 
         return getCount() == 0;
+    }
+
+    /**
+     * Gets the index of the item on which the list should be scrolled at first display.
+     * 
+     * @return the position of element where the list should be scrolled at first display
+     */
+    public final int getInitialIndex() {
+
+        int index = -1;
+
+        if (StringUtils.isBlank(tripIdToHighlight)) {
+            index = getIndexForNow();
+        } else {
+            final int length = data.getStopTimes().size();
+            for (int i = 0; index == -1 && i < length; i++) {
+                if (data.getStopTimes().get(i).getTripId().equalsIgnoreCase(tripIdToHighlight)) {
+                    index = i;
+                }
+            }
+        }
+
+        if (index == -1) {
+            index = 0;
+        }
+
+        return index;
     }
 
 }

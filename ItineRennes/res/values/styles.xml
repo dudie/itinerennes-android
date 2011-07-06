@@ -9,10 +9,16 @@
     <style name="text_black_bold" parent="text_black">
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="text_grey">
+    <style name="text_grey_20">
         <item name="android:textColor">@color/grey_20</item>
     </style>
-    <style name="text_grey_bold" parent="text_grey">
+    <style name="text_grey_20_bold" parent="text_grey_20">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="text_grey_40">
+        <item name="android:textColor">@color/grey_40</item>
+    </style>
+    <style name="text_grey_40_bold" parent="text_grey_40">
         <item name="android:textStyle">bold</item>
     </style>
     <style name="text_credit">
