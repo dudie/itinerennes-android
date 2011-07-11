@@ -3,7 +3,7 @@
     <string name="app_name_long">ItinéRennes pour Android™</string>
     <string name="rennes_metropole_application">Application \"Rennes Métropole en accès libre\"</string>
     <string name="visit_our_website">Visitez notre page web www.itinerennes.fr</string>
-    <string name="about_keolis">Sources des données : Data Keolis Rennes (18/01/2011)</string>
+    <string name="about_keolis">Sources des données : Data Keolis Rennes (11/07/2011)</string>
     <string name="about_openstreetmap_data">Données géographiques © contributeurs OpenStreetMap, CC-BY-SA</string>
     <string name="about_openstreetmap_logo">© logo OpenStreetMap, CC-BY-SA</string>
     <string name="about_osmdroid">Carte affichée grâce à Osmdroid</string>
