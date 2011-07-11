@@ -1,10 +1,8 @@
-1436
-BUS;1_7fours;47.9595412;-1.637031;Sept Fours;septfours
-BUS;1_7fours1;47.9595613;-1.6369791;Sept Fours;septfours
+1347
 BUS;1_9jrn;48.085728;-1.6040549;Rosa Parks;rosaparks
 BUS;1_aclande1;48.1339709;-1.5418809;Lande;lande
 BUS;1_aclande2;48.134483;-1.541925;Lande;lande
-BUS;1_airlande;48.0754889;-1.7162637;Airlande;airlande
+BUS;1_airlande;48.0754889;-1.7162637;Airlande (futur Morinais);airlandefuturmorinais
 BUS;1_airlib1;48.0673716;-1.7216739;Aire Libre Aéroport;airelibreaeroport
 BUS;1_airlib2;48.0669289;-1.72233;Aire Libre Aéroport;airelibreaéroport
 BUS;1_alma;48.0823346;-1.6778716;Alma;alma
@@ -12,11 +10,11 @@ BUS;1_alma1;48.0813585;-1.6797493;Alma;alma
 BUS;1_alma2;48.0826699;-1.6769192;Alma;alma
 BUS;1_anatfra1;48.1182406;-1.6893851;Anatole France;anatolefrance
 BUS;1_anatfra2;48.1178336;-1.6896451;Anatole France;anatolefrance
-BUS;1_anatfra3;48.1182104;-1.6872015;Anatole France;anatolefrance
-BUS;1_anatfra4;48.1185328;-1.688159;Anatole France;anatolefrance
 BUS;1_anbretf1;48.1559483;-1.5806951;Anne De Bretagne;annedebretagne
 BUS;1_anbretf2;48.1556387;-1.5807759;Anne De Bretagne;annedebretagne
 BUS;1_anjou;48.1228329;-1.7136771;Villejean Anjou;villejeananjou
+BUS;1_apigne1;48.0920852;-1.737365;Etangs D'apigné;etangsdapigne
+BUS;1_apigne2;48.0919831;-1.7378114;Etangs D'apigné;etangsdapigné
 BUS;1_argaun1;48.0893108;-1.6742644;Argonautes;argonautes
 BUS;1_argaun2;48.0903939;-1.6749118;Argonautes;argonautes
 BUS;1_arsenal1;48.1055061;-1.6838804;Cité Judiciaire;citejudiciaire
@@ -28,7 +26,6 @@ BUS;1_auditoi1;48.0416477;-1.702622;Auditoire;auditoire
 BUS;1_auditoi2;48.0415829;-1.702882;Auditoire;auditoire
 BUS;1_avenir1;48.0539838;-1.7837615;Avenir;avenir
 BUS;1_avenir2;48.0540818;-1.783709;Avenir;avenir
-BUS;1_balzac1;48.1161612;-1.6593293;Balzac;balzac
 BUS;1_barbera1;48.0975505;-1.7813333;Barberais;barberais
 BUS;1_barbera2;48.0976365;-1.7814353;Barberais;barberais
 BUS;1_barbes1;48.1127031;-1.6644899;Saint Vincent;saintvincent
@@ -45,29 +42,29 @@ BUS;1_beaumon1;48.101338;-1.6762571;Gare Sud Féval;garesudfeval
 BUS;1_beaumon2;48.1030641;-1.6768271;Gare Sud Féval;garesudféval
 BUS;1_beaunoy1;48.0684525;-1.6657125;Petit Beaulieu;petitbeaulieu
 BUS;1_beaunoy2;48.068619;-1.6659521;Petit Beaulieu;petitbeaulieu
-BUS;1_belair1;48.1140854;-1.6303672;Bel Air;belair
-BUS;1_belair2;48.1140788;-1.628011;Bel Air;belair
+BUS;1_belair1;48.1140854;-1.6303672;Bel Air (futur Champs Péans);belairfuturchampspeans
+BUS;1_belair2;48.1140788;-1.628011;Bel Air (futur Champs Péans);belairfuturchampspéans
 BUS;1_belaive1;48.0434014;-1.6016473;Bel Air;belair
 BUS;1_belaive2;48.0435474;-1.6017159;Bel Air;belair
-BUS;1_belepin1;48.1252267;-1.5965282;Belle Epine;belleepine
-BUS;1_belepin2;48.1248184;-1.5968292;Belle Epine;belleepine
+BUS;1_belepin1;48.1252267;-1.5965282;Belle Epine (futur Petits Champs);belleepinefuturpetitschamps
+BUS;1_belepin2;48.1248184;-1.5968292;Belle Epine (futur Petits Champs);belleepinefuturpetitschamps
 BUS;1_belepmo1;48.1553112;-1.7108321;Belle Epine;belleepine
 BUS;1_belepmo2;48.1555879;-1.7108224;Belle Epine;belleepine
-BUS;1_belepsg1;48.1513777;-1.6912945;Belle Epine;belleepine
-BUS;1_belepsg2;48.1514745;-1.6913184;Belle Epine;belleepine
+BUS;1_belepsg1;48.1513777;-1.6912945;Belle Epine (futur Cité Des Jardins);belleepinefuturcitedesjardins
+BUS;1_belepsg2;48.1514745;-1.6913184;Belle Epine (futur Cité Des Jardins);belleepinefuturcitédesjardins
 BUS;1_belfont1;48.1273075;-1.6242023;Belle Fontaine;bellefontaine
 BUS;1_belfont2;48.1272563;-1.6241305;Belle Fontaine;bellefontaine
 BUS;1_bellang1;48.1326426;-1.6717583;Bellangerais;bellangerais
 BUS;1_bellang2;48.1327095;-1.6723432;Bellangerais;bellangerais
-BUS;1_bellece1;48.123586;-1.6043822;Bellevue;bellevue
-BUS;1_bellece2;48.1235341;-1.604095;Bellevue;bellevue
-BUS;1_bellnou2;48.0424022;-1.549825;Bellevue;bellevue
-BUS;1_bellstg1;48.1568449;-1.6873887;Bellevue;bellevue
-BUS;1_bellstg2;48.1569673;-1.6873028;Bellevue;bellevue
+BUS;1_bellece1;48.123586;-1.6043822;Bellevue (futur La Coulée);bellevuefuturlacoulee
+BUS;1_bellece2;48.1235341;-1.604095;Bellevue (futur La Coulée);bellevuefuturlacoulée
+BUS;1_bellnou2;48.0424022;-1.549825;Bellevue (futur Grée Barel);bellevuefuturgreebarel
+BUS;1_bellstg1;48.1568449;-1.6873887;Bellevue (futur Uttenreuth);bellevuefuturuttenreuth
+BUS;1_bellstg2;48.1569673;-1.6873028;Bellevue (futur Uttenreuth);bellevuefuturuttenreuth
 BUS;1_belscor1;48.1321646;-1.6729009;Bellangerais;bellangerais
 BUS;1_belscor2;48.1320737;-1.6726909;Bellangerais;bellangerais
-BUS;1_belvure1;48.0784599;-1.7712518;Bellevue;bellevue
-BUS;1_belvure2;48.0787929;-1.7721563;Bellevue;bellevue
+BUS;1_belvure1;48.0784599;-1.7712518;Bellevue (futur Haut Plessis);bellevuefuturhautplessis
+BUS;1_belvure2;48.0787929;-1.7721563;Bellevue (futur Haut Plessis);bellevuefuturhautplessis
 BUS;1_belvusj1;48.0798639;-1.7338041;Bellevue;bellevue
 BUS;1_belvusj2;48.0797673;-1.7337416;Bellevue;bellevue
 BUS;1_berger1;48.1167346;-1.7047729;Berger;berger
@@ -87,8 +84,8 @@ BUS;1_bgstsul1;48.2179211;-1.5814225;Bourg;bourg
 BUS;1_bgstsul2;48.217732;-1.5813974;Bourg;bourg
 BUS;1_bignoch1;48.1785826;-1.7263642;Bignon;bignon
 BUS;1_bignoch2;48.1784188;-1.7261919;Bignon;bignon
-BUS;1_bignon1;48.0949932;-1.6379381;Cram;cram
-BUS;1_bignon2;48.09445;-1.6379981;Cram;cram
+BUS;1_bignon1;48.0949932;-1.6379381;Cram (futur Carsat);cramfuturcarsat
+BUS;1_bignon2;48.09445;-1.6379981;Cram (futur Carsat);cramfuturcarsat
 BUS;1_bigopre1;48.0980242;-1.6670823;Bigot De Préameneu;bigotdepreameneu
 BUS;1_bigopre2;48.0980217;-1.666463;Bigot De Préameneu;bigotdepréameneu
 BUS;1_binquen1;48.0913399;-1.66629;Binquenais;binquenais
@@ -113,16 +110,14 @@ BUS;1_bospho1;48.0827051;-1.6823842;Bosphore;bosphore
 BUS;1_bospho2;48.0821401;-1.682536;Bosphore;bosphore
 BUS;1_boulai5;48.139094;-1.5587438;Boulais;boulais
 BUS;1_boulai6;48.1390869;-1.5594769;Boulais;boulais
-BUS;1_boulais1;48.1227994;-1.6108968;Boulais;boulais
-BUS;1_boulais2;48.1227655;-1.61084;Boulais;boulais
-BUS;1_boulais3;48.1233812;-1.6112304;Boulais;boulais
+BUS;1_boulais1;48.1227994;-1.6108968;Boulais (futur Mare Pavée);boulaisfuturmarepavee
+BUS;1_boulais2;48.1227655;-1.61084;Boulais (futur Mare Pavée);boulaisfuturmarepavée
+BUS;1_boulais3;48.1233812;-1.6112304;Boulais (futur Mare Pavée);boulaisfuturmarepavée
 BUS;1_bouleau1;48.1016302;-1.7945155;Bouleaux;bouleaux
 BUS;1_bouleau2;48.101776;-1.794919;Bouleaux;bouleaux
-BUS;1_boullac1;48.1235324;-1.6112839;Boulais;boulais
+BUS;1_boullac1;48.1235324;-1.6112839;Boulais (futur Mare Pavée);boulaisfuturmarepavée
 BUS;1_bourdon1;48.1205024;-1.7097399;Bourbonnais;bourbonnais
 BUS;1_bourdon2;48.1206267;-1.7104645;Bourbonnais;bourbonnais
-BUS;1_bourglb1;48.0982615;-1.655167;Bourgeois;bourgeois
-BUS;1_bourglb2;48.0977884;-1.6566459;Bourgeois;bourgeois
 BUS;1_bourgog1;48.0891452;-1.6125755;Bourgogne;bourgogne
 BUS;1_bourgog2;48.0882819;-1.6123651;Bourgogne;bourgogne
 BUS;1_bourgue1;48.089494;-1.6354373;Bourgueil;bourgueil
@@ -135,13 +130,12 @@ BUS;1_bouzat1;48.128266;-1.6376561;Bouzat;bouzat
 BUS;1_bouzat2;48.1282633;-1.6372654;Bouzat;bouzat
 BUS;1_brassen1;48.0989712;-1.7969389;Brassens;brassens
 BUS;1_brassen2;48.0993952;-1.7967083;Brassens;brassens
-BUS;1_bray;48.1061693;-1.6258986;Erbonière;erboniere
-BUS;1_bray2;48.1060663;-1.625694;Erbonière;erbonière
+BUS;1_bray2;48.1060663;-1.625694;Erbonière;erboniere
 BUS;1_brayno1;48.0290801;-1.6597993;Bray;bray
 BUS;1_brayno2;48.0286404;-1.6597921;Bray;bray
 BUS;1_brecean;48.1097509;-1.4809723;Anjou;anjou
-BUS;1_breil1;48.0981304;-1.6229601;Breil;breil
-BUS;1_breil2;48.0982841;-1.6227923;Breil;breil
+BUS;1_breil1;48.0981304;-1.6229601;Breil (futur Breillou);breilfuturbreillou
+BUS;1_breil2;48.0982841;-1.6227923;Breil (futur Breillou);breilfuturbreillou
 BUS;1_brest1;48.1133458;-1.6934599;Brest Verdun;brestverdun
 BUS;1_brest2;48.1130964;-1.6933839;Brest Verdun;brestverdun
 BUS;1_bretoni3;48.0592709;-1.6165979;Bretonnière;bretonniere
@@ -154,23 +148,22 @@ BUS;1_broceli1;48.1807215;-1.6519371;Brocéliande;broceliande
 BUS;1_broceli2;48.1805791;-1.652229;Brocéliande;brocéliande
 BUS;1_broscha1;48.1767489;-1.7220963;La Brosse;labrosse
 BUS;1_broscha2;48.1769275;-1.722015;La Brosse;labrosse
-BUS;1_broscin1;48.1024474;-1.8323031;La Brosse;labrosse
-BUS;1_broscin2;48.1024446;-1.8310511;La Brosse;labrosse
+BUS;1_broscin1;48.1024474;-1.8323031;La Brosse (futur Noë Diole);labrossefuturnoediole
+BUS;1_broscin2;48.1024446;-1.8310511;La Brosse (futur Noë Diole);labrossefuturnoëdiole
 BUS;1_buhoti1;48.078105;-1.732261;Buhotière;buhotiere
 BUS;1_buhoti2;48.0781621;-1.7321854;Buhotière;buhotière
 BUS;1_callorn1;48.0423253;-1.712032;Callouët;callouet
-BUS;1_callpot1;48.0414071;-1.7124559;Callouët;callouët
 BUS;1_callpot2;48.042013;-1.7110581;Callouët;callouët
-BUS;1_calvair1;48.0857645;-1.6140466;Calvaire;calvaire
-BUS;1_calvair2;48.085813;-1.6147174;Calvaire;calvaire
+BUS;1_calvair1;48.0857645;-1.6140466;Calvaire (futur Deux Ruisseaux);calvairefuturdeuxruisseaux
+BUS;1_calvair2;48.085813;-1.6147174;Calvaire (futur Deux Ruisseaux);calvairefuturdeuxruisseaux
 BUS;1_calvcha1;48.0520122;-1.7907022;Calvaire;calvaire
 BUS;1_calvcha2;48.0524532;-1.7905001;Calvaire;calvaire
 BUS;1_camus1;48.1591284;-1.6813425;Camus;camus
 BUS;1_camus2;48.1591451;-1.6808139;Camus;camus
 BUS;1_canacha1;48.0851781;-1.6823074;Canada;canada
 BUS;1_canacha2;48.0852071;-1.6824848;Canada;canada
-BUS;1_capvert1;48.0294126;-1.7580112;Vert Buisson Place;vertbuissonplace
-BUS;1_capvert2;48.0293767;-1.758008;Vert Buisson Place;vertbuissonplace
+BUS;1_capvert1;48.0294126;-1.7580112;Vert Buisson Place (futur Vert Buisson);vertbuissonplacefuturvertbuisson
+BUS;1_capvert2;48.0293767;-1.758008;Vert Buisson Place (futur Vert Buisson);vertbuissonplacefuturvertbuisson
 BUS;1_cardum1;48.1457977;-1.7706712;Carré Dumaine;carredumaine
 BUS;1_cardum2;48.1457264;-1.7706513;Carré Dumaine;carrédumaine
 BUS;1_cartier1;48.0977472;-1.6751992;Jacques Cartier;jacquescartier
@@ -184,14 +177,11 @@ BUS;1_cenbett1;48.1759989;-1.6396187;Betton Rue De Rennes;bettonruederennes
 BUS;1_cenbett2;48.1759017;-1.6395394;Betton Rue De Rennes;bettonruederennes
 BUS;1_cenbru2;48.0245288;-1.7452349;Bruz Centre;bruzcentre
 BUS;1_cenbruz;48.0244277;-1.7448361;Bruz Centre;bruzcentre
-BUS;1_cenbruz3;48.0249491;-1.7450979;Bruz Centre;bruzcentre
 BUS;1_cencha1;48.0423037;-1.7064999;Chartres Centre;chartrescentre
 BUS;1_cencha2;48.042292;-1.7074667;Chartres Centre;chartrescentre
 BUS;1_cenclay1;48.1760181;-1.8525484;Clayes Centre;clayescentre
 BUS;1_cennoch1;48.0423861;-1.6655373;Centre;centre
 BUS;1_cennoch2;48.0424394;-1.6657197;Centre;centre
-BUS;1_cennoch3;48.0426952;-1.6660394;Centre;centre
-BUS;1_cennoch4;48.0429449;-1.6659724;Centre;centre
 BUS;1_censtg1;48.1538801;-1.8296432;Saint Gilles Centre;saintgillescentre
 BUS;1_censtgi2;48.1547687;-1.8284177;Saint Gilles Centre;saintgillescentre
 BUS;1_centenf1;48.092569;-1.6129143;Idefs;idefs
@@ -214,21 +204,19 @@ BUS;1_champal2;48.1554242;-1.764684;Champalaune;champalaune
 BUS;1_champea1;48.1136726;-1.7125904;Atalante Champeaux;atalantechampeaux
 BUS;1_champea2;48.1135114;-1.7143663;Atalante Champeaux;atalantechampeaux
 BUS;1_champel1;48.1161343;-1.582357;Champelé;champele
-BUS;1_chantep;48.0935701;-1.6076061;Portes De Cucé;portesdecuce
+BUS;1_chantep;48.0935701;-1.6076061;Portes De Cucé (futur Cucé);portesdecucefuturcuce
 BUS;1_chapitr1;48.174139;-1.7893668;Chapitre;chapitre
 BUS;1_chapitr2;48.1752848;-1.7900099;Chapitre;chapitre
-BUS;1_chardon1;48.107144;-1.6509699;Chardonnet;chardonnet
-BUS;1_chardon2;48.1056962;-1.6506541;Chardonnet;chardonnet
-BUS;1_charmil1;48.1064975;-1.6213712;Charmilles;charmilles
-BUS;1_charmil2;48.1064023;-1.6212687;Charmilles;charmilles
+BUS;1_charmil1;48.1064975;-1.6213712;Charmilles (futur Z.i. Sud-est);charmillesfuturzisudest
+BUS;1_charmil2;48.1064023;-1.6212687;Charmilles (futur Z.i. Sud-est);charmillesfuturzisudest
 BUS;1_chataig1;48.1794944;-1.729267;Métairie;metairie
 BUS;1_chataig2;48.1794216;-1.7290583;Métairie;métairie
 BUS;1_chatill1;48.0977563;-1.6711091;Châtillon;chatillon
 BUS;1_chatill2;48.0977584;-1.6712842;Châtillon;châtillon
-BUS;1_chaussa1;48.0333552;-1.7116297;Chaussairie;chaussairie
-BUS;1_chaussa2;48.0330927;-1.7116212;Chaussairie;chaussairie
 BUS;1_chavaux1;48.1404154;-1.6167988;Château De Vaux;chateaudevaux
 BUS;1_chavaux2;48.1405992;-1.6164782;Château De Vaux;châteaudevaux
+BUS;1_chbleus1;48.11899882;-1.74937216;Champs Bleus;champsbleus
+BUS;1_chbleus2;48.11912563;-1.74955085;Champs Bleus;champsbleus
 BUS;1_chcente1;48.0404249;-1.5419801;Chêne Centenaire;chenecentenaire
 BUS;1_chcente2;48.0402188;-1.541949;Chêne Centenaire;chênecentenaire
 BUS;1_chcice1;48.1022576;-1.7049909;Champion De Cicé;championdecice
@@ -261,19 +249,15 @@ BUS;1_chopi1;48.1991757;-1.6275791;Chopinais;chopinais
 BUS;1_chopi2;48.1991821;-1.6276471;Chopinais;chopinais
 BUS;1_chqpost1;48.1081424;-1.6948684;Chèques Postaux;chequespostaux
 BUS;1_chqpost2;48.1084183;-1.6936008;Chèques Postaux;chèquespostaux
-BUS;1_churbou;48.1174068;-1.7082522;Bourgogne;bourgogne
 BUS;1_church1;48.1185879;-1.7080209;Bourgogne;bourgogne
 BUS;1_church2;48.1185303;-1.70811;Bourgogne;bourgogne
 BUS;1_chverc;48.1050825;-1.8727104;Chêne Vert;chenevert
 BUS;1_chverpn1;48.0129631;-1.7030439;Chemin Vert;cheminvert
 BUS;1_chverpp2;48.0129557;-1.703003;Chemin Vert;cheminvert
-BUS;1_cice;48.0336484;-1.7658387;Cicé Blossac;ciceblossac
 BUS;1_cimces1;48.1263241;-1.5991279;Cesson Cimetière;cessoncimetiere
 BUS;1_cimces2;48.1262902;-1.5990711;Cesson Cimetière;cessoncimetière
 BUS;1_cimest1;48.1042918;-1.649696;Cimetière De L'est;cimetieredelest
 BUS;1_cimest2;48.1043959;-1.6493418;Cimetière De L'est;cimetièredelest
-BUS;1_cimestm1;48.1037238;-1.649471;Cimetière De L'est;cimetièredelest
-BUS;1_cimestm2;48.1036313;-1.649759;Cimetière De L'est;cimetièredelest
 BUS;1_cimnord1;48.1244201;-1.6817883;Cimetière Nord;cimetierenord
 BUS;1_cimnord2;48.1249352;-1.681982;Cimetière Nord;cimetièrenord
 BUS;1_cimorg1;47.9939507;-1.6654953;Chateaubriand;chateaubriand
@@ -284,9 +268,11 @@ BUS;1_citeu1;48.1207832;-1.6438648;Beaulieu Cité U;beaulieuciteu
 BUS;1_citeu2;48.1206204;-1.6443352;Beaulieu Cité U;beaulieucitéu
 BUS;1_clairef1;48.1232096;-1.8063041;Clairefontaine;clairefontaine
 BUS;1_clairef2;48.1233134;-1.8068521;Clairefontaine;clairefontaine
-BUS;1_clatouc1;48.18138;-1.8534731;La Touche;latouche
+BUS;1_clatouc1;48.18138;-1.8534731;La Touche (futur Croix Simon);latouchefuturcroixsimon
 BUS;1_clemenc1;48.0937063;-1.6738997;Clemenceau;clemenceau
 BUS;1_clemenc2;48.0931734;-1.6746061;Clemenceau;clemenceau
+BUS;1_clesta1;48.1015717;-1.7083413;Cleunay Stade;cleunaystade
+BUS;1_clesta2;48.1016609;-1.7085086;Cleunay Stade;cleunaystade
 BUS;1_cleunay;48.1041359;-1.7134758;Cleunay;cleunay
 BUS;1_clisage1;48.100883;-1.7116379;Clinique La Sagesse;cliniquelasagesse
 BUS;1_clisage2;48.1012179;-1.7118292;Clinique La Sagesse;cliniquelasagesse
@@ -307,8 +293,6 @@ BUS;1_coeurca1;48.0472486;-1.7419546;Coeur De Campus;coeurdecampus
 BUS;1_coeurca2;48.0474265;-1.7421026;Coeur De Campus;coeurdecampus
 BUS;1_colbinq1;48.0913638;-1.663184;Binquenais Collège;binquenaiscollege
 BUS;1_colbinq2;48.091587;-1.6623291;Binquenais Collège;binquenaiscollège
-BUS;1_colbinq3;48.0907956;-1.6611425;Binquenais Le Moine;binquenaislemoine
-BUS;1_colbinq4;48.0907851;-1.661182;Binquenais Le Moine;binquenaislemoine
 BUS;1_colbour1;48.120117;-1.5992739;Cesson Collège;cessoncollege
 BUS;1_colbour2;48.1205773;-1.599489;Cesson Collège;cessoncollège
 BUS;1_colin1;48.1161614;-1.7159491;Colin;colin
@@ -319,8 +303,6 @@ BUS;1_colpace1;48.154073;-1.7711229;Pacé Collèges;pacecolleges
 BUS;1_colpace2;48.1544409;-1.770496;Pacé Collèges;pacécollèges
 BUS;1_colpols1;48.0413764;-1.6984155;Collège Pôle Sud;collegepolesud
 BUS;1_colpols2;48.0412557;-1.6977629;Collège Pôle Sud;collègepôlesud
-BUS;1_colpols3;48.0420243;-1.6961239;Collège Pôle Sud;collègepôlesud
-BUS;1_colpols4;48.0416906;-1.6960678;Collège Pôle Sud;collègepôlesud
 BUS;1_colvern1;48.0446892;-1.6039826;La Poste;laposte
 BUS;1_colvern2;48.044616;-1.6038816;La Poste;laposte
 BUS;1_combes1;48.0934965;-1.6701001;Combes;combes
@@ -343,17 +325,15 @@ BUS;1_courbet1;48.1077362;-1.702114;Papeteries;papeteries
 BUS;1_courbet2;48.1082473;-1.7037612;Papeteries;papeteries
 BUS;1_courtin1;48.1572612;-1.7144665;Courtines;courtines
 BUS;1_courtin2;48.1573341;-1.7146065;Courtines;courtines
-BUS;1_cram1;48.0954382;-1.6380848;Cram;cram
-BUS;1_cram2;48.0949842;-1.6372511;Cram;cram
+BUS;1_cram1;48.0954382;-1.6380848;Cram (futur Carsat);cramfuturcarsat
+BUS;1_cram2;48.0949842;-1.6372511;Cram (futur Carsat);cramfuturcarsat
 BUS;1_croixhe2;48.1012589;-1.6595451;Croix Saint Hélier;croixsainthelier
 BUS;1_cropy;48.2252809;-1.570373;Cropy;cropy
-BUS;1_crotigne;48.0310308;-1.559262;Crotigné;crotigne
 BUS;1_cucille1;48.1285861;-1.6987329;Cucillé;cucille
 BUS;1_cucille2;48.1285084;-1.6988741;Cucillé;cucillé
 BUS;1_curi1;48.149328;-1.5775272;Curien;curien
 BUS;1_curi2;48.1492898;-1.577154;Curien;curien
 BUS;1_cxblanc1;48.0519247;-1.7976824;Croix Blanche;croixblanche
-BUS;1_cxepine1;48.0293045;-1.5642602;La Croix De L'epine;lacroixdelepine
 BUS;1_cxfleu1;48.0566582;-1.6637207;Croix Fleurie;croixfleurie
 BUS;1_cxfleu2;48.0559716;-1.6641369;Croix Fleurie;croixfleurie
 BUS;1_cxhecha1;48.102057;-1.6601028;Croix Saint Hélier;croixsainthélier
@@ -372,22 +352,18 @@ BUS;1_cxpotie1;48.0467328;-1.7106333;Croix Aux Potiers;croixauxpotiers
 BUS;1_cxpotie2;48.047863;-1.7135214;Croix Aux Potiers;croixauxpotiers
 BUS;1_cxpotrn1;48.0459063;-1.7100862;Croix Aux Potiers;croixauxpotiers
 BUS;1_cxpotrn2;48.045659;-1.7104979;Croix Aux Potiers;croixauxpotiers
-BUS;1_cxrobr1;48.1075891;-1.486145;Croix Rouge;croixrouge
-BUS;1_cxrobr2;48.1075932;-1.4860377;Croix Rouge;croixrouge
-BUS;1_cxroure1;48.1162868;-1.711464;Croix Rouge;croixrouge
-BUS;1_cxroure2;48.1163852;-1.7121593;Croix Rouge;croixrouge
+BUS;1_cxrobr1;48.1075891;-1.486145;Croix Rouge (futur Destiers);croixrougefuturdestiers
+BUS;1_cxrobr2;48.1075932;-1.4860377;Croix Rouge (futur Destiers);croixrougefuturdestiers
+BUS;1_cxroure1;48.1162868;-1.711464;Croix Rouge (futur Merlin);croixrougefuturmerlin
+BUS;1_cxroure2;48.1163852;-1.7121593;Croix Rouge (futur Merlin);croixrougefuturmerlin
 BUS;1_cxrouve1;48.0495583;-1.6061528;Croix Rouge;croixrouge
 BUS;1_cxrouve2;48.0491416;-1.6059535;Croix Rouge;croixrouge
-BUS;1_cxvaiss1;48.0091623;-1.7733498;Croix Vaisserelle;croixvaisserelle
-BUS;1_cxvaiss2;48.0085708;-1.7737863;Croix Vaisserelle;croixvaisserelle
 BUS;1_dargent1;48.1036072;-1.7000911;Dargent;dargent
 BUS;1_dargent2;48.1036176;-1.7002804;Dargent;dargent
 BUS;1_diee2;48.1172311;-1.6773682;Hôtel Dieu;hoteldieu
 BUS;1_dieu1;48.116872;-1.6782383;Hôtel Dieu;hôteldieu
 BUS;1_dieu2;48.1170941;-1.6778676;Hôtel Dieu;hôteldieu
 BUS;1_dieuw2;48.1173554;-1.6785504;Hôtel Dieu;hôteldieu
-BUS;1_dinan1;48.1172056;-1.6823199;Dinan;dinan
-BUS;1_dinan2;48.1171715;-1.6815899;Dinan;dinan
 BUS;1_discalc1;48.1543384;-1.686723;Discalceat;discalceat
 BUS;1_discalc2;48.1547117;-1.6867033;Discalceat;discalceat
 BUS;1_domaine1;48.097611;-1.6424202;Domaine;domaine
@@ -396,34 +372,31 @@ BUS;1_donelie1;48.1300609;-1.6843352;Donelière;doneliere
 BUS;1_donelie2;48.1311599;-1.6845808;Donelière;donelière
 BUS;1_donzelo1;48.1252884;-1.6425377;Donzelot;donzelot
 BUS;1_donzelo2;48.1255389;-1.6421289;Donzelot;donzelot
-BUS;1_doublee1;48.0341462;-1.7237851;Doublée;doublee
-BUS;1_doublee3;48.0348879;-1.7248105;Doublée;doublée
-BUS;1_doublee4;48.0357818;-1.7232135;Doublée;doublée
+BUS;1_doublee3;48.0348879;-1.7248105;Doublée (futur Doublé);doubleefuturdouble
+BUS;1_doublee4;48.0357818;-1.7232135;Doublée (futur Doublé);doubléefuturdoublé
 BUS;1_douro1;48.0836774;-1.6681158;Douro;douro
 BUS;1_douro2;48.0837049;-1.6681047;Douro;douro
 BUS;1_drlaen1;48.1811226;-1.6378981;Betton Centre;bettoncentre
 BUS;1_drlaen2;48.1815722;-1.6392838;Betton Centre;bettoncentre
 BUS;1_drlaene;48.1817038;-1.638551;Betton Centre;bettoncentre
-BUS;1_drouais1;48.0240519;-1.5732399;La Drouais;ladrouais
-BUS;1_duannno2;48.0407715;-1.6721205;Duchesse Anne;duchesseanne
-BUS;1_duanno1;48.0408029;-1.6719381;Duchesse Anne;duchesseanne
+BUS;1_duannno2;48.0407715;-1.6721205;Duchesse Anne (futur Potiers);duchesseannefuturpotiers
+BUS;1_duanno1;48.0408029;-1.6719381;Duchesse Anne (futur Potiers);duchesseannefuturpotiers
 BUS;1_duanpa1;48.1509164;-1.77205;Duchesse Anne;duchesseanne
 BUS;1_duanpa2;48.1508875;-1.7718722;Duchesse Anne;duchesseanne
-BUS;1_duchann1;48.1191757;-1.6676591;Duchesse Anne;duchesseanne
-BUS;1_duchann2;48.1194781;-1.6668512;Duchesse Anne;duchesseanne
+BUS;1_duchann1;48.1191757;-1.6676591;Duchesse Anne (futur Guéhenno);duchesseannefuturguehenno
+BUS;1_duchann2;48.1194781;-1.6668512;Duchesse Anne (futur Guéhenno);duchesseannefuturguéhenno
 BUS;1_dugues1;48.0209406;-1.7380981;Du Guesclin;duguesclin
 BUS;1_dugues2;48.0209283;-1.7382536;Du Guesclin;duguesclin
-BUS;1_dullin1;48.093597;-1.6818693;Le Brix;lebrix
-BUS;1_dullin2;48.0930648;-1.681876;Le Brix;lebrix
+BUS;1_dullin1;48.093597;-1.6818693;Le Brix (futur Frères Moine);lebrixfuturfreresmoine
+BUS;1_dullin2;48.0930648;-1.681876;Le Brix (futur Frères Moine);lebrixfuturfrèresmoine
 BUS;1_durafou1;48.1144661;-1.6580759;Durafour;durafour
 BUS;1_durafou2;48.114244;-1.658771;Durafour;durafour
-BUS;1_durafou4;48.1135831;-1.6565982;Durafour Strasbourg;durafourstrasbourg
 BUS;1_durafst1;48.113639;-1.6567781;Durafour Strasbourg;durafourstrasbourg
 BUS;1_durafst2;48.113638;-1.6568049;Durafour Strasbourg;durafourstrasbourg
 BUS;1_eboue1;48.0857885;-1.6940752;Félix Eboué;felixeboue
 BUS;1_eboue2;48.0857295;-1.6938914;Félix Eboué;félixeboué
-BUS;1_eccxve1;48.0884351;-1.6973961;Ecole Croix Verte;ecolecroixverte
-BUS;1_eccxve2;48.0884928;-1.697307;Ecole Croix Verte;ecolecroixverte
+BUS;1_eccxve1;48.0884351;-1.6973961;Ecole Croix Verte (futur Croix Verte);ecolecroixvertefuturcroixverte
+BUS;1_eccxve2;48.0884928;-1.697307;Ecole Croix Verte (futur Croix Verte);ecolecroixvertefuturcroixverte
 BUS;1_eclose1;48.0445322;-1.5616222;Eclosel;eclosel
 BUS;1_eclose2;48.0444571;-1.5614679;Eclosel;eclosel
 BUS;1_ecoagro1;48.1139277;-1.7054783;Agrocampus;agrocampus
@@ -447,13 +420,12 @@ BUS;1_epalet1;48.0194932;-1.7449883;Epalet;epalet
 BUS;1_epalet2;48.0195785;-1.7445894;Epalet;epalet
 BUS;1_epimed1;48.0798692;-1.7155262;Médiathèque;mediatheque
 BUS;1_epimed2;48.07942;-1.7157095;Médiathèque;médiathèque
-BUS;1_epron1;48.0150971;-1.5396183;Epron;epron
 BUS;1_erenan1;48.1511953;-1.7776254;Renan;renan
 BUS;1_erenan2;48.1512345;-1.7775482;Renan;renan
 BUS;1_etangs1;48.0494237;-1.7404544;Etangs;etangs
 BUS;1_etangs2;48.049376;-1.7407267;Etangs;etangs
-BUS;1_etgstg1;48.1507078;-1.825217;Etangs;etangs
-BUS;1_etgstg2;48.1506799;-1.8247968;Etangs;etangs
+BUS;1_etgstg1;48.1507078;-1.825217;Etangs (futur Pont Aux Moines);etangsfuturpontauxmoines
+BUS;1_etgstg2;48.1506799;-1.8247968;Etangs (futur Pont Aux Moines);etangsfuturpontauxmoines
 BUS;1_europe1;48.1285527;-1.6571239;Europe;europe
 BUS;1_europe2;48.1283445;-1.657146;Europe;europe
 BUS;1_exupery1;48.1249329;-1.6613554;Saint Exupéry;saintexupery
@@ -472,10 +444,8 @@ BUS;1_fontene1;48.1235295;-1.6081334;Fontenelle;fontenelle
 BUS;1_fontene2;48.1234914;-1.6081839;Fontenelle;fontenelle
 BUS;1_forge1;48.150852;-1.6858336;Forge;forge
 BUS;1_forge2;48.1514925;-1.6858387;Forge;forge
-BUS;1_forgebe1;48.1863304;-1.6332539;Forge;forge
-BUS;1_forgebe2;48.1863545;-1.6331937;Forge;forge
-BUS;1_forjoua1;47.9697857;-1.6460629;Fort Joual;fortjoual
-BUS;1_forjoua2;47.9696531;-1.6457693;Fort Joual;fortjoual
+BUS;1_forgebe1;48.1863304;-1.6332539;Forge (futur J. Sébastien Bach);forgefuturjsebastienbach
+BUS;1_forgebe2;48.1863545;-1.6331937;Forge (futur J. Sébastien Bach);forgefuturjsébastienbach
 BUS;1_forum1;48.0996196;-1.6211464;Forum;forum
 BUS;1_forum2;48.0996186;-1.6209444;Forum;forum
 BUS;1_fossega1;48.0494839;-1.6111057;Fosse Gauchère;fossegauchere
@@ -484,9 +454,9 @@ BUS;1_fouaye1;48.1529181;-1.8090771;Fouaye;fouaye
 BUS;1_fouaye2;48.1535644;-1.8104698;Fouaye;fouaye
 BUS;1_fougero1;48.1571785;-1.723301;Fougerolle;fougerolle
 BUS;1_fougero2;48.1571342;-1.7232999;Fougerolle;fougerolle
-BUS;1_fouggal1;48.1289946;-1.6427289;Fougères Gallets;fougeresgallets
-BUS;1_fouggal2;48.1298184;-1.6424109;Fougères Gallets;fougèresgallets
-BUS;1_fouggal3;48.1295558;-1.6435861;Fougères Gallets;fougèresgallets
+BUS;1_fouggal1;48.1289946;-1.6427289;Fougères Gallets (futur Zac St Sulpice);fougeresgalletsfuturzacstsulpice
+BUS;1_fouggal2;48.1298184;-1.6424109;Fougères Gallets (futur Zac St Sulpice);fougèresgalletsfuturzacstsulpice
+BUS;1_fouggal3;48.1295558;-1.6435861;Fougères Gallets (futur Zac St Sulpice);fougèresgalletsfuturzacstsulpice
 BUS;1_fouilla1;48.1604123;-1.5860213;Fouillard;fouillard
 BUS;1_fouilla2;48.1606178;-1.5854605;Fouillard;fouillard
 BUS;1_foyerac1;48.133913;-1.5377692;Foyer;foyer
@@ -499,8 +469,6 @@ BUS;1_frevi03;48.0877794;-1.6744653;Henri Fréville;henrifréville
 BUS;1_frevi04;48.0878364;-1.6746183;Henri Fréville;henrifréville
 BUS;1_frevi3;48.0873158;-1.6750162;Henri Fréville;henrifréville
 BUS;1_frevill1;48.0870365;-1.6743323;Henri Fréville;henrifréville
-BUS;1_frogera1;47.9753563;-1.6513176;Frogerais;frogerais
-BUS;1_frogera2;47.9754307;-1.6523982;Frogerais;frogerais
 BUS;1_gaite1;48.0874972;-1.7069457;Gaité;gaite
 BUS;1_gaite2;48.0872606;-1.7073839;Gaité;gaité
 BUS;1_gaitedo1;48.0868111;-1.7056299;Gaité;gaité
@@ -515,7 +483,6 @@ BUS;1_gambett2;48.1132957;-1.6752294;Fossés;fosses
 BUS;1_gare1;48.1038801;-1.6728484;Gares;gares
 BUS;1_gare2;48.1040035;-1.6720114;Gares;gares
 BUS;1_garecn;47.9852879;-1.5760953;Corps Nuds Gare;corpsnudsgare
-BUS;1_gareher;48.1234383;-1.8189166;L'hermitage Gare;lhermitagegare
 BUS;1_gareher1;48.1238491;-1.817794;L'hermitage Gare;lhermitagegare
 BUS;1_gareher2;48.1237358;-1.8179183;L'hermitage Gare;lhermitagegare
 BUS;1_garenne1;48.0677361;-1.6257561;Garenne;garenne
@@ -551,6 +518,8 @@ BUS;1_geriat1;48.0852287;-1.6107469;Gériatrie;geriatrie
 BUS;1_geriat2;48.0850471;-1.6103805;Gériatrie;gériatrie
 BUS;1_gide1;48.0924199;-1.658366;Gide;gide
 BUS;1_gide2;48.0920305;-1.6584124;Gide;gide
+BUS;1_gilois1;48.01619592;-1.65151734;Gillois;gillois
+BUS;1_gilois2;48.01632313;-1.6513413;Gillois;gillois
 BUS;1_ginguen1;48.0992081;-1.675638;Ginguené;ginguene
 BUS;1_ginguen2;48.0991606;-1.675701;Ginguené;ginguené
 BUS;1_gohier1;48.0918761;-1.6362921;Gohier;gohier
@@ -570,8 +539,6 @@ BUS;1_grpesco2;47.9968944;-1.669005;Groupe Scolaire;groupescolaire
 BUS;1_grquart2;48.1356012;-1.6929256;Grand Quartier;grandquartier
 BUS;1_guerina1;48.0990007;-1.7055083;Guérinais;guerinais
 BUS;1_guerina2;48.0989348;-1.7053544;Guérinais;guérinais
-BUS;1_guyoma1;48.0396469;-1.6767318;Guyomerais;guyomerais
-BUS;1_guyoma2;48.0395947;-1.6764714;Guyomerais;guyomerais
 BUS;1_haiet1;48.1209582;-1.772547;Haie De Terre;haiedeterre
 BUS;1_haiet2;48.1209755;-1.7716734;Haie De Terre;haiedeterre
 BUS;1_hallerv1;48.072396;-1.6287462;Hallerais;hallerais
@@ -626,10 +593,7 @@ BUS;1_huberd1;47.9823929;-1.580817;Huberdières;huberdieres
 BUS;1_huberd2;47.9825992;-1.5803206;Huberdières;huberdières
 BUS;1_hublais1;48.1142224;-1.616313;Hublais;hublais
 BUS;1_hublais2;48.1142145;-1.6137548;Hublais;hublais
-BUS;1_hugo1;48.0234105;-1.743109;Victor Hugo;victorhugo
-BUS;1_hugo2;48.0234609;-1.7433344;Victor Hugo;victorhugo
-BUS;1_idf;48.12537;-1.6925764;Lycée Basch;lyceebasch
-BUS;1_idftill1;48.1272767;-1.6933652;Lycée Basch;lycéebasch
+BUS;1_idftill1;48.1272767;-1.6933652;Lycée Basch;lyceebasch
 BUS;1_idftill2;48.1266385;-1.693093;Lycée Basch;lycéebasch
 BUS;1_ikea1;48.1402095;-1.7632972;Rive Ouest;riveouest
 BUS;1_ikea2;48.1402441;-1.7635562;Rive Ouest;riveouest
@@ -642,18 +606,14 @@ BUS;1_iufm1;48.1216312;-1.6832374;Iufm;iufm
 BUS;1_iufm2;48.1220215;-1.683622;Iufm;iufm
 BUS;1_iutguil1;48.1247488;-1.6338064;Iut;iut
 BUS;1_iutguil2;48.1250922;-1.633096;Iut;iut
-BUS;1_jaille1;48.0126001;-1.557325;La Jaille;lajaille
 BUS;1_janaich1;48.0589061;-1.70116;Janais;janais
 BUS;1_janaich2;48.0594578;-1.7011149;Janais;janais
-BUS;1_janaire1;48.1038675;-1.7504371;La Janais;lajanais
-BUS;1_janaire2;48.1036412;-1.7511301;La Janais;lajanais
-BUS;1_jaunais1;48.0131831;-1.5706348;La Jaunais;lajaunais
+BUS;1_janaire1;48.1038675;-1.7504371;La Janais (futur Plessix Saucourt);lajanaisfuturplessixsaucourt
+BUS;1_janaire2;48.1036412;-1.7511301;La Janais (futur Plessix Saucourt);lajanaisfuturplessixsaucourt
 BUS;1_jaures1;48.0825175;-1.712313;Jean Jaurès;jeanjaures
 BUS;1_jaures2;48.0827877;-1.713065;Jean Jaurès;jeanjaurès
 BUS;1_jdarc1;48.1163526;-1.6556308;Jeanne D'arc;jeannedarc
 BUS;1_jdarc2;48.116528;-1.6555251;Jeanne D'arc;jeannedarc
-BUS;1_jdarclj1;48.116984;-1.655848;Jeanne D'arc;jeannedarc
-BUS;1_jdarclj2;48.1168275;-1.6563862;Jeanne D'arc;jeannedarc
 BUS;1_juteaud1;48.1641768;-1.5793211;Juteauderies;juteauderies
 BUS;1_juteaud2;48.162934;-1.5791815;Juteauderies;juteauderies
 BUS;1_kenguye1;48.1210723;-1.71352;Kennedy Guyenne;kennedyguyenne
@@ -671,12 +631,9 @@ BUS;1_laennec1;48.1052192;-1.6661298;Laënnec;laennec
 BUS;1_laennec2;48.1047332;-1.6656562;Laënnec;laënnec
 BUS;1_lamot741;47.9960732;-1.6172378;La Motte;lamotte
 BUS;1_lamot742;47.9959031;-1.6176662;La Motte;lamotte
-BUS;1_lanbrei1;48.1322948;-1.7097011;Lande Du Breil;landedubreil
 BUS;1_landesd1;48.2038793;-1.5946344;Lande Saint Denis;landesaintdenis
-BUS;1_landorg1;48.000737;-1.6667582;Landelle;landelle
-BUS;1_landorg2;48.0004513;-1.6670622;Landelle;landelle
-BUS;1_landpin1;48.0469507;-1.6647529;Croix De Pierre;croixdepierre
-BUS;1_landpin2;48.0462405;-1.6647037;Croix De Pierre;croixdepierre
+BUS;1_landorg1;48.000737;-1.6667582;Landelle (futur Levant);landellefuturlevant
+BUS;1_landorg2;48.0004513;-1.6670622;Landelle (futur Levant);landellefuturlevant
 BUS;1_landrel1;48.0914375;-1.6556288;Landrel;landrel
 BUS;1_landrel2;48.0912617;-1.6546041;Landrel;landrel
 BUS;1_landry1;48.0994333;-1.646725;Landry;landry
@@ -685,11 +642,9 @@ BUS;1_landstd2;48.2032048;-1.595061;Lande Saint Denis;landesaintdenis
 BUS;1_landthf;48.1551878;-1.5731067;Landelles;landelles
 BUS;1_langevi1;48.0942102;-1.6582278;Langevin;langevin
 BUS;1_langevi2;48.0947254;-1.65865;Langevin;langevin
-BUS;1_langevi3;48.0960127;-1.65801;Langevin;langevin
 BUS;1_langloi1;48.0409077;-1.5497771;Langlois;langlois
 BUS;1_langloi2;48.0406586;-1.5501589;Langlois;langlois
 BUS;1_langued1;48.1155737;-1.7047233;Languedoc;languedoc
-BUS;1_langued2;48.1160329;-1.7056393;Languedoc;languedoc
 BUS;1_lasalle1;48.114948;-1.7014047;La Salle;lasalle
 BUS;1_lasalle2;48.1149849;-1.7020863;La Salle;lasalle
 BUS;1_latour1;48.1743823;-1.846508;La Tour;latour
@@ -708,12 +663,6 @@ BUS;1_leblosn2;48.0877309;-1.6538492;Le Blosne;leblosne
 BUS;1_leblosn3;48.088;-1.65434;Le Blosne;leblosne
 BUS;1_lebrix1;48.1507181;-1.7707119;Le Brix;lebrix
 BUS;1_lebrix2;48.1515553;-1.7705181;Le Brix;lebrix
-BUS;1_lecormi1;47.9599934;-1.6324268;Cormier;cormier
-BUS;1_lecormi2;47.9601149;-1.6314039;Cormier;cormier
-BUS;1_ledant2;48.0992758;-1.6527668;Le Dantec;ledantec
-BUS;1_ledante1;48.0992631;-1.6526311;Le Dantec;ledantec
-BUS;1_legrave1;48.1176998;-1.6848542;Legraverend;legraverend
-BUS;1_legrave2;48.1177288;-1.6850318;Legraverend;legraverend
 BUS;1_leho1;48.1062024;-1.7237682;Le Hô;leho
 BUS;1_leho2;48.1063075;-1.7238449;Le Hô;lehô
 BUS;1_lehosu1;48.1069299;-1.7254081;Le Hô;lehô
@@ -738,8 +687,8 @@ BUS;1_lguillo1;48.1086959;-1.6988479;Guilloux Lorient;guillouxlorient
 BUS;1_lguillo2;48.1091011;-1.6979552;Guilloux Lorient;guillouxlorient
 BUS;1_lices1;48.1117364;-1.6870173;Les Lices;leslices
 BUS;1_lices2;48.1117663;-1.6862662;Les Lices;leslices
-BUS;1_lilamor1;48.0758077;-1.8421525;Lilas;lilas
-BUS;1_lilamor2;48.0756036;-1.8428269;Lilas;lilas
+BUS;1_lilamor1;48.0758077;-1.8421525;Lilas (futur Mordelles Lilas);lilasfuturmordelleslilas
+BUS;1_lilamor2;48.0756036;-1.8428269;Lilas (futur Mordelles Lilas);lilasfuturmordelleslilas
 BUS;1_lilas1;48.0933071;-1.7014697;Lilas;lilas
 BUS;1_lilas2;48.0935329;-1.7013479;Lilas;lilas
 BUS;1_lionor1;48.119081;-1.7610144;Lion D'or;liondor
@@ -770,7 +719,6 @@ BUS;1_lyjmou1;48.0773954;-1.7157245;Collège Jean Moulin;collegejeanmoulin
 BUS;1_lyjmou2;48.0769092;-1.7159206;Collège Jean Moulin;collègejeanmoulin
 BUS;1_lyjp1;48.1601395;-1.6772172;Jean Paul Ii;jeanpaulii
 BUS;1_lyjp2;48.1599613;-1.6771018;Jean Paul Ii;jeanpaulii
-BUS;1_lysevig1;48.1190054;-1.5981944;Lycée Sévigné;lyceesevigne
 BUS;1_maacig1;48.1341951;-1.5349125;Acigné Mairie;acignemairie
 BUS;1_maacig2;48.1341702;-1.5347181;Acigné Mairie;acignémairie
 BUS;1_mabetto1;48.1819127;-1.6417391;Betton Mairie;bettonmairie
@@ -821,43 +769,35 @@ BUS;1_mapope2;48.0108247;-1.7064679;Pont Péan Mairie;pontpéanmairie
 BUS;1_marbeuf1;48.1114079;-1.701364;Marbeuf;marbeuf
 BUS;1_marbeuf2;48.1112228;-1.7008091;Marbeuf;marbeuf
 BUS;1_marbeuf3;48.11177;-1.70281;Marbeuf;marbeuf
-BUS;1_marbour1;47.9900952;-1.6138292;Marronniers;marronniers
+BUS;1_marbour1;47.9900952;-1.6138292;Marronniers (futur Centre De Loisirs);marronniersfuturcentredeloisirs
 BUS;1_mardou1;48.0632565;-1.7723118;Mare Doux;maredoux
 BUS;1_mardou2;48.0633949;-1.7723803;Mare Doux;maredoux
 BUS;1_mareuch1;48.1005807;-1.6503114;Villebois-mareuil;villeboismareuil
 BUS;1_mareuch2;48.1001396;-1.6493844;Villebois-mareuil;villeboismareuil
-BUS;1_mareuil1;48.1012117;-1.6496268;Villebois-mareuil;villeboismareuil
-BUS;1_mareuil2;48.1010716;-1.649749;Villebois-mareuil;villeboismareuil
 BUS;1_marin1;48.0825567;-1.715255;Jean Marin;jeanmarin
 BUS;1_marin2;48.0824907;-1.7154529;Jean Marin;jeanmarin
 BUS;1_maronn1;48.1761543;-1.6373587;Marronniers;marronniers
 BUS;1_maronn2;48.1768667;-1.6370554;Marronniers;marronniers
-BUS;1_marsal1;48.0293487;-1.7191097;Mare De La Salle;maredelasalle
-BUS;1_marsal2;48.029193;-1.71962;Mare De La Salle;maredelasalle
 BUS;1_martich1;48.0769248;-1.63186;Martinière;martiniere
 BUS;1_martich2;48.0767753;-1.6317661;Martinière;martinière
 BUS;1_martin1;48.1037113;-1.6627801;Martin;martin
 BUS;1_martin2;48.1033103;-1.6624352;Martin;martin
-BUS;1_martisj1;48.074856;-1.7157341;Airlande;airlande
-BUS;1_martisj2;48.0750709;-1.7159954;Airlande;airlande
-BUS;1_master1;48.0176745;-1.649421;Croix Faucheux;croixfaucheux
-BUS;1_master2;48.0177675;-1.649577;Croix Faucheux;croixfaucheux
+BUS;1_martisj1;48.074856;-1.7157341;Airlande (futur Morinais);airlandefuturmorinais
+BUS;1_martisj2;48.0750709;-1.7159954;Airlande (futur Morinais);airlandefuturmorinais
 BUS;1_mathori1;48.1530391;-1.5794451;Thorigné Mairie;thorignemairie
 BUS;1_mathori2;48.1536062;-1.5797679;Thorigné Mairie;thorignémairie
 BUS;1_maurepa1;48.1213794;-1.6550239;Assomption;assomption
 BUS;1_maurepa2;48.1214359;-1.6551904;Assomption;assomption
 BUS;1_mblanc1;48.1489964;-1.6566011;Maison Blanche;maisonblanche
 BUS;1_mblanc2;48.1492839;-1.6564613;Maison Blanche;maisonblanche
-BUS;1_mdioces1;48.1137769;-1.6980211;Maison Diocésaine;maisondiocesaine
-BUS;1_mdioces2;48.1140288;-1.6982589;Maison Diocésaine;maisondiocésaine
 BUS;1_merel1;48.031429;-1.7087545;Constant Mérel;constantmerel
 BUS;1_merel2;48.0312156;-1.709196;Constant Mérel;constantmérel
 BUS;1_mermoz1;48.0971097;-1.690322;Mermoz;mermoz
 BUS;1_mermoz2;48.0974365;-1.6895839;Mermoz;mermoz
 BUS;1_mermozm1;48.0974581;-1.68859;Mermoz;mermoz
 BUS;1_mermozm2;48.0970891;-1.6890283;Mermoz;mermoz
-BUS;1_metairi1;48.1231135;-1.6005581;Métairies;metairies
-BUS;1_metairi2;48.1231468;-1.6006283;Métairies;métairies
+BUS;1_metairi1;48.1231135;-1.6005581;Métairies (futur Bourgchevreuil);metairiesfuturbourgchevreuil
+BUS;1_metairi2;48.1231468;-1.6006283;Métairies (futur Bourgchevreuil);métairiesfuturbourgchevreuil
 BUS;1_metairi3;48.1231054;-1.6019171;Métairies Chalotais;metairieschalotais
 BUS;1_metairi4;48.1231736;-1.6017884;Métairies Chalotais;métairieschalotais
 BUS;1_meteo1;48.0650068;-1.724483;Centre Météo;centremeteo
@@ -880,8 +820,8 @@ BUS;1_montand1;48.0993419;-1.7111774;Montand;montand
 BUS;1_montant2;48.0998513;-1.7111918;Montand;montand
 BUS;1_morbiha1;48.1327097;-1.6675629;Morbihan;morbihan
 BUS;1_morbiha2;48.132762;-1.6676079;Morbihan;morbihan
-BUS;1_morinai1;48.0805942;-1.7122873;Morinais;morinais
-BUS;1_morinai2;48.0805297;-1.7125899;Morinais;morinais
+BUS;1_morinai1;48.0805942;-1.7122873;Morinais (futur Malraux);morinaisfuturmalraux
+BUS;1_morinai2;48.0805297;-1.7125899;Morinais (futur Malraux);morinaisfuturmalraux
 BUS;1_moubla1;48.01062;-1.7009951;Mouton Blanc;moutonblanc
 BUS;1_moubla2;48.0103843;-1.7010279;Mouton Blanc;moutonblanc
 BUS;1_moulin1;48.1189206;-1.704658;Université;universite
@@ -897,14 +837,10 @@ BUS;1_mtarree1;48.13666;-1.6675082;Monts D'arrée;montsdarree
 BUS;1_mtarree2;48.1365855;-1.6675689;Monts D'arrée;montsdarrée
 BUS;1_mtarrep3;48.1348275;-1.659832;Hôtel De Région;hôtelderégion
 BUS;1_mtarrep4;48.1359346;-1.6591891;Hôtel De Région;hôtelderégion
-BUS;1_mtga1;48.0392507;-1.6804461;Monts Gaultier;montsgaultier
-BUS;1_mtga2;48.0393544;-1.6801058;Monts Gaultier;montsgaultier
 BUS;1_muguet1;48.1184431;-1.60843;Muguet;muguet
 BUS;1_muguet2;48.1183263;-1.6084198;Muguet;muguet
 BUS;1_musscha1;48.0547385;-1.7901692;Alfred De Musset;alfreddemusset
 BUS;1_musscha2;48.055097;-1.79;Alfred De Musset;alfreddemusset
-BUS;1_musset1;48.1161811;-1.6625765;Musset Cité U;mussetciteu
-BUS;1_musset2;48.1162234;-1.6627744;Musset Cité U;mussetcitéu
 BUS;1_nemours1;48.1079815;-1.6801159;Les Halles;leshalles
 BUS;1_nemours2;48.1083487;-1.6801754;Les Halles;leshalles
 BUS;1_neruda1;48.1367537;-1.6710582;Neruda;neruda
@@ -913,9 +849,9 @@ BUS;1_noebi1;48.122835;-1.8013419;Noë Biche;noebiche
 BUS;1_noebi2;48.1229489;-1.8023083;Noë Biche;noëbiche
 BUS;1_noebru1;48.0214159;-1.7523127;Noë;noe
 BUS;1_noebru2;48.0215667;-1.7522797;Noë;noë
-BUS;1_noecin1;48.1033356;-1.8695449;La Noë;lanoe
-BUS;1_noecin2;48.1034233;-1.869448;La Noë;lanoë
-BUS;1_noepar1;48.1913006;-1.8245901;La Noë;lanoë
+BUS;1_noecin1;48.1033356;-1.8695449;La Noë (futur Saint Melaine);lanoefutursaintmelaine
+BUS;1_noecin2;48.1034233;-1.869448;La Noë (futur Saint Melaine);lanoëfutursaintmelaine
+BUS;1_noepar1;48.1913006;-1.8245901;La Noë;lanoe
 BUS;1_noepar2;48.1912471;-1.824356;La Noë;lanoë
 BUS;1_nomi1;48.1416552;-1.7705662;Nominoë;nominoe
 BUS;1_nomi2;48.1417225;-1.770909;Nominoë;nominoë
@@ -936,7 +872,6 @@ BUS;1_ormeaux1;48.0977161;-1.6691678;Ormeaux;ormeaux
 BUS;1_ormeaux2;48.0977396;-1.668349;Ormeaux;ormeaux
 BUS;1_ouessa1;48.15732;-1.7657309;Ouessant;ouessant
 BUS;1_ouessa2;48.1572846;-1.7657142;Ouessant;ouessant
-BUS;1_ourmais1;48.0289902;-1.5514399;L'ourmais;lourmais
 BUS;1_paam1;48.1547327;-1.784426;Pont Amelin;pontamelin
 BUS;1_paam2;48.1547174;-1.7843572;Pont Amelin;pontamelin
 BUS;1_pacoua1;48.0829696;-1.7316741;Le Pâtis;lepatis
@@ -946,7 +881,6 @@ BUS;1_painlev1;48.1231741;-1.6602443;Painlevé;painlevé
 BUS;1_painlev2;48.1233185;-1.659328;Painlevé;painlevé
 BUS;1_palissy1;48.0969578;-1.6785069;Sacrés Coeurs;sacrescoeurs
 BUS;1_palissy2;48.0969052;-1.6791482;Sacrés Coeurs;sacréscoeurs
-BUS;1_parcacti;48.0172697;-1.660332;Parc D'activités;parcdactivites
 BUS;1_parcexp1;48.0600256;-1.734166;Parc Expo;parcexpo
 BUS;1_parcexp2;48.0598812;-1.7343952;Parc Expo;parcexpo
 BUS;1_parcros1;48.0854658;-1.62716;Rocade Sud;rocadesud
@@ -964,15 +898,13 @@ BUS;1_patis1;48.1094452;-1.5031744;Pâtis;patis
 BUS;1_patis2;48.1092968;-1.5032741;Pâtis;pâtis
 BUS;1_patismo1;48.1410523;-1.5736521;Pâtis Du Moulinet;patisdumoulinet
 BUS;1_patismo2;48.1409333;-1.5734668;Pâtis Du Moulinet;pâtisdumoulinet
-BUS;1_patismo3;48.141708;-1.5774259;Pâtis Du Moulinet;pâtisdumoulinet
-BUS;1_patismo4;48.1418168;-1.5774084;Pâtis Du Moulinet;pâtisdumoulinet
 BUS;1_patton1;48.1314131;-1.6622911;Patton Gast;pattongast
 BUS;1_patton2;48.1323062;-1.6615889;Patton Gast;pattongast
 BUS;1_pavie1;48.1050081;-1.6445641;Pavie;pavie
 BUS;1_pavie2;48.1049109;-1.6438288;Pavie;pavie
 BUS;1_perelle1;47.9945013;-1.6315247;Perelle;perelle
 BUS;1_perelle2;47.9944268;-1.631357;Perelle;perelle
-BUS;1_petpre;48.1074015;-1.7392466;Petit Pré;petitpre
+BUS;1_petpre;48.1074015;-1.7392466;Petit Pré (futur Z.i. Ouest);petitprefuturziouest
 BUS;1_pigblan1;48.0900936;-1.6922018;Pigeon Blanc;pigeonblanc
 BUS;1_pigblan2;48.0903981;-1.6931573;Pigeon Blanc;pigeonblanc
 BUS;1_pigeonb1;48.0897679;-1.6929847;Pigeon Blanc;pigeonblanc
@@ -997,7 +929,6 @@ BUS;1_piscgay1;48.1343641;-1.6521694;Gayeulles Piscine;gayeullespiscine
 BUS;1_piscgay2;48.1349454;-1.652059;Gayeulles Piscine;gayeullespiscine
 BUS;1_plardie1;48.0099882;-1.6668553;Plardière;plardiere
 BUS;1_plardie2;48.0100051;-1.6668837;Plardière;plardière
-BUS;1_platin2;48.0938377;-1.7801898;Platinium;platinium
 BUS;1_plaver2;48.1743799;-1.6022392;Placis Vert;placisvert
 BUS;1_plbaud1;48.1123113;-1.644291;Plaine De Baud;plainedebaud
 BUS;1_plbaud2;48.112584;-1.6428613;Plaine De Baud;plainedebaud
@@ -1026,7 +957,6 @@ BUS;1_pommier2;48.2109541;-1.6260239;Pommiers;pommiers
 BUS;1_pontay2;48.1598018;-1.6921369;Pontay;pontay
 BUS;1_pontno1;48.038446;-1.6665252;Pont;pont
 BUS;1_pontno2;48.038657;-1.6668039;Pont;pont
-BUS;1_pontrean;48.005026;-1.7750201;Pont Réan;pontrean
 BUS;1_popla1;48.0875394;-1.6434054;La Poterie;lapoterie
 BUS;1_portail1;48.156271;-1.5923757;Portail;portail
 BUS;1_portail2;48.1564477;-1.5918416;Portail;portail
@@ -1038,8 +968,7 @@ BUS;1_poteri2;48.0875663;-1.6438652;La Poterie;lapoterie
 BUS;1_poteri3;48.0874134;-1.6453714;La Poterie;lapoterie
 BUS;1_poteri4;48.0876077;-1.6459837;La Poterie;lapoterie
 BUS;1_ppaskl2;48.1106884;-1.673693;Place Pasteur;placepasteur
-BUS;1_pprena1;48.0064798;-1.698572;Renardière;renardiere
-BUS;1_pprena2;48.005532;-1.698152;Renardière;renardière
+BUS;1_pprena1;48.0064798;-1.698572;Renardière (futur Caliorne);renardierefuturcaliorne
 BUS;1_pref1;48.1282603;-1.6940181;Préfecture;prefecture
 BUS;1_pref2;48.1282301;-1.6940963;Préfecture;préfecture
 BUS;1_prega1;48.10349;-1.6345929;Pré Garel;pregarel
@@ -1049,7 +978,6 @@ BUS;1_provenc1;48.1074996;-1.4829268;Provence;provence
 BUS;1_provenc2;48.1074804;-1.4826099;Provence;provence
 BUS;1_ptavoin1;48.0961416;-1.7647204;Pont D'avoine;pontdavoine
 BUS;1_ptavoin2;48.0962346;-1.764648;Pont D'avoine;pontdavoine
-BUS;1_ptbeauv1;48.0119527;-1.5458774;Le Petit Beauvais;lepetitbeauvais
 BUS;1_ptbran1;48.1782784;-1.6607127;Pont Brand;pontbrand
 BUS;1_ptbran2;48.178228;-1.6606122;Pont Brand;pontbrand
 BUS;1_ptbreta1;48.1101402;-1.6865796;Pont De Bretagne;pontdebretagne
@@ -1064,8 +992,6 @@ BUS;1_ptcham1;48.1164085;-1.723281;Petit Champeaux;petitchampeaux
 BUS;1_ptcham2;48.1165819;-1.7239023;Petit Champeaux;petitchampeaux
 BUS;1_ptehubl1;48.1822431;-1.6159852;Petite Hublais;petitehublais
 BUS;1_ptehubl2;48.1820989;-1.6162152;Petite Hublais;petitehublais
-BUS;1_pteroch1;47.9762576;-1.6574653;Petite Rochelle;petiterochelle
-BUS;1_pteroch2;47.9761171;-1.6571441;Petite Rochelle;petiterochelle
 BUS;1_ptesaud1;48.047169;-1.6612027;Petite Saudrais;petitesaudrais
 BUS;1_ptesaud2;48.0470077;-1.6610051;Petite Saudrais;petitesaudrais
 BUS;1_ptnante1;48.1021685;-1.6841632;Pont De Nantes;pontdenantes
@@ -1077,22 +1003,17 @@ BUS;1_ptohin2;48.1368661;-1.5486069;Pont D'ohin;pontdohin
 BUS;1_ptpaste1;48.1105417;-1.6748914;Place Pasteur;placepasteur
 BUS;1_ptpastm1;48.1098832;-1.6751292;Musée Beaux Arts;museebeauxarts
 BUS;1_ptpastm2;48.1098533;-1.6745209;Musée Beaux Arts;muséebeauxarts
-BUS;1_ptrean1;48.0047164;-1.7752034;Pont Réan;pontréan
-BUS;1_ptstra1;48.1106991;-1.6556709;Pont De Strasbourg;pontdestrasbourg
-BUS;1_ptstra2;48.109366;-1.65519;Pont De Strasbourg;pontdestrasbourg
 BUS;1_ptstras1;48.1103355;-1.6559754;Pont De Strasbourg;pontdestrasbourg
 BUS;1_ptstras2;48.1099349;-1.6567611;Pont De Strasbourg;pontdestrasbourg
 BUS;1_quentin1;48.1202427;-1.65071;Docteur Quentin;docteurquentin
 BUS;1_quentin2;48.1204335;-1.6506729;Docteur Quentin;docteurquentin
-BUS;1_quince;48.1313498;-1.6918152;Beauregard;beauregard
-BUS;1_quince1;48.1314883;-1.6917332;Beauregard;beauregard
-BUS;1_quince2;48.1313413;-1.6918009;Beauregard;beauregard
-BUS;1_rabine1;48.0238401;-1.7618239;Rabine;rabine
-BUS;1_rabine2;48.0240627;-1.7616693;Rabine;rabine
+BUS;1_quince;48.1313498;-1.6918152;Beauregard (futur Léonard);beauregardfuturleonard
+BUS;1_quince1;48.1314883;-1.6917332;Beauregard (futur Léonard);beauregardfuturléonard
+BUS;1_quince2;48.1313413;-1.6918009;Beauregard (futur Léonard);beauregardfuturléonard
 BUS;1_rabine5;48.0257287;-1.7608247;Rabine;rabine
 BUS;1_rabine6;48.025641;-1.760763;Rabine;rabine
-BUS;1_rablais1;48.0864562;-1.7018328;Rablais Stade Allende;rablaisstadeallende
-BUS;1_rablais2;48.0866451;-1.7014459;Rablais Stade Allende;rablaisstadeallende
+BUS;1_rablais1;48.0864562;-1.7018328;Rablais Stade Allende (futur Rablais Allende);rablaisstadeallendefuturrablaisallende
+BUS;1_rablais2;48.0866451;-1.7014459;Rablais Stade Allende (futur Rablais Allende);rablaisstadeallendefuturrablaisallende
 BUS;1_raison1;48.1013767;-1.6536651;Raison;raison
 BUS;1_raison2;48.1012061;-1.6529637;Raison;raison
 BUS;1_rdkerll1;48.0527801;-1.7383579;Lande Du Pont;landedupont
@@ -1109,8 +1030,6 @@ BUS;1_renaiss1;48.0198998;-1.706993;Renaissance;renaissance
 BUS;1_renaiss2;48.0198882;-1.7070591;Renaissance;renaissance
 BUS;1_renau1;48.1786925;-1.6558632;Renaudais;renaudais
 BUS;1_renau2;48.1787861;-1.655548;Renaudais;renaudais
-BUS;1_renbour1;47.9976362;-1.6192141;Rue De Rennes;ruederennes
-BUS;1_renbour2;47.997531;-1.6189095;Rue De Rennes;ruederennes
 BUS;1_repbottb;48.1093468;-1.6786486;République Pré Botté;republiqueprebotte
 BUS;1_repbottc;48.1092916;-1.6795859;République Pré Botté;républiqueprébotté
 BUS;1_repea;48.1098086;-1.6788241;République;republique
@@ -1155,24 +1074,20 @@ BUS;1_roussai1;48.0153853;-1.6664714;Roussais;roussais
 BUS;1_roussai2;48.0155189;-1.66651;Roussais;roussais
 BUS;1_saens1;48.1041163;-1.6376893;Saint Saëns;saintsaens
 BUS;1_saens2;48.1039852;-1.6359821;Saint Saëns;saintsaëns
-BUS;1_sand1;48.11625;-1.6650582;George Sand;georgesand
-BUS;1_sand2;48.1163146;-1.668887;George Sand;georgesand
 BUS;1_saules1;48.1070625;-1.4791429;Saules;saules
 BUS;1_saules2;48.1072143;-1.4784694;Saules;saules
 BUS;1_sauvaie1;48.0943078;-1.6347428;Sauvaie;sauvaie
 BUS;1_sauvaie2;48.0938729;-1.6338839;Sauvaie;sauvaie
-BUS;1_schuman1;48.1537493;-1.6920125;Schuman;schuman
-BUS;1_schuman2;48.1536686;-1.6920481;Schuman;schuman
+BUS;1_schuman1;48.1537493;-1.6920125;Schuman (futur Paul-emile Victor);schumanfuturpaulemilevictor
+BUS;1_schuman2;48.1536686;-1.6920481;Schuman (futur Paul-emile Victor);schumanfuturpaulemilevictor
 BUS;1_schustj1;48.0445335;-1.7463187;Schuman;schuman
 BUS;1_schustj2;48.0446218;-1.7465021;Schuman;schuman
 BUS;1_senestr1;48.1702892;-1.7363245;Sénestrais;senestrais
 BUS;1_senestr2;48.1699222;-1.7359823;Sénestrais;sénestrais
 BUS;1_serpett1;48.1032093;-1.6524538;Serpette;serpette
 BUS;1_serpett2;48.1031137;-1.6525934;Serpette;serpette
-BUS;1_sevigne2;48.1164027;-1.6732563;Sévigné;sevigne
-BUS;1_sevivin1;48.11618;-1.6740982;Sévigné;sévigné
+BUS;1_sevivin1;48.11618;-1.6740982;Sévigné;sevigne
 BUS;1_sevivin2;48.1175065;-1.6736098;Sévigné;sévigné
-BUS;1_sevivin3;48.1179831;-1.675227;Vincennes;vincennes
 BUS;1_siland2;48.1627198;-1.730593;Silandière;silandiere
 BUS;1_silandi1;48.1639913;-1.7317041;Silandière;silandière
 BUS;1_solidor1;48.0506424;-1.615038;Solidor;solidor
@@ -1189,11 +1104,12 @@ BUS;1_steanne2;48.1147845;-1.6792784;Sainte Anne;sainteanne
 BUS;1_steannec;48.1148434;-1.6800644;Sainte Anne;sainteanne
 BUS;1_steelis1;48.0849285;-1.6508579;Sainte Elisabeth;sainteelisabeth
 BUS;1_steelis2;48.0848814;-1.6511363;Sainte Elisabeth;sainteelisabeth
+BUS;1_stem1;48.01723;-1.65078;Saint-erblon Mairie;sainterblonmairie
+BUS;1_stem2;48.17470;-1.65086;Saint-erblon Mairie;sainterblonmairie
 BUS;1_stetien1;48.131726;-1.5979019;Saint Etienne;saintetienne
 BUS;1_stetien2;48.1321598;-1.5963666;Saint Etienne;saintetienne
 BUS;1_stetien3;48.1311413;-1.5969489;Saint Etienne;saintetienne
 BUS;1_stgillw1;48.1564142;-1.8329201;Saint Gilles Ouest;saintgillesouest
-BUS;1_stgillw2;48.1566259;-1.833694;Saint Gilles Ouest;saintgillesouest
 BUS;1_stlaur;48.1388001;-1.6592131;Saint Laurent;saintlaurent
 BUS;1_stlaur19;48.1384091;-1.6590708;Saint Laurent;saintlaurent
 BUS;1_stlaure1;48.1379717;-1.6587359;Saint Laurent;saintlaurent
@@ -1204,24 +1120,20 @@ BUS;1_styves1;48.0926907;-1.6912753;Saint Yves;saintyves
 BUS;1_styves2;48.0923809;-1.6915842;Saint Yves;saintyves
 BUS;1_suede1;48.0880754;-1.6822143;Suède;suede
 BUS;1_suede2;48.0872748;-1.682399;Suède;suède
-BUS;1_surcouf1;48.1054128;-1.6898479;Surcouf;surcouf
-BUS;1_surcouf2;48.1052143;-1.6907589;Surcouf;surcouf
+BUS;1_surcouf1;48.1054128;-1.6898479;Surcouf (futur Mabilais);surcouffuturmabilais
+BUS;1_surcouf2;48.1052143;-1.6907589;Surcouf (futur Mabilais);surcouffuturmabilais
 BUS;1_surcouo1;47.9924967;-1.6687381;Surcouf;surcouf
 BUS;1_surcouo2;47.9922507;-1.6678971;Surcouf;surcouf
 BUS;1_tage1;48.083464;-1.6632672;Tage;tage
 BUS;1_tage2;48.0836213;-1.6638461;Tage;tage
-BUS;1_tailleb1;48.0370017;-1.7123528;Taillebois;taillebois
-BUS;1_tailleb2;48.0368176;-1.7124772;Taillebois;taillebois
 BUS;1_taillis1;48.1141817;-1.6219493;Taillis;taillis
 BUS;1_taillis2;48.1141499;-1.6218389;Taillis;taillis
 BUS;1_tchemil1;48.1485113;-1.7848992;Touche Milon;touchemilon
 BUS;1_tchemil2;48.1485353;-1.7847532;Touche Milon;touchemilon
-BUS;1_telegra1;47.9832697;-1.6600022;Télégraphe;telegraphe
 BUS;1_terseul1;48.1809499;-1.8448603;Terseul;terseul
 BUS;1_terseul2;48.1809185;-1.8449653;Terseul;terseul
 BUS;1_tertre1;48.1183859;-1.7424941;Tertre;tertre
 BUS;1_tertre2;48.1183511;-1.7411178;Tertre;tertre
-BUS;1_tertro1;48.021833;-1.5472502;Le Tertronais;letertronais
 BUS;1_tespcla;48.1808628;-1.8504869;Parc Des Sports;parcdessports
 BUS;1_tespsps1;48.2146955;-1.5867439;Terrain Des Sports;terraindessports
 BUS;1_tespsps2;48.2147922;-1.586577;Terrain Des Sports;terraindessports
@@ -1242,7 +1154,7 @@ BUS;1_toucham1;48.1799936;-1.8016791;Touche Champagne;touchechampagne
 BUS;1_toucham2;48.1800747;-1.8019021;Touche Champagne;touchechampagne
 BUS;1_touche1;48.1161775;-1.6911673;La Touche;latouche
 BUS;1_touche2;48.1164614;-1.690829;La Touche;latouche
-BUS;1_toucver2;48.0409017;-1.6022922;La Touche;latouche
+BUS;1_toucver2;48.0409017;-1.6022922;La Touche (futur Vern La Touche);latouchefuturvernlatouche
 BUS;1_tourneb1;48.1140593;-1.6372163;Tournebride;tournebride
 BUS;1_tourneb2;48.1139848;-1.6361329;Tournebride;tournebride
 BUS;1_toutizon;48.0559205;-1.7012038;Touche Tizon;touchetizon
@@ -1275,20 +1187,20 @@ BUS;1_valdors1;48.0640817;-1.6230964;Val D'orson;valdorson
 BUS;1_valdors2;48.0639993;-1.6229009;Val D'orson;valdorson
 BUS;1_vallee1;48.1042131;-1.7360399;Marais;marais
 BUS;1_vallee2;48.104127;-1.735938;Marais;marais
-BUS;1_valleeb1;48.1617238;-1.6478676;Vallée;vallee
-BUS;1_valleeb2;48.1619969;-1.6474649;Vallée;vallée
+BUS;1_valleeb1;48.1617238;-1.6478676;Vallée (futur Betton Vallée);valleefuturbettonvallee
+BUS;1_valleeb2;48.1619969;-1.6474649;Vallée (futur Betton Vallée);valléefuturbettonvallée
 BUS;1_vallstj1;48.0684297;-1.6975736;Vallon;vallon
 BUS;1_vallstj2;48.068792;-1.6978563;Vallon;vallon
-BUS;1_valosta1;48.0147322;-1.5984041;Vallon;vallon
-BUS;1_valosta2;48.0146694;-1.5982955;Vallon;vallon
-BUS;1_valvez1;48.1202643;-1.765416;Vallée;vallée
+BUS;1_valosta1;48.0147322;-1.5984041;Vallon (futur Lande Du Jardin);vallonfuturlandedujardin
+BUS;1_valosta2;48.0146694;-1.5982955;Vallon (futur Lande Du Jardin);vallonfuturlandedujardin
+BUS;1_valvez1;48.1202643;-1.765416;Vallée;vallee
 BUS;1_valvez2;48.1203661;-1.7655732;Vallée;vallée
 BUS;1_vaugon1;48.0313922;-1.5995162;Vaugon;vaugon
 BUS;1_vaugon2;48.031259;-1.5994643;Vaugon;vaugon
 BUS;1_vcentre1;48.1188993;-1.756811;Vezin Centre;vezincentre
 BUS;1_vcentre2;48.1193066;-1.7547609;Vezin Centre;vezincentre
-BUS;1_verbuis1;48.0312803;-1.7594874;Vert Buisson Ecoles;vertbuissonecoles
-BUS;1_verbuis2;48.031212;-1.7595513;Vert Buisson Ecoles;vertbuissonecoles
+BUS;1_verbuis1;48.0312803;-1.7594874;Vert Buisson Ecoles (futur Gavrinis);vertbuissonecolesfuturgavrinis
+BUS;1_verbuis2;48.031212;-1.7595513;Vert Buisson Ecoles (futur Gavrinis);vertbuissonecolesfuturgavrinis
 BUS;1_verdaud1;48.1369049;-1.533137;Verdaudais;verdaudais
 BUS;1_verdaud2;48.1371632;-1.5329451;Verdaudais;verdaudais
 BUS;1_verdun2;48.1210206;-1.6868047;Iufm;iufm
@@ -1311,7 +1223,6 @@ BUS;1_villj1;48.1210241;-1.703001;Villejean-université;villejeanuniversite
 BUS;1_villj2;48.1210965;-1.702994;Villejean-université;villejeanuniversité
 BUS;1_villj3;48.1211958;-1.7029893;Villejean-université;villejeanuniversité
 BUS;1_villj4;48.1212654;-1.7032783;Villejean-université;villejeanuniversité
-BUS;1_villj6;48.121344;-1.7024371;Villejean-université;villejeanuniversité
 BUS;1_villuni1;48.1219261;-1.7038891;Villejean-université;villejeanuniversité
 BUS;1_villuni2;48.1218041;-1.703784;Villejean-université;villejeanuniversité
 BUS;1_vincent1;48.0927425;-1.64724;Monsieur Vincent;monsieurvincent
@@ -1425,13 +1336,13 @@ SUBWAY;BLO;48.08774000;-1.654270000;Le Blosne;leblosne
 SUBWAY;CDG;48.10550000;-1.676990000;Charles De Gaulle;charlesdegaulle
 SUBWAY;GAR;48.10379000;-1.672190000;Gares;gares
 SUBWAY;GCL;48.09350000;-1.674390000;Clemenceau;clemenceau
-SUBWAY;HFR;48.08770000;-1.674830000;Henri Fréville;henrifreville
+SUBWAY;HFR;48.08770000;-1.674830000;Henri Fréville;henrifréville
 SUBWAY;ITA;48.08656000;-1.667920000;Italie;italie
 SUBWAY;JCA;48.09766000;-1.675560000;Jacques Cartier;jacquescartier
 SUBWAY;JFK;48.12132000;-1.711460000;J.f. Kennedy;jfkennedy
 SUBWAY;PON;48.12154000;-1.693380000;Pontchaillou;pontchaillou
 SUBWAY;POT;48.08749000;-1.644570000;La Poterie;lapoterie
-SUBWAY;REP;48.10972000;-1.679180000;République;republique
+SUBWAY;REP;48.10972000;-1.679180000;République;république
 SUBWAY;STA;48.11443000;-1.680400000;Sainte-anne;sainteanne
 SUBWAY;TRI;48.08649000;-1.660470000;Triangle;triangle
-SUBWAY;VU;48.12125000;-1.703950000;Villejean-université;villejeanuniversite
+SUBWAY;VU;48.12125000;-1.703950000;Villejean-université;villejeanuniversité
