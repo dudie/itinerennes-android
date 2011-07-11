@@ -2,7 +2,7 @@
     <string name="app_description">Tout ce qu\'il faut pour se déplacer à Rennes</string>
     <string name="version_dots">Version :\u0020</string>
     <string name="error_network">Certaines informations n\'ont pas pu être récupérées. Merci de vérifier votre réseau.</string>
-    <string name="select_layer">Sélectionnez des claques</string>
+    <string name="select_layer">Sélectionnez des calques</string>
     <string name="loading">Chargement</string>
     <string name="location_service_disabled">Le service de localisation n\'est pas activé. Activez le dans les paramètres du système.</string>
     <string name="continuer">Continuer</string>
