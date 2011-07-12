@@ -113,7 +113,7 @@ public class MarkerDao implements MarkersColumns {
      * Fetch a single MarkerOverlayItem from the database based on an unique android id.
      * 
      * @param id
-     *            unique id of the marker
+     *            unique id of the marker ({@link BaseColumns#_ID})
      * @return the Marker
      */
     public final Cursor getMarker(final String id) {
@@ -157,7 +157,7 @@ public class MarkerDao implements MarkersColumns {
                 String.format("m.%s", TYPE), String.format("m.%s", LABEL), LONGITUDE, LATITUDE,
                 String.format("b.%s is not null AS bookmarked", ID) };
 
-        final String selection = String.format("m.%s = ?", ID);
+        final String selection = String.format("m.%s = ? AND m.%s", ID, TYPE);
 
         final String[] selectionArgs = new String[] { id };
 

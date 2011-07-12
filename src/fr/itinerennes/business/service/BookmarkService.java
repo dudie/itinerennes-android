@@ -20,7 +20,7 @@ import fr.itinerennes.model.Bookmark;
  * 
  * @author Jérémie Huchet
  */
-public class BookmarkService extends AbstractService implements BookmarksColumns {
+public final class BookmarkService extends AbstractService implements BookmarksColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BookmarkService.class);
@@ -39,7 +39,13 @@ public class BookmarkService extends AbstractService implements BookmarksColumns
         super(dbHelper);
     }
 
-    public final void addListener(final IBookmarkModificationListener listener) {
+    /**
+     * Adds a listener for modifications make by this service.
+     * 
+     * @param listener
+     *            the listener to bind to this service.
+     */
+    public void addListener(final IBookmarkModificationListener listener) {
 
         if (null == listener) {
             throw new NullPointerException("Can't bind a null listener");
@@ -58,7 +64,7 @@ public class BookmarkService extends AbstractService implements BookmarksColumns
      * @param id
      *            the identifier of the resource
      */
-    public final void setStarred(final String type, final String id, final String label) {
+    public void setStarred(final String type, final String id, final String label) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("setStarred.start - type={}, id={}", type, id);
@@ -97,7 +103,7 @@ public class BookmarkService extends AbstractService implements BookmarksColumns
      * @param id
      *            the identifier of the resource
      */
-    public final void setNotStarred(final String type, final String id) {
+    public void setNotStarred(final String type, final String id) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("setNotStarred.start - type={}, id={}", type, id);
@@ -133,7 +139,7 @@ public class BookmarkService extends AbstractService implements BookmarksColumns
      *            the identifier of the resource
      * @return true if the resource is starred or false
      */
-    public final boolean isStarred(final String type, final String id) {
+    public boolean isStarred(final String type, final String id) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("isStarred.start - type={}, id={}", type, id);
@@ -158,7 +164,7 @@ public class BookmarkService extends AbstractService implements BookmarksColumns
      * 
      * @return all bookmarks
      */
-    public final List<Bookmark> getAllBookmarks() {
+    public List<Bookmark> getAllBookmarks() {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getAllBookmarks.start");
