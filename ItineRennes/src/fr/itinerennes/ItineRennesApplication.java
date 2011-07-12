@@ -225,9 +225,9 @@ public class ItineRennesApplication extends Application {
             httpClient = new ProgressHttpClient(connexionManager, null);
 
             final String appVersion = this.getString(R.string.version_number);
-            final String userAgent = String.format("Android/%s (SDK %s; %s) %s ItineRennes %s",
-                    android.os.Build.DISPLAY, android.os.Build.VERSION.SDK_INT,
-                    android.os.Build.CPU_ABI, android.os.Build.MODEL, appVersion);
+            final String userAgent = String.format("ItineRennes/%s (Android/%s; SDK %s; %s; %s)",
+                    appVersion, android.os.Build.VERSION.RELEASE, android.os.Build.VERSION.SDK_INT,
+                    android.os.Build.MODEL, android.os.Build.DEVICE);
             httpClient.setDefaultUserAgent(userAgent);
         }
 
