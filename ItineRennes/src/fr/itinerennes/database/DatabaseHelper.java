@@ -15,7 +15,7 @@ import fr.itinerennes.utils.FileUtils;
  * 
  * @author Jérémie Huchet
  */
-public class DatabaseHelper extends SQLiteOpenHelper {
+public final class DatabaseHelper extends SQLiteOpenHelper {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(DatabaseHelper.class);
@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
      */
     @Override
-    public final void onCreate(final SQLiteDatabase db) {
+    public void onCreate(final SQLiteDatabase db) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(String.format("database creation - name=%s, version=%d, script=%s",
@@ -59,7 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *      int, int)
      */
     @Override
-    public final void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+    public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(String.format("database upgrade - name=%s, oldVersion=%d, newVersion=%d",
@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param db
      * @param script
      */
-    private final void execScript(final SQLiteDatabase db, final String script) {
+    private void execScript(final SQLiteDatabase db, final String script) {
 
         final String[] statements = script.replaceAll("[\r\n]*", "").replaceAll("[\n\r]*\\s*$", "")
                 .split(";");
