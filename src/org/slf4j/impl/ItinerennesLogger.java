@@ -4,7 +4,7 @@ import org.slf4j.helpers.MessageFormatter;
 
 import android.util.Log;
 
-import fr.itinerennes.LogLevelConstants;
+import fr.itinerennes.DebugConstants;
 
 /**
  * A simple logger using the package for the logging tag and prepends the name of the class which
@@ -38,7 +38,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public final boolean isTraceEnabled() {
 
-        return LogLevelConstants.TRACE || Log.isLoggable(name, Log.VERBOSE);
+        return DebugConstants.LOG_TRACE || Log.isLoggable(name, Log.VERBOSE);
     }
 
     /* @see org.slf4j.Logger#trace(java.lang.String) */
@@ -80,7 +80,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public final boolean isDebugEnabled() {
 
-        return LogLevelConstants.DEBUG || Log.isLoggable(name, Log.DEBUG);
+        return DebugConstants.LOG_DEBUG || Log.isLoggable(name, Log.DEBUG);
     }
 
     /* @see org.slf4j.Logger#debug(java.lang.String) */
@@ -122,7 +122,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public final boolean isInfoEnabled() {
 
-        return LogLevelConstants.INFO || Log.isLoggable(name, Log.INFO);
+        return DebugConstants.LOG_INFO || Log.isLoggable(name, Log.INFO);
     }
 
     /* @see org.slf4j.Logger#info(java.lang.String) */
@@ -164,7 +164,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public final boolean isWarnEnabled() {
 
-        return LogLevelConstants.WARN || Log.isLoggable(name, Log.WARN);
+        return DebugConstants.LOG_WARN || Log.isLoggable(name, Log.WARN);
     }
 
     /* @see org.slf4j.Logger#warn(java.lang.String) */
@@ -206,7 +206,7 @@ public class ItinerennesLogger extends AndroidLogger {
     @Override
     public final boolean isErrorEnabled() {
 
-        return LogLevelConstants.ERROR || Log.isLoggable(name, Log.ERROR);
+        return DebugConstants.LOG_ERROR || Log.isLoggable(name, Log.ERROR);
     }
 
     /* @see org.slf4j.Logger#error(java.lang.String) */

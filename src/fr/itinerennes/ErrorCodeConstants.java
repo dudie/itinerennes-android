@@ -5,7 +5,7 @@ package fr.itinerennes;
  * 
  * @author Jérémie Huchet
  */
-public class ErrorCodeConstants {
+public final class ErrorCodeConstants {
 
     /** A bookmark was not found. */
     public static final short BOOKMARK_NOT_FOUND = 0;

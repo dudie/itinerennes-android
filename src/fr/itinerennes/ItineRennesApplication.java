@@ -35,7 +35,7 @@ import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 /**
  * @author Jérémie Huchet
  */
-@ReportsCrashes(formKey = "dHVwTGY1ZTBOcEQ5SzdXT2dEN2diY3c6MQ")
+@ReportsCrashes(formKey = "dDRaN2hHdUFrUDctQXc3Zl85ZjZOYWc6MQ")
 public class ItineRennesApplication extends Application {
 
     /** The event logger. */
@@ -83,11 +83,11 @@ public class ItineRennesApplication extends Application {
     @Override
     public final void onCreate() {
 
-        // The following line triggers the initialization of ACRA
-        ACRA.init(this);
-
+        if (DebugConstants.ENABLE_ACRA_BUG_REPORTS) {
+            // The following line triggers the initialization of ACRA
+            ACRA.init(this);
+        }
         super.onCreate();
-
     }
 
     /**

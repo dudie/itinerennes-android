@@ -7,6 +7,13 @@ package fr.itinerennes;
  */
 public final class ITRPrefs {
 
+    /**
+     * Private constructor to avoid instantiation.
+     */
+    private ITRPrefs() {
+
+    }
+
     /** Preferences file name. */
     public static final String PREFS_NAME = "fr.itinerennes";
 
