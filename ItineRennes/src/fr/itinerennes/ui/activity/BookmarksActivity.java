@@ -1,6 +1,5 @@
 package fr.itinerennes.ui.activity;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.osmdroid.util.GeoPoint;
@@ -78,13 +77,7 @@ public class BookmarksActivity extends ItineRennesActivity {
                     bookmarksService.setNotStarred(favType, favId);
                     Toast.makeText(BookmarksActivity.this,
                             getString(R.string.delete_bookmark_not_found, favLabel), 5000).show();
-                    list.invalidate();
-                } catch (final IOException e) {
-                    // station is not found, remove it
-                    bookmarksService.setNotStarred(favType, favId);
-                    Toast.makeText(BookmarksActivity.this,
-                            getString(R.string.delete_bookmark_not_found, favLabel), 5000).show();
-                    list.invalidate();
+                    onCreate(null);
                 }
 
             }
@@ -101,11 +94,9 @@ public class BookmarksActivity extends ItineRennesActivity {
      * @return a geopoint
      * @throws GenericException
      *             the bookmark may be not found
-     * @throws IOException
-     *             station not found
      */
     private GeoPoint findBookmarkLocation(final String type, final String id)
-            throws GenericException, IOException {
+            throws GenericException {
 
         final ItineRennesApplication appCtx = getApplicationContext();
         GeoPoint location = null;
