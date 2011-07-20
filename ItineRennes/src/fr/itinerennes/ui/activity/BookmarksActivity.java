@@ -14,7 +14,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import fr.itinerennes.ErrorCodeConstants;
-import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.database.Columns;
@@ -98,10 +97,9 @@ public class BookmarksActivity extends ItineRennesActivity {
     private GeoPoint findBookmarkLocation(final String type, final String id)
             throws GenericException {
 
-        final ItineRennesApplication appCtx = getApplicationContext();
         GeoPoint location = null;
 
-        final Cursor c = appCtx.getMarkerDao().getMarker(id, type);
+        final Cursor c = getApplicationContext().getMarkerDao().getMarker(id, type);
         if (c != null && c.moveToFirst()) {
             location = new GeoPoint(c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE)),
                     c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE)));
