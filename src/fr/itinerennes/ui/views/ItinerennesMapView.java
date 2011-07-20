@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.osmdroid.events.DelayedMapListener;
 import org.osmdroid.events.MapListener;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Overlay;
 
@@ -50,6 +53,14 @@ public class ItinerennesMapView extends MapView {
 
     /** The map box controller. */
     private final MapBoxController mapBoxController;
+
+    static {
+        final ITileSource tileSource = new XYTileSource("Itinerennes", null, 0, 20, 256, ".png",
+                "http://tiles.itinerennes.fr/");
+
+        TileSourceFactory.addTileSource(tileSource);
+
+    }
 
     /**
      * @param context

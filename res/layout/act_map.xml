@@ -60,7 +60,7 @@
 		android:layout_height="fill_parent"
 		android:clickable="true"
 		android:layout_below="@+id/toolbar"
-		tilesource="MapquestOSM"/>
+		tilesource="Itinerennes"/>
 
     <fr.itinerennes.ui.views.ItinerennesZoomControls
         android:id="@+id/zoom_controls" 
