@@ -157,9 +157,9 @@ public class MarkerDao implements MarkersColumns {
                 String.format("m.%s", TYPE), String.format("m.%s", LABEL), LONGITUDE, LATITUDE,
                 String.format("b.%s is not null AS bookmarked", ID) };
 
-        final String selection = String.format("m.%s = ? AND m.%s", ID, TYPE);
+        final String selection = String.format("m.%s = ? AND m.%s = ?", ID, TYPE);
 
-        final String[] selectionArgs = new String[] { id };
+        final String[] selectionArgs = new String[] { id, type };
 
         final Cursor c = query(selection, selectionArgs, columns);
 
