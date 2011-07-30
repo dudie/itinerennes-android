@@ -59,8 +59,24 @@
     </LinearLayout>
     <!-- END TITLE BAR -->
     
-	<ListView android:id="@+activity_bus_route/list_route_stops" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:orientation="vertical">
+    <!--  Progress Bar -->
+    <LinearLayout android:id="@+activity_bus_route/progress_bar"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ProgressBar android:layout_height="@dimen/progress_bar_size"
+            android:layout_width="@dimen/progress_bar_size">
+        </ProgressBar>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"/>
+    </LinearLayout>
+    
+	<ListView android:id="@+activity_bus_route/list_route_stops"
+        android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+        android:orientation="vertical">
 	</ListView>
 
 </LinearLayout>

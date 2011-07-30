@@ -3,16 +3,13 @@
     <string name="version_dots">Version:\u0020</string>
     <string name="error_network">Some informations can not be fetched. Please verify your network.</string>
     <string name="select_layer">Select layers</string>
-    <string name="loading">Loading</string>
+    <string name="loading">Loading...</string>
     <string name="location_service_disabled">The location service is disabled. Enable it in system parameters.</string>
     <string name="continuer">Continue</string>
     <string name="no_departure">No departure for this day.</string>
     <string name="activity_title_bus_stop">Bus stop</string>
     <string name="activity_title_bus_trip">Bus trip</string>
-    <!-- dates -->
-    <string name="date_today_at">today at %s</string>
-    <string name="date_tomorrow_at">tomorrow at %s</string>
-    <string name="date_in_x_days_at">in %0$s days at %1$s</string>
+    
     <!-- bookmarks -->
     <string name="added_to_bookmarks"><i>%s</i> added to bookmarks</string>
     <string name="removed_from_bookmarks"><i>%s</i> removed from bookmarks</string>

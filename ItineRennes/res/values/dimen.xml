@@ -6,4 +6,5 @@
     <dimen name="ic_activity_title_size">28dp</dimen>
     <dimen name="line_icon_max_size">32dp</dimen>
     <dimen name="search_result_list_item_height">64dp</dimen>
+    <dimen name="progress_bar_size">80dp</dimen>
 </resources>

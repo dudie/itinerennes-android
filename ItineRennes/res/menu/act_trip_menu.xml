@@ -2,5 +2,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_back_to_map"
           android:title="@string/menu_back_to_map"
-          android:icon="@drawable/ic_menu_backward" />
+          android:icon="@drawable/ic_menu_map" />
 </menu>

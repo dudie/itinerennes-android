@@ -31,7 +31,7 @@
                 android:background="@drawable/bg_toolbar_bugdroid_bus_station">
             </TextView>
             
-            <ImageView android:id="@+station/bus_activity_wheelchair_icon"
+            <ImageView android:id="@+activity_bus_stop/wheelchair_icon"
                 android:src="@drawable/misc_handistar_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             
             <include layout="@layout/misc_toolbar_vertical_separator"/>
             
-            <ToggleButton android:id="@+station/toggle_bookmark"
+            <ToggleButton android:id="@+activity_bus_stop/toggle_bookmark"
                 android:layout_width="@dimen/toolbar_button_width"
                 android:layout_height="fill_parent"
                 android:background="@drawable/btn_toggle_star"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical">    
             
-            <TextView android:id="@+station/name"
+            <TextView android:id="@+activity_bus_stop/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -81,8 +81,22 @@
 
     <include layout="@layout/ul_line_icon" />
 	
+    <!--  Progress Bar -->
+    <LinearLayout android:id="@+activity_bus_stop/progress_bar"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ProgressBar android:layout_height="@dimen/progress_bar_size"
+            android:layout_width="@dimen/progress_bar_size">
+        </ProgressBar>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"/>
+    </LinearLayout>
+    
 	<ListView 
-	    android:id="@+station/list_bus" 
+	    android:id="@+activity_bus_stop/list_bus" 
 	    android:layout_width="fill_parent"
 		android:layout_height="fill_parent" 
 		android:orientation="vertical">

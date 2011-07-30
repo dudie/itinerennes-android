@@ -9,9 +9,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
@@ -64,26 +62,8 @@ public final class BusTripActivity extends ItineRennesActivity {
     public static final String INTENT_ROUTE_ID = String.format("%s.routeId",
             BusTripActivity.class.getName());
 
-    /** Constant identifying the "loading" dialog. */
-    private static final int DIALOG_LOADING = 0;
-
     /** Constant identifying the "failure" dialog. */
-    private static final int DIALOG_FAILURE = 1;
-
-    /** Handler message specifying the trip schedule download has started. */
-    private static final int MSG_DOWNLOAD_START = 0;
-
-    /**
-     * Handler message specifying the trip schedule is available and the list adapter should be set
-     * up.
-     */
-    private static final int MSG_SET_ADAPTER = 1;
-
-    /** Handler message specifying the trip schedule download finished. */
-    private static final int MSG_DOWNLOAD_END = 3;
-
-    /** Handler message specifying the trip schedule download failed. */
-    private static final int MSG_DOWNLOAD_ERROR = -1;
+    private static final int DIALOG_FAILURE = 0;
 
     /** The view where to display the route icon. */
     private ImageView routeIcon;
@@ -94,41 +74,11 @@ public final class BusTripActivity extends ItineRennesActivity {
     /** The list view where to display the trip schedule. */
     private ListView listRouteStops;
 
-    /** The progress bar of the dialog box. */
-    private ProgressBar progressBar;
-
     /** flag indicating if this route is accessible or not. */
     private boolean isAccessible;
 
-    /** The handler to handle progress messages in the UI thread. */
-    private final Handler handler = new Handler() {
-
-        @Override
-        public void handleMessage(final Message msg) {
-
-            switch (msg.what) {
-            case MSG_DOWNLOAD_START:
-                progressBar.setProgress(0);
-                progressBar.setMax(2);
-                break;
-            case MSG_SET_ADAPTER:
-                progressBar.setProgress(1);
-                onReceiveTripSchedule((TripSchedule) msg.obj);
-                break;
-            case MSG_DOWNLOAD_END:
-                progressBar.setProgress(2);
-                dismissDialogIfDisplayed(DIALOG_LOADING);
-                break;
-            case MSG_DOWNLOAD_ERROR:
-                dismissDialogIfDisplayed(DIALOG_LOADING);
-                showDialog(DIALOG_FAILURE);
-                break;
-
-            default:
-                break;
-            }
-        }
-    };
+    /** Adapter for the schedule list view. */
+    private BusTripTimeAdapter adapter;
 
     /**
      * Creates the main screen. {@inheritDoc}
@@ -147,6 +97,9 @@ public final class BusTripActivity extends ItineRennesActivity {
         routeIcon = (ImageView) findViewById(R.activity_bus_route.route_icon);
         routeName = (TextView) findViewById(R.activity_bus_route.route_name);
         listRouteStops = (ListView) findViewById(R.activity_bus_route.list_route_stops);
+
+        adapter = new BusTripTimeAdapter(this, isAccessible);
+        listRouteStops.setAdapter(adapter);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
@@ -200,8 +153,7 @@ public final class BusTripActivity extends ItineRennesActivity {
             }
         });
 
-        showDialog(DIALOG_LOADING);
-        new ScheduleDownloader(tripId, handler).start();
+        new ScheduleDownloader().execute(tripId);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onResume.end");
@@ -218,24 +170,6 @@ public final class BusTripActivity extends ItineRennesActivity {
 
         Dialog d = null;
         switch (id) {
-        // the loading dialog
-        case DIALOG_LOADING:
-            final AlertDialog.Builder progressBuilder = new AlertDialog.Builder(this);
-            progressBuilder.setTitle(R.string.loading);
-            final View progressView = getLayoutInflater().inflate(R.layout.dial_progress, null);
-            progressBar = (ProgressBar) progressView.findViewById(R.id.progress_bar);
-            progressBuilder.setView(progressView);
-            progressBuilder.setCancelable(true);
-            progressBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-                @Override
-                public void onCancel(final DialogInterface dialog) {
-
-                    finish();
-                }
-            });
-            d = progressBuilder.create();
-            break;
 
         // the failure dialog
         case DIALOG_FAILURE:
@@ -261,81 +195,70 @@ public final class BusTripActivity extends ItineRennesActivity {
     }
 
     /**
-     * Called by the {@link #handler} when the trip schedule has been retrieved.
+     * AsyncTask intended to request a TripSchedule.
      * 
-     * @param schedule
-     *            the retrieved trip schedule.
+     * @author Olivier Boudet
      */
-    private void onReceiveTripSchedule(final TripSchedule schedule) {
-
-        final String stopId = getIntent().getExtras().getString(INTENT_FROM_STOP_ID);
-
-        final BusTripTimeAdapter routeStopsAdapter = new BusTripTimeAdapter(this, stopId,
-                schedule.getStopTimes(), isAccessible);
-        listRouteStops.setAdapter(routeStopsAdapter);
-        final int idx = routeStopsAdapter.getIndexForStopId(stopId);
-        listRouteStops.setSelectionFromTop(idx, 50);
-    }
-
-    /**
-     * Thread intended to request a TripSchedule.
-     * 
-     * @author Jérémie Huchet
-     */
-    private class ScheduleDownloader extends Thread {
-
-        /** The trip id. */
-        private final String tripId;
-
-        /** The handler to notify progress. */
-        private final Handler handler;
+    private class ScheduleDownloader extends AsyncTask<String, Void, TripSchedule> {
 
         /**
-         * Creates the trip schedule requested.
+         * {@inheritDoc}
          * 
-         * @param tripId
-         *            the trip id the retrieve
-         * @param handler
-         *            the handler to notify
-         */
-        public ScheduleDownloader(final String tripId, final Handler handler) {
-
-            this.tripId = tripId;
-            this.handler = handler;
-        }
-
-        /**
-         * Retrieve the trip schedule and notifies the handler.
-         * 
-         * @see java.lang.Thread#run()
+         * @see android.os.AsyncTask#onPreExecute()
          */
         @Override
-        public void run() {
+        protected void onPreExecute() {
 
-            handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_START));
+            /* Hide progress bar and show list view. */
+            findViewById(R.activity_bus_route.progress_bar).setVisibility(View.VISIBLE);
+            findViewById(R.activity_bus_route.list_route_stops).setVisibility(View.GONE);
+        };
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see android.os.AsyncTask#doInBackground(Params[])
+         */
+        @Override
+        protected TripSchedule doInBackground(final String... params) {
+
             try {
 
                 final IOneBusAwayClient obaClient = getApplicationContext().getOneBusAwayClient();
 
-                final TripSchedule schedule = obaClient.getTripDetails(tripId);
+                return obaClient.getTripDetails(params[0]);
 
-                handler.sendMessage(handler.obtainMessage(MSG_SET_ADAPTER, schedule));
-                handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_END));
             } catch (final IOException e) {
-                handler.sendMessage(handler.obtainMessage(MSG_DOWNLOAD_ERROR));
+                LOGGER.debug(String.format("Can't load informations for the trip %s.", params[0]),
+                        e);
             }
+            return null;
         }
-    }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onNewIntent(android.content.Intent)
-     */
-    @Override
-    protected void onNewIntent(final Intent intent) {
+        /**
+         * {@inheritDoc}
+         * 
+         * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+         */
+        @Override
+        protected void onPostExecute(final TripSchedule schedule) {
 
-        setIntent(intent);
+            if (schedule != null) {
+
+                /* Hide progress bar and show list view. */
+                findViewById(R.activity_bus_route.progress_bar).setVisibility(View.GONE);
+                findViewById(R.activity_bus_route.list_route_stops).setVisibility(View.VISIBLE);
+
+                final String stopId = getIntent().getExtras().getString(INTENT_FROM_STOP_ID);
+
+                adapter.setInitialStopId(stopId);
+                adapter.setArrivalAndDepartures(schedule.getStopTimes());
+
+                listRouteStops.setSelectionFromTop(adapter.getIndexForStopId(stopId), 50);
+            } else {
+                showDialog(DIALOG_FAILURE);
+            }
+        };
     }
 
     /**
@@ -347,7 +270,7 @@ public final class BusTripActivity extends ItineRennesActivity {
     public boolean onCreateOptionsMenu(final Menu menu) {
 
         final MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.back_to_map_menu, menu);
+        inflater.inflate(R.menu.act_trip_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -366,7 +289,6 @@ public final class BusTripActivity extends ItineRennesActivity {
 
             final Intent i = new Intent(getApplicationContext(), MapActivity.class);
             i.setAction(Intent.ACTION_VIEW);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
             return true;
         default:
