@@ -1,9 +1,10 @@
 package fr.itinerennes.ui.adapter;
 
-import java.util.Calendar;
 import java.util.Date;
 
+import android.content.res.Resources;
 import android.text.format.DateUtils;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ public class BusStopTimeAdapter extends BaseAdapter {
     private final LineIconService lineIconService;
 
     /** Stop complete schedule. */
-    private final StopSchedule data;
+    private StopSchedule data;
 
     /** Global instance of Layout inflater. */
     private final LayoutInflater inflater;
@@ -40,7 +41,7 @@ public class BusStopTimeAdapter extends BaseAdapter {
      * A trip identifier which must be highlighted in the schedule. May be null if there no trip to
      * highlight.
      */
-    private final String tripIdToHighlight;
+    private String tripIdToHighlight;
 
     /**
      * Is the stop accessible ? Determines if the handistar icon should be displayed for accessible
@@ -48,26 +49,21 @@ public class BusStopTimeAdapter extends BaseAdapter {
      */
     private final boolean stopIsAccessible;
 
+    private static Time sThenTime;
+
     /**
      * Constructor.
      * 
      * @param context
      *            The android context
-     * @param schedule
-     *            departures to display in the list
-     * @param tripIdToHighlight
-     *            a trip id to highlight in the schedule, or null to not highlight any trip
      * @param stopIsAccessible
      *            true if the stop of the given schedule is accessible
      */
-    public BusStopTimeAdapter(final ItineRennesActivity context, final StopSchedule schedule,
-            final String tripIdToHighlight, final boolean stopIsAccessible) {
+    public BusStopTimeAdapter(final ItineRennesActivity context, final boolean stopIsAccessible) {
 
-        this.data = schedule;
         this.context = context;
         this.lineIconService = context.getApplicationContext().getLineIconService();
         this.inflater = LayoutInflater.from(context);
-        this.tripIdToHighlight = tripIdToHighlight;
         this.stopIsAccessible = stopIsAccessible;
 
     }
@@ -80,7 +76,11 @@ public class BusStopTimeAdapter extends BaseAdapter {
     @Override
     public final int getCount() {
 
-        return data.getStopTimes().size();
+        if (data != null) {
+            return data.getStopTimes().size();
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -91,7 +91,10 @@ public class BusStopTimeAdapter extends BaseAdapter {
     @Override
     public final ScheduleStopTime getItem(final int position) {
 
-        return data.getStopTimes().get(position);
+        if (data != null) {
+            return data.getStopTimes().get(position);
+        } else
+            return null;
     }
 
     /**
@@ -132,9 +135,8 @@ public class BusStopTimeAdapter extends BaseAdapter {
         final TextView timeBeforeDepartureView = (TextView) busTimeView
                 .findViewById(R.station.bus_departure_time_before);
 
-        timeBeforeDepartureView.setText(DateUtils.getRelativeTimeSpanString(stopTime
-                .getDepartureTime().getTime(), System.currentTimeMillis(),
-                DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
+        timeBeforeDepartureView.setText(getRelativeTimeSpanString(stopTime.getDepartureTime()
+                .getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS));
 
         if (stopIsAccessible) {
             // TOBO est ce que c'est nécessaire de mettre dans une map les attributs déjà récupérés
@@ -192,7 +194,7 @@ public class BusStopTimeAdapter extends BaseAdapter {
      * <ul>
      * <li>if today, displays : 10h05</li>
      * <li>if tomorrow, displays : tomorrow at 10h05</li>
-     * <li>if after, displays : in * days at 10h05</li>
+     * <li>else, displays directly the localized date</li>
      * </ul>
      * 
      * @param date
@@ -201,23 +203,118 @@ public class BusStopTimeAdapter extends BaseAdapter {
      */
     private String formatDepartureDate(final Date date) {
 
-        final Calendar c = Calendar.getInstance();
-        c.set(Calendar.MILLISECOND, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        final int days = fr.itinerennes.commons.utils.DateUtils.getDayCount(date.getTime()
-                - c.getTimeInMillis());
-        final String time = DateUtils.formatDateTime(context, date.getTime(),
+        final long now = System.currentTimeMillis();
+        final boolean past = (now >= date.getTime());
+
+        final int days = getNumberOfDaysPassed(date.getTime(), now);
+
+        final String timeToDisplay = DateUtils.formatDateTime(context, date.getTime(),
                 DateUtils.FORMAT_24HOUR | DateUtils.FORMAT_SHOW_TIME);
+
         switch (days) {
         case 0:
-            return context.getResources().getString(R.string.date_today_at, time);
+            return context.getResources().getString(R.string.date_today_at, timeToDisplay);
+
         case 1:
-            return context.getResources().getString(R.string.date_tomorrow_at, time);
+            if (past) {
+                return context.getResources().getString(R.string.date_yesterday_at, timeToDisplay);
+            } else {
+                return context.getResources().getString(R.string.date_tomorrow_at, timeToDisplay);
+            }
         default:
-            return context.getResources().getString(R.string.date_in_x_days_at, days, time);
+            return DateUtils.formatDateTime(context, date.getTime(), DateUtils.FORMAT_24HOUR
+                    | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE);
         }
+    }
+
+    /**
+     * Returns a string describing 'time' as a time relative to 'now'.
+     * <p>
+     * Time spans in the past are formatted like "42 minutes ago". Time spans in the future are
+     * formatted like "in 42 minutes".
+     * <p>
+     * Inspired by {@link DateUtils#getRelativeTimeSpanString(long, long, long)}
+     * 
+     * @param time
+     *            the time to describe, in milliseconds
+     * @param now
+     *            the current time in milliseconds
+     * @param minResolution
+     *            the minimum timespan to report. For example, a time 3 seconds in the past will be
+     *            reported as "0 minutes ago" if this is set to MINUTE_IN_MILLIS. Pass one of 0,
+     *            MINUTE_IN_MILLIS, HOUR_IN_MILLIS, DAY_IN_MILLIS, WEEK_IN_MILLIS
+     */
+    public CharSequence getRelativeTimeSpanString(final long time, final long now,
+            final long minResolution) {
+
+        /*
+         * This method is not in DateUtils because we need Application Resources, unavailable in
+         * static methods (needs application context to get one).
+         */
+        final Resources r = context.getResources();
+
+        final boolean past = (now >= time);
+        final long duration = Math.abs(now - time);
+
+        final int resId;
+        final long count;
+        if (duration < DateUtils.MINUTE_IN_MILLIS && minResolution < DateUtils.MINUTE_IN_MILLIS) {
+            count = duration / DateUtils.SECOND_IN_MILLIS;
+            if (past) {
+                resId = R.plurals.num_seconds_ago;
+            } else {
+                resId = R.plurals.in_num_seconds;
+            }
+        } else if (duration < DateUtils.HOUR_IN_MILLIS && minResolution < DateUtils.HOUR_IN_MILLIS) {
+            count = duration / DateUtils.MINUTE_IN_MILLIS;
+            if (past) {
+                resId = R.plurals.num_minutes_ago;
+            } else {
+                resId = R.plurals.in_num_minutes;
+            }
+        } else if (duration < DateUtils.DAY_IN_MILLIS && minResolution < DateUtils.DAY_IN_MILLIS) {
+            count = duration / DateUtils.HOUR_IN_MILLIS;
+            if (past) {
+                resId = R.plurals.num_hours_ago;
+            } else {
+                resId = R.plurals.in_num_hours;
+            }
+        } else if (duration < DateUtils.WEEK_IN_MILLIS && minResolution < DateUtils.WEEK_IN_MILLIS) {
+            count = getNumberOfDaysPassed(time, now);
+            if (past) {
+                resId = R.plurals.num_days_ago;
+            } else {
+                resId = R.plurals.in_num_days;
+            }
+        } else {
+            // We know that we won't be showing the time, so it is safe to pass
+            // in a null context.
+            return DateUtils.formatDateRange(null, time, time, 0);
+        }
+
+        final String format = r.getQuantityString(resId, (int) count);
+        return String.format(format, count);
+    }
+
+    /**
+     * Returns the number of days passed between two dates.
+     * 
+     * @param date1
+     *            first date
+     * @param date2
+     *            second date
+     * @return number of days passed between to dates.
+     */
+    private static synchronized int getNumberOfDaysPassed(final long date1, final long date2) {
+
+        if (sThenTime == null) {
+            sThenTime = new Time();
+        }
+        sThenTime.set(date1);
+        final int day1 = Time.getJulianDay(date1, sThenTime.gmtoff);
+        sThenTime.set(date2);
+        final int day2 = Time.getJulianDay(date2, sThenTime.gmtoff);
+        return Math.abs(day2 - day1);
     }
 
     /**
@@ -274,6 +371,25 @@ public class BusStopTimeAdapter extends BaseAdapter {
         }
 
         return index;
+    }
+
+    /**
+     * @param tripId
+     */
+    public void setTripIdToHighlight(final String tripId) {
+
+        this.tripIdToHighlight = tripId;
+
+    }
+
+    /**
+     * @param schedule
+     */
+    public void setData(final StopSchedule schedule) {
+
+        this.data = schedule;
+        notifyDataSetChanged();
+
     }
 
 }

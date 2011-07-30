@@ -29,10 +29,10 @@ public class BusTripTimeAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
 
     /** The initial stop identifier on which set a marker. */
-    private final String initialStopId;
+    private String initialStopId;
 
     /** The list of arrival times and departure times of the bus for each stop of the trip. */
-    private final List<TripStopTime> arrivalAndDepartures;
+    private List<TripStopTime> arrivalAndDepartures;
 
     /**
      * Is the route accessible ? Determines if the handistar icon should be displayed for accessible
@@ -45,20 +45,13 @@ public class BusTripTimeAdapter extends BaseAdapter {
      * 
      * @param context
      *            The android context
-     * @param initialStopId
-     *            the stop id where to set a marker
-     * @param arrivalAndDepartures
-     *            the list of arrival times and departure times of the bus for each stop of the trip
      * @param routeIsAccessible
      *            accessibility flag for the route
      */
-    public BusTripTimeAdapter(final ItineRennesActivity context, final String initialStopId,
-            final List<TripStopTime> arrivalAndDepartures, final boolean routeIsAccessible) {
+    public BusTripTimeAdapter(final ItineRennesActivity context, final boolean routeIsAccessible) {
 
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.arrivalAndDepartures = arrivalAndDepartures;
-        this.initialStopId = initialStopId;
         this.routeIsAccessible = routeIsAccessible;
     }
 
@@ -70,7 +63,11 @@ public class BusTripTimeAdapter extends BaseAdapter {
     @Override
     public final int getCount() {
 
-        return arrivalAndDepartures.size();
+        if (arrivalAndDepartures != null) {
+            return arrivalAndDepartures.size();
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -81,7 +78,11 @@ public class BusTripTimeAdapter extends BaseAdapter {
     @Override
     public final TripStopTime getItem(final int position) {
 
-        return arrivalAndDepartures.get(position);
+        if (arrivalAndDepartures != null) {
+            return arrivalAndDepartures.get(position);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -171,4 +172,27 @@ public class BusTripTimeAdapter extends BaseAdapter {
         }
         return 0;
     }
+
+    /**
+     * Sets the initialStopId.
+     * 
+     * @param initialStopId
+     *            the initialStopId to set
+     */
+    public void setInitialStopId(final String initialStopId) {
+
+        this.initialStopId = initialStopId;
+    }
+
+    /**
+     * Sets the arrivalAndDepartures.
+     * 
+     * @param arrivalAndDepartures
+     *            the arrivalAndDepartures to set
+     */
+    public void setArrivalAndDepartures(final List<TripStopTime> arrivalAndDepartures) {
+
+        this.arrivalAndDepartures = arrivalAndDepartures;
+    }
+
 }
