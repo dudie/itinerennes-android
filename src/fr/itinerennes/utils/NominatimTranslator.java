@@ -6,8 +6,9 @@ import java.util.List;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 
+import fr.dudie.nominatim.model.Address;
+
 import fr.itinerennes.database.Columns.NominatimColumns;
-import fr.itinerennes.nominatim.model.Address;
 
 /**
  * Translates nominatim {@link Address}es to {@link Cursor}.

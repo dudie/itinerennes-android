@@ -12,12 +12,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import fr.dudie.onebusaway.model.ScheduleStopTime;
+import fr.dudie.onebusaway.model.StopSchedule;
+
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.business.service.LineIconService;
 import fr.itinerennes.commons.utils.StringUtils;
-import fr.itinerennes.onebusaway.model.ScheduleStopTime;
-import fr.itinerennes.onebusaway.model.StopSchedule;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 
 /**

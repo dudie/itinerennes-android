@@ -27,14 +27,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import fr.dudie.onebusaway.client.IOneBusAwayClient;
+import fr.dudie.onebusaway.model.Route;
+import fr.dudie.onebusaway.model.ScheduleStopTime;
+import fr.dudie.onebusaway.model.StopSchedule;
+
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.commons.utils.DateUtils;
 import fr.itinerennes.database.Columns;
-import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
-import fr.itinerennes.onebusaway.model.Route;
-import fr.itinerennes.onebusaway.model.ScheduleStopTime;
-import fr.itinerennes.onebusaway.model.StopSchedule;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 

@@ -12,11 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import fr.dudie.onebusaway.client.IOneBusAwayClient;
+import fr.dudie.onebusaway.model.Route;
+import fr.dudie.onebusaway.model.Stop;
+
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
-import fr.itinerennes.onebusaway.model.Route;
-import fr.itinerennes.onebusaway.model.Stop;
 import fr.itinerennes.ui.activity.BusStopActivity;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.event.ToggleStarListener;

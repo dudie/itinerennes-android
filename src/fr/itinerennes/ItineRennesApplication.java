@@ -16,6 +16,12 @@ import org.slf4j.impl.AndroidLoggerFactory;
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import fr.dudie.nominatim.client.JsonNominatimClient;
+import fr.dudie.nominatim.client.NominatimClient;
+import fr.dudie.nominatim.model.BoundingBox;
+import fr.dudie.onebusaway.client.IOneBusAwayClient;
+import fr.dudie.onebusaway.client.JsonOneBusAwayClient;
+
 import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.business.service.LineIconService;
@@ -26,11 +32,6 @@ import fr.itinerennes.exceptions.ExceptionHandler;
 import fr.itinerennes.http.client.ProgressHttpClient;
 import fr.itinerennes.keolis.client.JsonKeolisClient;
 import fr.itinerennes.keolis.client.KeolisClient;
-import fr.itinerennes.nominatim.client.JsonNominatimClient;
-import fr.itinerennes.nominatim.client.NominatimClient;
-import fr.itinerennes.nominatim.model.BoundingBox;
-import fr.itinerennes.onebusaway.client.IOneBusAwayClient;
-import fr.itinerennes.onebusaway.client.JsonOneBusAwayClient;
 
 /**
  * @author Jérémie Huchet
