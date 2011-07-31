@@ -24,12 +24,13 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
+import fr.dudie.nominatim.model.Address;
+
 import fr.itinerennes.R;
 import fr.itinerennes.commons.utils.SearchUtils;
 import fr.itinerennes.database.Columns.LocationColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.database.Columns.NominatimColumns;
-import fr.itinerennes.nominatim.model.Address;
 import fr.itinerennes.ui.adapter.WrapperAdapter;
 import fr.itinerennes.utils.NominatimTranslator;
 import fr.itinerennes.utils.ResourceResolver;
