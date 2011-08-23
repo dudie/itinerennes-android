@@ -8,10 +8,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import fr.dudie.keolis.client.KeolisClient;
+import fr.dudie.keolis.model.BikeStation;
+
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.keolis.client.KeolisClient;
-import fr.itinerennes.keolis.model.BikeStation;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;

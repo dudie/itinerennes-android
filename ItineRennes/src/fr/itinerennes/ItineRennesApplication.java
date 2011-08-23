@@ -2,20 +2,25 @@ package fr.itinerennes;
 
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
+import org.apache.http.client.HttpClient;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import fr.dudie.keolis.client.JsonKeolisClient;
+import fr.dudie.keolis.client.KeolisClient;
 import fr.dudie.nominatim.client.JsonNominatimClient;
 import fr.dudie.nominatim.client.NominatimClient;
 import fr.dudie.nominatim.model.BoundingBox;
@@ -30,8 +35,6 @@ import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
 import fr.itinerennes.exceptions.ExceptionHandler;
 import fr.itinerennes.http.client.ProgressHttpClient;
-import fr.itinerennes.keolis.client.JsonKeolisClient;
-import fr.itinerennes.keolis.client.KeolisClient;
 
 /**
  * @author Jérémie Huchet
@@ -74,7 +77,7 @@ public class ItineRennesApplication extends Application {
     private NominatimClient nominatimClient;
 
     /** The Progress Http Client. */
-    private ProgressHttpClient httpClient;
+    private HttpClient httpClient;
 
     /**
      * Inits ACRA.
@@ -210,7 +213,7 @@ public class ItineRennesApplication extends Application {
      * 
      * @return a reference to the {@link ProgressHttpClient}
      */
-    public final ProgressHttpClient getHttpClient() {
+    public final HttpClient getHttpClient() {
 
         if (httpClient == null) {
             final SchemeRegistry registry = new SchemeRegistry();
@@ -223,13 +226,15 @@ public class ItineRennesApplication extends Application {
 
             final ThreadSafeClientConnManager connexionManager = new ThreadSafeClientConnManager(
                     params, registry);
-            httpClient = new ProgressHttpClient(connexionManager, null);
 
             final String appVersion = this.getString(R.string.version_number);
             final String userAgent = String.format("ItineRennes/%s (Android/%s; SDK %s; %s; %s)",
                     appVersion, android.os.Build.VERSION.RELEASE, android.os.Build.VERSION.SDK_INT,
                     android.os.Build.MODEL, android.os.Build.DEVICE);
-            httpClient.setDefaultUserAgent(userAgent);
+
+            params.setParameter(HttpProtocolParams.USER_AGENT, userAgent);
+
+            httpClient = new DefaultHttpClient(connexionManager, null);
         }
 
         return httpClient;

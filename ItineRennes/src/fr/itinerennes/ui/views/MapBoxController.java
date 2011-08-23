@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import fr.dudie.keolis.model.BikeStation;
+import fr.dudie.keolis.model.SubwayStation;
 import fr.dudie.onebusaway.model.Stop;
 
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.keolis.model.BikeStation;
-import fr.itinerennes.keolis.model.SubwayStation;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.adapter.BikeStationBoxAdapter;
 import fr.itinerennes.ui.adapter.BusStationBoxAdapter;
