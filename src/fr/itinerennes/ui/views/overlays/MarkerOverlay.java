@@ -152,14 +152,13 @@ public class MarkerOverlay extends LazyOverlay {
     /**
      * {@inheritDoc}
      * 
-     * @see org.osmdroid.views.overlay.Overlay#onSingleTapUp(android.view.MotionEvent,
-     *      org.osmdroid.views.MapView)
+     * @see org.osmdroid.views.overlay.Overlay#onSingleTapConfirmed(MotionEvent, MapView)
      */
     @Override
-    public final boolean onSingleTapUp(final MotionEvent e, final MapView mapView) {
+    public final boolean onSingleTapConfirmed(final MotionEvent e, final MapView mapView) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onSingleTapUp.start - event={}", e);
+            LOGGER.debug("onSingleTapConfirmed.start - event={}", e);
         }
 
         final boolean eventHandled;
@@ -178,7 +177,7 @@ public class MarkerOverlay extends LazyOverlay {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onSingleTapUp.end - eventHandled={}", eventHandled);
+            LOGGER.debug("onSingleTapConfirmed.end - eventHandled={}", eventHandled);
         }
 
         return eventHandled;
