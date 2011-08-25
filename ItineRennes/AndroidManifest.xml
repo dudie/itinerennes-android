@@ -18,7 +18,7 @@
                 <action android:name="android.intent.action.VIEW"></action>
             </intent-filter>
             <intent-filter>
-                <action android:name="fr.itinerennes.ui.activity.MapActivity.CENTER_ON_MARKER" />
+                <action android:name="fr.itinerennes.ui.activity.MapActivity.SEARCH_SUGGESTION" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"></action>

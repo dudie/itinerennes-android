@@ -3,6 +3,7 @@ package fr.itinerennes.ui.activity;
 import java.io.IOException;
 import java.util.List;
 
+import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,6 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
-
 import fr.dudie.nominatim.model.Address;
 
 import fr.itinerennes.R;
@@ -32,6 +32,7 @@ import fr.itinerennes.database.Columns.LocationColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.database.Columns.NominatimColumns;
 import fr.itinerennes.ui.adapter.WrapperAdapter;
+import fr.itinerennes.utils.MapUtils;
 import fr.itinerennes.utils.NominatimTranslator;
 import fr.itinerennes.utils.ResourceResolver;
 
@@ -124,15 +125,31 @@ public final class SearchResultsActivity extends ItineRennesActivity {
 
                 final Cursor item = (Cursor) resultsListAdapter.getItem(position);
                 if (null != item) {
-                    final Intent i = new Intent(getBaseContext(), MapActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                     if (item.getColumnIndex(MarkersColumns.TYPE) != -1
                             && item.getColumnIndex(MarkersColumns.LABEL) != -1) {
                         // item has a type and a label, it is a marker
-                        i.setAction(MapActivity.INTENT_CENTER_ON_MARKER);
-                        i.putExtra(MapActivity.INTENT_MARKER_UNIQUE_ID,
-                                item.getString(item.getColumnIndex(BaseColumns._ID)));
+                        final String markerId = item.getString(item.getColumnIndex(BaseColumns._ID));
+                        final Cursor c = getApplicationContext().getMarkerDao()
+                                .getMarkersWithSameLabel(markerId);
+
+                        // calculate the barycenter to center the map on it
+                        if (c != null && c.moveToFirst()) {
+
+                            final GeoPoint barycentre = MapUtils.getBarycenter(c);
+
+                            final String markerType = item.getString(item
+                                    .getColumnIndex(MarkersColumns.TYPE));
+
+                            c.close();
+
+                            startActivity(MapActivity.IntentFactory
+                                    .getCenterOnLocationAndShowMarkerTypeIntent(
+                                            getApplicationContext(), barycentre.getLatitudeE6(),
+                                            barycentre.getLongitudeE6(), 17, markerType));
+
+                        }
+
                     } else {
                         // item does not have a type and a label, so it is a simple location
                         final int latE6 = item.getInt(item.getColumnIndex(LocationColumns.LATITUDE));
@@ -145,15 +162,10 @@ public final class SearchResultsActivity extends ItineRennesActivity {
                                     lonE6, latE6);
                         }
 
-                        i.setAction(Intent.ACTION_VIEW);
-
-                        i.putExtra(MapActivity.INTENT_SET_MAP_LON, lonE6);
-                        i.putExtra(MapActivity.INTENT_SET_MAP_LAT, latE6);
+                        startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(
+                                getApplicationContext(), latE6, lonE6, 17));
                     }
 
-                    i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
-
-                    startActivity(i);
                 }
             }
         });

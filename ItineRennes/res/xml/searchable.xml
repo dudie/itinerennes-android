@@ -3,7 +3,7 @@
     android:label="@string/app_name"
     android:hint="@string/search_field_hint"
     android:searchSuggestAuthority="fr.itinerennes.provider.searchMarkersProvider"
-    android:searchSuggestIntentAction="fr.itinerennes.ui.activity.MapActivity.CENTER_ON_MARKER"
+    android:searchSuggestIntentAction="fr.itinerennes.ui.activity.MapActivity.SEARCH_SUGGESTION"
     android:searchSuggestSelection=" ?" 
     android:searchSuggestIntentData="content://fr.itinerennes.provider.searchMarkersProvider"
     android:includeInGlobalSearch="true" >

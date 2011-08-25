@@ -225,13 +225,7 @@ public final class BusStopActivity extends ItineRennesActivity {
 
             c.close();
 
-            final Intent i = new Intent(getApplicationContext(), MapActivity.class);
-            i.setAction(Intent.ACTION_VIEW);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
-            i.putExtra(MapActivity.INTENT_SET_MAP_LON, lon);
-            i.putExtra(MapActivity.INTENT_SET_MAP_LAT, lat);
-            startActivity(i);
+            startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(getApplicationContext(), lat, lon, 17));
 
         } else {
             // TJHU gestion erreur qui ne doit pas arriver dans un cas normal
