@@ -62,15 +62,8 @@ public class BookmarksActivity extends ItineRennesActivity {
 
                 try {
                     final GeoPoint location = findBookmarkLocation(favType, favId);
-                    final Intent i = new Intent(BookmarksActivity.this, MapActivity.class);
-                    i.setAction(Intent.ACTION_VIEW);
-                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.putExtra(MapActivity.INTENT_SELECT_BOOKMARK_ID, favId);
-                    i.putExtra(MapActivity.INTENT_SELECT_BOOKMARK_TYPE, favType);
-                    i.putExtra(MapActivity.INTENT_SET_MAP_ZOOM, 17);
-                    i.putExtra(MapActivity.INTENT_SET_MAP_LON, location.getLongitudeE6());
-                    i.putExtra(MapActivity.INTENT_SET_MAP_LAT, location.getLatitudeE6());
-                    BookmarksActivity.this.startActivity(i);
+                    
+                    BookmarksActivity.this.startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(getApplicationContext(), location.getLatitudeE6(), location.getLongitudeE6(), 17));
                 } catch (final GenericException e) {
                     // bookmark is not found, remove it
                     bookmarksService.setNotStarred(favType, favId);

@@ -28,6 +28,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import fr.itinerennes.ITRPrefs;
+import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
@@ -48,40 +49,6 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(MapActivity.class);
-
-    /** Intent parameter name to pass the map zoom level to set. */
-    public static final String INTENT_SET_MAP_ZOOM = String.format("%s.setMapZoom",
-            MapActivity.class.getName());
-
-    /** Intent parameter name to pass the map latidute to set. */
-    public static final String INTENT_SET_MAP_LAT = String.format("%s.setMapLatitude",
-            MapActivity.class.getName());
-
-    /** Intent parameter name to pass the map longitude to set. */
-    public static final String INTENT_SET_MAP_LON = String.format("%s.setMapLongitude",
-            MapActivity.class.getName());
-
-    /**
-     * Intent parameter name to use to set the type of something to find in the overlay and to set
-     * selected.
-     */
-    public static final String INTENT_SELECT_BOOKMARK_TYPE = String.format("%s.selectBookmarkType",
-            MapActivity.class.getName());
-
-    /**
-     * Intent parameter name to use to set the identifier of something to find in the overlay and to
-     * set selected.
-     */
-    public static final String INTENT_SELECT_BOOKMARK_ID = String.format("s.selectBookmarkId",
-            MapActivity.class.getName());
-
-    /** Intent name to use to center the map on a marker. */
-    public static final String INTENT_CENTER_ON_MARKER = String.format("%s.CENTER_ON_MARKER",
-            MapActivity.class.getName());
-
-    /** Intent parameter name to set the marker unique id on which center the map. */
-    public static final String INTENT_MARKER_UNIQUE_ID = String.format("%s.markerId",
-            MapActivity.class.getName());
 
     /** Duration of toast messages. */
     private static final int TOAST_DURATION = 300;
@@ -439,26 +406,16 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             if (c != null && c.moveToFirst()) {
                 // check if marker type is visible, and add it if not visible
                 final String type = c.getString(c.getColumnIndex(Columns.MarkersColumns.TYPE));
-                if (!map.getMarkerOverlay().isMarkerTypeVisible(type)) {
-                    map.getMarkerOverlay().show(type);
-
-                    final SharedPreferences.Editor edit = getApplicationContext()
-                            .getITRPreferences().edit();
-                    saveVisibleOverlaysInPreferences(edit);
-                    edit.commit();
-                }
 
                 final GeoPoint barycentre = MapUtils.getBarycenter(c);
 
-                if (barycentre != null) {
-                    final SharedPreferences.Editor edit = getApplicationContext()
-                            .getITRPreferences().edit();
-                    saveMapCenterInPreferences(edit, barycentre.getLatitudeE6(),
-                            barycentre.getLongitudeE6(), 0);
-                    edit.commit();
-                }
-
                 c.close();
+
+                if (barycentre != null) {
+                    startActivity(IntentFactory.getCenterOnLocationAndShowMarkerTypeIntent(
+                            getApplicationContext(), barycentre.getLatitudeE6(),
+                            barycentre.getLongitudeE6(), 17, type));
+                }
 
             }
 
@@ -485,7 +442,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
      * @see android.app.Activity#onNewIntent(android.content.Intent)
      */
     @Override
-    protected void onNewIntent(final Intent intent) {
+    protected final void onNewIntent(final Intent intent) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.start");
@@ -500,42 +457,124 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             // center on the latitude and longitude sent in the intent
 
-            if (intent.hasExtra(INTENT_SET_MAP_LAT) && intent.hasExtra(INTENT_SET_MAP_LON)) {
+            final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
+                    .edit();
+
+            if (intent.hasExtra(IntentFactory.INTENT_SET_MAP_LAT)
+                    && intent.hasExtra(IntentFactory.INTENT_SET_MAP_LON)) {
                 // center coordinates are send in the intent
-                final int newZoom = intent.getIntExtra(INTENT_SET_MAP_ZOOM, map.getZoomLevel());
-                final int newLat = intent.getIntExtra(INTENT_SET_MAP_LAT, map.getMapCenter()
-                        .getLatitudeE6());
-                final int newLon = intent.getIntExtra(INTENT_SET_MAP_LON, map.getMapCenter()
-                        .getLongitudeE6());
+                final int newZoom = intent.getIntExtra(IntentFactory.INTENT_SET_MAP_ZOOM,
+                        map.getZoomLevel());
+                final int newLat = intent.getIntExtra(IntentFactory.INTENT_SET_MAP_LAT, map
+                        .getMapCenter().getLatitudeE6());
+                final int newLon = intent.getIntExtra(IntentFactory.INTENT_SET_MAP_LON, map
+                        .getMapCenter().getLongitudeE6());
 
-                final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
-                        .edit();
                 saveMapCenterInPreferences(edit, newLat, newLon, newZoom);
-                edit.commit();
-
             }
 
-        } else if (INTENT_CENTER_ON_MARKER.equals(intent.getAction())) {
-            // center on a marker sent in the intent (or a group of center based on the label of the
-            // given marker)
-            // this intent can be sent by suggestion click or an item from SearchResultsActivity
+            if (intent.hasExtra(IntentFactory.INTENT_SHOW_MARKER_TYPE)) {
+                final String type = intent.getStringExtra(IntentFactory.INTENT_SHOW_MARKER_TYPE);
+                if (!map.getMarkerOverlay().isMarkerTypeVisible(type)) {
+                    map.getMarkerOverlay().show(type);
+                    saveVisibleOverlaysInPreferences(edit);
+                }
+            }
 
-            myLocation.disableFollowLocation();
+            edit.commit();
 
-            String id = null;
+        } else if (IntentFactory.INTENT_SEARCH_SUGGESTION.equals(intent.getAction())) {
+            // intent sent by suggestion click
+
             if (intent.hasExtra(SearchManager.USER_QUERY)) {
-                id = intent.getData().getLastPathSegment();
-            } else if (intent.hasExtra(INTENT_MARKER_UNIQUE_ID)) {
-                id = intent.getStringExtra(INTENT_MARKER_UNIQUE_ID);
-            }
-
-            if (id != null) {
-                onSearchResultClick(id, intent);
+                onSearchResultClick(intent.getData().getLastPathSegment(), intent);
             }
         }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.end");
+        }
+
+    }
+
+    /**
+     * Simple Factory to get intents to send to {@link MapActivity}.
+     * 
+     * @author Olivier Boudet
+     */
+    public static class IntentFactory {
+
+        /** Intent parameter name to pass the map zoom level to set. */
+        public static final String INTENT_SET_MAP_ZOOM = String.format("%s.setMapZoom",
+                MapActivity.class.getName());
+
+        /** Intent parameter name to pass the map latitude to set. */
+        public static final String INTENT_SET_MAP_LAT = String.format("%s.setMapLatitude",
+                MapActivity.class.getName());
+
+        /** Intent parameter name to pass the map longitude to set. */
+        public static final String INTENT_SET_MAP_LON = String.format("%s.setMapLongitude",
+                MapActivity.class.getName());
+
+        /** Intent name to use to show a marker type. */
+        public static final String INTENT_SHOW_MARKER_TYPE = String.format("%s.SHOW_MARKER_TYPE",
+                MapActivity.class.getName());
+
+        /** Intent name to use to manage search suggestion. */
+        public static final String INTENT_SEARCH_SUGGESTION = String.format("%s.SEARCH_SUGGESTION",
+                MapActivity.class.getName());
+
+        /**
+         * Returns an intent to open the map centered on a location.
+         * 
+         * @param context
+         *            the contexxt
+         * @param latitude
+         *            latitude on which center the map
+         * @param longitude
+         *            longitude on which center the map
+         * @param zoom
+         *            zoom level of the centered map
+         * @return an intent
+         */
+        public static Intent getCenterOnLocationIntent(final ItineRennesApplication context,
+                final int latitude, final int longitude, final int zoom) {
+
+            final Intent i = new Intent(context, MapActivity.class);
+            i.setAction(Intent.ACTION_VIEW);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra(INTENT_SET_MAP_ZOOM, zoom);
+            i.putExtra(INTENT_SET_MAP_LON, longitude);
+            i.putExtra(INTENT_SET_MAP_LAT, latitude);
+
+            return i;
+        }
+
+        /**
+         * Returns an intent to open the map centered on a location and activate a marker type if
+         * not already activated (useful for center the map on a marker after a search).
+         * 
+         * @param context
+         *            the contexxt
+         * @param latitude
+         *            latitude on which center the map
+         * @param longitude
+         *            longitude on which center the map
+         * @param zoom
+         *            zoom level of the centered map
+         * @param markerType
+         *            the type of markers layer to activate on the map
+         * @return an intent
+         */
+        public static Intent getCenterOnLocationAndShowMarkerTypeIntent(
+                final ItineRennesApplication context, final int latitude, final int longitude,
+                final int zoom, final String markerType) {
+
+            final Intent i = getCenterOnLocationIntent(context, latitude, longitude, zoom);
+
+            i.putExtra(INTENT_SHOW_MARKER_TYPE, markerType);
+
+            return i;
         }
 
     }
