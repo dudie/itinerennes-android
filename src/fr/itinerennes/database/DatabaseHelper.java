@@ -1,13 +1,17 @@
 package fr.itinerennes.database;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.exceptions.ItineRennesRuntimeException;
 import fr.itinerennes.utils.FileUtils;
 
 /**
@@ -20,6 +24,21 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(DatabaseHelper.class);
 
+    /** The database name. */
+    private static final String DATABASE_NAME = "fr.itinerennes";
+
+    /** The database create script URI. */
+    private static final String CREATE_SCRIPT = "database/create.sql";
+
+    /** The database drop script URI. */
+    private static final String DROP_SCRIPT = "database/drop.sql";
+
+    /** The database upgrade script URI. */
+    private static final String UPGRADE_SCRIPT = "database/upgrade_%s_to_%s.sql";
+
+    /** The assets manager. */
+    private final AssetManager assets;
+
     /**
      * Creates the database helper.
      * 
@@ -28,8 +47,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
      */
     public DatabaseHelper(final Context context) {
 
-        super(context, ItineRennesConstants.DATABASE_NAME, null,
-                ItineRennesConstants.DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, ItineRennesConstants.DATABASE_VERSION);
+        assets = context.getAssets();
     }
 
     /**
@@ -42,14 +61,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(String.format("database creation - name=%s, version=%d, script=%s",
-                    ItineRennesConstants.DATABASE_NAME, ItineRennesConstants.DATABASE_VERSION,
-                    ItineRennesConstants.DATABASE_CREATE_SCRIPT_URI));
+                    DATABASE_NAME, ItineRennesConstants.DATABASE_VERSION, CREATE_SCRIPT));
         }
-        execScript(
-                db,
-                FileUtils.read(getClass().getResourceAsStream(
-                        ItineRennesConstants.DATABASE_CREATE_SCRIPT_URI)));
 
+        execScript(db, readScript(CREATE_SCRIPT));
     }
 
     /**
@@ -63,19 +78,18 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(String.format("database upgrade - name=%s, oldVersion=%d, newVersion=%d",
-                    ItineRennesConstants.DATABASE_NAME, oldVersion, newVersion));
+                    DATABASE_NAME, oldVersion, newVersion));
         }
 
         for (int i = oldVersion; i < newVersion; i++) {
-            final String script = String.format(ItineRennesConstants.DATABASE_UPGRADE_SCRIPT_URI,
-                    i, i + 1);
+            final String script = String.format(UPGRADE_SCRIPT, i, i + 1);
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(String.format("executing database upgrade script : %s", script));
             }
 
             if (getClass().getResourceAsStream(script) != null) {
-                execScript(db, FileUtils.read(getClass().getResourceAsStream(script)));
+                execScript(db, readScript(script));
             } else {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug(String.format("database upgrade script %s does not exist", script));
@@ -83,6 +97,26 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
 
+    }
+
+    /**
+     * Reads a script located in the assets folder.
+     * 
+     * @param filename
+     *            the name of the asset to read
+     * @return the content of the script
+     */
+    private String readScript(final String filename) {
+
+        try {
+            return FileUtils.read(assets.open(filename, AssetManager.ACCESS_STREAMING));
+        } catch (final IOException e) {
+            final String msg = String
+                    .format("Failed to read packaged database script: an error occured while accessing asset %s",
+                            filename);
+            LOGGER.error(msg);
+            throw new ItineRennesRuntimeException(msg, e);
+        }
     }
 
     /**
