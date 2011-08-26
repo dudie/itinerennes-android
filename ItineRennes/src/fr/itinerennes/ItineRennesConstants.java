@@ -58,22 +58,9 @@ public final class ItineRennesConstants {
     public static final String OBA_API_KEY = "web";
 
     /*
-     * Database constantes.
+     * Database constants.
      */
-
     /** The database schema version. */
     public static final int DATABASE_VERSION = 25;
-
-    /** The database name. */
-    public static final String DATABASE_NAME = "fr.itinerennes";
-
-    /** The database create script URI. */
-    public static final String DATABASE_CREATE_SCRIPT_URI = "/fr/itinerennes/database/create_database.sql";
-
-    /** The database drop script URI. */
-    public static final String DATABASE_DROP_SCRIPT_URI = "/fr/itinerennes/database/drop_database.sql";
-
-    /** The database upgrade script URI. */
-    public static final String DATABASE_UPGRADE_SCRIPT_URI = "/fr/itinerennes/database/upgrade_database_%s_to_%s.sql";
 
 }
