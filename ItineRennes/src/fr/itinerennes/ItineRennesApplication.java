@@ -34,7 +34,6 @@ import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
 import fr.itinerennes.exceptions.ExceptionHandler;
-import fr.itinerennes.http.client.ProgressHttpClient;
 
 /**
  * @author Jérémie Huchet
