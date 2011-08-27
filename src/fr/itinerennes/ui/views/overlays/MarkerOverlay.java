@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.MapView.Projection;
 import org.osmdroid.views.overlay.Overlay;
@@ -23,12 +22,17 @@ import android.view.MotionEvent;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.database.Columns.MarkersColumns;
+import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.utils.ResourceResolver;
 
 /**
+ * This overlay displays a different icon for each type of marker.
+ * 
  * @author Jérémie Huchet
+ * @author Olivier Boudet
  */
 public class MarkerOverlay extends LazyOverlay {
 
@@ -54,7 +58,7 @@ public class MarkerOverlay extends LazyOverlay {
     /** This property references the task currently loading the current displayed bounding box. */
     private AsyncTask<Void, Void, LinkedHashMap<String, MarkerOverlayItem>> refreshTask = null;
 
-    /** Simple cache of marker drawable to avoid inflating it each time. */
+    /** Simple cache for markers icons. */
     private final HashMap<String, Drawable> markerIcons = new HashMap<String, Drawable>();
 
     /**
@@ -62,6 +66,8 @@ public class MarkerOverlay extends LazyOverlay {
      * 
      * @param context
      *            the context
+     * @param map
+     *            the {@link MapView}
      */
     public MarkerOverlay(final ItineRennesActivity context, final ItinerennesMapView map) {
 
@@ -97,6 +103,7 @@ public class MarkerOverlay extends LazyOverlay {
             @Override
             protected LinkedHashMap<String, MarkerOverlayItem> doInBackground(final Void... params) {
 
+                final MarkerDao markerDao = context.getApplicationContext().getMarkerDao();
                 final Cursor c = context.getApplicationContext().getMarkerDao()
                         .getMarkers(source.getBoundingBox(), visibleMarkerTypes);
 
@@ -104,23 +111,9 @@ public class MarkerOverlay extends LazyOverlay {
                 if (c != null && c.moveToFirst()) {
                     while (!c.isAfterLast()) {
 
-                        final MarkerOverlayItem marker = new MarkerOverlayItem();
-                        marker.setId(c.getString(0));
-                        marker.setType(c.getString(1));
-                        marker.setLabel(c.getString(2));
-                        marker.setLocation(new GeoPoint(c.getInt(4), c.getInt(3)));
-                        marker.setBookmarked((c.getInt(5) != 0));
+                        final String markerId = c.getString(c.getColumnIndex(MarkersColumns.ID));
 
-                        if (!markerIcons.containsKey(marker.getType())) {
-                            // TJHU set the default marker resource identifier
-                            final int iconId = ResourceResolver.getDrawableId(context,
-                                    String.format("icx_marker_%s", marker.getType()), 0);
-                            markerIcons.put(marker.getType(),
-                                    context.getResources().getDrawable(iconId));
-                        }
-
-                        marker.setIcon(markerIcons.get(marker.getType()));
-                        markers.put(marker.getId(), marker);
+                        markers.put(markerId, markerDao.getMarkerOverlayItem(c));
 
                         c.moveToNext();
                     }
@@ -258,7 +251,14 @@ public class MarkerOverlay extends LazyOverlay {
     protected final void drawItem(final Canvas canvas, final MarkerOverlayItem item,
             final Point curScreenCoords, final MapView mapView) {
 
-        final Drawable drawable = item.getIcon();
+        if (!markerIcons.containsKey(item.getType())) {
+            // TJHU set the default marker resource identifier
+            final int iconId = ResourceResolver.getDrawableId(context,
+                    String.format("icx_marker_%s", item.getType()), 0);
+            markerIcons.put(item.getType(), context.getResources().getDrawable(iconId));
+        }
+
+        final Drawable drawable = markerIcons.get(item.getType());
         int[] originalState = null;
 
         final int[] states = new int[2];
@@ -278,9 +278,9 @@ public class MarkerOverlay extends LazyOverlay {
 
         }
 
-        final int left_right = drawable.getIntrinsicWidth() / 2;
-        final int top_bottom = drawable.getIntrinsicHeight() / 2;
-        final Rect bounds = new Rect(-left_right, -top_bottom, left_right, top_bottom);
+        final int leftRight = drawable.getIntrinsicWidth() / 2;
+        final int topBottom = drawable.getIntrinsicHeight() / 2;
+        final Rect bounds = new Rect(-leftRight, -topBottom, leftRight, topBottom);
         drawable.setBounds(bounds);
 
         // draw it
@@ -311,7 +311,7 @@ public class MarkerOverlay extends LazyOverlay {
 
         final Point itemPoint = new Point();
         for (final MarkerOverlayItem marker : markers.values()) {
-            final Drawable drawable = marker.getIcon();
+            final Drawable drawable = markerIcons.get(marker.getType());
 
             pj.toPixels(marker.getLocation(), itemPoint);
 
@@ -329,7 +329,7 @@ public class MarkerOverlay extends LazyOverlay {
      * 
      * @return the markerTypesLabel
      */
-    public HashMap<String, String> getMarkerTypesLabel() {
+    public final HashMap<String, String> getMarkerTypesLabel() {
 
         return markerTypesLabel;
     }
@@ -338,9 +338,10 @@ public class MarkerOverlay extends LazyOverlay {
      * Is a marker type visible ?
      * 
      * @param type
+     *            the type of the marker to get its visibility
      * @return true if the marker type is visible
      */
-    public boolean isMarkerTypeVisible(final String type) {
+    public final boolean isMarkerTypeVisible(final String type) {
 
         return visibleMarkerTypes.contains(type);
     }
@@ -351,7 +352,7 @@ public class MarkerOverlay extends LazyOverlay {
      * @param type
      *            type to show
      */
-    public void show(final String type) {
+    public final void show(final String type) {
 
         if (!visibleMarkerTypes.contains(type)) {
             visibleMarkerTypes.add(type);
@@ -365,7 +366,7 @@ public class MarkerOverlay extends LazyOverlay {
      * @param type
      *            type to hide
      */
-    public void hide(final String type) {
+    public final void hide(final String type) {
 
         visibleMarkerTypes.remove(type);
 

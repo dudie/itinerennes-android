@@ -3,6 +3,7 @@ package fr.itinerennes.database;
 import java.util.List;
 
 import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,7 @@ import fr.itinerennes.TypeConstants;
 import fr.itinerennes.commons.utils.SearchUtils;
 import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
  * Fetch markers from the database.
@@ -43,6 +45,8 @@ public class MarkerDao implements MarkersColumns {
     /**
      * Constructor.
      * 
+     * @param context
+     *            the context
      * @param databaseHelper
      *            the itinerennes context
      */
@@ -81,7 +85,7 @@ public class MarkerDao implements MarkersColumns {
 
         final String[] columns = new String[] { String.format("m.%s", ID),
                 String.format("m.%s", TYPE), String.format("m.%s", LABEL), LONGITUDE, LATITUDE,
-                String.format("b.%s is not null  AS bookmarked", ID) };
+                String.format("b.%s is not null  AS %s", ID, MarkersColumns.IS_BOOKMARKED) };
 
         final StringBuilder selection = new StringBuilder();
 
@@ -124,7 +128,7 @@ public class MarkerDao implements MarkersColumns {
 
         final String[] columns = new String[] { String.format("m.%s", ID),
                 String.format("m.%s", TYPE), String.format("m.%s", LABEL), LONGITUDE, LATITUDE,
-                String.format("b.%s is not null  AS bookmarked", ID) };
+                String.format("b.%s is not null  AS %s", ID, MarkersColumns.IS_BOOKMARKED) };
 
         final String selection = String.format("m.%s = ?", BaseColumns._ID);
 
@@ -155,7 +159,7 @@ public class MarkerDao implements MarkersColumns {
 
         final String[] columns = new String[] { String.format("m.%s", ID),
                 String.format("m.%s", TYPE), String.format("m.%s", LABEL), LONGITUDE, LATITUDE,
-                String.format("b.%s is not null AS bookmarked", ID) };
+                String.format("b.%s is not null AS %s", ID, MarkersColumns.IS_BOOKMARKED) };
 
         final String selection = String.format("m.%s = ? AND m.%s = ?", ID, TYPE);
 
@@ -349,6 +353,8 @@ public class MarkerDao implements MarkersColumns {
      *            parameters for the selection
      * @param columns
      *            columns to retrieve
+     * @param groupBy
+     *            group by clause
      * @param orderBy
      *            order by clause
      * @return results
@@ -376,6 +382,26 @@ public class MarkerDao implements MarkersColumns {
         }
         return c;
 
+    }
+
+    /**
+     * Transforms single a row from a Cursor to a {@link MarkerOverlayItem}.
+     * 
+     * @param c
+     *            Cursor to use
+     * @return a {@link MarkerOverlayItem}
+     */
+    public final MarkerOverlayItem getMarkerOverlayItem(final Cursor c) {
+
+        final MarkerOverlayItem marker = new MarkerOverlayItem();
+        marker.setId(c.getString(c.getColumnIndex(MarkersColumns.ID)));
+        marker.setType(c.getString(c.getColumnIndex(MarkersColumns.TYPE)));
+        marker.setLabel(c.getString(c.getColumnIndex(MarkersColumns.LABEL)));
+        marker.setLocation(new GeoPoint(c.getInt(c.getColumnIndex(MarkersColumns.LATITUDE)), c
+                .getInt(c.getColumnIndex(MarkersColumns.LONGITUDE))));
+        marker.setBookmarked((c.getInt(c.getColumnIndex(MarkersColumns.IS_BOOKMARKED)) != 0));
+
+        return marker;
     }
 
 }

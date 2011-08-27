@@ -143,10 +143,9 @@ public final class SearchResultsActivity extends ItineRennesActivity {
 
                             c.close();
 
-                            startActivity(MapActivity.IntentFactory
-                                    .getCenterOnLocationAndShowMarkerTypeIntent(
-                                            getApplicationContext(), barycentre.getLatitudeE6(),
-                                            barycentre.getLongitudeE6(), 17, markerType));
+                            startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(
+                                    getApplicationContext(), barycentre.getLatitudeE6(),
+                                    barycentre.getLongitudeE6(), 17, markerType));
 
                         }
 
