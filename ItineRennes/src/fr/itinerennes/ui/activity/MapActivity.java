@@ -36,6 +36,7 @@ import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 import fr.itinerennes.utils.MapUtils;
 
 /**
@@ -412,9 +413,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                 c.close();
 
                 if (barycentre != null) {
-                    startActivity(IntentFactory.getCenterOnLocationAndShowMarkerTypeIntent(
-                            getApplicationContext(), barycentre.getLatitudeE6(),
-                            barycentre.getLongitudeE6(), 17, type));
+                    onNewIntent(IntentFactory.getCenterOnLocationIntent(getApplicationContext(),
+                            barycentre.getLatitudeE6(), barycentre.getLongitudeE6(), 17, type));
                 }
 
             }
@@ -448,6 +448,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             LOGGER.debug("onNewIntent.start");
         }
 
+        setIntent(intent);
+
         myLocation.disableFollowLocation();
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -460,21 +462,29 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
                     .edit();
 
-            if (intent.hasExtra(IntentFactory.INTENT_SET_MAP_LAT)
-                    && intent.hasExtra(IntentFactory.INTENT_SET_MAP_LON)) {
+            if (intent.hasExtra(IntentFactory.INTENT_PARAM_SET_MAP_LAT)
+                    && intent.hasExtra(IntentFactory.INTENT_PARAM_SET_MAP_LON)) {
                 // center coordinates are send in the intent
-                final int newZoom = intent.getIntExtra(IntentFactory.INTENT_SET_MAP_ZOOM,
+                final int newZoom = intent.getIntExtra(IntentFactory.INTENT_PARAM_SET_MAP_ZOOM,
                         map.getZoomLevel());
-                final int newLat = intent.getIntExtra(IntentFactory.INTENT_SET_MAP_LAT, map
+                final int newLat = intent.getIntExtra(IntentFactory.INTENT_PARAM_SET_MAP_LAT, map
                         .getMapCenter().getLatitudeE6());
-                final int newLon = intent.getIntExtra(IntentFactory.INTENT_SET_MAP_LON, map
+                final int newLon = intent.getIntExtra(IntentFactory.INTENT_PARAM_SET_MAP_LON, map
                         .getMapCenter().getLongitudeE6());
 
                 saveMapCenterInPreferences(edit, newLat, newLon, newZoom);
+
+                if (intent.hasExtra(IntentFactory.INTENT_PARAM_MARKER)) {
+
+                    map.getMapBoxController().show(
+                            (MarkerOverlayItem) intent
+                                    .getSerializableExtra(IntentFactory.INTENT_PARAM_MARKER));
+                }
+
             }
 
-            if (intent.hasExtra(IntentFactory.INTENT_SHOW_MARKER_TYPE)) {
-                final String type = intent.getStringExtra(IntentFactory.INTENT_SHOW_MARKER_TYPE);
+            if (intent.hasExtra(IntentFactory.INTENT_PARAM_MARKER_TYPE)) {
+                final String type = intent.getStringExtra(IntentFactory.INTENT_PARAM_MARKER_TYPE);
                 if (!map.getMarkerOverlay().isMarkerTypeVisible(type)) {
                     map.getMarkerOverlay().show(type);
                     saveVisibleOverlaysInPreferences(edit);
@@ -505,19 +515,23 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     public static class IntentFactory {
 
         /** Intent parameter name to pass the map zoom level to set. */
-        public static final String INTENT_SET_MAP_ZOOM = String.format("%s.setMapZoom",
+        public static final String INTENT_PARAM_SET_MAP_ZOOM = String.format("%s.setMapZoom",
                 MapActivity.class.getName());
 
         /** Intent parameter name to pass the map latitude to set. */
-        public static final String INTENT_SET_MAP_LAT = String.format("%s.setMapLatitude",
+        public static final String INTENT_PARAM_SET_MAP_LAT = String.format("%s.setMapLatitude",
                 MapActivity.class.getName());
 
         /** Intent parameter name to pass the map longitude to set. */
-        public static final String INTENT_SET_MAP_LON = String.format("%s.setMapLongitude",
+        public static final String INTENT_PARAM_SET_MAP_LON = String.format("%s.setMapLongitude",
                 MapActivity.class.getName());
 
-        /** Intent name to use to show a marker type. */
-        public static final String INTENT_SHOW_MARKER_TYPE = String.format("%s.SHOW_MARKER_TYPE",
+        /** Intent parameter name to pass a marker type. */
+        public static final String INTENT_PARAM_MARKER_TYPE = String.format("%s.markerType",
+                MapActivity.class.getName());
+
+        /** Intent parameter name to use to pass a marker. */
+        public static final String INTENT_PARAM_MARKER = String.format("%s.marker",
                 MapActivity.class.getName());
 
         /** Intent name to use to manage search suggestion. */
@@ -543,10 +557,33 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             final Intent i = new Intent(context, MapActivity.class);
             i.setAction(Intent.ACTION_VIEW);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra(INTENT_SET_MAP_ZOOM, zoom);
-            i.putExtra(INTENT_SET_MAP_LON, longitude);
-            i.putExtra(INTENT_SET_MAP_LAT, latitude);
+            i.putExtra(INTENT_PARAM_SET_MAP_ZOOM, zoom);
+            i.putExtra(INTENT_PARAM_SET_MAP_LON, longitude);
+            i.putExtra(INTENT_PARAM_SET_MAP_LAT, latitude);
 
+            return i;
+        }
+
+        /**
+         * Returns an intent to open a mapbox and center the map on the mapbox location. The map is
+         * centered on the given location, so the mapbox could be invisible if the location is not
+         * the good one.
+         * 
+         * @param context
+         *            the context
+         * @param marker
+         *            the marker on which open the mapbox
+         * @param zoom
+         *            zoom level of the centered map
+         * @return an intent
+         */
+        public static Intent getOpenMapBoxIntent(final ItineRennesApplication context,
+                final MarkerOverlayItem marker, final int zoom) {
+
+            final Intent i = getCenterOnLocationIntent(context, marker.getLocation()
+                    .getLatitudeE6(), marker.getLocation().getLongitudeE6(), zoom);
+
+            i.putExtra(INTENT_PARAM_MARKER, marker);
             return i;
         }
 
@@ -555,7 +592,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
          * not already activated (useful for center the map on a marker after a search).
          * 
          * @param context
-         *            the contexxt
+         *            the context
          * @param latitude
          *            latitude on which center the map
          * @param longitude
@@ -563,16 +600,15 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
          * @param zoom
          *            zoom level of the centered map
          * @param markerType
-         *            the type of markers layer to activate on the map
+         *            a type of markers layer to activate on the map
          * @return an intent
          */
-        public static Intent getCenterOnLocationAndShowMarkerTypeIntent(
-                final ItineRennesApplication context, final int latitude, final int longitude,
-                final int zoom, final String markerType) {
+        public static Intent getCenterOnLocationIntent(final ItineRennesApplication context,
+                final int latitude, final int longitude, final int zoom, final String markerType) {
 
             final Intent i = getCenterOnLocationIntent(context, latitude, longitude, zoom);
 
-            i.putExtra(INTENT_SHOW_MARKER_TYPE, markerType);
+            i.putExtra(INTENT_PARAM_MARKER_TYPE, markerType);
 
             return i;
         }

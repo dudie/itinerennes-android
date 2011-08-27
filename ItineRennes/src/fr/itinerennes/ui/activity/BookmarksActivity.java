@@ -2,9 +2,6 @@ package fr.itinerennes.ui.activity;
 
 import java.util.List;
 
-import org.osmdroid.util.GeoPoint;
-
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -16,13 +13,14 @@ import android.widget.Toast;
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.business.service.BookmarkService;
-import fr.itinerennes.database.Columns;
+import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.Bookmark;
 import fr.itinerennes.ui.adapter.BookmarksAdapter;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
- * This activity displays bookmarks items the user starred.
+ * This activity displays bookmarked items the user starred.
  * 
  * @author Jérémie Huchet
  */
@@ -61,9 +59,10 @@ public class BookmarksActivity extends ItineRennesActivity {
                 final String favLabel = bm.getLabel();
 
                 try {
-                    final GeoPoint location = findBookmarkLocation(favType, favId);
-                    
-                    BookmarksActivity.this.startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(getApplicationContext(), location.getLatitudeE6(), location.getLongitudeE6(), 17));
+                    final MarkerOverlayItem item = findBookmarkedMarkerItem(favType, favId);
+
+                    BookmarksActivity.this.startActivity(MapActivity.IntentFactory
+                            .getOpenMapBoxIntent(getApplicationContext(), item, 17));
                 } catch (final GenericException e) {
                     // bookmark is not found, remove it
                     bookmarksService.setNotStarred(favType, favId);
@@ -77,33 +76,33 @@ public class BookmarksActivity extends ItineRennesActivity {
     }
 
     /**
-     * Finds the location of a bookmark using the resource type and identifier.
+     * Finds the MarkerOverlayItem of a bookmark using the resource type and identifier.
      * 
      * @param type
      *            the type of the resource
      * @param id
      *            the identifier of the resource
-     * @return a geopoint
+     * @return a {@link MarkerOverlayItem}
      * @throws GenericException
-     *             the bookmark may be not found
+     *             the bookmarked item may be not found
      */
-    private GeoPoint findBookmarkLocation(final String type, final String id)
+    private MarkerOverlayItem findBookmarkedMarkerItem(final String type, final String id)
             throws GenericException {
 
-        GeoPoint location = null;
+        MarkerOverlayItem item = null;
 
-        final Cursor c = getApplicationContext().getMarkerDao().getMarker(id, type);
+        final MarkerDao markerDao = getApplicationContext().getMarkerDao();
+        final Cursor c = markerDao.getMarker(id, type);
         if (c != null && c.moveToFirst()) {
-            location = new GeoPoint(c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE)),
-                    c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE)));
+            item = markerDao.getMarkerOverlayItem(c);
 
             c.close();
         }
 
-        if (location == null) {
+        if (item == null) {
             throw new GenericException(ErrorCodeConstants.BOOKMARK_NOT_FOUND, String.format(
                     "bookmark location not found using type=%s and id=%s", type, id));
         }
-        return location;
+        return item;
     }
 }

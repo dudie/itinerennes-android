@@ -1,15 +1,18 @@
 package fr.itinerennes.ui.views.overlays;
 
-import org.osmdroid.util.GeoPoint;
+import java.io.Serializable;
 
-import android.graphics.drawable.Drawable;
+import org.osmdroid.util.GeoPoint;
 
 /**
  * Represents a marker on the map.
  * 
  * @author Jérémie Huchet
  */
-public class MarkerOverlayItem {
+public class MarkerOverlayItem implements Serializable {
+
+    /** Serial version UID. */
+    private static final long serialVersionUID = 1L;
 
     /** The type of the marker. */
     private String type;
@@ -19,9 +22,6 @@ public class MarkerOverlayItem {
 
     /** The marker title. */
     private String label;
-
-    /** The marker icon. */
-    private Drawable icon;
 
     /** The marker position. */
     private GeoPoint location;
@@ -93,27 +93,6 @@ public class MarkerOverlayItem {
     }
 
     /**
-     * Gets the icon.
-     * 
-     * @return the icon
-     */
-    public final Drawable getIcon() {
-
-        return icon;
-    }
-
-    /**
-     * Sets the icon.
-     * 
-     * @param icon
-     *            the icon to set
-     */
-    public final void setIcon(final Drawable icon) {
-
-        this.icon = icon;
-    }
-
-    /**
      * Gets the location.
      * 
      * @return the location
@@ -139,7 +118,7 @@ public class MarkerOverlayItem {
      * 
      * @return the bookmarked
      */
-    public boolean isBookmarked() {
+    public final boolean isBookmarked() {
 
         return bookmarked;
     }
@@ -150,18 +129,18 @@ public class MarkerOverlayItem {
      * @param bookmarked
      *            the bookmarked to set
      */
-    public void setBookmarked(final boolean bookmarked) {
+    public final void setBookmarked(final boolean bookmarked) {
 
         this.bookmarked = bookmarked;
     }
 
     /**
-     * (non-javadoc)
+     * {@inheritDoc}
      * 
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString() {
+    public final String toString() {
 
         final StringBuilder builder = new StringBuilder();
         builder.append("MarkerOverlayItem [type=");
@@ -170,8 +149,6 @@ public class MarkerOverlayItem {
         builder.append(id);
         builder.append(", label=");
         builder.append(label);
-        builder.append(", icon=");
-        builder.append(icon);
         builder.append(", location=");
         builder.append(location);
         builder.append(", bookmarked=");

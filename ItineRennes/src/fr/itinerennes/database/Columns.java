@@ -78,6 +78,14 @@ public final class Columns {
          * </P>
          */
         String SEARCH_LABEL = "search_label";
+
+        /**
+         * Indicates if a station is bookmarked.
+         * <P>
+         * Type: BOOLEAN
+         * </P>
+         */
+        String IS_BOOKMARKED = "is_bookmarked";
     }
 
     /**

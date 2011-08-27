@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import fr.dudie.onebusaway.client.IOneBusAwayClient;
 import fr.dudie.onebusaway.model.Route;
 import fr.dudie.onebusaway.model.ScheduleStopTime;
@@ -38,6 +37,7 @@ import fr.itinerennes.commons.utils.DateUtils;
 import fr.itinerennes.database.Columns;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
+import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
 /**
  * This activity uses the <code>bus_station.xml</code> layout and displays a window with
@@ -223,9 +223,13 @@ public final class BusStopActivity extends ItineRennesActivity {
             final int lat = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE));
             final int lon = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE));
 
+            final MarkerOverlayItem marker = getApplicationContext().getMarkerDao()
+                    .getMarkerOverlayItem(c);
+
             c.close();
 
-            startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(getApplicationContext(), lat, lon, 17));
+            startActivity(MapActivity.IntentFactory.getOpenMapBoxIntent(getApplicationContext(),
+                    marker, 17));
 
         } else {
             // TJHU gestion erreur qui ne doit pas arriver dans un cas normal
