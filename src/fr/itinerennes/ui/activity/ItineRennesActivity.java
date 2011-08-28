@@ -82,6 +82,11 @@ public abstract class ItineRennesActivity extends Activity {
         return (ItineRennesApplication) super.getApplicationContext();
     }
 
+    /**
+     * Broadcast Receiver for new application version intents.
+     * 
+     * @author Olivier Boudet
+     */
     private class NewVersionReceiver extends BroadcastReceiver {
 
         /**

@@ -16,10 +16,15 @@ public class EventGarbageOverlay extends Overlay {
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(EventGarbageOverlay.class);
 
+    /**
+     * Constructor.
+     * 
+     * @param ctx
+     *            the context
+     */
     public EventGarbageOverlay(final Context ctx) {
 
         super(ctx);
-        // TJHU Auto-generated constructor stub
     }
 
     /**

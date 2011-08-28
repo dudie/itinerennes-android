@@ -14,6 +14,10 @@ import fr.itinerennes.ui.activity.ItineRennesActivity;
 public class MapViewController extends MapController {
 
     /**
+     * Constructor.
+     * 
+     * @param context
+     *            the context
      * @param map
      *            the map view to which associate the controller
      */

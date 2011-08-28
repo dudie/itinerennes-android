@@ -63,7 +63,10 @@ public class ItinerennesMapView extends MapView {
     }
 
     /**
+     * Constructor.
+     * 
      * @param context
+     *            the context
      */
     public ItinerennesMapView(final ItineRennesActivity context) {
 
@@ -71,8 +74,12 @@ public class ItinerennesMapView extends MapView {
     }
 
     /**
+     * Constructor.
+     * 
      * @param context
+     *            the context
      * @param attrs
+     *            the set of attributes
      */
     public ItinerennesMapView(final Context context, final AttributeSet attrs) {
 
@@ -215,7 +222,7 @@ public class ItinerennesMapView extends MapView {
      * 
      * @return the mapBoxController
      */
-    public MapBoxController getMapBoxController() {
+    public final MapBoxController getMapBoxController() {
 
         return mapBoxController;
     }

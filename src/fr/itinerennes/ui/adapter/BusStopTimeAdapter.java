@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import fr.dudie.onebusaway.model.ScheduleStopTime;
 import fr.dudie.onebusaway.model.StopSchedule;
 
@@ -50,6 +49,7 @@ public class BusStopTimeAdapter extends BaseAdapter {
      */
     private final boolean stopIsAccessible;
 
+    /** A time used for date calculation to avoid multiple instantiations. */
     private static Time sThenTime;
 
     /**
@@ -244,8 +244,9 @@ public class BusStopTimeAdapter extends BaseAdapter {
      *            the minimum timespan to report. For example, a time 3 seconds in the past will be
      *            reported as "0 minutes ago" if this is set to MINUTE_IN_MILLIS. Pass one of 0,
      *            MINUTE_IN_MILLIS, HOUR_IN_MILLIS, DAY_IN_MILLIS, WEEK_IN_MILLIS
+     * @return a String describing the relative time
      */
-    public CharSequence getRelativeTimeSpanString(final long time, final long now,
+    public final CharSequence getRelativeTimeSpanString(final long time, final long now,
             final long minResolution) {
 
         /*
@@ -375,18 +376,24 @@ public class BusStopTimeAdapter extends BaseAdapter {
     }
 
     /**
+     * Sets the trip to highlight in the list.
+     * 
      * @param tripId
+     *            the trip id to highlight
      */
-    public void setTripIdToHighlight(final String tripId) {
+    public final void setTripIdToHighlight(final String tripId) {
 
         this.tripIdToHighlight = tripId;
 
     }
 
     /**
+     * Sets the schedule data to display.
+     * 
      * @param schedule
+     *            the schedule data
      */
-    public void setData(final StopSchedule schedule) {
+    public final void setData(final StopSchedule schedule) {
 
         this.data = schedule;
         notifyDataSetChanged();

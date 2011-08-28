@@ -15,10 +15,15 @@ import android.content.Context;
  */
 public abstract class LazyOverlay extends Overlay implements MapListener {
 
+    /**
+     * Constructor.
+     * 
+     * @param ctx
+     *            the context
+     */
     public LazyOverlay(final Context ctx) {
 
         super(ctx);
-        // TJHU Auto-generated constructor stub
     }
 
     /**

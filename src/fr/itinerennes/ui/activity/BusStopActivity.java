@@ -31,10 +31,10 @@ import fr.dudie.onebusaway.model.Route;
 import fr.dudie.onebusaway.model.ScheduleStopTime;
 import fr.dudie.onebusaway.model.StopSchedule;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.commons.utils.DateUtils;
-import fr.itinerennes.database.Columns;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
@@ -220,16 +220,13 @@ public final class BusStopActivity extends ItineRennesActivity {
                 TypeConstants.TYPE_BUS);
         if (c != null && c.moveToFirst()) {
 
-            final int lat = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE));
-            final int lon = c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE));
-
             final MarkerOverlayItem marker = getApplicationContext().getMarkerDao()
                     .getMarkerOverlayItem(c);
 
             c.close();
 
             startActivity(MapActivity.IntentFactory.getOpenMapBoxIntent(getApplicationContext(),
-                    marker, 17));
+                    marker, ItineRennesConstants.CONFIG_ZOOM_ON_LOCATION));
 
         } else {
             // TJHU gestion erreur qui ne doit pas arriver dans un cas normal

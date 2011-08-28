@@ -40,6 +40,8 @@ public class BookmarksAdapter extends BaseAdapter {
      * 
      * @param context
      *            the application context
+     * @param bookmarks
+     *            the list of bookmarks to display
      */
     public BookmarksAdapter(final Context context, final List<Bookmark> bookmarks) {
 
