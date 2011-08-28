@@ -15,11 +15,18 @@ import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 
+/**
+ * Overlay displaying the current location.
+ * 
+ * @author Olivier Boudet
+ * @author Jérémie Huchet
+ */
 public final class LocationOverlay extends MyLocationOverlay {
 
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(LocationOverlay.class);
 
+    /** The context. */
     private final ItineRennesActivity context;
 
     /** The map on which this location overlay is attached. */
@@ -28,6 +35,14 @@ public final class LocationOverlay extends MyLocationOverlay {
     /** Delay for desactivate follow location on map move event. */
     private static final long MAP_MOVE_DELAY = 500;
 
+    /**
+     * Constructor.
+     * 
+     * @param ctx
+     *            the context
+     * @param mapView
+     *            the map view containing this overlay
+     */
     public LocationOverlay(final Context ctx, final MapView mapView) {
 
         super(ctx, mapView);
@@ -51,7 +66,7 @@ public final class LocationOverlay extends MyLocationOverlay {
      * Disable FollowLocation and EnableMyLocation flags for the MyLocationOverlay.
      */
     @Override
-    public final void disableFollowLocation() {
+    public void disableFollowLocation() {
 
         super.disableFollowLocation();
         disableMyLocation();

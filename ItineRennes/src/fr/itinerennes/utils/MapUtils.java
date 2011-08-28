@@ -9,6 +9,12 @@ import android.database.Cursor;
 
 import fr.itinerennes.database.Columns;
 
+/**
+ * Provides some useful methods to work with map.
+ * 
+ * @author Jérémie Huchet
+ * @author Olivier Boudet
+ */
 public final class MapUtils {
 
     /**

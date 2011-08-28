@@ -63,6 +63,8 @@ public final class BookmarkService extends AbstractService implements BookmarksC
      *            the type of the resource
      * @param id
      *            the identifier of the resource
+     * @param label
+     *            the label of the bookmark
      */
     public void setStarred(final String type, final String id, final String label) {
 

@@ -18,7 +18,6 @@ import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-
 import fr.dudie.keolis.client.JsonKeolisClient;
 import fr.dudie.keolis.client.KeolisClient;
 import fr.dudie.nominatim.client.JsonNominatimClient;

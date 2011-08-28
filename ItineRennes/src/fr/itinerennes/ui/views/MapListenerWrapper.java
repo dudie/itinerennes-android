@@ -16,6 +16,12 @@ public class MapListenerWrapper implements MapListener {
     /** The listeners which wants to receive events. */
     private final ArrayList<MapListener> mapListeners;
 
+    /**
+     * Constructor.
+     * 
+     * @param nb
+     *            Initialization size of the listeners list.
+     */
     public MapListenerWrapper(final int nb) {
 
         mapListeners = new ArrayList<MapListener>(nb);
@@ -53,11 +59,23 @@ public class MapListenerWrapper implements MapListener {
         return false;
     }
 
+    /**
+     * Adds a listener.
+     * 
+     * @param listener
+     *            the listener to add
+     */
     public final void add(final MapListener listener) {
 
         mapListeners.add(listener);
     }
 
+    /**
+     * Removes a listener.
+     * 
+     * @param listener
+     *            the listener to remove
+     */
     public final void remove(final MapListener listener) {
 
         mapListeners.remove(listener);

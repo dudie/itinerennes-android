@@ -38,6 +38,11 @@ public final class ItineRennesConstants {
      */
     public static final int CONFIG_MINIMUM_ZOOM_ITEMS = 17;
 
+    /**
+     * Zoom level for zooming on a precise marker or location.
+     */
+    public static final int CONFIG_ZOOM_ON_LOCATION = 17;
+
     /*
      * Keolis constants.
      */
@@ -63,4 +68,6 @@ public final class ItineRennesConstants {
     /** The database schema version. */
     public static final int DATABASE_VERSION = 25;
 
+    /** Duration of toast messages. */
+    public static final int TOAST_DURATION = 5000;
 }

@@ -52,6 +52,8 @@ public class LineIconService extends AbstractService {
      * @param line
      *            the name of the line you want the icon
      * @return the drawable
+     * @throws GenericException
+     *             when the drawable is not found
      */
     public final BitmapDrawable getIcon(final String line) throws GenericException {
 
@@ -104,6 +106,8 @@ public class LineIconService extends AbstractService {
     /**
      * Returns a mock icon. This method always returns a displayable drawable.
      * 
+     * @param context
+     *            the context
      * @param line
      *            the name of the line you want the icon
      * @return the drawable

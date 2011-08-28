@@ -10,7 +10,6 @@ import android.os.AsyncTask.Status;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
 import fr.dudie.keolis.model.BikeStation;
 import fr.dudie.keolis.model.SubwayStation;
 import fr.dudie.onebusaway.model.Stop;
@@ -66,8 +65,6 @@ public final class MapBoxController {
     /**
      * Constructs the map box controller.
      * 
-     * @param context
-     *            the context
      * @param map
      *            the map view
      */

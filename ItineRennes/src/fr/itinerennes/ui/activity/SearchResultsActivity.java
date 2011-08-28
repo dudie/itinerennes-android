@@ -26,6 +26,7 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import fr.dudie.nominatim.model.Address;
 
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.commons.utils.SearchUtils;
 import fr.itinerennes.database.Columns.LocationColumns;
@@ -145,7 +146,8 @@ public final class SearchResultsActivity extends ItineRennesActivity {
 
                             startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(
                                     getApplicationContext(), barycentre.getLatitudeE6(),
-                                    barycentre.getLongitudeE6(), 17, markerType));
+                                    barycentre.getLongitudeE6(),
+                                    ItineRennesConstants.CONFIG_ZOOM_ON_LOCATION, markerType));
 
                         }
 
@@ -162,7 +164,8 @@ public final class SearchResultsActivity extends ItineRennesActivity {
                         }
 
                         startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(
-                                getApplicationContext(), latE6, lonE6, 17));
+                                getApplicationContext(), latE6, lonE6,
+                                ItineRennesConstants.CONFIG_ZOOM_ON_LOCATION));
                     }
 
                 }
@@ -303,6 +306,8 @@ public final class SearchResultsActivity extends ItineRennesActivity {
          * 
          * @param context
          *            the context
+         * @param query
+         *            the search query
          */
         public SearchResultsListItemViewBinder(final Context context, final String query) {
 

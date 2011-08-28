@@ -10,12 +10,28 @@ import android.widget.ZoomControls;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 
+/**
+ * Zoom Controls.
+ * 
+ * @author Olivier Boudet
+ * @author Jérémie Huchet
+ */
 public class ItinerennesZoomControls extends ZoomControls {
 
+    /** Ressource id of the {@link ItinerennesMapView}. */
     private final int mapResId;
 
+    /** The {@link ItinerennesMapView} containing this Zoom Controls. */
     private ItinerennesMapView map;
 
+    /**
+     * Constructor.
+     * 
+     * @param context
+     *            the context
+     * @param attr
+     *            the set of attributes
+     */
     public ItinerennesZoomControls(final Context context, final AttributeSet attr) {
 
         super(context, attr);
@@ -29,6 +45,12 @@ public class ItinerennesZoomControls extends ZoomControls {
         setOnZoomOutClickListener(new OnZoomOutClickListener());
     }
 
+    /**
+     * Zoom in listener.
+     * 
+     * @author Olivier Boudet
+     * @author Jérémie Huchet
+     */
     private class OnZoomInClickListener implements OnClickListener {
 
         @Override
@@ -43,6 +65,12 @@ public class ItinerennesZoomControls extends ZoomControls {
         }
     }
 
+    /**
+     * Zoom out listener.
+     * 
+     * @author Olivier Boudet
+     * @author Jérémie Huchet
+     */
     private class OnZoomOutClickListener implements OnClickListener {
 
         @Override
@@ -57,6 +85,9 @@ public class ItinerennesZoomControls extends ZoomControls {
         }
     }
 
+    /**
+     * Initializes zoom controls.
+     */
     public final void tryInitZoomControls() {
 
         map = (ItinerennesMapView) ((ItineRennesActivity) getContext()).findViewById(mapResId);
@@ -65,8 +96,13 @@ public class ItinerennesZoomControls extends ZoomControls {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.widget.LinearLayout#onMeasure(int, int)
+     */
     @Override
-    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+    protected final void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
 
         // Ugly code : force buttons be equal size.
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

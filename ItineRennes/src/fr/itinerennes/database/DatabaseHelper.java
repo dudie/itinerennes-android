@@ -124,7 +124,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
      * separation. If a value contains a ';' the execution will crash.
      * 
      * @param db
+     *            the database to use
      * @param script
+     *            the sql script to execute
      */
     private void execScript(final SQLiteDatabase db, final String script) {
 

@@ -51,9 +51,6 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     /** The event logger. */
     private static final Logger LOGGER = AndroidLoggerFactory.getLogger(MapActivity.class);
 
-    /** Duration of toast messages. */
-    private static final int TOAST_DURATION = 300;
-
     /** The map view. */
     private ItinerennesMapView map;
 
@@ -223,7 +220,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            Toast.makeText(this, R.string.location_service_disabled, TOAST_DURATION).show();
+            Toast.makeText(this, R.string.location_service_disabled,
+                    ItineRennesConstants.TOAST_DURATION).show();
             ((ToggleButton) button).setChecked(false);
         } else {
             myLocation.toggleFollowLocation();
@@ -414,7 +412,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
                 if (barycentre != null) {
                     onNewIntent(IntentFactory.getCenterOnLocationIntent(getApplicationContext(),
-                            barycentre.getLatitudeE6(), barycentre.getLongitudeE6(), 17, type));
+                            barycentre.getLatitudeE6(), barycentre.getLongitudeE6(),
+                            ItineRennesConstants.CONFIG_ZOOM_ON_LOCATION, type));
                 }
 
             }

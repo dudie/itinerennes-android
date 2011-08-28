@@ -58,6 +58,8 @@ public final class ResourceResolver {
      * Resolves the given drawable resource id and applies a filter to make it more consistent with
      * Android UI guidelines for dialog icons.
      * 
+     * @param context
+     *            the context
      * @param drawableResourceId
      *            a drawable resource identifier
      * @return a drawable representing the given resource but a little more lightened
