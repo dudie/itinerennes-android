@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fr.itinerennes.ui.views.MapBoxView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -57,4 +57,4 @@
 
     <include layout="@layout/ul_line_icon" />
 
-</LinearLayout>
+</fr.itinerennes.ui.views.MapBoxView>
