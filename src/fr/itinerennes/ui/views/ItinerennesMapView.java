@@ -14,7 +14,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import fr.itinerennes.ui.activity.ItineRennesActivity;
-import fr.itinerennes.ui.views.overlays.EventGarbageOverlay;
 import fr.itinerennes.ui.views.overlays.LazyOverlay;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.ui.views.overlays.MarkerOverlay;
@@ -41,9 +40,6 @@ public class ItinerennesMapView extends MapView {
 
     /** The overlay containing all the markers. */
     private final MarkerOverlay markerOverlay;
-
-    /** The overlay collecting unhandled events. */
-    private final EventGarbageOverlay garbageOverlay;
 
     /** The overlay displaying the current location. */
     private final LocationOverlay myLocationOverlay;
@@ -92,11 +88,9 @@ public class ItinerennesMapView extends MapView {
         mapListeners = new MapListenerWrapper(3);
         super.setMapListener(new DelayedMapListener(mapListeners, MAP_LISTENER_DELAY));
 
-        garbageOverlay = new EventGarbageOverlay(this.context);
         markerOverlay = new MarkerOverlay(this.context, this);
         myLocationOverlay = new LocationOverlay(this.context, this);
 
-        super.getOverlays().add(garbageOverlay);
         this.addOverlay(markerOverlay);
         super.getOverlays().add(myLocationOverlay);
 
@@ -145,16 +139,6 @@ public class ItinerennesMapView extends MapView {
     public final MarkerOverlay getMarkerOverlay() {
 
         return markerOverlay;
-    }
-
-    /**
-     * Gets the garbageOverlay.
-     * 
-     * @return the garbageOverlay
-     */
-    public final EventGarbageOverlay getGarbageOverlay() {
-
-        return garbageOverlay;
     }
 
     /**
