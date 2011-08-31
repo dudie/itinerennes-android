@@ -18,6 +18,7 @@ import org.slf4j.impl.AndroidLoggerFactory;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+
 import fr.dudie.keolis.client.JsonKeolisClient;
 import fr.dudie.keolis.client.KeolisClient;
 import fr.dudie.nominatim.client.JsonNominatimClient;
@@ -217,22 +218,21 @@ public class ItineRennesApplication extends Application {
             final SchemeRegistry registry = new SchemeRegistry();
             registry.register(new Scheme("http", new PlainSocketFactory(), 80));
 
-            final HttpParams params = new BasicHttpParams();
-
-            ConnManagerParams.setMaxTotalConnections(params, 5);
-            HttpConnectionParams.setConnectionTimeout(params, 60000);
-
+            final HttpParams cxParams = new BasicHttpParams();
+            ConnManagerParams.setMaxTotalConnections(cxParams, 5);
+            HttpConnectionParams.setConnectionTimeout(cxParams, 60000);
             final ThreadSafeClientConnManager connexionManager = new ThreadSafeClientConnManager(
-                    params, registry);
+                    cxParams, registry);
 
             final String appVersion = this.getString(R.string.version_number);
             final String userAgent = String.format("ItineRennes/%s (Android/%s; SDK %s; %s; %s)",
                     appVersion, android.os.Build.VERSION.RELEASE, android.os.Build.VERSION.SDK_INT,
                     android.os.Build.MODEL, android.os.Build.DEVICE);
 
-            params.setParameter(HttpProtocolParams.USER_AGENT, userAgent);
+            final HttpParams clientParams = new BasicHttpParams();
+            clientParams.setParameter(HttpProtocolParams.USER_AGENT, userAgent);
 
-            httpClient = new DefaultHttpClient(connexionManager, null);
+            httpClient = new DefaultHttpClient(connexionManager, clientParams);
         }
 
         return httpClient;
