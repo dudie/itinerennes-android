@@ -88,13 +88,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 LOGGER.debug(String.format("executing database upgrade script : %s", script));
             }
 
-            if (getClass().getResourceAsStream(script) != null) {
-                execScript(db, readScript(script));
-            } else {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(String.format("database upgrade script %s does not exist", script));
-                }
-            }
+            execScript(db, readScript(script));
         }
 
     }
