@@ -1,9 +1,11 @@
 package fr.itinerennes.business.service;
 
+import org.acra.ErrorReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -55,7 +57,7 @@ public class LineIconService extends AbstractService {
      * @throws GenericException
      *             when the drawable is not found
      */
-    public final BitmapDrawable getIcon(final String line) throws GenericException {
+    public final Drawable getIcon(final String line) throws GenericException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getIcon.start - line={}", line);
@@ -70,7 +72,15 @@ public class LineIconService extends AbstractService {
             LOGGER.debug("icon resource : name={}, id={}", resName, id);
         }
 
-        final BitmapDrawable image = (BitmapDrawable) context.getResources().getDrawable(id);
+        final Drawable image;
+        if (0 == id) {
+            final String msg = String.format("No icon found for line %s", line);
+            LOGGER.warn(msg);
+            ErrorReporter.getInstance().handleSilentException(new Resources.NotFoundException(msg));
+            image = getDefaultIcon(context, line);
+        } else {
+            image = context.getResources().getDrawable(id);
+        }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getIcon.end - imageNotNull={}", null != image);
