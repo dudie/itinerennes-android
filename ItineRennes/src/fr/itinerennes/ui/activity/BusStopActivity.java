@@ -180,6 +180,21 @@ public final class BusStopActivity extends ItineRennesActivity {
     /**
      * {@inheritDoc}
      * 
+     * @see fr.itinerennes.ui.activity.ItineRennesActivity#onResume()
+     */
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+
+        if (adapter != null) {
+            adapter.notifyDataSetInvalidated();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @see android.app.Activity#onCreateDialog(int)
      */
     @Override
