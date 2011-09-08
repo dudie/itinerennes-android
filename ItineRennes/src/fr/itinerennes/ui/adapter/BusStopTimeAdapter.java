@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import fr.dudie.onebusaway.model.ScheduleStopTime;
 import fr.dudie.onebusaway.model.StopSchedule;
 
@@ -32,7 +33,7 @@ public class BusStopTimeAdapter extends BaseAdapter {
     private final LineIconService lineIconService;
 
     /** Stop complete schedule. */
-    private StopSchedule data;
+    private StopSchedule stopSchedule;
 
     /** Global instance of Layout inflater. */
     private final LayoutInflater inflater;
@@ -77,8 +78,8 @@ public class BusStopTimeAdapter extends BaseAdapter {
     @Override
     public final int getCount() {
 
-        if (data != null) {
-            return data.getStopTimes().size();
+        if (stopSchedule != null) {
+            return stopSchedule.getStopTimes().size();
         } else {
             return 0;
         }
@@ -92,10 +93,11 @@ public class BusStopTimeAdapter extends BaseAdapter {
     @Override
     public final ScheduleStopTime getItem(final int position) {
 
-        if (data != null) {
-            return data.getStopTimes().get(position);
-        } else
+        if (stopSchedule != null) {
+            return stopSchedule.getStopTimes().get(position);
+        } else {
             return null;
+        }
     }
 
     /**
@@ -118,7 +120,7 @@ public class BusStopTimeAdapter extends BaseAdapter {
     public final View getView(final int position, final View convertView, final ViewGroup parent) {
 
         final View busTimeView = inflater.inflate(R.layout.li_stop_time_bus, null);
-        final ScheduleStopTime stopTime = data.getStopTimes().get(position);
+        final ScheduleStopTime stopTime = stopSchedule.getStopTimes().get(position);
 
         final ImageView departureLineIconeView = (ImageView) busTimeView
                 .findViewById(R.station.bus_departure_line_icon);
@@ -149,7 +151,7 @@ public class BusStopTimeAdapter extends BaseAdapter {
             if (context
                     .getApplicationContext()
                     .getAccessibilityService()
-                    .isAccessible(data.getStopTimes().get(position).getRoute().getId(),
+                    .isAccessible(stopSchedule.getStopTimes().get(position).getRoute().getId(),
                             TypeConstants.TYPE_BUS_ROUTE)) {
                 handistar.setVisibility(View.VISIBLE);
             }
@@ -327,10 +329,10 @@ public class BusStopTimeAdapter extends BaseAdapter {
     public final int getIndexForNow() {
 
         final Date now = new Date();
-        final int length = data.getStopTimes().size();
+        final int length = stopSchedule.getStopTimes().size();
 
         for (int i = 0; i < length; i++) {
-            if (data.getStopTimes().get(i).getDepartureTime().compareTo(now) > 0) {
+            if (stopSchedule.getStopTimes().get(i).getDepartureTime().compareTo(now) > 0) {
                 return i;
             }
         }
@@ -360,9 +362,10 @@ public class BusStopTimeAdapter extends BaseAdapter {
         if (StringUtils.isBlank(tripIdToHighlight)) {
             index = getIndexForNow();
         } else {
-            final int length = data.getStopTimes().size();
+            final int length = stopSchedule.getStopTimes().size();
             for (int i = 0; index == -1 && i < length; i++) {
-                if (data.getStopTimes().get(i).getTripId().equalsIgnoreCase(tripIdToHighlight)) {
+                if (stopSchedule.getStopTimes().get(i).getTripId()
+                        .equalsIgnoreCase(tripIdToHighlight)) {
                     index = i;
                 }
             }
@@ -393,9 +396,9 @@ public class BusStopTimeAdapter extends BaseAdapter {
      * @param schedule
      *            the schedule data
      */
-    public final void setData(final StopSchedule schedule) {
+    public final void setStopSchedule(final StopSchedule schedule) {
 
-        this.data = schedule;
+        this.stopSchedule = schedule;
         notifyDataSetChanged();
 
     }

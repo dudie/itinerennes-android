@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
 import fr.dudie.onebusaway.client.IOneBusAwayClient;
 import fr.dudie.onebusaway.model.Route;
 import fr.dudie.onebusaway.model.ScheduleStopTime;
@@ -92,6 +93,12 @@ public final class BusStopActivity extends ItineRennesActivity {
 
     /** The list view showing departures. */
     private ListView listTimes;
+
+    /**
+     * If an update of the content displayed is requested, the task which result is expected is
+     * referenced by this variable. It's typically the last requested started.
+     */
+    private AsyncTask<Void, Void, StopSchedule> refreshStopScheduleTask;
 
     /**
      * Creates the activity.
@@ -187,6 +194,10 @@ public final class BusStopActivity extends ItineRennesActivity {
 
         super.onResume();
 
+        /*
+         * When the user gets back to the activity, the time may have changed since the last time he
+         * used it. So we need to update the UI to gray deprecated bus times.
+         */
         if (adapter != null) {
             adapter.notifyDataSetInvalidated();
         }
@@ -260,12 +271,12 @@ public final class BusStopActivity extends ItineRennesActivity {
     private void onDayChanged(final Date newDate) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(String.format("Showing schedule for %s", newDate));
+            LOGGER.debug("onDayChanged.start - {}", newDate);
         }
 
         scheduleDate = newDate;
 
-        new AsyncTask<Void, Void, StopSchedule>() {
+        refreshStopScheduleTask = new AsyncTask<Void, Void, StopSchedule>() {
 
             /**
              * {@inheritDoc}
@@ -291,7 +302,7 @@ public final class BusStopActivity extends ItineRennesActivity {
                 try {
                     /* Fetching stop informations for this station from the network. */
 
-                    return obaClient.getScheduleForStop(stopId, scheduleDate);
+                    return obaClient.getScheduleForStop(stopId, newDate);
 
                 } catch (final IOException e) {
                     LOGGER.debug(
@@ -307,46 +318,65 @@ public final class BusStopActivity extends ItineRennesActivity {
              * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
              */
             @Override
-            protected void onPostExecute(final StopSchedule result) {
+            protected void onPostExecute(final StopSchedule schedule) {
 
-                if (result != null) {
+                if (schedule != null) {
+                    if (refreshStopScheduleTask == this) {
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("received schedule for {} and refreshing UI with it",
+                                    newDate);
+                        }
 
-                    /* Hide progress bar and show list view. */
-                    findViewById(R.activity_bus_stop.progress_bar).setVisibility(View.GONE);
-                    findViewById(R.activity_bus_stop.list_bus).setVisibility(View.VISIBLE);
+                        /* Hide progress bar and show list view. */
+                        findViewById(R.activity_bus_stop.progress_bar).setVisibility(View.GONE);
+                        findViewById(R.activity_bus_stop.list_bus).setVisibility(View.VISIBLE);
 
-                    /* Displaying routes icons. */
+                        /* Displaying routes icons. */
 
-                    final ViewGroup lineList = (ViewGroup) findViewById(R.id.line_icon_container);
-                    lineList.removeAllViews();
-                    for (final Route busRoute : result.getStop().getRoutes()) {
-                        final View imageContainer = getLayoutInflater().inflate(
-                                R.layout.li_line_icon, null);
-                        final ImageView lineIcon = (ImageView) imageContainer
-                                .findViewById(R.station.bus_line_icon);
-                        lineIcon.setImageDrawable(getApplicationContext().getLineIconService()
-                                .getIconOrDefault(getApplicationContext(), busRoute.getShortName()));
+                        final ViewGroup lineList = (ViewGroup) findViewById(R.id.line_icon_container);
+                        lineList.removeAllViews();
+                        for (final Route busRoute : schedule.getStop().getRoutes()) {
+                            final View imageContainer = getLayoutInflater().inflate(
+                                    R.layout.li_line_icon, null);
+                            final ImageView lineIcon = (ImageView) imageContainer
+                                    .findViewById(R.station.bus_line_icon);
+                            lineIcon.setImageDrawable(getApplicationContext().getLineIconService()
+                                    .getIconOrDefault(getApplicationContext(),
+                                            busRoute.getShortName()));
 
-                        lineList.addView(imageContainer);
+                            lineList.addView(imageContainer);
+                        }
 
-                        LOGGER.debug("Showing icon for line {}.", busRoute.getShortName());
+                        /* Displaying departures dates. */
+                        // get, if available, the tripId of the previous BusTripActivity displayed
+                        final String tripId = getIntent().getExtras()
+                                .getString(INTENT_FROM_TRIP_ID);
+
+                        adapter.setTripIdToHighlight(tripId);
+                        adapter.setStopSchedule(schedule);
+
+                        listTimes
+                                .setSelectionFromTop(adapter.getInitialIndex(), SELECTION_FROM_TOP);
+                    } else if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug(
+                                "received schedule for {} but this is not the expected one (another one should have or will be received)",
+                                newDate);
                     }
-
-                    /* Displaying departures dates. */
-                    // get, if available, the tripId of the previous BusTripActivity displayed
-                    final String tripId = getIntent().getExtras().getString(INTENT_FROM_TRIP_ID);
-
-                    adapter.setTripIdToHighlight(tripId);
-                    adapter.setData(result);
-
-                    listTimes.setSelectionFromTop(adapter.getInitialIndex(), SELECTION_FROM_TOP);
-
                 } else {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("no schedule received for {}", newDate);
+                    }
                     showDialog(FAILURE_DIALOG);
                 }
             };
 
-        }.execute();
+        };
+
+        refreshStopScheduleTask.execute();
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("onDayChanged.end - {}", newDate);
+        }
     }
 
     /**
