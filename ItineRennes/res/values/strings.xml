@@ -11,6 +11,7 @@
     <string name="activity_title_bus_trip">Bus trip</string>
     
     <!-- bookmarks -->
+    <string name="activity_title_bookmarks">Bookmarks</string>
     <string name="added_to_bookmarks"><i>%s</i> added to bookmarks</string>
     <string name="removed_from_bookmarks"><i>%s</i> removed from bookmarks</string>
     <string name="delete_bookmark_not_found"><i>%s</i> removed from bookmarks because it\'s not available anymore</string>
@@ -24,4 +25,6 @@
     <string name="select_end_point_on_map">Click on the map to choose an end point.</string>
     <!-- Activity search results -->
     <string name="activity_title_search_results">Search results</string>
+    <!-- Activity transport alerts -->
+    <string name="activity_title_network_alerts">Network alerts</string>
 </resources>

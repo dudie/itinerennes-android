@@ -37,4 +37,6 @@
         <item quantity="one">demain</item>
         <item quantity="other">dans %d jours</item>
     </plurals>
+    <string name="date_from">du %s</string>
+    <string name="date_to">au %s</string>
 </resources>

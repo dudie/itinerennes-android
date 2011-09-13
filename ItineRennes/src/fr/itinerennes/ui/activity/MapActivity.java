@@ -191,6 +191,9 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         case R.id.menu_search:
             onSearchRequested();
             return true;
+        case R.id.menu_network_alerts:
+            startActivity(new Intent(this, NetworkAlertsActivity.class));
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }

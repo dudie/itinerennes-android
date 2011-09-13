@@ -1,0 +1,13 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+    android:orientation="horizontal"
+    android:gravity="left|center_vertical">
+
+    <TextView android:id="@+id/li_line_alert_title"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textSize="16sp"
+        android:layout_margin="10dp"/>
+        
+</LinearLayout>

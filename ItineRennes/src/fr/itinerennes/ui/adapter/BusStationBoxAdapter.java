@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -20,6 +19,8 @@ import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.activity.BusStopActivity;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
+import fr.itinerennes.ui.views.FlowLayout;
+import fr.itinerennes.ui.views.LineImageView;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
@@ -135,19 +136,17 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
             // updates the station name just to be sure
             ((TextView) view.findViewById(R.id.map_box_title)).setText(station.getName());
 
-            final LinearLayout iconsView = (LinearLayout) view
-                    .findViewById(R.id.line_icon_container);
+            final FlowLayout iconsView = (FlowLayout) view.findViewById(R.id.line_icon_container);
 
             final List<Route> busRoutes = station.getRoutes();
             if (!busRoutes.isEmpty()) {
                 for (final Route route : busRoutes) {
 
-                    final View imageContainer = inflater.inflate(R.layout.li_line_icon, null);
-                    final ImageView lineIcon = (ImageView) imageContainer
-                            .findViewById(R.station.bus_line_icon);
-                    lineIcon.setImageDrawable(context.getApplicationContext().getLineIconService()
-                            .getIconOrDefault(context, route.getShortName()));
-                    iconsView.addView(imageContainer);
+                    final LineImageView lineIcon = new LineImageView(context);
+                    lineIcon.setLine(route.getShortName());
+                    lineIcon.setBounds(24, 24);
+                    lineIcon.setPadding(2, 0, 2, 0);
+                    iconsView.addView(lineIcon);
                 }
                 // set the list of routes icons visible only if it contains icons
                 view.findViewById(R.id.line_icon_container).setVisibility(View.VISIBLE);

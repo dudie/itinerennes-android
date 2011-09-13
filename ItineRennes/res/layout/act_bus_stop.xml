@@ -3,7 +3,8 @@
 <LinearLayout android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:orientation="vertical"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes">
+    xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes"
+    android:gravity="center_horizontal">
 
     <!-- START TITLE BAR -->
     <LinearLayout android:layout_width="fill_parent"
@@ -79,21 +80,25 @@
     </LinearLayout>
     <!-- END TITLE BAR -->
 
-    <include layout="@layout/ul_line_icon" />
+    <!-- line icons list -->
+    <HorizontalScrollView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="2dp" 
+           android:scrollbarAlwaysDrawHorizontalTrack="true">
+    
+        <LinearLayout android:id="@+id/line_icon_container" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"  
+            android:gravity="center">
+            <!-- the icons of each lines are appended here -->
+        </LinearLayout>
+
+    </HorizontalScrollView>
 	
     <!--  Progress Bar -->
-    <LinearLayout android:id="@+activity_bus_stop/progress_bar"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-        <ProgressBar android:layout_height="@dimen/progress_bar_size"
-            android:layout_width="@dimen/progress_bar_size">
-        </ProgressBar>
-        <TextView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"/>
-    </LinearLayout>
+    <include layout="@layout/misc_view_is_loading"/>
     
 	<ListView 
 	    android:id="@+activity_bus_stop/list_bus" 

@@ -55,6 +55,12 @@
 	
 	</LinearLayout>
 
-    <include layout="@layout/ul_line_icon" />
+    <fr.itinerennes.ui.views.FlowLayout android:id="@+id/line_icon_container" 
+        android:layout_width="wrap_content" 
+        android:layout_height="fill_parent" 
+        android:orientation="horizontal"
+        android:gravity="center">
+        <!-- the icons of each lines are appended here -->
+    </fr.itinerennes.ui.views.FlowLayout>
 
 </fr.itinerennes.ui.views.MapBoxView>

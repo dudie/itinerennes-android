@@ -28,7 +28,6 @@
         </activity>
         
         <activity android:name=".ui.activity.BusStopActivity"
-                  android:label="@string/app_name"
                   android:configChanges="orientation" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -36,7 +35,6 @@
         </activity>
         
         <activity android:name=".ui.activity.BusTripActivity"
-                  android:label="@string/app_name"
                   android:configChanges="orientation" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -44,7 +42,6 @@
         </activity>
         
         <activity android:name=".ui.activity.BookmarksActivity"
-                  android:label="@string/app_name"
                   android:launchMode="singleTop"
                   android:configChanges="orientation">
             <intent-filter>
@@ -53,7 +50,6 @@
         </activity>
         
         <activity android:name=".ui.activity.LoadingActivity"
-                  android:label="@string/app_name"
                   android:launchMode="singleTop"
                   android:configChanges="orientation" 
                   android:theme="@android:style/Theme.Black.NoTitleBar">
@@ -64,7 +60,6 @@
         </activity>
         
         <activity android:name=".ui.activity.SearchResultsActivity"
-                  android:label="@string/app_name"
                   android:launchMode="singleTop"
                   android:configChanges="orientation" 
                   android:theme="@android:style/Theme.Light.NoTitleBar">
@@ -78,13 +73,21 @@
         <activity android:name=".ui.activity.NewVersionActivity"
         	android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         
+        <activity android:name=".ui.activity.NetworkAlertsActivity"
+                  android:launchMode="singleTop"
+                  android:configChanges="orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        
         <provider android:authorities="fr.itinerennes.provider.searchMarkersProvider" 
             android:name=".provider.SearchMarkersProvider">
         </provider>
     
     </application>
 
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="9"/>
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="12"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />

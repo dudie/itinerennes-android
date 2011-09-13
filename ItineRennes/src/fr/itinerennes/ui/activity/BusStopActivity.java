@@ -37,6 +37,7 @@ import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.commons.utils.DateUtils;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
+import fr.itinerennes.ui.views.LineImageView;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
 
@@ -287,7 +288,7 @@ public final class BusStopActivity extends ItineRennesActivity {
             protected void onPreExecute() {
 
                 /* Hide progress bar and show list view. */
-                findViewById(R.activity_bus_stop.progress_bar).setVisibility(View.VISIBLE);
+                findViewById(R.id.misc_view_is_loading).setVisibility(View.VISIBLE);
                 findViewById(R.activity_bus_stop.list_bus).setVisibility(View.GONE);
             };
 
@@ -328,7 +329,7 @@ public final class BusStopActivity extends ItineRennesActivity {
                         }
 
                         /* Hide progress bar and show list view. */
-                        findViewById(R.activity_bus_stop.progress_bar).setVisibility(View.GONE);
+                        findViewById(R.id.misc_view_is_loading).setVisibility(View.GONE);
                         findViewById(R.activity_bus_stop.list_bus).setVisibility(View.VISIBLE);
 
                         /* Displaying routes icons. */
@@ -336,15 +337,12 @@ public final class BusStopActivity extends ItineRennesActivity {
                         final ViewGroup lineList = (ViewGroup) findViewById(R.id.line_icon_container);
                         lineList.removeAllViews();
                         for (final Route busRoute : schedule.getStop().getRoutes()) {
-                            final View imageContainer = getLayoutInflater().inflate(
-                                    R.layout.li_line_icon, null);
-                            final ImageView lineIcon = (ImageView) imageContainer
-                                    .findViewById(R.station.bus_line_icon);
-                            lineIcon.setImageDrawable(getApplicationContext().getLineIconService()
-                                    .getIconOrDefault(getApplicationContext(),
-                                            busRoute.getShortName()));
 
-                            lineList.addView(imageContainer);
+                            final LineImageView lineIcon = new LineImageView(BusStopActivity.this);
+                            lineIcon.setLine(busRoute.getShortName());
+                            lineIcon.setBounds(24, 24);
+                            lineIcon.setPadding(2, 0, 2, 0);
+                            lineList.addView(lineIcon);
                         }
 
                         /* Displaying departures dates. */

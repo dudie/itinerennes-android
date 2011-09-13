@@ -11,6 +11,7 @@
     <string name="activity_title_bus_trip">Horaires d\'un trajet</string>
     
     <!-- bookmarks -->
+    <string name="activity_title_bookmarks">Favoris</string>
     <string name="added_to_bookmarks"><i>%s</i> ajouté aux favoris</string>
     <string name="removed_from_bookmarks"><i>%s</i> retiré des favoris</string>
     <string name="delete_bookmark_not_found"><i>%s</i> est retiré des favoris car il n\'est plus disponible</string>
@@ -24,5 +25,6 @@
     <string name="select_end_point_on_map">Cliquez sur la carte pour choisir un point de d\'arrivée.</string>
     <!-- Activity search results -->
     <string name="activity_title_search_results">Résultats de recherche</string>
-    
+    <!-- Activity transport alerts -->
+    <string name="activity_title_network_alerts">Alertes sur le réseau</string>
 </resources>

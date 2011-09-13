@@ -35,4 +35,6 @@
         <item quantity="one">tomorrow</item>
         <item quantity="other">in %d days</item>
     </plurals>
+    <string name="date_from">from %s</string>
+    <string name="date_to">to %s</string>
 </resources>

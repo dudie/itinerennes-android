@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_bookmarks"
+          android:title="@string/menu_bookmarks"
+          android:icon="@drawable/ic_menu_star" />
+    <item android:id="@+id/menu_network_alerts"
+          android:title="@string/menu_network_alerts"
+          android:icon="@drawable/ic_menu_alert" />
     <item android:id="@+id/menu_search"
           android:title="@string/menu_search"
           android:icon="@android:drawable/ic_menu_search" />
     <item android:id="@+id/menu_layers"
           android:title="@string/menu_layers"
           android:icon="@drawable/ic_menu_layers" />
-    <item android:id="@+id/menu_bookmarks"
-          android:title="@string/menu_bookmarks"
-          android:icon="@drawable/ic_menu_star" />
     <item android:id="@+id/menu_about"
           android:title="@string/menu_about"
           android:icon="@android:drawable/ic_menu_help" />

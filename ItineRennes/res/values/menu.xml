@@ -2,6 +2,7 @@
 <resources>
     <string name="menu_about">About</string>
     <string name="menu_bookmarks">Bookmarks</string>
+    <string name="menu_network_alerts">Alerts</string>
     <string name="menu_layers">Layers</string>
     <string name="menu_search">Search</string>
     <string name="menu_previous_day">Previous day</string>

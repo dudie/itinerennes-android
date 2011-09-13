@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:orientation="vertical"
-	xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:layout_height="fill_parent" android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- START TITLE BAR -->
     <LinearLayout android:id="@+id/toolbar"
@@ -14,18 +14,23 @@
         <TextView android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:text="@string/activity_title_bookmarks"
+            android:text="@string/activity_title_network_alerts"
             android:textSize="@dimen/toolbar_text_size"
             android:gravity="center_vertical"
             android:textColor="@color/white"/>
         
     </LinearLayout>
     <!-- END TITLE BAR -->
+    
+    <!--  Progress Bar -->
+    <include layout="@layout/misc_view_is_loading"/>
 
-	<ListView android:id="@+id/bookmark_list" 
-	    android:layout_width="fill_parent"
-		android:layout_height="fill_parent" 
-		android:orientation="vertical">
-	</ListView>
+    <!-- list containing alerts -->
+    <ListView android:id="@+id/alerts_list" 
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:orientation="vertical">
+    </ListView>
 
 </LinearLayout>
