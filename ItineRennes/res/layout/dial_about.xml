@@ -1,70 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scrollbarAlwaysDrawVerticalTrack="true">
-        
-<LinearLayout 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-	android:layout_height="fill_parent" 
-	android:padding="10dp"
-	android:orientation="vertical">
-	
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content" 
-	    android:orientation="horizontal"
-	    android:gravity="center_vertical">
-
-        <ImageView
-            android:src="@drawable/ic_itinerennes_200"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:gravity="center"/>
-	
-		<RelativeLayout
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:paddingLeft="10dp"
-	        android:gravity="center">
-	
-	        <TextView android:id="@+id/app_name" 
-	            android:text="@string/app_name_long"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:textSize="20sp"
-		        android:textStyle="bold"
-		        android:textColor="@color/white"/>
-                    
-            <TextView android:id="@+id/about_rennes_metropole_application"  
-                android:text="@string/rennes_metropole_application"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/app_name"
-                android:textColor="@color/grey_20"/>
-	
-		    <TextView
-		        android:text="@string/version_dots"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_below="@+id/about_rennes_metropole_application"
-	            android:layout_toLeftOf="@+id/about_version_number"
-	            android:textColor="@color/grey_20"/>
-                    
-            <TextView android:id="@+id/about_version_number"  
-                android:text="@string/version_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/about_rennes_metropole_application"
-                android:textColor="@color/grey_20"/>
-	
-	    </RelativeLayout>
-	    
-    </LinearLayout>
+    android:layout_height="fill_parent"
+    android:scrollbarAlwaysDrawVerticalTrack="true">
+        
+    <LinearLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="fill_parent" 
+    	android:padding="10dp"
+    	android:orientation="vertical">
+    	
+    	<LinearLayout
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="wrap_content" 
+    	    android:orientation="horizontal"
+    	    android:gravity="center_vertical">
+    
+            <ImageView
+                android:src="@drawable/ic_itinerennes_200"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center"/>
+    	
+    		<RelativeLayout
+    		    android:layout_width="fill_parent"
+    		    android:layout_height="wrap_content"
+    		    android:paddingLeft="10dp"
+    	        android:gravity="center">
+    	
+    	        <TextView android:id="@+id/app_name" 
+    	            android:text="@string/app_name_long"
+    		        android:layout_width="fill_parent"
+    		        android:layout_height="wrap_content"
+    		        android:textSize="20sp"
+    		        android:textStyle="bold"
+    		        android:textColor="@color/white"/>
+                        
+                <TextView android:id="@+id/about_rennes_metropole_application"  
+                    android:text="@string/rennes_metropole_application"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" 
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/app_name"
+                    android:textColor="@color/grey_20"/>
+    	
+    		    <TextView
+    		        android:text="@string/version_dots"
+    	            android:layout_width="wrap_content"
+    	            android:layout_height="wrap_content"
+    	            android:layout_below="@+id/about_rennes_metropole_application"
+    	            android:layout_toLeftOf="@+id/about_version_number"
+    	            android:textColor="@color/grey_20"/>
+                        
+                <TextView android:id="@+id/about_version_number"  
+                    android:text="@string/version_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" 
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/about_rennes_metropole_application"
+                    android:textColor="@color/grey_20"/>
+    	
+    	    </RelativeLayout>
+    	    
+        </LinearLayout>
   
         <TextView android:text="@string/about_keolis"
             android:layout_marginTop="10dp"
