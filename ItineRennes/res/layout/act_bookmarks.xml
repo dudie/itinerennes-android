@@ -17,7 +17,8 @@
             android:text="@string/activity_title_bookmarks"
             android:textSize="@dimen/toolbar_text_size"
             android:gravity="center_vertical"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:background="@drawable/bg_toolbar_bugdroid_bookmarks"/>
         
     </LinearLayout>
     <!-- END TITLE BAR -->
