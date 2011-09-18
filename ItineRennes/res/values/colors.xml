@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="blue">#007fff</color>
     <color name="dark_blue">#0d2e8b</color>
     <color name="dark_blue_darker">#0d2ebb</color>
     <color name="dark_blue_lighter">#0d2e66</color>
-    <color name="blue">#007fff</color>
     <color name="green">#00cc00</color>
-    <color name="orange_translucent_20">#ccff7400</color>
-    <color name="orange_translucent_40">#99ff7400</color>
     <color name="grey_10">#e6e6e6</color>
     <color name="grey_20">#cccccc</color>
     <color name="grey_30">#b3b3b3</color>
@@ -17,5 +14,8 @@
     <color name="grey_60">#666666</color>
     <color name="grey_70">#4d4d4d</color>
     <color name="orange_focused">#ff7400</color>
+    <color name="orange_translucent_20">#ccff7400</color>
+    <color name="orange_translucent_40">#99ff7400</color>
+    <color name="white">#ffffff</color>  
     <color name="yellow_pressed">#efbd32</color>
 </resources>
