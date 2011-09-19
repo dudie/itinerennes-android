@@ -184,7 +184,7 @@ public class MarkerOverlay extends LazyOverlay {
      * @param mapView
      *            the map view containing the overlay
      */
-    public final void onSingleTapUpMarker(final MarkerOverlayItem marker, final MapView mapView) {
+    private void onSingleTapUpMarker(final MarkerOverlayItem marker, final MapView mapView) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(String.format("onSingleTapUpMarker.start - %s", marker));
