@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +27,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import fr.dudie.onebusaway.client.IOneBusAwayClient;
 import fr.dudie.onebusaway.model.Route;
 import fr.dudie.onebusaway.model.ScheduleStopTime;
@@ -201,6 +201,27 @@ public final class BusStopActivity extends ItineRennesActivity {
          */
         if (adapter != null) {
             adapter.notifyDataSetInvalidated();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onDestroy()
+     */
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+
+        if (refreshStopScheduleTask != null
+                && !refreshStopScheduleTask.getStatus().equals(Status.FINISHED)) {
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("onDestroy - cancelling running refresh task.");
+            }
+
+            refreshStopScheduleTask.cancel(true);
         }
     }
 
