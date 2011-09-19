@@ -10,6 +10,7 @@ import android.os.AsyncTask.Status;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
 import fr.dudie.keolis.model.BikeStation;
 import fr.dudie.keolis.model.SubwayStation;
 import fr.dudie.onebusaway.model.Stop;
@@ -236,7 +237,9 @@ public final class MapBoxController {
             try {
                 result = adapter.doInBackground(boxView, item);
             } catch (final Exception e) {
-                // TJHU pas bien mais c'est pour éviter de planter à cause d'une async task perdue
+                // TJHU Gestion d'erreur : async task perdue
+                // on fait un catch Exception pour éviter de faire planter l'application si l'async
+                // task se vautre alors que l'activité est en pause
                 if (LOGGER.isInfoEnabled()) {
                     LOGGER.error("async task failed", e);
                 }
