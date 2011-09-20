@@ -13,9 +13,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -143,7 +143,7 @@ public final class NetworkAlertsActivity extends ItineRennesActivity {
         // set lines related to the alert
         final TextView title = (TextView) alertView.findViewById(R.id.dial_network_alert_title);
         title.setText(alertToDisplay.getBetterTitle());
-        final LinearLayout lines = (LinearLayout) alertView
+        final ViewGroup lines = (ViewGroup) alertView
                 .findViewById(R.id.dial_network_alert_list_icons);
         for (final String lineId : alertToDisplay.getLines()) {
             final LineImageView lineIcon = new LineImageView(this);

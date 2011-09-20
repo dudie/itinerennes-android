@@ -43,13 +43,11 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
         
-            <LinearLayout android:id="@+id/dial_network_alert_list_icons"
+            <fr.itinerennes.ui.views.FlowLayout android:id="@+id/dial_network_alert_list_icons"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" 
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:layout_height="wrap_content">
                 
-            </LinearLayout>
+            </fr.itinerennes.ui.views.FlowLayout>
       
             <TextView android:id="@+id/dial_network_alert_start_time"
                 android:layout_marginTop="5dp"
