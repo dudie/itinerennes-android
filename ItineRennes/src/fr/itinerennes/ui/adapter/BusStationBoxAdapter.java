@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -19,7 +20,6 @@ import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.activity.BusStopActivity;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
-import fr.itinerennes.ui.views.FlowLayout;
 import fr.itinerennes.ui.views.LineImageView;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
 import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
@@ -136,7 +136,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
             // updates the station name just to be sure
             ((TextView) view.findViewById(R.id.map_box_title)).setText(station.getName());
 
-            final FlowLayout iconsView = (FlowLayout) view.findViewById(R.id.line_icon_container);
+            final ViewGroup iconsView = (ViewGroup) view.findViewById(R.id.line_icon_container);
 
             final List<Route> busRoutes = station.getRoutes();
             if (!busRoutes.isEmpty()) {

@@ -11,16 +11,16 @@
     android:minWidth="240dp">
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	       android:orientation="horizontal"
-	       android:layout_width="fill_parent"
-	       android:layout_height="wrap_content"
-	       android:gravity="center_vertical">
+	        android:orientation="horizontal"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical">
 	       
-	    <ImageView android:src="@drawable/ic_mapbox_bus"
+	   <ImageView android:src="@drawable/ic_mapbox_bus"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"/>
 	    
-	    <TextView android:id="@+id/map_box_title"
+	   <TextView android:id="@+id/map_box_title"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
@@ -29,7 +29,7 @@
             android:padding="5dp"
 	        style="@style/WhiteText"/>
 	           
-	    <ProgressBar android:id="@+id/map_box_progressbar"
+	   <ProgressBar android:id="@+id/map_box_progressbar"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginRight="5dp"
@@ -56,7 +56,7 @@
 	</LinearLayout>
 
     <fr.itinerennes.ui.views.FlowLayout android:id="@+id/line_icon_container" 
-        android:layout_width="wrap_content" 
+        android:layout_width="fill_parent" 
         android:layout_height="fill_parent" 
         android:orientation="horizontal"
         android:gravity="center">
