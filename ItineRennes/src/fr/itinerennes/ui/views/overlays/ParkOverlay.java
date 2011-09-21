@@ -145,12 +145,14 @@ public class ParkOverlay extends LazyOverlay implements ILayerSelector {
 
         int[] originalState = null;
 
-        final int[] states = new int[1];
+        final int[] states = new int[2];
         int index = 0;
 
         if (map.getZoomLevel() >= ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
             states[index++] = R.attr.state_high_zoom;
-        } else if (item.getAvailable() == 0 || item.getState().equals(RelayParkState.CLOSED)) {
+        }
+
+        if (item.getAvailable() == 0 || item.getState().equals(RelayParkState.CLOSED)) {
             states[index++] = R.attr.state_park_red;
         } else if (item.getAvailable() < item.getCapacity() * ORANGE_LEVEL) {
             states[index++] = R.attr.state_park_orange;
