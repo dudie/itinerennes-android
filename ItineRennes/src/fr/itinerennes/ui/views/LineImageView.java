@@ -36,6 +36,14 @@ public final class LineImageView extends ImageView {
         this.context = context;
     }
 
+    /**
+     * Sets the max bounds the image view must fit to.
+     * 
+     * @param dipWidth
+     *            the maximum width in DIP
+     * @param dipHeight
+     *            the maximum height in DIP
+     */
     public void setBounds(final int dipWidth, final int dipHeight) {
 
         final DisplayMetrics metrics = context.getResources().getDisplayMetrics();
@@ -50,8 +58,49 @@ public final class LineImageView extends ImageView {
         setLayoutParams(params);
         setAdjustViewBounds(true);
         setMaxHeight(pxHeight);
-        // width is automatically adjusted
-        // setMaxWidth(pxWidth);
+        setMaxWidth(pxWidth);
+    }
+
+    /**
+     * Sets the max width the image view must fit to. The height is automatically adjusted to keep
+     * image ratio.
+     * 
+     * @param dipWidth
+     *            the maximum width in DIP
+     */
+    public void fitToWidth(final int dipWidth) {
+
+        final DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        final int pxWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipWidth,
+                metrics);
+
+        final LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
+
+        setLayoutParams(params);
+        setAdjustViewBounds(true);
+        setMaxWidth(pxWidth);
+    }
+
+    /**
+     * Sets the max height the image view must fit to. The width is automatically adjusted to keep
+     * image ratio.
+     * 
+     * @param dipHeight
+     *            the maximum height in DIP
+     */
+    public void fitToHeight(final int dipHeight) {
+
+        final DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        final int pxHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                dipHeight, metrics);
+
+        final LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
+
+        setLayoutParams(params);
+        setAdjustViewBounds(true);
+        setMaxHeight(pxHeight);
     }
 
     /**

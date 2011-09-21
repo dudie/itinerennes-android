@@ -148,7 +148,7 @@ public final class NetworkAlertsActivity extends ItineRennesActivity {
         for (final String lineId : alertToDisplay.getLines()) {
             final LineImageView lineIcon = new LineImageView(this);
             lineIcon.setLine(lineId);
-            lineIcon.setBounds(28, 28);
+            lineIcon.fitToHeight(28);
             lineIcon.setPadding(2, 0, 2, 0);
             lines.addView(lineIcon);
         }

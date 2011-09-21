@@ -96,7 +96,7 @@ public final class NetworkAlertsAdapter extends ArrayAdapter<LineAlert> {
         for (final String line : alert.getLines()) {
             final LineImageView icon = new LineImageView(context);
             icon.setLine(line);
-            icon.setBounds(24, 24);
+            icon.fitToHeight(24);
             icon.setPadding(2, 0, 2, 0);
             linesContainer.addView(icon);
         }

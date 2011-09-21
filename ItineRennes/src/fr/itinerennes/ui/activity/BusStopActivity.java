@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
 import fr.dudie.onebusaway.client.IOneBusAwayClient;
 import fr.dudie.onebusaway.model.Route;
 import fr.dudie.onebusaway.model.ScheduleStopTime;
@@ -361,7 +362,7 @@ public final class BusStopActivity extends ItineRennesActivity {
 
                             final LineImageView lineIcon = new LineImageView(BusStopActivity.this);
                             lineIcon.setLine(busRoute.getShortName());
-                            lineIcon.setBounds(24, 24);
+                            lineIcon.fitToHeight(24);
                             lineIcon.setPadding(2, 0, 2, 0);
                             lineList.addView(lineIcon);
                         }

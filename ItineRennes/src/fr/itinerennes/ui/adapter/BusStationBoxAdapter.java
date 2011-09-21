@@ -143,7 +143,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
 
                     final LineImageView lineIcon = new LineImageView(context);
                     lineIcon.setLine(route.getShortName());
-                    lineIcon.setBounds(24, 24);
+                    lineIcon.fitToHeight(24);
                     lineIcon.setPadding(2, 0, 2, 0);
                     iconsView.addView(lineIcon);
                 }
