@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import fr.dudie.onebusaway.client.IOneBusAwayClient;
 import fr.dudie.onebusaway.model.Route;
 import fr.dudie.onebusaway.model.Stop;
@@ -22,7 +21,8 @@ import fr.itinerennes.ui.activity.BusStopActivity;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.LineImageView;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 /**
  * @author Jérémie Huchet
@@ -56,10 +56,12 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getView(java.lang.Object)
      */
     @Override
-    public final View getView(final MarkerOverlayItem item) {
+    public final View getView(final OverlayItem item) {
+
+        final StopOverlayItem busStation = (StopOverlayItem) item;
 
         final View busView = inflater.inflate(R.layout.vw_mapbox_bus, null);
-        ((TextView) busView.findViewById(R.id.map_box_title)).setText(item.getLabel());
+        ((TextView) busView.findViewById(R.id.map_box_title)).setText(busStation.getLabel());
         busView.findViewById(R.id.line_icon_container).setVisibility(View.GONE);
 
         busView.setOnClickListener(new OnClickListener() {
@@ -68,21 +70,21 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
             public void onClick(final View v) {
 
                 final Intent i = new Intent(context, BusStopActivity.class);
-                i.putExtra(BusStopActivity.INTENT_STOP_ID, item.getId());
-                i.putExtra(BusStopActivity.INTENT_STOP_NAME, item.getLabel());
+                i.putExtra(BusStopActivity.INTENT_STOP_ID, busStation.getId());
+                i.putExtra(BusStopActivity.INTENT_STOP_NAME, busStation.getLabel());
                 context.startActivity(i);
             }
         });
 
         final ToggleButton star = (ToggleButton) busView.findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getApplicationContext().getBookmarksService()
-                .isStarred(TypeConstants.TYPE_BUS, item.getId()));
+                .isStarred(TypeConstants.TYPE_BUS, busStation.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context, TypeConstants.TYPE_BUS,
-                item.getId(), item.getLabel()));
+                busStation.getId(), busStation.getLabel()));
 
         final ImageView handistar = (ImageView) busView.findViewById(R.id.map_box_wheelchair);
         if (context.getApplicationContext().getAccessibilityService()
-                .isAccessible(item.getId(), TypeConstants.TYPE_BUS)) {
+                .isAccessible(busStation.getId(), TypeConstants.TYPE_BUS)) {
             handistar.setVisibility(View.VISIBLE);
         }
         return busView;
@@ -102,12 +104,11 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
     /**
      * {@inheritDoc}
      * 
-     * @return
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#doInBackground(android.view.View,
      *      java.lang.Object)
      */
     @Override
-    public final Stop doInBackground(final View view, final MarkerOverlayItem item) {
+    public final Stop doInBackground(final View view, final OverlayItem item) {
 
         station = null;
         try {
@@ -115,7 +116,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
             final IOneBusAwayClient obaClient = context.getApplicationContext()
                     .getOneBusAwayClient();
 
-            station = obaClient.getStop(item.getId());
+            station = obaClient.getStop(((StopOverlayItem) item).getId());
 
         } catch (final IOException e) {
             context.getApplicationContext().getExceptionHandler().handleException(e);

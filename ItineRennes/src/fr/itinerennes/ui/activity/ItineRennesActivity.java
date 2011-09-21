@@ -77,7 +77,7 @@ public abstract class ItineRennesActivity extends Activity {
      * @see android.content.ContextWrapper#getApplicationContext()
      */
     @Override
-    public ItineRennesApplication getApplicationContext() {
+    public final ItineRennesApplication getApplicationContext() {
 
         return (ItineRennesApplication) super.getApplicationContext();
     }

@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import fr.dudie.keolis.model.BikeStation;
+import fr.dudie.keolis.model.RelayPark;
 import fr.dudie.keolis.model.SubwayStation;
 import fr.dudie.onebusaway.model.Stop;
 
@@ -20,8 +21,9 @@ import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.adapter.BikeStationBoxAdapter;
 import fr.itinerennes.ui.adapter.BusStationBoxAdapter;
 import fr.itinerennes.ui.adapter.MapBoxAdapter;
+import fr.itinerennes.ui.adapter.ParkBoxAdapter;
 import fr.itinerennes.ui.adapter.SubwayStationBoxAdapter;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+import fr.itinerennes.ui.views.overlays.OverlayItem;
 
 /**
  * Manage displaying of the map box additional informations view.
@@ -43,7 +45,7 @@ public final class MapBoxController {
     private final Animation fadeOut;
 
     /** The current selected item. */
-    private MarkerOverlayItem selectedItem;
+    private OverlayItem selectedItem;
 
     /**
      * The task used to fill the map box view with additional information in background for a bike
@@ -58,10 +60,16 @@ public final class MapBoxController {
     private DisplayMapBoxTask<Stop> busMapBoxDisplayer = null;
 
     /**
-     * The task used to fill the map box view with additional information in background for a bus
+     * The task used to fill the map box view with additional information in background for a subway
      * station.
      */
     private DisplayMapBoxTask<SubwayStation> subwayMapBoxDisplayer = null;
+
+    /**
+     * The task used to fill the map box view with additional information in background for car
+     * park.
+     */
+    private DisplayMapBoxTask<RelayPark> parkMapBoxDisplayer = null;
 
     /**
      * Constructs the map box controller.
@@ -83,7 +91,7 @@ public final class MapBoxController {
      * @param item
      *            the item
      */
-    public void show(final MarkerOverlayItem item) {
+    public void show(final OverlayItem item) {
 
         cancelAll();
         hide();
@@ -102,6 +110,10 @@ public final class MapBoxController {
             subwayMapBoxDisplayer = new DisplayMapBoxTask<SubwayStation>(map,
                     new SubwayStationBoxAdapter(context), item);
             subwayMapBoxDisplayer.execute();
+        } else if (item.getType().equals(TypeConstants.TYPE_CAR_PARK)) {
+            parkMapBoxDisplayer = new DisplayMapBoxTask<RelayPark>(map,
+                    new ParkBoxAdapter(context), item);
+            parkMapBoxDisplayer.execute();
         }
     }
 
@@ -144,7 +156,7 @@ public final class MapBoxController {
      * 
      * @return the selected item
      */
-    public MarkerOverlayItem getSelectedItem() {
+    public OverlayItem getSelectedItem() {
 
         return selectedItem;
     }
@@ -166,7 +178,7 @@ public final class MapBoxController {
         private final MapBoxAdapter<D> adapter;
 
         /** The marker displayed. */
-        private final MarkerOverlayItem item;
+        private final OverlayItem item;
 
         /** The box view to display inside the map. */
         private View boxView;
@@ -182,7 +194,7 @@ public final class MapBoxController {
          *            the metadata of the marker displayed
          */
         public DisplayMapBoxTask(final MapView map, final MapBoxAdapter<D> adapter,
-                final MarkerOverlayItem item) {
+                final OverlayItem item) {
 
             super();
             this.map = map;

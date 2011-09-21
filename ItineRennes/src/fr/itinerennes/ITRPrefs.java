@@ -41,4 +41,8 @@ public final class ITRPrefs {
     /** Preference attribute name defining if the subway overlay should be displayed on startup. */
     public static final String OVERLAY_SUBWAY_ACTIVATED = String.format("%s.%s", PREFS_NAME,
             "displaySubwayOverlayOnStartup");
+
+    /** Preference attribute name defining if the park overlay should be displayed on startup. */
+    public static final String OVERLAY_PARK_ACTIVATED = String.format("%s.%s", PREFS_NAME,
+            "displayParkOverlayOnStartup");
 }

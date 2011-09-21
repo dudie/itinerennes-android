@@ -4,14 +4,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import fr.dudie.keolis.model.SubwayStation;
 
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 /**
  * @author Jérémie Huchet
@@ -42,17 +42,19 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getView(java.lang.Object)
      */
     @Override
-    public final View getView(final MarkerOverlayItem item) {
+    public final View getView(final OverlayItem item) {
+
+        final StopOverlayItem subwayStation = (StopOverlayItem) item;
 
         final View subwayView = inflater.inflate(R.layout.vw_mapbox_subway, null);
-        ((TextView) subwayView.findViewById(R.id.map_box_title)).setText(item.getLabel());
+        ((TextView) subwayView.findViewById(R.id.map_box_title)).setText(subwayStation.getLabel());
 
         final ToggleButton star = (ToggleButton) subwayView
                 .findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getApplicationContext().getBookmarksService()
-                .isStarred(TypeConstants.TYPE_SUBWAY, item.getId()));
+                .isStarred(TypeConstants.TYPE_SUBWAY, subwayStation.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context, TypeConstants.TYPE_SUBWAY,
-                item.getId(), item.getLabel()));
+                subwayStation.getId(), subwayStation.getLabel()));
 
         return subwayView;
     }
@@ -75,7 +77,7 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
      *      java.lang.Object)
      */
     @Override
-    public final SubwayStation doInBackground(final View view, final MarkerOverlayItem item) {
+    public final SubwayStation doInBackground(final View view, final OverlayItem item) {
 
         return null;
     }

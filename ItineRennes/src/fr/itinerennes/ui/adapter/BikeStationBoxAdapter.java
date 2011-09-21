@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import fr.dudie.keolis.client.KeolisClient;
 import fr.dudie.keolis.model.BikeStation;
 
@@ -15,7 +14,8 @@ import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+import fr.itinerennes.ui.views.overlays.OverlayItem;
+import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 /**
  * @author Jérémie Huchet
@@ -46,17 +46,19 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#getView(java.lang.Object)
      */
     @Override
-    public final View getView(final MarkerOverlayItem item) {
+    public final View getView(final OverlayItem item) {
+
+        final StopOverlayItem bikeStation = (StopOverlayItem) item;
 
         final View bikeView = inflater.inflate(R.layout.vw_mapbox_bike, null);
-        ((TextView) bikeView.findViewById(R.id.map_box_title)).setText(item.getLabel());
+        ((TextView) bikeView.findViewById(R.id.map_box_title)).setText(bikeStation.getLabel());
 
         final ToggleButton star = (ToggleButton) bikeView
                 .findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getApplicationContext().getBookmarksService()
-                .isStarred(TypeConstants.TYPE_BIKE, item.getId()));
+                .isStarred(TypeConstants.TYPE_BIKE, bikeStation.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context, TypeConstants.TYPE_BIKE,
-                item.getId(), item.getLabel()));
+                bikeStation.getId(), bikeStation.getLabel()));
 
         return bikeView;
     }
@@ -79,11 +81,11 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
      *      java.lang.Object)
      */
     @Override
-    public final BikeStation doInBackground(final View view, final MarkerOverlayItem item) {
+    public final BikeStation doInBackground(final View view, final OverlayItem item) {
 
         final KeolisClient keolisClient = context.getApplicationContext().getKeolisClient();
         try {
-            return keolisClient.getBikeStation(item.getId());
+            return keolisClient.getBikeStation(((StopOverlayItem) item).getId());
         } catch (final IOException e) {
             context.getApplicationContext().getExceptionHandler().handleException(e);
             return null;

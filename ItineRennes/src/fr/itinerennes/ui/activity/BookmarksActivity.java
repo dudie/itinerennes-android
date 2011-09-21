@@ -18,7 +18,7 @@ import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.model.Bookmark;
 import fr.itinerennes.ui.adapter.BookmarksAdapter;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 /**
  * This activity displays bookmarked items the user starred.
@@ -60,7 +60,7 @@ public class BookmarksActivity extends ItineRennesActivity {
                 final String favLabel = bm.getLabel();
 
                 try {
-                    final MarkerOverlayItem item = findBookmarkedMarkerItem(favType, favId);
+                    final StopOverlayItem item = findBookmarkedMarkerItem(favType, favId);
 
                     BookmarksActivity.this.startActivity(MapActivity.IntentFactory
                             .getOpenMapBoxIntent(getApplicationContext(), item,
@@ -85,14 +85,14 @@ public class BookmarksActivity extends ItineRennesActivity {
      *            the type of the resource
      * @param id
      *            the identifier of the resource
-     * @return a {@link MarkerOverlayItem}
+     * @return a {@link StopOverlayItem}
      * @throws GenericException
      *             the bookmarked item may be not found
      */
-    private MarkerOverlayItem findBookmarkedMarkerItem(final String type, final String id)
+    private StopOverlayItem findBookmarkedMarkerItem(final String type, final String id)
             throws GenericException {
 
-        MarkerOverlayItem item = null;
+        StopOverlayItem item = null;
 
         final MarkerDao markerDao = getApplicationContext().getMarkerDao();
         final Cursor c = markerDao.getMarker(id, type);

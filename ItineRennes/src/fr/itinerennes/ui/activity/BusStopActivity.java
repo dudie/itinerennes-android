@@ -39,7 +39,7 @@ import fr.itinerennes.commons.utils.DateUtils;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
 import fr.itinerennes.ui.views.LineImageView;
 import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 /**
  * This activity uses the <code>bus_station.xml</code> layout and displays a window with
@@ -268,7 +268,7 @@ public final class BusStopActivity extends ItineRennesActivity {
                 TypeConstants.TYPE_BUS);
         if (c != null && c.moveToFirst()) {
 
-            final MarkerOverlayItem marker = getApplicationContext().getMarkerDao()
+            final StopOverlayItem marker = getApplicationContext().getMarkerDao()
                     .getMarkerOverlayItem(c);
 
             c.close();

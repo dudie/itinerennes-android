@@ -16,7 +16,8 @@ import android.util.AttributeSet;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.overlays.LazyOverlay;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
-import fr.itinerennes.ui.views.overlays.MarkerOverlay;
+import fr.itinerennes.ui.views.overlays.ParkOverlay;
+import fr.itinerennes.ui.views.overlays.StopOverlay;
 
 /**
  * The map view.
@@ -38,8 +39,11 @@ public class ItinerennesMapView extends MapView {
     /** The list of map listeners. */
     private final MapListenerWrapper mapListeners;
 
-    /** The overlay containing all the markers. */
-    private final MarkerOverlay markerOverlay;
+    /** The overlay containing stop markers. */
+    private final StopOverlay stopOverlay;
+
+    /** The overlay containing park and ride markers. */
+    private final ParkOverlay parkOverlay;
 
     /** The overlay displaying the current location. */
     private final LocationOverlay myLocationOverlay;
@@ -88,10 +92,12 @@ public class ItinerennesMapView extends MapView {
         mapListeners = new MapListenerWrapper(3);
         super.setMapListener(new DelayedMapListener(mapListeners, MAP_LISTENER_DELAY));
 
-        markerOverlay = new MarkerOverlay(this.context, this);
+        stopOverlay = new StopOverlay(this.context, this);
         myLocationOverlay = new LocationOverlay(this.context, this);
 
-        this.addOverlay(markerOverlay);
+        parkOverlay = new ParkOverlay(this.context, this);
+        this.addOverlay(parkOverlay);
+        this.addOverlay(stopOverlay);
         super.getOverlays().add(myLocationOverlay);
 
         // next index to add an overlay is just before the index of the location overlay
@@ -132,13 +138,23 @@ public class ItinerennesMapView extends MapView {
     }
 
     /**
-     * Gets the markerOrverlay.
+     * Gets the Stop Overlay.
      * 
-     * @return the markerOrverlay
+     * @return the stop Overlay
      */
-    public final MarkerOverlay getMarkerOverlay() {
+    public final StopOverlay getStopOverlay() {
 
-        return markerOverlay;
+        return stopOverlay;
+    }
+
+    /**
+     * Gets the Park Overlay.
+     * 
+     * @return the park and ride Overlay
+     */
+    public final ParkOverlay getParkOverlay() {
+
+        return parkOverlay;
     }
 
     /**
@@ -159,7 +175,7 @@ public class ItinerennesMapView extends MapView {
      */
     public final void addOverlay(final LazyOverlay overlay) {
 
-        this.addListener(markerOverlay);
+        this.addListener(overlay);
         super.getOverlays().add(nextOverlayIndex, overlay);
     }
 
@@ -171,7 +187,7 @@ public class ItinerennesMapView extends MapView {
      */
     public final void removeOverlay(final LazyOverlay overlay) {
 
-        this.removeListener(markerOverlay);
+        this.removeListener(overlay);
         super.getOverlays().remove(overlay);
     }
 

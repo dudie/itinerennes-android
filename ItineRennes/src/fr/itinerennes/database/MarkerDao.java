@@ -18,7 +18,7 @@ import fr.itinerennes.TypeConstants;
 import fr.itinerennes.commons.utils.SearchUtils;
 import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 /**
  * Fetch markers from the database.
@@ -385,15 +385,15 @@ public class MarkerDao implements MarkersColumns {
     }
 
     /**
-     * Transforms single a row from a Cursor to a {@link MarkerOverlayItem}.
+     * Transforms single a row from a Cursor to a {@link StopOverlayItem}.
      * 
      * @param c
      *            Cursor to use
-     * @return a {@link MarkerOverlayItem}
+     * @return a {@link StopOverlayItem}
      */
-    public final MarkerOverlayItem getMarkerOverlayItem(final Cursor c) {
+    public final StopOverlayItem getMarkerOverlayItem(final Cursor c) {
 
-        final MarkerOverlayItem marker = new MarkerOverlayItem();
+        final StopOverlayItem marker = new StopOverlayItem();
         marker.setId(c.getString(c.getColumnIndex(MarkersColumns.ID)));
         marker.setType(c.getString(c.getColumnIndex(MarkersColumns.TYPE)));
         marker.setLabel(c.getString(c.getColumnIndex(MarkersColumns.LABEL)));

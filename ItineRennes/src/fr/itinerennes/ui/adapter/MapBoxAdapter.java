@@ -2,7 +2,7 @@ package fr.itinerennes.ui.adapter;
 
 import android.view.View;
 
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+import fr.itinerennes.ui.views.overlays.OverlayItem;
 
 /**
  * Common base interface of implementation for an adapter that can be used to fill the MapBox.
@@ -23,7 +23,7 @@ public interface MapBoxAdapter<R> {
      *            the item for which the view must be generated
      * @return the view to display in the map box
      */
-    View getView(MarkerOverlayItem item);
+    View getView(OverlayItem item);
 
     /**
      * Called before the {@link #doInBackground(View, Object)} begins.
@@ -43,7 +43,7 @@ public interface MapBoxAdapter<R> {
      *            the item for which this adapter generates a view
      * @return some data helping you to fill the view
      */
-    R doInBackground(View view, MarkerOverlayItem item);
+    R doInBackground(View view, OverlayItem item);
 
     /**
      * This method is called after the method {@link #doInBackground(View, Object)} finished.

@@ -1,11 +1,11 @@
 package fr.itinerennes.ui.activity;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.List;
 
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.util.constants.OverlayConstants;
 import org.slf4j.Logger;
 import org.slf4j.impl.AndroidLoggerFactory;
@@ -35,8 +35,10 @@ import fr.itinerennes.TypeConstants;
 import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.ui.views.ItinerennesMapView;
+import fr.itinerennes.ui.views.overlays.ILayerSelector;
+import fr.itinerennes.ui.views.overlays.LayerDescriptor;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
-import fr.itinerennes.ui.views.overlays.MarkerOverlayItem;
+import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 import fr.itinerennes.utils.MapUtils;
 
 /**
@@ -122,13 +124,16 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         }
 
         if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, true)) {
-            map.getMarkerOverlay().hide(TypeConstants.TYPE_BUS);
+            map.getStopOverlay().hide(TypeConstants.TYPE_BUS);
         }
         if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, true)) {
-            map.getMarkerOverlay().hide(TypeConstants.TYPE_BIKE);
+            map.getStopOverlay().hide(TypeConstants.TYPE_BIKE);
         }
         if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, true)) {
-            map.getMarkerOverlay().hide(TypeConstants.TYPE_SUBWAY);
+            map.getStopOverlay().hide(TypeConstants.TYPE_SUBWAY);
+        }
+        if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_PARK_ACTIVATED, true)) {
+            map.getParkOverlay().hide(TypeConstants.TYPE_CAR_PARK);
         }
 
         super.onResume();
@@ -265,24 +270,27 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         switch (id) {
         case Dialogs.SELECT_LAYERS:
 
-            final HashMap<String, String> markerLabels = map.getMarkerOverlay()
-                    .getMarkerTypesLabel();
-            final String[] options = new String[markerLabels.size()];
-            final boolean[] selections = new boolean[markerLabels.size()];
-            final HashMap<String, String> labelstoType = new HashMap<String, String>(
-                    markerLabels.size());
+            final List<LayerDescriptor> allLabels = new ArrayList<LayerDescriptor>();
 
-            final Iterator<Entry<String, String>> it = markerLabels.entrySet().iterator();
-            int i = 0;
-            while (it.hasNext()) {
-                final Entry<String, String> entry = it.next();
-                options[i] = entry.getValue();
-                selections[i] = map.getMarkerOverlay().isMarkerTypeVisible(entry.getKey());
-                labelstoType.put(entry.getValue(), entry.getKey());
-                i++;
+            final Iterator<Overlay> overlayIterator = map.getOverlayManager().iterator();
+            while (overlayIterator.hasNext()) {
+                final Overlay overlay = overlayIterator.next();
+                if (overlay instanceof ILayerSelector) {
+                    allLabels.addAll(((ILayerSelector) overlay).getLayersDescriptors());
+                }
             }
 
-            final Map<String, Boolean> results = new HashMap<String, Boolean>();
+            final String[] options = new String[allLabels.size()];
+            final boolean[] selections = new boolean[allLabels.size()];
+
+            final Iterator<LayerDescriptor> labelIterator = allLabels.iterator();
+            int i = 0;
+            while (labelIterator.hasNext()) {
+                final LayerDescriptor entry = labelIterator.next();
+                options[i] = entry.getLabel();
+                selections[i] = entry.isVisible();
+                i++;
+            }
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.select_layer);
@@ -295,28 +303,23 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                         public void onClick(final DialogInterface dialog, final int which,
                                 final boolean isChecked) {
 
-                            results.put(options[which], isChecked);
+                            if (isChecked) {
+                                allLabels.get(which).getOverlay()
+                                        .show(allLabels.get(which).getType());
+                            } else {
+                                allLabels.get(which).getOverlay()
+                                        .hide(allLabels.get(which).getType());
+                            }
+
                         }
                     });
+
             builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(final DialogInterface dialog, final int which) {
 
-                    for (final Entry<String, Boolean> userInput : results.entrySet()) {
-                        if (userInput.getValue()) {
-                            map.getMarkerOverlay().show(labelstoType.get(userInput.getKey()));
-                        } else {
-                            map.getMarkerOverlay().hide(labelstoType.get(userInput.getKey()));
-                            if (map.getMapBoxController().getSelectedItem() != null
-                                    && map.getMapBoxController().getSelectedItem().getType()
-                                            .equals(labelstoType.get(userInput.getKey()))) {
-                                map.getMapBoxController().hide();
-                            }
-                        }
-
-                    }
-                    map.getMarkerOverlay().onMapMove(map);
+                    map.postInvalidate();
                 }
 
             });
@@ -371,11 +374,12 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     private void saveVisibleOverlaysInPreferences(final Editor edit) {
 
         edit.putBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED,
-                map.getMarkerOverlay().isMarkerTypeVisible(TypeConstants.TYPE_BUS));
-        edit.putBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, map.getMarkerOverlay()
-                .isMarkerTypeVisible(TypeConstants.TYPE_BIKE));
-        edit.putBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, map.getMarkerOverlay()
-                .isMarkerTypeVisible(TypeConstants.TYPE_SUBWAY));
+                map.getStopOverlay().isVisible(TypeConstants.TYPE_BUS));
+        edit.putBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED,
+                map.getStopOverlay().isVisible(TypeConstants.TYPE_BIKE));
+        edit.putBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED,
+                map.getStopOverlay().isVisible(TypeConstants.TYPE_SUBWAY));
+        edit.putBoolean(ITRPrefs.OVERLAY_PARK_ACTIVATED, map.getParkOverlay().isVisible(null));
 
     }
 
@@ -479,7 +483,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                 if (intent.hasExtra(IntentFactory.INTENT_PARAM_MARKER)) {
 
                     map.getMapBoxController().show(
-                            (MarkerOverlayItem) intent
+                            (StopOverlayItem) intent
                                     .getSerializableExtra(IntentFactory.INTENT_PARAM_MARKER));
                 }
 
@@ -487,8 +491,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
             if (intent.hasExtra(IntentFactory.INTENT_PARAM_MARKER_TYPE)) {
                 final String type = intent.getStringExtra(IntentFactory.INTENT_PARAM_MARKER_TYPE);
-                if (!map.getMarkerOverlay().isMarkerTypeVisible(type)) {
-                    map.getMarkerOverlay().show(type);
+                if (!map.getStopOverlay().isVisible(type)) {
+                    map.getStopOverlay().show(type);
                     saveVisibleOverlaysInPreferences(edit);
                 }
             }
@@ -580,7 +584,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
          * @return an intent
          */
         public static Intent getOpenMapBoxIntent(final ItineRennesApplication context,
-                final MarkerOverlayItem marker, final int zoom) {
+                final StopOverlayItem marker, final int zoom) {
 
             final Intent i = getCenterOnLocationIntent(context, marker.getLocation()
                     .getLatitudeE6(), marker.getLocation().getLongitudeE6(), zoom);

@@ -34,10 +34,10 @@ import fr.itinerennes.utils.ResourceResolver;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class MarkerOverlay extends LazyOverlay {
+public class StopOverlay extends LazyOverlay implements ILayerSelector {
 
     /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MarkerOverlay.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StopOverlay.class);
 
     /** The MapActivity context. */
     private final ItineRennesActivity context;
@@ -48,15 +48,12 @@ public class MarkerOverlay extends LazyOverlay {
     /** The list containing visible types of markers. */
     private final List<String> visibleMarkerTypes = new ArrayList<String>(3);
 
-    /** The map containing labels for types of markers. */
-    private final HashMap<String, String> markerTypesLabel = new HashMap<String, String>(3);
-
     /** The list of all displayed markers. */
-    private final LinkedHashMap<String, MarkerOverlayItem> markers = new LinkedHashMap<String, MarkerOverlayItem>(
+    private final LinkedHashMap<String, StopOverlayItem> markers = new LinkedHashMap<String, StopOverlayItem>(
             20);
 
     /** This property references the task currently loading the current displayed bounding box. */
-    private AsyncTask<Void, Void, LinkedHashMap<String, MarkerOverlayItem>> refreshTask = null;
+    private AsyncTask<Void, Void, LinkedHashMap<String, StopOverlayItem>> refreshTask = null;
 
     /** Simple cache for markers icons. */
     private final HashMap<String, Drawable> markerIcons = new HashMap<String, Drawable>();
@@ -69,7 +66,7 @@ public class MarkerOverlay extends LazyOverlay {
      * @param map
      *            the {@link MapView}
      */
-    public MarkerOverlay(final ItineRennesActivity context, final ItinerennesMapView map) {
+    public StopOverlay(final ItineRennesActivity context, final ItinerennesMapView map) {
 
         super(context);
         this.context = context;
@@ -78,10 +75,6 @@ public class MarkerOverlay extends LazyOverlay {
         visibleMarkerTypes.add(TypeConstants.TYPE_BIKE);
         visibleMarkerTypes.add(TypeConstants.TYPE_BUS);
         visibleMarkerTypes.add(TypeConstants.TYPE_SUBWAY);
-
-        markerTypesLabel.put(TypeConstants.TYPE_BUS, context.getString(R.string.overlay_bus));
-        markerTypesLabel.put(TypeConstants.TYPE_BIKE, context.getString(R.string.overlay_bike));
-        markerTypesLabel.put(TypeConstants.TYPE_SUBWAY, context.getString(R.string.overlay_subway));
 
     }
 
@@ -93,7 +86,7 @@ public class MarkerOverlay extends LazyOverlay {
     @Override
     public final void onMapMove(final MapView source) {
 
-        refreshTask = new AsyncTask<Void, Void, LinkedHashMap<String, MarkerOverlayItem>>() {
+        refreshTask = new AsyncTask<Void, Void, LinkedHashMap<String, StopOverlayItem>>() {
 
             /**
              * Retrieves the markers for the currently displayed bounding boxes.
@@ -101,13 +94,13 @@ public class MarkerOverlay extends LazyOverlay {
              * @see android.os.AsyncTask#doInBackground(Params[])
              */
             @Override
-            protected LinkedHashMap<String, MarkerOverlayItem> doInBackground(final Void... params) {
+            protected LinkedHashMap<String, StopOverlayItem> doInBackground(final Void... params) {
 
                 final MarkerDao markerDao = context.getApplicationContext().getMarkerDao();
                 final Cursor c = context.getApplicationContext().getMarkerDao()
                         .getMarkers(source.getBoundingBox(), visibleMarkerTypes);
 
-                final LinkedHashMap<String, MarkerOverlayItem> markers = new LinkedHashMap<String, MarkerOverlayItem>();
+                final LinkedHashMap<String, StopOverlayItem> markers = new LinkedHashMap<String, StopOverlayItem>();
                 if (c != null && c.moveToFirst()) {
                     while (!c.isAfterLast()) {
 
@@ -124,7 +117,7 @@ public class MarkerOverlay extends LazyOverlay {
             }
 
             @Override
-            protected void onPostExecute(final LinkedHashMap<String, MarkerOverlayItem> newMarkers) {
+            protected void onPostExecute(final LinkedHashMap<String, StopOverlayItem> newMarkers) {
 
                 if (refreshTask == this) {
                     LOGGER.debug("refreshing map");
@@ -156,7 +149,7 @@ public class MarkerOverlay extends LazyOverlay {
 
         final boolean eventHandled;
 
-        final MarkerOverlayItem marker = checkItemPresence(e, mapView);
+        final StopOverlayItem marker = checkItemPresence(e, mapView);
         if (marker != null) {
             onSingleTapUpMarker(marker, mapView);
             mapView.postInvalidate();
@@ -184,7 +177,7 @@ public class MarkerOverlay extends LazyOverlay {
      * @param mapView
      *            the map view containing the overlay
      */
-    private void onSingleTapUpMarker(final MarkerOverlayItem marker, final MapView mapView) {
+    private void onSingleTapUpMarker(final StopOverlayItem marker, final MapView mapView) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(String.format("onSingleTapUpMarker.start - %s", marker));
@@ -216,18 +209,20 @@ public class MarkerOverlay extends LazyOverlay {
             final Point point = new Point();
 
             // first draw markers
-            for (final MarkerOverlayItem marker : markers.values()) {
+            for (final StopOverlayItem marker : markers.values()) {
                 pj.toMapPixels(marker.getLocation(), point);
 
                 drawItem(c, marker, point, osmv);
             }
 
             // then if a marker is selected draw it over the others
-            final MarkerOverlayItem selectedItem = ((ItinerennesMapView) osmv)
-                    .getMapBoxController().getSelectedItem();
-            if (null != selectedItem && markers.containsKey(selectedItem.getId())) {
-                pj.toMapPixels(selectedItem.getLocation(), point);
-                drawItem(c, selectedItem, point, osmv);
+            final OverlayItem selectedItem = ((ItinerennesMapView) osmv).getMapBoxController()
+                    .getSelectedItem();
+            if (null != selectedItem && selectedItem instanceof StopOverlayItem) {
+                if (markers.containsKey(((StopOverlayItem) selectedItem).getId())) {
+                    pj.toMapPixels(selectedItem.getLocation(), point);
+                    drawItem(c, (StopOverlayItem) selectedItem, point, osmv);
+                }
             }
         }
 
@@ -248,7 +243,7 @@ public class MarkerOverlay extends LazyOverlay {
      * @param mapView
      *            the map view
      */
-    protected final void drawItem(final Canvas canvas, final MarkerOverlayItem item,
+    protected final void drawItem(final Canvas canvas, final StopOverlayItem item,
             final Point curScreenCoords, final MapView mapView) {
 
         if (!markerIcons.containsKey(item.getType())) {
@@ -301,7 +296,7 @@ public class MarkerOverlay extends LazyOverlay {
      *            map view containing the overlay
      * @return if found, the MarkerOverlayItem under the touch point
      */
-    private MarkerOverlayItem checkItemPresence(final MotionEvent event, final MapView mapView) {
+    private StopOverlayItem checkItemPresence(final MotionEvent event, final MapView mapView) {
 
         final Projection pj = mapView.getProjection();
         final int eventX = (int) event.getX();
@@ -310,7 +305,7 @@ public class MarkerOverlay extends LazyOverlay {
         final Point touchPoint = pj.fromMapPixels(eventX, eventY, null);
 
         final Point itemPoint = new Point();
-        for (final MarkerOverlayItem marker : markers.values()) {
+        for (final StopOverlayItem marker : markers.values()) {
             final Drawable drawable = markerIcons.get(marker.getType());
 
             pj.toPixels(marker.getLocation(), itemPoint);
@@ -325,23 +320,12 @@ public class MarkerOverlay extends LazyOverlay {
     }
 
     /**
-     * Gets the markerTypesLabel.
+     * {@inheritDoc}
      * 
-     * @return the markerTypesLabel
+     * @see fr.itinerennes.ui.views.overlays.ILayerSelector#isVisible(java.lang.String)
      */
-    public final HashMap<String, String> getMarkerTypesLabel() {
-
-        return markerTypesLabel;
-    }
-
-    /**
-     * Is a marker type visible ?
-     * 
-     * @param type
-     *            the type of the marker to get its visibility
-     * @return true if the marker type is visible
-     */
-    public final boolean isMarkerTypeVisible(final String type) {
+    @Override
+    public final boolean isVisible(final String type) {
 
         return visibleMarkerTypes.contains(type);
     }
@@ -352,12 +336,13 @@ public class MarkerOverlay extends LazyOverlay {
      * @param type
      *            type to show
      */
+    @Override
     public final void show(final String type) {
 
         if (!visibleMarkerTypes.contains(type)) {
             visibleMarkerTypes.add(type);
         }
-
+        onMapMove(map);
     }
 
     /**
@@ -366,9 +351,30 @@ public class MarkerOverlay extends LazyOverlay {
      * @param type
      *            type to hide
      */
+    @Override
     public final void hide(final String type) {
 
         visibleMarkerTypes.remove(type);
+        onMapMove(map);
+    }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see fr.itinerennes.ui.views.overlays.ILayerSelector#getLayersDescriptors()
+     */
+    @Override
+    public final List<LayerDescriptor> getLayersDescriptors() {
+
+        final List<LayerDescriptor> labels = new ArrayList<LayerDescriptor>();
+
+        labels.add(new LayerDescriptor(this, context.getString(R.string.overlay_bus),
+                TypeConstants.TYPE_BUS, isVisible(TypeConstants.TYPE_BUS)));
+        labels.add(new LayerDescriptor(this, context.getString(R.string.overlay_bike),
+                TypeConstants.TYPE_BIKE, isVisible(TypeConstants.TYPE_BIKE)));
+        labels.add(new LayerDescriptor(this, context.getString(R.string.overlay_subway),
+                TypeConstants.TYPE_SUBWAY, isVisible(TypeConstants.TYPE_SUBWAY)));
+
+        return labels;
     }
 }
