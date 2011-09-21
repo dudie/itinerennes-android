@@ -49,8 +49,9 @@ public final class LineImageView extends ImageView {
 
         setLayoutParams(params);
         setAdjustViewBounds(true);
-        setMaxWidth(pxWidth);
         setMaxHeight(pxHeight);
+        // width is automatically adjusted
+        // setMaxWidth(pxWidth);
     }
 
     /**
