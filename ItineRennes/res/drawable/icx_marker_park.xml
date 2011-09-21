@@ -4,7 +4,7 @@
     <!-- HIGH ZOOMED -->
     <item itr:state_high_zoom="true">
         <layer-list>
-            <item android:top="3px" android:right="5px" android:left="5dp" android:bottom="3dp">
+            <item android:top="5px" android:right="5px" android:left="5dp" android:bottom="5dp">
                 <selector>
                     <!-- RED  -->
                     <item itr:state_park_red="true">
