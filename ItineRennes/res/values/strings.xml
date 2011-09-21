@@ -9,20 +9,26 @@
     <string name="no_departure">No departure for this day.</string>
     <string name="activity_title_bus_stop">Bus stop</string>
     <string name="activity_title_bus_trip">Bus trip</string>
+    <string name="available_spaces">available spaces</string>
+    <string name="closed">Closed</string>
     
     <!-- bookmarks -->
     <string name="activity_title_bookmarks">Bookmarks</string>
     <string name="added_to_bookmarks"><i>%s</i> added to bookmarks</string>
     <string name="removed_from_bookmarks"><i>%s</i> removed from bookmarks</string>
     <string name="delete_bookmark_not_found"><i>%s</i> removed from bookmarks because it\'s not available anymore</string>
+    
     <!-- overlays -->
     <string name="overlay_unamed">Unamed overlay</string>
     <string name="overlay_bus">Bus stops</string>
     <string name="overlay_subway">Subway stations</string>
     <string name="overlay_bike">Bike stations</string>
+    <string name="overlay_park">Park and Ride</string>
+    
     <!-- Trip planner -->
     <string name="select_start_point_on_map">Click on the map to choose a start point.</string>
     <string name="select_end_point_on_map">Click on the map to choose an end point.</string>
+    
     <!-- Activity search results -->
     <string name="activity_title_search_results">Search results</string>
     <!-- Activity transport alerts -->

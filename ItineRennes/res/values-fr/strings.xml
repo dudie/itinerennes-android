@@ -9,20 +9,26 @@
     <string name="no_departure">Aucun départ ce jour.</string>
     <string name="activity_title_bus_stop">Arrêt de bus</string>
     <string name="activity_title_bus_trip">Horaires d\'un trajet</string>
+    <string name="available_spaces">places disponibles</string>
+    <string name="closed">Fermé</string>
     
     <!-- bookmarks -->
     <string name="activity_title_bookmarks">Favoris</string>
     <string name="added_to_bookmarks"><i>%s</i> ajouté aux favoris</string>
     <string name="removed_from_bookmarks"><i>%s</i> retiré des favoris</string>
     <string name="delete_bookmark_not_found"><i>%s</i> est retiré des favoris car il n\'est plus disponible</string>
+    
     <!-- overlays -->
     <string name="overlay_unamed">Overlay sans nom</string>
     <string name="overlay_bus">Arrêts de bus</string>
     <string name="overlay_subway">Stations de métro</string>
     <string name="overlay_bike">Stations de vélo</string>
+    <string name="overlay_park">Parcs relais</string>
+    
     <!-- Trip planner -->
     <string name="select_start_point_on_map">Cliquez sur la carte pour choisir un point de départ.</string>
     <string name="select_end_point_on_map">Cliquez sur la carte pour choisir un point de d\'arrivée.</string>
+    
     <!-- Activity search results -->
     <string name="activity_title_search_results">Résultats de recherche</string>
     <!-- Activity transport alerts -->

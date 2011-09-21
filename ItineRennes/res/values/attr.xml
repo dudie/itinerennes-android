@@ -8,6 +8,15 @@
     <declare-styleable name="BookmarkedState">
         <attr name="state_bookmarked" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="ParkStateRed">
+        <attr name="state_park_red" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="ParkStateOrange">
+        <attr name="state_park_orange" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="ParkStateGreen">
+        <attr name="state_park_green" format="boolean"/>
+    </declare-styleable>
 	<declare-styleable name="ITRZoomControls">
 	    <attr name="mapview" format="integer"/>
 	</declare-styleable>

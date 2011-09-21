@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fr.itinerennes.ui.views.MapBoxView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bgx_mapbox"
+    android:focusable="true"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:minWidth="240dp">
+
+    <!-- PARK ICON AND TITLE -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+           android:orientation="horizontal"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center_vertical">
+           
+        <ImageView android:src="@drawable/ic_mapbox_park"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+        <TextView android:id="@+park_map_box/map_box_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:padding="5dp"
+            style="@style/WhiteText"/>
+               
+        <ProgressBar android:id="@+park_map_box/map_box_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:visibility="gone"
+            style="@android:style/Widget.ProgressBar.Small" />
+    
+    </LinearLayout>
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	       android:orientation="vertical"
+	       android:gravity="center"
+	       android:layout_width="fill_parent"
+	       android:layout_height="wrap_content"
+	       android:id="@+park_map_box/details">
+	
+	    <ProgressBar android:id="@+park_map_box/gauge"
+	        android:indeterminate="true" 
+	        android:layout_width="fill_parent" 
+	        android:layout_height="10dp" 
+            android:visibility="gone"
+	        style="?android:attr/progressBarStyleHorizontal"/>
+            
+            
+        <TextView android:id="@+park_map_box/text_available_spaces"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text=""
+            android:visibility="gone"
+            style="@style/WhiteText"/>
+            
+        <TextView android:id="@+park_map_box/text_closed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/closed"
+            android:visibility="gone"
+            style="@style/text_red"/>
+	
+	</LinearLayout>
+    
+</fr.itinerennes.ui.views.MapBoxView>
