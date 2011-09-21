@@ -2,6 +2,7 @@ package fr.itinerennes.ui.views.overlays;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import android.view.MotionEvent;
 import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.business.event.IBookmarkModificationListener;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -76,6 +78,40 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
         visibleMarkerTypes.add(TypeConstants.TYPE_BUS);
         visibleMarkerTypes.add(TypeConstants.TYPE_SUBWAY);
 
+        context.getApplicationContext().getBookmarksService()
+                .addListener(new IBookmarkModificationListener() {
+
+                    @Override
+                    public void onBookmarkRemoval(final String type, final String id) {
+
+                        updateBookmarkedFlag(type, id, false);
+                    }
+
+                    @Override
+                    public void onBookmarkAddition(final String type, final String id,
+                            final String label) {
+
+                        updateBookmarkedFlag(type, id, true);
+                    }
+
+                    private void updateBookmarkedFlag(final String type, final String id,
+                            final boolean bookmarked) {
+
+                        StopOverlayItem stopItem = null;
+                        final Iterator<StopOverlayItem> i = markers.values().iterator();
+                        while (null == stopItem && i.hasNext()) {
+                            final StopOverlayItem overlayItem = i.next();
+                            if (overlayItem.getType().equals(type)
+                                    && overlayItem.getId().equals(id)) {
+                                stopItem = overlayItem;
+                            }
+                        }
+                        if (null != stopItem) {
+                            stopItem.setBookmarked(bookmarked);
+                            map.postInvalidate();
+                        }
+                    }
+                });
     }
 
     /**
