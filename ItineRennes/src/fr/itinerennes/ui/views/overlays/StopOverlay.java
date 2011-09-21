@@ -81,20 +81,17 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
         context.getApplicationContext().getBookmarksService()
                 .addListener(new IBookmarkModificationListener() {
 
+                    /**
+                     * When a bookmark is added/removed, ensure to dispatch modification to the
+                     * overlay item representing it: add the star or remove the star.
+                     * <p>
+                     * {@inheritDoc}
+                     * 
+                     * @see fr.itinerennes.business.event.IBookmarkModificationListener#onBookmarkStateChanged(java.lang.String,
+                     *      java.lang.String, boolean)
+                     */
                     @Override
-                    public void onBookmarkRemoval(final String type, final String id) {
-
-                        updateBookmarkedFlag(type, id, false);
-                    }
-
-                    @Override
-                    public void onBookmarkAddition(final String type, final String id,
-                            final String label) {
-
-                        updateBookmarkedFlag(type, id, true);
-                    }
-
-                    private void updateBookmarkedFlag(final String type, final String id,
+                    public void onBookmarkStateChanged(final String type, final String id,
                             final boolean bookmarked) {
 
                         StopOverlayItem stopItem = null;
@@ -106,6 +103,7 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
                                 stopItem = overlayItem;
                             }
                         }
+
                         if (null != stopItem) {
                             stopItem.setBookmarked(bookmarked);
                             map.postInvalidate();

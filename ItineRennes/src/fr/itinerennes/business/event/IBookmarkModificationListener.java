@@ -8,24 +8,16 @@ package fr.itinerennes.business.event;
 public interface IBookmarkModificationListener {
 
     /**
-     * Called when a bookmark is removed.
+     * Called when a bookmark is removed or added. E.g. called when the bookmarked state of an
+     * element is modified.
      * 
      * @param type
      *            the type of the bookmark
      * @param id
      *            the identifier of the bookmark
+     * @param bookmarked
+     *            true if the element pointed out by parameters <code>type</code> and
+     *            <code>id</code> is bookmarked, else false
      */
-    void onBookmarkRemoval(String type, String id);
-
-    /**
-     * Called when a bookmark is added.
-     * 
-     * @param type
-     *            the type of the bookmark
-     * @param id
-     *            the identifier of the bookmark
-     * @param label
-     *            the label of the bookmark
-     */
-    void onBookmarkAddition(String type, String id, String label);
+    void onBookmarkStateChanged(String type, String id, boolean bookmarked);
 }

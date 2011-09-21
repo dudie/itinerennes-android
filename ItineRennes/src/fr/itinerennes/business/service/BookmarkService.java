@@ -88,7 +88,7 @@ public final class BookmarkService extends AbstractService implements BookmarksC
         }
         if (listeners != null) {
             for (final IBookmarkModificationListener l : listeners) {
-                l.onBookmarkAddition(type, id, label);
+                l.onBookmarkStateChanged(type, id, true);
             }
         }
 
@@ -123,7 +123,7 @@ public final class BookmarkService extends AbstractService implements BookmarksC
         }
         if (listeners != null) {
             for (final IBookmarkModificationListener l : listeners) {
-                l.onBookmarkRemoval(type, id);
+                l.onBookmarkStateChanged(type, id, false);
             }
         }
 
