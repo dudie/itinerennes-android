@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
 import fr.dudie.onebusaway.client.IOneBusAwayClient;
 import fr.dudie.onebusaway.model.Route;
 import fr.dudie.onebusaway.model.Stop;
@@ -34,9 +35,6 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
 
     /** The layout inflater. */
     private final LayoutInflater inflater;
-
-    /** The bus station for which informations are displayed. */
-    private Stop station = null;
 
     /**
      * Creates the bus station adapter for map box.
@@ -110,7 +108,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
     @Override
     public final Stop doInBackground(final View view, final OverlayItem item) {
 
-        station = null;
+        Stop station = null;
         try {
 
             final IOneBusAwayClient obaClient = context.getApplicationContext()
@@ -131,7 +129,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateView(android.view.View, java.lang.Object)
      */
     @Override
-    public final void updateView(final View view, final Stop item) {
+    public final void updateView(final View view, final Stop station) {
 
         if (station != null) {
             // updates the station name just to be sure
