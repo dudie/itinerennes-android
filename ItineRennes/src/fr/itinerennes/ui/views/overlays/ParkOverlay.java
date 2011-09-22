@@ -62,7 +62,7 @@ public class ParkOverlay extends LazyOverlay implements ILayerSelector {
     private boolean visible = true;
 
     /** From which availability rate we have to display an orange gauge. */
-    private static final double ORANGE_LEVEL = 0.85;
+    private static final double ORANGE_LEVEL = 0.15;
 
     /**
      * Creates the marker overlay.
