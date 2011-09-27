@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +21,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import fr.dudie.onebusaway.client.IOneBusAwayClient;
 import fr.dudie.onebusaway.model.TripSchedule;
 import fr.dudie.onebusaway.model.TripStopTime;
@@ -82,6 +82,12 @@ public final class BusTripActivity extends ItineRennesActivity {
     private BusTripTimeAdapter adapter;
 
     /**
+     * If an update of the content displayed is requested, the task which result is expected is
+     * referenced by this variable. It's typically the last requested started.
+     */
+    private AsyncTask<String, Void, TripSchedule> scheduleDownloaderTask;
+
+    /**
      * Creates the main screen. {@inheritDoc}
      * 
      * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -104,6 +110,27 @@ public final class BusTripActivity extends ItineRennesActivity {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onDestroy()
+     */
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+
+        if (scheduleDownloaderTask != null
+                && !scheduleDownloaderTask.getStatus().equals(Status.FINISHED)) {
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("onDestroy - cancelling running refresh task.");
+            }
+
+            scheduleDownloaderTask.cancel(true);
         }
     }
 
@@ -154,7 +181,8 @@ public final class BusTripActivity extends ItineRennesActivity {
             }
         });
 
-        new ScheduleDownloader().execute(tripId);
+        scheduleDownloaderTask = new ScheduleDownloader();
+        scheduleDownloaderTask.execute(tripId);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onResume.end");
