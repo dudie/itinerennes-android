@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="fr.itinerennes"
+      android:versionCode="12"
+      android:versionName="@string/version_number">
+    <application android:icon="@drawable/ic_itinerennes" 
+            android:label="@string/app_name" 
+            android:description="@string/app_description" 
+            android:debuggable="true"
+            android:theme="@android:style/Theme.Light.NoTitleBar" android:name="ItineRennesApplication">
+            
+        <activity android:name=".ui.activity.MapActivity"
+                  android:label="@string/app_name"
+                  android:launchMode="singleTop"
+                  android:configChanges="orientation" 
+                  android:theme="@android:style/Theme.Black.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"></action>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="fr.itinerennes.ui.activity.MapActivity.SEARCH_SUGGESTION" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"></action>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+        
+        <activity android:name=".ui.activity.BusStopActivity"
+                  android:configChanges="orientation" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".ui.activity.BusTripActivity"
+                  android:configChanges="orientation" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".ui.activity.BookmarksActivity"
+                  android:launchMode="singleTop"
+                  android:configChanges="orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".ui.activity.LoadingActivity"
+                  android:launchMode="singleTop"
+                  android:configChanges="orientation" 
+                  android:theme="@android:style/Theme.Black.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="android.intent.category.LAUNCHER"></category>
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".ui.activity.SearchResultsActivity"
+                  android:launchMode="singleTop"
+                  android:configChanges="orientation" 
+                  android:theme="@android:style/Theme.Light.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+        
+        <activity android:name=".ui.activity.NewVersionActivity"
+        	android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        
+        <activity android:name=".ui.activity.NetworkAlertsActivity"
+                  android:launchMode="singleTop"
+                  android:configChanges="orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        
+        <provider android:authorities="fr.itinerennes.provider.searchMarkersProvider" 
+            android:name=".provider.SearchMarkersProvider">
+        </provider>
+    
+    </application>
+
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="12"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:anyDensity="true" />
+
+</manifest> 

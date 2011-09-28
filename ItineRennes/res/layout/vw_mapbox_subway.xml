@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fr.itinerennes.ui.views.MapBoxView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bgx_mapbox"
+    android:focusable="true"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:minWidth="240dp">
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	       android:orientation="horizontal"
+	       android:layout_width="fill_parent"
+	       android:layout_height="wrap_content"
+	       android:gravity="center_vertical">
+	       
+	    <ImageView android:src="@drawable/ic_mapbox_subway"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>
+	    
+	    <TextView android:id="@+id/map_box_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textStyle="bold"
+	        android:textSize="16sp"
+            android:padding="5dp"
+	        style="@style/WhiteText"/>
+	
+	    <ToggleButton android:id="@+id/map_box_toggle_bookmark"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:gravity="right"
+	        android:background="@drawable/btn_toggle_star"
+	        android:textOn=""
+	        android:textOff="" />
+	
+	</LinearLayout>
+
+</fr.itinerennes.ui.views.MapBoxView>

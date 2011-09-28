@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="date_today_at">aujourd\'hui à %0$s</string>
+    <string name="date_tomorrow_at">demain à %0$s</string>
+    <string name="date_yesterday_at">hier à %0$s</string>
+    <plurals name="num_seconds_ago">
+        <item quantity="zero">maintenant</item>
+        <item quantity="one">il y %d seconde</item>
+        <item quantity="other">il y a %s secondes</item>
+    </plurals>
+    <plurals name="in_num_seconds">
+        <item quantity="zero">maintenant</item>
+        <item quantity="one">dans %d seconde</item>
+        <item quantity="other">dans %d secondes</item>
+    </plurals>
+    <plurals name="num_minutes_ago">
+        <item quantity="one">il y a %d minute</item>
+        <item quantity="other">il y a %d minutes</item>
+    </plurals>
+    <plurals name="in_num_minutes">
+        <item quantity="one">dans %d minute</item>
+        <item quantity="other">dans %d minutes</item>
+    </plurals>
+    <plurals name="num_hours_ago">
+        <item quantity="one">il y a %d heure</item>
+        <item quantity="other">il y a %d heures</item>
+    </plurals>
+    <plurals name="in_num_hours">
+        <item quantity="one">dans %d heure</item>
+        <item quantity="other">dans %d heures</item>
+    </plurals>
+    <plurals name="num_days_ago">
+        <item quantity="one">hier</item>
+        <item quantity="other">il y a %d jours</item>
+    </plurals>
+    <plurals name="in_num_days">
+        <item quantity="one">demain</item>
+        <item quantity="other">dans %d jours</item>
+    </plurals>
+    <string name="date_from">du %s</string>
+    <string name="date_to">au %s</string>
+</resources>

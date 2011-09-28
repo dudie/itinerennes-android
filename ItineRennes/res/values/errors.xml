@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="error_network_connectivity">No more network connectivity</string>
+	<string name="error_loading_bus_station_position">Unable to retrieve the location of bus stop %s</string>
+    <string name="error_mandatory_upgrade">A new version is available. You must upgrade from the market.</string>
+    <string name="error_recommended_upgrade">A new version is available. Upgrade now ?</string>
+</resources>

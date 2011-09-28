@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes">
+    <item>
+        <selector>
+            <!-- HIGH ZOOMED -->
+            <item itr:state_high_zoom="true">
+                <bitmap android:gravity="center" android:src="@drawable/ic_marker_bike" />
+            </item>
+            
+            <!--  default -->
+            <item>
+                <bitmap android:gravity="center" android:src="@drawable/ic_marker_bike_lite" />
+            </item>
+            
+        </selector>
+    </item>
+    <item
+        android:bottom="15dp"
+        android:left="15dp">
+        <selector>
+            <item itr:state_bookmarked="true"
+                android:drawable="@drawable/ic_marker_star_small"/>
+        </selector>
+    </item>
+</layer-list>
