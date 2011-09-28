@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ItinéRennes</string>
-    <string name="version_number">0.4</string>
+    <string name="version_number">0.5-dev</string>
     <string name="contact_mail">contact@itinerennes.fr</string>
 </resources>
