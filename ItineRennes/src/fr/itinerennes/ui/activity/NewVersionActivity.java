@@ -123,7 +123,7 @@ public final class NewVersionActivity extends Activity {
     /**
      * Creates an intent in order to open the Itinerennes website download page.
      * 
-     * @return intent to open Itinerennes market page
+     * @return intent to open Itinerennes website download page
      */
     private Intent buildManualDownloadIntent() {
 
