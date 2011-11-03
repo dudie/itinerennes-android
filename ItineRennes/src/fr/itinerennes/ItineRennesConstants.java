@@ -70,4 +70,10 @@ public final class ItineRennesConstants {
 
     /** Duration of toast messages. */
     public static final int TOAST_DURATION = 5000;
+
+    /*
+     * Misc constants.
+     */
+    /** The APK download page URL. */
+    public static final String DOWNLOAD_PAGE_URL = "https://bugtracker.dudie.fr/projects/itr-android/files";
 }
