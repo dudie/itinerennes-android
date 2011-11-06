@@ -9,14 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import fr.dudie.keolis.model.LineAlert;
 
 import fr.itinerennes.R;
-import fr.itinerennes.business.service.LineIconService;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.LineImageView;
 
@@ -36,9 +34,6 @@ public final class NetworkAlertsAdapter extends ArrayAdapter<LineAlert> {
     /** The layout inflater. */
     private final LayoutInflater layoutInfalter;
 
-    /** The line icon service */
-    private final LineIconService lineIcons;
-
     /**
      * Creates a network alerts adapter.
      * 
@@ -50,7 +45,6 @@ public final class NetworkAlertsAdapter extends ArrayAdapter<LineAlert> {
         super(context, R.layout.li_line_alert);
         this.context = context;
         layoutInfalter = LayoutInflater.from(context);
-        lineIcons = context.getApplicationContext().getLineIconService();
     }
 
     /**
@@ -79,12 +73,12 @@ public final class NetworkAlertsAdapter extends ArrayAdapter<LineAlert> {
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
 
-        LinearLayout row;
+        ViewGroup row;
 
         if (null == convertView) {
-            row = (LinearLayout) layoutInfalter.inflate(R.layout.li_line_alert, null);
+            row = (ViewGroup) layoutInfalter.inflate(R.layout.li_line_alert, null);
         } else {
-            row = (LinearLayout) convertView;
+            row = (ViewGroup) convertView;
         }
 
         final LineAlert alert = getItem(position);
