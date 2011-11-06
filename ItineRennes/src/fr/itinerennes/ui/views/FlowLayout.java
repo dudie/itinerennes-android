@@ -239,18 +239,16 @@ public final class FlowLayout extends ViewGroup {
                     // move cursor vertically (move cursor to the next line)
                     currentLine++;
 
-                    // if there are more children, then increment lineWidth and lineHeight arrays
-                    if (i < count - 1) {
-                        int[] copyTemp = new int[lineWidth.length + 1];
-                        System.arraycopy(lineWidth, 0, copyTemp, 0, lineWidth.length);
-                        copyTemp[copyTemp.length - 1] = 0;
-                        lineWidth = copyTemp;
+                    // then increment lineWidth and lineHeight arrays
+                    int[] copyTemp = new int[lineWidth.length + 1];
+                    System.arraycopy(lineWidth, 0, copyTemp, 0, lineWidth.length);
+                    copyTemp[copyTemp.length - 1] = 0;
+                    lineWidth = copyTemp;
 
-                        copyTemp = new int[lineHeight.length + 1];
-                        System.arraycopy(lineHeight, 0, copyTemp, 0, lineHeight.length);
-                        copyTemp[copyTemp.length - 1] = 0;
-                        lineHeight = copyTemp;
-                    }
+                    copyTemp = new int[lineHeight.length + 1];
+                    System.arraycopy(lineHeight, 0, copyTemp, 0, lineHeight.length);
+                    copyTemp[copyTemp.length - 1] = 0;
+                    lineHeight = copyTemp;
                 }
 
                 lineWidth[currentLine] = lineWidth[currentLine] + childWidth;
