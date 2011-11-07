@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
 import fr.dudie.keolis.client.KeolisClient;
 import fr.dudie.keolis.model.BikeStation;
 
@@ -125,6 +127,11 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
         gauge.setProgress(upToDateStation.getAvailableBikes());
         gauge.setSecondaryProgress(upToDateStation.getAvailableBikes()
                 + upToDateStation.getAvailableSlots());
+
+        if (upToDateStation.isPos()) {
+            final ImageView paymentAvailable = (ImageView) view.findViewById(R.id.map_box_payment);
+            paymentAvailable.setVisibility(View.VISIBLE);
+        }
 
     }
 

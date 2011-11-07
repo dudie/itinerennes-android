@@ -36,6 +36,13 @@
             android:gravity="right"
             android:visibility="gone"
             style="@android:style/Widget.ProgressBar.Small" />
+            
+        <ImageView android:id="@+id/map_box_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:visibility="gone"
+            android:src="@drawable/ic_payment" />
     
         <ToggleButton android:id="@+id/map_box_toggle_bookmark"
             android:layout_width="wrap_content"
