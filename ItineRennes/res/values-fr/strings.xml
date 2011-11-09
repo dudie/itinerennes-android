@@ -11,6 +11,7 @@
     <string name="activity_title_bus_trip">Horaires d\'un trajet</string>
     <string name="available_spaces">places disponibles</string>
     <string name="closed">Fermé</string>
+    <string name="filter_the_list">Filtrer la liste</string>
     
     <!-- bookmarks -->
     <string name="activity_title_bookmarks">Favoris</string>

@@ -85,9 +85,28 @@
             android:name=".provider.SearchMarkersProvider">
         </provider>
     
+        <activity android:name=".ui.widget.BikeWidgetConfigure">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".ui.widget.BikeWidgetProvider" android:label="@string/bike_widget_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="fr.itinerennes.intent.BIKE_WIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_bike" />
+        </receiver>
+        
+        <!-- Service to perform web API queries for widget -->
+        <service android:name=".ui.widget.BikeWidgetProvider$UpdateService" />
+
     </application>
 
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="12"/>
+    <uses-sdk android:minSdkVersion="5" android:targetSdkVersion="14"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />

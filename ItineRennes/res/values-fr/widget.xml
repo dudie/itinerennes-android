@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bike_widget_label">Stations de vélos</string>
+    <string name="bike_widget_instruction">Choisissez les stations de vélos à afficher dans le widget.</string>
+</resources>

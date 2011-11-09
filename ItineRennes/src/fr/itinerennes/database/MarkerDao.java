@@ -207,6 +207,46 @@ public class MarkerDao implements MarkersColumns {
     }
 
     /**
+     * Fetch a list of marker of a given type from the database based. If a labelFilter is given,
+     * markers will be filtered based on the marker label.
+     * 
+     * @param type
+     *            type of markers to retrieve
+     * @param labelFilter
+     *            an optional label filter
+     * @return a cursor with all markers of this type and matching the filter
+     */
+    public final Cursor getMarkers(final String type, final String labelFilter) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getMarkers.start - type={}, labelFilter={}", type, labelFilter);
+        }
+
+        final String[] columns = new String[] { String.format("m.%s", _ID),
+                String.format("m.%s", ID), String.format("m.%s", LABEL) };
+
+        final String selection;
+        final String[] selectionArgs;
+
+        if (labelFilter != null && !labelFilter.equals("")) {
+            selection = String.format("m.%s = ? AND (m.%s LIKE ? OR m.%s LIKE ?)",
+                    MarkersColumns.TYPE, MarkersColumns.LABEL, MarkersColumns.SEARCH_LABEL);
+            selectionArgs = new String[] { type, "%" + labelFilter + "%",
+                    "%" + SearchUtils.canonicalize(labelFilter) + "%" };
+        } else {
+            selection = String.format("m.%s = ?", MarkersColumns.TYPE);
+            selectionArgs = new String[] { type };
+        }
+
+        final Cursor c = query(selection, selectionArgs, columns);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getMarkers.end - count={}", (c != null) ? c.getCount() : 0);
+        }
+        return c;
+    }
+
+    /**
      * Search markers containing the given string. This method returns only one row with same label
      * and same type.
      * 

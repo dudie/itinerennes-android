@@ -11,6 +11,7 @@
     <string name="activity_title_bus_trip">Bus trip</string>
     <string name="available_spaces">available spaces</string>
     <string name="closed">Closed</string>
+    <string name="filter_the_list">Filter the list</string>
     
     <!-- bookmarks -->
     <string name="activity_title_bookmarks">Bookmarks</string>

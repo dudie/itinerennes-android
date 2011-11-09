@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:visibility="gone">
+    
+    <TextView android:id="@+widget_bike/title"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"/>
+            
+    <LinearLayout
+       android:orientation="horizontal"
+       android:gravity="center"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content">
+    
+        <ImageView android:src="@drawable/misc_bike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    
+        <TextView android:id="@+widget_bike/available_bikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textStyle="bold"
+            android:text="-"
+            style="@style/WhiteText"/>
+    
+        <ProgressBar android:id="@+widget_bike/bike_station_gauge"
+            android:indeterminate="true" 
+            android:layout_width="wrap_content" 
+            android:layout_height="10dp" 
+            android:layout_weight="1"
+            style="?android:attr/progressBarStyleHorizontal"/>
+    
+        <TextView android:id="@+widget_bike/available_slots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textStyle="bold"
+            android:text="-"
+            style="@style/WhiteText"/>
+    
+        <ImageView android:src="@drawable/misc_slot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    
+    </LinearLayout>
+</LinearLayout>
