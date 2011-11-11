@@ -99,7 +99,7 @@
             <intent-filter>
                 <action android:name="fr.itinerennes.intent.BIKE_WIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_bike" />
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/wgt_bike" />
         </receiver>
         
         <!-- Service to perform web API queries for bike widget -->

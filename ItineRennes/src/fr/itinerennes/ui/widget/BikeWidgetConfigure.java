@@ -80,7 +80,7 @@ public class BikeWidgetConfigure extends ItineRennesActivity {
         setResult(RESULT_CANCELED);
 
         // Set the view layout resource to use.
-        setContentView(R.layout.act_widget_bike_configure);
+        setContentView(R.layout.act_wgt_bike_configure);
 
         // Bind the action for the save button.
         findViewById(R.act_widget_bike.savebutton).setOnClickListener(mOnClickSaveButtonListener);
@@ -134,7 +134,7 @@ public class BikeWidgetConfigure extends ItineRennesActivity {
             savePref(BikeWidgetConfigure.this, mAppWidgetId, adapter.getSelectedIds());
 
             // initialize the widget view with a progress bar
-            final RemoteViews views = new RemoteViews(getPackageName(), R.layout.vw_widget);
+            final RemoteViews views = new RemoteViews(getPackageName(), R.layout.wgt_container);
             views.addView(R.widget.container, new RemoteViews(getPackageName(),
                     R.layout.misc_view_is_loading));
             AppWidgetManager.getInstance(getBaseContext()).updateAppWidget(mAppWidgetId, views);

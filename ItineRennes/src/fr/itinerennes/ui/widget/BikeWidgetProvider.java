@@ -232,7 +232,7 @@ public class BikeWidgetProvider extends AppWidgetProvider {
             }
 
             final RemoteViews allViews = new RemoteViews(context.getPackageName(),
-                    R.layout.vw_widget);
+                    R.layout.wgt_container);
 
             // removing all child view before adding new ones
             allViews.removeAllViews(R.widget.container);
@@ -240,7 +240,7 @@ public class BikeWidgetProvider extends AppWidgetProvider {
             for (final BikeStation bikeStation : bikeStations) {
 
                 final RemoteViews bikeView = new RemoteViews(context.getPackageName(),
-                        R.layout.vw_widget_bike);
+                        R.layout.wgt_bike);
 
                 bikeView.setTextViewText(R.widget_bike.title, bikeStation.getName());
                 bikeView.setProgressBar(R.widget_bike.bike_station_gauge,
