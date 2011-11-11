@@ -54,7 +54,6 @@ public class BikeWidgetProvider extends AppWidgetProvider {
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Updating bike widget. id = {}", appWidgetIds[i]);
-
             }
 
             final int appWidgetId = appWidgetIds[i];
@@ -135,7 +134,7 @@ public class BikeWidgetProvider extends AppWidgetProvider {
      * 
      * @author Olivier Boudet
      */
-    public class UpdateService extends Service {
+    public static final class UpdateService extends Service {
 
         /**
          * {@inheritDoc}
@@ -143,7 +142,7 @@ public class BikeWidgetProvider extends AppWidgetProvider {
          * @see android.app.Service#onStartCommand(android.content.Intent, int, int)
          */
         @Override
-        public final int onStartCommand(final Intent intent, final int flags, final int startId) {
+        public int onStartCommand(final Intent intent, final int flags, final int startId) {
 
             final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -166,7 +165,7 @@ public class BikeWidgetProvider extends AppWidgetProvider {
          * @see android.app.Service#onBind(android.content.Intent)
          */
         @Override
-        public final IBinder onBind(final Intent intent) {
+        public IBinder onBind(final Intent intent) {
 
             return null;
         }
@@ -225,7 +224,6 @@ public class BikeWidgetProvider extends AppWidgetProvider {
          *            the list of bike stations to show
          * @return an updated {@link RemoteViews}
          */
-
         private RemoteViews buildUpdatedViews(final Context context,
                 final List<BikeStation> bikeStations) {
 
@@ -246,7 +244,7 @@ public class BikeWidgetProvider extends AppWidgetProvider {
 
                 bikeView.setTextViewText(R.widget_bike.title, bikeStation.getName());
                 bikeView.setProgressBar(R.widget_bike.bike_station_gauge,
-                        (bikeStation.getAvailableBikes() + bikeStation.getAvailableSlots()),
+                        bikeStation.getAvailableBikes() + bikeStation.getAvailableSlots(),
                         bikeStation.getAvailableBikes(), false);
                 bikeView.setTextViewText(R.widget_bike.available_bikes,
                         String.valueOf(bikeStation.getAvailableBikes()));

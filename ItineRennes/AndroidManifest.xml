@@ -91,6 +91,7 @@
             </intent-filter>
         </activity>
 
+        <!-- Broadcast receiver for bike widget update -->
         <receiver android:name=".ui.widget.BikeWidgetProvider" android:label="@string/bike_widget_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -101,9 +102,9 @@
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_bike" />
         </receiver>
         
-        <!-- Service to perform web API queries for widget -->
+        <!-- Service to perform web API queries for bike widget -->
         <service android:name=".ui.widget.BikeWidgetProvider$UpdateService" />
-
+		
     </application>
 
     <uses-sdk android:minSdkVersion="5" android:targetSdkVersion="14"/>
