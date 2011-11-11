@@ -107,7 +107,7 @@
 		
     </application>
 
-    <uses-sdk android:minSdkVersion="5" android:targetSdkVersion="14"/>
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="14"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
