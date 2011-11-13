@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itinerennes xmlns="http://www.itinerennes.fr/android/version" xmlns:itr05="http://www.itinerennes.fr/android/version/0.5">
+    <version>
+        <latest>0.4.1</latest>
+        <min_required>0.3</min_required>
+    </version>
+    <itr05:version>
+        <itr05:latest>0.8.2</itr05:latest>
+        <itr05:min_required>0.6</itr05:min_required>
+    </itr05:version>
+</itinerennes>
