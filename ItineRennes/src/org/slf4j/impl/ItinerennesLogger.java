@@ -17,21 +17,15 @@ public class ItinerennesLogger extends AndroidLogger {
     /** The serial version UID. */
     private static final long serialVersionUID = -922236915857722949L;
 
-    /** The name of the class using this logger. */
-    private final String classname;
-
     /**
      * Creates a new logger.
      * 
      * @param tag
      *            the tag name
-     * @param classname
-     *            the name of the class using this logger
      */
-    ItinerennesLogger(final String tag, final String classname) {
+    ItinerennesLogger(final String tag) {
 
         super(tag);
-        this.classname = classname;
     }
 
     /* @see org.slf4j.Logger#isTraceEnabled() */
@@ -253,9 +247,10 @@ public class ItinerennesLogger extends AndroidLogger {
      */
     private String format(final String message) {
 
-        return String.format("%s%-6.7s.%-30.30s %s", AndroidLoggerFactory.PREFIX, Thread
-                .currentThread().getName().replaceAll("AsyncTask ", "task"), this.classname,
-                message);
+        return String.format(
+                "%-6.7s %s",
+                Thread.currentThread().getName().replaceAll("AsyncTask ", "task")
+                        .replaceAll("Thread ", "th"), message);
     }
 
     /**
