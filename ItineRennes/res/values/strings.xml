@@ -12,6 +12,10 @@
     <string name="available_spaces">available spaces</string>
     <string name="closed">Closed</string>
     <string name="filter_the_list">Filter the list</string>
+    <string name="cancel">Cancel</string>
+    <string name="prev">Previous</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
     
     <!-- bookmarks -->
     <string name="activity_title_bookmarks">Bookmarks</string>

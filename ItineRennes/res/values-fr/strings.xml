@@ -12,6 +12,10 @@
     <string name="available_spaces">places disponibles</string>
     <string name="closed">Fermé</string>
     <string name="filter_the_list">Filtrer la liste</string>
+    <string name="cancel">Annuler</string>
+    <string name="prev">Précédent</string>
+    <string name="next">Suivant</string>
+    <string name="finish">Terminer</string>
     
     <!-- bookmarks -->
     <string name="activity_title_bookmarks">Favoris</string>
