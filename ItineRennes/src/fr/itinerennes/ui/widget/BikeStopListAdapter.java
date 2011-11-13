@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.CursorAdapter;
-import android.widget.TextView;
 
 import fr.itinerennes.R;
 import fr.itinerennes.database.Columns.MarkersColumns;
@@ -54,13 +53,11 @@ public class BikeStopListAdapter extends CursorAdapter {
     @Override
     public final View getView(final int position, View convertView, final ViewGroup parent) {
 
-        ViewHolder holder;
+        final ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.li_bike_selection, null);
 
             holder = new ViewHolder();
-            holder.label = (TextView) convertView
-                    .findViewById(R.vw_widget_configuration_line.label);
             holder.checkbox = (CheckBox) convertView
                     .findViewById(R.vw_widget_configuration_line.checkbox);
             holder.checkbox.setOnCheckedChangeListener(onCheckedChangeListener);
@@ -74,8 +71,8 @@ public class BikeStopListAdapter extends CursorAdapter {
         final String stationId = getCursor().getString(
                 getCursor().getColumnIndex(MarkersColumns.ID));
 
-        holder.label.setText(getCursor()
-                .getString(getCursor().getColumnIndex(MarkersColumns.LABEL)));
+        holder.checkbox.setText(getCursor().getString(
+                getCursor().getColumnIndex(MarkersColumns.LABEL)));
         holder.checkbox.setTag(stationId);
 
         if (selectedIds.contains(stationId)) {
@@ -93,9 +90,6 @@ public class BikeStopListAdapter extends CursorAdapter {
      * @author Olivier Boudet
      */
     private static class ViewHolder {
-
-        /** The bike label. */
-        TextView label;
 
         /** The checkbox. */
         CheckBox checkbox;
