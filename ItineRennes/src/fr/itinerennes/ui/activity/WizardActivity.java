@@ -158,22 +158,27 @@ public abstract class WizardActivity extends ItineRennesActivity {
 
             final WizardStepAdapter stepAdapter = stepsAdapters.get(currentStep);
 
-            switch ((Integer) v.getTag()) {
-            case R.string.cancel:
-                stepAdapter.onCancel();
+            switch (v.getId()) {
+            case R.id.act_wizard_button_left:
+                // LEFT button click
+                if (0 == currentStep) {
+                    stepAdapter.onCancel();
+                } else {
+                    stepAdapter.onPrevious();
+                    show(--currentStep, TO_PREVIOUS_STEP);
+                }
                 break;
-            case R.string.prev:
-                stepAdapter.onPrevious(currentStep);
-                show(--currentStep, TO_PREVIOUS_STEP);
-                break;
-            case R.string.next:
-                stepAdapter.onNext(currentStep);
-                show(++currentStep, TO_NEXT_STEP);
-                break;
-            case R.string.finish:
-                stepAdapter.onFinish();
+            case R.id.act_wizard_button_right:
+                // RIGHT button click
+                if (stepsAdapters.size() - 1 == currentStep) {
+                    stepAdapter.onFinish();
+                } else {
+                    stepAdapter.onNext();
+                    show(++currentStep, TO_NEXT_STEP);
+                }
                 break;
             default:
+                LOGGER.warn("can't handle event on view {}", this.getClass().getName(), v.getId());
                 break;
             }
         }
@@ -211,6 +216,8 @@ public abstract class WizardActivity extends ItineRennesActivity {
             }
         }
 
+        final WizardStepAdapter step = stepsAdapters.get(stepId);
+
         /*
          * A ViewSwitcher can only contain 2 views. When switching from a step to another, we have
          * to remove one child. Assuming we reach step_4 from step_3 : the WiewSwitcher contains
@@ -230,7 +237,7 @@ public abstract class WizardActivity extends ItineRennesActivity {
             // remove all views if there is no directions (wizard is opened for instance)
             stepsContainer.removeAllViews();
         }
-        stepsContainer.addView(stepsAdapters.get(stepId).onShow(stepId));
+        stepsContainer.addView(step.onShow(stepId));
 
         // set animations
         if (TO_PREVIOUS_STEP == direction) {
@@ -251,47 +258,11 @@ public abstract class WizardActivity extends ItineRennesActivity {
 
         }
 
-        updateWizardButtons();
+        // set buttons labels
+        leftButton.setText(step.getLeftButtonLabel());
+        rightButton.setText(step.getRightButtonLabel());
 
         stepsContainer.showNext();
-    }
-
-    /**
-     * Update the wizard buttons labels depending on the current step displayed and the total amount
-     * of steps of the wizard.
-     */
-    private void updateWizardButtons() {
-
-        final int left, right;
-
-        if (stepsAdapters.size() == 1) {
-            LOGGER.debug("wizard has only 1 step, cancel+finish");
-            // one step : display only "cancel" and "finish" buttons
-            left = R.string.cancel;
-            right = R.string.finish;
-        } else if (currentStep == 0) {
-            LOGGER.debug("wizard first step, cancel+next");
-            // first step : display "cancel" and "next"
-            left = R.string.cancel;
-            right = R.string.next;
-        } else if (currentStep == stepsAdapters.size() - 1) {
-            LOGGER.debug("wizard last step, previous+finish");
-            // last step : display "previous" and "finish"
-            left = R.string.prev;
-            right = R.string.finish;
-        } else {
-            LOGGER.debug("wizard intermediate step, previous+next");
-            // intermediate step : display "previous" and "next"
-            left = R.string.prev;
-            right = R.string.next;
-        }
-
-        leftButton.setText(left);
-        rightButton.setText(right);
-        // we also set the string id to the TAG of the buttons to identify events in
-        // WizardActivityButtonsClickListener#onClick(View)
-        leftButton.setTag(left);
-        rightButton.setTag(right);
     }
 
     /**
@@ -317,24 +288,32 @@ public abstract class WizardActivity extends ItineRennesActivity {
 
         /**
          * This is invoked when the user clicks button <i>previous</i>.
-         * 
-         * @param stepId
-         *            the step displayed when the user hit button "previous"
          */
-        void onPrevious(final int stepId);
+        void onPrevious();
 
         /**
-         * This is invoked when the user clicks button <i>next.
-         * 
-         * @param stepId
-         *            the step displayed when the user hit button "next"
+         * This is invoked when the user clicks button <i>next</i>.
          */
-        void onNext(final int stepId);
+        void onNext();
 
         /**
          * This is invoked when the user clicks button finish at the end of the wizard.
          */
         void onFinish();
+
+        /**
+         * Gets the text label to set on the left button of this step.
+         * 
+         * @return the text label to set on the left button of this step
+         */
+        String getLeftButtonLabel();
+
+        /**
+         * Gets the text label to set on the right button of this step.
+         * 
+         * @return the text label to set on the right button of this step
+         */
+        String getRightButtonLabel();
     }
 
     /**
@@ -368,20 +347,20 @@ public abstract class WizardActivity extends ItineRennesActivity {
         /**
          * {@inheritDoc}
          * 
-         * @see fr.itinerennes.ui.activity.WizardActivity.WizardStepAdapter#onPrevious(int)
+         * @see fr.itinerennes.ui.activity.WizardActivity.WizardStepAdapter#onPrevious()
          */
         @Override
-        public void onPrevious(final int stepId) {
+        public void onPrevious() {
 
         }
 
         /**
          * {@inheritDoc}
          * 
-         * @see fr.itinerennes.ui.activity.WizardActivity.WizardStepAdapter#onNext(int)
+         * @see fr.itinerennes.ui.activity.WizardActivity.WizardStepAdapter#onNext()
          */
         @Override
-        public void onNext(final int stepId) {
+        public void onNext() {
 
         }
 
@@ -396,6 +375,42 @@ public abstract class WizardActivity extends ItineRennesActivity {
         public void onFinish() {
 
             finish();
+        }
+
+        /**
+         * {@inheritDoc}
+         * <p>
+         * The left button label is set to "Cancel" if the step is the first one, else it is set to
+         * "Previous".
+         * 
+         * @see fr.itinerennes.ui.activity.WizardActivity.WizardStepAdapter#getLeftButtonLabel()
+         */
+        @Override
+        public String getLeftButtonLabel() {
+
+            if (stepsAdapters.indexOf(this) == 0) {
+                return WizardActivity.this.getString(R.string.cancel);
+            } else {
+                return WizardActivity.this.getString(R.string.prev);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         * <p>
+         * The right button label is set to "Finish" if the step is the last one, else it is set to
+         * "Next".
+         * 
+         * @see fr.itinerennes.ui.activity.WizardActivity.WizardStepAdapter#getRightButtonLabel()
+         */
+        @Override
+        public String getRightButtonLabel() {
+
+            if (stepsAdapters.indexOf(this) == stepsAdapters.size() - 1) {
+                return WizardActivity.this.getString(R.string.finish);
+            } else {
+                return WizardActivity.this.getString(R.string.next);
+            }
         }
     }
 }
