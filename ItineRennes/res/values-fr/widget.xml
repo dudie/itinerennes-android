@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- BIKE - widget strings -->
     <string name="bike_widget_label">Stations de vélos</string>
-    <string name="bike_widget_instruction">Choisissez les stations de vélos à afficher dans le widget.</string>
+    <string name="bike_widget_instruction">Choisissez les stations de vélos à afficher dans le widget</string>
+    <!-- BIKE - Configuration wizard strings -->
+    <string name="bike_widget_description">Le widget vélo affiche le status des stations LE Velo STAR sur votre bureau</string>
+    <string name="bike_widget_wizard_instructions">Vous allez pouvoir sélectionner les stations que vous souhaitez inclure dans le widget</string>
 </resources>

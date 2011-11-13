@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- BIKE - widget strings -->
     <string name="bike_widget_label">Bike stations</string>
     <string name="bike_widget_instruction">Choose bike stations to display in the widget.</string>
+    <!-- BIKE - Configuration wizard strings -->
+    <string name="bike_widget_description">Bike widget displays LE Velo STAR stations status on you desktop</string>
+    <string name="bike_widget_wizard_instructions">You will have to select the stations you want to show in the widget</string>
 </resources>

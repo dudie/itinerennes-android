@@ -46,6 +46,9 @@ public abstract class WizardActivity extends ItineRennesActivity {
     /** Constant indicating that the wizard switch forward to a next step. */
     private static final int TO_NEXT_STEP = 1;
 
+    /** The view containing buttons at the bottom of the wizard. */
+    private View bottomButtonsBar;
+
     /** The buttons to navigate in the wizard. */
     private Button leftButton, rightButton;
 
@@ -99,14 +102,15 @@ public abstract class WizardActivity extends ItineRennesActivity {
         setContentView(R.layout.act_wizard_base);
 
         stepsContainer = (ViewGroup) findViewById(R.id.act_wizard_steps);
-        leftButton = (Button) findViewById(R.id.act_wizard_button_left);
-        rightButton = (Button) findViewById(R.id.act_wizard_button_right);
+        bottomButtonsBar = findViewById(R.id.act_wizard_buttons);
+        leftButton = (Button) bottomButtonsBar.findViewById(R.id.act_wizard_button_left);
+        rightButton = (Button) bottomButtonsBar.findViewById(R.id.act_wizard_button_right);
 
         final WizardActivityButtonsClickListener buttonsListener = new WizardActivityButtonsClickListener();
         leftButton.setOnClickListener(buttonsListener);
         rightButton.setOnClickListener(buttonsListener);
 
-        onCreateSteps(savedInstanceState);
+        onCreateWizard(savedInstanceState);
 
         if (stepsAdapters.size() <= 0) {
             throw new IllegalArgumentException(
@@ -125,7 +129,7 @@ public abstract class WizardActivity extends ItineRennesActivity {
      * @param savedInstanceState
      *            see {@link #onCreate(Bundle)}
      */
-    protected abstract void onCreateSteps(Bundle savedInstanceState);
+    protected abstract void onCreateWizard(Bundle savedInstanceState);
 
     /**
      * Subclasses should use this method to add steps to the wizard.

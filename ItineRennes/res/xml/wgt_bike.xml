@@ -3,5 +3,5 @@
     android:minWidth="160dp"
     android:minHeight="100dp"
     android:initialLayout="@layout/wgt_container"
-    android:configure="fr.itinerennes.ui.widget.BikeWidgetConfigure">
+    android:configure="fr.itinerennes.ui.widget.BikeWidgetConfigurationWizardActivity">
 </appwidget-provider>

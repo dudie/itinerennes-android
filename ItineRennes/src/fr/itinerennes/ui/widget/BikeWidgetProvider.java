@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.widget.RemoteViews;
+
 import fr.dudie.keolis.model.BikeStation;
 
 import fr.itinerennes.ItineRennesApplication;
@@ -97,7 +98,7 @@ public class BikeWidgetProvider extends AppWidgetProvider {
     public final void onDeleted(final Context context, final int[] appWidgetIds) {
 
         for (int i = 0; i < appWidgetIds.length; i++) {
-            BikeWidgetConfigure.deletePref(context, appWidgetIds[i]);
+            BikeWidgetConfigurationWizardActivity.deletePref(context, appWidgetIds[i]);
         }
         super.onDeleted(context, appWidgetIds);
     }
@@ -184,7 +185,8 @@ public class BikeWidgetProvider extends AppWidgetProvider {
 
             final List<BikeStation> bikeStations = new ArrayList<BikeStation>();
 
-            final String stationIdsString = BikeWidgetConfigure.loadPref(context, appWidgetId);
+            final String stationIdsString = BikeWidgetConfigurationWizardActivity.loadPref(context,
+                    appWidgetId);
 
             if (stationIdsString != null) {
                 final String[] stationIds = stationIdsString.split(";");

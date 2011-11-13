@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="5dp">
+    
+    <TextView android:id="@+id/label_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/bike_widget_description"/>
+
+    <ImageView android:id="@+id/widget_preview" 
+        android:src="@drawable/pv_widget_bike"
+        android:layout_below="@id/label_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"/>
+    
+    <TextView android:id="@+id/config_steps"
+        android:layout_below="@id/widget_preview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/bike_widget_wizard_instructions"/>
+
+</RelativeLayout>

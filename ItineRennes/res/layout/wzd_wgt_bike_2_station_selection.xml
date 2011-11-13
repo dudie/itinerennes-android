@@ -3,11 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
-
-    <TextView android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/bike_widget_instruction"/>
     
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/bike_widget_instruction"/>
+
     <EditText android:id="@+act_widget_bike/filter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -19,10 +22,5 @@
         android:layout_height="fill_parent"
         android:layout_weight="1">
     </ListView>
-
-    <Button android:id="@+act_widget_bike/savebutton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@android:string/ok"
-        android:layout_gravity="center_horizontal"/>
+    
 </LinearLayout>

@@ -85,7 +85,8 @@
             android:name=".provider.SearchMarkersProvider">
         </provider>
     
-        <activity android:name=".ui.widget.BikeWidgetConfigure">
+        <activity android:name=".ui.widget.BikeWidgetConfigurationWizardActivity"
+            android:theme="@android:style/Theme.Black">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
