@@ -11,8 +11,9 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ViewSwitcher;
 
 import fr.itinerennes.R;
 
@@ -49,7 +50,7 @@ public abstract class WizardActivity extends ItineRennesActivity {
     private Button leftButton, rightButton;
 
     /** The view containing the steps views. */
-    private ViewSwitcher stepsContainer;
+    private ViewGroup stepsContainer;
 
     /** The current step number. */
     private int currentStep = 0;
@@ -97,7 +98,7 @@ public abstract class WizardActivity extends ItineRennesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_wizard_base);
 
-        stepsContainer = (ViewSwitcher) findViewById(R.id.act_wizard_steps);
+        stepsContainer = (ViewGroup) findViewById(R.id.act_wizard_steps);
         leftButton = (Button) findViewById(R.id.act_wizard_button_left);
         rightButton = (Button) findViewById(R.id.act_wizard_button_right);
 
@@ -217,52 +218,37 @@ public abstract class WizardActivity extends ItineRennesActivity {
         }
 
         final WizardStepAdapter step = stepsAdapters.get(stepId);
-
-        /*
-         * A ViewSwitcher can only contain 2 views. When switching from a step to another, we have
-         * to remove one child. Assuming we reach step_4 from step_3 : the WiewSwitcher contains
-         * views for step_3 and step_4. ----------------------------------------------------------
-         * We want to switch to step_5, then we have to remove the view of the setp_3 before adding
-         * the view of the step_5.
-         */
-
-        // we have to remove the view which is not currently displayed
-        // eg. we have to remove the view at index != stepsContainer.getDisplayedChild()
-        // and we know there are 2 children max
-        // childIndexToRemove = (childIndexDisplayed + 1) % 2
-        final int childIndexToRemove = (stepsContainer.getDisplayedChild() + 1) % 2;
-        if (stepsContainer.getChildCount() > 1) {
-            stepsContainer.removeViewAt(childIndexToRemove);
-        } else if (NO_DIRECTION == direction) {
-            // remove all views if there is no directions (wizard is opened for instance)
-            stepsContainer.removeAllViews();
-        }
-        stepsContainer.addView(step.onShow(stepId));
+        final View oldStepView = stepsContainer.getChildAt(0);
+        final View newStepView = step.onShow();
 
         // set animations
+        final int outAnim, inAnim;
         if (TO_PREVIOUS_STEP == direction) {
             // we are switching from right to left <<
             // so the new view has to be before the old one
-            // stepsContainer.setOutAnimation(AnimationUtils.loadAnimation(WizardActivity.this,
-            // android.R.anim.slide_out_right));
-            // stepsContainer.setInAnimation(AnimationUtils.loadAnimation(WizardActivity.this,
-            // android.R.anim.slide_in_left));
+            outAnim = android.R.anim.slide_out_right;
+            inAnim = android.R.anim.slide_in_left;
 
         } else if (TO_NEXT_STEP == direction) {
             // we are switching from left to right >>
             // so the new view has to be after the old one
-            // stepsContainer.setOutAnimation(AnimationUtils.loadAnimation(WizardActivity.this,
-            // R.anim.slide_in_right));
-            // stepsContainer.setInAnimation(AnimationUtils.loadAnimation(WizardActivity.this,
-            // R.anim.slide_out_left));
+            outAnim = R.anim.slide_out_left;
+            inAnim = R.anim.slide_in_right;
 
+        } else {
+            outAnim = android.R.anim.fade_out;
+            inAnim = android.R.anim.fade_in;
         }
+        if (oldStepView != null) {
+            oldStepView.startAnimation(AnimationUtils.loadAnimation(WizardActivity.this, outAnim));
+        }
+        newStepView.startAnimation(AnimationUtils.loadAnimation(WizardActivity.this, inAnim));
+        stepsContainer.removeAllViews();
+        stepsContainer.addView(newStepView);
 
         // set buttons labels
         leftButton.setText(step.getLeftButtonLabel());
         rightButton.setText(step.getRightButtonLabel());
-
-        stepsContainer.showNext();
     }
 
     /**
@@ -275,11 +261,9 @@ public abstract class WizardActivity extends ItineRennesActivity {
         /**
          * This method is invoked to request the view to display one of the wizard steps.
          * 
-         * @param stepId
-         *            the number of the step requested
          * @return the view to display in this wizard step
          */
-        View onShow(int stepId);
+        View onShow();
 
         /**
          * This is invoked when the user clicks button cancel of the wizard.
@@ -326,10 +310,10 @@ public abstract class WizardActivity extends ItineRennesActivity {
         /**
          * {@inheritDoc}
          * 
-         * @see fr.itinerennes.ui.activity.WizardActivity.WizardStepAdapter#onShow(int)
+         * @see fr.itinerennes.ui.activity.WizardActivity.WizardStepAdapter#onShow()
          */
         @Override
-        public abstract View onShow(int stepId);
+        public abstract View onShow();
 
         /**
          * {@inheritDoc}

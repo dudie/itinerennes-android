@@ -4,10 +4,12 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <ViewSwitcher android:id="@+id/act_wizard_steps"
+    <LinearLayout android:id="@+id/act_wizard_steps"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1">
+        <!-- The step content is included here -->
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
