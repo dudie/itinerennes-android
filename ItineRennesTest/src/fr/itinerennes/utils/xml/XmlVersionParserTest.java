@@ -61,7 +61,7 @@ public final class XmlVersionParserTest extends AndroidTestCase {
      */
     public void testNewFileFormat() {
 
-        final InputStream versionFile = getClass().getResourceAsStream("version-format_api_4.xml");
+        final InputStream versionFile = getClass().getResourceAsStream("version-format_api_7.xml");
         final VersionCheck check = parser.parse(versionFile);
 
         assertEquals("0.6", check.getMinRequired());
