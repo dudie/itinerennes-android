@@ -1,7 +1,7 @@
 package fr.itinerennes.ui.widget;
 
 import java.util.Calendar;
-import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -186,7 +186,7 @@ public final class BikeWidgetConfigurationWizardActivity extends WizardActivity 
      *            the list of checked bike stations
      */
     private static void savePref(final Context context, final int appWidgetId,
-            final List<String> checkedIds) {
+            final Set<String> checkedIds) {
 
         // prior to API Level 11 it is not possible to store a set of string in preferences. a
         // workaround used here is to concatenate all station is in a unique string, separated by a

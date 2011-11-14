@@ -1,7 +1,7 @@
 package fr.itinerennes.ui.widget;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -27,7 +27,7 @@ public class BikeStopListAdapter extends CursorAdapter {
     private final LayoutInflater inflater;
 
     /** The list of bike station id which was selected. */
-    private final List<String> selectedIds = new ArrayList<String>();
+    private final Set<String> selectedIds = new HashSet<String>();
 
     /**
      * Constructor.
@@ -199,7 +199,7 @@ public class BikeStopListAdapter extends CursorAdapter {
      * 
      * @return the list of selected ids
      */
-    public final List<String> getSelectedIds() {
+    public final Set<String> getSelectedIds() {
 
         return selectedIds;
     }
