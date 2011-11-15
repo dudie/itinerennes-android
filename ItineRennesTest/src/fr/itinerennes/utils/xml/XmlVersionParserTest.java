@@ -31,6 +31,23 @@ public final class XmlVersionParserTest extends AndroidTestCase {
         final VersionCheck check = parser.parse(versionFile);
 
         // TJHU what do we expect ? Send ACRA report ?
+        assertNull(check.getLatest());
+        assertNull(check.getMinRequired());
+    }
+
+    /**
+     * Test the XML version parser with an XML file which contains expected elements but in a wrong
+     * namespace.
+     */
+    public void testWrongFileFormatNamespace() {
+
+        final InputStream versionFile = getClass().getResourceAsStream(
+                "version-format_wrong_namespace.xml");
+        final VersionCheck check = parser.parse(versionFile);
+
+        // TJHU what do we expect ? Send ACRA report ?
+        assertNull(check.getLatest());
+        assertNull(check.getMinRequired());
     }
 
     /**
@@ -46,14 +63,17 @@ public final class XmlVersionParserTest extends AndroidTestCase {
 
     /**
      * Test the XML version parser with the file format for ItinéRennes version <= 0.4.1.
+     * <p>
+     * The parser shouldn't be able to extract min and latest version because it expects the
+     * namespace of elements to be the right one.
      */
     public void testOldFileFormat() {
 
         final InputStream versionFile = getClass().getResourceAsStream("version-format_api_4.xml");
         final VersionCheck check = parser.parse(versionFile);
 
-        assertEquals("0.3", check.getMinRequired());
-        assertEquals("0.4.1", check.getLatest());
+        assertNull(check.getMinRequired());
+        assertNull(check.getLatest());
     }
 
     /**
@@ -61,10 +81,18 @@ public final class XmlVersionParserTest extends AndroidTestCase {
      */
     public void testNewFileFormat() {
 
-        final InputStream versionFile = getClass().getResourceAsStream("version-format_api_7.xml");
-        final VersionCheck check = parser.parse(versionFile);
+        final InputStream[] files = new InputStream[] {
+                getClass().getResourceAsStream("version-format_api_7-a.xml"),
+                getClass().getResourceAsStream("version-format_api_7-b.xml"),
+                getClass().getResourceAsStream("version-format_api_7-c.xml") };
 
-        assertEquals("0.6", check.getMinRequired());
-        assertEquals("0.8.2", check.getLatest());
+        assertTrue(files.length > 0);
+
+        for (final InputStream versionFile : files) {
+            final VersionCheck check = parser.parse(versionFile);
+
+            assertEquals("0.6", check.getMinRequired());
+            assertEquals("0.8.2", check.getLatest());
+        }
     }
 }

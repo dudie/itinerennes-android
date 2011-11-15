@@ -13,17 +13,75 @@ import fr.itinerennes.model.VersionCheck;
  */
 public class XmlVersionHandler extends DefaultHandler {
 
+    /** The XML namespace of the schema. */
+    private static final String NAMESPACE_URI = "http://www.itinerennes.fr/api/v2/android";
+
     /** Name of the latest tag. */
     private static final String LATEST = "latest";
 
     /** Name of the min_required tag. */
     private static final String MIN_REQUIRED = "min_required";
 
+    /** Name of document root element <code>itinerennes</code>. */
+    private static final Object ITINERENNES = "itinerennes";
+
+    /** Name of element version. */
+    private static final Object VERSION = "version";
+
     /** StringBuilder used for each xml element. */
     private StringBuilder builder;
 
     /** Result object containing version informations. */
     private VersionCheck versionCheck;
+
+    /**
+     * Defines whether or not the parser is currently under the <code>itinerennes</code> document
+     * root element.
+     */
+    private boolean isItinerennesElementActive;
+
+    /**
+     * Defines whether or not the parser is currently under the <code>itinerennes/version</code>
+     * element.
+     */
+    private boolean isVersionElementActive;
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.xml.sax.helpers.DefaultHandler#startDocument()
+     */
+    @Override
+    public final void startDocument() throws SAXException {
+
+        super.startDocument();
+        versionCheck = new VersionCheck();
+        builder = new StringBuilder();
+        isItinerennesElementActive = false;
+        isVersionElementActive = false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String,
+     *      java.lang.String, org.xml.sax.Attributes)
+     */
+    @Override
+    public final void startElement(final String uri, final String localName, final String name,
+            final Attributes attributes) throws SAXException {
+
+        super.startElement(uri, localName, name, attributes);
+
+        builder.setLength(0);
+
+        if (ITINERENNES.equals(localName)) {
+            isItinerennesElementActive = true;
+        } else if (VERSION.equals(localName) && NAMESPACE_URI.equals(uri)
+                && isItinerennesElementActive) {
+            isVersionElementActive = true;
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -49,40 +107,18 @@ public class XmlVersionHandler extends DefaultHandler {
             throws SAXException {
 
         super.endElement(uri, localName, name);
-        if (localName.equalsIgnoreCase(LATEST)) {
-            versionCheck.setLatest(builder.toString());
-        } else if (localName.equalsIgnoreCase(MIN_REQUIRED)) {
-            versionCheck.setMinRequired(builder.toString());
+
+        if (ITINERENNES.equals(localName)) {
+            isItinerennesElementActive = false;
+        } else if (NAMESPACE_URI.equals(uri) && isItinerennesElementActive) {
+            if (VERSION.equals(localName)) {
+                isVersionElementActive = false;
+            } else if (localName.equalsIgnoreCase(LATEST) && isVersionElementActive) {
+                versionCheck.setLatest(builder.toString());
+            } else if (localName.equalsIgnoreCase(MIN_REQUIRED) && isVersionElementActive) {
+                versionCheck.setMinRequired(builder.toString());
+            }
         }
-
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.xml.sax.helpers.DefaultHandler#startDocument()
-     */
-    @Override
-    public final void startDocument() throws SAXException {
-
-        super.startDocument();
-        versionCheck = new VersionCheck();
-        builder = new StringBuilder();
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String,
-     *      java.lang.String, org.xml.sax.Attributes)
-     */
-    @Override
-    public final void startElement(final String uri, final String localName, final String name,
-            final Attributes attributes) throws SAXException {
-
-        super.startElement(uri, localName, name, attributes);
-
-        builder.setLength(0);
 
     }
 
