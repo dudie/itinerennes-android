@@ -14,7 +14,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -42,8 +42,7 @@ import fr.itinerennes.exceptions.ExceptionHandler;
 public class ItineRennesApplication extends Application {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(ItineRennesApplication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItineRennesApplication.class);
 
     /** The database helper. */
     private DatabaseHelper databaseHelper;
