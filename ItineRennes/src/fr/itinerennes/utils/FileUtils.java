@@ -7,7 +7,7 @@ import java.io.Reader;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 /**
  * Some file utilities.
@@ -17,7 +17,7 @@ import org.slf4j.impl.AndroidLoggerFactory;
 public final class FileUtils {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(FileUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
     /** Char buffer length for input reads. */
     private static final int CHAR_BUF_SIZE = 512;

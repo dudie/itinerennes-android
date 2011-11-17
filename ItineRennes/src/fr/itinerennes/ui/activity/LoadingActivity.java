@@ -10,7 +10,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.content.Intent;
 import android.database.DatabaseUtils.InsertHelper;
@@ -21,8 +21,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.model.VersionCheck;
@@ -36,7 +36,7 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
         AccessibilityColumns {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(LoadingActivity.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoadingActivity.class);
 
     /** Constant identifying the "failure" dialog. */
     private static final int DIALOG_FAILURE = 1;

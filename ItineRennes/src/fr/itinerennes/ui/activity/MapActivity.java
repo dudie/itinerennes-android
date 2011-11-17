@@ -8,7 +8,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.util.constants.OverlayConstants;
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -27,10 +27,10 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import fr.itinerennes.R;
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.MarkerDao;
@@ -51,7 +51,7 @@ import fr.itinerennes.utils.MapUtils;
 public class MapActivity extends ItineRennesActivity implements OverlayConstants {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(MapActivity.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapActivity.class);
 
     /** The map view. */
     private ItinerennesMapView map;

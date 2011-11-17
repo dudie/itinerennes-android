@@ -3,7 +3,7 @@ package fr.itinerennes.ui.views;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.MapView.LayoutParams;
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
@@ -169,7 +169,7 @@ public final class MapBoxController {
     private class DisplayMapBoxTask<D> extends AsyncTask<Void, Void, D> {
 
         /** The event logger. */
-        private final Logger LOGGER = AndroidLoggerFactory.getLogger(DisplayMapBoxTask.class);
+        private final Logger LOGGER = LoggerFactory.getLogger(DisplayMapBoxTask.class);
 
         /** The map view where the additional informations are added. */
         private final MapView map;

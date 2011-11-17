@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -20,8 +20,8 @@ import android.widget.RemoteViews;
 
 import fr.dudie.keolis.model.BikeStation;
 
-import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
+import fr.itinerennes.ItineRennesApplication;
 
 /**
  * Provider to update the bike widget.
@@ -31,7 +31,7 @@ import fr.itinerennes.R;
 public class BikeWidgetProvider extends AppWidgetProvider {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BikeWidgetProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BikeWidgetProvider.class);
 
     /** Intent name for widget update. */
     public static final String WIDGET_UPDATE = "fr.itinerennes.intent.BIKE_WIDGET_UPDATE";

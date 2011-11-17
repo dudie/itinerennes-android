@@ -3,15 +3,15 @@ package fr.itinerennes.ui.views.overlays;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MyLocationOverlay;
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.widget.ToggleButton;
 
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
+import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 
@@ -24,7 +24,7 @@ import fr.itinerennes.ui.views.ItinerennesMapView;
 public final class LocationOverlay extends MyLocationOverlay {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(LocationOverlay.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocationOverlay.class);
 
     /** The context. */
     private final ItineRennesActivity context;
