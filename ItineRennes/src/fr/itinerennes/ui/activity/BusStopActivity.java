@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -52,7 +52,7 @@ import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 public final class BusStopActivity extends ItineRennesActivity {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusStopActivity.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BusStopActivity.class);
 
     /** Intent parameter name for the station identifier. */
     public static final String INTENT_STOP_ID = String.format("%s.stopId",

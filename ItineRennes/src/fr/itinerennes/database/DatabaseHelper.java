@@ -3,7 +3,7 @@ package fr.itinerennes.database;
 import java.io.IOException;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -22,7 +22,7 @@ import fr.itinerennes.utils.FileUtils;
 public final class DatabaseHelper extends SQLiteOpenHelper {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(DatabaseHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHelper.class);
 
     /** The database name. */
     private static final String DATABASE_NAME = "fr.itinerennes";

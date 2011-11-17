@@ -3,7 +3,7 @@ package fr.itinerennes.ui.activity;
 import java.io.IOException;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,6 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import fr.dudie.onebusaway.client.IOneBusAwayClient;
 import fr.dudie.onebusaway.model.TripSchedule;
 import fr.dudie.onebusaway.model.TripStopTime;
@@ -38,7 +39,7 @@ import fr.itinerennes.ui.adapter.BusTripTimeAdapter;
 public final class BusTripActivity extends ItineRennesActivity {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(BusTripActivity.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BusTripActivity.class);
 
     /**
      * Intent parameter name for the stop identifier where to scroll in the list of displayed trip

@@ -1,7 +1,7 @@
 package fr.itinerennes.ui.activity;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -19,7 +19,7 @@ import fr.itinerennes.ItineRennesApplication;
 public abstract class ItineRennesActivity extends Activity {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory.getLogger(ItineRennesActivity.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItineRennesActivity.class);
 
     /** Receiver for new version notifications. */
     private final NewVersionReceiver receiver = new NewVersionReceiver();

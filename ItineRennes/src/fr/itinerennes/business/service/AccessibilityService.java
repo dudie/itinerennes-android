@@ -1,7 +1,7 @@
 package fr.itinerennes.business.service;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,8 +17,7 @@ import fr.itinerennes.database.DatabaseHelper;
 public class AccessibilityService extends AbstractService implements AccessibilityColumns {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(AccessibilityService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccessibilityService.class);
 
     /**
      * Creates the accessibility service.

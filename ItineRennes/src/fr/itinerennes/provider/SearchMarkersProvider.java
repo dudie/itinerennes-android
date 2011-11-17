@@ -1,7 +1,7 @@
 package fr.itinerennes.provider;
 
 import org.slf4j.Logger;
-import org.slf4j.impl.AndroidLoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import android.app.SearchManager;
 import android.content.ContentProvider;
@@ -22,8 +22,7 @@ import fr.itinerennes.database.MarkerDao;
 public class SearchMarkersProvider extends ContentProvider {
 
     /** The event logger. */
-    private static final Logger LOGGER = AndroidLoggerFactory
-            .getLogger(SearchMarkersProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SearchMarkersProvider.class);
 
     /** Authority for this content provider. */
     public static final String AUTHORITY = "fr.itinerennes.provider.searchMarkersProvider";
