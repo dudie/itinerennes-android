@@ -10,8 +10,8 @@ import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.widget.ToggleButton;
 
-import fr.itinerennes.R;
 import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 

@@ -21,8 +21,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
-import fr.itinerennes.R;
 import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.R;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.model.VersionCheck;

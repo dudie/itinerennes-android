@@ -27,10 +27,10 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import fr.itinerennes.R;
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.MarkerDao;

@@ -27,7 +27,6 @@ import fr.dudie.nominatim.model.BoundingBox;
 import fr.dudie.onebusaway.client.IOneBusAwayClient;
 import fr.dudie.onebusaway.client.JsonOneBusAwayClient;
 
-import fr.itinerennes.R;
 import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.business.service.LineIconService;

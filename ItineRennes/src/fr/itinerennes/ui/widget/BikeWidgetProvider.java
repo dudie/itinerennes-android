@@ -20,8 +20,8 @@ import android.widget.RemoteViews;
 
 import fr.dudie.keolis.model.BikeStation;
 
-import fr.itinerennes.R;
 import fr.itinerennes.ItineRennesApplication;
+import fr.itinerennes.R;
 
 /**
  * Provider to update the bike widget.
