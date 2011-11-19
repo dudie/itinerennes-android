@@ -82,6 +82,11 @@ public final class BikeWidgetConfigurationWizardActivity extends WizardActivity 
         addStep(new Step2());
     }
 
+    /**
+     * Step displaying some explanations on how the bike widget works.
+     * 
+     * @author Olivier Boudet
+     */
     private class Step1 extends BaseWizardStepAdapter {
 
         @Override
@@ -93,6 +98,12 @@ public final class BikeWidgetConfigurationWizardActivity extends WizardActivity 
         }
     }
 
+    /**
+     * Step displaying the list of bike stations giving to the user the ability to select those he
+     * want to follow.
+     * 
+     * @author Olivier Boudet
+     */
     private class Step2 extends BaseWizardStepAdapter {
 
         @Override

@@ -378,7 +378,8 @@ public class MarkerDao implements MarkersColumns {
         final String tables = String.format("%s m left join %s b on m.%s=b.%s", MARKERS_TABLE_NAME,
                 Columns.BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, Columns.BookmarksColumns.ID);
 
-        return query(tables, selection, selectionArgs, columns, null, null);
+        final String order = String.format("m.%s", MarkersColumns.LABEL);
+        return query(tables, selection, selectionArgs, columns, null, order);
 
     }
 
@@ -439,7 +440,7 @@ public class MarkerDao implements MarkersColumns {
         marker.setLabel(c.getString(c.getColumnIndex(MarkersColumns.LABEL)));
         marker.setLocation(new GeoPoint(c.getInt(c.getColumnIndex(MarkersColumns.LATITUDE)), c
                 .getInt(c.getColumnIndex(MarkersColumns.LONGITUDE))));
-        marker.setBookmarked((c.getInt(c.getColumnIndex(MarkersColumns.IS_BOOKMARKED)) != 0));
+        marker.setBookmarked(c.getInt(c.getColumnIndex(MarkersColumns.IS_BOOKMARKED)) != 0);
 
         return marker;
     }
