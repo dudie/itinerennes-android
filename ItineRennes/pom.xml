@@ -69,12 +69,14 @@
 	</repositories>
 
 	<dependencies>
+        <!-- BEGIN - PROVIDED DEPENDENCIES -->
 		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
 			<version>2.3.3</version>
 			<scope>provided</scope>
 		</dependency>
+        <!-- dependencies provided by com.google.android:android -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -111,12 +113,14 @@
 			<version>20080701</version>
 			<scope>provided</scope>
 		</dependency>
+        <!-- not required at runtime, included in org.slf4j:slf4j-itinerennes  -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.1</version>
 			<scope>provided</scope>
 		</dependency>
+        <!-- END - PROVIDED DEPENDENCIES -->
 
 		<dependency>
 			<groupId>org.osmdroid</groupId>
