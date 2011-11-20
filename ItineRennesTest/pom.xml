@@ -10,11 +10,11 @@
         <relativePath>..</relativePath>
     </parent>
 
-    <artifactId>itinerennes-android-app</artifactId>
+    <artifactId>itinerennes-android-app-test</artifactId>
     <packaging>apk</packaging>
 
-    <name>ItinéRennes Android</name>
-    <description>ItinéRennes Android application</description>
+    <name>ItinéRennes Android Tests</name>
+    <description>ItinéRennes Android test application</description>
 
 
     <dependencies>
@@ -23,65 +23,60 @@
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
         </dependency>
-        <!-- dependencies provided by com.google.android:android -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.james</groupId>
-            <artifactId>apache-mime4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-        </dependency>
-        <!-- not required at runtime, included in org.slf4j:slf4j-itinerennes  -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <groupId>com.google.android</groupId>
+            <artifactId>android-test</artifactId>
         </dependency>
         <!-- END - PROVIDED DEPENDENCIES -->
 
         <dependency>
+            <!-- The tested APK, will be deployed before running instrumentation tests -->
+            <groupId>${project.groupId}</groupId>
+            <artifactId>itinerennes-android-app</artifactId>
+            <type>apk</type>
+        </dependency>
+        <dependency>
+            <!-- The source classes so they can be accessed at compile time -->
+            <groupId>${project.groupId}</groupId>
+            <artifactId>itinerennes-android-app</artifactId>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
             <groupId>org.acra</groupId>
             <artifactId>acra</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-itinerennes</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.osmdroid</groupId>
             <artifactId>osmdroid-itinerennes</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fr.itinerennes</groupId>
             <artifactId>itinerennes-commons</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fr.dudie</groupId>
             <artifactId>rennes-data-api</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fr.dudie</groupId>
             <artifactId>nominatim-api</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fr.dudie</groupId>
             <artifactId>onebusaway-api</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -92,6 +87,9 @@
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
+                <configuration>
+                    <createReport>true</createReport>
+                </configuration>
             </plugin>
         </plugins>
     </build>
