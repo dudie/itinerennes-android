@@ -7,7 +7,6 @@
         <groupId>fr.itinerennes</groupId>
         <artifactId>itinerennes-android-parent</artifactId>
         <version>0.5-SNAPSHOT</version>
-        <relativePath>..</relativePath>
     </parent>
 
     <artifactId>itinerennes-android-app</artifactId>
@@ -23,35 +22,9 @@
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
         </dependency>
-        <!-- dependencies provided by com.google.android:android -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.james</groupId>
-            <artifactId>apache-mime4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-        </dependency>
-        <!-- not required at runtime, included in org.slf4j:slf4j-itinerennes  -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
         </dependency>
         <!-- END - PROVIDED DEPENDENCIES -->
 

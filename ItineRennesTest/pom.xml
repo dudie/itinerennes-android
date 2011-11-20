@@ -7,7 +7,6 @@
         <groupId>fr.itinerennes</groupId>
         <artifactId>itinerennes-android-parent</artifactId>
         <version>0.5-SNAPSHOT</version>
-        <relativePath>..</relativePath>
     </parent>
 
     <artifactId>itinerennes-android-app-test</artifactId>

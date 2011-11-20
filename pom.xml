@@ -85,48 +85,10 @@
                 <version>2.3.3</version>
                 <scope>provided</scope>
             </dependency>
-            <!-- dependencies provided by com.google.android:android -->
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>4.0.1</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpcore</artifactId>
-                <version>4.0.1</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpmime</artifactId>
-                <version>4.0.1</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.james</groupId>
-                <artifactId>apache-mime4j</artifactId>
-                <version>0.6</version>
-                <scope>provided</scope>
-            </dependency>
             <dependency>
                 <groupId>commons-logging</groupId>
                 <artifactId>commons-logging</artifactId>
                 <version>1.1.1</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.json</groupId>
-                <artifactId>json</artifactId>
-                <version>20080701</version>
-                <scope>provided</scope>
-            </dependency>
-            <!-- not required at runtime, included in org.slf4j:slf4j-itinerennes  -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.6.1</version>
                 <scope>provided</scope>
             </dependency>
             <!-- END - PROVIDED DEPENDENCIES -->
