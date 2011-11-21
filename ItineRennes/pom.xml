@@ -12,9 +12,8 @@
     <artifactId>itinerennes-android-app</artifactId>
     <packaging>apk</packaging>
 
-    <name>ItinéRennes Android</name>
-    <description>ItinéRennes Android application</description>
-
+    <name>ItineRennes Android</name>
+    <description>ItineRennes Android application</description>
 
     <dependencies>
         <!-- BEGIN - PROVIDED DEPENDENCIES -->
@@ -23,8 +22,8 @@
             <artifactId>android</artifactId>
         </dependency>
         <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
         </dependency>
         <!-- END - PROVIDED DEPENDENCIES -->
 
@@ -59,13 +58,99 @@
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>itinerennes</finalName>
         <sourceDirectory>${basedir}/src</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
+                <configuration>
+                    <assetsDirectory>${project.build.directory}/generated-resources/assets</assetsDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${basedir}/assets</directory>
+                        <targetPath>${project.build.directory}/generated-resources/assets</targetPath>
+                        <filtering>false</filtering>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>release</id>
+            <activation>
+                <property>
+                    <name>release</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${basedir}/assets</directory>
+                        <targetPath>${project.build.directory}/generated-resources/assets</targetPath>
+                        <filtering>false</filtering>
+                        <excludes>
+                            <exclude>itinerennes.properties</exclude>
+                            <exclude>slf4j.properties</exclude>
+                        </excludes>
+                    </resource>
+                    <resource>
+                        <directory>${basedir}/etc/conf/prod</directory>
+                        <targetPath>${project.build.directory}/generated-resources/assets</targetPath>
+                        <filtering>false</filtering>
+                        <includes>
+                            <include>itinerennes.properties</include>
+                            <include>slf4j.properties</include>
+                        </includes>
+                    </resource>
+                </resources>
+                <plugins>
+<!--                     <plugin> -->
+<!--                         <groupId>org.apache.maven.plugins</groupId> -->
+<!--                         <artifactId>maven-jarsigner-plugin</artifactId> -->
+<!--                         <executions> -->
+<!--                             <execution> -->
+<!--                                 <id>signing</id> -->
+<!--                                 <goals> -->
+<!--                                     <goal>sign</goal> -->
+<!--                                 </goals> -->
+<!--                                 <phase>package</phase> -->
+<!--                                 <inherited>true</inherited> -->
+<!--                                 <configuration> -->
+<!--                                     <includes> -->
+<!--                                         <include>target/*.apk</include> -->
+<!--                                     </includes> -->
+<!--                                     <keystore>${itinerennes.keystore.path}</keystore> -->
+<!--                                     <storepass>${itinerennes.keystore.storepass}</storepass> -->
+<!--                                     <keypass>${itinerennes.keystore.keypass}</keypass> -->
+<!--                                 </configuration> -->
+<!--                             </execution> -->
+<!--                         </executions> -->
+<!--                     </plugin> -->
+                    <plugin>
+                        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                        <artifactId>android-maven-plugin</artifactId>
+                        <configuration>
+                            <assetsDirectory>${project.build.directory}/generated-resources/assets</assetsDirectory>
+                            <sign>
+                                <debug>false</debug>
+                            </sign>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

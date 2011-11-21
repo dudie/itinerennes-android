@@ -8,8 +8,8 @@
     <version>0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>ItinéRennes Android - Parent</name>
-    <description>ItinéRennes Android parent pom</description>
+    <name>ItineRennes Android - Parent</name>
+    <description>ItineRennes Android parent pom</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -157,11 +157,22 @@
                             <platform>7</platform>
                         </sdk>
                         <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                        <manifestVersionCode></manifestVersionCode>
+                        <manifestVersionName>${project.version}</manifestVersionName>
                     </configuration>
                     <extensions>true</extensions>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jarsigner-plugin</artifactId>
+                    <version>1.2</version>
+                </plugin>
             </plugins>
-
         </pluginManagement>
     </build>
 

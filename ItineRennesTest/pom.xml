@@ -12,8 +12,8 @@
     <artifactId>itinerennes-android-app-test</artifactId>
     <packaging>apk</packaging>
 
-    <name>ItinéRennes Android Tests</name>
-    <description>ItinéRennes Android test application</description>
+    <name>ItineRennes Android Tests</name>
+    <description>ItineRennes Android test application</description>
 
 
     <dependencies>
