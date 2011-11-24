@@ -70,6 +70,19 @@
         </repository>
     </repositories>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>dudie-releases</id>
+            <url>https://repository-dudie.forge.cloudbees.com/private/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencyManagement>
         <dependencies>
             <!-- BEGIN - PROVIDED DEPENDENCIES -->
@@ -148,6 +161,11 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>fr.dudie</groupId>
+                    <artifactId>property-validation-maven-plugin</artifactId>
+                    <version>1.0</version>
+                </plugin>
                 <plugin>
                     <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                     <artifactId>android-maven-plugin</artifactId>

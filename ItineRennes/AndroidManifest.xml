@@ -1,125 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="fr.itinerennes"
-      android:versionCode="14"
-      android:versionName="@string/version_number">
-    <application android:icon="@drawable/ic_itinerennes" 
-            android:label="@string/app_name" 
-            android:description="@string/app_description" 
-            android:debuggable="true"
-            android:theme="@android:style/Theme.Light.NoTitleBar" android:name="ItineRennesApplication">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="14" android:versionName="0.5-SNAPSHOT" package="fr.itinerennes">
+    <application android:debuggable="false" android:description="@string/app_description" android:icon="@drawable/ic_itinerennes" android:label="@string/app_name" android:name="ItineRennesApplication" android:theme="@android:style/Theme.Light.NoTitleBar">
             
-        <activity android:name=".ui.activity.MapActivity"
-                  android:label="@string/app_name"
-                  android:launchMode="singleTop"
-                  android:configChanges="orientation" 
-                  android:theme="@android:style/Theme.Black.NoTitleBar">
+        <activity android:configChanges="orientation" android:label="@string/app_name" android:launchMode="singleTop" android:name=".ui.activity.MapActivity" android:theme="@android:style/Theme.Black.NoTitleBar">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"></action>
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="fr.itinerennes.ui.activity.MapActivity.SEARCH_SUGGESTION" />
+                <action android:name="fr.itinerennes.ui.activity.MapActivity.SEARCH_SUGGESTION"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH"></action>
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
         </activity>
         
-        <activity android:name=".ui.activity.BusStopActivity"
-                  android:configChanges="orientation" >
+        <activity android:configChanges="orientation" android:name=".ui.activity.BusStopActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
         
-        <activity android:name=".ui.activity.BusTripActivity"
-                  android:configChanges="orientation" >
+        <activity android:configChanges="orientation" android:name=".ui.activity.BusTripActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
         
-        <activity android:name=".ui.activity.BookmarksActivity"
-                  android:launchMode="singleTop"
-                  android:configChanges="orientation">
+        <activity android:configChanges="orientation" android:launchMode="singleTop" android:name=".ui.activity.BookmarksActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
         
-        <activity android:name=".ui.activity.LoadingActivity"
-                  android:launchMode="singleTop"
-                  android:configChanges="orientation" 
-                  android:theme="@android:style/Theme.Black.NoTitleBar">
+        <activity android:configChanges="orientation" android:launchMode="singleTop" android:name=".ui.activity.LoadingActivity" android:theme="@android:style/Theme.Black.NoTitleBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
-                <category android:name="android.intent.category.LAUNCHER"></category>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         
-        <activity android:name=".ui.activity.SearchResultsActivity"
-                  android:launchMode="singleTop"
-                  android:configChanges="orientation" 
-                  android:theme="@android:style/Theme.Light.NoTitleBar">
+        <activity android:configChanges="orientation" android:launchMode="singleTop" android:name=".ui.activity.SearchResultsActivity" android:theme="@android:style/Theme.Light.NoTitleBar">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
         </activity>
         
-        <activity android:name=".ui.activity.NewVersionActivity"
-        	android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name=".ui.activity.NewVersionActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         
-        <activity android:name=".ui.activity.NetworkAlertsActivity"
-                  android:launchMode="singleTop"
-                  android:configChanges="orientation">
+        <activity android:configChanges="orientation" android:launchMode="singleTop" android:name=".ui.activity.NetworkAlertsActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
         
-        <provider android:authorities="fr.itinerennes.provider.searchMarkersProvider" 
-            android:name=".provider.SearchMarkersProvider">
+        <provider android:authorities="fr.itinerennes.provider.searchMarkersProvider" android:name=".provider.SearchMarkersProvider">
         </provider>
     
-        <activity android:name=".ui.widget.BikeWidgetConfigurationWizardActivity"
-            android:theme="@android:style/Theme.Black">
+        <activity android:name=".ui.widget.BikeWidgetConfigurationWizardActivity" android:theme="@android:style/Theme.Black">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 
         <!-- Broadcast receiver for bike widget update -->
-        <receiver android:name=".ui.widget.BikeWidgetProvider" android:label="@string/bike_widget_label">
+        <receiver android:label="@string/bike_widget_label" android:name=".ui.widget.BikeWidgetProvider">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="fr.itinerennes.intent.BIKE_WIDGET_UPDATE" />
+                <action android:name="fr.itinerennes.intent.BIKE_WIDGET_UPDATE"/>
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider" android:resource="@xml/wgt_bike" />
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/wgt_bike"/>
         </receiver>
         
         <!-- Service to perform web API queries for bike widget -->
-        <service android:name=".ui.widget.BikeWidgetProvider$UpdateService" />
+        <service android:name=".ui.widget.BikeWidgetProvider$UpdateService"/>
 		
     </application>
 
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="14"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <supports-screens
-        android:smallScreens="true"
-        android:normalScreens="true"
-        android:largeScreens="true"
-        android:anyDensity="true" />
+    <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
 
-</manifest> 
+</manifest>

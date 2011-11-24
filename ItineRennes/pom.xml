@@ -140,14 +140,48 @@
 <!--                         </executions> -->
 <!--                     </plugin> -->
                     <plugin>
+                        <groupId>fr.dudie</groupId>
+                        <artifactId>property-validation-maven-plugin</artifactId>
+                        <configuration>
+                            <properties>
+                                <property>
+                                    <name>versionCode</name>
+                                    <regex>\d+</regex>
+                                </property>
+                            </properties>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>check-properties</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <phase>validate</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                         <artifactId>android-maven-plugin</artifactId>
                         <configuration>
-                            <assetsDirectory>${project.build.directory}/generated-resources/assets</assetsDirectory>
                             <sign>
-                                <debug>false</debug>
+                                <debug>true</debug>
                             </sign>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>update-android-manifest</id>
+                                <goals>
+                                    <goal>manifest-update</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <manifestDebuggable>false</manifestDebuggable>
+                                    <manifestVersionCode>${versionCode}</manifestVersionCode>
+                                    <manifestVersionName>${project.version}</manifestVersionName>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
