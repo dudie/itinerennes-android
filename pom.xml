@@ -12,6 +12,7 @@
     <description>ItineRennes Android parent pom</description>
 
     <properties>
+        <versionCode></versionCode>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
