@@ -203,8 +203,6 @@
                 <configuration>
                     <goals>clean fr.dudie:property-validation-maven-plugin:check com.jayway.maven.plugins.android.generation2:android-maven-plugin:manifest-update verify</goals>
                     <arguments>-DversionCode=${versionCode}</arguments>
-		    <manifestVersionCode>${versionCode}</manifestVersionCode>
-                    <manifestVersionName>${project.version}</manifestVersionName>
                 </configuration>
             </plugin>
         </plugins>
