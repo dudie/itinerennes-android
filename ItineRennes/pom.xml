@@ -75,7 +75,10 @@
         <profile>
             <id>dev</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>performRelease</name>
+                    <value>!true</value>
+                </property>
             </activation>
             <build>
                 <resources>
@@ -88,10 +91,10 @@
             </build>
         </profile>
         <profile>
-            <id>release</id>
+            <id>performRelease</id>
             <activation>
                 <property>
-                    <name>release</name>
+                    <name>performRelease</name>
                     <value>true</value>
                 </property>
             </activation>
@@ -150,15 +153,6 @@
                                 </property>
                             </properties>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>check-properties</id>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                                <phase>validate</phase>
-                            </execution>
-                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>com.jayway.maven.plugins.android.generation2</groupId>
@@ -167,21 +161,10 @@
                             <sign>
                                 <debug>true</debug>
                             </sign>
+                            <manifestDebuggable>false</manifestDebuggable>
+                            <manifestVersionCode>${versionCode}</manifestVersionCode>
+                            <manifestVersionName>${project.version}</manifestVersionName>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>update-android-manifest</id>
-                                <goals>
-                                    <goal>manifest-update</goal>
-                                </goals>
-                                <phase>generate-sources</phase>
-                                <configuration>
-                                    <manifestDebuggable>false</manifestDebuggable>
-                                    <manifestVersionCode>${versionCode}</manifestVersionCode>
-                                    <manifestVersionName>${project.version}</manifestVersionName>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>

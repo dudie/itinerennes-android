@@ -15,6 +15,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <scm>
+        <url>https://bugtracker.dudie.fr/itr-android/browse</url>
+	<connection>scm:svn:https://svn.itinerennes.fr/android/trunk</connection>
+        <developerConnection>scm:svn:https://svn.itinerennes.fr/android/trunk</developerConnection>
+    </scm>
+
     <repositories>
         <repository>
             <id>sonatype-nexus-staging</id>
@@ -175,8 +181,6 @@
                             <platform>7</platform>
                         </sdk>
                         <undeployBeforeDeploy>true</undeployBeforeDeploy>
-                        <manifestVersionCode></manifestVersionCode>
-                        <manifestVersionName>${project.version}</manifestVersionName>
                     </configuration>
                     <extensions>true</extensions>
                 </plugin>
@@ -192,6 +196,18 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <goals>clean fr.dudie:property-validation-maven-plugin:check com.jayway.maven.plugins.android.generation2:android-maven-plugin:manifest-update verify</goals>
+                    <arguments>-DversionCode=${versionCode}</arguments>
+		    <manifestVersionCode>${versionCode}</manifestVersionCode>
+                    <manifestVersionName>${project.version}</manifestVersionName>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <modules>
