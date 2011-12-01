@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>fr.itinerennes</groupId>
+        <artifactId>itinerennes-parent</artifactId>
+        <version>0.5-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>itinerennes-android</artifactId>
+    <packaging>apk</packaging>
+
+    <name>ItineRennes</name>
+    <description>ItineRennes android application</description>
+
+    <dependencies>
+        <!-- BEGIN - PROVIDED DEPENDENCIES -->
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+        <!-- END - PROVIDED DEPENDENCIES -->
+
+        <dependency>
+            <groupId>org.acra</groupId>
+            <artifactId>acra</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-itinerennes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osmdroid</groupId>
+            <artifactId>osmdroid-itinerennes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.itinerennes</groupId>
+            <artifactId>itinerennes-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.dudie</groupId>
+            <artifactId>rennes-data-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.dudie</groupId>
+            <artifactId>nominatim-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.dudie</groupId>
+            <artifactId>onebusaway-api</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>itinerennes</finalName>
+        <sourceDirectory>${basedir}/src</sourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <configuration>
+		            <!-- 
+                      default assets directory is set to "target/generated-resources/assets" to let maven profiles 
+                      overriding and filtering them
+                    -->
+                    <assetsDirectory>${project.build.directory}/generated-resources/assets</assetsDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <!-- DEVELOPMENT PROFILE -->
+            <id>dev</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>!true</value>
+                </property>
+            </activation>
+            <build>
+                <resources>
+                    <!-- development profile copies the "assets" folder content to "target/generated-resources/assets" -->
+                    <resource>
+                        <directory>${basedir}/assets</directory>
+                        <targetPath>${project.build.directory}/generated-resources/assets</targetPath>
+                        <filtering>false</filtering>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <!-- RELEASE PROFILE -->
+            <id>performRelease</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <!-- 
+                          release profile copies the "assets" folder content to "target/generated-resources/assets" 
+                          except some files... 
+                        -->
+                        <directory>${basedir}/assets</directory>
+                        <targetPath>${project.build.directory}/generated-resources/assets</targetPath>
+                        <filtering>false</filtering>
+                        <excludes>
+                            <exclude>itinerennes.properties</exclude>
+                            <exclude>slf4j.properties</exclude>
+                        </excludes>
+                    </resource>
+                    <resource>
+                        <!-- ... these files are copied from "etc/conf/prod" -->
+                        <directory>${basedir}/etc/conf/prod</directory>
+                        <targetPath>${project.build.directory}/generated-resources/assets</targetPath>
+                        <filtering>false</filtering>
+                        <includes>
+                            <include>itinerennes.properties</include>
+                            <include>slf4j.properties</include>
+                        </includes>
+                    </resource>
+                </resources>
+                <plugins>
+<!--                     <plugin> -->
+<!--                         <groupId>org.apache.maven.plugins</groupId> -->
+<!--                         <artifactId>maven-jarsigner-plugin</artifactId> -->
+<!--                         <executions> -->
+<!--                             <execution> -->
+<!--                                 <id>signing</id> -->
+<!--                                 <goals> -->
+<!--                                     <goal>sign</goal> -->
+<!--                                 </goals> -->
+<!--                                 <phase>package</phase> -->
+<!--                                 <inherited>true</inherited> -->
+<!--                                 <configuration> -->
+<!--                                     <includes> -->
+<!--                                         <include>target/*.apk</include> -->
+<!--                                     </includes> -->
+<!--                                     <keystore>${itinerennes.keystore.path}</keystore> -->
+<!--                                     <storepass>${itinerennes.keystore.storepass}</storepass> -->
+<!--                                     <keypass>${itinerennes.keystore.keypass}</keypass> -->
+<!--                                 </configuration> -->
+<!--                             </execution> -->
+<!--                         </executions> -->
+<!--                     </plugin> -->
+                    <plugin>
+                        <groupId>fr.dudie</groupId>
+                        <artifactId>property-validation-maven-plugin</artifactId>
+                        <configuration>
+                            <!-- ensure that the property "versionCode" is set and valid when releasing -->
+                            <properties>
+                                <property>
+                                    <name>versionCode</name>
+                                    <regex>\d+</regex>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                        <artifactId>android-maven-plugin</artifactId>
+                        <configuration>
+                            <sign>
+                                <debug>true</debug>
+                            </sign>
+                            <manifestDebuggable>false</manifestDebuggable>
+                            <manifestVersionCode>${versionCode}</manifestVersionCode>
+                            <manifestVersionName>${project.version}</manifestVersionName>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

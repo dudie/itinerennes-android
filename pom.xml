@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>fr.itinerennes</groupId>
+    <artifactId>itinerennes-parent</artifactId>
+    <version>0.5-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>ItineRennes parent</name>
+    <description>ItineRennes parent pom</description>
+
+    <properties>
+        <versionCode /><!-- Empty versionCode property to avoid recursivity issue if not set -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>ItineRennes</module>
+        <module>ItineRennesTest</module>
+    </modules>
+
+    <scm>
+        <url>https://bugtracker.dudie.fr/itr-android/browse</url>
+        <connection>scm:svn:https://svn.itinerennes.fr/android/trunk</connection>
+        <developerConnection>scm:svn:https://svn.itinerennes.fr/android/trunk</developerConnection>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>dudie-releases</id>
+            <name>Dudie releases by Cloudbees</name>
+            <url>https://repository-dudie.forge.cloudbees.com/private/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>dudie-snapshots</id>
+            <name>Dudie snapshots by Cloudbees</name>
+            <url>https://repository-dudie.forge.cloudbees.com/private/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <!-- Sonatype repositories to access fr.dudie snapshots and releases -->
+        <repository>
+            <id>sonatype-nexus-releases</id>
+            <name>Sonatype Nexus Releases</name>
+            <url>https://oss.sonatype.org/content/repositories/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+	
+        <!-- ACRA artifact releases repository hosted on project's GoogleCode -->
+        <repository>
+            <id>acra-releases</id>
+            <name>ACRA releases by GoogleCode</name>
+            <url>http://acra.googlecode.com/svn/repository/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+	
+        <!-- Dudie private repositories hosted by Cloudbees -->
+        <repository>
+            <id>dudie-releases</id>
+            <name>Dudie releases by Cloudbees</name>
+            <url>https://repository-dudie.forge.cloudbees.com/private/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>dudie-snapshots</id>
+            <name>Dudie snapshots by Cloudbees</name>
+            <url>https://repository-dudie.forge.cloudbees.com/private/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <!-- Dudie private repository hosts one custom plugin used at release time -->
+            <id>dudie-releases</id>
+            <name>Dudie releases by Cloudbees</name>
+            <url>https://repository-dudie.forge.cloudbees.com/private/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- BEGIN - PROVIDED DEPENDENCIES -->
+            <dependency>
+                <groupId>com.google.android</groupId>
+                <artifactId>android</artifactId>
+                <version>2.3.3</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.android</groupId>
+                <artifactId>android-test</artifactId>
+                <version>2.3.3</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.1.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- END - PROVIDED DEPENDENCIES -->
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>itinerennes-android-app</artifactId>
+                <version>${project.version}</version>
+                <type>apk</type>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>itinerennes-android-app</artifactId>
+                <version>${project.version}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.acra</groupId>
+                <artifactId>acra</artifactId>
+                <version>4.2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-itinerennes</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.osmdroid</groupId>
+                <artifactId>osmdroid-itinerennes</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.itinerennes</groupId>
+                <artifactId>itinerennes-commons</artifactId>
+                <version>0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.dudie</groupId>
+                <artifactId>rennes-data-api</artifactId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.dudie</groupId>
+                <artifactId>nominatim-api</artifactId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>fr.dudie</groupId>
+                <artifactId>onebusaway-api</artifactId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <!-- Run the "property-validation" custom plugin, update the android manifest before packaging and deployment -->
+                    <goals>fr.dudie:property-validation-maven-plugin:check com.jayway.maven.plugins.android.generation2:android-maven-plugin:manifest-update deploy</goals>
+                    <!-- Forward the "versionCode" property value to the maven instance building the release -->
+                    <arguments>-DversionCode=${versionCode}</arguments>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>fr.dudie</groupId>
+                    <artifactId>property-validation-maven-plugin</artifactId>
+                    <version>1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                    <artifactId>android-maven-plugin</artifactId>
+                    <version>3.0.0-alpha-13</version>
+                    <configuration>
+                        <sdk>
+                            <platform>7</platform>
+                        </sdk>
+                        <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                    </configuration>
+                    <extensions>true</extensions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jarsigner-plugin</artifactId>
+                    <version>1.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.8</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <!-- Activate this profiles to test artifacts staging for release -->
+            <id>staging</id>
+            <repositories>
+                <repository>
+                    <id>sonatype-nexus-staging</id>
+                    <name>Sonatype Nexus Staging</name>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+
+</project>
