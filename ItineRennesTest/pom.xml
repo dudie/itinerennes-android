@@ -5,16 +5,15 @@
 
     <parent>
         <groupId>fr.itinerennes</groupId>
-        <artifactId>itinerennes-android-parent</artifactId>
+        <artifactId>itinerennes-parent</artifactId>
         <version>0.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>itinerennes-android-app-test</artifactId>
+    <artifactId>itinerennes-android-tests</artifactId>
     <packaging>apk</packaging>
 
-    <name>ItineRennes Android Tests</name>
-    <description>ItineRennes Android test application</description>
-
+    <name>Instrumentation tests</name>
+    <description>ItineRennes android test application</description>
 
     <dependencies>
         <!-- BEGIN - PROVIDED DEPENDENCIES -->
@@ -41,7 +40,7 @@
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.acra</groupId>
             <artifactId>acra</artifactId>
