@@ -17,6 +17,7 @@
     </properties>
 
     <modules>
+        <module>commons</module>
         <module>ItineRennes</module>
         <module>ItineRennesTest</module>
     </modules>
@@ -143,6 +144,11 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>itinerennes-commons</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>itinerennes-android</artifactId>
                 <version>${project.version}</version>
                 <type>apk</type>
@@ -171,11 +177,6 @@
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>fr.itinerennes</groupId>
-                <artifactId>itinerennes-commons</artifactId>
-                <version>0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
                 <groupId>fr.dudie</groupId>
                 <artifactId>rennes-data-api</artifactId>
                 <version>1.1-SNAPSHOT</version>
@@ -201,7 +202,9 @@
                 <version>2.2.1</version>
                 <configuration>
                     <!-- Run the "property-validation" custom plugin, update the android manifest before packaging and deployment -->
-                    <goals>fr.dudie:property-validation-maven-plugin:check com.jayway.maven.plugins.android.generation2:android-maven-plugin:manifest-update deploy</goals>
+                    <goals>fr.dudie:property-validation-maven-plugin:check
+                        com.jayway.maven.plugins.android.generation2:android-maven-plugin:manifest-update
+                        deploy</goals>
                     <!-- Forward the "versionCode" property value to the maven instance building the release -->
                     <arguments>-DversionCode=${versionCode}</arguments>
                     <autoVersionSubmodules>true</autoVersionSubmodules>

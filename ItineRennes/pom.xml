@@ -28,6 +28,11 @@
         <!-- END - PROVIDED DEPENDENCIES -->
 
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>itinerennes-commons</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.acra</groupId>
             <artifactId>acra</artifactId>
         </dependency>
@@ -38,10 +43,6 @@
         <dependency>
             <groupId>org.osmdroid</groupId>
             <artifactId>osmdroid-itinerennes</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>fr.itinerennes</groupId>
-            <artifactId>itinerennes-commons</artifactId>
         </dependency>
         <dependency>
             <groupId>fr.dudie</groupId>
