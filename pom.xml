@@ -143,13 +143,13 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>itinerennes-android-app</artifactId>
+                <artifactId>itinerennes-android</artifactId>
                 <version>${project.version}</version>
                 <type>apk</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>itinerennes-android-app</artifactId>
+                <artifactId>itinerennes-android</artifactId>
                 <version>${project.version}</version>
                 <type>jar</type>
                 <scope>provided</scope>

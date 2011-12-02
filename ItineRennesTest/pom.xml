@@ -30,13 +30,13 @@
         <dependency>
             <!-- The tested APK, will be deployed before running instrumentation tests -->
             <groupId>${project.groupId}</groupId>
-            <artifactId>itinerennes-android-app</artifactId>
+            <artifactId>itinerennes-android</artifactId>
             <type>apk</type>
         </dependency>
         <dependency>
             <!-- The source classes so they can be accessed at compile time -->
             <groupId>${project.groupId}</groupId>
-            <artifactId>itinerennes-android-app</artifactId>
+            <artifactId>itinerennes-android</artifactId>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
