@@ -18,8 +18,8 @@
 
     <modules>
         <module>commons</module>
-        <module>ItineRennes</module>
-        <module>ItineRennesTest</module>
+        <module>itinerennes</module>
+        <module>itinerennes-android-tests</module>
     </modules>
 
     <scm>
