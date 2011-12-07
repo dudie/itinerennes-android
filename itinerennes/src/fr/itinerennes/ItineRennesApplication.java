@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.app.Application;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import fr.dudie.keolis.client.JsonKeolisClient;
@@ -34,6 +35,7 @@ import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
 import fr.itinerennes.exceptions.ExceptionHandler;
+import fr.itinerennes.startup.LoadingActivity;
 
 /**
  * @author Jérémie Huchet
@@ -91,6 +93,10 @@ public class ItineRennesApplication extends Application {
             // The following line triggers the initialization of ACRA
             ACRA.init(this);
         }
+
+        final Intent i = new Intent(this, LoadingActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
 
         super.onCreate();
     }

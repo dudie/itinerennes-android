@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.activity;
+package fr.itinerennes.startup;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +26,8 @@ import fr.itinerennes.R;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.model.VersionCheck;
+import fr.itinerennes.ui.activity.ItineRennesActivity;
+import fr.itinerennes.ui.activity.NewVersionActivity;
 import fr.itinerennes.utils.VersionUtils;
 import fr.itinerennes.utils.xml.XmlVersionParser;
 
@@ -75,8 +77,6 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
                 break;
             case MSG_PRELOAD_SUCCESS:
                 checkVersion();
-                final Intent i = new Intent(getBaseContext(), MapActivity.class);
-                startActivity(i);
                 finish();
                 break;
             case MSG_PRELOAD_FAILED:
