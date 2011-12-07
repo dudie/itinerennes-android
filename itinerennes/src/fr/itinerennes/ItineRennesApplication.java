@@ -85,10 +85,13 @@ public class ItineRennesApplication extends Application {
     @Override
     public final void onCreate() {
 
-        if (DebugConstants.ENABLE_ACRA_BUG_REPORTS) {
+        Conf.info();
+
+        if (Conf.ACRA_ENABLED) {
             // The following line triggers the initialization of ACRA
             ACRA.init(this);
         }
+
         super.onCreate();
     }
 
