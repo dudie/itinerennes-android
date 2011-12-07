@@ -11,7 +11,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.exceptions.ItineRennesRuntimeException;
 import fr.itinerennes.utils.FileUtils;
 
 /**
@@ -109,7 +108,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     .format("Failed to read packaged database script: an error occured while accessing asset %s",
                             filename);
             LOGGER.error(msg);
-            throw new ItineRennesRuntimeException(msg, e);
+            throw new IllegalStateException(msg, e);
         }
     }
 
