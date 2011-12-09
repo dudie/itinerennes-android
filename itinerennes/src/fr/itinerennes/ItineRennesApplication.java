@@ -95,7 +95,7 @@ public class ItineRennesApplication extends Application {
         }
 
         final Intent i = new Intent(this, LoadingActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         startActivity(i);
 
         super.onCreate();
