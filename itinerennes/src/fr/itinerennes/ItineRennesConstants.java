@@ -66,7 +66,7 @@ public final class ItineRennesConstants {
      * Database constants.
      */
     /** The database schema version. */
-    public static final int DATABASE_VERSION = 27;
+    public static final int DATABASE_VERSION = 28;
 
     /** Duration of toast messages. */
     public static final int TOAST_DURATION = 5000;
