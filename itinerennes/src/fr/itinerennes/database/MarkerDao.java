@@ -92,13 +92,15 @@ public class MarkerDao implements MarkersColumns {
         selection.append(String.format("%s >= ? AND %s <= ? AND %s >= ? AND %s <= ?", LONGITUDE,
                 LONGITUDE, LATITUDE, LATITUDE));
 
-        selection.append(" AND ( ");
-        // filter on visible types
-        for (int i = 0; i < types.size(); i++) {
-            selection.append(String.format(" %s m.%s = '%s'", (i > 0) ? "OR" : "", TYPE,
-                    types.get(i)));
+        if (types.size() > 0) {
+            selection.append(" AND ( ");
+            // filter on visible types
+            for (int i = 0; i < types.size(); i++) {
+                selection.append(String.format(" %s m.%s = '%s'", (i > 0) ? "OR" : "", TYPE,
+                        types.get(i)));
+            }
+            selection.append(")");
         }
-        selection.append(")");
 
         final String[] selectionArgs = new String[] { String.valueOf(bbox.getLonWestE6()),
                 String.valueOf(bbox.getLonEastE6()), String.valueOf(bbox.getLatSouthE6()),
