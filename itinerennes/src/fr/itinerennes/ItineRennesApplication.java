@@ -225,6 +225,7 @@ public class ItineRennesApplication extends Application {
         if (httpClient == null) {
             final SchemeRegistry registry = new SchemeRegistry();
             registry.register(new Scheme("http", new PlainSocketFactory(), 80));
+            registry.register(new Scheme("https", new PlainSocketFactory(), 443));
 
             final HttpParams cxParams = new BasicHttpParams();
             ConnManagerParams.setMaxTotalConnections(cxParams, 5);
