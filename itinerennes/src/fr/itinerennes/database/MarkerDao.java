@@ -1,6 +1,8 @@
 package fr.itinerennes.database;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
@@ -145,6 +147,84 @@ public class MarkerDao implements MarkersColumns {
     }
 
     /**
+     * Fetch a list of marker of a given type from the database based. If a labelFilter is given,
+     * markers will be filtered based on the marker label. If selectedIds is not empty, those
+     * markers will be included in results even if the label does not match the filter.
+     * 
+     * @param type
+     *            type of markers to retrieve
+     * @param labelFilter
+     *            an optional label filter
+     * @param selectedIds
+     *            ids to include in results even if the label does not match the filter
+     * @return a cursor with all markers of this type and matching the filter
+     */
+    public final Cursor getMarkers(final String type, final String labelFilter,
+            final Set<String> selectedIds) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getMarkers.start - type={}, labelFilter={}", type, labelFilter);
+        }
+
+        StringBuffer sb = new StringBuffer();
+
+        sb.append(String.format("SELECT 0, %s, %s, %s ", _ID, ID, LABEL));
+        sb.append(String.format("FROM %s ", MARKERS_TABLE_NAME));
+
+        final ArrayList<String> selectionArgsList = new ArrayList<String>();
+
+        if (labelFilter != null && !labelFilter.equals("")) {
+            // if labelFilter is not empty, filtering markers on the type and the label
+            sb.append(String.format("WHERE %s = ? AND (%s LIKE ? OR %s LIKE ?)",
+                    MarkersColumns.TYPE, MarkersColumns.LABEL, MarkersColumns.SEARCH_LABEL));
+
+            selectionArgsList.add(type);
+            selectionArgsList.add("%" + labelFilter + "%");
+            selectionArgsList.add("%" + SearchUtils.canonicalize(labelFilter) + "%");
+
+        } else {
+            // else, filtering markers on the type only
+            sb.append(String.format("WHERE %s = ?", MarkersColumns.TYPE));
+            selectionArgsList.add(type);
+        }
+
+        if (selectedIds != null && selectedIds.size() > 0) {
+            // if some markers id are given, build an union query to retrieve also those markers
+            sb.append(" UNION");
+            sb.append(String.format(" SELECT 1, %s, %s, %s", _ID, ID, LABEL));
+            sb.append(String.format(" FROM %s", MARKERS_TABLE_NAME));
+            sb.append(String.format(" WHERE %s = ? AND %s IN (", MarkersColumns.TYPE,
+                    MarkersColumns.ID));
+
+            boolean first = true;
+            for (String id : selectedIds) {
+                if (!first) {
+                    sb.append(",");
+
+                }
+                sb.append(id);
+                first = false;
+            }
+
+            sb.append(")");
+
+            selectionArgsList.add(type);
+        }
+
+        // ordering first on boolean "selected", and after on labels
+        sb.append(String.format(" ORDER BY 1, %s ASC", MarkersColumns.LABEL));
+
+        final Cursor c = dbHelper.getReadableDatabase().rawQuery(sb.toString(),
+                (String[]) selectionArgsList.toArray(new String[selectionArgsList.size()]));
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("query = {}", sb.toString());
+            LOGGER.debug("getMarkers.end - count={}", (c != null) ? c.getCount() : 0);
+        }
+        return c;
+    }
+
+    /**
      * Fetch a single MarkerOverlayItem from the database based on a stop id and his type.
      * 
      * @param id
@@ -204,46 +284,6 @@ public class MarkerDao implements MarkersColumns {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getMarkersWithSameLabel.end - count={}", (c != null) ? c.getCount() : 0);
-        }
-        return c;
-    }
-
-    /**
-     * Fetch a list of marker of a given type from the database based. If a labelFilter is given,
-     * markers will be filtered based on the marker label.
-     * 
-     * @param type
-     *            type of markers to retrieve
-     * @param labelFilter
-     *            an optional label filter
-     * @return a cursor with all markers of this type and matching the filter
-     */
-    public final Cursor getMarkers(final String type, final String labelFilter) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getMarkers.start - type={}, labelFilter={}", type, labelFilter);
-        }
-
-        final String[] columns = new String[] { String.format("m.%s", _ID),
-                String.format("m.%s", ID), String.format("m.%s", LABEL) };
-
-        final String selection;
-        final String[] selectionArgs;
-
-        if (labelFilter != null && !labelFilter.equals("")) {
-            selection = String.format("m.%s = ? AND (m.%s LIKE ? OR m.%s LIKE ?)",
-                    MarkersColumns.TYPE, MarkersColumns.LABEL, MarkersColumns.SEARCH_LABEL);
-            selectionArgs = new String[] { type, "%" + labelFilter + "%",
-                    "%" + SearchUtils.canonicalize(labelFilter) + "%" };
-        } else {
-            selection = String.format("m.%s = ?", MarkersColumns.TYPE);
-            selectionArgs = new String[] { type };
-        }
-
-        final Cursor c = query(selection, selectionArgs, columns);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("getMarkers.end - count={}", (c != null) ? c.getCount() : 0);
         }
         return c;
     }

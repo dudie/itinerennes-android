@@ -118,7 +118,7 @@ public final class BikeWidgetConfigurationWizardActivity extends WizardActivity 
             listview.setTextFilterEnabled(true);
 
             adapter = new BikeStopListAdapter(getBaseContext(), getApplicationContext()
-                    .getMarkerDao().getMarkers(TypeConstants.TYPE_BIKE, null));
+                    .getMarkerDao().getMarkers(TypeConstants.TYPE_BIKE, null, null));
 
             adapter.setFilterQueryProvider(new FilterQueryProvider() {
 
@@ -126,7 +126,7 @@ public final class BikeWidgetConfigurationWizardActivity extends WizardActivity 
                 public Cursor runQuery(final CharSequence filter) {
 
                     final Cursor c = getApplicationContext().getMarkerDao().getMarkers(
-                            TypeConstants.TYPE_BIKE, filter.toString());
+                            TypeConstants.TYPE_BIKE, filter.toString(), adapter.getSelectedIds());
                     return c;
                 }
 
