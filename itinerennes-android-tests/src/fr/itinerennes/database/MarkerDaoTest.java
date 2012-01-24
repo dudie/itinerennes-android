@@ -125,7 +125,7 @@ public class MarkerDaoTest extends AndroidTestCase {
         values.put("", 83);
 
         for (final String value : values.keySet()) {
-            final Cursor c = markerDao.getMarkers(TypeConstants.TYPE_BIKE, value);
+            final Cursor c = markerDao.getMarkers(TypeConstants.TYPE_BIKE, value, null);
             assertNotNull("Cursor is null.", c);
             assertEquals(String.format("bad number of fetched results for filter %s.", value),
                     (int) values.get(value), c.getCount());
