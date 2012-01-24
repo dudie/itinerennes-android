@@ -168,7 +168,7 @@ public class MarkerDao implements MarkersColumns {
 
         StringBuffer sb = new StringBuffer();
 
-        sb.append(String.format("SELECT 0, %s, %s, %s ", _ID, ID, LABEL));
+        sb.append(String.format("SELECT %s, %s, %s ", _ID, ID, LABEL));
         sb.append(String.format("FROM %s ", MARKERS_TABLE_NAME));
 
         final ArrayList<String> selectionArgsList = new ArrayList<String>();
@@ -191,7 +191,7 @@ public class MarkerDao implements MarkersColumns {
         if (selectedIds != null && selectedIds.size() > 0) {
             // if some markers id are given, build an union query to retrieve also those markers
             sb.append(" UNION");
-            sb.append(String.format(" SELECT 1, %s, %s, %s", _ID, ID, LABEL));
+            sb.append(String.format(" SELECT  %s, %s, %s", _ID, ID, LABEL));
             sb.append(String.format(" FROM %s", MARKERS_TABLE_NAME));
             sb.append(String.format(" WHERE %s = ? AND %s IN (", MarkersColumns.TYPE,
                     MarkersColumns.ID));
@@ -212,7 +212,7 @@ public class MarkerDao implements MarkersColumns {
         }
 
         // ordering first on boolean "selected", and after on labels
-        sb.append(String.format(" ORDER BY 1, %s ASC", MarkersColumns.LABEL));
+        sb.append(String.format(" ORDER BY %s ASC", MarkersColumns.LABEL));
 
         final Cursor c = dbHelper.getReadableDatabase().rawQuery(sb.toString(),
                 (String[]) selectionArgsList.toArray(new String[selectionArgsList.size()]));
