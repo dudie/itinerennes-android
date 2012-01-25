@@ -14,7 +14,8 @@
     <EditText android:id="@+act_widget_bike/filter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/filter_the_list"/>
+        android:hint="@string/filter_the_list"
+        android:singleLine="true"/>
      
     <ListView
         android:id="@+act_widget_bike/list"
