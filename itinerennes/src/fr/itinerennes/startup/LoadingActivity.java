@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
@@ -117,6 +118,23 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see android.app.Activity#onBackPressed()
+     */
+    @Override
+    public final void onBackPressed() {
+
+        final Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(intent);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Back button pressed. Displaying home screen.");
         }
     }
 
