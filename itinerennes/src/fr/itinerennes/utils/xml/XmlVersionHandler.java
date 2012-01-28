@@ -13,9 +13,6 @@ import fr.itinerennes.model.VersionCheck;
  */
 public class XmlVersionHandler extends DefaultHandler {
 
-    /** The XML namespace of the schema. */
-    private static final String NAMESPACE_URI = "http://www.itinerennes.fr/api/v2/android";
-
     /** Name of the latest tag. */
     private static final String LATEST = "latest";
 
@@ -77,8 +74,7 @@ public class XmlVersionHandler extends DefaultHandler {
 
         if (ITINERENNES.equals(localName)) {
             isItinerennesElementActive = true;
-        } else if (VERSION.equals(localName) && NAMESPACE_URI.equals(uri)
-                && isItinerennesElementActive) {
+        } else if (VERSION.equals(localName) && isItinerennesElementActive) {
             isVersionElementActive = true;
         }
     }
@@ -110,12 +106,12 @@ public class XmlVersionHandler extends DefaultHandler {
 
         if (ITINERENNES.equals(localName)) {
             isItinerennesElementActive = false;
-        } else if (NAMESPACE_URI.equals(uri) && isItinerennesElementActive) {
+        } else if (isItinerennesElementActive) {
             if (VERSION.equals(localName)) {
                 isVersionElementActive = false;
-            } else if (localName.equalsIgnoreCase(LATEST) && isVersionElementActive) {
+            } else if (LATEST.equalsIgnoreCase(localName) && isVersionElementActive) {
                 versionCheck.setLatest(builder.toString());
-            } else if (localName.equalsIgnoreCase(MIN_REQUIRED) && isVersionElementActive) {
+            } else if (MIN_REQUIRED.equalsIgnoreCase(localName) && isVersionElementActive) {
                 versionCheck.setMinRequired(builder.toString());
             }
         }
