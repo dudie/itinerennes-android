@@ -19,6 +19,7 @@
     <modules>
         <module>commons</module>
         <module>itinerennes</module>
+        <module>itinerennes-tests</module>
         <module>itinerennes-android-tests</module>
     </modules>
 

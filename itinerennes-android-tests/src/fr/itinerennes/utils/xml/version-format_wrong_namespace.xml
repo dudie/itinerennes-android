@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<itinerennes xmlns:itr="http://www.itinerennes.fr/api/v2/android">
-    <version>
-        <itr:latest>0.8.2</itr:latest>
-        <min_required>0.6</min_required>
-    </version>
-</itinerennes>
