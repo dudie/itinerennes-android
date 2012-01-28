@@ -8,9 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.database.Cursor;
+import android.os.Handler;
 import android.test.AndroidTestCase;
 
+import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.startup.EmptyDatabaseListener;
 
 /**
  * Test class for {@link MarkerDao}.
@@ -34,6 +37,13 @@ public class MarkerDaoTest extends AndroidTestCase {
     protected final void setUp() throws Exception {
 
         super.setUp();
+        // load data if necessary
+        final EmptyDatabaseListener loader = new EmptyDatabaseListener(
+                (ItineRennesApplication) getContext().getApplicationContext(), new Handler());
+        if (loader.isExecutionNeeded()) {
+            loader.execute();
+        }
+
         markerDao = new MarkerDao(getContext(), new DatabaseHelper(getContext()));
     }
 
