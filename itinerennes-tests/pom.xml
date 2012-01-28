@@ -33,10 +33,11 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>itinerennes</artifactId>
-            <version>${project.version}</version>
+            <artifactId>itinerennes-android</artifactId>
+            <type>jar</type>
             <exclusions>
                 <exclusion>
+                    <!-- slf4j-itinerennes conflicts with slf4j-log4j12 at runtime -->
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-itinerennes</artifactId>
                 </exclusion>
