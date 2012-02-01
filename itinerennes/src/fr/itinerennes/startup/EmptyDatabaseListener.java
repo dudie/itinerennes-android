@@ -4,25 +4,26 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.acra.ErrorReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.database.DatabaseUtils.InsertHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
-import android.os.Handler;
 
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
+import fr.itinerennes.startup.LoadingActivity.ProgressObserver;
 
 /**
  * Listener which checks if markers table is empty, and fill it if necessary.
  * 
  * @author Olivier Boudet
  */
-public class EmptyDatabaseListener implements IStartupListener, MarkersColumns,
+public final class EmptyDatabaseListener extends AbstractStartupListener implements MarkersColumns,
         AccessibilityColumns {
 
     /** The event logger. */
@@ -31,9 +32,6 @@ public class EmptyDatabaseListener implements IStartupListener, MarkersColumns,
     /** The context. */
     private final ItineRennesApplication context;
 
-    /** Handler to notify progress. */
-    private final Handler handler;
-
     /** Database instance. */
     private final SQLiteDatabase db;
 
@@ -41,25 +39,66 @@ public class EmptyDatabaseListener implements IStartupListener, MarkersColumns,
      * Constructor.
      * 
      * @param context
-     *            the application context.
-     * @param progressHandler
-     *            handler to use for progress messages
+     *            the application context
+     * @param listener
+     *            the observer to notify about progression
      */
-    public EmptyDatabaseListener(final ItineRennesApplication context, final Handler progressHandler) {
+    public EmptyDatabaseListener(final ItineRennesApplication context,
+            final ProgressObserver listener) {
 
-        this.handler = progressHandler;
+        super(listener);
         this.context = context;
         this.db = context.getDatabaseHelper().getWritableDatabase();
+    }
+
+    /**
+     * Reads the first line of the markers.csv file to determine the total number of markers to
+     * insert.
+     * 
+     * @return the total amount of markers to insert
+     */
+    @Override
+    public int progressCount() {
+
+        final BufferedReader readerMarkers = new BufferedReader(new InputStreamReader(context
+                .getResources().openRawResource(R.raw.markers)));
+        int count = 0;
+        try {
+            count = Integer.parseInt(readerMarkers.readLine());
+        } catch (final NumberFormatException e) {
+            LOGGER.error("unable to parse the markers's file first line", e);
+        } catch (final IOException e) {
+            LOGGER.error("unable to read markers's file first line", e);
+        } finally {
+            try {
+                readerMarkers.close();
+            } catch (final IOException e) {
+                LOGGER.error("unable to close stream propertly", e);
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Checks if marker/stations is required then loads them into the database if necessary.
+     */
+    @Override
+    public void execute() {
+
+        if (isExecutionNeeded()) {
+            LOGGER.info("Inserting stations...");
+            doInsertMarkers();
+        } else if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Markers seems to be already inserted");
+        }
     }
 
     /**
      * Returns true if {@link MarkersColumns#MARKERS_TABLE_NAME} is empty.
      * 
      * @return true if {@link MarkersColumns#MARKERS_TABLE_NAME} is empty
-     * @see fr.itinerennes.startup.IStartupListener#isExecutionNeeded()
      */
-    @Override
-    public final boolean isExecutionNeeded() {
+    private boolean isExecutionNeeded() {
 
         final SQLiteStatement statement = db.compileStatement(String.format(
                 "SELECT count(%s) FROM %s", MarkersColumns.ID, MARKERS_TABLE_NAME));
@@ -68,207 +107,153 @@ public class EmptyDatabaseListener implements IStartupListener, MarkersColumns,
 
         if (markersCount <= 0) {
             return true;
+        } else {
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Database is not empty.");
+            }
+
+            return false;
         }
+    }
+
+    /**
+     * Loads markers/stations into the database.
+     */
+    public void doInsertMarkers() {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Database is not empty.");
+            LOGGER.debug("doInsertMarkers.start");
         }
 
-        return false;
-    }
+        // file reader for markers
+        final BufferedReader readerMarkers = new BufferedReader(new InputStreamReader(context
+                .getResources().openRawResource(R.raw.markers)));
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.startup.IStartupListener#execute()
-     */
-    @Override
-    public final void execute() {
+        // file reader for accessibility informations
+        final BufferedReader readerAccessibility = new BufferedReader(new InputStreamReader(context
+                .getResources().openRawResource(R.raw.accessibility)));
 
-        new DataPreloader().start();
+        LOGGER.debug("Inserting markers in database...");
+        final long debut = System.currentTimeMillis();
 
-    }
+        try {
 
-    /**
-     * Thread intended to preload the data.
-     * 
-     * @author Jérémie Huchet
-     * @author Olivier Boudet
-     */
-    private class DataPreloader extends Thread {
+            // skip header line with total line number
+            readerMarkers.readLine();
+            readerAccessibility.readLine();
 
-        /**
-         * Create the data preloader.
-         */
-        public DataPreloader() {
+            insertMarkers(readerMarkers);
+            insertAccessibility(readerAccessibility);
 
-        }
-
-        /**
-         * Preloads the data and notifies the handler of the progression.
-         * 
-         * @see java.lang.Thread#run()
-         */
-        @Override
-        public void run() {
-
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("run.start");
+            if (db.inTransaction()) {
+                db.setTransactionSuccessful();
             }
-
-            // file reader for markers
-            final BufferedReader readerMarkers = new BufferedReader(new InputStreamReader(context
-                    .getResources().openRawResource(R.raw.markers)));
-
-            // file reader for accessibility informations
-            final BufferedReader readerAccessibility = new BufferedReader(new InputStreamReader(
-                    context.getResources().openRawResource(R.raw.accessibility)));
-
-            LOGGER.debug("Inserting markers in database...");
-            final long debut = System.currentTimeMillis();
-
+        } catch (final IOException e) {
+            ErrorReporter.getInstance().handleSilentException(e);
+        } finally {
             try {
-
-                String line = readerMarkers.readLine();
-                int count = Integer.parseInt(line);
-
-                line = readerAccessibility.readLine();
-                count += Integer.parseInt(line);
-
-                handler.sendMessage(handler.obtainMessage(
-                        LoadingActivity.MSG_PROGRESS_INCREASE_MAX, count));
-
-                insertMarkers(readerMarkers);
-                insertAccessibility(readerAccessibility);
-
-                if (db.inTransaction()) {
-                    db.setTransactionSuccessful();
-                }
+                readerAccessibility.close();
+                readerMarkers.close();
             } catch (final IOException e) {
-                context.getExceptionHandler().handleException(e);
-                handler.sendMessage(handler.obtainMessage(LoadingActivity.MSG_PROGRESS_FAILED,
-                        EmptyDatabaseListener.this));
-            } finally {
-                try {
-                    readerAccessibility.close();
-                    readerMarkers.close();
-                } catch (final IOException e) {
-                    LOGGER.debug("Can't close buffered readers !", e);
-                }
-
-                if (db.inTransaction()) {
-                    db.endTransaction();
-                }
+                LOGGER.debug("Can't close buffered readers !", e);
             }
 
-            final long fin = System.currentTimeMillis();
-            LOGGER.debug(String.format("Markers inserted... Took %s ms", (fin - debut)));
-
-            handler.sendMessage(handler.obtainMessage(LoadingActivity.MSG_PROGRESS_FINISH,
-                    EmptyDatabaseListener.this));
-
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("run.end");
+            if (db.inTransaction()) {
+                db.endTransaction();
             }
         }
 
-        /**
-         * Insert accessibility informations from a buffered reader into a database.
-         * 
-         * @param readerAccessibility
-         *            buffered reader on accessibility csv file
-         * @throws IOException
-         *             if the accessibility file can not be read
-         */
-        private void insertAccessibility(final BufferedReader readerAccessibility)
-                throws IOException {
+        final long fin = System.currentTimeMillis();
+        LOGGER.debug(String.format("Markers inserted... Took %s ms", (fin - debut)));
 
-            // insert helper for accessibility informations
-            final InsertHelper insertAccessibilityHelper = new InsertHelper(db,
-                    ACCESSIBILITY_TABLE_NAME);
-            final int idAccessibilityColumn = insertAccessibilityHelper
-                    .getColumnIndex(AccessibilityColumns.ID);
-            final int typeAccessibilityColumn = insertAccessibilityHelper
-                    .getColumnIndex(AccessibilityColumns.TYPE);
-            final int wheelchairAccessibilityColumn = insertAccessibilityHelper
-                    .getColumnIndex(AccessibilityColumns.WHEELCHAIR);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("doInsertMarkers.end");
+        }
+    }
 
-            // walking through accessibility file
-            String line = null;
-            while ((line = readerAccessibility.readLine()) != null) {
-                final String[] fields = line.split(";");
+    /**
+     * Insert accessibility informations from a buffered reader into a database.
+     * 
+     * @param readerAccessibility
+     *            buffered reader on accessibility csv file
+     * @throws IOException
+     *             if the accessibility file can not be read
+     */
+    private void insertAccessibility(final BufferedReader readerAccessibility) throws IOException {
 
-                insertAccessibilityHelper.prepareForInsert();
+        // insert helper for accessibility informations
+        final InsertHelper insertAccessibilityHelper = new InsertHelper(db,
+                ACCESSIBILITY_TABLE_NAME);
+        final int idAccessibilityColumn = insertAccessibilityHelper
+                .getColumnIndex(AccessibilityColumns.ID);
+        final int typeAccessibilityColumn = insertAccessibilityHelper
+                .getColumnIndex(AccessibilityColumns.TYPE);
+        final int wheelchairAccessibilityColumn = insertAccessibilityHelper
+                .getColumnIndex(AccessibilityColumns.WHEELCHAIR);
 
-                insertAccessibilityHelper.bind(idAccessibilityColumn, fields[0]);
-                insertAccessibilityHelper.bind(typeAccessibilityColumn, fields[1]);
-                insertAccessibilityHelper.bind(wheelchairAccessibilityColumn, 1);
+        // walking through accessibility file
+        String line = null;
+        while ((line = readerAccessibility.readLine()) != null) {
+            final String[] fields = line.split(";");
 
-                insertAccessibilityHelper.execute();
-                handler.sendMessage(handler.obtainMessage(LoadingActivity.MSG_PROGRESS_INCREASE, 1));
-            }
+            insertAccessibilityHelper.prepareForInsert();
 
+            insertAccessibilityHelper.bind(idAccessibilityColumn, fields[0]);
+            insertAccessibilityHelper.bind(typeAccessibilityColumn, fields[1]);
+            insertAccessibilityHelper.bind(wheelchairAccessibilityColumn, 1);
+
+            insertAccessibilityHelper.execute();
+            publishProgress(1);
         }
 
-        /**
-         * Insert markers from a buffered reader into a database.
-         * 
-         * @param readerMarkers
-         *            buffered reader on marker csv file
-         * @throws IOException
-         *             if the marker file can not be read
-         */
-        private void insertMarkers(final BufferedReader readerMarkers) throws IOException {
+    }
 
+    /**
+     * Insert markers from a buffered reader into a database.
+     * 
+     * @param readerMarkers
+     *            buffered reader on marker csv file
+     * @throws IOException
+     *             if the marker file can not be read
+     */
+    private void insertMarkers(final BufferedReader readerMarkers) throws IOException {
+
+        if (!db.inTransaction()) {
+            db.beginTransaction();
+        }
+
+        // insert helper for markers
+        final InsertHelper insertMarkerHelper = new InsertHelper(db, MARKERS_TABLE_NAME);
+        final int idMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.ID);
+        final int typeMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.TYPE);
+        final int latMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LATITUDE);
+        final int lonMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LONGITUDE);
+        final int labelMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LABEL);
+        final int searchLabelMarkerColumn = insertMarkerHelper
+                .getColumnIndex(MarkersColumns.SEARCH_LABEL);
+
+        // walking through markers file
+        String line = null;
+        while ((line = readerMarkers.readLine()) != null) {
             if (!db.inTransaction()) {
                 db.beginTransaction();
             }
+            final String[] fields = line.split(";");
 
-            // insert helper for markers
-            final InsertHelper insertMarkerHelper = new InsertHelper(db, MARKERS_TABLE_NAME);
-            final int idMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.ID);
-            final int typeMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.TYPE);
-            final int latMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LATITUDE);
-            final int lonMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LONGITUDE);
-            final int labelMarkerColumn = insertMarkerHelper.getColumnIndex(MarkersColumns.LABEL);
-            final int searchLabelMarkerColumn = insertMarkerHelper
-                    .getColumnIndex(MarkersColumns.SEARCH_LABEL);
+            insertMarkerHelper.prepareForInsert();
 
-            // walking through markers file
-            String line = null;
-            while ((line = readerMarkers.readLine()) != null) {
-                if (!db.inTransaction()) {
-                    db.beginTransaction();
-                }
-                final String[] fields = line.split(";");
+            insertMarkerHelper.bind(typeMarkerColumn, fields[0]);
+            insertMarkerHelper.bind(idMarkerColumn, fields[1]);
+            insertMarkerHelper.bind(latMarkerColumn, (int) (Double.parseDouble(fields[2]) * 1E6));
+            insertMarkerHelper.bind(lonMarkerColumn, (int) (Double.parseDouble(fields[3]) * 1E6));
+            insertMarkerHelper.bind(labelMarkerColumn, fields[4]);
+            insertMarkerHelper.bind(searchLabelMarkerColumn, fields[5]);
 
-                insertMarkerHelper.prepareForInsert();
-
-                insertMarkerHelper.bind(typeMarkerColumn, fields[0]);
-                insertMarkerHelper.bind(idMarkerColumn, fields[1]);
-                insertMarkerHelper.bind(latMarkerColumn,
-                        (int) (Double.parseDouble(fields[2]) * 1E6));
-                insertMarkerHelper.bind(lonMarkerColumn,
-                        (int) (Double.parseDouble(fields[3]) * 1E6));
-                insertMarkerHelper.bind(labelMarkerColumn, fields[4]);
-                insertMarkerHelper.bind(searchLabelMarkerColumn, fields[5]);
-
-                insertMarkerHelper.execute();
-                handler.sendMessage(handler.obtainMessage(LoadingActivity.MSG_PROGRESS_INCREASE, 1));
-            }
-
+            insertMarkerHelper.execute();
+            publishProgress(1);
         }
-    }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see fr.itinerennes.startup.IStartupListener#isInBackground()
-     */
-    @Override
-    public final boolean isInBackground() {
-
-        return false;
     }
 
 }

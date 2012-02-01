@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
@@ -26,11 +27,11 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(LoadingActivity.class);
 
-    /** Constant identifying the "failure" dialog. */
-    private static final int DIALOG_FAILURE = 1;
+    // /** Constant identifying the "failure" dialog. */
+    // private static final int DIALOG_FAILURE = 1;
 
-    /** Handler message to increase the progress bar max. */
-    public static final int MSG_PROGRESS_INCREASE_MAX = 0;
+    /** Handler message to set the progress bar max value. */
+    public static final int MSG_PROGRESS_SET_MAX = 0;
 
     /** Handler message to increase the progress status. */
     public static final int MSG_PROGRESS_INCREASE = 1;
@@ -38,17 +39,11 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
     /** Handler message when progress is done. */
     public static final int MSG_PROGRESS_FINISH = 2;
 
-    /** Handler message specifying the preload has failed. */
-    public static final int MSG_PROGRESS_FAILED = -1;
+    // /** Handler message specifying the preload has failed. */
+    // public static final int MSG_PROGRESS_FAILED = -1;
 
     /** The progress bar displaying the preload progression state. */
     private ProgressBar progressBar;
-
-    /** List of listeners to invoke when application is starting up. */
-    private final List<IStartupListener> startupListeners = new ArrayList<IStartupListener>();
-
-    /** List of running listeners. */
-    private final List<IStartupListener> runningListeners = new ArrayList<IStartupListener>();
 
     /** The handler to handle progress messages in the UI thread. */
     private final Handler progressHandler = new Handler() {
@@ -57,23 +52,27 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
         public void handleMessage(final android.os.Message msg) {
 
             switch (msg.what) {
-            case MSG_PROGRESS_INCREASE_MAX:
-                progressBar.setMax(progressBar.getMax() + (Integer) msg.obj);
+            /* first message: set the progressbar maximum value, this message is received only once */
+            case MSG_PROGRESS_SET_MAX:
+                progressBar.setIndeterminate(false);
+                progressBar.setMax((Integer) msg.obj);
                 break;
+
+            /* message sent when the progressbar must be increased */
             case MSG_PROGRESS_INCREASE:
                 progressBar.setProgress(progressBar.getProgress() + (Integer) msg.obj);
                 break;
+
+            /* message sent when synchronous listeners finished their job, the activity is finished */
             case MSG_PROGRESS_FINISH:
-                runningListeners.remove(msg.obj);
-                if (runningListeners.size() == 0) {
-                    finish();
-                }
+                finish();
                 break;
-            case MSG_PROGRESS_FAILED:
-                progressBar.setIndeterminate(true);
-                runningListeners.remove(msg.obj);
-                showDialog(DIALOG_FAILURE);
-                break;
+
+            /* message when a failure occurred during a listener's execution */
+            // case MSG_PROGRESS_FAILED:
+            // progressBar.setIndeterminate(true);
+            // showDialog(DIALOG_FAILURE);
+            // break;
 
             default:
                 break;
@@ -96,25 +95,27 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
 
         setContentView(R.layout.act_loading);
         progressBar = (ProgressBar) findViewById(R.id.activity_preload_progress_bar);
-        progressBar.setProgress(0);
+        progressBar.setIndeterminate(true);
 
-        startupListeners.add(new EmptyDatabaseListener(getApplicationContext(), progressHandler));
-        startupListeners.add(new VersionCheckListener(getApplicationContext()));
+        /* initializes the listeners to trigger in background on application startup */
+        final List<AsyncTask<Void, ?, ?>> asyncListeners = new ArrayList<AsyncTask<Void, ?, ?>>();
+        asyncListeners.add(new VersionCheckListener(getApplicationContext()));
+        // trigger them (execution is forked to background)
+        for (final AsyncTask<Void, ?, ?> listener : asyncListeners) {
 
-        for (final IStartupListener listener : startupListeners) {
-            if (listener.isExecutionNeeded()) {
-                if (!listener.isInBackground()) {
-                    runningListeners.add(listener);
-                }
-                listener.execute();
-            }
+            listener.execute();
         }
+
+        /* initializes the listeners to trigger in foreground on application startup */
+        /* the activity keep running until these listeners finish their work */
+        // prepare task runner and start
+        final List<AbstractStartupListener> syncListeners = new ArrayList<AbstractStartupListener>();
+        final TaskRunner syncListenerRunner = new TaskRunner(syncListeners);
+
+        syncListeners.add(new EmptyDatabaseListener(getApplicationContext(), syncListenerRunner));
+        syncListenerRunner.start();
 
         super.onCreate(savedInstanceState);
-
-        if (runningListeners.size() == 0) {
-            finish();
-        }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
@@ -122,7 +123,8 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
     }
 
     /**
-     * {@inheritDoc}
+     * Default <i>back</i> button behavior is overrided. Now <i>back</i> button does the same as
+     * <i>home</i> button. See {@link Issue #587 https://bugtracker.dudie.fr/issues/587}.
      * 
      * @see android.app.Activity#onBackPressed()
      */
@@ -138,4 +140,77 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
         }
     }
 
+    /**
+     * Interface to provide abilities to listen on progress events fired by
+     * {@link AbstractStartupListener} .
+     * 
+     * @author Jérémie Huchet
+     */
+    public interface ProgressObserver {
+
+        /**
+         * Invoked by {@link AbstractStartupListener} when a task progresses.
+         * 
+         * @param progress
+         *            the amount of units of work processed
+         */
+        void publishProgress(Integer progress);
+    }
+
+    /**
+     * A thread to manage synchronous listeners execution and progress bar update.
+     * 
+     * @author Jérémie Huchet
+     */
+    private class TaskRunner extends Thread implements ProgressObserver {
+
+        /** The list of listeners to display and follow execution with the progressbar. */
+        private final List<AbstractStartupListener> syncListeners;
+
+        /**
+         * Constructor.
+         * 
+         * @param syncListeners
+         *            the listeners
+         */
+        public TaskRunner(final List<AbstractStartupListener> syncListeners) {
+
+            this.syncListeners = syncListeners;
+        }
+
+        /**
+         * Executes the listeners and manage progressbar.
+         * 
+         * @see java.lang.Thread#run()
+         */
+        @Override
+        public void run() {
+
+            int totalProgressCount = 0;
+            for (final AbstractStartupListener listener : syncListeners) {
+                totalProgressCount += listener.progressCount();
+            }
+            progressHandler.sendMessage(progressHandler.obtainMessage(MSG_PROGRESS_SET_MAX,
+                    totalProgressCount));
+
+            for (final AbstractStartupListener listener : syncListeners) {
+                listener.execute();
+            }
+
+            progressHandler.sendMessage(progressHandler.obtainMessage(MSG_PROGRESS_FINISH));
+        }
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see fr.itinerennes.startup.LoadingActivity.ProgressObserver#publishProgress(java.lang.Integer)
+         */
+        @Override
+        public void publishProgress(final Integer progress) {
+
+            progressHandler.sendMessage(progressHandler.obtainMessage(MSG_PROGRESS_INCREASE,
+                    progress));
+        }
+
+    }
 }

@@ -8,11 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.database.Cursor;
-import android.os.Handler;
+import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.startup.EmptyDatabaseListener;
 
 /**
@@ -37,14 +38,15 @@ public class MarkerDaoTest extends AndroidTestCase {
     protected final void setUp() throws Exception {
 
         super.setUp();
-        // load data if necessary
-        final EmptyDatabaseListener loader = new EmptyDatabaseListener(
-                (ItineRennesApplication) getContext().getApplicationContext(), new Handler());
-        if (loader.isExecutionNeeded()) {
-            loader.execute();
-        }
 
-        markerDao = new MarkerDao(getContext(), new DatabaseHelper(getContext()));
+        final ItineRennesApplication appCtx = (ItineRennesApplication) getContext()
+                .getApplicationContext();
+
+        // load data if necessary
+        final EmptyDatabaseListener loader = new EmptyDatabaseListener(appCtx, null);
+        loader.execute();
+
+        markerDao = new MarkerDao(getContext(), appCtx.getDatabaseHelper());
     }
 
     /**
@@ -54,16 +56,30 @@ public class MarkerDaoTest extends AndroidTestCase {
 
         LOGGER.info("testGetMarkerByAndroidId.start");
 
-        final Cursor c = markerDao.getMarker("16");
+        // retrieve a marker from database (on 2012-01-28, 2_1024 means "Republique Nemours")
+        final ItineRennesApplication appCtx = (ItineRennesApplication) getContext()
+                .getApplicationContext();
+        final SQLiteDatabase db = appCtx.getDatabaseHelper().getReadableDatabase();
+        final Cursor expected = db.query(MarkersColumns.MARKERS_TABLE_NAME, new String[] {
+                MarkersColumns._ID, MarkersColumns.LABEL, MarkersColumns.LATITUDE,
+                MarkersColumns.LONGITUDE, MarkersColumns.TYPE },
+                String.format("%s = ?", MarkersColumns.ID), new String[] { "2_1024" }, null, null,
+                null);
 
-        assertNotNull("Cursor is null.", c);
-        assertEquals("More than one result fetched.", 1, c.getCount());
-        assertEquals("République Nemours",
-                c.getString(c.getColumnIndex(Columns.MarkersColumns.LABEL)));
-        assertEquals(-1680167, c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE)));
-        assertEquals(48110072, c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE)));
-        assertEquals(TypeConstants.TYPE_BUS,
-                c.getString(c.getColumnIndex(Columns.MarkersColumns.TYPE)));
+        assertTrue("cursor should have one result if database was correctly loaded",
+                expected.moveToFirst());
+
+        // query this marker using our DAO
+        final String androidId = expected.getString(expected.getColumnIndex(MarkersColumns._ID));
+        final Cursor c = markerDao.getMarker(androidId);
+
+        assertNotNull("Cursor shouldn't be null", c);
+        assertEquals("Ensure only one result has been fectched", 1, c.getCount());
+        assertEquals("Check expected label", "République Nemours",
+                c.getString(c.getColumnIndex(MarkersColumns.LABEL)));
+        assertEquals(-1680212, c.getInt(c.getColumnIndex(MarkersColumns.LONGITUDE)));
+        assertEquals(48109978, c.getInt(c.getColumnIndex(MarkersColumns.LATITUDE)));
+        assertEquals(TypeConstants.TYPE_BUS, c.getString(c.getColumnIndex(MarkersColumns.TYPE)));
 
         LOGGER.info("testGetMarkerByAndroidId.end");
     }
