@@ -64,7 +64,7 @@ public class LineIconService extends AbstractService {
         }
 
         final String resName = String.format("z_ic_line_%s",
-                line.toLowerCase().replaceAll("[^a-z0-9_.]", "_"));
+                line.toLowerCase().replaceAll("[^a-z0-9_.]", "_").replaceAll("ex$", ""));
 
         final int id = ResourceResolver.getDrawableId(context, resName, 0);
 
