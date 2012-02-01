@@ -14,7 +14,7 @@ import android.test.AndroidTestCase;
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.database.Columns.MarkersColumns;
-import fr.itinerennes.startup.EmptyDatabaseListener;
+import fr.itinerennes.startup.DatabaseLoaderListener;
 
 /**
  * Test class for {@link MarkerDao}.
@@ -43,7 +43,8 @@ public class MarkerDaoTest extends AndroidTestCase {
                 .getApplicationContext();
 
         // load data if necessary
-        final EmptyDatabaseListener loader = new EmptyDatabaseListener(appCtx, null);
+        final DatabaseLoaderListener loader = new DatabaseLoaderListener(appCtx, null,
+                CSVDataReader.markers(appCtx));
         loader.execute();
 
         markerDao = new MarkerDao(getContext(), appCtx.getDatabaseHelper());

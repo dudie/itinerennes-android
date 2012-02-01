@@ -14,7 +14,7 @@ import fr.itinerennes.startup.LoadingActivity.ProgressObserver;
 public abstract class AbstractStartupListener {
 
     /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmptyDatabaseListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractStartupListener.class);
 
     /** An (optional) observer listening on progress events. */
     private final ProgressObserver observer;
@@ -42,9 +42,8 @@ public abstract class AbstractStartupListener {
     }
 
     /**
-     * This will be run in background before starting the {@link #execute()} job. This is
-     * intended to compute/estimate the total length of the work which will be done by
-     * {@link #execute()}.
+     * This will be run in background before starting the {@link #execute()} job. This is intended
+     * to compute/estimate the total length of the work which will be done by {@link #execute()}.
      * <p>
      * Even if this is run in background, execution should be as quick as possible.
      * 

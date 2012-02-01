@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.widget.ProgressBar;
 
 import fr.itinerennes.R;
+import fr.itinerennes.database.CSVDataReader;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -112,7 +113,10 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
         final List<AbstractStartupListener> syncListeners = new ArrayList<AbstractStartupListener>();
         final TaskRunner syncListenerRunner = new TaskRunner(syncListeners);
 
-        syncListeners.add(new EmptyDatabaseListener(getApplicationContext(), syncListenerRunner));
+        syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                syncListenerRunner, CSVDataReader.markers(getBaseContext())));
+        syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                syncListenerRunner, CSVDataReader.accessibility(getBaseContext())));
         syncListenerRunner.start();
 
         super.onCreate(savedInstanceState);
