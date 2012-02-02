@@ -20,7 +20,8 @@
         <module>commons</module>
         <module>itinerennes</module>
         <module>itinerennes-tests</module>
-        <module>itinerennes-android-tests</module>
+        <!-- this module is enabled by the development profile (see below) -->
+        <!--<module>itinerennes-android-tests</module>-->
     </modules>
 
     <scm>
@@ -158,7 +159,6 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>itinerennes-android</artifactId>
                 <version>${project.version}</version>
-                <type>jar</type>
                 <scope>provided</scope>
             </dependency>
 
@@ -221,13 +221,10 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.2.1</version>
                 <configuration>
-                    <!-- Run the "property-validation" custom plugin, update the android manifest before packaging and deployment -->
-                    <goals>fr.dudie:property-validation-maven-plugin:check
-                        com.jayway.maven.plugins.android.generation2:android-maven-plugin:manifest-update
-                        deploy</goals>
                     <!-- Forward the "versionCode" property value to the maven instance building the release -->
                     <arguments>-DversionCode=${versionCode}</arguments>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <scmCommentPrefix>[maven-release-plugin] version=${project.version} versionCode='${versionCode}'</scmCommentPrefix>
                 </configuration>
             </plugin>
         </plugins>
@@ -252,6 +249,11 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jarsigner-plugin</artifactId>
                     <version>1.2</version>
                 </plugin>
@@ -264,6 +266,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.8</version>
+                    <configuration>
+                        <quiet>true</quiet>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -279,21 +284,18 @@
 
     <profiles>
         <profile>
-            <!-- Activate this profiles to test artifacts staging for release -->
-            <id>staging</id>
-            <repositories>
-                <repository>
-                    <id>sonatype-nexus-staging</id>
-                    <name>Sonatype Nexus Staging</name>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                </repository>
-            </repositories>
+            <!-- DEVELOPMENT PROFILE -->
+            <id>dev</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>!true</value>
+                </property>
+            </activation>
+            <modules>
+            	<!-- add instrumentation test module -->
+                <module>itinerennes-android-tests</module>
+            </modules>
         </profile>
     </profiles>
 

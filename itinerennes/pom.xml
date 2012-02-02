@@ -59,7 +59,6 @@
     </dependencies>
 
     <build>
-        <finalName>itinerennes</finalName>
         <sourceDirectory>${basedir}/src</sourceDirectory>
         <plugins>
             <plugin>
@@ -99,7 +98,7 @@
         </profile>
         <profile>
             <!-- RELEASE PROFILE -->
-            <id>performRelease</id>
+            <id>release</id>
             <activation>
                 <property>
                     <name>performRelease</name>
@@ -107,6 +106,7 @@
                 </property>
             </activation>
             <build>
+                <finalName>${artifactId}-${version}-signed</finalName>
                 <resources>
                     <resource>
                         <!-- 
@@ -133,28 +133,6 @@
                     </resource>
                 </resources>
                 <plugins>
-<!--                     <plugin> -->
-<!--                         <groupId>org.apache.maven.plugins</groupId> -->
-<!--                         <artifactId>maven-jarsigner-plugin</artifactId> -->
-<!--                         <executions> -->
-<!--                             <execution> -->
-<!--                                 <id>signing</id> -->
-<!--                                 <goals> -->
-<!--                                     <goal>sign</goal> -->
-<!--                                 </goals> -->
-<!--                                 <phase>package</phase> -->
-<!--                                 <inherited>true</inherited> -->
-<!--                                 <configuration> -->
-<!--                                     <includes> -->
-<!--                                         <include>target/*.apk</include> -->
-<!--                                     </includes> -->
-<!--                                     <keystore>${itinerennes.keystore.path}</keystore> -->
-<!--                                     <storepass>${itinerennes.keystore.storepass}</storepass> -->
-<!--                                     <keypass>${itinerennes.keystore.keypass}</keypass> -->
-<!--                                 </configuration> -->
-<!--                             </execution> -->
-<!--                         </executions> -->
-<!--                     </plugin> -->
                     <plugin>
                         <groupId>fr.dudie</groupId>
                         <artifactId>property-validation-maven-plugin</artifactId>
@@ -167,18 +145,68 @@
                                 </property>
                             </properties>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>check-properties</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <phase>validate</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jarsigner-plugin</artifactId>
+                        <configuration>
+                            <removeExistingSignatures>true</removeExistingSignatures>
+                            <archive>${project.build.directory}/${project.build.finalName}.apk</archive>
+                            <keystore>${itinerennes.keystore.path}</keystore>
+                            <storepass>${itinerennes.keystore.storepass}</storepass>
+                            <keypass>${itinerennes.keystore.keypass}</keypass>
+                            <alias>${itinerennes.keystore.alias}</alias>
+                        </configuration>
+                        <executions>
+                            <!-- sign generated APK -->
+                            <execution>
+                                <id>signing</id>
+                                <goals>
+                                    <goal>sign</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                         <artifactId>android-maven-plugin</artifactId>
                         <configuration>
                             <sign>
-                                <debug>true</debug>
+                                <debug>false</debug>
                             </sign>
                             <manifestDebuggable>false</manifestDebuggable>
                             <manifestVersionCode>${versionCode}</manifestVersionCode>
                             <manifestVersionName>${project.version}</manifestVersionName>
                         </configuration>
+                        <executions>
+                            <!-- update the manifest file -->
+                            <execution>
+                                <id>manifestUpdate</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>manifest-update</goal>
+                                </goals>
+                            </execution>
+                            <!-- zipalign the signed APK -->
+                            <execution>
+                                <id>alignApk</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>zipalign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
