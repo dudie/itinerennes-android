@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+    <classpathentry kind="src" path="src"/>
+    <classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/org/acra/acra/4.2.3/acra-4.2.3.jar"/>
-    <classpathentry exported="true" kind="var" path="M2_REPO/org/slf4j/slf4j-itinerennes/1.0-SNAPSHOT/slf4j-itinerennes-1.0-SNAPSHOT.jar"/>
-    <classpathentry exported="true" kind="var" path="M2_REPO/org/osmdroid/osmdroid-itinerennes/1.1-SNAPSHOT/osmdroid-itinerennes-1.1-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/slf4j/slf4j-itinerennes/1.1/slf4j-itinerennes-1.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/osmdroid/osmdroid-itinerennes/1.0.1/osmdroid-itinerennes-1.0.1.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/fr/itinerennes/itinerennes-commons/0.5-SNAPSHOT/itinerennes-commons-0.5-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/nominatim-api/1.1-SNAPSHOT/nominatim-api-1.1-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/rennes-data-api/1.1-SNAPSHOT/rennes-data-api-1.1-SNAPSHOT.jar"/>
-	<classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/onebusaway-api/1.1-SNAPSHOT/onebusaway-api-1.1-SNAPSHOT.jar"/>
-	<classpathentry kind="output" path="bin/classes"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/nominatim-api/1.0.1/nominatim-api-1.0.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/rennes-data-api/1.0.1/rennes-data-api-1.0.1.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/onebusaway-api/1.0/onebusaway-api-1.0.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar"/>
+    <classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+    <classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+    <classpathentry kind="output" path="bin/classes"/>
 </classpath>
