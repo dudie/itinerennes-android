@@ -15,6 +15,10 @@
     <name>Instrumentation tests</name>
     <description>ItineRennes android test application</description>
 
+    <properties>
+        <skipInstrumentationTests>auto</skipInstrumentationTests>
+    </properties>
+
     <dependencies>
         <!-- BEGIN - PROVIDED DEPENDENCIES -->
         <dependency>
@@ -87,6 +91,9 @@
                 <artifactId>android-maven-plugin</artifactId>
                 <configuration>
                     <createReport>true</createReport>
+                    <test>
+                        <skip>${skipInstrumentationTests}</skip>
+                    </test>
                 </configuration>
             </plugin>
         </plugins>
