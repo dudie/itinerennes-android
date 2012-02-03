@@ -222,12 +222,12 @@
                 <version>2.2.1</version>
                 <configuration>
                     <!-- Run the "property-validation" custom plugin during release:prepare -->
-                    <preparationGoals>fr.dudie:property-validation-maven-plugin:check deploy</preparationGoals>
+                    <preparationGoals>clean verify fr.dudie:property-validation-maven-plugin:check</preparationGoals>
                     <!-- Forward the "versionCode" property value to the maven instance building the release -->
                     <arguments>-DversionCode=${versionCode}</arguments>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <tagNameFormat>itinerennes-@{version}</tagNameFormat>
-                    <scmCommentPrefix>[maven-release-plugin] version=@{version} versionCode=${versionCode}</scmCommentPrefix>
+                    <scmCommentPrefix>[maven-release-plugin] version=${project.version} versionCode=${versionCode}</scmCommentPrefix>
                 </configuration>
             </plugin>
         </plugins>
