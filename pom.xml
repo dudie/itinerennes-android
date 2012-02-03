@@ -226,7 +226,8 @@
                     <!-- Forward the "versionCode" property value to the maven instance building the release -->
                     <arguments>-DversionCode=${versionCode}</arguments>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <scmCommentPrefix>[maven-release-plugin] version=${releaseVersion} versionCode='${versionCode}'</scmCommentPrefix>
+                    <tagNameFormat>itinerennes-${project.version}</tagNameFormat>
+                    <scmCommentPrefix>[maven-release-plugin] version=${project.version} versionCode='${versionCode}'</scmCommentPrefix>
                 </configuration>
             </plugin>
         </plugins>
