@@ -227,7 +227,7 @@
                     <arguments>-DversionCode=${versionCode}</arguments>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <tagNameFormat>itinerennes-${project.version}</tagNameFormat>
-                    <scmCommentPrefix>[maven-release-plugin] version=${project.version} versionCode='${versionCode}'</scmCommentPrefix>
+                    <scmCommentPrefix>[maven-release-plugin] version=${releaseVersion} versionCode='${versionCode}'</scmCommentPrefix>
                 </configuration>
             </plugin>
         </plugins>
