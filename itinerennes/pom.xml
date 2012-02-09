@@ -72,19 +72,6 @@
                     <assetsDirectory>${project.build.directory}/generated-resources/assets</assetsDirectory>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>fr.dudie</groupId>
-                <artifactId>property-validation-maven-plugin</artifactId>
-                <configuration>
-                    <!-- ensure that the property "versionCode" is set and valid when releasing -->
-                    <properties>
-                        <property>
-                            <name>versionCode</name>
-                            <regex>\d+</regex>
-                        </property>
-                    </properties>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 

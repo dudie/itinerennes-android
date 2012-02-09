@@ -230,8 +230,6 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.2.1</version>
                 <configuration>
-                    <!-- Run the "property-validation" custom plugin during release:prepare -->
-                    <preparationGoals>clean verify fr.dudie:property-validation-maven-plugin:check</preparationGoals>
                     <!-- Forward the "versionCode" property value to the maven instance building the release -->
                     <arguments>-DversionCode=${versionCode}</arguments>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
@@ -242,11 +240,6 @@
         </plugins>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>fr.dudie</groupId>
-                    <artifactId>property-validation-maven-plugin</artifactId>
-                    <version>1.0</version>
-                </plugin>
                 <plugin>
                     <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                     <artifactId>android-maven-plugin</artifactId>
