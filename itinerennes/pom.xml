@@ -160,30 +160,13 @@
                                         <requireJavaVersion>
                                             <version>[1.6,1.7)</version>
                                         </requireJavaVersion>
+                                        <requireProperty>
+                                            <property>versionCode</property>
+                                            <regex>^\d+$</regex>
+                                            <regexMessage>Property versionCode must be an integer</regexMessage>
+                                        </requireProperty>
                                     </rules>
                                 </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>fr.dudie</groupId>
-                        <artifactId>property-validation-maven-plugin</artifactId>
-                        <configuration>
-                            <!-- ensure that the property "versionCode" is set and valid when releasing -->
-                            <properties>
-                                <property>
-                                    <name>versionCode</name>
-                                    <regex>\d+</regex>
-                                </property>
-                            </properties>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>check-properties</id>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                                <phase>validate</phase>
                             </execution>
                         </executions>
                     </plugin>
