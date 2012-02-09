@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -118,7 +119,6 @@
                 </property>
             </activation>
             <build>
-                <finalName>${artifactId}-${version}-signed</finalName>
                 <resources>
                     <resource>
                         <!-- 
@@ -145,6 +145,26 @@
                     </resource>
                 </resources>
                 <plugins>
+                    <!-- there is an issue with JDK7 and maven-jarsigner-plugin, so java version is enforced to 1.6 when releasing -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-java-version</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireJavaVersion>
+                                            <version>[1.6,1.7)</version>
+                                        </requireJavaVersion>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>fr.dudie</groupId>
                         <artifactId>property-validation-maven-plugin</artifactId>
@@ -177,6 +197,7 @@
                             <storepass>${itinerennes.keystore.storepass}</storepass>
                             <keypass>${itinerennes.keystore.keypass}</keypass>
                             <alias>${itinerennes.keystore.alias}</alias>
+                            <sigfile>CERT</sigfile>
                         </configuration>
                         <executions>
                             <!-- sign generated APK -->
