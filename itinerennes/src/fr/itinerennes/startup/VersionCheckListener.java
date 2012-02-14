@@ -14,7 +14,6 @@ import android.os.AsyncTask;
 
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.R;
 import fr.itinerennes.model.VersionCheck;
 import fr.itinerennes.ui.activity.NewVersionActivity;
 import fr.itinerennes.utils.VersionUtils;
@@ -72,8 +71,7 @@ public final class VersionCheckListener extends AsyncTask<Void, Void, Intent> {
 
                 final VersionCheck versionCheck = parser.parse(response.getEntity().getContent());
 
-                final String currentVersion = context.getResources().getString(
-                        R.string.version_number);
+                final String currentVersion = VersionUtils.getCurrent(context);
 
                 final int comparisonMinRequired = VersionUtils.compare(currentVersion,
                         versionCheck.getMinRequired());

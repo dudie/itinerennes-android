@@ -9,4 +9,5 @@
     <string name="about_osmdroid">Carte affichée grâce à Osmdroid</string>
     <string name="about_mapquest">Tuiles de carte par Mapquest</string>
     <string name="about_onebusaway">OneBusAway pour les API serveur</string>
+    <string name="about_unknown_version">inconnue</string>
 </resources>

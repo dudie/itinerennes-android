@@ -46,20 +46,11 @@
                     android:textColor="@color/grey_20"/>
     	
     		    <TextView
-    		        android:text="@string/version_dots"
+    		        android:id="@+id/about_version_name"
     	            android:layout_width="wrap_content"
     	            android:layout_height="wrap_content"
     	            android:layout_below="@+id/about_rennes_metropole_application"
-    	            android:layout_toLeftOf="@+id/about_version_number"
     	            android:textColor="@color/grey_20"/>
-                        
-                <TextView android:id="@+id/about_version_number"  
-                    android:text="@string/version_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" 
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/about_rennes_metropole_application"
-                    android:textColor="@color/grey_20"/>
     	
     	    </RelativeLayout>
     	    

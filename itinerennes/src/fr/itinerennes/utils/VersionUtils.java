@@ -1,5 +1,13 @@
 package fr.itinerennes.utils;
 
+import org.acra.ErrorReporter;
+
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+
+import fr.itinerennes.R;
+
 /**
  * Class providing some useful method to work with application versions.
  * 
@@ -47,4 +55,25 @@ public final class VersionUtils {
 
     }
 
+    /**
+     * Gets the version of the running ItineRennes instance.
+     * 
+     * @param context
+     *            the context
+     * @return the current running version
+     */
+    public static String getCurrent(final Context context) {
+
+        final PackageManager pkgManager = context.getPackageManager();
+        final String pkgName = context.getPackageName();
+        String version;
+
+        try {
+            version = pkgManager.getPackageInfo(pkgName, 0).versionName;
+        } catch (final NameNotFoundException e) {
+            version = context.getString(R.string.about_unknown_version);
+            ErrorReporter.getInstance().handleSilentException(e);
+        }
+        return version;
+    }
 }

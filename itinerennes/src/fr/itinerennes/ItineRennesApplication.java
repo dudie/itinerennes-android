@@ -36,6 +36,7 @@ import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
 import fr.itinerennes.exceptions.ExceptionHandler;
 import fr.itinerennes.startup.LoadingActivity;
+import fr.itinerennes.utils.VersionUtils;
 
 /**
  * @author Jérémie Huchet
@@ -233,7 +234,7 @@ public class ItineRennesApplication extends Application {
             final ThreadSafeClientConnManager connexionManager = new ThreadSafeClientConnManager(
                     cxParams, registry);
 
-            final String appVersion = this.getString(R.string.version_number);
+            final String appVersion = VersionUtils.getCurrent(this);
             final String userAgent = String.format("ItineRennes/%s (Android/%s; SDK %s; %s; %s)",
                     appVersion, android.os.Build.VERSION.RELEASE, android.os.Build.VERSION.SDK_INT,
                     android.os.Build.MODEL, android.os.Build.DEVICE);

@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -40,6 +41,7 @@ import fr.itinerennes.ui.views.overlays.LayerDescriptor;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 import fr.itinerennes.utils.MapUtils;
+import fr.itinerennes.utils.VersionUtils;
 
 /**
  * This is the main activity. Uses the <code>main_map.xml</code> layout and displays a menu bar on
@@ -329,7 +331,11 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         case Dialogs.ABOUT:
             final AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
             aboutBuilder.setTitle(R.string.menu_about).setCancelable(true);
+
             final View aboutView = getLayoutInflater().inflate(R.layout.dial_about, null);
+            final TextView versionText = (TextView) aboutView.findViewById(R.id.about_version_name);
+            versionText.setText(getBaseContext().getString(R.string.version_dots,
+                    VersionUtils.getCurrent(this)));
             aboutBuilder.setView(aboutView);
             aboutBuilder.setIcon(R.drawable.ic_dialog_help);
             dialog = aboutBuilder.create();
