@@ -51,8 +51,11 @@ public final class VersionUtils {
      */
     public static String normalizeVersion(final String version) {
 
-        return version.replaceAll("\\.", "");
-
+        if (null == version) {
+            return "";
+        } else {
+            return version.replaceAll("\\.", "");
+        }
     }
 
     /**
