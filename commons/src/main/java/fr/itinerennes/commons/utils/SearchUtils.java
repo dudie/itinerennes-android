@@ -24,7 +24,9 @@ public class SearchUtils {
     }
 
     /**
-     * Canonicalize the given query:
+     * Canonicalize the given query.
+     * <p>
+     * Do the following operations:
      * <ul>
      * <li>remove accents/diachritics characters</li>
      * <li>remove all non alphanumeric characters (keeps only a-z0-9)</li>
@@ -118,7 +120,7 @@ public class SearchUtils {
      * <em>"(<b>r</b>\s*<b>n</b>)"</em>
      * <p>
      * In case query parameter <code>query</code> doesn't contains any alpnanumeric characters, the
-     * query pattern returned is <code>null</code>
+     * query pattern returned is <code>null</code>.
      * 
      * @param unaccentQuery
      *            the text query

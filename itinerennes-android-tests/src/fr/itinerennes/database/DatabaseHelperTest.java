@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import android.test.AndroidTestCase;
 
-import fr.itinerennes.database.DatabaseHelper;
-
 /**
  * Test class for {@link DatabaseHelper}.
  * 
