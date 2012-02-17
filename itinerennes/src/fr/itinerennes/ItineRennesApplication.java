@@ -1,5 +1,7 @@
 package fr.itinerennes;
 
+import java.lang.reflect.Method;
+
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 import org.apache.http.client.HttpClient;
@@ -81,7 +83,7 @@ public class ItineRennesApplication extends Application {
     private HttpClient httpClient;
 
     /**
-     * Inits ACRA.
+     * Inits ACRA and strict mode.
      * 
      * @see android.app.Application#onCreate()
      */
@@ -93,6 +95,20 @@ public class ItineRennesApplication extends Application {
         if (Conf.ACRA_ENABLED) {
             // The following line triggers the initialization of ACRA
             ACRA.init(this);
+        }
+
+        if (Conf.STRICT_ENABLED) {
+            // trying to enable strict mode if the current api level supports it
+            try {
+                final Class<?> sMode = Class.forName("android.os.StrictMode");
+                final Method enableDefaults = sMode.getMethod("enableDefaults");
+                enableDefaults.invoke(null);
+            } catch (final Exception e) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("StrictMode not supported...");
+                }
+            }
+
         }
 
         final Intent i = new Intent(this, LoadingActivity.class);
