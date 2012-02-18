@@ -4,7 +4,7 @@
 
     <groupId>fr.itinerennes</groupId>
     <artifactId>itinerennes-parent</artifactId>
-    <version>0.6-SNAPSHOT</version>
+    <version>0.5.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>ItineRennes parent</name>
@@ -23,9 +23,9 @@
     </modules>
 
     <scm>
-        <url>https://bugtracker.dudie.fr/itr-android/browse/branches/0.5.x</url>
-        <connection>scm:svn:https://svn.itinerennes.fr/android/branches/0.5.x</connection>
-        <developerConnection>scm:svn:https://svn.itinerennes.fr/android/branches/0.5.x</developerConnection>
+        <url>https://bugtracker.dudie.fr/itr-android/browse</url>
+        <connection>scm:svn:https://svn.itinerennes.fr/android/trunk</connection>
+        <developerConnection>scm:svn:https://svn.itinerennes.fr/android/trunk</developerConnection>
     </scm>
 
     <ciManagement>
