@@ -97,18 +97,16 @@ public class ItineRennesApplication extends Application {
             ACRA.init(this);
         }
 
-        if (Conf.STRICT_ENABLED) {
-            // trying to enable strict mode if the current api level supports it
-            try {
-                final Class<?> sMode = Class.forName("android.os.StrictMode");
-                final Method enableDefaults = sMode.getMethod("enableDefaults");
-                enableDefaults.invoke(null);
-            } catch (final Exception e) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("StrictMode not supported...");
-                }
+        // trying to manage strict mode if the current api level supports it
+        try {
+            final Class<?> sMode = Class.forName("android.os.StrictMode");
+            // enable the recommended StrictMode defaults, with violations just being logged.
+            final Method enableDefaults = sMode.getMethod("enableDefaults");
+            enableDefaults.invoke(null);
+        } catch (final Exception e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("StrictMode not supported...");
             }
-
         }
 
         final Intent i = new Intent(this, LoadingActivity.class);
