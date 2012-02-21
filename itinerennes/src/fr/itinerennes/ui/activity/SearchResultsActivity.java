@@ -50,11 +50,8 @@ public final class SearchResultsActivity extends ItineRennesActivity {
     /** A reference to the list view displaying search results. */
     private ListView resultsList;
 
-    /** A reference to the view displaying "no search  results". */
-    private View noResultsView;
-
     /** A reference to the textview displaying "no search results for query '%s'". */
-    private TextView noResultsLabel;
+    private TextView noResultsView;
 
     /** The results list adapter. */
     private WrapperAdapter resultsListAdapter;
@@ -79,8 +76,7 @@ public final class SearchResultsActivity extends ItineRennesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_search_results);
 
-        noResultsView = findViewById(R.id.search_results_none);
-        noResultsLabel = (TextView) noResultsView.findViewById(R.id.search_results_no_results);
+        noResultsView = (TextView) findViewById(R.id.search_results_none);
         resultsList = (ListView) findViewById(R.id.search_results_list);
 
         // prepare adapter to show marker results
@@ -264,7 +260,7 @@ public final class SearchResultsActivity extends ItineRennesActivity {
                 if (resultsListAdapter.getCount() == 0) {
                     resultsList.setVisibility(View.GONE);
                     noResultsView.setVisibility(View.VISIBLE);
-                    noResultsLabel.setText(getString(R.string.no_results, query));
+                    noResultsView.setText(getString(R.string.no_results, query));
                 } else {
                     resultsList.setVisibility(View.VISIBLE);
                     noResultsView.setVisibility(View.GONE);

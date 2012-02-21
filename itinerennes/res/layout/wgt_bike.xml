@@ -30,7 +30,7 @@
     
         <ProgressBar android:id="@+widget_bike/bike_station_gauge"
             android:indeterminate="true" 
-            android:layout_width="wrap_content" 
+            android:layout_width="0dp" 
             android:layout_height="10dp" 
             android:layout_weight="1"
             style="?android:attr/progressBarStyleHorizontal"/>

@@ -2,5 +2,5 @@
     <string name="search_field_hint">Search an address or stop</string>
     <string name="no_results">No results found for \"%s\"</string>
     <string name="try_with">Try with</string>
-    <string name="search_address">Search an address...</string>
+    <string name="search_address">Search an address&#8230;</string>
 </resources>
