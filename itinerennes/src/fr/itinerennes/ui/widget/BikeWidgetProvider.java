@@ -8,14 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.app.AlarmManager;
+import android.app.IntentService;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.widget.RemoteViews;
 
 import fr.dudie.keolis.model.BikeStation;
@@ -135,40 +134,57 @@ public class BikeWidgetProvider extends AppWidgetProvider {
      * 
      * @author Olivier Boudet
      */
-    public static final class UpdateService extends Service {
+    public static final class UpdateService extends IntentService {
+
+        /**
+         * Constructor.
+         */
+        public UpdateService() {
+
+            super(BikeWidgetProvider.class.getName());
+        }
+
+        /**
+         * Constructor.
+         * 
+         * @param name
+         *            the name the worker thread
+         */
+        public UpdateService(final String name) {
+
+            super(BikeWidgetProvider.class.getName());
+        }
 
         /**
          * {@inheritDoc}
          * 
-         * @see android.app.Service#onStartCommand(android.content.Intent, int, int)
+         * @see android.app.IntentService#onHandleIntent(android.content.Intent)
          */
         @Override
-        public int onStartCommand(final Intent intent, final int flags, final int startId) {
+        protected void onHandleIntent(final Intent intent) {
 
             final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
 
             if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
 
-                final List<BikeStation> stationsList = buildStationsList(this, appWidgetId);
-                final RemoteViews views = buildUpdatedViews(this, stationsList);
+                final String stationIdsString = BikeWidgetConfigurationWizardActivity.loadPref(
+                        this, appWidgetId);
 
-                // Tell the widget manager
-                AppWidgetManager.getInstance(this).updateAppWidget(appWidgetId, views);
+                if (stationIdsString != null) {
+                    final String[] stationIds = stationIdsString.split(";");
+
+                    if (stationIds.length > 0) {
+                        final List<BikeStation> stationsList = getBikeStations(this, stationIds);
+                        final RemoteViews views = getUpdatedViews(this, stationsList);
+
+                        // Tell the widget manager
+                        AppWidgetManager.getInstance(this).updateAppWidget(appWidgetId, views);
+                    }
+                }
+
             }
 
-            return Service.START_NOT_STICKY;
-        }
-
-        /**
-         * {@inheritDoc}
-         * 
-         * @see android.app.Service#onBind(android.content.Intent)
-         */
-        @Override
-        public IBinder onBind(final Intent intent) {
-
-            return null;
         }
 
         /**
@@ -177,44 +193,37 @@ public class BikeWidgetProvider extends AppWidgetProvider {
          * 
          * @param context
          *            the context
-         * @param appWidgetId
-         *            the widget id
+         * @param stationIds
+         *            the list of bike stations to get
          * @return the list of updated BikeStation
          */
-        private List<BikeStation> buildStationsList(final Context context, final int appWidgetId) {
+        private List<BikeStation> getBikeStations(final Context context, final String[] stationIds) {
 
             final List<BikeStation> bikeStations = new ArrayList<BikeStation>();
 
-            final String stationIdsString = BikeWidgetConfigurationWizardActivity.loadPref(context,
-                    appWidgetId);
+            // fetch information from keolis for each bike station saved in preferences
+            for (int j = 0; j < stationIds.length; j++) {
 
-            if (stationIdsString != null) {
-                final String[] stationIds = stationIdsString.split(";");
+                try {
 
-                // fetch information from keolis for each bike station saved in preferences
-                for (int j = 0; j < stationIds.length; j++) {
-
-                    try {
-
-                        // TOBO ici on fait autant de requêtes qu'on a de stations. Voir pour faire
-                        // un appel a getAllBikeStations si nécessaire.
-                        final BikeStation bikeStation = ((ItineRennesApplication) context
-                                .getApplicationContext()).getKeolisClient().getBikeStation(
-                                stationIds[j]);
-                        if (bikeStation != null) {
-                            bikeStations.add(bikeStation);
-                        }
-
-                    } catch (final IOException e) {
-                        LOGGER.error("onUpdate : can't get bike station from keolis. {}",
-                                e.getMessage());
+                    // TOBO ici on fait autant de requêtes qu'on a de stations. Voir pour faire
+                    // un appel a getAllBikeStations si nécessaire.
+                    final BikeStation bikeStation = ((ItineRennesApplication) context
+                            .getApplicationContext()).getKeolisClient().getBikeStation(
+                            stationIds[j]);
+                    if (bikeStation != null) {
+                        bikeStations.add(bikeStation);
                     }
 
+                } catch (final IOException e) {
+                    LOGGER.error("onUpdate : can't get bike station from keolis. {}",
+                            e.getMessage());
                 }
 
             }
 
             return bikeStations;
+
         }
 
         /**
@@ -226,7 +235,7 @@ public class BikeWidgetProvider extends AppWidgetProvider {
          *            the list of bike stations to show
          * @return an updated {@link RemoteViews}
          */
-        private RemoteViews buildUpdatedViews(final Context context,
+        private RemoteViews getUpdatedViews(final Context context,
                 final List<BikeStation> bikeStations) {
 
             if (LOGGER.isDebugEnabled()) {
@@ -259,6 +268,7 @@ public class BikeWidgetProvider extends AppWidgetProvider {
 
             return allViews;
         }
+
     }
 
 }
