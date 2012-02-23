@@ -403,9 +403,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         // search in nominatim
         if (id.equals(MarkerDao.NOMINATIM_INTENT_DATA_ID)) {
             final Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
-            if (intent.hasExtra(SearchManager.USER_QUERY)) {
-                i.putExtra(SearchManager.QUERY, intent.getStringExtra(SearchManager.USER_QUERY));
-            }
+            i.putExtra(SearchManager.QUERY, intent.getStringExtra(SearchManager.QUERY));
             startActivity(i);
         } else {
             // we fetch from database all items having the same label than the item clicked

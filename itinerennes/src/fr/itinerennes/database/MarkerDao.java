@@ -336,7 +336,7 @@ public class MarkerDao implements MarkersColumns {
         }
 
         final String[] selectionArgs = new String[] { "%" + query + "%",
-                "%" + SearchUtils.canonicalize(query) + "%" };
+                "%" + SearchUtils.canonicalize(query) + "%", query };
 
         if (getSuggestionsStatement == null) {
 
@@ -381,8 +381,12 @@ public class MarkerDao implements MarkersColumns {
         sql.append(String.format(" m.%s AS %s", BaseColumns._ID,
                 SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID));
 
-        sql.append(String.format(" ,CASE WHEN b.%s is not null = 1 THEN '%s' END AS %s", ID,
+        sql.append(String.format(" ,CASE WHEN b.%s is not null = 1 THEN '%s' END AS %s,", ID,
                 android.R.drawable.btn_star_big_on, SearchManager.SUGGEST_COLUMN_ICON_2));
+
+        // SUGGEST_COLUMN_QUERY will be used to send the query string to SearchResultsActivity.
+        // filled with the typed query for the "search address" line, empty for markers line
+        sql.append(String.format("'' AS %s", SearchManager.SUGGEST_COLUMN_QUERY));
 
         sql.append(String.format(" FROM %s m LEFT JOIN %s b ON m.%s=b.%s", MARKERS_TABLE_NAME,
                 BookmarksColumns.BOOKMARKS_TABLE_NAME, ID, BookmarksColumns.ID));
@@ -390,14 +394,17 @@ public class MarkerDao implements MarkersColumns {
         sql.append(String.format(" WHERE m.%s LIKE ?", Columns.MarkersColumns.LABEL));
         sql.append(String.format(" OR m.%s LIKE ?", Columns.MarkersColumns.SEARCH_LABEL));
 
+        // delete duplicates
         sql.append(" GROUP BY suggest_text_1, m.type, suggest_icon_2");
 
+        // union to add the "search address" line in results
         sql.append(String.format(
-                " UNION ALL select 'A', 'nominatim','%s' as %s,'%s','%s' as %s,''",
+                " UNION ALL select 'A', 'nominatim','%s' as %s,'%s','%s' as %s,'', ? as %s",
                 R.drawable.ic_osm, SearchManager.SUGGEST_COLUMN_ICON_1, context.getResources()
                         .getString(R.string.search_address), NOMINATIM_INTENT_DATA_ID,
-                SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID));
+                SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID, SearchManager.SUGGEST_COLUMN_QUERY));
 
+        // showing the "search address" line in first, and after ordering marker by label
         sql.append(String.format(" ORDER BY 1,m.%s", Columns.MarkersColumns.LABEL));
 
         return sql.toString();
