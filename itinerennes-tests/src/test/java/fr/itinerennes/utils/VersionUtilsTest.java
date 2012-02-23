@@ -37,6 +37,18 @@ public final class VersionUtilsTest {
     }
 
     /**
+     * Ensure the version code returned by {@link VersionUtils#getCode(Context)} is not null.
+     */
+    @Test
+    public void testGetCode() {
+
+        final Context ctx = Robolectric.application;
+        final int currentVersionCode = VersionUtils.getCode(ctx);
+        LOGGER.info("Current Version: {}", currentVersionCode);
+        assertEquals("development version code is 0", 0, currentVersionCode);
+    }
+
+    /**
      * Check {@link VersionUtils#compare(String, String)} behavior with null values.
      */
     @Test
