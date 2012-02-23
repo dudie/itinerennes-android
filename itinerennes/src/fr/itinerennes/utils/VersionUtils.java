@@ -79,4 +79,27 @@ public final class VersionUtils {
         }
         return version;
     }
+
+    /**
+     * Gets the version code of the running ItineRennes instance.
+     * 
+     * @param context
+     *            the context
+     * @return the current code running version
+     */
+    public static int getCode(final Context context) {
+
+        final PackageManager pkgManager = context.getPackageManager();
+        final String pkgName = context.getPackageName();
+        int versionCode;
+
+        try {
+            versionCode = pkgManager.getPackageInfo(pkgName, 0).versionCode;
+        } catch (final NameNotFoundException e) {
+            versionCode = 0;
+            ErrorReporter.getInstance().handleSilentException(e);
+        }
+        return versionCode;
+    }
+
 }

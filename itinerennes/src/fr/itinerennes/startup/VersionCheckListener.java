@@ -1,23 +1,16 @@
 package fr.itinerennes.startup;
 
-import java.net.URI;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
 import fr.itinerennes.ItineRennesApplication;
-import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.model.VersionCheck;
+import fr.itinerennes.business.service.VersionService;
+import fr.itinerennes.startup.version.model.UpdateInfo;
 import fr.itinerennes.ui.activity.NewVersionActivity;
-import fr.itinerennes.utils.VersionUtils;
-import fr.itinerennes.utils.xml.XmlVersionParser;
 
 /**
  * Listener which checks if a new application version is available.
@@ -30,7 +23,10 @@ public final class VersionCheckListener extends AsyncTask<Void, Void, Intent> {
     private static final Logger LOGGER = LoggerFactory.getLogger(VersionCheckListener.class);
 
     /** The context. */
-    private final ItineRennesApplication context;
+    private final Context context;
+
+    /** The version service. */
+    private final VersionService versionService;
 
     /**
      * Constructor.
@@ -41,6 +37,7 @@ public final class VersionCheckListener extends AsyncTask<Void, Void, Intent> {
     public VersionCheckListener(final ItineRennesApplication context) {
 
         this.context = context;
+        this.versionService = new VersionService(context, context.getHttpClient());
     }
 
     /**
@@ -55,58 +52,21 @@ public final class VersionCheckListener extends AsyncTask<Void, Void, Intent> {
     @Override
     protected Intent doInBackground(final Void... params) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("start checking version");
-        }
-
         Intent i = null;
-        final HttpClient httpClient = context.getHttpClient();
-        final HttpGet request = new HttpGet();
-        try {
-            request.setURI(new URI(ItineRennesConstants.ITINERENNES_VERSION_URL));
-            final HttpResponse response = httpClient.execute(request);
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 
-                final XmlVersionParser parser = new XmlVersionParser();
+        final UpdateInfo update = versionService.getUpdateInfo();
+        if (null != update && Boolean.TRUE.equals(update.isAvailable())) {
 
-                final VersionCheck versionCheck = parser.parse(response.getEntity().getContent());
+            final boolean mandatory = Boolean.valueOf(update.isMandatory());
 
-                final String currentVersion = VersionUtils.getCurrent(context);
+            LOGGER.info("An update is available (mandatory={})", mandatory);
 
-                final int comparisonMinRequired = VersionUtils.compare(currentVersion,
-                        versionCheck.getMinRequired());
-                final int comparisonLatest = VersionUtils.compare(currentVersion,
-                        versionCheck.getLatest());
+            i = new Intent();
+            i.setAction(NewVersionActivity.INTENT_UPGRADE);
+            i.putExtra(NewVersionActivity.INTENT_EXTRA_MANDATORY_UPGRADE, mandatory);
 
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(String
-                            .format("Current version : %s - Latest version : %s - Minimum required version : %s",
-                                    currentVersion, versionCheck.getLatest(),
-                                    versionCheck.getMinRequired()));
-                }
-
-                if (comparisonMinRequired < 0 || comparisonLatest < 0) {
-
-                    i = new Intent();
-                    i.setAction(NewVersionActivity.INTENT_UPGRADE);
-
-                    if (comparisonMinRequired < 0) {
-                        // minimum version required is greater than the current version
-                        i.putExtra(NewVersionActivity.INTENT_EXTRA_MANDATORY_UPGRADE, true);
-
-                    } else if (comparisonLatest < 0) {
-                        // the latest available version is greater than the current version
-                        i.putExtra(NewVersionActivity.INTENT_EXTRA_MANDATORY_UPGRADE, false);
-                    }
-                }
-
-            }
-        } catch (final Exception e) {
-            LOGGER.warn("Can not get version informations.");
-        }
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("end checking version.");
+        } else if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("No update available");
         }
 
         return i;
