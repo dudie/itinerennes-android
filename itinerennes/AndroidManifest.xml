@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.itinerennes"
-    android:versionCode="0"
-    android:versionName="snapshot" >
-
-    <uses-sdk android:minSdkVersion="7" />
-
+      package="fr.itinerennes"
+      android:versionCode="0"
+      android:versionName="snapshot">
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="4"
+        android:maxSdkVersion="6"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -121,41 +120,7 @@
             android:name=".provider.SearchMarkersProvider"
             android:authorities="fr.itinerennes.provider.searchMarkersProvider" >
         </provider>
-
-        <activity
-            android:name=".ui.widget.BikeWidgetConfigurationWizardActivity"
-            android:theme="@android:style/Theme.Black" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
-
-        <!-- Broadcast receiver for bike widget update -->
-        <receiver
-            android:name=".ui.widget.BikeWidgetProvider"
-            android:label="@string/bike_widget_label" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="fr.itinerennes.intent.BIKE_WIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/wgt_bike" />
-        </receiver>
-
-        <!-- Service to perform web API queries for bike widget -->
-        <service android:name=".ui.widget.BikeWidgetProvider$UpdateService" />
-
-        <activity
-            android:name=".ui.activity.FullScreenImageActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
-        </activity>
+    
     </application>
 
 </manifest>
