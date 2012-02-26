@@ -39,7 +39,7 @@ public class SearchUtils {
     public static String canonicalize(final String query) {
 
         if (null != query) {
-            final String normalizedQuery = StringUtils.normalize(query);
+            final String normalizedQuery = StringUtils.unaccent(query);
             if (null != normalizedQuery) {
                 return normalizedQuery.toLowerCase().replaceAll("[^a-z0-9]", "");
             }

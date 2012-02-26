@@ -1,11 +1,14 @@
 package fr.itinerennes.commons.utils;
 
-import java.lang.reflect.Method;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import fr.itinerennes.commons.utils.unaccent.CompatibleUnaccentProvider;
+import fr.itinerennes.commons.utils.unaccent.UTFUnaccentProvider;
+import fr.itinerennes.commons.utils.unaccent.UnaccentProvider;
 
 /**
  * Some String function utilities.
@@ -17,42 +20,16 @@ public final class StringUtils {
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.class);
 
-    /**
-     * The method
-     * <code>java.text.Normalizer#normalize(java.lang.String, java.text.Normalizer.Form)</code>.
-     */
-    private static final Method NORMALIZE;
+    /** A tool to remove accents. */
+    private static final UnaccentProvider unaccent;
 
-    /** The enum value <code>java.text.Normalizer.Form.NFD</code>. */
-    private static final Object NFD;
-
-    /*
-     * Load a java.text.Normalizer instance to normalize UTF8 string and then remove diachritics
-     * characters.
-     */
     static {
-        Method normalizerNormalizeMethod = null;
-        Object formNFDEnumValue = null;
-        try {
-            final Class<?> normalizerClazz = Class.forName("java.text.Normalizer");
-            final Class<?> formClazz = Class.forName("java.text.Normalizer$Form");
-
-            normalizerNormalizeMethod = normalizerClazz.getMethod("normalize", CharSequence.class,
-                    formClazz);
-
-            for (final Object enumValue : formClazz.getEnumConstants()) {
-                if ("NFD".equals(enumValue.toString())) {
-                    formNFDEnumValue = enumValue;
-                }
-            }
-            if (null == formNFDEnumValue) {
-                throw new IllegalStateException("Enum value for form NFD not found");
-            }
-        } catch (final Throwable t) {
-            LOGGER.info("No java.text.Normalizer instance found, UTF-8 string normalizing is not supported");
+        final UTFUnaccentProvider utfProvider = new UTFUnaccentProvider();
+        if (utfProvider.isCompatible()) {
+            unaccent = utfProvider;
+        } else {
+            unaccent = new CompatibleUnaccentProvider();
         }
-        NORMALIZE = normalizerNormalizeMethod;
-        NFD = formNFDEnumValue;
     }
 
     /**
@@ -89,38 +66,6 @@ public final class StringUtils {
     }
 
     /**
-     * Gets whether or not UTF-8 string normalizing is supported.
-     * 
-     * @return true is UTF-8 string normalizing is supported
-     */
-    public static boolean isNormalizeSupported() {
-
-        return null != NORMALIZE && null != NFD;
-    }
-
-    /**
-     * Normalizes the given string using the Canonical decomposition form (
-     * <code>java.text.Normalizer.Form.NFD</code>).
-     * 
-     * @param s
-     *            the string to normalize
-     * @return the normalized string
-     */
-    public static String normalize(final String s) {
-
-        String result = s;
-        if (null != s && isNormalizeSupported()) {
-            try {
-                result = (String) NORMALIZE.invoke(null, s, NFD);
-            } catch (final Exception e) {
-                throw new UnsupportedOperationException(
-                        "Unable to normalize the given string in this environment", e);
-            }
-        }
-        return result;
-    }
-
-    /**
      * Remove accents from the given string.
      * 
      * @param s
@@ -130,8 +75,8 @@ public final class StringUtils {
      */
     public static String unaccent(final String s) {
 
-        if (null != s && isNormalizeSupported()) {
-            return normalize(s).replaceAll("[\u0300-\u036F]", "");
+        if (null != s) {
+            return unaccent.unaccent(s);
         } else {
             return s;
         }

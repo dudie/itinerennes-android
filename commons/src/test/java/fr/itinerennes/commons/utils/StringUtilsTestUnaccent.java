@@ -31,7 +31,7 @@ public final class StringUtilsTestUnaccent extends AbstractStringOperationTestCa
     }
 
     /**
-     * Initialized the test values.
+     * Initializes the test values.
      * 
      * @return a list of constructor parameters to initialize test cases
      */
