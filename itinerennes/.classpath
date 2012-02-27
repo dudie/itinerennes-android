@@ -5,7 +5,7 @@
 	<classpathentry exported="true" kind="var" path="M2_REPO/org/acra/acra/4.2.3/acra-4.2.3.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/org/slf4j/slf4j-itinerennes/1.1/slf4j-itinerennes-1.1.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/org/osmdroid/osmdroid-itinerennes/1.0.1/osmdroid-itinerennes-1.0.1.jar"/>
-	<classpathentry exported="true" kind="var" path="M2_REPO/fr/itinerennes/itinerennes-commons/0.5-SNAPSHOT/itinerennes-commons-0.5-SNAPSHOT.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/fr/itinerennes/itinerennes-commons/0.6-SNAPSHOT/itinerennes-commons-0.6-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/nominatim-api/1.0.1/nominatim-api-1.0.1.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/rennes-data-api/1.0.1/rennes-data-api-1.0.1.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/onebusaway-api/1.0/onebusaway-api-1.0.jar"/>
