@@ -29,7 +29,9 @@ public class SearchUtils {
      * Do the following operations:
      * <ul>
      * <li>remove accents/diachritics characters</li>
-     * <li>remove all non alphanumeric characters (keeps only a-z0-9)</li>
+     * <li>remove all non alphanumeric characters (keeps only a-z0-9) <strong>and replace them with
+     * _ SQL wildcard</strong></li>
+     * <li><strong>add % SQL wildcard</strong> at beginning and ending</li>
      * </ul>
      * 
      * @param query
@@ -41,7 +43,8 @@ public class SearchUtils {
         if (null != query) {
             final String normalizedQuery = StringUtils.unaccent(query);
             if (null != normalizedQuery) {
-                return normalizedQuery.toLowerCase().replaceAll("[^a-z0-9]", "");
+                return String.format("%%%s%%",
+                        normalizedQuery.toLowerCase().replaceAll("[^a-z0-9]", "_"));
             }
         }
         return null;
