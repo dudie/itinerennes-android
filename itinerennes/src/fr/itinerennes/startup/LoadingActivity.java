@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.widget.ProgressBar;
 
 import fr.itinerennes.R;
@@ -128,19 +129,27 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
 
     /**
      * Default <i>back</i> button behavior is overrided. Now <i>back</i> button does the same as
-     * <i>home</i> button. See {@link Issue #587 https://bugtracker.dudie.fr/issues/587}.
+     * <i>home</i> button. See {@link Issue #587 https://bugtracker.dudie.fr/issues/587} .
+     * {@inheritDoc}
      * 
-     * @see android.app.Activity#onBackPressed()
+     * @see android.app.Activity#onKeyDown()
      */
     @Override
-    public final void onBackPressed() {
+    public final boolean onKeyDown(final int keyCode, final KeyEvent event) {
 
-        final Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        startActivity(intent);
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            final Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Back button pressed. Displaying home screen.");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Back button pressed. Displaying home screen.");
+            }
+
+            return true;
+
+        } else {
+            return super.onKeyDown(keyCode, event);
         }
     }
 
