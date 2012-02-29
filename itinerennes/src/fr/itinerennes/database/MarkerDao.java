@@ -166,7 +166,7 @@ public class MarkerDao implements MarkersColumns {
             LOGGER.debug("getMarkers.start - type={}, labelFilter={}", type, labelFilter);
         }
 
-        StringBuffer sb = new StringBuffer();
+        final StringBuffer sb = new StringBuffer();
 
         sb.append(String.format("SELECT %s, %s, %s ", _ID, ID, LABEL));
         sb.append(String.format("FROM %s ", MARKERS_TABLE_NAME));
@@ -179,8 +179,8 @@ public class MarkerDao implements MarkersColumns {
                     MarkersColumns.TYPE, MarkersColumns.LABEL, MarkersColumns.SEARCH_LABEL));
 
             selectionArgsList.add(type);
-            selectionArgsList.add("%" + labelFilter + "%");
-            selectionArgsList.add("%" + SearchUtils.canonicalize(labelFilter) + "%");
+            selectionArgsList.add(String.format("%%%s%%", labelFilter));
+            selectionArgsList.add(SearchUtils.canonicalize(labelFilter));
 
         } else {
             // else, filtering markers on the type only
@@ -197,7 +197,7 @@ public class MarkerDao implements MarkersColumns {
                     MarkersColumns.ID));
 
             boolean first = true;
-            for (String id : selectedIds) {
+            for (final String id : selectedIds) {
                 if (!first) {
                     sb.append(",");
 
@@ -308,8 +308,8 @@ public class MarkerDao implements MarkersColumns {
                 MarkersColumns.TYPE, MarkersColumns.LABEL, MarkersColumns.LONGITUDE,
                 MarkersColumns.LATITUDE };
 
-        final String[] selectionArgs = new String[] { "%" + query + "%",
-                "%" + SearchUtils.canonicalize(query) + "%" };
+        final String[] selectionArgs = new String[] { String.format("%%%s%%", query),
+                SearchUtils.canonicalize(query) };
 
         final String groupBy = String.format("%s, %s", MarkersColumns.LABEL, MarkersColumns.TYPE);
 
@@ -335,8 +335,8 @@ public class MarkerDao implements MarkersColumns {
             LOGGER.debug("getSuggestions.start - query={}", query);
         }
 
-        final String[] selectionArgs = new String[] { "%" + query + "%",
-                "%" + SearchUtils.canonicalize(query) + "%", query };
+        final String[] selectionArgs = new String[] { String.format("%%%s%%", query),
+                SearchUtils.canonicalize(query) };
 
         if (getSuggestionsStatement == null) {
 
