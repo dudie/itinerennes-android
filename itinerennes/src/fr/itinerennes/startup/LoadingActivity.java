@@ -7,16 +7,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
+import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.R;
 import fr.itinerennes.database.CSVDataReader;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
+import fr.itinerennes.utils.VersionUtils;
 
 /**
  * @author Jérémie Huchet
@@ -66,6 +69,12 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
 
             /* message sent when synchronous listeners finished their job, the activity is finished */
             case MSG_PROGRESS_FINISH:
+                // we must update the preferences to store the current versionCode
+                final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
+                        .edit();
+                edit.putInt(ITRPrefs.PREV_EXEC_VERSION_CODE,
+                        VersionUtils.getCode(getBaseContext()));
+                edit.commit();
                 finish();
                 break;
 
@@ -107,22 +116,51 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
             listener.execute();
         }
 
+        /* ONLY IF this is the first startup of this version : */
         /* initializes the listeners to trigger in foreground on application startup */
         /* the activity keep running until these listeners finish their work */
         // prepare task runner and start
-        final List<AbstractStartupListener> syncListeners = new ArrayList<AbstractStartupListener>();
-        final TaskRunner syncListenerRunner = new TaskRunner(syncListeners);
+        if (isFirstStartAfterInstallation()) {
+            final List<AbstractStartupListener> syncListeners = new ArrayList<AbstractStartupListener>();
+            final TaskRunner syncListenerRunner = new TaskRunner(syncListeners);
 
-        syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
-                syncListenerRunner, CSVDataReader.markers(getBaseContext())));
-        syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
-                syncListenerRunner, CSVDataReader.accessibility(getBaseContext())));
-        syncListenerRunner.start();
+            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                    syncListenerRunner, CSVDataReader.markers(getBaseContext())));
+            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                    syncListenerRunner, CSVDataReader.accessibility(getBaseContext())));
+            syncListenerRunner.start();
+        } else {
+            finish();
+        }
 
         super.onCreate(savedInstanceState);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.end");
+        }
+    }
+
+    /**
+     * Checks if an update occurred from the last run.
+     * 
+     * @return true if the application have been updated between the last run and now
+     */
+    private final boolean isFirstStartAfterInstallation() {
+
+        // get the previous versionCode
+        final SharedPreferences prefs = getApplicationContext().getITRPreferences();
+        final int previous = prefs.getInt(ITRPrefs.PREV_EXEC_VERSION_CODE, -1);
+
+        final int current = VersionUtils.getCode(this);
+
+        if (current != previous) {
+            LOGGER.info(
+                    "ItinéRennes have been upgraded  from versionCode {} to {} and preloading tasks may be triggered",
+                    previous, current);
+            return true;
+        } else {
+            LOGGER.info("Preload tasks not required");
+            return false;
         }
     }
 

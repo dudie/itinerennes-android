@@ -1,5 +1,7 @@
 package fr.itinerennes;
 
+import fr.itinerennes.startup.LoadingActivity;
+
 /**
  * Constants for preferences.
  * 
@@ -16,6 +18,12 @@ public final class ITRPrefs {
 
     /** Preferences file name. */
     public static final String PREFS_NAME = "fr.itinerennes";
+
+    /**
+     * Preference key where the version code of the last execution of the application is stored.
+     * {@link LoadingActivity} is in charge to update this property.
+     */
+    public static final String PREV_EXEC_VERSION_CODE = "prev.exec.version.code";
 
     /** Preferences key for map center latitude. */
     public static final String MAP_CENTER_LAT = String.format("%s.%s", PREFS_NAME, "latitude");
