@@ -4,7 +4,7 @@
 
     <groupId>fr.itinerennes</groupId>
     <artifactId>itinerennes-parent</artifactId>
-    <version>0.5.1-SNAPSHOT</version>
+    <version>0.5.1_api4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>ItineRennes parent</name>
