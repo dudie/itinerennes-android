@@ -18,9 +18,6 @@ public final class Conf {
     /** True if ACRA reporting is enabled. */
     public static final boolean ACRA_ENABLED;
 
-    /** True if strict mode is enabled. */
-    public static final boolean STRICT_ENABLED;
-
     static {
         final Properties props = new Properties();
         try {
@@ -28,7 +25,6 @@ public final class Conf {
                     "assets/itinerennes.properties"));
 
             ACRA_ENABLED = Boolean.valueOf(props.getProperty("acra.enabled"));
-            STRICT_ENABLED = Boolean.valueOf(props.getProperty("strict.enabled"));
 
         } catch (final Throwable t) {
             throw new IllegalStateException("Can't load itinerennes.properties configuration file",
@@ -51,7 +47,6 @@ public final class Conf {
         if (LOGGER.isDebugEnabled()) {
             final StringBuilder conf = new StringBuilder();
             conf.append("acra.enabled = ").append(ACRA_ENABLED).append("\n");
-            conf.append("strict.enabled = ").append(STRICT_ENABLED).append("\n");
             LOGGER.info("Current configuration: \n{}", conf);
         }
     }
