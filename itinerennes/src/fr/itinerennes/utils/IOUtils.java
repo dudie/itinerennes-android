@@ -9,8 +9,10 @@ import org.apache.http.util.ByteArrayBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.database.Cursor;
+
 /**
- * Some file utilities.
+ * Some utilities to deal with I/O resources.
  * 
  * @author Jérémie Huchet
  */
@@ -77,5 +79,20 @@ public final class IOUtils {
         }
 
         return bytes.toByteArray();
+    }
+
+    /**
+     * Closes an InputStream.
+     * <p>
+     * Equivalent to {@link Cursor#close()} but accept null values.
+     * 
+     * @param cursor
+     *            the {@link Cursor} to close, may be null or already closed
+     */
+    public static void close(final Cursor cursor) {
+
+        if (null != cursor && !cursor.isClosed()) {
+            cursor.close();
+        }
     }
 }

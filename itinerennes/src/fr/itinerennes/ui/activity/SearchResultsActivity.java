@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
+
 import fr.dudie.nominatim.model.Address;
 
 import fr.itinerennes.ItineRennesConstants;
@@ -33,6 +34,7 @@ import fr.itinerennes.database.Columns.LocationColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.database.Columns.NominatimColumns;
 import fr.itinerennes.ui.adapter.WrapperAdapter;
+import fr.itinerennes.utils.IOUtils;
 import fr.itinerennes.utils.MapUtils;
 import fr.itinerennes.utils.NominatimTranslator;
 import fr.itinerennes.utils.ResourceResolver;
@@ -282,6 +284,14 @@ public final class SearchResultsActivity extends ItineRennesActivity {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onNewIntent.end");
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        IOUtils.close(markersAdapter.getCursor());
+        IOUtils.close(nominatimAdapter.getCursor());
+        super.onDestroy();
     }
 
     /**
