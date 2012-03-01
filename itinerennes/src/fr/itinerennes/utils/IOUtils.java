@@ -14,10 +14,10 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Jérémie Huchet
  */
-public final class FileUtils {
+public final class IOUtils {
 
     /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
 
     /** Char buffer length for input reads. */
     private static final int CHAR_BUF_SIZE = 512;
@@ -28,7 +28,7 @@ public final class FileUtils {
     /**
      * Private constructor to avoid instantiation.
      */
-    private FileUtils() {
+    private IOUtils() {
 
     }
 

@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import fr.itinerennes.ItineRennesConstants;
-import fr.itinerennes.utils.FileUtils;
+import fr.itinerennes.utils.IOUtils;
 
 /**
  * The database helper. Manage database creation and update.
@@ -102,7 +102,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     private String readScript(final String filename) {
 
         try {
-            return FileUtils.read(assets.open(filename, AssetManager.ACCESS_STREAMING));
+            return IOUtils.read(assets.open(filename, AssetManager.ACCESS_STREAMING));
         } catch (final IOException e) {
             final String msg = String
                     .format("Failed to read packaged database script: an error occured while accessing asset %s",
