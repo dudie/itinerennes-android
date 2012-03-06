@@ -153,12 +153,36 @@
                         <targetPath>${project.build.directory}/generated-resources/assets</targetPath>
                         <filtering>false</filtering>
                         <includes>
-                            <include>itinerennes.properties</include>
                             <include>slf4j.properties</include>
                         </includes>
                     </resource>
                 </resources>
                 <plugins>
+                    <plugin>
+                        <groupId>org.beardedgeeks</groupId>
+                        <artifactId>maven-merge-properties-plugin</artifactId>
+                        <version>0.2</version>
+                        <configuration>
+                            <merges>
+                                <merge>
+                                    <targetFile>${project.build.directory}/generated-resources/assets/itinerennes.properties</targetFile>
+                                    <propertiesFiles>
+                                        <propertiesFile>${basedir}/etc/conf/prod/itinerennes.properties</propertiesFile>
+                                        <propertiesFile>${basedir}/assets/itinerennes.properties</propertiesFile>
+                                    </propertiesFiles>
+                                </merge>
+                            </merges>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>merge-itinerennes-properties</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>merge</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <!-- there is an issue with JDK7 and maven-jarsigner-plugin, so java version is enforced to 1.6 when releasing -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>

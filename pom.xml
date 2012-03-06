@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.itinerennes</groupId>
@@ -13,6 +14,19 @@
     <properties>
         <versionCode /><!-- Empty versionCode property to avoid recursivity issue if not set -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- dependencies versions -->
+        <version.itinerennes-commons>${project.version}</version.itinerennes-commons>
+        <version.itinerennes-android>${project.version}</version.itinerennes-android>
+        <version.gson>2.1</version.gson>
+        <version.acra>4.2.3</version.acra>
+        <version.slf4j-api>1.6.1</version.slf4j-api>
+        <version.slf4j-log4j12>1.6.1</version.slf4j-log4j12>
+        <version.slf4j-itinerennes>1.1</version.slf4j-itinerennes>
+        <version.osmdroid-itinerennes>1.0.1</version.osmdroid-itinerennes>
+        <version.rennes-data-api>1.0.1</version.rennes-data-api>
+        <version.nominatim-api>1.0.1</version.nominatim-api>
+        <version.onebusaway-api>1.0</version.onebusaway-api>
     </properties>
 
     <modules>
@@ -122,6 +136,15 @@
                 <enabled>true</enabled>
             </releases>
         </pluginRepository>
+        <pluginRepository>
+            <!-- Beardedgeeks repository hosts properties-merge plugin -->
+            <id>beardedgeeks-googlecode</id>
+            <name>Beardedgeeks GoogleCode Repository</name>
+            <url>https://beardedgeeks.googlecode.com/svn/repository/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
     </pluginRepositories>
 
     <dependencyManagement>
@@ -150,66 +173,66 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>itinerennes-commons</artifactId>
-                <version>${project.version}</version>
+                <version>${version.itinerennes-commons}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>itinerennes-android</artifactId>
-                <version>${project.version}</version>
+                <version>${version.itinerennes-android}</version>
                 <type>apk</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>itinerennes-android</artifactId>
-                <version>${project.version}</version>
+                <version>${version.itinerennes-android}</version>
                 <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
-                <version>2.1</version>
+                <version>${version.gson}</version>
             </dependency>
             <dependency>
                 <groupId>org.acra</groupId>
                 <artifactId>acra</artifactId>
-                <version>4.2.3</version>
+                <version>${version.acra}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.6.1</version>
+                <version>${version.slf4j-api}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <version>1.6.1</version>
+                <version>${version.slf4j-log4j12}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-itinerennes</artifactId>
-                <version>1.1</version>
+                <version>${version.slf4j-itinerennes}</version>
             </dependency>
             <dependency>
                 <groupId>org.osmdroid</groupId>
                 <artifactId>osmdroid-itinerennes</artifactId>
-                <version>1.0.1</version>
+                <version>${version.osmdroid-itinerennes}</version>
             </dependency>
             <dependency>
                 <groupId>fr.dudie</groupId>
                 <artifactId>rennes-data-api</artifactId>
-                <version>1.0.1</version>
+                <version>${version.rennes-data-api}</version>
             </dependency>
             <dependency>
                 <groupId>fr.dudie</groupId>
                 <artifactId>nominatim-api</artifactId>
-                <version>1.0.1</version>
+                <version>${version.nominatim-api}</version>
             </dependency>
             <dependency>
                 <groupId>fr.dudie</groupId>
                 <artifactId>onebusaway-api</artifactId>
-                <version>1.0</version>
+                <version>${version.onebusaway-api}</version>
             </dependency>
             
             <!-- test dependencies -->
@@ -262,6 +285,11 @@
                         <undeployBeforeDeploy>true</undeployBeforeDeploy>
                     </configuration>
                     <extensions>true</extensions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
