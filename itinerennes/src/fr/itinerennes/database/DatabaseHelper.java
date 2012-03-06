@@ -10,7 +10,7 @@ import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.Conf;
 import fr.itinerennes.utils.IOUtils;
 
 /**
@@ -46,7 +46,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
      */
     public DatabaseHelper(final Context context) {
 
-        super(context, DATABASE_NAME, null, ItineRennesConstants.DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, Conf.DATABASE_SCHEMA_VERSION);
         assets = context.getAssets();
     }
 
@@ -60,7 +60,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(String.format("database creation - name=%s, version=%d, script=%s",
-                    DATABASE_NAME, ItineRennesConstants.DATABASE_VERSION, CREATE_SCRIPT));
+                    DATABASE_NAME, Conf.DATABASE_SCHEMA_VERSION, CREATE_SCRIPT));
         }
 
         execScript(db, readScript(CREATE_SCRIPT));

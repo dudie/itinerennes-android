@@ -10,7 +10,7 @@ import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.widget.ToggleButton;
 
-import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.ItinerennesMapView;
@@ -83,7 +83,7 @@ public final class LocationOverlay extends MyLocationOverlay {
         enableMyLocation();
         super.enableFollowLocation();
         ((ToggleButton) this.context.findViewById(R.id.mylocation_button)).setChecked(true);
-        map.getController().setZoom(ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
+        map.getController().setZoom(Conf.MAP_DEFAULT_ZOOM);
 
     }
 

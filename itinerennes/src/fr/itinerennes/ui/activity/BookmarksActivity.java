@@ -10,8 +10,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import fr.itinerennes.Conf;
 import fr.itinerennes.ErrorCodeConstants;
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.database.MarkerDao;
@@ -64,13 +64,13 @@ public class BookmarksActivity extends ItineRennesActivity {
 
                     BookmarksActivity.this.startActivity(MapActivity.IntentFactory
                             .getOpenMapBoxIntent(getApplicationContext(), item,
-                                    ItineRennesConstants.CONFIG_ZOOM_ON_LOCATION));
+                                    Conf.MAP_ZOOM_ON_LOCATION));
                 } catch (final GenericException e) {
                     // bookmark is not found, remove it
                     bookmarksService.setNotStarred(favType, favId);
                     Toast.makeText(BookmarksActivity.this,
                             getString(R.string.delete_bookmark_not_found, favLabel),
-                            ItineRennesConstants.TOAST_DURATION).show();
+                            Conf.TOAST_DURATION).show();
                     onCreate(null);
                 }
 

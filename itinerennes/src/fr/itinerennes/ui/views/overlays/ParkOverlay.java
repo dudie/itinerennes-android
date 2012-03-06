@@ -17,10 +17,11 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.MotionEvent;
+
 import fr.dudie.keolis.model.RelayPark;
 import fr.dudie.keolis.model.RelayParkState;
 
-import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -148,7 +149,7 @@ public class ParkOverlay extends LazyOverlay implements ILayerSelector {
         final int[] states = new int[2];
         int index = 0;
 
-        if (map.getZoomLevel() >= ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
+        if (map.getZoomLevel() >= Conf.MAP_MINIMUM_ZOOM_ITEMS) {
             states[index++] = R.attr.state_high_zoom;
         }
 

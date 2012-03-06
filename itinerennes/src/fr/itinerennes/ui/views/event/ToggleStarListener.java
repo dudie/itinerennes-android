@@ -4,7 +4,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 
-import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -54,7 +54,7 @@ public class ToggleStarListener implements OnCheckedChangeListener {
         this.type = type;
         this.id = id;
         this.label = label;
-        this.notification = Toast.makeText(context, null, ItineRennesConstants.TOAST_DURATION);
+        this.notification = Toast.makeText(context, null, Conf.TOAST_DURATION);
     }
 
     /**

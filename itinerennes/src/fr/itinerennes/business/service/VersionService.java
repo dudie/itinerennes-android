@@ -17,7 +17,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
-import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.Conf;
 import fr.itinerennes.startup.version.model.PackageVersion;
 import fr.itinerennes.startup.version.model.UpdateInfo;
 import fr.itinerennes.utils.VersionUtils;
@@ -62,8 +62,8 @@ public class VersionService {
         LOGGER.debug("getUpdateInfo.start");
 
         final HttpGet request = new HttpGet();
-        request.setURI(URI.create(String.format("%s/%d.json",
-                ItineRennesConstants.ITINERENNES_VERSION_URL, VersionUtils.getCode(context))));
+        request.setURI(URI.create(String.format("%s/%d.json", Conf.ITINERENNES_VERSION_URL,
+                VersionUtils.getCode(context))));
 
         UpdateInfo updateInfo = null;
 

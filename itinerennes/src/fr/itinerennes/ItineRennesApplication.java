@@ -90,8 +90,6 @@ public class ItineRennesApplication extends Application {
     @Override
     public final void onCreate() {
 
-        Conf.info();
-
         if (Conf.ACRA_ENABLED) {
             // The following line triggers the initialization of ACRA
             ACRA.init(this);
@@ -270,8 +268,8 @@ public class ItineRennesApplication extends Application {
     public final KeolisClient getKeolisClient() {
 
         if (null == keolisClient) {
-            keolisClient = new JsonKeolisClient(getHttpClient(),
-                    ItineRennesConstants.KEOLIS_API_URL, ItineRennesConstants.KEOLIS_API_KEY);
+            keolisClient = new JsonKeolisClient(getHttpClient(), Conf.KEOLIS_API_URL,
+                    Conf.KEOLIS_API_KEY);
         }
         return keolisClient;
     }
@@ -284,8 +282,8 @@ public class ItineRennesApplication extends Application {
     public final IOneBusAwayClient getOneBusAwayClient() {
 
         if (null == oneBusAwayClient) {
-            oneBusAwayClient = new JsonOneBusAwayClient(getHttpClient(),
-                    ItineRennesConstants.OBA_API_URL, ItineRennesConstants.OBA_API_KEY);
+            oneBusAwayClient = new JsonOneBusAwayClient(getHttpClient(), Conf.ONEBUSAWAY_API_URL,
+                    Conf.ONEBUSAWAY_API_KEY);
         }
         return oneBusAwayClient;
     }
@@ -299,14 +297,10 @@ public class ItineRennesApplication extends Application {
 
         if (null == nominatimClient) {
             final BoundingBox bounds = new BoundingBox();
-            bounds.setWestE6(ItineRennesConstants.CONFIG_RENNES_LON
-                    - ItineRennesConstants.CONFIG_NOMINATIM_SEARCH_OFFSET);
-            bounds.setEastE6(ItineRennesConstants.CONFIG_RENNES_LON
-                    + ItineRennesConstants.CONFIG_NOMINATIM_SEARCH_OFFSET);
-            bounds.setNorthE6(ItineRennesConstants.CONFIG_RENNES_LAT
-                    + ItineRennesConstants.CONFIG_NOMINATIM_SEARCH_OFFSET);
-            bounds.setSouthE6(ItineRennesConstants.CONFIG_RENNES_LAT
-                    - ItineRennesConstants.CONFIG_NOMINATIM_SEARCH_OFFSET);
+            bounds.setWestE6(Conf.MAP_RENNES_LON - Conf.NOMINATIM_SEARCH_OFFSET);
+            bounds.setEastE6(Conf.MAP_RENNES_LON + Conf.NOMINATIM_SEARCH_OFFSET);
+            bounds.setNorthE6(Conf.MAP_RENNES_LAT + Conf.NOMINATIM_SEARCH_OFFSET);
+            bounds.setSouthE6(Conf.MAP_RENNES_LAT - Conf.NOMINATIM_SEARCH_OFFSET);
             nominatimClient = new JsonNominatimClient(getHttpClient(), getResources().getString(
                     R.string.contact_mail), bounds, true);
         }

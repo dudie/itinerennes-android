@@ -33,7 +33,7 @@ import fr.dudie.onebusaway.model.Route;
 import fr.dudie.onebusaway.model.ScheduleStopTime;
 import fr.dudie.onebusaway.model.StopSchedule;
 
-import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.commons.utils.DateUtils;
@@ -275,7 +275,7 @@ public final class BusStopActivity extends ItineRennesActivity {
             c.close();
 
             startActivity(MapActivity.IntentFactory.getOpenMapBoxIntent(getApplicationContext(),
-                    marker, ItineRennesConstants.CONFIG_ZOOM_ON_LOCATION));
+                    marker, Conf.MAP_ZOOM_ON_LOCATION));
 
         } else {
             // TJHU gestion erreur qui ne doit pas arriver dans un cas normal

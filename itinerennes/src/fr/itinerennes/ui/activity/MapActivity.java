@@ -28,9 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import fr.itinerennes.Conf;
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesApplication;
-import fr.itinerennes.ItineRennesConstants;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.database.Columns;
@@ -109,12 +109,12 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
         final SharedPreferences sharedPreferences = getApplicationContext().getITRPreferences();
         final int zoomToRestore = sharedPreferences.getInt(ITRPrefs.MAP_ZOOM_LEVEL,
-                ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
+                Conf.MAP_DEFAULT_ZOOM);
         map.getController().setZoom(zoomToRestore);
         final int latToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LAT,
-                ItineRennesConstants.CONFIG_RENNES_LAT);
+                Conf.MAP_RENNES_LAT);
         final int lonToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LON,
-                ItineRennesConstants.CONFIG_RENNES_LON);
+                Conf.MAP_RENNES_LON);
         map.getController().setCenter(new GeoPoint(latToRestore, lonToRestore));
 
         // if a location provider is enabled and follow location is activated in preferences, the
@@ -230,8 +230,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            Toast.makeText(this, R.string.location_service_disabled,
-                    ItineRennesConstants.TOAST_DURATION).show();
+            Toast.makeText(this, R.string.location_service_disabled, Conf.TOAST_DURATION).show();
             ((ToggleButton) button).setChecked(false);
         } else {
             myLocation.toggleFollowLocation();
@@ -361,12 +360,9 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     private void saveMapCenterInPreferences(final Editor edit, final int latitude,
             final int longitude, final int zoom) {
 
-        edit.putInt(ITRPrefs.MAP_CENTER_LAT, (latitude != 0) ? latitude
-                : ItineRennesConstants.CONFIG_RENNES_LAT);
-        edit.putInt(ITRPrefs.MAP_CENTER_LON, (longitude != 0) ? longitude
-                : ItineRennesConstants.CONFIG_RENNES_LAT);
-        edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, (zoom != 0) ? zoom
-                : ItineRennesConstants.CONFIG_DEFAULT_ZOOM);
+        edit.putInt(ITRPrefs.MAP_CENTER_LAT, (latitude != 0) ? latitude : Conf.MAP_RENNES_LAT);
+        edit.putInt(ITRPrefs.MAP_CENTER_LON, (longitude != 0) ? longitude : Conf.MAP_RENNES_LAT);
+        edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, (zoom != 0) ? zoom : Conf.MAP_DEFAULT_ZOOM);
 
         edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, myLocation.isMyLocationEnabled());
     }
@@ -424,7 +420,7 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                 if (barycentre != null) {
                     onNewIntent(IntentFactory.getCenterOnLocationIntent(getApplicationContext(),
                             barycentre.getLatitudeE6(), barycentre.getLongitudeE6(),
-                            ItineRennesConstants.CONFIG_ZOOM_ON_LOCATION, type));
+                            Conf.MAP_ZOOM_ON_LOCATION, type));
                 }
 
             }

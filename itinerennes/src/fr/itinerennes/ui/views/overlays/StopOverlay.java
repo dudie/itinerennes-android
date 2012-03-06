@@ -20,7 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.MotionEvent;
 
-import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.business.event.IBookmarkModificationListener;
@@ -293,7 +293,7 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
         final int[] states = new int[2];
         int index = 0;
 
-        if (map.getZoomLevel() >= ItineRennesConstants.CONFIG_MINIMUM_ZOOM_ITEMS) {
+        if (map.getZoomLevel() >= Conf.MAP_MINIMUM_ZOOM_ITEMS) {
             states[index++] = R.attr.state_high_zoom;
         }
 

@@ -11,7 +11,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 
 /**
@@ -128,7 +128,7 @@ public final class NewVersionActivity extends Activity {
     private Intent buildManualDownloadIntent() {
 
         final Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(ItineRennesConstants.DOWNLOAD_PAGE_URL));
+        intent.setData(Uri.parse(Conf.ITINERENNES_DOWNLOAD_PAGE_URL));
 
         return intent;
     }

@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import fr.dudie.nominatim.model.Address;
 
-import fr.itinerennes.ItineRennesConstants;
+import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.commons.utils.SearchUtils;
 import fr.itinerennes.database.Columns.LocationColumns;
@@ -144,8 +144,8 @@ public final class SearchResultsActivity extends ItineRennesActivity {
 
                             startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(
                                     getApplicationContext(), barycentre.getLatitudeE6(),
-                                    barycentre.getLongitudeE6(),
-                                    ItineRennesConstants.CONFIG_ZOOM_ON_LOCATION, markerType));
+                                    barycentre.getLongitudeE6(), Conf.MAP_ZOOM_ON_LOCATION,
+                                    markerType));
 
                         }
 
@@ -162,8 +162,7 @@ public final class SearchResultsActivity extends ItineRennesActivity {
                         }
 
                         startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(
-                                getApplicationContext(), latE6, lonE6,
-                                ItineRennesConstants.CONFIG_ZOOM_ON_LOCATION));
+                                getApplicationContext(), latE6, lonE6, Conf.MAP_ZOOM_ON_LOCATION));
                     }
 
                 }
