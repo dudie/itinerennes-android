@@ -46,7 +46,10 @@ public class MapBoxView extends LinearLayout {
      * Always return true to to tell parent view the event has been dispatched and handled by this
      * view. This mechanism is used with {@link MapView} {@link Overlay}s to avoid events happening
      * on views on top of the overlays to be dispatched to the overlays.
+     * <p>
+     * {@inheritDoc}
      * 
+     * @return always true
      * @see android.view.View#dispatchTouchEvent(android.view.MotionEvent)
      */
     @Override

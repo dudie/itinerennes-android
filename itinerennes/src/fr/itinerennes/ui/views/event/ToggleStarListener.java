@@ -1,12 +1,17 @@
 package fr.itinerennes.ui.views.event;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.business.service.BookmarkService;
+import fr.itinerennes.model.Bookmark;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 
 /**
@@ -71,14 +76,37 @@ public class ToggleStarListener implements OnCheckedChangeListener {
 
         notification.cancel();
         if (isChecked) {
-            bookmarks.setStarred(type, id, label);
-            notification.setText(context.getString(R.string.added_to_bookmarks, label));
-            notification.show();
+
+            // generate a dialog box to let the user name its new bookmark
+            final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.bookmarks_dialog_title_add);
+            builder.setIcon(android.R.drawable.star_off);
+            builder.setMessage(R.string.bookmarks_give_a_name);
+            final EditText bookmarkName = new EditText(context);
+            bookmarkName.setText(label);
+            builder.setView(bookmarkName);
+            // if the user confirm, then add the bookmark
+            builder.setPositiveButton(R.string.bookmarks_button_add, new OnClickListener() {
+
+                @Override
+                public void onClick(final DialogInterface dialog, final int which) {
+
+                    bookmarks.setStarred(type, id, bookmarkName.getText().toString());
+                    notification.setText(context.getString(R.string.added_to_bookmarks,
+                            bookmarkName.getText().toString()));
+                    notification.show();
+                }
+            });
+            builder.create().show();
+
         } else {
-            bookmarks.setNotStarred(type, id);
-            notification.setText(context.getString(R.string.removed_from_bookmarks, label));
-            notification.show();
+            final Bookmark bm = bookmarks.getBookmark(type, id);
+            if (null != bm) {
+                bookmarks.setNotStarred(type, id);
+                notification.setText(context.getString(R.string.removed_from_bookmarks,
+                        bm.getLabel()));
+                notification.show();
+            }
         }
     }
-
 }

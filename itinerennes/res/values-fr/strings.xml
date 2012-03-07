@@ -22,6 +22,9 @@
     <string name="added_to_bookmarks"><i>%s</i> ajouté aux favoris</string>
     <string name="removed_from_bookmarks"><i>%s</i> retiré des favoris</string>
     <string name="delete_bookmark_not_found"><i>%s</i> est retiré des favoris car il n\'est plus disponible</string>
+    <string name="bookmarks_dialog_title_add">Ajouter un favori</string>
+    <string name="bookmarks_give_a_name">Nommez le favori :</string>
+    <string name="bookmarks_button_add">Ajouter</string>
     
     <!-- overlays -->
     <string name="overlay_unamed">Overlay sans nom</string>

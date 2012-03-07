@@ -27,7 +27,7 @@ import fr.itinerennes.utils.VersionUtils;
  * 
  * @author Jérémie Huchet
  */
-public class VersionService {
+public final class VersionService {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(VersionService.class);

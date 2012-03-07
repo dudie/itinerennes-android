@@ -162,6 +162,44 @@ public final class BookmarkService extends AbstractService implements BookmarksC
     }
 
     /**
+     * Gets a bookmark.
+     * 
+     * @param type
+     *            the type of the resource
+     * @param id
+     *            the identifier of the resource
+     * @return the bookmark if it exists or null
+     */
+    public Bookmark getBookmark(final String type, final String id) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getBookmark.start - type={}, id={}", type, id);
+        }
+
+        final String selection = String.format("%s = ? AND %s = ?", TYPE, ID);
+        final String[] args = new String[] { type, id };
+
+        final Cursor c = dbHelper.getWritableDatabase().query(BOOKMARKS_TABLE_NAME,
+                new String[] { LABEL, TYPE, ID }, selection, args, null, null, null);
+
+        final Bookmark bm;
+        if (c.moveToNext()) {
+            bm = new Bookmark();
+            bm.setLabel(c.getString(0));
+            bm.setType(c.getString(1));
+            bm.setId(c.getString(2));
+        } else {
+            bm = null;
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("getBookmark.end - bookmark={}", bm);
+        }
+
+        return bm;
+    }
+
+    /**
      * Gets all bookmarks.
      * 
      * @return all bookmarks
