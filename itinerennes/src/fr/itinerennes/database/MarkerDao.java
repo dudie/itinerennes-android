@@ -336,7 +336,7 @@ public class MarkerDao implements MarkersColumns {
         }
 
         final String[] selectionArgs = new String[] { String.format("%%%s%%", query),
-                SearchUtils.canonicalize(query) };
+                SearchUtils.canonicalize(query), query };
 
         if (getSuggestionsStatement == null) {
 
