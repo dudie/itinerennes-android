@@ -33,7 +33,7 @@ import fr.itinerennes.test.ItineRennesRobolelectricTestRunner;
  * @author Jérémie Huchet
  */
 @RunWith(ItineRennesRobolelectricTestRunner.class)
-public class VersionServiceTest {
+public final class VersionServiceTest {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(VersionServiceTest.class);
