@@ -72,8 +72,7 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
                 // we must update the preferences to store the current versionCode
                 final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
                         .edit();
-                edit.putInt(ITRPrefs.PREV_EXEC_VERSION_CODE,
-                        VersionUtils.getCode(getBaseContext()));
+                edit.putInt(ITRPrefs.PREV_EXEC_VERSION_CODE, VersionUtils.getCode(getBaseContext()));
                 edit.commit();
                 finish();
                 break;
@@ -145,7 +144,7 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
      * 
      * @return true if the application have been updated between the last run and now
      */
-    private final boolean isFirstStartAfterInstallation() {
+    private boolean isFirstStartAfterInstallation() {
 
         // get the previous versionCode
         final SharedPreferences prefs = getApplicationContext().getITRPreferences();

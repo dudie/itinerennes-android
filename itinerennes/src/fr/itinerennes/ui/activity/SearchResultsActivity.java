@@ -30,6 +30,7 @@ import fr.dudie.nominatim.model.Address;
 import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.commons.utils.SearchUtils;
+import fr.itinerennes.commons.utils.StringUtils;
 import fr.itinerennes.database.Columns.LocationColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.database.Columns.NominatimColumns;
@@ -333,19 +334,31 @@ public final class SearchResultsActivity extends ItineRennesActivity {
 
             boolean handled = false;
 
-            if (R.id.search_result_marker_icon == view.getId()) {
+            switch (view.getId()) {
+            case R.id.search_result_marker_icon:
                 // want to bind the marker icon view
                 final String type = cursor.getString(columnIndex);
                 final int resId = ResourceResolver.getDrawableId(context,
                         String.format("ic_activity_title_%s", type), 0);
                 ((ImageView) view).setImageResource(resId);
                 handled = true;
-            } else if (R.id.search_result_marker_label == view.getId()
-                    || R.id.search_result_nominatim_label == view.getId()) {
+                break;
+            case R.id.search_result_marker_label:
+            case R.id.search_result_nominatim_label:
                 final String html = SearchUtils.highlight(cursor.getString(columnIndex), query,
                         "<b>", "</b>");
                 ((TextView) view).setText(Html.fromHtml(html));
                 handled = true;
+                break;
+            case R.id.search_result_marker_city:
+                if (StringUtils.isBlank(cursor.getString(columnIndex))) {
+                    view.setVisibility(View.GONE);
+                }
+                // let android handle binding
+                handled = false;
+                break;
+            default:
+                break;
             }
             return handled;
         }
