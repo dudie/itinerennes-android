@@ -1,1459 +1,1459 @@
 1458
-BUS;2_1001;48129037;-1632508;Longs Champs;longschamps
-BUS;2_1002;48128266;-1637656;Bouzat;bouzat
-BUS;2_1003;48127441;-1640290;Gallets;gallets
-BUS;2_1004;48125288;-1642538;Donzelot;donzelot
-BUS;2_1005;48123127;-1646831;Mirabeau;mirabeau
-BUS;2_1006;48122263;-1650696;Turmel;turmel
-BUS;2_1007;48121419;-1655058;Assomption;assomption
-BUS;2_1008;48123174;-1660244;Painlevé;painleve
-BUS;2_1009;48121625;-1663177;Metz Volney;metzvolney
-BUS;2_1010;48119176;-1667659;Guehenno;guehenno
-BUS;2_1011;48118305;-1671203;Fac De Droit;facdedroit
-BUS;2_1012;48116180;-1674098;Sévigné;sevigne
-BUS;2_1013;48116872;-1678238;Hôtel Dieu;hoteldieu
-BUS;2_1014;48113711;-1679036;Sainte Anne;sainteanne
-BUS;2_1015;48112522;-1680317;Champ Jacquet;champjacquet
-BUS;2_1016;48110073;-1680167;République Nemours;republiquenemours
-BUS;2_1017;48108349;-1680175;Les Halles;leshalles
-BUS;2_1018;48106048;-1681600;Plélo Colombier;plelocolombier
-BUS;2_1019;48105158;-1684711;Cité Judiciaire;citejudiciaire
-BUS;2_1020;48097394;-1689563;Mermoz;mermoz
-BUS;2_1021;48105506;-1683880;Cité Judiciaire;citejudiciaire
-BUS;2_1022;48106229;-1680810;Plélo Colombier;plelocolombier
-BUS;2_1023;48107982;-1680116;Les Halles;leshalles
-BUS;2_1024;48109979;-1680212;République Nemours;republiquenemours
-BUS;2_1025;48112736;-1680258;Champ Jacquet;champjacquet
-BUS;2_1026;48114785;-1679278;Sainte Anne;sainteanne
-BUS;2_1027;48117231;-1677368;Hôtel Dieu;hoteldieu
-BUS;2_1028;48117507;-1673610;Sévigné;sevigne
-BUS;2_1029;48118320;-1669697;Fac De Droit;facdedroit
-BUS;2_1030;48119478;-1666851;Guehenno;guehenno
-BUS;2_1031;48122004;-1662241;Metz Volney;metzvolney
-BUS;2_1032;48123319;-1659328;Painlevé;painleve
-BUS;2_1033;48121324;-1654994;Assomption;assomption
-BUS;2_1034;48122219;-1650619;Turmel;turmel
-BUS;2_1035;48123702;-1645293;Mirabeau;mirabeau
-BUS;2_1036;48125539;-1642129;Donzelot;donzelot
-BUS;2_1037;48127740;-1640020;Gallets;gallets
-BUS;2_1038;48128263;-1637265;Bouzat;bouzat
-BUS;2_1039;48129017;-1632430;Longs Champs;longschamps
-BUS;2_1040;48130061;-1684335;Donelière;doneliere
-BUS;2_1041;48128842;-1683715;Trois Croix;troiscroix
-BUS;2_1042;48124420;-1681788;Cimetière Nord;cimetierenord
-BUS;2_1043;48123595;-1684179;Saint Martin;saintmartin
-BUS;2_1044;48122248;-1685850;Iufm;iufm
-BUS;2_1046;48118223;-1689352;Anatole France;anatolefrance
-BUS;2_1047;48116178;-1691167;La Touche;latouche
-BUS;2_1048;48113346;-1693460;Brest Verdun;brestverdun
-BUS;2_1049;48111683;-1689489;Horizons;horizons
-BUS;2_1050;48111736;-1687017;Les Lices;leslices
-BUS;2_1051;48109859;-1683279;Place De Bretagne;placedebretagne
-BUS;2_1052;48109893;-1678874;République;republique
-BUS;2_1054;48107550;-1675084;Liberté Tnb;libertetnb
-BUS;2_1055;48105335;-1673892;Champs Libres;champslibres
-BUS;2_1056;48103990;-1672131;Gares;gares
-BUS;2_1057;48105219;-1666130;Laënnec;laennec
-BUS;2_1059;48101368;-1659599;Croix Saint Hélier;croixsainthelier
-BUS;2_1060;48099528;-1657553;Piré;pire
-BUS;2_1061;48097330;-1654331;Bourgeois;bourgeois
-BUS;2_1062;48095126;-1650558;Calmette;calmette
-BUS;2_1063;48092768;-1647498;Monsieur Vincent;monsieurvincent
-BUS;2_1064;48090351;-1645025;Lycée Descartes;lyceedescartes
-BUS;2_1065;48087587;-1643937;La Poterie;lapoterie
-BUS;2_1066;48087800;-1638640;Monnet;monnet
-BUS;2_1067;48089432;-1635418;Bourgueil;bourgueil
-BUS;2_1068;48092015;-1636425;Gohier;gohier
-BUS;2_1069;48092707;-1639675;Ronceray;ronceray
-BUS;2_1070;48094450;-1637998;Carsat;carsat
-BUS;2_1071;48096183;-1637020;Haut Sancé;hautsance
-BUS;2_1072;48094993;-1637938;Carsat;carsat
-BUS;2_1073;48092573;-1639663;Ronceray;ronceray
-BUS;2_1074;48091876;-1636292;Gohier;gohier
-BUS;2_1075;48089494;-1635437;Bourgueil;bourgueil
-BUS;2_1076;48087993;-1638306;Monnet;monnet
-BUS;2_1077;48087441;-1643422;La Poterie;lapoterie
-BUS;2_1078;48089886;-1644715;Lycée Descartes;lyceedescartes
-BUS;2_1079;48092743;-1647240;Monsieur Vincent;monsieurvincent
-BUS;2_1080;48095951;-1651586;Calmette;calmette
-BUS;2_1081;48098002;-1655346;Bourgeois;bourgeois
-BUS;2_1082;48099897;-1657814;Piré;pire
-BUS;2_1083;48102163;-1660276;Croix Saint Hélier;croixsainthelier
-BUS;2_1084;48103267;-1662346;Martin;martin
-BUS;2_1085;48104733;-1665656;Laënnec;laennec
-BUS;2_1086;48104004;-1672011;Gares;gares
-BUS;2_1087;48106030;-1674102;Champs Libres;champslibres
-BUS;2_1088;48107449;-1674914;Liberté Tnb;libertetnb
-BUS;2_1090;48109526;-1677907;République;republique
-BUS;2_1091;48109779;-1683882;Place De Bretagne;placedebretagne
-BUS;2_1092;48111766;-1686266;Les Lices;leslices
-BUS;2_1093;48111743;-1689562;Horizons;horizons
-BUS;2_1094;48113096;-1693384;Brest Verdun;brestverdun
-BUS;2_1095;48116461;-1690829;La Touche;latouche
-BUS;2_1096;48118206;-1689283;Anatole France;anatolefrance
-BUS;2_1097;48121021;-1686805;Iufm;iufm
-BUS;2_1099;48123616;-1683642;Saint Martin;saintmartin
-BUS;2_1100;48124935;-1681982;Cimetière Nord;cimetierenord
-BUS;2_1101;48127275;-1683226;Trois Croix;troiscroix
-BUS;2_1102;48131160;-1684581;Donelière;doneliere
-BUS;2_1103;48138800;-1659213;Saint Laurent;saintlaurent
-BUS;2_1104;48134788;-1658549;Hôtel De Région;hotelderegion
-BUS;2_1105;48135550;-1655694;Héronière;heroniere
-BUS;2_1106;48134364;-1652169;Gayeulles Piscine;gayeullespiscine
-BUS;2_1107;48130869;-1652104;Le Blizz;leblizz
-BUS;2_1108;48128388;-1652168;Gayeulles;gayeulles
-BUS;2_1109;48125659;-1651874;Joliot Curie;joliotcurie
-BUS;2_1110;48124155;-1651620;Chateaubriand;chateaubriand
-BUS;2_1111;48120243;-1650710;Docteur Quentin;docteurquentin
-BUS;2_1112;48118900;-1650928;Vitré Danton;vitredanton
-BUS;2_1113;48116353;-1655631;Jeanne D'arc;jeannedarc
-BUS;2_1114;48114474;-1658009;Durafour;durafour
-BUS;2_1115;48113497;-1661275;Oberthur;oberthur
-BUS;2_1116;48112743;-1664385;Saint Vincent;saintvincent
-BUS;2_1117;48112492;-1666853;Châteaudun;chateaudun
-BUS;2_1118;48111759;-1671215;Thabor;thabor
-BUS;2_1119;48110542;-1674891;Place Pasteur;placepasteur
-BUS;2_1120;48109982;-1677857;République Jaurès;republiquejaures
-BUS;2_1121;48106071;-1677766;Charles De Gaulle;charlesdegaulle
-BUS;2_1122;48103064;-1676827;Gare Sud Féval;garesudfeval
-BUS;2_1123;48099161;-1675701;Ginguené;ginguene
-BUS;2_1124;48097336;-1675580;Jacques Cartier;jacquescartier
-BUS;2_1125;48096905;-1679148;Sacrés Coeurs;sacrescoeurs
-BUS;2_1126;48096030;-1681668;Garigliano;garigliano
-BUS;2_1127;48093065;-1681876;Frères Moines;freresmoines
-BUS;2_1128;48091036;-1682113;Champs Manceaux;champsmanceaux
-BUS;2_1129;48087275;-1682399;Suède;suede
-BUS;2_1130;48085207;-1682485;Canada;canada
-BUS;2_1131;48082705;-1682384;Bosphore;bosphore
-BUS;2_1132;48082335;-1677872;Alma;alma
-BUS;2_1133;48082140;-1682536;Bosphore;bosphore
-BUS;2_1134;48085178;-1682307;Canada;canada
-BUS;2_1135;48088075;-1682214;Suède;suede
-BUS;2_1136;48091137;-1682082;Champs Manceaux;champsmanceaux
-BUS;2_1137;48093597;-1681869;Frères Moines;freresmoines
-BUS;2_1138;48096347;-1681615;Garigliano;garigliano
-BUS;2_1139;48096958;-1678507;Sacrés Coeurs;sacrescoeurs
-BUS;2_1140;48097413;-1674766;Jacques Cartier;jacquescartier
-BUS;2_1141;48099278;-1675618;Ginguené;ginguene
-BUS;2_1142;48101338;-1676257;Gare Sud Féval;garesudfeval
-BUS;2_1143;48106081;-1677601;Charles De Gaulle;charlesdegaulle
-BUS;2_1144;48110069;-1677805;République Jaurès;republiquejaures
-BUS;2_1146;48111873;-1671130;Thabor;thabor
-BUS;2_1147;48112716;-1664396;Saint Vincent;saintvincent
-BUS;2_1148;48113411;-1661415;Oberthur;oberthur
-BUS;2_1149;48114256;-1658739;Durafour;durafour
-BUS;2_1150;48116528;-1655525;Jeanne D'arc;jeannedarc
-BUS;2_1151;48118792;-1651619;Vitré Danton;vitredanton
-BUS;2_1152;48120434;-1650673;Docteur Quentin;docteurquentin
-BUS;2_1153;48124439;-1651497;Chateaubriand;chateaubriand
-BUS;2_1154;48126085;-1651817;Joliot Curie;joliotcurie
-BUS;2_1155;48129166;-1652102;Gayeulles;gayeulles
-BUS;2_1156;48131856;-1652002;Le Blizz;leblizz
-BUS;2_1157;48134945;-1652059;Gayeulles Piscine;gayeullespiscine
-BUS;2_1158;48135539;-1656205;Héronière;heroniere
-BUS;2_1159;48134394;-1658754;Hôtel De Région;hotelderegion
-BUS;2_1160;48114059;-1637216;Tournebride;tournebride
-BUS;2_1161;48112311;-1644291;Plaine De Baud;plainedebaud
-BUS;2_1162;48110336;-1655975;Pont De Strasbourg;pontdestrasbourg
-BUS;2_1163;48110332;-1660390;Robidou;robidou
-BUS;2_1164;48110106;-1666777;Pont De Châteaudun;pontdechateaudun
-BUS;2_1165;48110062;-1670178;Paul Bert;paulbert
-BUS;2_1166;48109883;-1675129;Musée Beaux Arts;museebeauxarts
-BUS;2_1167;48109367;-1678658;République Pré Botté;republiqueprebotte
-BUS;2_1168;48109809;-1678824;République;republique
-BUS;2_1169;48109853;-1674521;Musée Beaux Arts;museebeauxarts
-BUS;2_1170;48110033;-1669072;Paul Bert;paulbert
-BUS;2_1171;48110038;-1664873;Pont De Châteaudun;pontdechateaudun
-BUS;2_1172;48109830;-1659417;Robidou;robidou
-BUS;2_1173;48109935;-1656761;Pont De Strasbourg;pontdestrasbourg
-BUS;2_1174;48112584;-1642861;Plaine De Baud;plainedebaud
-BUS;2_1175;48116984;-1633906;Beaulieu Chimie;beaulieuchimie
-BUS;2_1176;48119017;-1635148;Beaulieu Insa;beaulieuinsa
-BUS;2_1177;48121880;-1640286;Beaulieu Restau U;beaulieurestauu
-BUS;2_1178;48120783;-1643865;Beaulieu Cité U;beaulieuciteu
-BUS;2_1179;48116984;-1655848;Jeanne D'arc;jeannedarc
-BUS;2_1180;48116161;-1659329;Balzac;balzac
-BUS;2_1181;48116195;-1662590;Musset Cité U;mussetciteu
-BUS;2_1182;48116250;-1665058;George Sand;georgesand
-BUS;2_1183;48117355;-1678550;Hôtel Dieu;hoteldieu
-BUS;2_1184;48117172;-1681590;Dinan;dinan
-BUS;2_1185;48117679;-1684845;Legraverend;legraverend
-BUS;2_1186;48118533;-1688159;Anatole France;anatolefrance
-BUS;2_1187;48114029;-1698259;Maison Diocésaine;maisondiocesaine
-BUS;2_1188;48114985;-1702086;La Salle;lasalle
-BUS;2_1189;48116033;-1705639;Languedoc;languedoc
-BUS;2_1190;48117407;-1708252;Bourgogne;bourgogne
-BUS;2_1191;48115574;-1704723;Languedoc;languedoc
-BUS;2_1192;48114890;-1701297;La Salle;lasalle
-BUS;2_1193;48113777;-1698021;Maison Diocésaine;maisondiocesaine
-BUS;2_1194;48118210;-1687202;Anatole France;anatolefrance
-BUS;2_1195;48117761;-1685005;Legraverend;legraverend
-BUS;2_1196;48117206;-1682320;Dinan;dinan
-BUS;2_1197;48116403;-1673256;Sévigné;sevigne
-BUS;2_1198;48116315;-1668887;George Sand;georgesand
-BUS;2_1199;48116200;-1662900;Musset Cité U;mussetciteu
-BUS;2_1200;48116828;-1656386;Jeanne D'arc;jeannedarc
-BUS;2_1201;48119113;-1649197;Vitré Foulon;vitrefoulon
-BUS;2_1202;48120620;-1644335;Beaulieu Cité U;beaulieuciteu
-BUS;2_1203;48122033;-1639599;Beaulieu Restau U;beaulieurestauu
-BUS;2_1204;48119477;-1635390;Beaulieu Insa;beaulieuinsa
-BUS;2_1205;48097121;-1629230;Veyettes;veyettes
-BUS;2_1206;48100158;-1631542;Tremblaie;tremblaie
-BUS;2_1207;48103490;-1634593;Pré Garel;pregarel
-BUS;2_1208;48104116;-1637689;Saint Saëns;saintsaens
-BUS;2_1209;48105008;-1644564;Pavie;pavie
-BUS;2_1210;48104292;-1649696;Cimetière De L'est;cimetieredelest
-BUS;2_1211;48103177;-1652512;Serpette;serpette
-BUS;2_1212;48101913;-1656525;Mouézy;mouezy
-BUS;2_1213;48102008;-1660046;Croix Saint Hélier;croixsainthelier
-BUS;2_1214;48109901;-1679667;République;republique
-BUS;2_1215;48109972;-1686796;Pont De Bretagne;pontdebretagne
-BUS;2_1216;48109189;-1690305;Le Mail;lemail
-BUS;2_1217;48108452;-1693644;Chèques Postaux;chequespostaux
-BUS;2_1218;48109101;-1697955;Guilloux Lorient;guillouxlorient
-BUS;2_1219;48108247;-1703761;Papeteries;papeteries
-BUS;2_1220;48109143;-1706385;Kerviler;kerviler
-BUS;2_1221;48108866;-1710614;Géniaux;geniaux
-BUS;2_1222;48108074;-1713962;Stade Rennais;staderennais
-BUS;2_1223;48106221;-1723831;Le Hô;leho
-BUS;2_1224;48103064;-1723353;Robinot De St Cyr;robinotdestcyr
-BUS;2_1225;48102182;-1726235;Jardin Moderne;jardinmoderne
-BUS;2_1226;48101224;-1731694;Servigné;servigne
-BUS;2_1229;48101182;-1731628;Servigné;servigne
-BUS;2_1230;48102110;-1726915;Jardin Moderne;jardinmoderne
-BUS;2_1231;48103281;-1723332;Robinot De St Cyr;robinotdestcyr
-BUS;2_1232;48106256;-1723746;Le Hô;leho
-BUS;2_1233;48107045;-1721878;Lemaistre;lemaistre
-BUS;2_1234;48107759;-1714849;Stade Rennais;staderennais
-BUS;2_1235;48108927;-1709771;Géniaux;geniaux
-BUS;2_1236;48108813;-1705615;Kerviler;kerviler
-BUS;2_1237;48107736;-1702114;Papeteries;papeteries
-BUS;2_1238;48108696;-1698848;Guilloux Lorient;guillouxlorient
-BUS;2_1239;48108142;-1694868;Chèques Postaux;chequespostaux
-BUS;2_1240;48109272;-1689707;Le Mail;lemail
-BUS;2_1241;48109996;-1686495;Pont De Bretagne;pontdebretagne
-BUS;2_1242;48109803;-1679522;République;republique
-BUS;2_1243;48101735;-1659416;Croix Saint Hélier;croixsainthelier
-BUS;2_1244;48102292;-1655132;Mouézy;mouezy
-BUS;2_1245;48103136;-1652505;Serpette;serpette
-BUS;2_1246;48104396;-1649342;Cimetière De L'est;cimetieredelest
-BUS;2_1247;48104911;-1643829;Pavie;pavie
-BUS;2_1248;48103985;-1635982;Saint Saëns;saintsaens
-BUS;2_1249;48103560;-1634653;Pré Garel;pregarel
-BUS;2_1250;48099789;-1631294;Tremblaie;tremblaie
-BUS;2_1251;48097079;-1629133;Veyettes;veyettes
-BUS;2_1252;48138768;-1665957;Patton;patton
-BUS;2_1253;48136660;-1667508;Monts D'arrée;montsdarree
-BUS;2_1254;48136754;-1671058;Neruda;neruda
-BUS;2_1255;48134550;-1672977;Condate;condate
-BUS;2_1256;48132643;-1671758;Bellangerais;bellangerais
-BUS;2_1257;48132696;-1667573;Morbihan;morbihan
-BUS;2_1258;48130808;-1663907;Houx Cité U;houxciteu
-BUS;2_1259;48128006;-1664575;Rochester;rochester
-BUS;2_1260;48126703;-1665384;Gros Chêne;groschene
-BUS;2_1261;48125282;-1666664;Volney;volney
-BUS;2_1262;48121471;-1670918;Jules Ferry;julesferry
-BUS;2_1263;48119636;-1674229;Rectorat;rectorat
-BUS;2_1264;48102115;-1684387;Pont De Nantes;pontdenantes
-BUS;2_1265;48099790;-1687088;Foyer Rennais;foyerrennais
-BUS;2_1266;48097089;-1689028;Mermoz;mermoz
-BUS;2_1267;48085736;-1693904;Félix Eboué;felixeboue
-BUS;2_1268;48083764;-1693604;Boberil;boberil
-BUS;2_1269;48084239;-1692072;Lycée Bréquigny;lyceebrequigny
-BUS;2_1270;48085784;-1694045;Félix Eboué;felixeboue
-BUS;2_1273;48092691;-1691275;Saint Yves;saintyves
-BUS;2_1274;48095031;-1690003;Pilate;pilate
-BUS;2_1275;48097458;-1688590;Mermoz;mermoz
-BUS;2_1276;48099706;-1686246;Foyer Rennais;foyerrennais
-BUS;2_1277;48102169;-1684163;Pont De Nantes;pontdenantes
-BUS;2_1278;48117094;-1677868;Hôtel Dieu;hoteldieu
-BUS;2_1279;48119464;-1674483;Rectorat;rectorat
-BUS;2_1280;48121419;-1670873;Jules Ferry;julesferry
-BUS;2_1281;48125284;-1666368;Volney;volney
-BUS;2_1282;48126615;-1665333;Gros Chêne;groschene
-BUS;2_1283;48128792;-1663837;Rochester;rochester
-BUS;2_1284;48131050;-1664400;Houx Cité U;houxciteu
-BUS;2_1285;48132779;-1667598;Morbihan;morbihan
-BUS;2_1286;48132710;-1672343;Bellangerais;bellangerais
-BUS;2_1287;48134917;-1672835;Condate;condate
-BUS;2_1288;48136685;-1670742;Neruda;neruda
-BUS;2_1289;48136586;-1667569;Monts D'arrée;montsdarree
-BUS;2_1290;48126886;-1629544;Clos Courtel;closcourtel
-BUS;2_1291;48124755;-1633884;Iut;iut
-BUS;2_1292;48121450;-1638148;Beaulieu Restau U;beaulieurestauu
-BUS;2_1293;48109921;-1698634;Guilloux;guilloux
-BUS;2_1294;48111408;-1701364;Marbeuf;marbeuf
-BUS;2_1295;48116740;-1704639;Berger;berger
-BUS;2_1296;48119285;-1704556;Université;universite
-BUS;2_1297;48121804;-1703784;Villejean-université;villejeanuniversite
-BUS;2_1298;48125592;-1703071;Irts;irts
-BUS;2_1299;48127852;-1702909;Olympe De Gouges;olympedegouges
-BUS;2_1300;48128586;-1698733;Cucillé;cucille
-BUS;2_1301;48128195;-1693964;Préfecture;prefecture
-BUS;2_1302;48131494;-1691729;Léonard;leonard
-BUS;2_1303;48128326;-1694142;Préfecture;prefecture
-BUS;2_1304;48128508;-1698874;Cucillé;cucille
-BUS;2_1305;48127658;-1703242;Olympe De Gouges;olympedegouges
-BUS;2_1306;48125337;-1703129;Irts;irts
-BUS;2_1307;48121926;-1703889;Villejean-université;villejeanuniversite
-BUS;2_1308;48118921;-1704658;Université;universite
-BUS;2_1309;48116735;-1704773;Berger;berger
-BUS;2_1310;48111223;-1700809;Marbeuf;marbeuf
-BUS;2_1311;48109661;-1698382;Guilloux;guilloux
-BUS;2_1312;48116649;-1633930;Beaulieu Chimie;beaulieuchimie
-BUS;2_1313;48121875;-1638347;Beaulieu Restau U;beaulieurestauu
-BUS;2_1314;48125092;-1633096;Iut;iut
-BUS;2_1315;48109697;-1678081;République;republique
-BUS;2_1316;48101206;-1652964;Raison;raison
-BUS;2_1317;48100140;-1649384;Villebois-mareuil;villeboismareuil
-BUS;2_1318;48099147;-1645973;Landry;landry
-BUS;2_1319;48097056;-1641645;Domaine;domaine
-BUS;2_1320;48094984;-1637251;Carsat;carsat
-BUS;2_1321;48093873;-1633884;Sauvaie;sauvaie
-BUS;2_1322;48094308;-1634743;Sauvaie;sauvaie
-BUS;2_1323;48095438;-1638085;Carsat;carsat
-BUS;2_1324;48097611;-1642420;Domaine;domaine
-BUS;2_1325;48099433;-1646725;Landry;landry
-BUS;2_1326;48101212;-1649627;Villebois-mareuil;villeboismareuil
-BUS;2_1327;48101377;-1653665;Raison;raison
-BUS;2_1328;48133214;-1685288;Lycée Mendès France;lyceemendesfrance
-BUS;2_1329;48121631;-1683237;Iufm;iufm
-BUS;2_1330;48120372;-1681591;Auberge De Jeunesse;aubergedejeunesse
-BUS;2_1331;48117971;-1680745;Square De La Rance;squaredelarance
-BUS;2_1333;48097747;-1675199;Jacques Cartier;jacquescartier
-BUS;2_1334;48097758;-1671284;Châtillon;chatillon
-BUS;2_1335;48097740;-1668349;Ormeaux;ormeaux
-BUS;2_1336;48098022;-1666463;Bigot De Préameneu;bigotdepreameneu
-BUS;2_1337;48097593;-1662953;Sainte Thérèse;saintetherese
-BUS;2_1338;48095015;-1661582;Leray;leray
-BUS;2_1339;48094725;-1658650;Langevin;langevin
-BUS;2_1340;48092031;-1658412;Gide;gide
-BUS;2_1341;48091262;-1654604;Landrel;landrel
-BUS;2_1342;48091202;-1651773;Pologne;pologne
-BUS;2_1343;48087609;-1645968;La Poterie;lapoterie
-BUS;2_1344;48087665;-1650036;Galicie;galicie
-BUS;2_1345;48084881;-1651136;Sainte Elisabeth;sainteelisabeth
-BUS;2_1346;48084688;-1655128;Hôpital Sud;hopitalsud
-BUS;2_1347;48084735;-1657810;Torigné;torigne
-BUS;2_1348;48083621;-1663846;Tage;tage
-BUS;2_1349;48083674;-1668171;Douro;douro
-BUS;2_1350;48083583;-1672305;Portugal;portugal
-BUS;2_1351;48083489;-1667358;Douro;douro
-BUS;2_1352;48083464;-1663267;Tage;tage
-BUS;2_1353;48084556;-1658009;Torigné;torigne
-BUS;2_1354;48084486;-1653244;Hôpital Sud;hopitalsud
-BUS;2_1355;48084929;-1650858;Sainte Elisabeth;sainteelisabeth
-BUS;2_1356;48087532;-1649984;Galicie;galicie
-BUS;2_1358;48091368;-1651909;Pologne;pologne
-BUS;2_1359;48091438;-1655629;Landrel;landrel
-BUS;2_1360;48092420;-1658366;Gide;gide
-BUS;2_1361;48094210;-1658228;Langevin;langevin
-BUS;2_1362;48095080;-1661534;Leray;leray
-BUS;2_1363;48097442;-1662657;Sainte Thérèse;saintetherese
-BUS;2_1364;48098024;-1667082;Bigot De Préameneu;bigotdepreameneu
-BUS;2_1365;48097716;-1669168;Ormeaux;ormeaux
-BUS;2_1366;48097756;-1671109;Châtillon;chatillon
-BUS;2_1367;48110980;-1679520;Mairie;mairie
-BUS;2_1368;48118374;-1680606;Square De La Rance;squaredelarance
-BUS;2_1369;48120266;-1681070;Auberge De Jeunesse;aubergedejeunesse
-BUS;2_1370;48122022;-1683622;Iufm;iufm
-BUS;2_1371;48133003;-1685068;Lycée Mendès France;lyceemendesfrance
-BUS;2_1372;48138409;-1659071;Saint Laurent;saintlaurent
-BUS;2_1373;48135205;-1659387;Hôtel De Région;hotelderegion
-BUS;2_1374;48133248;-1656932;Longs Prés;longspres
-BUS;2_1375;48130137;-1656725;Gast;gast
-BUS;2_1376;48128553;-1657124;Europe;europe
-BUS;2_1377;48126793;-1658544;Trégain;tregain
-BUS;2_1378;48124933;-1661355;Saint Exupéry;saintexupery
-BUS;2_1379;48105911;-1688654;Inkermann;inkermann
-BUS;2_1380;48105214;-1690759;Mabilais;mabilais
-BUS;2_1381;48105084;-1694260;Malakoff;malakoff
-BUS;2_1382;48105104;-1698717;Voltaire;voltaire
-BUS;2_1383;48103607;-1700091;Dargent;dargent
-BUS;2_1384;48102620;-1703825;Champion De Cicé;championdecice
-BUS;2_1385;48100691;-1706978;De Lesseps;delesseps
-BUS;2_1386;48098935;-1705354;Guérinais;guerinais
-BUS;2_1387;48098010;-1708192;Récipon;recipon
-BUS;2_1388;48099342;-1711177;Montand;montand
-BUS;2_1389;48101218;-1711829;Clinique La Sagesse;cliniquelasagesse
-BUS;2_1390;48104136;-1713476;Cleunay;cleunay
-BUS;2_1391;48100883;-1711638;Clinique La Sagesse;cliniquelasagesse
-BUS;2_1392;48099880;-1711239;Montand;montand
-BUS;2_1393;48097896;-1707657;Récipon;recipon
-BUS;2_1394;48099001;-1705508;Guérinais;guerinais
-BUS;2_1395;48101014;-1707020;De Lesseps;delesseps
-BUS;2_1396;48102258;-1704991;Champion De Cicé;championdecice
-BUS;2_1397;48103618;-1700280;Dargent;dargent
-BUS;2_1398;48105189;-1698630;Voltaire;voltaire
-BUS;2_1399;48104976;-1694022;Malakoff;malakoff
-BUS;2_1400;48105413;-1689848;Mabilais;mabilais
-BUS;2_1401;48105622;-1687767;Inkermann;inkermann
-BUS;2_1402;48105581;-1685179;Cité Judiciaire;citejudiciaire
-BUS;2_1403;48125226;-1661004;Saint Exupéry;saintexupery
-BUS;2_1404;48126768;-1658501;Trégain;tregain
-BUS;2_1405;48128345;-1657146;Europe;europe
-BUS;2_1406;48130740;-1656509;Gast;gast
-BUS;2_1407;48133058;-1656700;Longs Prés;longspres
-BUS;2_1408;48119715;-1651296;Vitré Péguy;vitrepeguy
-BUS;2_1409;48126870;-1653165;Joliot Curie;joliotcurie
-BUS;2_1410;48136487;-1662537;Hélias;helias
-BUS;2_1411;48132165;-1672901;Bellangerais;bellangerais
-BUS;2_1412;48121342;-1707771;Cours Kennedy;courskennedy
-BUS;2_1413;48118588;-1708021;Bourgogne;bourgogne
-BUS;2_1414;48116385;-1712159;Merlin;merlin
-BUS;2_1415;48114864;-1713006;Chambre Agriculture;chambreagriculture
-BUS;2_1416;48113511;-1714366;Atalante Champeaux;atalantechampeaux
-BUS;2_1417;48111459;-1713389;Les Arts;lesarts
-BUS;2_1418;48109277;-1710260;Géniaux;geniaux
-BUS;2_1419;48111163;-1712918;Les Arts;lesarts
-BUS;2_1420;48113673;-1712590;Atalante Champeaux;atalantechampeaux
-BUS;2_1421;48114702;-1715623;Chambre Agriculture;chambreagriculture
-BUS;2_1422;48116287;-1711464;Merlin;merlin
-BUS;2_1423;48118530;-1708110;Bourgogne;bourgogne
-BUS;2_1424;48121280;-1707884;Cours Kennedy;courskennedy
-BUS;2_1425;48127979;-1682521;Trois Croix;troiscroix
-BUS;2_1426;48132074;-1672691;Bellangerais;bellangerais
-BUS;2_1427;48136421;-1663312;Hélias;helias
-BUS;2_1428;48134486;-1658671;Hôtel De Région;hotelderegion
-BUS;2_1429;48127668;-1650987;Joliot Curie;joliotcurie
-BUS;2_1430;48123658;-1659398;Painlevé;painleve
-BUS;2_1431;48119491;-1651034;Vitré Péguy;vitrepeguy
-BUS;2_1432;48118769;-1649907;Vitré Foulon;vitrefoulon
-BUS;2_1433;48113583;-1656598;Durafour Strasbourg;durafourstrasbourg
-BUS;2_1434;48109366;-1655190;Pont De Strasbourg;pontdestrasbourg
-BUS;2_1435;48105696;-1650654;Chardonnet;chardonnet
-BUS;2_1436;48103631;-1649759;Cimetière De L'est;cimetieredelest
-BUS;2_1437;48101072;-1649749;Villebois-mareuil;villeboismareuil
-BUS;2_1438;48099223;-1652850;Le Dantec;ledantec
-BUS;2_1439;48098262;-1655167;Bourgeois;bourgeois
-BUS;2_1440;48087731;-1653849;Le Blosne;leblosne
-BUS;2_1441;48086062;-1660940;Triangle;triangle
-BUS;2_1442;48091593;-1667402;Binquenais;binquenais
-BUS;2_1443;48091587;-1662329;Binquenais Collège;binquenaiscollege
-BUS;2_1444;48093560;-1669648;Combes;combes
-BUS;2_1445;48093173;-1674606;Clemenceau;clemenceau
-BUS;2_1446;48090394;-1674912;Argonautes;argonautes
-BUS;2_1447;48087316;-1675016;Henri Fréville;henrifreville
-BUS;2_1448;48081359;-1679749;Alma;alma
-BUS;2_1449;48086824;-1683076;Norvège;norvege
-BUS;2_1450;48086659;-1688372;Coubertin;coubertin
-BUS;2_1451;48086834;-1691273;Lycée Bréquigny;lyceebrequigny
-BUS;2_1452;48089860;-1691064;Bréquigny Piscine;brequignypiscine
-BUS;2_1453;48089745;-1693032;Pigeon Blanc;pigeonblanc
-BUS;2_1454;48089512;-1691195;Bréquigny Piscine;brequignypiscine
-BUS;2_1455;48086731;-1691043;Lycée Bréquigny;lyceebrequigny
-BUS;2_1456;48086580;-1687396;Coubertin;coubertin
-BUS;2_1457;48086794;-1683890;Norvège;norvege
-BUS;2_1458;48082670;-1676919;Alma;alma
-BUS;2_1459;48088061;-1674320;Henri Fréville;henrifreville
-BUS;2_1460;48089311;-1674264;Argonautes;argonautes
-BUS;2_1461;48093706;-1673900;Clemenceau;clemenceau
-BUS;2_1462;48093497;-1670100;Combes;combes
-BUS;2_1463;48091364;-1663184;Binquenais Collège;binquenaiscollege
-BUS;2_1464;48091340;-1666290;Binquenais;binquenais
-BUS;2_1465;48086118;-1661068;Triangle;triangle
-BUS;2_1466;48085043;-1653902;Hôpital Sud;hopitalsud
-BUS;2_1467;48087559;-1653417;Le Blosne;leblosne
-BUS;2_1468;48087414;-1645371;La Poterie;lapoterie
-BUS;2_1469;48099269;-1652577;Le Dantec;ledantec
-BUS;2_1470;48100581;-1650311;Villebois-mareuil;villeboismareuil
-BUS;2_1471;48103724;-1649471;Cimetière De L'est;cimetieredelest
-BUS;2_1472;48107144;-1650970;Chardonnet;chardonnet
-BUS;2_1473;48110699;-1655671;Pont De Strasbourg;pontdestrasbourg
-BUS;2_1474;48113516;-1656716;Durafour Strasbourg;durafourstrasbourg
-BUS;2_1475;48126959;-1629180;Clos Courtel;closcourtel
-BUS;2_1476;48110288;-1664478;Pont De Châteaudun;pontdechateaudun
-BUS;2_1477;48103880;-1672848;Gares;gares
-BUS;2_1479;48109864;-1665396;Pont De Châteaudun;pontdechateaudun
-BUS;2_1480;48132029;-1635038;Gaudinais;gaudinais
-BUS;2_1481;48129818;-1642411;Zac Saint Sulpice;zacsaintsulpice
-BUS;2_1482;48114632;-1680167;Sainte Anne;sainteanne
-BUS;2_1483;48129556;-1643586;Zac Saint Sulpice;zacsaintsulpice
-BUS;2_1484;48131860;-1635898;Gaudinais;gaudinais
-BUS;2_1485;48137972;-1658736;Saint Laurent;saintlaurent
-BUS;2_1486;48134828;-1659832;Hôtel De Région;hotelderegion
-BUS;2_1487;48131413;-1662291;Patton Gast;pattongast
-BUS;2_1489;48132306;-1661589;Patton Gast;pattongast
-BUS;2_1490;48135935;-1659189;Hôtel De Région;hotelderegion
-BUS;2_1491;48138843;-1658368;Saint Laurent;saintlaurent
-BUS;2_1492;48133846;-1693868;Grand Quartier;grandquartier
-BUS;2_1493;48127277;-1693365;Lycée Basch;lyceebasch
-BUS;2_1494;48121253;-1702967;Villejean-université;villejeanuniversite
-BUS;2_1495;48126639;-1693093;Lycée Basch;lyceebasch
-BUS;2_1496;48132295;-1709701;Lande Du Breil;landedubreil
-BUS;2_1497;48121024;-1703001;Villejean-université;villejeanuniversite
-BUS;2_1498;48116582;-1723902;Petit Champeaux;petitchampeaux
-BUS;2_1499;48116260;-1715958;Colin;colin
-BUS;2_1500;48113870;-1705406;Agrocampus;agrocampus
-BUS;2_1501;48109368;-1679767;République Pré Botté;republiqueprebotte
-BUS;2_1502;48113273;-1704559;Agrocampus;agrocampus
-BUS;2_1503;48116161;-1715949;Colin;colin
-BUS;2_1504;48116408;-1723281;Petit Champeaux;petitchampeaux
-BUS;2_1506;48106481;-1731438;Berthault;berthault
-BUS;2_1507;48109370;-1675124;Lycée Zola;lyceezola
-BUS;2_1508;48106735;-1729146;Berthault;berthault
-BUS;2_1509;48088110;-1674450;Henri Fréville;henrifreville
-BUS;2_1510;48087779;-1674465;Henri Fréville;henrifreville
-BUS;2_1511;48087539;-1643455;La Poterie;lapoterie
-BUS;2_1513;48115482;-1648460;Bois Perrin;boisperrin
-BUS;2_1514;48113336;-1647605;Moulin De Joué;moulindejoue
-BUS;2_1515;48113501;-1647554;Moulin De Joué;moulindejoue
-BUS;2_1516;48115953;-1648407;Bois Perrin;boisperrin
-BUS;2_1517;48118540;-1713636;Berry;berry
-BUS;2_1518;48120627;-1710465;Bourbonnais;bourbonnais
-BUS;2_1519;48121101;-1702976;Villejean-université;villejeanuniversite
-BUS;2_1520;48120502;-1709740;Bourbonnais;bourbonnais
-BUS;2_1521;48118460;-1713760;Berry;berry
-BUS;2_1522;48113929;-1642818;Piletière;piletiere
-BUS;2_1523;48114549;-1649953;Moulin De Joué;moulindejoue
-BUS;2_1524;48114674;-1651350;Hôpital Régnier;hopitalregnier
-BUS;2_1525;48113553;-1656729;Durafour Strasbourg;durafourstrasbourg
-BUS;2_1526;48114791;-1653178;Hôpital Régnier;hopitalregnier
-BUS;2_1527;48114335;-1649207;Moulin De Joué;moulindejoue
-BUS;2_1528;48113994;-1644358;Piletière;piletiere
-BUS;2_1529;48121190;-1702972;Villejean-université;villejeanuniversite
-BUS;2_1530;48128995;-1642729;Zac Saint Sulpice;zacsaintsulpice
-BUS;2_1531;48114843;-1680064;Sainte Anne;sainteanne
-BUS;2_1532;48127058;-1652738;Joliot Curie;joliotcurie
-BUS;2_1533;48087600;-1643463;La Poterie;lapoterie
-BUS;2_1534;48088315;-1674443;Henri Fréville;henrifreville
-BUS;2_1535;48083779;-1672376;Portugal;portugal
-BUS;2_1536;48126806;-1630096;Clos Courtel;closcourtel
-BUS;2_1537;48131575;-1691701;Léonard;leonard
-BUS;2_1539;48107231;-1723066;Lemaistre;lemaistre
-BUS;2_1540;48109952;-1685190;Pont De Bretagne;pontdebretagne
-BUS;2_1542;48109973;-1685353;Pont De Bretagne;pontdebretagne
-BUS;2_1543;48131346;-1691835;Léonard;leonard
-BUS;2_1550;48109698;-1677973;République;republique
-BUS;2_1551;48109898;-1678262;République;republique
-BUS;2_1552;48110688;-1673693;Place Pasteur;placepasteur
-BUS;2_1553;48121344;-1702437;Villejean Université;villejeanuniversite
-BUS;2_1554;48090734;-1661205;Binquenais Le Moine;binquenaislemoine
-BUS;2_1555;48113296;-1675229;Fossés;fosses
-BUS;2_1556;48109432;-1677633;République;republique
-BUS;2_1560;48097788;-1656646;Bourgeois;bourgeois
-BUS;2_1561;48096013;-1658010;Langevin;langevin
-BUS;2_1563;48109697;-1678184;République;republique
-BUS;2_1564;48087822;-1674590;Henri Fréville;henrifreville
-BUS;2_1566;48125370;-1692576;Lycée Basch;lyceebasch
-BUS;2_1567;48106229;-1677502;Charles De Gaulle;charlesdegaulle
-BUS;2_1568;48121072;-1713520;Kennedy Guyenne;kennedyguyenne
-BUS;2_1570;48098471;-1697531;Coeur De Courrouze;coeurdecourrouze
-BUS;2_1571;48098290;-1699389;Coeur De Courrouze;coeurdecourrouze
-BUS;2_1572;48117983;-1675227;Vincennes;vincennes
-BUS;2_1573;48097069;-1690299;Mermoz;mermoz
-BUS;2_1574;48090796;-1661143;Binquenais Le Moine;binquenaislemoine
-BUS;2_1576;48122833;-1713677;Villejean Anjou;villejeananjou
-BUS;2_1577;48086706;-1661041;Triangle;triangle
-BUS;2_1584;48111765;-1702884;Marbeuf;marbeuf
-BUS;2_1585;48088049;-1654349;Le Blosne;leblosne
-BUS;2_1586;48131507;-1694506;Beauregard;beauregard
-BUS;2_1587;48105915;-1684405;Cité Judiciaire;citejudiciaire
-BUS;2_1588;48098019;-1703694;Jules Maniez;julesmaniez
-BUS;2_1589;48097935;-1703985;Jules Maniez;julesmaniez
-BUS;2_1590;48099279;-1694228;Jules Verne;julesverne
-BUS;2_1591;48098841;-1695018;Jules Verne;julesverne
-BUS;2_1593;48103428;-1712905;Cleunay;cleunay
-BUS;2_1595;48105832;-1677300;Charles De Gaulle;charlesdegaulle
-BUS;2_2001;48131133;-1624335;Chêne Germain;chenegermain
-BUS;2_2002;48130233;-1627528;Cesson Hôpital Privé;cessonhopitalprive
-BUS;2_2003;48130114;-1628030;Cesson Hôpital Privé;cessonhopitalprive
-BUS;2_2005;48124497;-1594203;Grand Domaine;granddomaine
-BUS;2_2006;48125227;-1596528;Petits Champs;petitschamps
-BUS;2_2007;48123114;-1600558;Bourgchevreuil;bourgchevreuil
-BUS;2_2008;48123586;-1604382;La Coulée;lacoulee
-BUS;2_2009;48123530;-1608133;Fontenelle;fontenelle
-BUS;2_2010;48122799;-1610897;Mare Pavée;marepavee
-BUS;2_2011;48121125;-1609929;Maison D'accueil;maisondaccueil
-BUS;2_2012;48118443;-1608430;Muguet;muguet
-BUS;2_2013;48116439;-1607353;Vilaine;vilaine
-BUS;2_2014;48114681;-1609663;Place Sévigné;placesevigne
-BUS;2_2015;48114222;-1616313;Hublais;hublais
-BUS;2_2016;48114182;-1621949;Taillis;taillis
-BUS;2_2017;48114085;-1630367;Champs Péans;champspeans
-BUS;2_2018;48113985;-1636133;Tournebride;tournebride
-BUS;2_2019;48114079;-1628011;Champs Péans;champspeans
-BUS;2_2020;48114150;-1621839;Taillis;taillis
-BUS;2_2021;48114215;-1613755;Hublais;hublais
-BUS;2_2022;48114675;-1609582;Place Sévigné;placesevigne
-BUS;2_2023;48116049;-1606969;Vilaine;vilaine
-BUS;2_2024;48118326;-1608420;Muguet;muguet
-BUS;2_2025;48121232;-1609952;Maison D'accueil;maisondaccueil
-BUS;2_2026;48122766;-1610840;Mare Pavée;marepavee
-BUS;2_2027;48123491;-1608184;Fontenelle;fontenelle
-BUS;2_2028;48123534;-1604095;La Coulée;lacoulee
-BUS;2_2029;48123147;-1600628;Bourgchevreuil;bourgchevreuil
-BUS;2_2030;48124818;-1596829;Petits Champs;petitschamps
-BUS;2_2031;48123914;-1593452;Grand Domaine;granddomaine
-BUS;2_2032;48106498;-1621371;Z.i. Sud Est;zisudest
-BUS;2_2033;48101390;-1623589;Bas Village;basvillage
-BUS;2_2034;48099620;-1621146;Forum;forum
-BUS;2_2035;48099619;-1620944;Forum;forum
-BUS;2_2036;48101186;-1623961;Bas Village;basvillage
-BUS;2_2037;48106066;-1625694;Erbonière;erboniere
-BUS;2_2038;48114966;-1590601;Haut Grippé;hautgrippe
-BUS;2_2039;48114415;-1600445;Bordage;bordage
-BUS;2_2040;48116177;-1600465;Chalotais;chalotais
-BUS;2_2041;48120577;-1599489;Cesson Collège;cessoncollege
-BUS;2_2042;48124685;-1613148;Les Lacs;leslacs
-BUS;2_2043;48124315;-1618447;Cormier;cormier
-BUS;2_2044;48127308;-1624202;Belle Fontaine;bellefontaine
-BUS;2_2045;48127348;-1628218;Clos Courtel;closcourtel
-BUS;2_2046;48127333;-1627835;Clos Courtel;closcourtel
-BUS;2_2047;48127256;-1624131;Belle Fontaine;bellefontaine
-BUS;2_2048;48124499;-1617669;Cormier;cormier
-BUS;2_2049;48124396;-1614079;Les Lacs;leslacs
-BUS;2_2050;48120117;-1599274;Cesson Collège;cessoncollege
-BUS;2_2051;48115836;-1600651;Chalotais;chalotais
-BUS;2_2052;48131141;-1596949;Saint Etienne;saintetienne
-BUS;2_2053;48126324;-1599128;Cesson Cimetière;cessoncimetiere
-BUS;2_2054;48123105;-1601917;Métairies Chalotais;metairieschalotais
-BUS;2_2055;48120110;-1602222;Cesson Piscine;cessonpiscine
-BUS;2_2056;48118498;-1604504;Cesson Mairie;cessonmairie
-BUS;2_2057;48113886;-1603254;Cesson Gare;cessongare
-BUS;2_2058;48112607;-1607167;Peupliers;peupliers
-BUS;2_2059;48108318;-1608731;Monniais;monniais
-BUS;2_2060;48107792;-1614666;Rond Point De Bray;rondpointdebray
-BUS;2_2061;48106402;-1621269;Z.i. Sud Est;zisudest
-BUS;2_2062;48107828;-1614085;Rond Point De Bray;rondpointdebray
-BUS;2_2063;48108304;-1608851;Monniais;monniais
-BUS;2_2064;48112570;-1607406;Peupliers;peupliers
-BUS;2_2065;48113828;-1603141;Cesson Gare;cessongare
-BUS;2_2066;48118347;-1604208;Cesson Mairie;cessonmairie
-BUS;2_2067;48120373;-1602406;Cesson Piscine;cessonpiscine
-BUS;2_2068;48123174;-1601788;Métairies Chalotais;metairieschalotais
-BUS;2_2069;48126290;-1599071;Cesson Cimetière;cessoncimetiere
-BUS;2_2070;48145107;-1608630;Victoire;victoire
-BUS;2_2071;48140415;-1616799;Château De Vaux;chateaudevaux
-BUS;2_2072;48140599;-1616478;Château De Vaux;chateaudevaux
-BUS;2_2073;48145102;-1608522;Victoire;victoire
-BUS;2_2074;48123532;-1611284;Mare Pavée;marepavee
-BUS;2_2075;48123381;-1611230;Mare Pavée;marepavee
-BUS;2_2076;48134066;-1629063;Lande Bouhard;landebouhard
-BUS;2_2077;48134203;-1628792;Lande Bouhard;landebouhard
-BUS;2_2079;48128798;-1605954;Verger;verger
-BUS;2_2080;48127350;-1612775;Gaudais;gaudais
-BUS;2_2081;48126826;-1619946;Bouriande;bouriande
-BUS;2_2082;48126936;-1619888;Bouriande;bouriande
-BUS;2_2083;48126962;-1614397;Gaudais;gaudais
-BUS;2_2084;48129040;-1604831;Verger;verger
-BUS;2_2085;48116134;-1582357;Champelé;champele
-BUS;2_2086;48114305;-1600484;Bordage;bordage
-BUS;2_2088;48124676;-1590653;Base De Loisirs;basedeloisirs
-BUS;2_2089;48113572;-1590520;Rigourdière;rigourdiere
-BUS;2_2091;48119005;-1598194;Lycée Sévigné;lyceesevigne
-BUS;2_2101;48131726;-1597902;Saint Etienne;saintetienne
-BUS;2_2102;48106169;-1625899;Erbonière;erboniere
-BUS;2_2103;48113348;-1590016;Rigourdière;rigourdiere
-BUS;2_2104;48114919;-1590425;Haut Grippé;hautgrippe
-BUS;2_2105;48131053;-1624625;Chêne Germain;chenegermain
-BUS;2_2106;48116039;-1582351;Champelé;champele
-BUS;2_2201;48075462;-1716353;Morinais;morinais
-BUS;2_2202;48077350;-1715822;Collège Jean Moulin;collegejeanmoulin
-BUS;2_2203;48079420;-1715671;Médiathèque;mediatheque
-BUS;2_2204;48082560;-1715372;Jean Marin;jeanmarin
-BUS;2_2205;48083209;-1710197;Blosne;blosne
-BUS;2_2206;48087518;-1707042;Gaité;gaite
-BUS;2_2207;48093533;-1701348;Lilas;lilas
-BUS;2_2208;48095716;-1694760;Commeurec;commeurec
-BUS;2_2209;48095726;-1694505;Commeurec;commeurec
-BUS;2_2210;48093354;-1701547;Lilas;lilas
-BUS;2_2211;48087272;-1707343;Gaité;gaite
-BUS;2_2212;48084440;-1709176;Blosne;blosne
-BUS;2_2213;48082496;-1715407;Jean Marin;jeanmarin
-BUS;2_2214;48079882;-1715604;Médiathèque;mediatheque
-BUS;2_2215;48076958;-1715908;Collège Jean Moulin;collegejeanmoulin
-BUS;2_2216;48087284;-1694630;Cormier;cormier
-BUS;2_2217;48090625;-1695008;25 Fusillés;25fusilles
-BUS;2_2218;48092381;-1691584;Saint Yves;saintyves
-BUS;2_2219;48094071;-1690577;Pilate;pilate
-BUS;2_2220;48061593;-1724099;Gautrais;gautrais
-BUS;2_2221;48063063;-1720492;Rossel;rossel
-BUS;2_2222;48066409;-1720239;Pommerais;pommerais
-BUS;2_2223;48067376;-1717017;Abbé Grimault;abbegrimault
-BUS;2_2224;48075071;-1715995;Morinais;morinais
-BUS;2_2225;48086859;-1705719;Gaité;gaite
-BUS;2_2226;48086618;-1701365;Rablais Allende;rablaisallende
-BUS;2_2227;48089421;-1697879;Croix Verte;croixverte
-BUS;2_2228;48089806;-1693091;Pigeon Blanc;pigeonblanc
-BUS;2_2229;48089427;-1697928;Croix Verte;croixverte
-BUS;2_2230;48086512;-1702001;Rablais Allende;rablaisallende
-BUS;2_2231;48086914;-1706598;Gaité;gaite
-BUS;2_2232;48074856;-1715734;Morinais;morinais
-BUS;2_2233;48067383;-1717300;Abbé Grimault;abbegrimault
-BUS;2_2234;48066427;-1720241;Pommerais;pommerais
-BUS;2_2235;48062849;-1720661;Rossel;rossel
-BUS;2_2236;48060026;-1734166;Parc Expo;parcexpo
-BUS;2_2237;48067348;-1721762;Aire Libre Aéroport;airelibreaeroport
-BUS;2_2238;48064981;-1724590;Centre Météo;centremeteo
-BUS;2_2239;48077825;-1712515;Haut Bois;hautbois
-BUS;2_2240;48080580;-1712357;Malraux;malraux
-BUS;2_2241;48080527;-1712554;Malraux;malraux
-BUS;2_2242;48065035;-1724595;Centre Météo;centremeteo
-BUS;2_2243;48066929;-1722330;Aire Libre Aéroport;airelibreaeroport
-BUS;2_2244;48059881;-1734395;Parc Expo;parcexpo
-BUS;2_2245;48077629;-1712672;Haut Bois;hautbois
-BUS;2_2248;48079262;-1733041;Bellevue;bellevue
-BUS;2_2249;48082970;-1731674;Le Pâtis;lepatis
-BUS;2_2250;48086694;-1721997;Reuzerais;reuzerais
-BUS;2_2251;48086628;-1713071;Maffeys;maffeys
-BUS;2_2252;48086621;-1713003;Maffeys;maffeys
-BUS;2_2253;48086677;-1722184;Reuzerais;reuzerais
-BUS;2_2254;48083808;-1730094;Le Pâtis;lepatis
-BUS;2_2255;48079279;-1733263;Bellevue;bellevue
-BUS;2_2257;48087038;-1694675;Pressoirs;pressoirs
-BUS;2_2258;48093537;-1704339;Dominos;dominos
-BUS;2_2260;48093433;-1704570;Dominos;dominos
-BUS;2_2262;48068792;-1697856;Vallon;vallon
-BUS;2_2263;48082574;-1712333;Jean Jaurès;jeanjaures
-BUS;2_2264;48082788;-1713065;Jean Jaurès;jeanjaures
-BUS;2_2265;48061577;-1724044;Gautrais;gautrais
-BUS;2_2267;48075289;-1728986;Auriol;auriol
-BUS;2_2268;48075072;-1728795;Auriol;auriol
-BUS;2_2271;48090537;-1694939;25 Fusillés;25fusilles
-BUS;2_2301;48024529;-1745235;Bruz Centre;bruzcentre
-BUS;2_2302;48024857;-1750734;Herverie;herverie
-BUS;2_2303;48024666;-1757235;Haut Launay;hautlaunay
-BUS;2_2304;48025729;-1760825;Rabine;rabine
-BUS;2_2305;48029377;-1758008;Vert Buisson;vertbuisson
-BUS;2_2306;48033648;-1765839;Cicé Blossac;ciceblossac
-BUS;2_2307;48031280;-1759487;Gavrinis;gavrinis
-BUS;2_2308;48041337;-1754513;Croix Madame;croixmadame
-BUS;2_2309;48044592;-1746457;Schuman;schuman
-BUS;2_2311;48047264;-1742006;Coeur De Campus;coeurdecampus
-BUS;2_2312;48049421;-1740517;Etangs;etangs
-BUS;2_2313;48052729;-1738337;Lande Du Pont;landedupont
-BUS;2_2314;48054910;-1739651;Porte De Ker-lann;portedekerlann
-BUS;2_2315;48052792;-1738371;Lande Du Pont;landedupont
-BUS;2_2316;48049361;-1740660;Etangs;etangs
-BUS;2_2317;48047401;-1742084;Coeur De Campus;coeurdecampus
-BUS;2_2319;48044541;-1746385;Schuman;schuman
-BUS;2_2320;48040337;-1755176;Croix Madame;croixmadame
-BUS;2_2321;48031212;-1759551;Gavrinis;gavrinis
-BUS;2_2322;48029413;-1758011;Vert Buisson;vertbuisson
-BUS;2_2323;48025641;-1760763;Rabine;rabine
-BUS;2_2324;48024630;-1757232;Haut Launay;hautlaunay
-BUS;2_2325;48024819;-1750556;Herverie;herverie
-BUS;2_2326;48034146;-1723785;Doublé;double
-BUS;2_2327;48004830;-1775079;Pont Réan;pontrean
-BUS;2_2328;48034907;-1724606;Doublé;double
-BUS;2_2329;48009162;-1773350;Croix Vaisserelle;croixvaisserelle
-BUS;2_2330;48024063;-1761669;Rabine;rabine
-BUS;2_2331;48021501;-1752341;Noë;noe
-BUS;2_2332;48019520;-1745053;Epalet;epalet
-BUS;2_2333;48020941;-1738098;Du Guesclin;duguesclin
-BUS;2_2334;48023787;-1736113;Pasteur;pasteur
-BUS;2_2335;48026255;-1734529;Bobinais;bobinais
-BUS;2_2336;48030212;-1734461;Champ Niguel;champniguel
-BUS;2_2337;48032960;-1733096;Lavoisier;lavoisier
-BUS;2_2338;48033272;-1733046;Lavoisier;lavoisier
-BUS;2_2339;48028375;-1735616;Champ Niguel;champniguel
-BUS;2_2340;48026032;-1734542;Bobinais;bobinais
-BUS;2_2341;48023667;-1736210;Pasteur;pasteur
-BUS;2_2342;48020928;-1738254;Du Guesclin;duguesclin
-BUS;2_2343;48019579;-1744589;Epalet;epalet
-BUS;2_2344;48021593;-1752282;Noë;noe
-BUS;2_2345;48023835;-1761885;Rabine;rabine
-BUS;2_2346;48008571;-1773786;Croix Vaisserelle;croixvaisserelle
-BUS;2_2347;48004716;-1775203;Pont Réan;pontrean
-BUS;2_2348;48023461;-1743334;Victor Hugo;victorhugo
-BUS;2_2350;48029349;-1719110;Mare De La Salle;maredelasalle
-BUS;2_2351;48029193;-1719620;Mare De La Salle;maredelasalle
-BUS;2_2353;48023410;-1743109;Victor Hugo;victorhugo
-BUS;2_2359;48035716;-1723307;Doublé;double
-BUS;2_2360;48024949;-1745098;Bruz Centre;bruzcentre
-BUS;2_2361;48024428;-1744836;Bruz Centre;bruzcentre
-BUS;2_2401;48177037;-1651229;Champ Devant;champdevant
-BUS;2_2402;48179267;-1651129;Omblais;omblais
-BUS;2_2403;48180664;-1652048;Brocéliande;broceliande
-BUS;2_2404;48183055;-1646032;Trégor;tregor
-BUS;2_2405;48181913;-1641739;Betton Mairie;bettonmairie
-BUS;2_2406;48181198;-1638024;Betton Centre;bettoncentre
-BUS;2_2407;48180213;-1634878;Haye Renaud Gare;hayerenaudgare
-BUS;2_2408;48176234;-1637291;Marronniers;marronniers
-BUS;2_2409;48172400;-1637358;Housset;housset
-BUS;2_2410;48171353;-1641969;Enseigne Abbaye;enseigneabbaye
-BUS;2_2411;48161796;-1647757;Betton Vallée;bettonvallee
-BUS;2_2412;48161997;-1647465;Betton Vallée;bettonvallee
-BUS;2_2413;48171109;-1641759;Enseigne Abbaye;enseigneabbaye
-BUS;2_2414;48172600;-1637322;Housset;housset
-BUS;2_2415;48176815;-1637180;Marronniers;marronniers
-BUS;2_2416;48180217;-1634784;Haye Renaud Gare;hayerenaudgare
-BUS;2_2417;48181704;-1638551;Betton Centre;bettoncentre
-BUS;2_2418;48181912;-1641200;Betton Mairie;bettonmairie
-BUS;2_2419;48183183;-1646447;Trégor;tregor
-BUS;2_2420;48180606;-1652137;Brocéliande;broceliande
-BUS;2_2421;48179228;-1651207;Omblais;omblais
-BUS;2_2422;48182243;-1615985;Petite Hublais;petitehublais
-BUS;2_2423;48175429;-1622895;Cour Neuve;courneuve
-BUS;2_2424;48170985;-1622196;Champ Giron;champgiron
-BUS;2_2425;48163815;-1625084;Tihouït;tihouit
-BUS;2_2426;48164164;-1624913;Tihouït;tihouit
-BUS;2_2427;48170406;-1622037;Champ Giron;champgiron
-BUS;2_2428;48175538;-1622864;Cour Neuve;courneuve
-BUS;2_2429;48182099;-1616215;Petite Hublais;petitehublais
-BUS;2_2430;48176045;-1639552;Betton Rue De Rennes;bettonruederennes
-BUS;2_2431;48183060;-1637217;Mozart;mozart
-BUS;2_2432;48186330;-1633254;J. Sébastien Bach;jsebastienbach
-BUS;2_2433;48190357;-1626077;Gentilhommière;gentilhommiere
-BUS;2_2434;48186355;-1633194;J. Sébastien Bach;jsebastienbach
-BUS;2_2435;48183060;-1637217;Mozart;mozart
-BUS;2_2436;48175902;-1639539;Betton Rue De Rennes;bettonruederennes
-BUS;2_2437;48181572;-1639284;Betton Centre;bettoncentre
-BUS;2_2438;48184986;-1650097;Mézières;mezieres
-BUS;2_2439;48178693;-1655863;Renaudais;renaudais
-BUS;2_2440;48178786;-1655548;Renaudais;renaudais
-BUS;2_2441;48184954;-1650000;Mézières;mezieres
-BUS;2_2442;48178278;-1660713;Pont Brand;pontbrand
-BUS;2_2443;48178228;-1660612;Pont Brand;pontbrand
-BUS;2_2448;48183806;-1646421;Trégor;tregor
-BUS;2_2449;48183689;-1646411;Trégor;tregor
-BUS;2_2450;48189804;-1626150;Gentilhommière;gentilhommiere
-BUS;2_2501;48102447;-1832303;Noë Diolé;noediole
-BUS;2_2502;48100553;-1806571;Lycée Monod;lyceemonod
-BUS;2_2503;48098952;-1801392;Champs Freslons;champsfreslons
-BUS;2_2504;48098971;-1796939;Brassens;brassens
-BUS;2_2505;48101630;-1794516;Bouleaux;bouleaux
-BUS;2_2506;48099311;-1791250;Genêts;genets
-BUS;2_2507;48097551;-1781333;Barberais;barberais
-BUS;2_2508;48096876;-1775581;Les Pins;lespins
-BUS;2_2509;48096142;-1764720;Pont D'avoine;pontdavoine
-BUS;2_2510;48103868;-1750437;Plessix Saucourt;plessixsaucourt
-BUS;2_2511;48103641;-1751130;Plessix Saucourt;plessixsaucourt
-BUS;2_2512;48096235;-1764648;Pont D'avoine;pontdavoine
-BUS;2_2513;48096976;-1775952;Les Pins;lespins
-BUS;2_2514;48097637;-1781435;Barberais;barberais
-BUS;2_2515;48099245;-1790652;Genêts;genets
-BUS;2_2516;48101776;-1794919;Bouleaux;bouleaux
-BUS;2_2517;48099395;-1796708;Brassens;brassens
-BUS;2_2518;48099275;-1802094;Champs Freslons;champsfreslons
-BUS;2_2519;48100845;-1806907;Lycée Monod;lyceemonod
-BUS;2_2520;48102445;-1831051;Noë Diolé;noediole
-BUS;2_2521;48091023;-1786892;Gerhoui;gerhoui
-BUS;2_2522;48094017;-1773989;Mahomat;mahomat
-BUS;2_2523;48094072;-1773980;Mahomat;mahomat
-BUS;2_2524;48091347;-1785576;Gerhoui;gerhoui
-BUS;2_2525;48078460;-1771252;Haut Plessis;hautplessis
-BUS;2_2526;48080350;-1774450;Moigné;moigne
-BUS;2_2529;48080305;-1774445;Moigné;moigne
-BUS;2_2530;48078793;-1772156;Haut Plessis;hautplessis
-BUS;2_2532;48093838;-1780190;Platinium;platinium
-BUS;2_2601;48038524;-1602475;Croix Malinge;croixmalinge
-BUS;2_2602;48043421;-1601718;Bel Air;belair
-BUS;2_2603;48044689;-1603983;La Poste;laposte
-BUS;2_2604;48049485;-1606158;Croix Rouge;croixrouge
-BUS;2_2605;48049448;-1609814;Fosse Gauchère;fossegauchere
-BUS;2_2606;48050642;-1615038;Solidor;solidor
-BUS;2_2607;48052616;-1613906;Haute Abbaye;hauteabbaye
-BUS;2_2608;48059271;-1616598;Bretonnière;bretonniere
-BUS;2_2609;48064082;-1623096;Val D'orson;valdorson
-BUS;2_2610;48067736;-1625756;Garenne;garenne
-BUS;2_2611;48072396;-1628746;Hallerais;hallerais
-BUS;2_2612;48072317;-1628699;Hallerais;hallerais
-BUS;2_2613;48067579;-1625621;Garenne;garenne
-BUS;2_2614;48063999;-1622901;Val D'orson;valdorson
-BUS;2_2615;48059025;-1616657;Bretonnière;bretonniere
-BUS;2_2616;48052586;-1613984;Haute Abbaye;hauteabbaye
-BUS;2_2617;48049438;-1611034;Fosse Gauchère;fossegauchere
-BUS;2_2618;48049142;-1605954;Croix Rouge;croixrouge
-BUS;2_2619;48044616;-1603882;La Poste;laposte
-BUS;2_2620;48043547;-1601716;Bel Air;belair
-BUS;2_2621;48040902;-1602292;Vern La Touche;vernlatouche
-BUS;2_2622;48059811;-1613176;Champ Martin;champmartin
-BUS;2_2627;48031392;-1599516;Vaugon;vaugon
-BUS;2_2628;48031259;-1599464;Vaugon;vaugon
-BUS;2_2629;48047191;-1602583;Vern Eglise;verneglise
-BUS;2_2630;48045029;-1598874;Maillardière;maillardiere
-BUS;2_2631;48047638;-1598536;Moulin;moulin
-BUS;2_2632;48048058;-1598640;Moulin;moulin
-BUS;2_2633;48045144;-1598682;Maillardière;maillardiere
-BUS;2_2634;48047099;-1602643;Vern Eglise;verneglise
-BUS;2_2635;48038498;-1602204;Croix Malinge;croixmalinge
-BUS;2_2637;48049703;-1615319;Solidor;solidor
-BUS;2_2640;48038406;-1602250;Croix Malinge;croixmalinge
-BUS;2_2641;48059081;-1612937;Champ Martin;champmartin
-BUS;2_2701;48058971;-1701078;Janais;janais
-BUS;2_2702;48068298;-1697636;Vallon;vallon
-BUS;2_2704;48059378;-1701191;Janais;janais
-BUS;2_2705;48028982;-1659809;Bray;bray
-BUS;2_2706;48038418;-1670712;Molène;molene
-BUS;2_2707;48040803;-1671938;Potiers;potiers
-BUS;2_2708;48042399;-1665655;Centre;centre
-BUS;2_2709;48044096;-1661261;Salle Polyvalente;sallepolyvalente
-BUS;2_2710;48047114;-1661084;Petite Saudrais;petitesaudrais
-BUS;2_2711;48056588;-1663828;Croix Fleurie;croixfleurie
-BUS;2_2712;48063667;-1663767;Mail Lancé;maillance
-BUS;2_2713;48068357;-1665754;Petit Beaulieu;petitbeaulieu
-BUS;2_2714;48077193;-1661140;Hil-bintinais;hilbintinais
-BUS;2_2715;48078641;-1661228;Hil-bintinais;hilbintinais
-BUS;2_2716;48068619;-1665952;Petit Beaulieu;petitbeaulieu
-BUS;2_2717;48063654;-1663860;Mail Lancé;maillance
-BUS;2_2718;48055972;-1664137;Croix Fleurie;croixfleurie
-BUS;2_2719;48047068;-1661120;Petite Saudrais;petitesaudrais
-BUS;2_2720;48044084;-1661354;Salle Polyvalente;sallepolyvalente
-BUS;2_2721;48042447;-1665579;Centre;centre
-BUS;2_2722;48040772;-1672121;Potiers;potiers
-BUS;2_2723;48038399;-1670628;Molène;molene
-BUS;2_2724;48028640;-1659792;Bray;bray
-BUS;2_2725;48039595;-1676471;Guyomerais;guyomerais
-BUS;2_2726;48039647;-1676732;Guyomerais;guyomerais
-BUS;2_2727;48038423;-1666568;Pont;pont
-BUS;2_2728;48042632;-1666146;Centre;centre
-BUS;2_2729;48046951;-1664753;Croix De Pierre;croixdepierre
-BUS;2_2730;48046241;-1664704;Croix De Pierre;croixdepierre
-BUS;2_2731;48042945;-1665972;Centre;centre
-BUS;2_2732;48038657;-1666804;Pont;pont
-BUS;2_2733;48034870;-1664091;Côteaux;coteaux
-BUS;2_2734;48034398;-1663498;Côteaux;coteaux
-BUS;2_2749;48055904;-1701131;Touche Tizon;touchetizon
-BUS;2_2750;48039251;-1680446;Monts Gaultier;montsgaultier
-BUS;2_2751;48039354;-1680106;Monts Gaultier;montsgaultier
-BUS;2_2801;48135805;-1693113;Grand Quartier;grandquartier
-BUS;2_2802;48137375;-1687866;Launay;launay
-BUS;2_2803;48137395;-1688514;Launay;launay
-BUS;2_2804;48159068;-1676617;Ricoquais;ricoquais
-BUS;2_2805;48159107;-1681309;Camus;camus
-BUS;2_2806;48158983;-1685588;Vivier Louis;vivierlouis
-BUS;2_2807;48159841;-1692099;Pontay;pontay
-BUS;2_2808;48156857;-1687347;Uttenreuth;uttenreuth
-BUS;2_2809;48154351;-1686680;Discalceat;discalceat
-BUS;2_2810;48153669;-1692048;Paul-emile Victor;paulemilevictor
-BUS;2_2811;48151416;-1691336;Cité Des Jardins;citedesjardins
-BUS;2_2812;48150915;-1685809;Forge;forge
-BUS;2_2813;48147487;-1686097;Général De Gaulle;generaldegaulle
-BUS;2_2814;48142903;-1686585;Chp Saint Grégoire;chpsaintgregoire
-BUS;2_2815;48138482;-1686550;La Plesse;laplesse
-BUS;2_2816;48138199;-1686431;La Plesse;laplesse
-BUS;2_2817;48143033;-1686504;Chp Saint Grégoire;chpsaintgregoire
-BUS;2_2818;48146870;-1686204;Général De Gaulle;generaldegaulle
-BUS;2_2819;48151398;-1685919;Forge;forge
-BUS;2_2820;48151446;-1691285;Cité Des Jardins;citedesjardins
-BUS;2_2821;48153749;-1692013;Paul-emile Victor;paulemilevictor
-BUS;2_2822;48154712;-1686703;Discalceat;discalceat
-BUS;2_2824;48158902;-1685142;Vivier Louis;vivierlouis
-BUS;2_2825;48159145;-1680814;Camus;camus
-BUS;2_2826;48135585;-1692986;Grand Quartier;grandquartier
-BUS;2_2827;48149065;-1656523;Maison Blanche;maisonblanche
-BUS;2_2829;48149284;-1656461;Maison Blanche;maisonblanche
-BUS;2_2830;48134327;-1694463;Grand Quartier;grandquartier
-BUS;2_2831;48153796;-1679100;Champ Daguet;champdaguet
-BUS;2_2832;48154626;-1678850;Champ Daguet;champdaguet
-BUS;2_2833;48160211;-1677136;Jean Paul Ii;jeanpaulii
-BUS;2_2834;48159866;-1677200;Jean Paul Ii;jeanpaulii
-BUS;2_2836;48156967;-1687303;Uttenreuth;uttenreuth
-BUS;2_2837;48176928;-1722015;La Brosse;labrosse
-BUS;2_2838;48153909;-1696900;Alphasis;alphasis
-BUS;2_2839;48154392;-1696640;Alphasis;alphasis
-BUS;2_2840;48176664;-1690277;Mfr Rabinardières;mfrrabinardieres
-BUS;2_2901;48046760;-1710615;Croix Aux Potiers;croixauxpotiers
-BUS;2_2902;48047863;-1713521;Croix Aux Potiers;croixauxpotiers
-BUS;2_2903;48033254;-1711649;Chaussairie;chaussairie
-BUS;2_2904;48036946;-1712435;Taillebois;taillebois
-BUS;2_2905;48042260;-1712088;Callouët;callouet
-BUS;2_2906;48045933;-1710177;Croix Aux Potiers;croixauxpotiers
-BUS;2_2907;48045660;-1710435;Croix Aux Potiers;croixauxpotiers
-BUS;2_2908;48041407;-1712456;Callouët;callouet
-BUS;2_2909;48036818;-1712477;Taillebois;taillebois
-BUS;2_2911;48033194;-1707289;Parc De Loisirs;parcdeloisirs
-BUS;2_2912;48035513;-1706326;Argoat;argoat
-BUS;2_2913;48034659;-1699502;Cornouaille;cornouaille
-BUS;2_2914;48036920;-1697082;Vieux Bourg;vieuxbourg
-BUS;2_2915;48041333;-1698321;Collège Pôle Sud;collegepolesud
-BUS;2_2916;48041648;-1702622;Auditoire;auditoire
-BUS;2_2917;48042304;-1706500;Chartres Centre;chartrescentre
-BUS;2_2918;48042013;-1711058;Callouët;callouet
-BUS;2_2919;48042292;-1707467;Chartres Centre;chartrescentre
-BUS;2_2920;48041583;-1702882;Auditoire;auditoire
-BUS;2_2921;48041256;-1697763;Collège Pôle Sud;collegepolesud
-BUS;2_2922;48037053;-1697134;Vieux Bourg;vieuxbourg
-BUS;2_2923;48034703;-1699775;Cornouaille;cornouaille
-BUS;2_2924;48035495;-1706109;Argoat;argoat
-BUS;2_2925;48033093;-1711621;Chaussairie;chaussairie
-BUS;2_2926;48041672;-1696133;Collège Pôle Sud;collegepolesud
-BUS;2_2927;48033172;-1707394;Parc De Loisirs;parcdeloisirs
-BUS;2_2928;48031445;-1708867;Constant Mérel;constantmerel
-BUS;2_2930;48031216;-1709196;Constant Mérel;constantmerel
-BUS;2_2942;48042024;-1696124;Collège Pôle Sud;collegepolesud
-BUS;2_3001;48085071;-1610349;Gériatrie;geriatrie
-BUS;2_3002;48085727;-1614079;Deux Ruisseaux;deuxruisseaux
-BUS;2_3003;48089118;-1612640;Bourgogne;bourgogne
-BUS;2_3004;48090344;-1615868;Hallouvry;hallouvry
-BUS;2_3005;48088221;-1616907;Chantepie Eglise;chantepieeglise
-BUS;2_3006;48088799;-1620550;Chantepie Mairie;chantepiemairie
-BUS;2_3007;48090408;-1623879;Loges;loges
-BUS;2_3008;48090372;-1624105;Loges;loges
-BUS;2_3009;48088414;-1619117;Chantepie Mairie;chantepiemairie
-BUS;2_3010;48088158;-1616915;Chantepie Eglise;chantepieeglise
-BUS;2_3011;48090437;-1615325;Hallouvry;hallouvry
-BUS;2_3012;48088282;-1612365;Bourgogne;bourgogne
-BUS;2_3013;48085865;-1614697;Deux Ruisseaux;deuxruisseaux
-BUS;2_3014;48098284;-1622792;Breillou;breillou
-BUS;2_3015;48098130;-1622960;Breillou;breillou
-BUS;2_3016;48093570;-1607606;Cucé;cuce
-BUS;2_3017;48092532;-1612951;Idefs;idefs
-BUS;2_3018;48085466;-1627160;Rocade Sud;rocadesud
-BUS;2_3019;48080491;-1630800;Val Blanc;valblanc
-BUS;2_3020;48080669;-1630641;Val Blanc;valblanc
-BUS;2_3021;48084612;-1627556;Rocade Sud;rocadesud
-BUS;2_3022;48091041;-1615283;Hallouvry;hallouvry
-BUS;2_3023;48092569;-1612914;Idefs;idefs
-BUS;2_3024;48076925;-1631860;Martinière;martiniere
-BUS;2_3025;48076775;-1631766;Martinière;martiniere
-BUS;2_3027;48085761;-1608136;Touche Annette;toucheannette
-BUS;2_3028;48085767;-1604087;Rosa Parks;rosaparks
-BUS;2_3029;48085733;-1607474;Touche Annette;toucheannette
-BUS;2_3032;48085172;-1610748;Gériatrie;geriatrie
-BUS;2_3101;48155274;-1788194;Vergéal;vergeal
-BUS;2_3102;48151302;-1792319;Chêne Amoureux;cheneamoureux
-BUS;2_3103;48149259;-1788914;Docteur Léon;docteurleon
-BUS;2_3104;48148511;-1784899;Touche Milon;touchemilon
-BUS;2_3105;48147541;-1781053;Pinault;pinault
-BUS;2_3107;48151195;-1777625;Renan;renan
-BUS;2_3108;48150916;-1772050;Duchesse Anne;duchesseanne
-BUS;2_3109;48148159;-1769807;Pacé Cimetière;pacecimetiere
-BUS;2_3110;48145798;-1770671;Carré Dumaine;carredumaine
-BUS;2_3111;48142844;-1770148;Le Ponant;leponant
-BUS;2_3112;48141125;-1767407;Opéra;opera
-BUS;2_3113;48143356;-1770410;Le Ponant;leponant
-BUS;2_3114;48145726;-1770651;Carré Dumaine;carredumaine
-BUS;2_3115;48147997;-1769792;Pacé Cimetière;pacecimetiere
-BUS;2_3116;48150888;-1771872;Duchesse Anne;duchesseanne
-BUS;2_3117;48151235;-1777548;Renan;renan
-BUS;2_3119;48147548;-1781094;Pinault;pinault
-BUS;2_3120;48148535;-1784753;Touche Milon;touchemilon
-BUS;2_3121;48149287;-1788890;Docteur Léon;docteurleon
-BUS;2_3122;48151285;-1792304;Chêne Amoureux;cheneamoureux
-BUS;2_3123;48174139;-1789367;Chapitre;chapitre
-BUS;2_3124;48175285;-1790010;Chapitre;chapitre
-BUS;2_3125;48160465;-1767982;Pâtis Roussel;patisroussel
-BUS;2_3126;48157320;-1765731;Ouessant;ouessant
-BUS;2_3127;48155489;-1764636;Champalaune;champalaune
-BUS;2_3128;48154073;-1771123;Pacé Collèges;pacecolleges
-BUS;2_3129;48150718;-1770712;Le Brix;lebrix
-BUS;2_3130;48151555;-1770518;Le Brix;lebrix
-BUS;2_3131;48154441;-1770496;Pacé Collèges;pacecolleges
-BUS;2_3132;48155424;-1764684;Champalaune;champalaune
-BUS;2_3133;48157285;-1765714;Ouessant;ouessant
-BUS;2_3134;48141655;-1770566;Nominoë;nominoe
-BUS;2_3135;48141723;-1770909;Nominoë;nominoe
-BUS;2_3136;48154733;-1784426;Pont Amelin;pontamelin
-BUS;2_3137;48140244;-1763556;Rive Ouest;riveouest
-BUS;2_3139;48140210;-1763297;Rive Ouest;riveouest
-BUS;2_3141;48154717;-1784357;Pont Amelin;pontamelin
-BUS;2_3142;48167383;-1787015;Haute Rabine;hauterabine
-BUS;2_3143;48169922;-1788000;Haute Rabine;hauterabine
-BUS;2_3144;48140985;-1766182;Opéra;opera
-BUS;2_3145;48179994;-1801679;Touche Champagne;touchechampagne
-BUS;2_3146;48180075;-1801902;Touche Champagne;touchechampagne
-BUS;2_3201;47969786;-1646063;Fort Joual;fortjoual
-BUS;2_3202;47975356;-1651318;Frogerais;frogerais
-BUS;2_3203;47976258;-1657465;Petite Rochelle;petiterochelle
-BUS;2_3204;47983270;-1660002;Télégraphe;telegraphe
-BUS;2_3205;47976117;-1657144;Petite Rochelle;petiterochelle
-BUS;2_3206;47975431;-1652398;Frogerais;frogerais
-BUS;2_3207;47969653;-1645769;Fort Joual;fortjoual
-BUS;2_3208;47993951;-1665495;Chateaubriand;chateaubriand
-BUS;2_3209;47992497;-1668738;Surcouf;surcouf
-BUS;2_3210;47995021;-1670756;Coteau;coteau
-BUS;2_3211;47997302;-1668504;Groupe Scolaire;groupescolaire
-BUS;2_3212;48000740;-1666819;Levant;levant
-BUS;2_3213;48009988;-1666855;Plardière;plardiere
-BUS;2_3214;48015385;-1666471;Roussais;roussais
-BUS;2_3215;48015519;-1666510;Roussais;roussais
-BUS;2_3216;48010005;-1666884;Plardière;plardiere
-BUS;2_3217;48000451;-1667062;Levant;levant
-BUS;2_3218;47996894;-1669005;Groupe Scolaire;groupescolaire
-BUS;2_3219;47994941;-1670903;Coteau;coteau
-BUS;2_3220;47992251;-1667897;Surcouf;surcouf
-BUS;2_3221;47993726;-1665247;Chateaubriand;chateaubriand
-BUS;2_3301;48155150;-1573163;Landelles;landelles
-BUS;2_3302;48153078;-1579422;Thorigné Mairie;thorignemairie
-BUS;2_3304;48155639;-1580776;Anne De Bretagne;annedebretagne
-BUS;2_3305;48158979;-1579705;Bocage;bocage
-BUS;2_3306;48164177;-1579321;Juteauderies;juteauderies
-BUS;2_3307;48160413;-1585946;Fouillard;fouillard
-BUS;2_3308;48174380;-1602239;Placis Vert;placisvert
-BUS;2_3309;48156262;-1592334;Portail;portail
-BUS;2_3310;48156305;-1592136;Portail;portail
-BUS;2_3311;48160505;-1585658;Fouillard;fouillard
-BUS;2_3312;48163021;-1579140;Juteauderies;juteauderies
-BUS;2_3313;48159185;-1579750;Bocage;bocage
-BUS;2_3314;48155948;-1580695;Anne De Bretagne;annedebretagne
-BUS;2_3315;48153548;-1579840;Thorigné Mairie;thorignemairie
-BUS;2_3316;48132153;-1596431;Saint Etienne;saintetienne
-BUS;2_3317;48141052;-1573652;Pâtis Du Moulinet;patisdumoulinet
-BUS;2_3318;48140933;-1573467;Pâtis Du Moulinet;patisdumoulinet
-BUS;2_3319;48141708;-1577426;Pâtis Du Moulinet;patisdumoulinet
-BUS;2_3320;48141817;-1577408;Pâtis Du Moulinet;patisdumoulinet
-BUS;2_3321;48160415;-1587064;Fouillard;fouillard
-BUS;2_3322;48149276;-1577503;Curien;curien
-BUS;2_3323;48149290;-1577154;Curien;curien
-BUS;2_3401;48041400;-1553368;Parc Des Sports;parcdessports
-BUS;2_3402;48040659;-1550159;Langlois;langlois
-BUS;2_3403;48040219;-1541949;Chêne Centenaire;chenecentenaire
-BUS;2_3404;48041278;-1544634;Menault;menault
-BUS;2_3405;48044532;-1561622;Eclosel;eclosel
-BUS;2_3406;48044457;-1561468;Eclosel;eclosel
-BUS;2_3407;48042402;-1549825;Grée Barel;greebarel
-BUS;2_3408;48040425;-1541980;Chêne Centenaire;chenecentenaire
-BUS;2_3409;48041416;-1545251;Menault;menault
-BUS;2_3410;48040908;-1549777;Langlois;langlois
-BUS;2_3411;48031031;-1559262;Crotigné;crotigne
-BUS;2_3412;48029305;-1564260;La Croix De L'epine;lacroixdelepine
-BUS;2_3413;48024052;-1573240;La Drouais;ladrouais
-BUS;2_3414;48013183;-1570635;La Jaunais;lajaunais
-BUS;2_3415;48012600;-1557325;La Jaille;lajaille
-BUS;2_3416;48011953;-1545877;Le Petit Beauvais;lepetitbeauvais
-BUS;2_3417;48015097;-1539618;Epron;epron
-BUS;2_3418;48021833;-1547250;Le Tertronais;letertronais
-BUS;2_3419;48028990;-1551440;L'ourmais;lourmais
-BUS;2_3500;48163991;-1731704;Silandière;silandiere
-BUS;2_3501;48157134;-1723300;Fougerolle;fougerolle
-BUS;2_3502;48155657;-1720611;Pierre Texier;pierretexier
-BUS;2_3503;48155741;-1716589;Montgermont Mairie;montgermontmairie
-BUS;2_3504;48157261;-1714467;Courtines;courtines
-BUS;2_3505;48155311;-1710832;Belle Epine;belleepine
-BUS;2_3506;48153114;-1706642;Décoparc;decoparc
-BUS;2_3507;48148972;-1704050;Vizeule;vizeule
-BUS;2_3508;48148267;-1703637;Vizeule;vizeule
-BUS;2_3509;48152881;-1708857;Métrie;metrie
-BUS;2_3510;48155588;-1710822;Belle Epine;belleepine
-BUS;2_3511;48157334;-1714607;Courtines;courtines
-BUS;2_3512;48155680;-1716638;Montgermont Mairie;montgermontmairie
-BUS;2_3513;48155686;-1720682;Pierre Texier;pierretexier
-BUS;2_3514;48157179;-1723301;Fougerolle;fougerolle
-BUS;2_3515;48162720;-1730593;Silandière;silandiere
-BUS;2_3516;48154307;-1707247;Décoparc;decoparc
-BUS;2_3601;48183479;-1835737;La Renardière;larenardiere
-BUS;2_3602;48192070;-1831243;Parthenay Mairie;parthenaymairie
-BUS;2_3603;48191696;-1827255;Clos Des Tilleuls;closdestilleuls
-BUS;2_3604;48191301;-1824590;La Noë;lanoe
-BUS;2_3605;48190005;-1820791;Placis De La Touche;placisdelatouche
-BUS;2_3606;48186358;-1816494;Le Reuvre;lereuvre
-BUS;2_3611;48186367;-1816495;Le Reuvre;lereuvre
-BUS;2_3612;48189914;-1820149;Placis De La Touche;placisdelatouche
-BUS;2_3613;48191247;-1824356;La Noë;lanoe
-BUS;2_3614;48191775;-1827748;Clos Des Tilleuls;closdestilleuls
-BUS;2_3615;48192125;-1831430;Parthenay Mairie;parthenaymairie
-BUS;2_3616;48183308;-1836180;La Renardière;larenardiere
-BUS;2_3705;48152973;-1829759;Saint Gilles Centre;saintgillescentre
-BUS;2_3707;48150708;-1825217;Pont Aux Moines;pontauxmoines
-BUS;2_3708;48152840;-1820710;Vigne;vigne
-BUS;2_3709;48152918;-1809077;Fouaye;fouaye
-BUS;2_3710;48153564;-1810470;Fouaye;fouaye
-BUS;2_3711;48154133;-1819939;Vigne;vigne
-BUS;2_3712;48150680;-1824797;Pont Aux Moines;pontauxmoines
-BUS;2_3714;48153114;-1829668;Saint Gilles Centre;saintgillescentre
-BUS;2_3715;48153745;-1834034;Clos Des Cerisiers;closdescerisiers
-BUS;2_3717;48153985;-1837600;Maison Neuve;maisonneuve
-BUS;2_3723;48154060;-1837815;Maison Neuve;maisonneuve
-BUS;2_3724;48153843;-1834042;Clos Des Cerisiers;closdescerisiers
-BUS;2_3751;48107402;-1739247;Z.i. Ouest;ziouest
-BUS;2_3752;48104741;-1739062;Trois Marches;troismarches
-BUS;2_3753;48105750;-1740014;Trois Marches;troismarches
-BUS;2_3754;48120958;-1772547;Haie De Terre;haiedeterre
-BUS;2_3755;48120264;-1765416;Vallée;vallee
-BUS;2_3756;48119081;-1761014;Lion D'or;liondor
-BUS;2_3757;48118899;-1756811;Vezin Centre;vezincentre
-BUS;2_3758;48118386;-1742494;Tertre;tertre
-BUS;2_3759;48117649;-1731671;Champ Noël;champnoel
-BUS;2_3760;48117703;-1731003;Champ Noël;champnoel
-BUS;2_3761;48118351;-1741118;Tertre;tertre
-BUS;2_3762;48119307;-1754761;Vezin Centre;vezincentre
-BUS;2_3763;48119278;-1761490;Lion D'or;liondor
-BUS;2_3764;48120366;-1765573;Vallée;vallee
-BUS;2_3765;48120976;-1771673;Haie De Terre;haiedeterre
-BUS;2_3766;48104992;-1740652;Trois Marches;troismarches
-BUS;2_3768;48104127;-1735938;Marais;marais
-BUS;2_3769;48104213;-1736040;Marais;marais
-BUS;2_3770;48118999;-1749372;Champs Bleus;champsbleus
-BUS;2_3771;48119126;-1749551;Champs Bleus;champsbleus
-BUS;2_3801;47990095;-1613829;Centre De Loisirs;centredeloisirs
-BUS;2_3802;47994880;-1614270;Bourgbarré Mairie;bourgbarremairie
-BUS;2_3803;47996073;-1617238;La Motte;lamotte
-BUS;2_3804;47995140;-1624234;La Basse Erable;labasseerable
-BUS;2_3805;47994501;-1631525;Perelle;perelle
-BUS;2_3806;47994427;-1631357;Perelle;perelle
-BUS;2_3807;47995124;-1623736;Basse Erable;basseerable
-BUS;2_3808;47995903;-1617666;La Motte;lamotte
-BUS;2_3809;47994762;-1614103;Bourgbarré Mairie;bourgbarremairie
-BUS;2_3810;47959993;-1632427;Moc Souris;mocsouris
-BUS;2_3811;47959541;-1637031;Sept Fours;septfours
-BUS;2_3812;47959561;-1636979;Sept Fours;septfours
-BUS;2_3813;47960115;-1631404;Moc Souris;mocsouris
-BUS;2_3814;47997636;-1619214;Rue De Rennes;ruederennes
-BUS;2_3815;47997531;-1618910;Rue De Rennes;ruederennes
-BUS;2_3816;48000751;-1594490;Launay Garnier;launaygarnier
-BUS;2_3817;48000916;-1594652;Launay Garnier;launaygarnier
-BUS;2_3851;48074603;-1853676;Le Pâtis;lepatis
-BUS;2_3852;48071942;-1849988;Mordelles Eglise;mordelleseglise
-BUS;2_3853;48073711;-1846424;Mordelles Mairie;mordellesmairie
-BUS;2_3854;48075841;-1842220;Mordelles Lilas;mordelleslilas
-BUS;2_3855;48077719;-1837549;Gretay;gretay
-BUS;2_3856;48081323;-1826846;Croix Ignon;croixignon
-BUS;2_3857;48083969;-1813741;Grande Fontaine;grandefontaine
-BUS;2_3858;48088220;-1798829;Vivier Des Bois;vivierdesbois
-BUS;2_3859;48088117;-1799802;Vivier Des Bois;vivierdesbois
-BUS;2_3860;48083615;-1815794;Grande Fontaine;grandefontaine
-BUS;2_3861;48081396;-1826813;Croix Ignon;croixignon
-BUS;2_3862;48077800;-1837328;Gretay;gretay
-BUS;2_3863;48075574;-1842801;Mordelles Lilas;mordelleslilas
-BUS;2_3864;48073571;-1846774;Mordelles Mairie;mordellesmairie
-BUS;2_3865;48071851;-1850208;Mordelles Eglise;mordelleseglise
-BUS;2_3869;48073936;-1853655;Le Pâtis;lepatis
-BUS;2_3901;47999909;-1696968;Bois Esnault;boisesnault
-BUS;2_3902;48006480;-1698572;Caliorne;caliorne
-BUS;2_3903;48010620;-1700995;Mouton Blanc;moutonblanc
-BUS;2_3904;48012956;-1703003;Chemin Vert;cheminvert
-BUS;2_3905;48010579;-1706970;Pont Péan Mairie;pontpeanmairie
-BUS;2_3906;48013645;-1707632;Rivaudière;rivaudiere
-BUS;2_3907;48016292;-1705678;Fontaine Blanche;fontaineblanche
-BUS;2_3908;48019900;-1706993;Renaissance;renaissance
-BUS;2_3909;48019888;-1707059;Renaissance;renaissance
-BUS;2_3910;48016943;-1705198;Fontaine Blanche;fontaineblanche
-BUS;2_3911;48013671;-1707648;Rivaudière;rivaudiere
-BUS;2_3912;48010825;-1706468;Pont Péan Mairie;pontpeanmairie
-BUS;2_3913;48012963;-1703044;Chemin Vert;cheminvert
-BUS;2_3914;48010384;-1701028;Mouton Blanc;moutonblanc
-BUS;2_3915;48005532;-1698152;Caliorne;caliorne
-BUS;2_3951;48225281;-1570373;Cropy;cropy
-BUS;2_3952;48223221;-1576318;Chesnais;chesnais
-BUS;2_3953;48217921;-1581423;Bourg;bourg
-BUS;2_3954;48214792;-1586577;Terrain Des Sports;terraindessports
-BUS;2_3955;48211691;-1590757;Tronchay;tronchay
-BUS;2_3956;48199818;-1597543;Oliverie;oliverie
-BUS;2_3957;48197437;-1599452;Oliverie;oliverie
-BUS;2_3958;48203205;-1595061;Lande Saint Denis;landesaintdenis
-BUS;2_3959;48211797;-1590591;Tronchay;tronchay
-BUS;2_3960;48214696;-1586744;Terrain Des Sports;terraindessports
-BUS;2_3961;48217732;-1581397;Bourg;bourg
-BUS;2_3962;48223152;-1576932;Chesnais;chesnais
-BUS;2_3964;48203879;-1594634;Lande Saint Denis;landesaintdenis
-BUS;2_4001;48137019;-1526375;Timonière;timoniere
-BUS;2_4002;48136961;-1533049;Verdaudais;verdaudais
-BUS;2_4003;48134195;-1534913;Acigné Mairie;acignemairie
-BUS;2_4004;48133913;-1537769;Foyer;foyer
-BUS;2_4005;48133971;-1541881;Lande;lande
-BUS;2_4006;48137199;-1549565;Pont D'ohin;pontdohin
-BUS;2_4007;48139060;-1558788;Boulais;boulais
-BUS;2_4008;48139087;-1559477;Boulais;boulais
-BUS;2_4009;48136866;-1548607;Pont D'ohin;pontdohin
-BUS;2_4010;48134483;-1541925;Lande;lande
-BUS;2_4011;48133883;-1537630;Foyer;foyer
-BUS;2_4012;48134170;-1534718;Acigné Mairie;acignemairie
-BUS;2_4013;48137163;-1532945;Verdaudais;verdaudais
-BUS;2_4051;48177113;-1726385;Bersandières;bersandieres
-BUS;2_4052;48178545;-1726419;Bignon;bignon
-BUS;2_4053;48179494;-1729267;Métairie;metairie
-BUS;2_4054;48177109;-1732099;Mairie;mairie
-BUS;2_4055;48174093;-1735144;Viennais;viennais
-BUS;2_4056;48170318;-1736233;Sénestrais;senestrais
-BUS;2_4057;48169922;-1735982;Sénestrais;senestrais
-BUS;2_4058;48174612;-1734584;Viennais;viennais
-BUS;2_4059;48176637;-1732865;Mairie;mairie
-BUS;2_4060;48179422;-1729058;Métairie;metairie
-BUS;2_4061;48178419;-1726192;Bignon;bignon
-BUS;2_4062;48176764;-1722041;La Brosse;labrosse
-BUS;2_4101;47985010;-1576286;Corps Nuds Gare;corpsnudsgare
-BUS;2_4102;47982403;-1580720;Huberdières;huberdieres
-BUS;2_4103;47977751;-1584909;Place De Kildare;placedekildare
-BUS;2_4104;47979329;-1587905;Corps Nuds Mairie;corpsnudsmairie
-BUS;2_4105;47982053;-1588316;Chêne Hervé;cheneherve
-BUS;2_4108;47981897;-1588383;Chêne Hervé;cheneherve
-BUS;2_4109;47979016;-1587838;Corps Nuds Mairie;corpsnudsmairie
-BUS;2_4110;47977764;-1585501;Place De Kildare;placedekildare
-BUS;2_4111;47982599;-1580321;Huberdières;huberdieres
-BUS;2_4112;47985288;-1576095;Corps Nuds Gare;corpsnudsgare
-BUS;2_4151;48109751;-1480972;Anjou;anjou
-BUS;2_4152;48109055;-1478410;Mainguère;mainguere
-BUS;2_4153;48107063;-1479143;Saules;saules
-BUS;2_4154;48107500;-1482927;Provence;provence
-BUS;2_4155;48107589;-1486145;Destiers;destiers
-BUS;2_4156;48109415;-1503015;Pâtis;patis
-BUS;2_4157;48109297;-1503274;Pâtis;patis
-BUS;2_4158;48107593;-1486038;Destiers;destiers
-BUS;2_4159;48107480;-1482610;Provence;provence
-BUS;2_4160;48107214;-1478469;Saules;saules
-BUS;2_4161;48109019;-1478407;Mainguère;mainguere
-BUS;2_4162;48108444;-1508356;Turbanière;turbaniere
-BUS;2_4163;48108292;-1507387;Turbanière;turbaniere
-BUS;2_4201;48051956;-1797622;Croix Blanche;croixblanche
-BUS;2_4202;48052012;-1790702;Calvaire;calvaire
-BUS;2_4203;48055097;-1790000;Alfred De Musset;alfreddemusset
-BUS;2_4204;48053995;-1783849;Avenir;avenir
-BUS;2_4205;48058142;-1776317;Grippay;grippay
-BUS;2_4206;48063231;-1772433;Mare Doux;maredoux
-BUS;2_4207;48063395;-1772380;Mare Doux;maredoux
-BUS;2_4208;48057761;-1776363;Grippay;grippay
-BUS;2_4209;48054082;-1783709;Avenir;avenir
-BUS;2_4210;48054739;-1790169;Alfred De Musset;alfreddemusset
-BUS;2_4211;48052453;-1790500;Calvaire;calvaire
-BUS;2_4251;48124633;-1865829;Eglise;eglise
-BUS;2_4252;48123056;-1860735;Rochers;rochers
-BUS;2_4253;48121973;-1846154;Besneraie;besneraie
-BUS;2_4254;48121289;-1837582;Grippière;grippiere
-BUS;2_4255;48121409;-1837741;Grippière;grippiere
-BUS;2_4256;48122031;-1846281;Besneraie;besneraie
-BUS;2_4257;48123088;-1860802;Rochers;rochers
-BUS;2_4301;48122993;-1821755;Hautière;hautiere
-BUS;2_4302;48118893;-1822579;Cat La Hautière;catlahautiere
-BUS;2_4303;48123849;-1817794;L'hermitage Gare;lhermitagegare
-BUS;2_4304;48125516;-1816061;L'hermitage Eglise;lhermitageeglise
-BUS;2_4305;48124644;-1811592;Village;village
-BUS;2_4306;48123210;-1806304;Clairefontaine;clairefontaine
-BUS;2_4307;48123313;-1806852;Clairefontaine;clairefontaine
-BUS;2_4308;48124996;-1812903;Village;village
-BUS;2_4309;48126238;-1816921;L'hermitage Eglise;lhermitageeglise
-BUS;2_4310;48123736;-1817918;L'hermitage Gare;lhermitagegare
-BUS;2_4311;48122900;-1820939;Hautière;hautiere
-BUS;2_4315;48122949;-1802308;Noë Biche;noebiche
-BUS;2_4316;48122835;-1801342;Noë Biche;noebiche
-BUS;2_4317;48123438;-1818917;L'hermitage Gare;lhermitagegare
-BUS;2_4351;48017257;-1660429;Parc D'activités;parcdactivites
-BUS;2_4352;48018835;-1657692;Champ Mulon;champmulon
-BUS;2_4353;48017662;-1654512;Paul Féval;paulfeval
-BUS;2_4354;48017647;-1654457;Paul Féval;paulfeval
-BUS;2_4355;48018835;-1657679;Champ Mulon;champmulon
-BUS;2_4356;48017522;-1661245;Croix Du Pigeonnet;croixdupigeonnet
-BUS;2_4357;48017714;-1661853;Croix Du Pigeonnet;croixdupigeonnet
-BUS;2_4358;48017675;-1649421;Croix Faucheux;croixfaucheux
-BUS;2_4359;48021522;-1653562;Leuzières;leuzieres
-BUS;2_4360;48021564;-1653646;Leuzières;leuzieres
-BUS;2_4361;48017768;-1649577;Croix Faucheux;croixfaucheux
-BUS;2_4362;48016196;-1651517;Gillois;gillois
-BUS;2_4363;48016323;-1651341;Gillois;gillois
-BUS;2_4401;48069923;-1932398;Le Verger Eglise;levergereglise
-BUS;2_4402;48070251;-1929079;Bouvrais;bouvrais
-BUS;2_4403;48070021;-1930255;Bouvrais;bouvrais
-BUS;2_4408;48069997;-1932351;Le Verger Eglise;levergereglise
-BUS;2_4451;48180863;-1850487;Parc Des Sports;parcdessports
-BUS;2_4452;48181380;-1853473;Croix Simon;croixsimon
-BUS;2_4453;48176018;-1852548;Clayes Centre;clayescentre
-BUS;2_4454;48180950;-1844860;Terseul;terseul
-BUS;2_4455;48180919;-1844965;Terseul;terseul
-BUS;2_4456;48174382;-1846508;La Tour;latour
-BUS;2_4502;48221049;-1788747;Gévezé Mairie;gevezemairie
-BUS;2_4503;48218636;-1783995;Flume;flume
-BUS;2_4504;48218305;-1783277;Flume;flume
-BUS;2_4505;48220966;-1788118;Gévezé Mairie;gevezemairie
-BUS;2_4507;48221783;-1802327;Cheval Blanc;chevalblanc
-BUS;2_4508;48224482;-1800785;Coualeuc;coualeuc
-BUS;2_4509;48224645;-1800449;Coualeuc;coualeuc
-BUS;2_4510;48223615;-1793630;Prés Verts;presverts
-BUS;2_4511;48223978;-1793771;Prés Verts;presverts
-BUS;2_4551;48013418;-1590968;Saint Armel Eglise;saintarmeleglise
-BUS;2_4552;48013967;-1594269;Saint Armel Gare;saintarmelgare
-BUS;2_4553;48014669;-1598296;Lande Du Jardin;landedujardin
-BUS;2_4554;48014732;-1598404;Lande Du Jardin;landedujardin
-BUS;2_4555;48014025;-1594403;Saint Armel Gare;saintarmelgare
-BUS;2_4601;48211718;-1630460;Chevaigné Mairie;chevaignemairie
-BUS;2_4602;48214314;-1629057;Fonderies;fonderies
-BUS;2_4603;48210954;-1626024;Pommiers;pommiers
-BUS;2_4604;48210088;-1625874;Pommiers;pommiers
-BUS;2_4605;48214424;-1628783;Fonderies;fonderies
-BUS;2_4606;48211933;-1630263;Chevaigné Mairie;chevaignemairie
-BUS;2_4607;48207648;-1630804;Chevaigné Gare;chevaignegare
-BUS;2_4608;48207870;-1630648;Chevaigné Gare;chevaignegare
-BUS;2_4609;48199176;-1627579;Chopinais;chopinais
-BUS;2_4610;48199182;-1627647;Chopinais;chopinais
-BUS;2_4652;48105083;-1872710;Chêne Vert;chenevert
-BUS;2_4653;48103429;-1869529;Saint Mélaine;saintmelaine
-BUS;2_4654;48103423;-1869448;Saint Mélaine;saintmelaine
-BIKE;75;48132100;-1635280;Zac Saint Sulpice;zacsaintsulpice
-BIKE;52;48121075;-1704122;Villejean-universite;villejeanuniversite
-BIKE;81;48122475;-1651089;Turmel;turmel
-BIKE;12;48107697;-1673695;Tnb;tnb
-BIKE;71;48094994;-1663705;Ste Therese;stetherese
-BIKE;5;48114510;-1680984;Sainte Anne;sainteanne
-BIKE;9;48112385;-1674417;Saint Georges;saintgeorges
-BIKE;23;48106663;-1686713;Rotonde;rotonde
-BIKE;1;48109990;-1678027;Republique;republique
-BIKE;8;48119396;-1674450;Rectorat;rectorat
-BIKE;55;48128407;-1693916;Prefecture;prefecture
-BIKE;39;48121490;-1692816;Pontchaillou (metro);pontchailloumetro
-BIKE;42;48109756;-1656451;Pont De Strasbourg;pontdestrasbourg
-BIKE;20;48102016;-1683961;Pont De Nantes;pontdenantes
-BIKE;35;48110310;-1663955;Pont De Chateaudun;pontdechateaudun
-BIKE;19;48105907;-1681306;Plelo Colombier;plelocolombier
-BIKE;4;48115074;-1677062;Place Hoche;placehoche
-BIKE;24;48109657;-1684020;Place De Bretagne;placedebretagne
-BIKE;59;48134563;-1651560;Piscine Gayeulles;piscinegayeulles
-BIKE;66;48089664;-1690234;Piscine Brequigny;piscinebrequigny
-BIKE;40;48103497;-1662321;Pierre Martin;pierremartin
-BIKE;36;48110115;-1670039;Paul Bert;paulbert
-BIKE;80;48123020;-1660502;Painleve;painleve
-BIKE;25;48110294;-1683107;Office De Tourisme;officedetourisme
-BIKE;22;48113510;-1661840;Oberthur;oberthur
-BIKE;10;48109573;-1674072;Musee Beaux Arts;museebeauxarts
-BIKE;46;48112038;-1645745;Moulin De Joue;moulindejoue
-BIKE;76;48136700;-1666673;Monts D'arree;montsdarree
-BIKE;44;48115967;-1658260;Metz Sevigne;metzsevigne
-BIKE;70;48097942;-1688113;Mermoz;mermoz
-BIKE;38;48111725;-1702033;Marbeuf;marbeuf
-BIKE;31;48105255;-1692976;Malakoff;malakoff
-BIKE;2;48111626;-1678745;Mairie;mairie
-BIKE;65;48084850;-1691921;Lycee Brequigny;lyceebrequigny
-BIKE;11;48107513;-1678163;Liberte;liberte
-BIKE;26;48112766;-1685036;Les Lices;leslices
-BIKE;21;48107660;-1680087;Les Halles;leshalles
-BIKE;14;48106850;-1665818;Laennec;laennec
-BIKE;32;48116608;-1690943;La Touche;latouche
-BIKE;58;48125570;-1710290;La Harpe;laharpe
-BIKE;29;48121384;-1671111;Jules Ferry;julesferry
-BIKE;53;48121530;-1711088;Jf Kennedy;jfkennedy
-BIKE;61;48097534;-1674305;Jacques Cartier;jacquescartier
-BIKE;64;48086770;-1667567;Italie;italie
-BIKE;77;48130510;-1663130;Houx Cite U;houxciteu
-BIKE;6;48117596;-1677851;Hotel Dieu;hoteldieu
-BIKE;27;48112060;-1688515;Horizons;horizons
-BIKE;63;48087296;-1674850;Henri Freville;henrifreville
-BIKE;78;48126823;-1665083;Gros Chene;groschene
-BIKE;73;48108936;-1709452;Geniaux;geniaux
-BIKE;79;48131290;-1656476;Gast;gast
-BIKE;45;48102257;-1673103;Gares (sud);garessud
-BIKE;15;48104088;-1672139;Gares (nord);garesnord
-BIKE;7;48118170;-1670735;Fac De Droit;facdedroit
-BIKE;30;48119530;-1667023;Guéhenno;guehenno
-BIKE;13;48117214;-1682698;Dinan;dinan
-BIKE;74;48100910;-1707072;De Lesseps;delesseps
-BIKE;18;48105118;-1678678;Dalle Du Colombier;dalleducolombier
-BIKE;60;48128803;-1698018;Cucille;cucille
-BIKE;72;48104210;-1712630;Cleunay;cleunay
-BIKE;62;48093285;-1674116;Clemenceau;clemenceau
-BIKE;43;48104816;-1684110;Cite Judiciaire;citejudiciaire
-BIKE;41;48104330;-1650099;Cimetiere Est;cimetiereest
-BIKE;28;48108880;-1693359;Cheques Postaux;chequespostaux
-BIKE;17;48105110;-1677122;Charles De Gaulle;charlesdegaulle
-BIKE;69;48091145;-1682269;Champs Manceaux;champsmanceaux
-BIKE;16;48105530;-1674394;Champs Libres;champslibres
-BIKE;3;48112804;-1680054;Champs Jacquet;champsjacquet
-BIKE;34;48113014;-1693273;Brest Verdun;brestverdun
-BIKE;51;48128730;-1635132;Bouzat;bouzat
-BIKE;67;48091568;-1667300;Binquenais;binquenais
-BIKE;56;48116290;-1705127;Berger;berger
-BIKE;48;48121950;-1638313;Beaulieu Restau U.;beaulieurestauu
-BIKE;50;48118954;-1635186;Beaulieu Insa;beaulieuinsa
-BIKE;47;48116455;-1633916;Beaulieu Chimie;beaulieuchimie
-BIKE;49;48117950;-1642867;Beaulieu Bois Perrin;beaulieuboisperrin
-BIKE;37;48120857;-1681836;Auberge De Jeunesse;aubergedejeunesse
-BIKE;57;48116070;-1713711;Atalante Champeaux;atalantechampeaux
-BIKE;33;48117985;-1686405;Anatole France;anatolefrance
-BIKE;68;48082397;-1677634;Alma;alma
-BIKE;83;48092785;-1640450;Ronceray;ronceray
-BIKE;82;48087320;-1644117;Poterie;poterie
-BIKE;54;48119316;-1691517;Pontchaillou (ter);pontchaillouter
-SUBWAY;ANF;48118120;-1687540;Anatole France;anatolefrance
-SUBWAY;BLO;48087740;-1654270;Le Blosne;leblosne
-SUBWAY;CDG;48105500;-1676990;Charles De Gaulle;charlesdegaulle
-SUBWAY;GAR;48103790;-1672190;Gares;gares
-SUBWAY;GCL;48093500;-1674390;Clemenceau;clemenceau
-SUBWAY;HFR;48087700;-1674830;Henri Fréville;henrifreville
-SUBWAY;ITA;48086560;-1667920;Italie;italie
-SUBWAY;JCA;48097660;-1675560;Jacques Cartier;jacquescartier
-SUBWAY;JFK;48121320;-1711460;J.f. Kennedy;jfkennedy
-SUBWAY;PON;48121540;-1693380;Pontchaillou;pontchaillou
-SUBWAY;POT;48087490;-1644570;La Poterie;lapoterie
-SUBWAY;REP;48109720;-1679180;République;republique
-SUBWAY;STA;48114430;-1680400;Sainte-anne;sainteanne
-SUBWAY;TRI;48086490;-1660470;Triangle;triangle
-SUBWAY;VU;48121250;-1703950;Villejean-université;villejeanuniversite
+BUS;2_1001;48129037;-1632508;Longs Champs;longschamps;Rennes;
+BUS;2_1002;48128266;-1637656;Bouzat;bouzat;Rennes;
+BUS;2_1003;48127441;-1640290;Gallets;gallets;Rennes;
+BUS;2_1004;48125288;-1642538;Donzelot;donzelot;Rennes;
+BUS;2_1005;48123127;-1646831;Mirabeau;mirabeau;Rennes;
+BUS;2_1006;48122263;-1650696;Turmel;turmel;Rennes;
+BUS;2_1007;48121419;-1655058;Assomption;assomption;Rennes;
+BUS;2_1008;48123174;-1660244;Painlevé;painleve;Rennes;
+BUS;2_1009;48121625;-1663177;Metz Volney;metzvolney;Rennes;
+BUS;2_1010;48119176;-1667659;Guehenno;guehenno;Rennes;
+BUS;2_1011;48118305;-1671203;Fac De Droit;facdedroit;Rennes;
+BUS;2_1012;48116180;-1674098;Sévigné;sevigne;Rennes;
+BUS;2_1013;48116872;-1678238;Hôtel Dieu;hoteldieu;Rennes;
+BUS;2_1014;48113711;-1679036;Sainte Anne;sainteanne;Rennes;
+BUS;2_1015;48112522;-1680317;Champ Jacquet;champjacquet;Rennes;
+BUS;2_1016;48110073;-1680167;République Nemours;republiquenemours;Rennes;
+BUS;2_1017;48108349;-1680175;Les Halles;leshalles;Rennes;
+BUS;2_1018;48106048;-1681600;Plélo Colombier;plelocolombier;Rennes;
+BUS;2_1019;48105158;-1684711;Cité Judiciaire;citejudiciaire;Rennes;
+BUS;2_1020;48097394;-1689563;Mermoz;mermoz;Rennes;
+BUS;2_1021;48105506;-1683880;Cité Judiciaire;citejudiciaire;Rennes;
+BUS;2_1022;48106229;-1680810;Plélo Colombier;plelocolombier;Rennes;
+BUS;2_1023;48107982;-1680116;Les Halles;leshalles;Rennes;
+BUS;2_1024;48109979;-1680212;République Nemours;republiquenemours;Rennes;
+BUS;2_1025;48112736;-1680258;Champ Jacquet;champjacquet;Rennes;
+BUS;2_1026;48114785;-1679278;Sainte Anne;sainteanne;Rennes;
+BUS;2_1027;48117231;-1677368;Hôtel Dieu;hoteldieu;Rennes;
+BUS;2_1028;48117507;-1673610;Sévigné;sevigne;Rennes;
+BUS;2_1029;48118320;-1669697;Fac De Droit;facdedroit;Rennes;
+BUS;2_1030;48119478;-1666851;Guehenno;guehenno;Rennes;
+BUS;2_1031;48122004;-1662241;Metz Volney;metzvolney;Rennes;
+BUS;2_1032;48123319;-1659328;Painlevé;painleve;Rennes;
+BUS;2_1033;48121324;-1654994;Assomption;assomption;Rennes;
+BUS;2_1034;48122219;-1650619;Turmel;turmel;Rennes;
+BUS;2_1035;48123702;-1645293;Mirabeau;mirabeau;Rennes;
+BUS;2_1036;48125539;-1642129;Donzelot;donzelot;Rennes;
+BUS;2_1037;48127740;-1640020;Gallets;gallets;Rennes;
+BUS;2_1038;48128263;-1637265;Bouzat;bouzat;Rennes;
+BUS;2_1039;48129017;-1632430;Longs Champs;longschamps;Rennes;
+BUS;2_1040;48130061;-1684335;Donelière;doneliere;Rennes;
+BUS;2_1041;48128842;-1683715;Trois Croix;troiscroix;Rennes;
+BUS;2_1042;48124420;-1681788;Cimetière Nord;cimetierenord;Rennes;
+BUS;2_1043;48123595;-1684179;Saint Martin;saintmartin;Rennes;
+BUS;2_1044;48122248;-1685850;Iufm;iufm;Rennes;
+BUS;2_1046;48118223;-1689352;Anatole France;anatolefrance;Rennes;
+BUS;2_1047;48116178;-1691167;La Touche;latouche;Rennes;
+BUS;2_1048;48113346;-1693460;Brest Verdun;brestverdun;Rennes;
+BUS;2_1049;48111683;-1689489;Horizons;horizons;Rennes;
+BUS;2_1050;48111736;-1687017;Les Lices;leslices;Rennes;
+BUS;2_1051;48109859;-1683279;Place De Bretagne;placedebretagne;Rennes;
+BUS;2_1052;48109893;-1678874;République;republique;Rennes;
+BUS;2_1054;48107550;-1675084;Liberté Tnb;libertetnb;Rennes;
+BUS;2_1055;48105335;-1673892;Champs Libres;champslibres;Rennes;
+BUS;2_1056;48103990;-1672131;Gares;gares;Rennes;
+BUS;2_1057;48105219;-1666130;Laënnec;laennec;Rennes;
+BUS;2_1059;48101368;-1659599;Croix Saint Hélier;croixsainthelier;Rennes;
+BUS;2_1060;48099528;-1657553;Piré;pire;Rennes;
+BUS;2_1061;48097330;-1654331;Bourgeois;bourgeois;Rennes;
+BUS;2_1062;48095126;-1650558;Calmette;calmette;Rennes;
+BUS;2_1063;48092768;-1647498;Monsieur Vincent;monsieurvincent;Rennes;
+BUS;2_1064;48090351;-1645025;Lycée Descartes;lyceedescartes;Rennes;
+BUS;2_1065;48087587;-1643937;La Poterie;lapoterie;Rennes;
+BUS;2_1066;48087800;-1638640;Monnet;monnet;Rennes;
+BUS;2_1067;48089432;-1635418;Bourgueil;bourgueil;Rennes;
+BUS;2_1068;48092015;-1636425;Gohier;gohier;Rennes;
+BUS;2_1069;48092707;-1639675;Ronceray;ronceray;Rennes;
+BUS;2_1070;48094450;-1637998;Carsat;carsat;Rennes;
+BUS;2_1071;48096183;-1637020;Haut Sancé;hautsance;Rennes;
+BUS;2_1072;48094993;-1637938;Carsat;carsat;Rennes;
+BUS;2_1073;48092573;-1639663;Ronceray;ronceray;Rennes;
+BUS;2_1074;48091876;-1636292;Gohier;gohier;Rennes;
+BUS;2_1075;48089494;-1635437;Bourgueil;bourgueil;Rennes;
+BUS;2_1076;48087993;-1638306;Monnet;monnet;Rennes;
+BUS;2_1077;48087441;-1643422;La Poterie;lapoterie;Rennes;
+BUS;2_1078;48089886;-1644715;Lycée Descartes;lyceedescartes;Rennes;
+BUS;2_1079;48092743;-1647240;Monsieur Vincent;monsieurvincent;Rennes;
+BUS;2_1080;48095951;-1651586;Calmette;calmette;Rennes;
+BUS;2_1081;48098002;-1655346;Bourgeois;bourgeois;Rennes;
+BUS;2_1082;48099897;-1657814;Piré;pire;Rennes;
+BUS;2_1083;48102163;-1660276;Croix Saint Hélier;croixsainthelier;Rennes;
+BUS;2_1084;48103267;-1662346;Martin;martin;Rennes;
+BUS;2_1085;48104733;-1665656;Laënnec;laennec;Rennes;
+BUS;2_1086;48104004;-1672011;Gares;gares;Rennes;
+BUS;2_1087;48106030;-1674102;Champs Libres;champslibres;Rennes;
+BUS;2_1088;48107449;-1674914;Liberté Tnb;libertetnb;Rennes;
+BUS;2_1090;48109526;-1677907;République;republique;Rennes;
+BUS;2_1091;48109779;-1683882;Place De Bretagne;placedebretagne;Rennes;
+BUS;2_1092;48111766;-1686266;Les Lices;leslices;Rennes;
+BUS;2_1093;48111743;-1689562;Horizons;horizons;Rennes;
+BUS;2_1094;48113096;-1693384;Brest Verdun;brestverdun;Rennes;
+BUS;2_1095;48116461;-1690829;La Touche;latouche;Rennes;
+BUS;2_1096;48118206;-1689283;Anatole France;anatolefrance;Rennes;
+BUS;2_1097;48121021;-1686805;Iufm;iufm;Rennes;
+BUS;2_1099;48123616;-1683642;Saint Martin;saintmartin;Rennes;
+BUS;2_1100;48124935;-1681982;Cimetière Nord;cimetierenord;Rennes;
+BUS;2_1101;48127275;-1683226;Trois Croix;troiscroix;Rennes;
+BUS;2_1102;48131160;-1684581;Donelière;doneliere;Rennes;
+BUS;2_1103;48138800;-1659213;Saint Laurent;saintlaurent;Rennes;
+BUS;2_1104;48134788;-1658549;Hôtel De Région;hotelderegion;Rennes;
+BUS;2_1105;48135550;-1655694;Héronière;heroniere;Rennes;
+BUS;2_1106;48134364;-1652169;Gayeulles Piscine;gayeullespiscine;Rennes;
+BUS;2_1107;48130869;-1652104;Le Blizz;leblizz;Rennes;
+BUS;2_1108;48128388;-1652168;Gayeulles;gayeulles;Rennes;
+BUS;2_1109;48125659;-1651874;Joliot Curie;joliotcurie;Rennes;
+BUS;2_1110;48124155;-1651620;Chateaubriand;chateaubriand;Rennes;
+BUS;2_1111;48120243;-1650710;Docteur Quentin;docteurquentin;Rennes;
+BUS;2_1112;48118900;-1650928;Vitré Danton;vitredanton;Rennes;
+BUS;2_1113;48116353;-1655631;Jeanne D'arc;jeannedarc;Rennes;
+BUS;2_1114;48114474;-1658009;Durafour;durafour;Rennes;
+BUS;2_1115;48113497;-1661275;Oberthur;oberthur;Rennes;
+BUS;2_1116;48112743;-1664385;Saint Vincent;saintvincent;Rennes;
+BUS;2_1117;48112492;-1666853;Châteaudun;chateaudun;Rennes;
+BUS;2_1118;48111759;-1671215;Thabor;thabor;Rennes;
+BUS;2_1119;48110542;-1674891;Place Pasteur;placepasteur;Rennes;
+BUS;2_1120;48109982;-1677857;République Jaurès;republiquejaures;Rennes;
+BUS;2_1121;48106071;-1677766;Charles De Gaulle;charlesdegaulle;Rennes;
+BUS;2_1122;48103064;-1676827;Gare Sud Féval;garesudfeval;Rennes;
+BUS;2_1123;48099161;-1675701;Ginguené;ginguene;Rennes;
+BUS;2_1124;48097336;-1675580;Jacques Cartier;jacquescartier;Rennes;
+BUS;2_1125;48096905;-1679148;Sacrés Coeurs;sacrescoeurs;Rennes;
+BUS;2_1126;48096030;-1681668;Garigliano;garigliano;Rennes;
+BUS;2_1127;48093065;-1681876;Frères Moines;freresmoines;Rennes;
+BUS;2_1128;48091036;-1682113;Champs Manceaux;champsmanceaux;Rennes;
+BUS;2_1129;48087275;-1682399;Suède;suede;Rennes;
+BUS;2_1130;48085207;-1682485;Canada;canada;Rennes;
+BUS;2_1131;48082705;-1682384;Bosphore;bosphore;Rennes;
+BUS;2_1132;48082335;-1677872;Alma;alma;Rennes;
+BUS;2_1133;48082140;-1682536;Bosphore;bosphore;Rennes;
+BUS;2_1134;48085178;-1682307;Canada;canada;Rennes;
+BUS;2_1135;48088075;-1682214;Suède;suede;Rennes;
+BUS;2_1136;48091137;-1682082;Champs Manceaux;champsmanceaux;Rennes;
+BUS;2_1137;48093597;-1681869;Frères Moines;freresmoines;Rennes;
+BUS;2_1138;48096347;-1681615;Garigliano;garigliano;Rennes;
+BUS;2_1139;48096958;-1678507;Sacrés Coeurs;sacrescoeurs;Rennes;
+BUS;2_1140;48097413;-1674766;Jacques Cartier;jacquescartier;Rennes;
+BUS;2_1141;48099278;-1675618;Ginguené;ginguene;Rennes;
+BUS;2_1142;48101338;-1676257;Gare Sud Féval;garesudfeval;Rennes;
+BUS;2_1143;48106081;-1677601;Charles De Gaulle;charlesdegaulle;Rennes;
+BUS;2_1144;48110069;-1677805;République Jaurès;republiquejaures;Rennes;
+BUS;2_1146;48111873;-1671130;Thabor;thabor;Rennes;
+BUS;2_1147;48112716;-1664396;Saint Vincent;saintvincent;Rennes;
+BUS;2_1148;48113411;-1661415;Oberthur;oberthur;Rennes;
+BUS;2_1149;48114256;-1658739;Durafour;durafour;Rennes;
+BUS;2_1150;48116528;-1655525;Jeanne D'arc;jeannedarc;Rennes;
+BUS;2_1151;48118792;-1651619;Vitré Danton;vitredanton;Rennes;
+BUS;2_1152;48120434;-1650673;Docteur Quentin;docteurquentin;Rennes;
+BUS;2_1153;48124439;-1651497;Chateaubriand;chateaubriand;Rennes;
+BUS;2_1154;48126085;-1651817;Joliot Curie;joliotcurie;Rennes;
+BUS;2_1155;48129166;-1652102;Gayeulles;gayeulles;Rennes;
+BUS;2_1156;48131856;-1652002;Le Blizz;leblizz;Rennes;
+BUS;2_1157;48134945;-1652059;Gayeulles Piscine;gayeullespiscine;Rennes;
+BUS;2_1158;48135539;-1656205;Héronière;heroniere;Rennes;
+BUS;2_1159;48134394;-1658754;Hôtel De Région;hotelderegion;Rennes;
+BUS;2_1160;48114059;-1637216;Tournebride;tournebride;Rennes;
+BUS;2_1161;48112311;-1644291;Plaine De Baud;plainedebaud;Rennes;
+BUS;2_1162;48110336;-1655975;Pont De Strasbourg;pontdestrasbourg;Rennes;
+BUS;2_1163;48110332;-1660390;Robidou;robidou;Rennes;
+BUS;2_1164;48110106;-1666777;Pont De Châteaudun;pontdechateaudun;Rennes;
+BUS;2_1165;48110062;-1670178;Paul Bert;paulbert;Rennes;
+BUS;2_1166;48109883;-1675129;Musée Beaux Arts;museebeauxarts;Rennes;
+BUS;2_1167;48109367;-1678658;République Pré Botté;republiqueprebotte;Rennes;
+BUS;2_1168;48109809;-1678824;République;republique;Rennes;
+BUS;2_1169;48109853;-1674521;Musée Beaux Arts;museebeauxarts;Rennes;
+BUS;2_1170;48110033;-1669072;Paul Bert;paulbert;Rennes;
+BUS;2_1171;48110038;-1664873;Pont De Châteaudun;pontdechateaudun;Rennes;
+BUS;2_1172;48109830;-1659417;Robidou;robidou;Rennes;
+BUS;2_1173;48109935;-1656761;Pont De Strasbourg;pontdestrasbourg;Rennes;
+BUS;2_1174;48112584;-1642861;Plaine De Baud;plainedebaud;Rennes;
+BUS;2_1175;48116984;-1633906;Beaulieu Chimie;beaulieuchimie;Rennes;
+BUS;2_1176;48119017;-1635148;Beaulieu Insa;beaulieuinsa;Rennes;
+BUS;2_1177;48121880;-1640286;Beaulieu Restau U;beaulieurestauu;Rennes;
+BUS;2_1178;48120783;-1643865;Beaulieu Cité U;beaulieuciteu;Rennes;
+BUS;2_1179;48116984;-1655848;Jeanne D'arc;jeannedarc;Rennes;
+BUS;2_1180;48116161;-1659329;Balzac;balzac;Rennes;
+BUS;2_1181;48116195;-1662590;Musset Cité U;mussetciteu;Rennes;
+BUS;2_1182;48116250;-1665058;George Sand;georgesand;Rennes;
+BUS;2_1183;48117355;-1678550;Hôtel Dieu;hoteldieu;Rennes;
+BUS;2_1184;48117172;-1681590;Dinan;dinan;Rennes;
+BUS;2_1185;48117679;-1684845;Legraverend;legraverend;Rennes;
+BUS;2_1186;48118533;-1688159;Anatole France;anatolefrance;Rennes;
+BUS;2_1187;48114029;-1698259;Maison Diocésaine;maisondiocesaine;Rennes;
+BUS;2_1188;48114985;-1702086;La Salle;lasalle;Rennes;
+BUS;2_1189;48116033;-1705639;Languedoc;languedoc;Rennes;
+BUS;2_1190;48117407;-1708252;Bourgogne;bourgogne;Rennes;
+BUS;2_1191;48115574;-1704723;Languedoc;languedoc;Rennes;
+BUS;2_1192;48114890;-1701297;La Salle;lasalle;Rennes;
+BUS;2_1193;48113777;-1698021;Maison Diocésaine;maisondiocesaine;Rennes;
+BUS;2_1194;48118210;-1687202;Anatole France;anatolefrance;Rennes;
+BUS;2_1195;48117761;-1685005;Legraverend;legraverend;Rennes;
+BUS;2_1196;48117206;-1682320;Dinan;dinan;Rennes;
+BUS;2_1197;48116403;-1673256;Sévigné;sevigne;Rennes;
+BUS;2_1198;48116315;-1668887;George Sand;georgesand;Rennes;
+BUS;2_1199;48116200;-1662900;Musset Cité U;mussetciteu;Rennes;
+BUS;2_1200;48116828;-1656386;Jeanne D'arc;jeannedarc;Rennes;
+BUS;2_1201;48119113;-1649197;Vitré Foulon;vitrefoulon;Rennes;
+BUS;2_1202;48120620;-1644335;Beaulieu Cité U;beaulieuciteu;Rennes;
+BUS;2_1203;48122033;-1639599;Beaulieu Restau U;beaulieurestauu;Rennes;
+BUS;2_1204;48119477;-1635390;Beaulieu Insa;beaulieuinsa;Rennes;
+BUS;2_1205;48097121;-1629230;Veyettes;veyettes;Rennes;
+BUS;2_1206;48100158;-1631542;Tremblaie;tremblaie;Rennes;
+BUS;2_1207;48103490;-1634593;Pré Garel;pregarel;Rennes;
+BUS;2_1208;48104116;-1637689;Saint Saëns;saintsaens;Rennes;
+BUS;2_1209;48105008;-1644564;Pavie;pavie;Rennes;
+BUS;2_1210;48104292;-1649696;Cimetière De L'est;cimetieredelest;Rennes;
+BUS;2_1211;48103177;-1652512;Serpette;serpette;Rennes;
+BUS;2_1212;48101913;-1656525;Mouézy;mouezy;Rennes;
+BUS;2_1213;48102008;-1660046;Croix Saint Hélier;croixsainthelier;Rennes;
+BUS;2_1214;48109901;-1679667;République;republique;Rennes;
+BUS;2_1215;48109972;-1686796;Pont De Bretagne;pontdebretagne;Rennes;
+BUS;2_1216;48109189;-1690305;Le Mail;lemail;Rennes;
+BUS;2_1217;48108452;-1693644;Chèques Postaux;chequespostaux;Rennes;
+BUS;2_1218;48109101;-1697955;Guilloux Lorient;guillouxlorient;Rennes;
+BUS;2_1219;48108247;-1703761;Papeteries;papeteries;Rennes;
+BUS;2_1220;48109143;-1706385;Kerviler;kerviler;Rennes;
+BUS;2_1221;48108866;-1710614;Géniaux;geniaux;Rennes;
+BUS;2_1222;48108074;-1713962;Stade Rennais;staderennais;Rennes;
+BUS;2_1223;48106221;-1723831;Le Hô;leho;Rennes;
+BUS;2_1224;48103064;-1723353;Robinot De St Cyr;robinotdestcyr;Rennes;
+BUS;2_1225;48102182;-1726235;Jardin Moderne;jardinmoderne;Rennes;
+BUS;2_1226;48101224;-1731694;Servigné;servigne;Rennes;
+BUS;2_1229;48101182;-1731628;Servigné;servigne;Rennes;
+BUS;2_1230;48102110;-1726915;Jardin Moderne;jardinmoderne;Rennes;
+BUS;2_1231;48103281;-1723332;Robinot De St Cyr;robinotdestcyr;Rennes;
+BUS;2_1232;48106256;-1723746;Le Hô;leho;Rennes;
+BUS;2_1233;48107045;-1721878;Lemaistre;lemaistre;Rennes;
+BUS;2_1234;48107759;-1714849;Stade Rennais;staderennais;Rennes;
+BUS;2_1235;48108927;-1709771;Géniaux;geniaux;Rennes;
+BUS;2_1236;48108813;-1705615;Kerviler;kerviler;Rennes;
+BUS;2_1237;48107736;-1702114;Papeteries;papeteries;Rennes;
+BUS;2_1238;48108696;-1698848;Guilloux Lorient;guillouxlorient;Rennes;
+BUS;2_1239;48108142;-1694868;Chèques Postaux;chequespostaux;Rennes;
+BUS;2_1240;48109272;-1689707;Le Mail;lemail;Rennes;
+BUS;2_1241;48109996;-1686495;Pont De Bretagne;pontdebretagne;Rennes;
+BUS;2_1242;48109803;-1679522;République;republique;Rennes;
+BUS;2_1243;48101735;-1659416;Croix Saint Hélier;croixsainthelier;Rennes;
+BUS;2_1244;48102292;-1655132;Mouézy;mouezy;Rennes;
+BUS;2_1245;48103136;-1652505;Serpette;serpette;Rennes;
+BUS;2_1246;48104396;-1649342;Cimetière De L'est;cimetieredelest;Rennes;
+BUS;2_1247;48104911;-1643829;Pavie;pavie;Rennes;
+BUS;2_1248;48103985;-1635982;Saint Saëns;saintsaens;Rennes;
+BUS;2_1249;48103560;-1634653;Pré Garel;pregarel;Rennes;
+BUS;2_1250;48099789;-1631294;Tremblaie;tremblaie;Rennes;
+BUS;2_1251;48097079;-1629133;Veyettes;veyettes;Rennes;
+BUS;2_1252;48138768;-1665957;Patton;patton;Rennes;
+BUS;2_1253;48136660;-1667508;Monts D'arrée;montsdarree;Rennes;
+BUS;2_1254;48136754;-1671058;Neruda;neruda;Rennes;
+BUS;2_1255;48134550;-1672977;Condate;condate;Rennes;
+BUS;2_1256;48132643;-1671758;Bellangerais;bellangerais;Rennes;
+BUS;2_1257;48132696;-1667573;Morbihan;morbihan;Rennes;
+BUS;2_1258;48130808;-1663907;Houx Cité U;houxciteu;Rennes;
+BUS;2_1259;48128006;-1664575;Rochester;rochester;Rennes;
+BUS;2_1260;48126703;-1665384;Gros Chêne;groschene;Rennes;
+BUS;2_1261;48125282;-1666664;Volney;volney;Rennes;
+BUS;2_1262;48121471;-1670918;Jules Ferry;julesferry;Rennes;
+BUS;2_1263;48119636;-1674229;Rectorat;rectorat;Rennes;
+BUS;2_1264;48102115;-1684387;Pont De Nantes;pontdenantes;Rennes;
+BUS;2_1265;48099790;-1687088;Foyer Rennais;foyerrennais;Rennes;
+BUS;2_1266;48097089;-1689028;Mermoz;mermoz;Rennes;
+BUS;2_1267;48085736;-1693904;Félix Eboué;felixeboue;Rennes;
+BUS;2_1268;48083764;-1693604;Boberil;boberil;Rennes;
+BUS;2_1269;48084239;-1692072;Lycée Bréquigny;lyceebrequigny;Rennes;
+BUS;2_1270;48085784;-1694045;Félix Eboué;felixeboue;Rennes;
+BUS;2_1273;48092691;-1691275;Saint Yves;saintyves;Rennes;
+BUS;2_1274;48095031;-1690003;Pilate;pilate;Rennes;
+BUS;2_1275;48097458;-1688590;Mermoz;mermoz;Rennes;
+BUS;2_1276;48099706;-1686246;Foyer Rennais;foyerrennais;Rennes;
+BUS;2_1277;48102169;-1684163;Pont De Nantes;pontdenantes;Rennes;
+BUS;2_1278;48117094;-1677868;Hôtel Dieu;hoteldieu;Rennes;
+BUS;2_1279;48119464;-1674483;Rectorat;rectorat;Rennes;
+BUS;2_1280;48121419;-1670873;Jules Ferry;julesferry;Rennes;
+BUS;2_1281;48125284;-1666368;Volney;volney;Rennes;
+BUS;2_1282;48126615;-1665333;Gros Chêne;groschene;Rennes;
+BUS;2_1283;48128792;-1663837;Rochester;rochester;Rennes;
+BUS;2_1284;48131050;-1664400;Houx Cité U;houxciteu;Rennes;
+BUS;2_1285;48132779;-1667598;Morbihan;morbihan;Rennes;
+BUS;2_1286;48132710;-1672343;Bellangerais;bellangerais;Rennes;
+BUS;2_1287;48134917;-1672835;Condate;condate;Rennes;
+BUS;2_1288;48136685;-1670742;Neruda;neruda;Rennes;
+BUS;2_1289;48136586;-1667569;Monts D'arrée;montsdarree;Rennes;
+BUS;2_1290;48126886;-1629544;Clos Courtel;closcourtel;Rennes;
+BUS;2_1291;48124755;-1633884;Iut;iut;Rennes;
+BUS;2_1292;48121450;-1638148;Beaulieu Restau U;beaulieurestauu;Rennes;
+BUS;2_1293;48109921;-1698634;Guilloux;guilloux;Rennes;
+BUS;2_1294;48111408;-1701364;Marbeuf;marbeuf;Rennes;
+BUS;2_1295;48116740;-1704639;Berger;berger;Rennes;
+BUS;2_1296;48119285;-1704556;Université;universite;Rennes;
+BUS;2_1297;48121804;-1703784;Villejean-université;villejeanuniversite;Rennes;
+BUS;2_1298;48125592;-1703071;Irts;irts;Rennes;
+BUS;2_1299;48127852;-1702909;Olympe De Gouges;olympedegouges;Rennes;
+BUS;2_1300;48128586;-1698733;Cucillé;cucille;Rennes;
+BUS;2_1301;48128195;-1693964;Préfecture;prefecture;Rennes;
+BUS;2_1302;48131494;-1691729;Léonard;leonard;Rennes;
+BUS;2_1303;48128326;-1694142;Préfecture;prefecture;Rennes;
+BUS;2_1304;48128508;-1698874;Cucillé;cucille;Rennes;
+BUS;2_1305;48127658;-1703242;Olympe De Gouges;olympedegouges;Rennes;
+BUS;2_1306;48125337;-1703129;Irts;irts;Rennes;
+BUS;2_1307;48121926;-1703889;Villejean-université;villejeanuniversite;Rennes;
+BUS;2_1308;48118921;-1704658;Université;universite;Rennes;
+BUS;2_1309;48116735;-1704773;Berger;berger;Rennes;
+BUS;2_1310;48111223;-1700809;Marbeuf;marbeuf;Rennes;
+BUS;2_1311;48109661;-1698382;Guilloux;guilloux;Rennes;
+BUS;2_1312;48116649;-1633930;Beaulieu Chimie;beaulieuchimie;Rennes;
+BUS;2_1313;48121875;-1638347;Beaulieu Restau U;beaulieurestauu;Rennes;
+BUS;2_1314;48125092;-1633096;Iut;iut;Rennes;
+BUS;2_1315;48109697;-1678081;République;republique;Rennes;
+BUS;2_1316;48101206;-1652964;Raison;raison;Rennes;
+BUS;2_1317;48100140;-1649384;Villebois-mareuil;villeboismareuil;Rennes;
+BUS;2_1318;48099147;-1645973;Landry;landry;Rennes;
+BUS;2_1319;48097056;-1641645;Domaine;domaine;Rennes;
+BUS;2_1320;48094984;-1637251;Carsat;carsat;Rennes;
+BUS;2_1321;48093873;-1633884;Sauvaie;sauvaie;Rennes;
+BUS;2_1322;48094308;-1634743;Sauvaie;sauvaie;Rennes;
+BUS;2_1323;48095438;-1638085;Carsat;carsat;Rennes;
+BUS;2_1324;48097611;-1642420;Domaine;domaine;Rennes;
+BUS;2_1325;48099433;-1646725;Landry;landry;Rennes;
+BUS;2_1326;48101212;-1649627;Villebois-mareuil;villeboismareuil;Rennes;
+BUS;2_1327;48101377;-1653665;Raison;raison;Rennes;
+BUS;2_1328;48133214;-1685288;Lycée Mendès France;lyceemendesfrance;Rennes;
+BUS;2_1329;48121631;-1683237;Iufm;iufm;Rennes;
+BUS;2_1330;48120372;-1681591;Auberge De Jeunesse;aubergedejeunesse;Rennes;
+BUS;2_1331;48117971;-1680745;Square De La Rance;squaredelarance;Rennes;
+BUS;2_1333;48097747;-1675199;Jacques Cartier;jacquescartier;Rennes;
+BUS;2_1334;48097758;-1671284;Châtillon;chatillon;Rennes;
+BUS;2_1335;48097740;-1668349;Ormeaux;ormeaux;Rennes;
+BUS;2_1336;48098022;-1666463;Bigot De Préameneu;bigotdepreameneu;Rennes;
+BUS;2_1337;48097593;-1662953;Sainte Thérèse;saintetherese;Rennes;
+BUS;2_1338;48095015;-1661582;Leray;leray;Rennes;
+BUS;2_1339;48094725;-1658650;Langevin;langevin;Rennes;
+BUS;2_1340;48092031;-1658412;Gide;gide;Rennes;
+BUS;2_1341;48091262;-1654604;Landrel;landrel;Rennes;
+BUS;2_1342;48091202;-1651773;Pologne;pologne;Rennes;
+BUS;2_1343;48087609;-1645968;La Poterie;lapoterie;Rennes;
+BUS;2_1344;48087665;-1650036;Galicie;galicie;Rennes;
+BUS;2_1345;48084881;-1651136;Sainte Elisabeth;sainteelisabeth;Rennes;
+BUS;2_1346;48084688;-1655128;Hôpital Sud;hopitalsud;Rennes;
+BUS;2_1347;48084735;-1657810;Torigné;torigne;Rennes;
+BUS;2_1348;48083621;-1663846;Tage;tage;Rennes;
+BUS;2_1349;48083674;-1668171;Douro;douro;Rennes;
+BUS;2_1350;48083583;-1672305;Portugal;portugal;Rennes;
+BUS;2_1351;48083489;-1667358;Douro;douro;Rennes;
+BUS;2_1352;48083464;-1663267;Tage;tage;Rennes;
+BUS;2_1353;48084556;-1658009;Torigné;torigne;Rennes;
+BUS;2_1354;48084486;-1653244;Hôpital Sud;hopitalsud;Rennes;
+BUS;2_1355;48084929;-1650858;Sainte Elisabeth;sainteelisabeth;Rennes;
+BUS;2_1356;48087532;-1649984;Galicie;galicie;Rennes;
+BUS;2_1358;48091368;-1651909;Pologne;pologne;Rennes;
+BUS;2_1359;48091438;-1655629;Landrel;landrel;Rennes;
+BUS;2_1360;48092420;-1658366;Gide;gide;Rennes;
+BUS;2_1361;48094210;-1658228;Langevin;langevin;Rennes;
+BUS;2_1362;48095080;-1661534;Leray;leray;Rennes;
+BUS;2_1363;48097442;-1662657;Sainte Thérèse;saintetherese;Rennes;
+BUS;2_1364;48098024;-1667082;Bigot De Préameneu;bigotdepreameneu;Rennes;
+BUS;2_1365;48097716;-1669168;Ormeaux;ormeaux;Rennes;
+BUS;2_1366;48097756;-1671109;Châtillon;chatillon;Rennes;
+BUS;2_1367;48110980;-1679520;Mairie;mairie;Rennes;
+BUS;2_1368;48118374;-1680606;Square De La Rance;squaredelarance;Rennes;
+BUS;2_1369;48120266;-1681070;Auberge De Jeunesse;aubergedejeunesse;Rennes;
+BUS;2_1370;48122022;-1683622;Iufm;iufm;Rennes;
+BUS;2_1371;48133003;-1685068;Lycée Mendès France;lyceemendesfrance;Rennes;
+BUS;2_1372;48138409;-1659071;Saint Laurent;saintlaurent;Rennes;
+BUS;2_1373;48135205;-1659387;Hôtel De Région;hotelderegion;Rennes;
+BUS;2_1374;48133248;-1656932;Longs Prés;longspres;Rennes;
+BUS;2_1375;48130137;-1656725;Gast;gast;Rennes;
+BUS;2_1376;48128553;-1657124;Europe;europe;Rennes;
+BUS;2_1377;48126793;-1658544;Trégain;tregain;Rennes;
+BUS;2_1378;48124933;-1661355;Saint Exupéry;saintexupery;Rennes;
+BUS;2_1379;48105911;-1688654;Inkermann;inkermann;Rennes;
+BUS;2_1380;48105214;-1690759;Mabilais;mabilais;Rennes;
+BUS;2_1381;48105084;-1694260;Malakoff;malakoff;Rennes;
+BUS;2_1382;48105104;-1698717;Voltaire;voltaire;Rennes;
+BUS;2_1383;48103607;-1700091;Dargent;dargent;Rennes;
+BUS;2_1384;48102620;-1703825;Champion De Cicé;championdecice;Rennes;
+BUS;2_1385;48100691;-1706978;De Lesseps;delesseps;Rennes;
+BUS;2_1386;48098935;-1705354;Guérinais;guerinais;Rennes;
+BUS;2_1387;48098010;-1708192;Récipon;recipon;Rennes;
+BUS;2_1388;48099342;-1711177;Montand;montand;Rennes;
+BUS;2_1389;48101218;-1711829;Clinique La Sagesse;cliniquelasagesse;Rennes;
+BUS;2_1390;48104136;-1713476;Cleunay;cleunay;Rennes;
+BUS;2_1391;48100883;-1711638;Clinique La Sagesse;cliniquelasagesse;Rennes;
+BUS;2_1392;48099880;-1711239;Montand;montand;Rennes;
+BUS;2_1393;48097896;-1707657;Récipon;recipon;Rennes;
+BUS;2_1394;48099001;-1705508;Guérinais;guerinais;Rennes;
+BUS;2_1395;48101014;-1707020;De Lesseps;delesseps;Rennes;
+BUS;2_1396;48102258;-1704991;Champion De Cicé;championdecice;Rennes;
+BUS;2_1397;48103618;-1700280;Dargent;dargent;Rennes;
+BUS;2_1398;48105189;-1698630;Voltaire;voltaire;Rennes;
+BUS;2_1399;48104976;-1694022;Malakoff;malakoff;Rennes;
+BUS;2_1400;48105413;-1689848;Mabilais;mabilais;Rennes;
+BUS;2_1401;48105622;-1687767;Inkermann;inkermann;Rennes;
+BUS;2_1402;48105581;-1685179;Cité Judiciaire;citejudiciaire;Rennes;
+BUS;2_1403;48125226;-1661004;Saint Exupéry;saintexupery;Rennes;
+BUS;2_1404;48126768;-1658501;Trégain;tregain;Rennes;
+BUS;2_1405;48128345;-1657146;Europe;europe;Rennes;
+BUS;2_1406;48130740;-1656509;Gast;gast;Rennes;
+BUS;2_1407;48133058;-1656700;Longs Prés;longspres;Rennes;
+BUS;2_1408;48119715;-1651296;Vitré Péguy;vitrepeguy;Rennes;
+BUS;2_1409;48126870;-1653165;Joliot Curie;joliotcurie;Rennes;
+BUS;2_1410;48136487;-1662537;Hélias;helias;Rennes;
+BUS;2_1411;48132165;-1672901;Bellangerais;bellangerais;Rennes;
+BUS;2_1412;48121342;-1707771;Cours Kennedy;courskennedy;Rennes;
+BUS;2_1413;48118588;-1708021;Bourgogne;bourgogne;Rennes;
+BUS;2_1414;48116385;-1712159;Merlin;merlin;Rennes;
+BUS;2_1415;48114864;-1713006;Chambre Agriculture;chambreagriculture;Rennes;
+BUS;2_1416;48113511;-1714366;Atalante Champeaux;atalantechampeaux;Rennes;
+BUS;2_1417;48111459;-1713389;Les Arts;lesarts;Rennes;
+BUS;2_1418;48109277;-1710260;Géniaux;geniaux;Rennes;
+BUS;2_1419;48111163;-1712918;Les Arts;lesarts;Rennes;
+BUS;2_1420;48113673;-1712590;Atalante Champeaux;atalantechampeaux;Rennes;
+BUS;2_1421;48114702;-1715623;Chambre Agriculture;chambreagriculture;Rennes;
+BUS;2_1422;48116287;-1711464;Merlin;merlin;Rennes;
+BUS;2_1423;48118530;-1708110;Bourgogne;bourgogne;Rennes;
+BUS;2_1424;48121280;-1707884;Cours Kennedy;courskennedy;Rennes;
+BUS;2_1425;48127979;-1682521;Trois Croix;troiscroix;Rennes;
+BUS;2_1426;48132074;-1672691;Bellangerais;bellangerais;Rennes;
+BUS;2_1427;48136421;-1663312;Hélias;helias;Rennes;
+BUS;2_1428;48134486;-1658671;Hôtel De Région;hotelderegion;Rennes;
+BUS;2_1429;48127668;-1650987;Joliot Curie;joliotcurie;Rennes;
+BUS;2_1430;48123658;-1659398;Painlevé;painleve;Rennes;
+BUS;2_1431;48119491;-1651034;Vitré Péguy;vitrepeguy;Rennes;
+BUS;2_1432;48118769;-1649907;Vitré Foulon;vitrefoulon;Rennes;
+BUS;2_1433;48113583;-1656598;Durafour Strasbourg;durafourstrasbourg;Rennes;
+BUS;2_1434;48109366;-1655190;Pont De Strasbourg;pontdestrasbourg;Rennes;
+BUS;2_1435;48105696;-1650654;Chardonnet;chardonnet;Rennes;
+BUS;2_1436;48103631;-1649759;Cimetière De L'est;cimetieredelest;Rennes;
+BUS;2_1437;48101072;-1649749;Villebois-mareuil;villeboismareuil;Rennes;
+BUS;2_1438;48099223;-1652850;Le Dantec;ledantec;Rennes;
+BUS;2_1439;48098262;-1655167;Bourgeois;bourgeois;Rennes;
+BUS;2_1440;48087731;-1653849;Le Blosne;leblosne;Rennes;
+BUS;2_1441;48086062;-1660940;Triangle;triangle;Rennes;
+BUS;2_1442;48091593;-1667402;Binquenais;binquenais;Rennes;
+BUS;2_1443;48091587;-1662329;Binquenais Collège;binquenaiscollege;Rennes;
+BUS;2_1444;48093560;-1669648;Combes;combes;Rennes;
+BUS;2_1445;48093173;-1674606;Clemenceau;clemenceau;Rennes;
+BUS;2_1446;48090394;-1674912;Argonautes;argonautes;Rennes;
+BUS;2_1447;48087316;-1675016;Henri Fréville;henrifreville;Rennes;
+BUS;2_1448;48081359;-1679749;Alma;alma;Rennes;
+BUS;2_1449;48086824;-1683076;Norvège;norvege;Rennes;
+BUS;2_1450;48086659;-1688372;Coubertin;coubertin;Rennes;
+BUS;2_1451;48086834;-1691273;Lycée Bréquigny;lyceebrequigny;Rennes;
+BUS;2_1452;48089860;-1691064;Bréquigny Piscine;brequignypiscine;Rennes;
+BUS;2_1453;48089745;-1693032;Pigeon Blanc;pigeonblanc;Saint-Jacques-de-la-Lande;
+BUS;2_1454;48089512;-1691195;Bréquigny Piscine;brequignypiscine;Rennes;
+BUS;2_1455;48086731;-1691043;Lycée Bréquigny;lyceebrequigny;Rennes;
+BUS;2_1456;48086580;-1687396;Coubertin;coubertin;Rennes;
+BUS;2_1457;48086794;-1683890;Norvège;norvege;Rennes;
+BUS;2_1458;48082670;-1676919;Alma;alma;Rennes;
+BUS;2_1459;48088061;-1674320;Henri Fréville;henrifreville;Rennes;
+BUS;2_1460;48089311;-1674264;Argonautes;argonautes;Rennes;
+BUS;2_1461;48093706;-1673900;Clemenceau;clemenceau;Rennes;
+BUS;2_1462;48093497;-1670100;Combes;combes;Rennes;
+BUS;2_1463;48091364;-1663184;Binquenais Collège;binquenaiscollege;Rennes;
+BUS;2_1464;48091340;-1666290;Binquenais;binquenais;Rennes;
+BUS;2_1465;48086118;-1661068;Triangle;triangle;Rennes;
+BUS;2_1466;48085043;-1653902;Hôpital Sud;hopitalsud;Rennes;
+BUS;2_1467;48087559;-1653417;Le Blosne;leblosne;Rennes;
+BUS;2_1468;48087414;-1645371;La Poterie;lapoterie;Rennes;
+BUS;2_1469;48099269;-1652577;Le Dantec;ledantec;Rennes;
+BUS;2_1470;48100581;-1650311;Villebois-mareuil;villeboismareuil;Rennes;
+BUS;2_1471;48103724;-1649471;Cimetière De L'est;cimetieredelest;Rennes;
+BUS;2_1472;48107144;-1650970;Chardonnet;chardonnet;Rennes;
+BUS;2_1473;48110699;-1655671;Pont De Strasbourg;pontdestrasbourg;Rennes;
+BUS;2_1474;48113516;-1656716;Durafour Strasbourg;durafourstrasbourg;Rennes;
+BUS;2_1475;48126959;-1629180;Clos Courtel;closcourtel;Rennes;
+BUS;2_1476;48110288;-1664478;Pont De Châteaudun;pontdechateaudun;Rennes;
+BUS;2_1477;48103880;-1672848;Gares;gares;Rennes;
+BUS;2_1479;48109864;-1665396;Pont De Châteaudun;pontdechateaudun;Rennes;
+BUS;2_1480;48132029;-1635038;Gaudinais;gaudinais;Rennes;
+BUS;2_1481;48129818;-1642411;Zac Saint Sulpice;zacsaintsulpice;Rennes;
+BUS;2_1482;48114632;-1680167;Sainte Anne;sainteanne;Rennes;
+BUS;2_1483;48129556;-1643586;Zac Saint Sulpice;zacsaintsulpice;Rennes;
+BUS;2_1484;48131860;-1635898;Gaudinais;gaudinais;Rennes;
+BUS;2_1485;48137972;-1658736;Saint Laurent;saintlaurent;Rennes;
+BUS;2_1486;48134828;-1659832;Hôtel De Région;hotelderegion;Rennes;
+BUS;2_1487;48131413;-1662291;Patton Gast;pattongast;Rennes;
+BUS;2_1489;48132306;-1661589;Patton Gast;pattongast;Rennes;
+BUS;2_1490;48135935;-1659189;Hôtel De Région;hotelderegion;Rennes;
+BUS;2_1491;48138843;-1658368;Saint Laurent;saintlaurent;Rennes;
+BUS;2_1492;48133846;-1693868;Grand Quartier;grandquartier;Rennes;
+BUS;2_1493;48127277;-1693365;Lycée Basch;lyceebasch;Rennes;
+BUS;2_1494;48121253;-1702967;Villejean-université;villejeanuniversite;Rennes;
+BUS;2_1495;48126639;-1693093;Lycée Basch;lyceebasch;Rennes;
+BUS;2_1496;48132295;-1709701;Lande Du Breil;landedubreil;Rennes;
+BUS;2_1497;48121024;-1703001;Villejean-université;villejeanuniversite;Rennes;
+BUS;2_1498;48116582;-1723902;Petit Champeaux;petitchampeaux;Rennes;
+BUS;2_1499;48116260;-1715958;Colin;colin;Rennes;
+BUS;2_1500;48113870;-1705406;Agrocampus;agrocampus;Rennes;
+BUS;2_1501;48109368;-1679767;République Pré Botté;republiqueprebotte;Rennes;
+BUS;2_1502;48113273;-1704559;Agrocampus;agrocampus;Rennes;
+BUS;2_1503;48116161;-1715949;Colin;colin;Rennes;
+BUS;2_1504;48116408;-1723281;Petit Champeaux;petitchampeaux;Rennes;
+BUS;2_1506;48106481;-1731438;Berthault;berthault;Rennes;
+BUS;2_1507;48109370;-1675124;Lycée Zola;lyceezola;Rennes;
+BUS;2_1508;48106735;-1729146;Berthault;berthault;Rennes;
+BUS;2_1509;48088110;-1674450;Henri Fréville;henrifreville;Rennes;
+BUS;2_1510;48087779;-1674465;Henri Fréville;henrifreville;Rennes;
+BUS;2_1511;48087539;-1643455;La Poterie;lapoterie;Rennes;
+BUS;2_1513;48115482;-1648460;Bois Perrin;boisperrin;Rennes;
+BUS;2_1514;48113336;-1647605;Moulin De Joué;moulindejoue;Rennes;
+BUS;2_1515;48113501;-1647554;Moulin De Joué;moulindejoue;Rennes;
+BUS;2_1516;48115953;-1648407;Bois Perrin;boisperrin;Rennes;
+BUS;2_1517;48118540;-1713636;Berry;berry;Rennes;
+BUS;2_1518;48120627;-1710465;Bourbonnais;bourbonnais;Rennes;
+BUS;2_1519;48121101;-1702976;Villejean-université;villejeanuniversite;Rennes;
+BUS;2_1520;48120502;-1709740;Bourbonnais;bourbonnais;Rennes;
+BUS;2_1521;48118460;-1713760;Berry;berry;Rennes;
+BUS;2_1522;48113929;-1642818;Piletière;piletiere;Rennes;
+BUS;2_1523;48114549;-1649953;Moulin De Joué;moulindejoue;Rennes;
+BUS;2_1524;48114674;-1651350;Hôpital Régnier;hopitalregnier;Rennes;
+BUS;2_1525;48113553;-1656729;Durafour Strasbourg;durafourstrasbourg;Rennes;
+BUS;2_1526;48114791;-1653178;Hôpital Régnier;hopitalregnier;Rennes;
+BUS;2_1527;48114335;-1649207;Moulin De Joué;moulindejoue;Rennes;
+BUS;2_1528;48113994;-1644358;Piletière;piletiere;Rennes;
+BUS;2_1529;48121190;-1702972;Villejean-université;villejeanuniversite;Rennes;
+BUS;2_1530;48128995;-1642729;Zac Saint Sulpice;zacsaintsulpice;Rennes;
+BUS;2_1531;48114843;-1680064;Sainte Anne;sainteanne;Rennes;
+BUS;2_1532;48127058;-1652738;Joliot Curie;joliotcurie;Rennes;
+BUS;2_1533;48087600;-1643463;La Poterie;lapoterie;Rennes;
+BUS;2_1534;48088315;-1674443;Henri Fréville;henrifreville;Rennes;
+BUS;2_1535;48083779;-1672376;Portugal;portugal;Rennes;
+BUS;2_1536;48126806;-1630096;Clos Courtel;closcourtel;Rennes;
+BUS;2_1537;48131575;-1691701;Léonard;leonard;Rennes;
+BUS;2_1539;48107231;-1723066;Lemaistre;lemaistre;Rennes;
+BUS;2_1540;48109952;-1685190;Pont De Bretagne;pontdebretagne;Rennes;
+BUS;2_1542;48109973;-1685353;Pont De Bretagne;pontdebretagne;Rennes;
+BUS;2_1543;48131346;-1691835;Léonard;leonard;Rennes;
+BUS;2_1550;48109698;-1677973;République;republique;Rennes;
+BUS;2_1551;48109898;-1678262;République;republique;Rennes;
+BUS;2_1552;48110688;-1673693;Place Pasteur;placepasteur;Rennes;
+BUS;2_1553;48121344;-1702437;Villejean Université;villejeanuniversite;Rennes;
+BUS;2_1554;48090734;-1661205;Binquenais Le Moine;binquenaislemoine;Rennes;
+BUS;2_1555;48113296;-1675229;Fossés;fosses;Rennes;
+BUS;2_1556;48109432;-1677633;République;republique;Rennes;
+BUS;2_1560;48097788;-1656646;Bourgeois;bourgeois;Rennes;
+BUS;2_1561;48096013;-1658010;Langevin;langevin;Rennes;
+BUS;2_1563;48109697;-1678184;République;republique;Rennes;
+BUS;2_1564;48087822;-1674590;Henri Fréville;henrifreville;Rennes;
+BUS;2_1566;48125370;-1692576;Lycée Basch;lyceebasch;Rennes;
+BUS;2_1567;48106229;-1677502;Charles De Gaulle;charlesdegaulle;Rennes;
+BUS;2_1568;48121072;-1713520;Kennedy Guyenne;kennedyguyenne;Rennes;
+BUS;2_1570;48098471;-1697531;Coeur De Courrouze;coeurdecourrouze;Rennes;
+BUS;2_1571;48098290;-1699389;Coeur De Courrouze;coeurdecourrouze;Rennes;
+BUS;2_1572;48117983;-1675227;Vincennes;vincennes;Rennes;
+BUS;2_1573;48097069;-1690299;Mermoz;mermoz;Rennes;
+BUS;2_1574;48090796;-1661143;Binquenais Le Moine;binquenaislemoine;Rennes;
+BUS;2_1576;48122833;-1713677;Villejean Anjou;villejeananjou;Rennes;
+BUS;2_1577;48086706;-1661041;Triangle;triangle;Rennes;
+BUS;2_1584;48111765;-1702884;Marbeuf;marbeuf;Rennes;
+BUS;2_1585;48088049;-1654349;Le Blosne;leblosne;Rennes;
+BUS;2_1586;48131507;-1694506;Beauregard;beauregard;Rennes;
+BUS;2_1587;48105915;-1684405;Cité Judiciaire;citejudiciaire;Rennes;
+BUS;2_1588;48098019;-1703694;Jules Maniez;julesmaniez;Rennes;
+BUS;2_1589;48097935;-1703985;Jules Maniez;julesmaniez;Rennes;
+BUS;2_1590;48099279;-1694228;Jules Verne;julesverne;Rennes;
+BUS;2_1591;48098841;-1695018;Jules Verne;julesverne;Rennes;
+BUS;2_1593;48103428;-1712905;Cleunay;cleunay;Rennes;
+BUS;2_1595;48105832;-1677300;Charles De Gaulle;charlesdegaulle;Rennes;
+BUS;2_2001;48131133;-1624335;Chêne Germain;chenegermain;Cesson-Sévigné;
+BUS;2_2002;48130233;-1627528;Cesson Hôpital Privé;cessonhopitalprive;Cesson-Sévigné;
+BUS;2_2003;48130114;-1628030;Cesson Hôpital Privé;cessonhopitalprive;Cesson-Sévigné;
+BUS;2_2005;48124497;-1594203;Grand Domaine;granddomaine;Cesson-Sévigné;
+BUS;2_2006;48125227;-1596528;Petits Champs;petitschamps;Cesson-Sévigné;
+BUS;2_2007;48123114;-1600558;Bourgchevreuil;bourgchevreuil;Cesson-Sévigné;
+BUS;2_2008;48123586;-1604382;La Coulée;lacoulee;Cesson-Sévigné;
+BUS;2_2009;48123530;-1608133;Fontenelle;fontenelle;Cesson-Sévigné;
+BUS;2_2010;48122799;-1610897;Mare Pavée;marepavee;Cesson-Sévigné;
+BUS;2_2011;48121125;-1609929;Maison D'accueil;maisondaccueil;Cesson-Sévigné;
+BUS;2_2012;48118443;-1608430;Muguet;muguet;Cesson-Sévigné;
+BUS;2_2013;48116439;-1607353;Vilaine;vilaine;Cesson-Sévigné;
+BUS;2_2014;48114681;-1609663;Place Sévigné;placesevigne;Cesson-Sévigné;
+BUS;2_2015;48114222;-1616313;Hublais;hublais;Cesson-Sévigné;
+BUS;2_2016;48114182;-1621949;Taillis;taillis;Cesson-Sévigné;
+BUS;2_2017;48114085;-1630367;Champs Péans;champspeans;Cesson-Sévigné;
+BUS;2_2018;48113985;-1636133;Tournebride;tournebride;Cesson-Sévigné;
+BUS;2_2019;48114079;-1628011;Champs Péans;champspeans;Cesson-Sévigné;
+BUS;2_2020;48114150;-1621839;Taillis;taillis;Cesson-Sévigné;
+BUS;2_2021;48114215;-1613755;Hublais;hublais;Cesson-Sévigné;
+BUS;2_2022;48114675;-1609582;Place Sévigné;placesevigne;Cesson-Sévigné;
+BUS;2_2023;48116049;-1606969;Vilaine;vilaine;Cesson-Sévigné;
+BUS;2_2024;48118326;-1608420;Muguet;muguet;Cesson-Sévigné;
+BUS;2_2025;48121232;-1609952;Maison D'accueil;maisondaccueil;Cesson-Sévigné;
+BUS;2_2026;48122766;-1610840;Mare Pavée;marepavee;Cesson-Sévigné;
+BUS;2_2027;48123491;-1608184;Fontenelle;fontenelle;Cesson-Sévigné;
+BUS;2_2028;48123534;-1604095;La Coulée;lacoulee;Cesson-Sévigné;
+BUS;2_2029;48123147;-1600628;Bourgchevreuil;bourgchevreuil;Cesson-Sévigné;
+BUS;2_2030;48124818;-1596829;Petits Champs;petitschamps;Cesson-Sévigné;
+BUS;2_2031;48123914;-1593452;Grand Domaine;granddomaine;Cesson-Sévigné;
+BUS;2_2032;48106498;-1621371;Z.i. Sud Est;zisudest;Cesson-Sévigné;
+BUS;2_2033;48101390;-1623589;Bas Village;basvillage;Cesson-Sévigné;
+BUS;2_2034;48099620;-1621146;Forum;forum;Cesson-Sévigné;
+BUS;2_2035;48099619;-1620944;Forum;forum;Cesson-Sévigné;
+BUS;2_2036;48101186;-1623961;Bas Village;basvillage;Cesson-Sévigné;
+BUS;2_2037;48106066;-1625694;Erbonière;erboniere;Cesson-Sévigné;
+BUS;2_2038;48114966;-1590601;Haut Grippé;hautgrippe;Cesson-Sévigné;
+BUS;2_2039;48114415;-1600445;Bordage;bordage;Cesson-Sévigné;
+BUS;2_2040;48116177;-1600465;Chalotais;chalotais;Cesson-Sévigné;
+BUS;2_2041;48120577;-1599489;Cesson Collège;cessoncollege;Cesson-Sévigné;
+BUS;2_2042;48124685;-1613148;Les Lacs;leslacs;Cesson-Sévigné;
+BUS;2_2043;48124315;-1618447;Cormier;cormier;Cesson-Sévigné;
+BUS;2_2044;48127308;-1624202;Belle Fontaine;bellefontaine;Cesson-Sévigné;
+BUS;2_2045;48127348;-1628218;Clos Courtel;closcourtel;Cesson-Sévigné;
+BUS;2_2046;48127333;-1627835;Clos Courtel;closcourtel;Cesson-Sévigné;
+BUS;2_2047;48127256;-1624131;Belle Fontaine;bellefontaine;Cesson-Sévigné;
+BUS;2_2048;48124499;-1617669;Cormier;cormier;Cesson-Sévigné;
+BUS;2_2049;48124396;-1614079;Les Lacs;leslacs;Cesson-Sévigné;
+BUS;2_2050;48120117;-1599274;Cesson Collège;cessoncollege;Cesson-Sévigné;
+BUS;2_2051;48115836;-1600651;Chalotais;chalotais;Cesson-Sévigné;
+BUS;2_2052;48131141;-1596949;Saint Etienne;saintetienne;Cesson-Sévigné;
+BUS;2_2053;48126324;-1599128;Cesson Cimetière;cessoncimetiere;Cesson-Sévigné;
+BUS;2_2054;48123105;-1601917;Métairies Chalotais;metairieschalotais;Cesson-Sévigné;
+BUS;2_2055;48120110;-1602222;Cesson Piscine;cessonpiscine;Cesson-Sévigné;
+BUS;2_2056;48118498;-1604504;Cesson Mairie;cessonmairie;Cesson-Sévigné;
+BUS;2_2057;48113886;-1603254;Cesson Gare;cessongare;Cesson-Sévigné;
+BUS;2_2058;48112607;-1607167;Peupliers;peupliers;Cesson-Sévigné;
+BUS;2_2059;48108318;-1608731;Monniais;monniais;Cesson-Sévigné;
+BUS;2_2060;48107792;-1614666;Rond Point De Bray;rondpointdebray;Cesson-Sévigné;
+BUS;2_2061;48106402;-1621269;Z.i. Sud Est;zisudest;Cesson-Sévigné;
+BUS;2_2062;48107828;-1614085;Rond Point De Bray;rondpointdebray;Cesson-Sévigné;
+BUS;2_2063;48108304;-1608851;Monniais;monniais;Cesson-Sévigné;
+BUS;2_2064;48112570;-1607406;Peupliers;peupliers;Cesson-Sévigné;
+BUS;2_2065;48113828;-1603141;Cesson Gare;cessongare;Cesson-Sévigné;
+BUS;2_2066;48118347;-1604208;Cesson Mairie;cessonmairie;Cesson-Sévigné;
+BUS;2_2067;48120373;-1602406;Cesson Piscine;cessonpiscine;Cesson-Sévigné;
+BUS;2_2068;48123174;-1601788;Métairies Chalotais;metairieschalotais;Cesson-Sévigné;
+BUS;2_2069;48126290;-1599071;Cesson Cimetière;cessoncimetiere;Cesson-Sévigné;
+BUS;2_2070;48145107;-1608630;Victoire;victoire;Cesson-Sévigné;
+BUS;2_2071;48140415;-1616799;Château De Vaux;chateaudevaux;Cesson-Sévigné;
+BUS;2_2072;48140599;-1616478;Château De Vaux;chateaudevaux;Cesson-Sévigné;
+BUS;2_2073;48145102;-1608522;Victoire;victoire;Cesson-Sévigné;
+BUS;2_2074;48123532;-1611284;Mare Pavée;marepavee;Cesson-Sévigné;
+BUS;2_2075;48123381;-1611230;Mare Pavée;marepavee;Cesson-Sévigné;
+BUS;2_2076;48134066;-1629063;Lande Bouhard;landebouhard;Cesson-Sévigné;
+BUS;2_2077;48134203;-1628792;Lande Bouhard;landebouhard;Cesson-Sévigné;
+BUS;2_2079;48128798;-1605954;Verger;verger;Cesson-Sévigné;
+BUS;2_2080;48127350;-1612775;Gaudais;gaudais;Cesson-Sévigné;
+BUS;2_2081;48126826;-1619946;Bouriande;bouriande;Cesson-Sévigné;
+BUS;2_2082;48126936;-1619888;Bouriande;bouriande;Cesson-Sévigné;
+BUS;2_2083;48126962;-1614397;Gaudais;gaudais;Cesson-Sévigné;
+BUS;2_2084;48129040;-1604831;Verger;verger;Cesson-Sévigné;
+BUS;2_2085;48116134;-1582357;Champelé;champele;Cesson-Sévigné;
+BUS;2_2086;48114305;-1600484;Bordage;bordage;Cesson-Sévigné;
+BUS;2_2088;48124676;-1590653;Base De Loisirs;basedeloisirs;Cesson-Sévigné;
+BUS;2_2089;48113572;-1590520;Rigourdière;rigourdiere;Cesson-Sévigné;
+BUS;2_2091;48119005;-1598194;Lycée Sévigné;lyceesevigne;Cesson-Sévigné;
+BUS;2_2101;48131726;-1597902;Saint Etienne;saintetienne;Cesson-Sévigné;
+BUS;2_2102;48106169;-1625899;Erbonière;erboniere;Cesson-Sévigné;
+BUS;2_2103;48113348;-1590016;Rigourdière;rigourdiere;Cesson-Sévigné;
+BUS;2_2104;48114919;-1590425;Haut Grippé;hautgrippe;Cesson-Sévigné;
+BUS;2_2105;48131053;-1624625;Chêne Germain;chenegermain;Cesson-Sévigné;
+BUS;2_2106;48116039;-1582351;Champelé;champele;Cesson-Sévigné;
+BUS;2_2201;48075462;-1716353;Morinais;morinais;Saint-Jacques-de-la-Lande;
+BUS;2_2202;48077350;-1715822;Collège Jean Moulin;collegejeanmoulin;Saint-Jacques-de-la-Lande;
+BUS;2_2203;48079420;-1715671;Médiathèque;mediatheque;Saint-Jacques-de-la-Lande;
+BUS;2_2204;48082560;-1715372;Jean Marin;jeanmarin;Saint-Jacques-de-la-Lande;
+BUS;2_2205;48083209;-1710197;Blosne;blosne;Saint-Jacques-de-la-Lande;
+BUS;2_2206;48087518;-1707042;Gaité;gaite;Saint-Jacques-de-la-Lande;
+BUS;2_2207;48093533;-1701348;Lilas;lilas;Saint-Jacques-de-la-Lande;
+BUS;2_2208;48095716;-1694760;Commeurec;commeurec;Saint-Jacques-de-la-Lande;
+BUS;2_2209;48095726;-1694505;Commeurec;commeurec;Saint-Jacques-de-la-Lande;
+BUS;2_2210;48093354;-1701547;Lilas;lilas;Saint-Jacques-de-la-Lande;
+BUS;2_2211;48087272;-1707343;Gaité;gaite;Saint-Jacques-de-la-Lande;
+BUS;2_2212;48084440;-1709176;Blosne;blosne;Saint-Jacques-de-la-Lande;
+BUS;2_2213;48082496;-1715407;Jean Marin;jeanmarin;Saint-Jacques-de-la-Lande;
+BUS;2_2214;48079882;-1715604;Médiathèque;mediatheque;Saint-Jacques-de-la-Lande;
+BUS;2_2215;48076958;-1715908;Collège Jean Moulin;collegejeanmoulin;Saint-Jacques-de-la-Lande;
+BUS;2_2216;48087284;-1694630;Cormier;cormier;Saint-Jacques-de-la-Lande;
+BUS;2_2217;48090625;-1695008;25 Fusillés;25fusilles;Saint-Jacques-de-la-Lande;
+BUS;2_2218;48092381;-1691584;Saint Yves;saintyves;Saint-Jacques-de-la-Lande;
+BUS;2_2219;48094071;-1690577;Pilate;pilate;Saint-Jacques-de-la-Lande;
+BUS;2_2220;48061593;-1724099;Gautrais;gautrais;Saint-Jacques-de-la-Lande;
+BUS;2_2221;48063063;-1720492;Rossel;rossel;Saint-Jacques-de-la-Lande;
+BUS;2_2222;48066409;-1720239;Pommerais;pommerais;Saint-Jacques-de-la-Lande;
+BUS;2_2223;48067376;-1717017;Abbé Grimault;abbegrimault;Saint-Jacques-de-la-Lande;
+BUS;2_2224;48075071;-1715995;Morinais;morinais;Saint-Jacques-de-la-Lande;
+BUS;2_2225;48086859;-1705719;Gaité;gaite;Saint-Jacques-de-la-Lande;
+BUS;2_2226;48086618;-1701365;Rablais Allende;rablaisallende;Saint-Jacques-de-la-Lande;
+BUS;2_2227;48089421;-1697879;Croix Verte;croixverte;Saint-Jacques-de-la-Lande;
+BUS;2_2228;48089806;-1693091;Pigeon Blanc;pigeonblanc;Saint-Jacques-de-la-Lande;
+BUS;2_2229;48089427;-1697928;Croix Verte;croixverte;Saint-Jacques-de-la-Lande;
+BUS;2_2230;48086512;-1702001;Rablais Allende;rablaisallende;Saint-Jacques-de-la-Lande;
+BUS;2_2231;48086914;-1706598;Gaité;gaite;Saint-Jacques-de-la-Lande;
+BUS;2_2232;48074856;-1715734;Morinais;morinais;Saint-Jacques-de-la-Lande;
+BUS;2_2233;48067383;-1717300;Abbé Grimault;abbegrimault;Saint-Jacques-de-la-Lande;
+BUS;2_2234;48066427;-1720241;Pommerais;pommerais;Saint-Jacques-de-la-Lande;
+BUS;2_2235;48062849;-1720661;Rossel;rossel;Saint-Jacques-de-la-Lande;
+BUS;2_2236;48060026;-1734166;Parc Expo;parcexpo;Saint-Jacques-de-la-Lande;
+BUS;2_2237;48067348;-1721762;Aire Libre Aéroport;airelibreaeroport;Saint-Jacques-de-la-Lande;
+BUS;2_2238;48064981;-1724590;Centre Météo;centremeteo;Saint-Jacques-de-la-Lande;
+BUS;2_2239;48077825;-1712515;Haut Bois;hautbois;Saint-Jacques-de-la-Lande;
+BUS;2_2240;48080580;-1712357;Malraux;malraux;Saint-Jacques-de-la-Lande;
+BUS;2_2241;48080527;-1712554;Malraux;malraux;Saint-Jacques-de-la-Lande;
+BUS;2_2242;48065035;-1724595;Centre Météo;centremeteo;Saint-Jacques-de-la-Lande;
+BUS;2_2243;48066929;-1722330;Aire Libre Aéroport;airelibreaeroport;Saint-Jacques-de-la-Lande;
+BUS;2_2244;48059881;-1734395;Parc Expo;parcexpo;Saint-Jacques-de-la-Lande;
+BUS;2_2245;48077629;-1712672;Haut Bois;hautbois;Saint-Jacques-de-la-Lande;
+BUS;2_2248;48079262;-1733041;Bellevue;bellevue;Saint-Jacques-de-la-Lande;
+BUS;2_2249;48082970;-1731674;Le Pâtis;lepatis;Saint-Jacques-de-la-Lande;
+BUS;2_2250;48086694;-1721997;Reuzerais;reuzerais;Saint-Jacques-de-la-Lande;
+BUS;2_2251;48086628;-1713071;Maffeys;maffeys;Saint-Jacques-de-la-Lande;
+BUS;2_2252;48086621;-1713003;Maffeys;maffeys;Saint-Jacques-de-la-Lande;
+BUS;2_2253;48086677;-1722184;Reuzerais;reuzerais;Saint-Jacques-de-la-Lande;
+BUS;2_2254;48083808;-1730094;Le Pâtis;lepatis;Saint-Jacques-de-la-Lande;
+BUS;2_2255;48079279;-1733263;Bellevue;bellevue;Saint-Jacques-de-la-Lande;
+BUS;2_2257;48087038;-1694675;Pressoirs;pressoirs;Saint-Jacques-de-la-Lande;
+BUS;2_2258;48093537;-1704339;Dominos;dominos;Saint-Jacques-de-la-Lande;
+BUS;2_2260;48093433;-1704570;Dominos;dominos;Saint-Jacques-de-la-Lande;
+BUS;2_2262;48068792;-1697856;Vallon;vallon;Saint-Jacques-de-la-Lande;
+BUS;2_2263;48082574;-1712333;Jean Jaurès;jeanjaures;Saint-Jacques-de-la-Lande;
+BUS;2_2264;48082788;-1713065;Jean Jaurès;jeanjaures;Saint-Jacques-de-la-Lande;
+BUS;2_2265;48061577;-1724044;Gautrais;gautrais;Saint-Jacques-de-la-Lande;
+BUS;2_2267;48075289;-1728986;Auriol;auriol;Saint-Jacques-de-la-Lande;
+BUS;2_2268;48075072;-1728795;Auriol;auriol;Saint-Jacques-de-la-Lande;
+BUS;2_2271;48090537;-1694939;25 Fusillés;25fusilles;Saint-Jacques-de-la-Lande;
+BUS;2_2301;48024529;-1745235;Bruz Centre;bruzcentre;Bruz;
+BUS;2_2302;48024857;-1750734;Herverie;herverie;Bruz;
+BUS;2_2303;48024666;-1757235;Haut Launay;hautlaunay;Bruz;
+BUS;2_2304;48025729;-1760825;Rabine;rabine;Bruz;
+BUS;2_2305;48029377;-1758008;Vert Buisson;vertbuisson;Bruz;
+BUS;2_2306;48033648;-1765839;Cicé Blossac;ciceblossac;Bruz;
+BUS;2_2307;48031280;-1759487;Gavrinis;gavrinis;Bruz;
+BUS;2_2308;48041337;-1754513;Croix Madame;croixmadame;Bruz;
+BUS;2_2309;48044592;-1746457;Schuman;schuman;Bruz;
+BUS;2_2311;48047264;-1742006;Coeur De Campus;coeurdecampus;Bruz;
+BUS;2_2312;48049421;-1740517;Etangs;etangs;Bruz;
+BUS;2_2313;48052729;-1738337;Lande Du Pont;landedupont;Bruz;
+BUS;2_2314;48054910;-1739651;Porte De Ker-lann;portedekerlann;Bruz;
+BUS;2_2315;48052792;-1738371;Lande Du Pont;landedupont;Bruz;
+BUS;2_2316;48049361;-1740660;Etangs;etangs;Bruz;
+BUS;2_2317;48047401;-1742084;Coeur De Campus;coeurdecampus;Bruz;
+BUS;2_2319;48044541;-1746385;Schuman;schuman;Bruz;
+BUS;2_2320;48040337;-1755176;Croix Madame;croixmadame;Bruz;
+BUS;2_2321;48031212;-1759551;Gavrinis;gavrinis;Bruz;
+BUS;2_2322;48029413;-1758011;Vert Buisson;vertbuisson;Bruz;
+BUS;2_2323;48025641;-1760763;Rabine;rabine;Bruz;
+BUS;2_2324;48024630;-1757232;Haut Launay;hautlaunay;Bruz;
+BUS;2_2325;48024819;-1750556;Herverie;herverie;Bruz;
+BUS;2_2326;48034146;-1723785;Doublé;double;Bruz;
+BUS;2_2327;48004830;-1775079;Pont Réan;pontrean;Bruz;
+BUS;2_2328;48034907;-1724606;Doublé;double;Bruz;
+BUS;2_2329;48009162;-1773350;Croix Vaisserelle;croixvaisserelle;Bruz;
+BUS;2_2330;48024063;-1761669;Rabine;rabine;Bruz;
+BUS;2_2331;48021501;-1752341;Noë;noe;Bruz;
+BUS;2_2332;48019520;-1745053;Epalet;epalet;Bruz;
+BUS;2_2333;48020941;-1738098;Du Guesclin;duguesclin;Bruz;
+BUS;2_2334;48023787;-1736113;Pasteur;pasteur;Bruz;
+BUS;2_2335;48026255;-1734529;Bobinais;bobinais;Bruz;
+BUS;2_2336;48030212;-1734461;Champ Niguel;champniguel;Bruz;
+BUS;2_2337;48032960;-1733096;Lavoisier;lavoisier;Bruz;
+BUS;2_2338;48033272;-1733046;Lavoisier;lavoisier;Bruz;
+BUS;2_2339;48028375;-1735616;Champ Niguel;champniguel;Bruz;
+BUS;2_2340;48026032;-1734542;Bobinais;bobinais;Bruz;
+BUS;2_2341;48023667;-1736210;Pasteur;pasteur;Bruz;
+BUS;2_2342;48020928;-1738254;Du Guesclin;duguesclin;Bruz;
+BUS;2_2343;48019579;-1744589;Epalet;epalet;Bruz;
+BUS;2_2344;48021593;-1752282;Noë;noe;Bruz;
+BUS;2_2345;48023835;-1761885;Rabine;rabine;Bruz;
+BUS;2_2346;48008571;-1773786;Croix Vaisserelle;croixvaisserelle;Bruz;
+BUS;2_2347;48004716;-1775203;Pont Réan;pontrean;Bruz;
+BUS;2_2348;48023461;-1743334;Victor Hugo;victorhugo;Bruz;
+BUS;2_2350;48029349;-1719110;Mare De La Salle;maredelasalle;Bruz;
+BUS;2_2351;48029193;-1719620;Mare De La Salle;maredelasalle;Bruz;
+BUS;2_2353;48023410;-1743109;Victor Hugo;victorhugo;Bruz;
+BUS;2_2359;48035716;-1723307;Doublé;double;Bruz;
+BUS;2_2360;48024949;-1745098;Bruz Centre;bruzcentre;Bruz;
+BUS;2_2361;48024428;-1744836;Bruz Centre;bruzcentre;Bruz;
+BUS;2_2401;48177037;-1651229;Champ Devant;champdevant;Betton;
+BUS;2_2402;48179267;-1651129;Omblais;omblais;Betton;
+BUS;2_2403;48180664;-1652048;Brocéliande;broceliande;Betton;
+BUS;2_2404;48183055;-1646032;Trégor;tregor;Betton;
+BUS;2_2405;48181913;-1641739;Betton Mairie;bettonmairie;Betton;
+BUS;2_2406;48181198;-1638024;Betton Centre;bettoncentre;Betton;
+BUS;2_2407;48180213;-1634878;Haye Renaud Gare;hayerenaudgare;Betton;
+BUS;2_2408;48176234;-1637291;Marronniers;marronniers;Betton;
+BUS;2_2409;48172400;-1637358;Housset;housset;Betton;
+BUS;2_2410;48171353;-1641969;Enseigne Abbaye;enseigneabbaye;Betton;
+BUS;2_2411;48161796;-1647757;Betton Vallée;bettonvallee;Betton;
+BUS;2_2412;48161997;-1647465;Betton Vallée;bettonvallee;Betton;
+BUS;2_2413;48171109;-1641759;Enseigne Abbaye;enseigneabbaye;Betton;
+BUS;2_2414;48172600;-1637322;Housset;housset;Betton;
+BUS;2_2415;48176815;-1637180;Marronniers;marronniers;Betton;
+BUS;2_2416;48180217;-1634784;Haye Renaud Gare;hayerenaudgare;Betton;
+BUS;2_2417;48181704;-1638551;Betton Centre;bettoncentre;Betton;
+BUS;2_2418;48181912;-1641200;Betton Mairie;bettonmairie;Betton;
+BUS;2_2419;48183183;-1646447;Trégor;tregor;Betton;
+BUS;2_2420;48180606;-1652137;Brocéliande;broceliande;Betton;
+BUS;2_2421;48179228;-1651207;Omblais;omblais;Betton;
+BUS;2_2422;48182243;-1615985;Petite Hublais;petitehublais;Betton;
+BUS;2_2423;48175429;-1622895;Cour Neuve;courneuve;Betton;
+BUS;2_2424;48170985;-1622196;Champ Giron;champgiron;Betton;
+BUS;2_2425;48163815;-1625084;Tihouït;tihouit;Betton;
+BUS;2_2426;48164164;-1624913;Tihouït;tihouit;Betton;
+BUS;2_2427;48170406;-1622037;Champ Giron;champgiron;Betton;
+BUS;2_2428;48175538;-1622864;Cour Neuve;courneuve;Betton;
+BUS;2_2429;48182099;-1616215;Petite Hublais;petitehublais;Betton;
+BUS;2_2430;48176045;-1639552;Betton Rue De Rennes;bettonruederennes;Betton;
+BUS;2_2431;48183060;-1637217;Mozart;mozart;Betton;
+BUS;2_2432;48186330;-1633254;J. Sébastien Bach;jsebastienbach;Betton;
+BUS;2_2433;48190357;-1626077;Gentilhommière;gentilhommiere;Betton;
+BUS;2_2434;48186355;-1633194;J. Sébastien Bach;jsebastienbach;Betton;
+BUS;2_2435;48183060;-1637217;Mozart;mozart;Betton;
+BUS;2_2436;48175902;-1639539;Betton Rue De Rennes;bettonruederennes;Betton;
+BUS;2_2437;48181572;-1639284;Betton Centre;bettoncentre;Betton;
+BUS;2_2438;48184986;-1650097;Mézières;mezieres;Betton;
+BUS;2_2439;48178693;-1655863;Renaudais;renaudais;Betton;
+BUS;2_2440;48178786;-1655548;Renaudais;renaudais;Betton;
+BUS;2_2441;48184954;-1650000;Mézières;mezieres;Betton;
+BUS;2_2442;48178278;-1660713;Pont Brand;pontbrand;Betton;
+BUS;2_2443;48178228;-1660612;Pont Brand;pontbrand;Betton;
+BUS;2_2448;48183806;-1646421;Trégor;tregor;Betton;
+BUS;2_2449;48183689;-1646411;Trégor;tregor;Betton;
+BUS;2_2450;48189804;-1626150;Gentilhommière;gentilhommiere;Betton;
+BUS;2_2501;48102447;-1832303;Noë Diolé;noediole;Le Rheu;
+BUS;2_2502;48100553;-1806571;Lycée Monod;lyceemonod;Le Rheu;
+BUS;2_2503;48098952;-1801392;Champs Freslons;champsfreslons;Le Rheu;
+BUS;2_2504;48098971;-1796939;Brassens;brassens;Le Rheu;
+BUS;2_2505;48101630;-1794516;Bouleaux;bouleaux;Le Rheu;
+BUS;2_2506;48099311;-1791250;Genêts;genets;Le Rheu;
+BUS;2_2507;48097551;-1781333;Barberais;barberais;Le Rheu;
+BUS;2_2508;48096876;-1775581;Les Pins;lespins;Le Rheu;
+BUS;2_2509;48096142;-1764720;Pont D'avoine;pontdavoine;Le Rheu;
+BUS;2_2510;48103868;-1750437;Plessix Saucourt;plessixsaucourt;Le Rheu;
+BUS;2_2511;48103641;-1751130;Plessix Saucourt;plessixsaucourt;Le Rheu;
+BUS;2_2512;48096235;-1764648;Pont D'avoine;pontdavoine;Le Rheu;
+BUS;2_2513;48096976;-1775952;Les Pins;lespins;Le Rheu;
+BUS;2_2514;48097637;-1781435;Barberais;barberais;Le Rheu;
+BUS;2_2515;48099245;-1790652;Genêts;genets;Le Rheu;
+BUS;2_2516;48101776;-1794919;Bouleaux;bouleaux;Le Rheu;
+BUS;2_2517;48099395;-1796708;Brassens;brassens;Le Rheu;
+BUS;2_2518;48099275;-1802094;Champs Freslons;champsfreslons;Le Rheu;
+BUS;2_2519;48100845;-1806907;Lycée Monod;lyceemonod;Le Rheu;
+BUS;2_2520;48102445;-1831051;Noë Diolé;noediole;Le Rheu;
+BUS;2_2521;48091023;-1786892;Gerhoui;gerhoui;Le Rheu;
+BUS;2_2522;48094017;-1773989;Mahomat;mahomat;Le Rheu;
+BUS;2_2523;48094072;-1773980;Mahomat;mahomat;Le Rheu;
+BUS;2_2524;48091347;-1785576;Gerhoui;gerhoui;Le Rheu;
+BUS;2_2525;48078460;-1771252;Haut Plessis;hautplessis;Le Rheu;
+BUS;2_2526;48080350;-1774450;Moigné;moigne;Le Rheu;
+BUS;2_2529;48080305;-1774445;Moigné;moigne;Le Rheu;
+BUS;2_2530;48078793;-1772156;Haut Plessis;hautplessis;Le Rheu;
+BUS;2_2532;48093838;-1780190;Platinium;platinium;Le Rheu;
+BUS;2_2601;48038524;-1602475;Croix Malinge;croixmalinge;Vern-sur-Seiche;
+BUS;2_2602;48043421;-1601718;Bel Air;belair;Vern-sur-Seiche;
+BUS;2_2603;48044689;-1603983;La Poste;laposte;Vern-sur-Seiche;
+BUS;2_2604;48049485;-1606158;Croix Rouge;croixrouge;Vern-sur-Seiche;
+BUS;2_2605;48049448;-1609814;Fosse Gauchère;fossegauchere;Vern-sur-Seiche;
+BUS;2_2606;48050642;-1615038;Solidor;solidor;Vern-sur-Seiche;
+BUS;2_2607;48052616;-1613906;Haute Abbaye;hauteabbaye;Vern-sur-Seiche;
+BUS;2_2608;48059271;-1616598;Bretonnière;bretonniere;Vern-sur-Seiche;
+BUS;2_2609;48064082;-1623096;Val D'orson;valdorson;Vern-sur-Seiche;
+BUS;2_2610;48067736;-1625756;Garenne;garenne;Vern-sur-Seiche;
+BUS;2_2611;48072396;-1628746;Hallerais;hallerais;Vern-sur-Seiche;
+BUS;2_2612;48072317;-1628699;Hallerais;hallerais;Vern-sur-Seiche;
+BUS;2_2613;48067579;-1625621;Garenne;garenne;Vern-sur-Seiche;
+BUS;2_2614;48063999;-1622901;Val D'orson;valdorson;Vern-sur-Seiche;
+BUS;2_2615;48059025;-1616657;Bretonnière;bretonniere;Vern-sur-Seiche;
+BUS;2_2616;48052586;-1613984;Haute Abbaye;hauteabbaye;Vern-sur-Seiche;
+BUS;2_2617;48049438;-1611034;Fosse Gauchère;fossegauchere;Vern-sur-Seiche;
+BUS;2_2618;48049142;-1605954;Croix Rouge;croixrouge;Vern-sur-Seiche;
+BUS;2_2619;48044616;-1603882;La Poste;laposte;Vern-sur-Seiche;
+BUS;2_2620;48043547;-1601716;Bel Air;belair;Vern-sur-Seiche;
+BUS;2_2621;48040902;-1602292;Vern La Touche;vernlatouche;Vern-sur-Seiche;
+BUS;2_2622;48059811;-1613176;Champ Martin;champmartin;Vern-sur-Seiche;
+BUS;2_2627;48031392;-1599516;Vaugon;vaugon;Vern-sur-Seiche;
+BUS;2_2628;48031259;-1599464;Vaugon;vaugon;Vern-sur-Seiche;
+BUS;2_2629;48047191;-1602583;Vern Eglise;verneglise;Vern-sur-Seiche;
+BUS;2_2630;48045029;-1598874;Maillardière;maillardiere;Vern-sur-Seiche;
+BUS;2_2631;48047638;-1598536;Moulin;moulin;Vern-sur-Seiche;
+BUS;2_2632;48048058;-1598640;Moulin;moulin;Vern-sur-Seiche;
+BUS;2_2633;48045144;-1598682;Maillardière;maillardiere;Vern-sur-Seiche;
+BUS;2_2634;48047099;-1602643;Vern Eglise;verneglise;Vern-sur-Seiche;
+BUS;2_2635;48038498;-1602204;Croix Malinge;croixmalinge;Vern-sur-Seiche;
+BUS;2_2637;48049703;-1615319;Solidor;solidor;Vern-sur-Seiche;
+BUS;2_2640;48038406;-1602250;Croix Malinge;croixmalinge;Vern-sur-Seiche;
+BUS;2_2641;48059081;-1612937;Champ Martin;champmartin;Vern-sur-Seiche;
+BUS;2_2701;48058971;-1701078;Janais;janais;Noyal-Châtillon-sur-Seiche;
+BUS;2_2702;48068298;-1697636;Vallon;vallon;Noyal-Châtillon-sur-Seiche;
+BUS;2_2704;48059378;-1701191;Janais;janais;Noyal-Châtillon-sur-Seiche;
+BUS;2_2705;48028982;-1659809;Bray;bray;Noyal-Châtillon-sur-Seiche;
+BUS;2_2706;48038418;-1670712;Molène;molene;Noyal-Châtillon-sur-Seiche;
+BUS;2_2707;48040803;-1671938;Potiers;potiers;Noyal-Châtillon-sur-Seiche;
+BUS;2_2708;48042399;-1665655;Centre;centre;Noyal-Châtillon-sur-Seiche;
+BUS;2_2709;48044096;-1661261;Salle Polyvalente;sallepolyvalente;Noyal-Châtillon-sur-Seiche;
+BUS;2_2710;48047114;-1661084;Petite Saudrais;petitesaudrais;Noyal-Châtillon-sur-Seiche;
+BUS;2_2711;48056588;-1663828;Croix Fleurie;croixfleurie;Noyal-Châtillon-sur-Seiche;
+BUS;2_2712;48063667;-1663767;Mail Lancé;maillance;Noyal-Châtillon-sur-Seiche;
+BUS;2_2713;48068357;-1665754;Petit Beaulieu;petitbeaulieu;Noyal-Châtillon-sur-Seiche;
+BUS;2_2714;48077193;-1661140;Hil-bintinais;hilbintinais;Noyal-Châtillon-sur-Seiche;
+BUS;2_2715;48078641;-1661228;Hil-bintinais;hilbintinais;Noyal-Châtillon-sur-Seiche;
+BUS;2_2716;48068619;-1665952;Petit Beaulieu;petitbeaulieu;Noyal-Châtillon-sur-Seiche;
+BUS;2_2717;48063654;-1663860;Mail Lancé;maillance;Noyal-Châtillon-sur-Seiche;
+BUS;2_2718;48055972;-1664137;Croix Fleurie;croixfleurie;Noyal-Châtillon-sur-Seiche;
+BUS;2_2719;48047068;-1661120;Petite Saudrais;petitesaudrais;Noyal-Châtillon-sur-Seiche;
+BUS;2_2720;48044084;-1661354;Salle Polyvalente;sallepolyvalente;Noyal-Châtillon-sur-Seiche;
+BUS;2_2721;48042447;-1665579;Centre;centre;Noyal-Châtillon-sur-Seiche;
+BUS;2_2722;48040772;-1672121;Potiers;potiers;Noyal-Châtillon-sur-Seiche;
+BUS;2_2723;48038399;-1670628;Molène;molene;Noyal-Châtillon-sur-Seiche;
+BUS;2_2724;48028640;-1659792;Bray;bray;Noyal-Châtillon-sur-Seiche;
+BUS;2_2725;48039595;-1676471;Guyomerais;guyomerais;Noyal-Châtillon-sur-Seiche;
+BUS;2_2726;48039647;-1676732;Guyomerais;guyomerais;Noyal-Châtillon-sur-Seiche;
+BUS;2_2727;48038423;-1666568;Pont;pont;Noyal-Châtillon-sur-Seiche;
+BUS;2_2728;48042632;-1666146;Centre;centre;Noyal-Châtillon-sur-Seiche;
+BUS;2_2729;48046951;-1664753;Croix De Pierre;croixdepierre;Noyal-Châtillon-sur-Seiche;
+BUS;2_2730;48046241;-1664704;Croix De Pierre;croixdepierre;Noyal-Châtillon-sur-Seiche;
+BUS;2_2731;48042945;-1665972;Centre;centre;Noyal-Châtillon-sur-Seiche;
+BUS;2_2732;48038657;-1666804;Pont;pont;Noyal-Châtillon-sur-Seiche;
+BUS;2_2733;48034870;-1664091;Côteaux;coteaux;Noyal-Châtillon-sur-Seiche;
+BUS;2_2734;48034398;-1663498;Côteaux;coteaux;Noyal-Châtillon-sur-Seiche;
+BUS;2_2749;48055904;-1701131;Touche Tizon;touchetizon;Noyal-Châtillon-sur-Seiche;
+BUS;2_2750;48039251;-1680446;Monts Gaultier;montsgaultier;Noyal-Châtillon-sur-Seiche;
+BUS;2_2751;48039354;-1680106;Monts Gaultier;montsgaultier;Noyal-Châtillon-sur-Seiche;
+BUS;2_2801;48135805;-1693113;Grand Quartier;grandquartier;Saint-Grégoire;
+BUS;2_2802;48137375;-1687866;Launay;launay;Saint-Grégoire;
+BUS;2_2803;48137395;-1688514;Launay;launay;Saint-Grégoire;
+BUS;2_2804;48159068;-1676617;Ricoquais;ricoquais;Saint-Grégoire;
+BUS;2_2805;48159107;-1681309;Camus;camus;Saint-Grégoire;
+BUS;2_2806;48158983;-1685588;Vivier Louis;vivierlouis;Saint-Grégoire;
+BUS;2_2807;48159841;-1692099;Pontay;pontay;Saint-Grégoire;
+BUS;2_2808;48156857;-1687347;Uttenreuth;uttenreuth;Saint-Grégoire;
+BUS;2_2809;48154351;-1686680;Discalceat;discalceat;Saint-Grégoire;
+BUS;2_2810;48153669;-1692048;Paul-emile Victor;paulemilevictor;Saint-Grégoire;
+BUS;2_2811;48151416;-1691336;Cité Des Jardins;citedesjardins;Saint-Grégoire;
+BUS;2_2812;48150915;-1685809;Forge;forge;Saint-Grégoire;
+BUS;2_2813;48147487;-1686097;Général De Gaulle;generaldegaulle;Saint-Grégoire;
+BUS;2_2814;48142903;-1686585;Chp Saint Grégoire;chpsaintgregoire;Saint-Grégoire;
+BUS;2_2815;48138482;-1686550;La Plesse;laplesse;Saint-Grégoire;
+BUS;2_2816;48138199;-1686431;La Plesse;laplesse;Saint-Grégoire;
+BUS;2_2817;48143033;-1686504;Chp Saint Grégoire;chpsaintgregoire;Saint-Grégoire;
+BUS;2_2818;48146870;-1686204;Général De Gaulle;generaldegaulle;Saint-Grégoire;
+BUS;2_2819;48151398;-1685919;Forge;forge;Saint-Grégoire;
+BUS;2_2820;48151446;-1691285;Cité Des Jardins;citedesjardins;Saint-Grégoire;
+BUS;2_2821;48153749;-1692013;Paul-emile Victor;paulemilevictor;Saint-Grégoire;
+BUS;2_2822;48154712;-1686703;Discalceat;discalceat;Saint-Grégoire;
+BUS;2_2824;48158902;-1685142;Vivier Louis;vivierlouis;Saint-Grégoire;
+BUS;2_2825;48159145;-1680814;Camus;camus;Saint-Grégoire;
+BUS;2_2826;48135585;-1692986;Grand Quartier;grandquartier;Saint-Grégoire;
+BUS;2_2827;48149065;-1656523;Maison Blanche;maisonblanche;Saint-Grégoire;
+BUS;2_2829;48149284;-1656461;Maison Blanche;maisonblanche;Saint-Grégoire;
+BUS;2_2830;48134327;-1694463;Grand Quartier;grandquartier;Saint-Grégoire;
+BUS;2_2831;48153796;-1679100;Champ Daguet;champdaguet;Saint-Grégoire;
+BUS;2_2832;48154626;-1678850;Champ Daguet;champdaguet;Saint-Grégoire;
+BUS;2_2833;48160211;-1677136;Jean Paul Ii;jeanpaulii;Saint-Grégoire;
+BUS;2_2834;48159866;-1677200;Jean Paul Ii;jeanpaulii;Saint-Grégoire;
+BUS;2_2836;48156967;-1687303;Uttenreuth;uttenreuth;Saint-Grégoire;
+BUS;2_2837;48176928;-1722015;La Brosse;labrosse;Saint-Grégoire;
+BUS;2_2838;48153909;-1696900;Alphasis;alphasis;Saint-Grégoire;
+BUS;2_2839;48154392;-1696640;Alphasis;alphasis;Saint-Grégoire;
+BUS;2_2840;48176664;-1690277;Mfr Rabinardières;mfrrabinardieres;Saint-Grégoire;
+BUS;2_2901;48046760;-1710615;Croix Aux Potiers;croixauxpotiers;Chartres-de-Bretagne;
+BUS;2_2902;48047863;-1713521;Croix Aux Potiers;croixauxpotiers;Chartres-de-Bretagne;
+BUS;2_2903;48033254;-1711649;Chaussairie;chaussairie;Chartres-de-Bretagne;
+BUS;2_2904;48036946;-1712435;Taillebois;taillebois;Chartres-de-Bretagne;
+BUS;2_2905;48042260;-1712088;Callouët;callouet;Chartres-de-Bretagne;
+BUS;2_2906;48045933;-1710177;Croix Aux Potiers;croixauxpotiers;Chartres-de-Bretagne;
+BUS;2_2907;48045660;-1710435;Croix Aux Potiers;croixauxpotiers;Chartres-de-Bretagne;
+BUS;2_2908;48041407;-1712456;Callouët;callouet;Chartres-de-Bretagne;
+BUS;2_2909;48036818;-1712477;Taillebois;taillebois;Chartres-de-Bretagne;
+BUS;2_2911;48033194;-1707289;Parc De Loisirs;parcdeloisirs;Chartres-de-Bretagne;
+BUS;2_2912;48035513;-1706326;Argoat;argoat;Chartres-de-Bretagne;
+BUS;2_2913;48034659;-1699502;Cornouaille;cornouaille;Chartres-de-Bretagne;
+BUS;2_2914;48036920;-1697082;Vieux Bourg;vieuxbourg;Chartres-de-Bretagne;
+BUS;2_2915;48041333;-1698321;Collège Pôle Sud;collegepolesud;Chartres-de-Bretagne;
+BUS;2_2916;48041648;-1702622;Auditoire;auditoire;Chartres-de-Bretagne;
+BUS;2_2917;48042304;-1706500;Chartres Centre;chartrescentre;Chartres-de-Bretagne;
+BUS;2_2918;48042013;-1711058;Callouët;callouet;Chartres-de-Bretagne;
+BUS;2_2919;48042292;-1707467;Chartres Centre;chartrescentre;Chartres-de-Bretagne;
+BUS;2_2920;48041583;-1702882;Auditoire;auditoire;Chartres-de-Bretagne;
+BUS;2_2921;48041256;-1697763;Collège Pôle Sud;collegepolesud;Chartres-de-Bretagne;
+BUS;2_2922;48037053;-1697134;Vieux Bourg;vieuxbourg;Chartres-de-Bretagne;
+BUS;2_2923;48034703;-1699775;Cornouaille;cornouaille;Chartres-de-Bretagne;
+BUS;2_2924;48035495;-1706109;Argoat;argoat;Chartres-de-Bretagne;
+BUS;2_2925;48033093;-1711621;Chaussairie;chaussairie;Chartres-de-Bretagne;
+BUS;2_2926;48041672;-1696133;Collège Pôle Sud;collegepolesud;Chartres-de-Bretagne;
+BUS;2_2927;48033172;-1707394;Parc De Loisirs;parcdeloisirs;Chartres-de-Bretagne;
+BUS;2_2928;48031445;-1708867;Constant Mérel;constantmerel;Chartres-de-Bretagne;
+BUS;2_2930;48031216;-1709196;Constant Mérel;constantmerel;Chartres-de-Bretagne;
+BUS;2_2942;48042024;-1696124;Collège Pôle Sud;collegepolesud;Chartres-de-Bretagne;
+BUS;2_3001;48085071;-1610349;Gériatrie;geriatrie;Chantepie;
+BUS;2_3002;48085727;-1614079;Deux Ruisseaux;deuxruisseaux;Chantepie;
+BUS;2_3003;48089118;-1612640;Bourgogne;bourgogne;Chantepie;
+BUS;2_3004;48090344;-1615868;Hallouvry;hallouvry;Chantepie;
+BUS;2_3005;48088221;-1616907;Chantepie Eglise;chantepieeglise;Chantepie;
+BUS;2_3006;48088799;-1620550;Chantepie Mairie;chantepiemairie;Chantepie;
+BUS;2_3007;48090408;-1623879;Loges;loges;Chantepie;
+BUS;2_3008;48090372;-1624105;Loges;loges;Chantepie;
+BUS;2_3009;48088414;-1619117;Chantepie Mairie;chantepiemairie;Chantepie;
+BUS;2_3010;48088158;-1616915;Chantepie Eglise;chantepieeglise;Chantepie;
+BUS;2_3011;48090437;-1615325;Hallouvry;hallouvry;Chantepie;
+BUS;2_3012;48088282;-1612365;Bourgogne;bourgogne;Chantepie;
+BUS;2_3013;48085865;-1614697;Deux Ruisseaux;deuxruisseaux;Chantepie;
+BUS;2_3014;48098284;-1622792;Breillou;breillou;Chantepie;
+BUS;2_3015;48098130;-1622960;Breillou;breillou;Chantepie;
+BUS;2_3016;48093570;-1607606;Cucé;cuce;Chantepie;
+BUS;2_3017;48092532;-1612951;Idefs;idefs;Chantepie;
+BUS;2_3018;48085466;-1627160;Rocade Sud;rocadesud;Chantepie;
+BUS;2_3019;48080491;-1630800;Val Blanc;valblanc;Chantepie;
+BUS;2_3020;48080669;-1630641;Val Blanc;valblanc;Chantepie;
+BUS;2_3021;48084612;-1627556;Rocade Sud;rocadesud;Chantepie;
+BUS;2_3022;48091041;-1615283;Hallouvry;hallouvry;Chantepie;
+BUS;2_3023;48092569;-1612914;Idefs;idefs;Chantepie;
+BUS;2_3024;48076925;-1631860;Martinière;martiniere;Chantepie;
+BUS;2_3025;48076775;-1631766;Martinière;martiniere;Chantepie;
+BUS;2_3027;48085761;-1608136;Touche Annette;toucheannette;Chantepie;
+BUS;2_3028;48085767;-1604087;Rosa Parks;rosaparks;Chantepie;
+BUS;2_3029;48085733;-1607474;Touche Annette;toucheannette;Chantepie;
+BUS;2_3032;48085172;-1610748;Gériatrie;geriatrie;Chantepie;
+BUS;2_3101;48155274;-1788194;Vergéal;vergeal;Pacé;
+BUS;2_3102;48151302;-1792319;Chêne Amoureux;cheneamoureux;Pacé;
+BUS;2_3103;48149259;-1788914;Docteur Léon;docteurleon;Pacé;
+BUS;2_3104;48148511;-1784899;Touche Milon;touchemilon;Pacé;
+BUS;2_3105;48147541;-1781053;Pinault;pinault;Pacé;
+BUS;2_3107;48151195;-1777625;Renan;renan;Pacé;
+BUS;2_3108;48150916;-1772050;Duchesse Anne;duchesseanne;Pacé;
+BUS;2_3109;48148159;-1769807;Pacé Cimetière;pacecimetiere;Pacé;
+BUS;2_3110;48145798;-1770671;Carré Dumaine;carredumaine;Pacé;
+BUS;2_3111;48142844;-1770148;Le Ponant;leponant;Pacé;
+BUS;2_3112;48141125;-1767407;Opéra;opera;Pacé;
+BUS;2_3113;48143356;-1770410;Le Ponant;leponant;Pacé;
+BUS;2_3114;48145726;-1770651;Carré Dumaine;carredumaine;Pacé;
+BUS;2_3115;48147997;-1769792;Pacé Cimetière;pacecimetiere;Pacé;
+BUS;2_3116;48150888;-1771872;Duchesse Anne;duchesseanne;Pacé;
+BUS;2_3117;48151235;-1777548;Renan;renan;Pacé;
+BUS;2_3119;48147548;-1781094;Pinault;pinault;Pacé;
+BUS;2_3120;48148535;-1784753;Touche Milon;touchemilon;Pacé;
+BUS;2_3121;48149287;-1788890;Docteur Léon;docteurleon;Pacé;
+BUS;2_3122;48151285;-1792304;Chêne Amoureux;cheneamoureux;Pacé;
+BUS;2_3123;48174139;-1789367;Chapitre;chapitre;Pacé;
+BUS;2_3124;48175285;-1790010;Chapitre;chapitre;Pacé;
+BUS;2_3125;48160465;-1767982;Pâtis Roussel;patisroussel;Pacé;
+BUS;2_3126;48157320;-1765731;Ouessant;ouessant;Pacé;
+BUS;2_3127;48155489;-1764636;Champalaune;champalaune;Pacé;
+BUS;2_3128;48154073;-1771123;Pacé Collèges;pacecolleges;Pacé;
+BUS;2_3129;48150718;-1770712;Le Brix;lebrix;Pacé;
+BUS;2_3130;48151555;-1770518;Le Brix;lebrix;Pacé;
+BUS;2_3131;48154441;-1770496;Pacé Collèges;pacecolleges;Pacé;
+BUS;2_3132;48155424;-1764684;Champalaune;champalaune;Pacé;
+BUS;2_3133;48157285;-1765714;Ouessant;ouessant;Pacé;
+BUS;2_3134;48141655;-1770566;Nominoë;nominoe;Pacé;
+BUS;2_3135;48141723;-1770909;Nominoë;nominoe;Pacé;
+BUS;2_3136;48154733;-1784426;Pont Amelin;pontamelin;Pacé;
+BUS;2_3137;48140244;-1763556;Rive Ouest;riveouest;Pacé;
+BUS;2_3139;48140210;-1763297;Rive Ouest;riveouest;Pacé;
+BUS;2_3141;48154717;-1784357;Pont Amelin;pontamelin;Pacé;
+BUS;2_3142;48167383;-1787015;Haute Rabine;hauterabine;Pacé;
+BUS;2_3143;48169922;-1788000;Haute Rabine;hauterabine;Pacé;
+BUS;2_3144;48140985;-1766182;Opéra;opera;Pacé;
+BUS;2_3145;48179994;-1801679;Touche Champagne;touchechampagne;Pacé;
+BUS;2_3146;48180075;-1801902;Touche Champagne;touchechampagne;Pacé;
+BUS;2_3201;47969786;-1646063;Fort Joual;fortjoual;Orgères;
+BUS;2_3202;47975356;-1651318;Frogerais;frogerais;Orgères;
+BUS;2_3203;47976258;-1657465;Petite Rochelle;petiterochelle;Orgères;
+BUS;2_3204;47983270;-1660002;Télégraphe;telegraphe;Orgères;
+BUS;2_3205;47976117;-1657144;Petite Rochelle;petiterochelle;Orgères;
+BUS;2_3206;47975431;-1652398;Frogerais;frogerais;Orgères;
+BUS;2_3207;47969653;-1645769;Fort Joual;fortjoual;Orgères;
+BUS;2_3208;47993951;-1665495;Chateaubriand;chateaubriand;Orgères;
+BUS;2_3209;47992497;-1668738;Surcouf;surcouf;Orgères;
+BUS;2_3210;47995021;-1670756;Coteau;coteau;Orgères;
+BUS;2_3211;47997302;-1668504;Groupe Scolaire;groupescolaire;Orgères;
+BUS;2_3212;48000740;-1666819;Levant;levant;Orgères;
+BUS;2_3213;48009988;-1666855;Plardière;plardiere;Orgères;
+BUS;2_3214;48015385;-1666471;Roussais;roussais;Orgères;
+BUS;2_3215;48015519;-1666510;Roussais;roussais;Orgères;
+BUS;2_3216;48010005;-1666884;Plardière;plardiere;Orgères;
+BUS;2_3217;48000451;-1667062;Levant;levant;Orgères;
+BUS;2_3218;47996894;-1669005;Groupe Scolaire;groupescolaire;Orgères;
+BUS;2_3219;47994941;-1670903;Coteau;coteau;Orgères;
+BUS;2_3220;47992251;-1667897;Surcouf;surcouf;Orgères;
+BUS;2_3221;47993726;-1665247;Chateaubriand;chateaubriand;Orgères;
+BUS;2_3301;48155150;-1573163;Landelles;landelles;Thorigné-Fouillard;
+BUS;2_3302;48153078;-1579422;Thorigné Mairie;thorignemairie;Thorigné-Fouillard;
+BUS;2_3304;48155639;-1580776;Anne De Bretagne;annedebretagne;Thorigné-Fouillard;
+BUS;2_3305;48158979;-1579705;Bocage;bocage;Thorigné-Fouillard;
+BUS;2_3306;48164177;-1579321;Juteauderies;juteauderies;Thorigné-Fouillard;
+BUS;2_3307;48160413;-1585946;Fouillard;fouillard;Thorigné-Fouillard;
+BUS;2_3308;48174380;-1602239;Placis Vert;placisvert;Thorigné-Fouillard;
+BUS;2_3309;48156262;-1592334;Portail;portail;Thorigné-Fouillard;
+BUS;2_3310;48156305;-1592136;Portail;portail;Thorigné-Fouillard;
+BUS;2_3311;48160505;-1585658;Fouillard;fouillard;Thorigné-Fouillard;
+BUS;2_3312;48163021;-1579140;Juteauderies;juteauderies;Thorigné-Fouillard;
+BUS;2_3313;48159185;-1579750;Bocage;bocage;Thorigné-Fouillard;
+BUS;2_3314;48155948;-1580695;Anne De Bretagne;annedebretagne;Thorigné-Fouillard;
+BUS;2_3315;48153548;-1579840;Thorigné Mairie;thorignemairie;Thorigné-Fouillard;
+BUS;2_3316;48132153;-1596431;Saint Etienne;saintetienne;Thorigné-Fouillard;
+BUS;2_3317;48141052;-1573652;Pâtis Du Moulinet;patisdumoulinet;Thorigné-Fouillard;
+BUS;2_3318;48140933;-1573467;Pâtis Du Moulinet;patisdumoulinet;Thorigné-Fouillard;
+BUS;2_3319;48141708;-1577426;Pâtis Du Moulinet;patisdumoulinet;Thorigné-Fouillard;
+BUS;2_3320;48141817;-1577408;Pâtis Du Moulinet;patisdumoulinet;Thorigné-Fouillard;
+BUS;2_3321;48160415;-1587064;Fouillard;fouillard;Thorigné-Fouillard;
+BUS;2_3322;48149276;-1577503;Curien;curien;Thorigné-Fouillard;
+BUS;2_3323;48149290;-1577154;Curien;curien;Thorigné-Fouillard;
+BUS;2_3401;48041400;-1553368;Parc Des Sports;parcdessports;Nouvoitou;
+BUS;2_3402;48040659;-1550159;Langlois;langlois;Nouvoitou;
+BUS;2_3403;48040219;-1541949;Chêne Centenaire;chenecentenaire;Nouvoitou;
+BUS;2_3404;48041278;-1544634;Menault;menault;Nouvoitou;
+BUS;2_3405;48044532;-1561622;Eclosel;eclosel;Nouvoitou;
+BUS;2_3406;48044457;-1561468;Eclosel;eclosel;Nouvoitou;
+BUS;2_3407;48042402;-1549825;Grée Barel;greebarel;Nouvoitou;
+BUS;2_3408;48040425;-1541980;Chêne Centenaire;chenecentenaire;Nouvoitou;
+BUS;2_3409;48041416;-1545251;Menault;menault;Nouvoitou;
+BUS;2_3410;48040908;-1549777;Langlois;langlois;Nouvoitou;
+BUS;2_3411;48031031;-1559262;Crotigné;crotigne;Nouvoitou;
+BUS;2_3412;48029305;-1564260;La Croix De L'epine;lacroixdelepine;Nouvoitou;
+BUS;2_3413;48024052;-1573240;La Drouais;ladrouais;Nouvoitou;
+BUS;2_3414;48013183;-1570635;La Jaunais;lajaunais;Saint-Armel;
+BUS;2_3415;48012600;-1557325;La Jaille;lajaille;Saint-Armel;
+BUS;2_3416;48011953;-1545877;Le Petit Beauvais;lepetitbeauvais;Nouvoitou;
+BUS;2_3417;48015097;-1539618;Epron;epron;Nouvoitou;
+BUS;2_3418;48021833;-1547250;Le Tertronais;letertronais;Nouvoitou;
+BUS;2_3419;48028990;-1551440;L'ourmais;lourmais;Nouvoitou;
+BUS;2_3500;48163991;-1731704;Silandière;silandiere;Montgermont;
+BUS;2_3501;48157134;-1723300;Fougerolle;fougerolle;Montgermont;
+BUS;2_3502;48155657;-1720611;Pierre Texier;pierretexier;Montgermont;
+BUS;2_3503;48155741;-1716589;Montgermont Mairie;montgermontmairie;Montgermont;
+BUS;2_3504;48157261;-1714467;Courtines;courtines;Montgermont;
+BUS;2_3505;48155311;-1710832;Belle Epine;belleepine;Montgermont;
+BUS;2_3506;48153114;-1706642;Décoparc;decoparc;Montgermont;
+BUS;2_3507;48148972;-1704050;Vizeule;vizeule;Montgermont;
+BUS;2_3508;48148267;-1703637;Vizeule;vizeule;Montgermont;
+BUS;2_3509;48152881;-1708857;Métrie;metrie;Montgermont;
+BUS;2_3510;48155588;-1710822;Belle Epine;belleepine;Montgermont;
+BUS;2_3511;48157334;-1714607;Courtines;courtines;Montgermont;
+BUS;2_3512;48155680;-1716638;Montgermont Mairie;montgermontmairie;Montgermont;
+BUS;2_3513;48155686;-1720682;Pierre Texier;pierretexier;Montgermont;
+BUS;2_3514;48157179;-1723301;Fougerolle;fougerolle;Montgermont;
+BUS;2_3515;48162720;-1730593;Silandière;silandiere;Montgermont;
+BUS;2_3516;48154307;-1707247;Décoparc;decoparc;Montgermont;
+BUS;2_3601;48183479;-1835737;La Renardière;larenardiere;Parthenay-de-Bretagne;
+BUS;2_3602;48192070;-1831243;Parthenay Mairie;parthenaymairie;Parthenay-de-Bretagne;
+BUS;2_3603;48191696;-1827255;Clos Des Tilleuls;closdestilleuls;Parthenay-de-Bretagne;
+BUS;2_3604;48191301;-1824590;La Noë;lanoe;Parthenay-de-Bretagne;
+BUS;2_3605;48190005;-1820791;Placis De La Touche;placisdelatouche;Parthenay-de-Bretagne;
+BUS;2_3606;48186358;-1816494;Le Reuvre;lereuvre;Parthenay-de-Bretagne;
+BUS;2_3611;48186367;-1816495;Le Reuvre;lereuvre;Parthenay-de-Bretagne;
+BUS;2_3612;48189914;-1820149;Placis De La Touche;placisdelatouche;Parthenay-de-Bretagne;
+BUS;2_3613;48191247;-1824356;La Noë;lanoe;Parthenay-de-Bretagne;
+BUS;2_3614;48191775;-1827748;Clos Des Tilleuls;closdestilleuls;Parthenay-de-Bretagne;
+BUS;2_3615;48192125;-1831430;Parthenay Mairie;parthenaymairie;Parthenay-de-Bretagne;
+BUS;2_3616;48183308;-1836180;La Renardière;larenardiere;Parthenay-de-Bretagne;
+BUS;2_3705;48152973;-1829759;Saint Gilles Centre;saintgillescentre;Saint-Gilles;
+BUS;2_3707;48150708;-1825217;Pont Aux Moines;pontauxmoines;Saint-Gilles;
+BUS;2_3708;48152840;-1820710;Vigne;vigne;Saint-Gilles;
+BUS;2_3709;48152918;-1809077;Fouaye;fouaye;Saint-Gilles;
+BUS;2_3710;48153564;-1810470;Fouaye;fouaye;Saint-Gilles;
+BUS;2_3711;48154133;-1819939;Vigne;vigne;Saint-Gilles;
+BUS;2_3712;48150680;-1824797;Pont Aux Moines;pontauxmoines;Saint-Gilles;
+BUS;2_3714;48153114;-1829668;Saint Gilles Centre;saintgillescentre;Saint-Gilles;
+BUS;2_3715;48153745;-1834034;Clos Des Cerisiers;closdescerisiers;Saint-Gilles;
+BUS;2_3717;48153985;-1837600;Maison Neuve;maisonneuve;Saint-Gilles;
+BUS;2_3723;48154060;-1837815;Maison Neuve;maisonneuve;Saint-Gilles;
+BUS;2_3724;48153843;-1834042;Clos Des Cerisiers;closdescerisiers;Saint-Gilles;
+BUS;2_3751;48107402;-1739247;Z.i. Ouest;ziouest;Vezin-le-Coquet;
+BUS;2_3752;48104741;-1739062;Trois Marches;troismarches;Vezin-le-Coquet;
+BUS;2_3753;48105750;-1740014;Trois Marches;troismarches;Vezin-le-Coquet;
+BUS;2_3754;48120958;-1772547;Haie De Terre;haiedeterre;Vezin-le-Coquet;
+BUS;2_3755;48120264;-1765416;Vallée;vallee;Vezin-le-Coquet;
+BUS;2_3756;48119081;-1761014;Lion D'or;liondor;Vezin-le-Coquet;
+BUS;2_3757;48118899;-1756811;Vezin Centre;vezincentre;Vezin-le-Coquet;
+BUS;2_3758;48118386;-1742494;Tertre;tertre;Vezin-le-Coquet;
+BUS;2_3759;48117649;-1731671;Champ Noël;champnoel;Vezin-le-Coquet;
+BUS;2_3760;48117703;-1731003;Champ Noël;champnoel;Vezin-le-Coquet;
+BUS;2_3761;48118351;-1741118;Tertre;tertre;Vezin-le-Coquet;
+BUS;2_3762;48119307;-1754761;Vezin Centre;vezincentre;Vezin-le-Coquet;
+BUS;2_3763;48119278;-1761490;Lion D'or;liondor;Vezin-le-Coquet;
+BUS;2_3764;48120366;-1765573;Vallée;vallee;Vezin-le-Coquet;
+BUS;2_3765;48120976;-1771673;Haie De Terre;haiedeterre;Vezin-le-Coquet;
+BUS;2_3766;48104992;-1740652;Trois Marches;troismarches;Vezin-le-Coquet;
+BUS;2_3768;48104127;-1735938;Marais;marais;Vezin-le-Coquet;
+BUS;2_3769;48104213;-1736040;Marais;marais;Vezin-le-Coquet;
+BUS;2_3770;48118999;-1749372;Champs Bleus;champsbleus;Vezin-le-Coquet;
+BUS;2_3771;48119126;-1749551;Champs Bleus;champsbleus;Vezin-le-Coquet;
+BUS;2_3801;47990095;-1613829;Centre De Loisirs;centredeloisirs;Bourgbarré;
+BUS;2_3802;47994880;-1614270;Bourgbarré Mairie;bourgbarremairie;Bourgbarré;
+BUS;2_3803;47996073;-1617238;La Motte;lamotte;Bourgbarré;
+BUS;2_3804;47995140;-1624234;La Basse Erable;labasseerable;Bourgbarré;
+BUS;2_3805;47994501;-1631525;Perelle;perelle;Bourgbarré;
+BUS;2_3806;47994427;-1631357;Perelle;perelle;Bourgbarré;
+BUS;2_3807;47995124;-1623736;Basse Erable;basseerable;Bourgbarré;
+BUS;2_3808;47995903;-1617666;La Motte;lamotte;Bourgbarré;
+BUS;2_3809;47994762;-1614103;Bourgbarré Mairie;bourgbarremairie;Bourgbarré;
+BUS;2_3810;47959993;-1632427;Moc Souris;mocsouris;Bourgbarré;
+BUS;2_3811;47959541;-1637031;Sept Fours;septfours;Bourgbarré;
+BUS;2_3812;47959561;-1636979;Sept Fours;septfours;Bourgbarré;
+BUS;2_3813;47960115;-1631404;Moc Souris;mocsouris;Bourgbarré;
+BUS;2_3814;47997636;-1619214;Rue De Rennes;ruederennes;Bourgbarré;
+BUS;2_3815;47997531;-1618910;Rue De Rennes;ruederennes;Bourgbarré;
+BUS;2_3816;48000751;-1594490;Launay Garnier;launaygarnier;Bourgbarré;
+BUS;2_3817;48000916;-1594652;Launay Garnier;launaygarnier;Bourgbarré;
+BUS;2_3851;48074603;-1853676;Le Pâtis;lepatis;Mordelles;
+BUS;2_3852;48071942;-1849988;Mordelles Eglise;mordelleseglise;Mordelles;
+BUS;2_3853;48073711;-1846424;Mordelles Mairie;mordellesmairie;Mordelles;
+BUS;2_3854;48075841;-1842220;Mordelles Lilas;mordelleslilas;Mordelles;
+BUS;2_3855;48077719;-1837549;Gretay;gretay;Mordelles;
+BUS;2_3856;48081323;-1826846;Croix Ignon;croixignon;Mordelles;
+BUS;2_3857;48083969;-1813741;Grande Fontaine;grandefontaine;Mordelles;
+BUS;2_3858;48088220;-1798829;Vivier Des Bois;vivierdesbois;Mordelles;
+BUS;2_3859;48088117;-1799802;Vivier Des Bois;vivierdesbois;Mordelles;
+BUS;2_3860;48083615;-1815794;Grande Fontaine;grandefontaine;Mordelles;
+BUS;2_3861;48081396;-1826813;Croix Ignon;croixignon;Mordelles;
+BUS;2_3862;48077800;-1837328;Gretay;gretay;Mordelles;
+BUS;2_3863;48075574;-1842801;Mordelles Lilas;mordelleslilas;Mordelles;
+BUS;2_3864;48073571;-1846774;Mordelles Mairie;mordellesmairie;Mordelles;
+BUS;2_3865;48071851;-1850208;Mordelles Eglise;mordelleseglise;Mordelles;
+BUS;2_3869;48073936;-1853655;Le Pâtis;lepatis;Mordelles;
+BUS;2_3901;47999909;-1696968;Bois Esnault;boisesnault;Pont-Péan;
+BUS;2_3902;48006480;-1698572;Caliorne;caliorne;Pont-Péan;
+BUS;2_3903;48010620;-1700995;Mouton Blanc;moutonblanc;Pont-Péan;
+BUS;2_3904;48012956;-1703003;Chemin Vert;cheminvert;Pont-Péan;
+BUS;2_3905;48010579;-1706970;Pont Péan Mairie;pontpeanmairie;Pont-Péan;
+BUS;2_3906;48013645;-1707632;Rivaudière;rivaudiere;Pont-Péan;
+BUS;2_3907;48016292;-1705678;Fontaine Blanche;fontaineblanche;Pont-Péan;
+BUS;2_3908;48019900;-1706993;Renaissance;renaissance;Pont-Péan;
+BUS;2_3909;48019888;-1707059;Renaissance;renaissance;Pont-Péan;
+BUS;2_3910;48016943;-1705198;Fontaine Blanche;fontaineblanche;Pont-Péan;
+BUS;2_3911;48013671;-1707648;Rivaudière;rivaudiere;Pont-Péan;
+BUS;2_3912;48010825;-1706468;Pont Péan Mairie;pontpeanmairie;Pont-Péan;
+BUS;2_3913;48012963;-1703044;Chemin Vert;cheminvert;Pont-Péan;
+BUS;2_3914;48010384;-1701028;Mouton Blanc;moutonblanc;Pont-Péan;
+BUS;2_3915;48005532;-1698152;Caliorne;caliorne;Pont-Péan;
+BUS;2_3951;48225281;-1570373;Cropy;cropy;Saint-Sulpice-la-Forêt;
+BUS;2_3952;48223221;-1576318;Chesnais;chesnais;Saint-Sulpice-la-Forêt;
+BUS;2_3953;48217921;-1581423;Bourg;bourg;Saint-Sulpice-la-Forêt;
+BUS;2_3954;48214792;-1586577;Terrain Des Sports;terraindessports;Saint-Sulpice-la-Forêt;
+BUS;2_3955;48211691;-1590757;Tronchay;tronchay;Saint-Sulpice-la-Forêt;
+BUS;2_3956;48199818;-1597543;Oliverie;oliverie;Saint-Sulpice-la-Forêt;
+BUS;2_3957;48197437;-1599452;Oliverie;oliverie;Saint-Sulpice-la-Forêt;
+BUS;2_3958;48203205;-1595061;Lande Saint Denis;landesaintdenis;Saint-Sulpice-la-Forêt;
+BUS;2_3959;48211797;-1590591;Tronchay;tronchay;Saint-Sulpice-la-Forêt;
+BUS;2_3960;48214696;-1586744;Terrain Des Sports;terraindessports;Saint-Sulpice-la-Forêt;
+BUS;2_3961;48217732;-1581397;Bourg;bourg;Saint-Sulpice-la-Forêt;
+BUS;2_3962;48223152;-1576932;Chesnais;chesnais;Saint-Sulpice-la-Forêt;
+BUS;2_3964;48203879;-1594634;Lande Saint Denis;landesaintdenis;Saint-Sulpice-la-Forêt;
+BUS;2_4001;48137019;-1526375;Timonière;timoniere;Acigné;
+BUS;2_4002;48136961;-1533049;Verdaudais;verdaudais;Acigné;
+BUS;2_4003;48134195;-1534913;Acigné Mairie;acignemairie;Acigné;
+BUS;2_4004;48133913;-1537769;Foyer;foyer;Acigné;
+BUS;2_4005;48133971;-1541881;Lande;lande;Acigné;
+BUS;2_4006;48137199;-1549565;Pont D'ohin;pontdohin;Acigné;
+BUS;2_4007;48139060;-1558788;Boulais;boulais;Acigné;
+BUS;2_4008;48139087;-1559477;Boulais;boulais;Acigné;
+BUS;2_4009;48136866;-1548607;Pont D'ohin;pontdohin;Acigné;
+BUS;2_4010;48134483;-1541925;Lande;lande;Acigné;
+BUS;2_4011;48133883;-1537630;Foyer;foyer;Acigné;
+BUS;2_4012;48134170;-1534718;Acigné Mairie;acignemairie;Acigné;
+BUS;2_4013;48137163;-1532945;Verdaudais;verdaudais;Acigné;
+BUS;2_4051;48177113;-1726385;Bersandières;bersandieres;La Chapelle-des-Fougeretz;
+BUS;2_4052;48178545;-1726419;Bignon;bignon;La Chapelle-des-Fougeretz;
+BUS;2_4053;48179494;-1729267;Métairie;metairie;La Chapelle-des-Fougeretz;
+BUS;2_4054;48177109;-1732099;Mairie;mairie;La Chapelle-des-Fougeretz;
+BUS;2_4055;48174093;-1735144;Viennais;viennais;La Chapelle-des-Fougeretz;
+BUS;2_4056;48170318;-1736233;Sénestrais;senestrais;La Chapelle-des-Fougeretz;
+BUS;2_4057;48169922;-1735982;Sénestrais;senestrais;La Chapelle-des-Fougeretz;
+BUS;2_4058;48174612;-1734584;Viennais;viennais;La Chapelle-des-Fougeretz;
+BUS;2_4059;48176637;-1732865;Mairie;mairie;La Chapelle-des-Fougeretz;
+BUS;2_4060;48179422;-1729058;Métairie;metairie;La Chapelle-des-Fougeretz;
+BUS;2_4061;48178419;-1726192;Bignon;bignon;La Chapelle-des-Fougeretz;
+BUS;2_4062;48176764;-1722041;La Brosse;labrosse;La Chapelle-des-Fougeretz;
+BUS;2_4101;47985010;-1576286;Corps Nuds Gare;corpsnudsgare;Corps-Nuds;
+BUS;2_4102;47982403;-1580720;Huberdières;huberdieres;Corps-Nuds;
+BUS;2_4103;47977751;-1584909;Place De Kildare;placedekildare;Corps-Nuds;
+BUS;2_4104;47979329;-1587905;Corps Nuds Mairie;corpsnudsmairie;Corps-Nuds;
+BUS;2_4105;47982053;-1588316;Chêne Hervé;cheneherve;Corps-Nuds;
+BUS;2_4108;47981897;-1588383;Chêne Hervé;cheneherve;Corps-Nuds;
+BUS;2_4109;47979016;-1587838;Corps Nuds Mairie;corpsnudsmairie;Corps-Nuds;
+BUS;2_4110;47977764;-1585501;Place De Kildare;placedekildare;Corps-Nuds;
+BUS;2_4111;47982599;-1580321;Huberdières;huberdieres;Corps-Nuds;
+BUS;2_4112;47985288;-1576095;Corps Nuds Gare;corpsnudsgare;Corps-Nuds;
+BUS;2_4151;48109751;-1480972;Anjou;anjou;Brécé;
+BUS;2_4152;48109055;-1478410;Mainguère;mainguere;Brécé;
+BUS;2_4153;48107063;-1479143;Saules;saules;Brécé;
+BUS;2_4154;48107500;-1482927;Provence;provence;Brécé;
+BUS;2_4155;48107589;-1486145;Destiers;destiers;Brécé;
+BUS;2_4156;48109415;-1503015;Pâtis;patis;Brécé;
+BUS;2_4157;48109297;-1503274;Pâtis;patis;Brécé;
+BUS;2_4158;48107593;-1486038;Destiers;destiers;Brécé;
+BUS;2_4159;48107480;-1482610;Provence;provence;Brécé;
+BUS;2_4160;48107214;-1478469;Saules;saules;Brécé;
+BUS;2_4161;48109019;-1478407;Mainguère;mainguere;Brécé;
+BUS;2_4162;48108444;-1508356;Turbanière;turbaniere;Brécé;
+BUS;2_4163;48108292;-1507387;Turbanière;turbaniere;Brécé;
+BUS;2_4201;48051956;-1797622;Croix Blanche;croixblanche;Chavagne;
+BUS;2_4202;48052012;-1790702;Calvaire;calvaire;Chavagne;
+BUS;2_4203;48055097;-1790000;Alfred De Musset;alfreddemusset;Chavagne;
+BUS;2_4204;48053995;-1783849;Avenir;avenir;Chavagne;
+BUS;2_4205;48058142;-1776317;Grippay;grippay;Chavagne;
+BUS;2_4206;48063231;-1772433;Mare Doux;maredoux;Chavagne;
+BUS;2_4207;48063395;-1772380;Mare Doux;maredoux;Chavagne;
+BUS;2_4208;48057761;-1776363;Grippay;grippay;Chavagne;
+BUS;2_4209;48054082;-1783709;Avenir;avenir;Chavagne;
+BUS;2_4210;48054739;-1790169;Alfred De Musset;alfreddemusset;Chavagne;
+BUS;2_4211;48052453;-1790500;Calvaire;calvaire;Chavagne;
+BUS;2_4251;48124633;-1865829;Eglise;eglise;La Chapelle-Thouarault;
+BUS;2_4252;48123056;-1860735;Rochers;rochers;La Chapelle-Thouarault;
+BUS;2_4253;48121973;-1846154;Besneraie;besneraie;La Chapelle-Thouarault;
+BUS;2_4254;48121289;-1837582;Grippière;grippiere;La Chapelle-Thouarault;
+BUS;2_4255;48121409;-1837741;Grippière;grippiere;La Chapelle-Thouarault;
+BUS;2_4256;48122031;-1846281;Besneraie;besneraie;La Chapelle-Thouarault;
+BUS;2_4257;48123088;-1860802;Rochers;rochers;La Chapelle-Thouarault;
+BUS;2_4301;48122993;-1821755;Hautière;hautiere;L'Hermitage;
+BUS;2_4302;48118893;-1822579;Cat La Hautière;catlahautiere;L'Hermitage;
+BUS;2_4303;48123849;-1817794;L'hermitage Gare;lhermitagegare;L'Hermitage;
+BUS;2_4304;48125516;-1816061;L'hermitage Eglise;lhermitageeglise;L'Hermitage;
+BUS;2_4305;48124644;-1811592;Village;village;L'Hermitage;
+BUS;2_4306;48123210;-1806304;Clairefontaine;clairefontaine;L'Hermitage;
+BUS;2_4307;48123313;-1806852;Clairefontaine;clairefontaine;L'Hermitage;
+BUS;2_4308;48124996;-1812903;Village;village;L'Hermitage;
+BUS;2_4309;48126238;-1816921;L'hermitage Eglise;lhermitageeglise;L'Hermitage;
+BUS;2_4310;48123736;-1817918;L'hermitage Gare;lhermitagegare;L'Hermitage;
+BUS;2_4311;48122900;-1820939;Hautière;hautiere;L'Hermitage;
+BUS;2_4315;48122949;-1802308;Noë Biche;noebiche;L'Hermitage;
+BUS;2_4316;48122835;-1801342;Noë Biche;noebiche;L'Hermitage;
+BUS;2_4317;48123438;-1818917;L'hermitage Gare;lhermitagegare;L'Hermitage;
+BUS;2_4351;48017257;-1660429;Parc D'activités;parcdactivites;Saint-Erblon;
+BUS;2_4352;48018835;-1657692;Champ Mulon;champmulon;Saint-Erblon;
+BUS;2_4353;48017662;-1654512;Paul Féval;paulfeval;Saint-Erblon;
+BUS;2_4354;48017647;-1654457;Paul Féval;paulfeval;Saint-Erblon;
+BUS;2_4355;48018835;-1657679;Champ Mulon;champmulon;Saint-Erblon;
+BUS;2_4356;48017522;-1661245;Croix Du Pigeonnet;croixdupigeonnet;Saint-Erblon;
+BUS;2_4357;48017714;-1661853;Croix Du Pigeonnet;croixdupigeonnet;Saint-Erblon;
+BUS;2_4358;48017675;-1649421;Croix Faucheux;croixfaucheux;Saint-Erblon;
+BUS;2_4359;48021522;-1653562;Leuzières;leuzieres;Saint-Erblon;
+BUS;2_4360;48021564;-1653646;Leuzières;leuzieres;Saint-Erblon;
+BUS;2_4361;48017768;-1649577;Croix Faucheux;croixfaucheux;Saint-Erblon;
+BUS;2_4362;48016196;-1651517;Gillois;gillois;Saint-Erblon;
+BUS;2_4363;48016323;-1651341;Gillois;gillois;Saint-Erblon;
+BUS;2_4401;48069923;-1932398;Le Verger Eglise;levergereglise;Le Verger;
+BUS;2_4402;48070251;-1929079;Bouvrais;bouvrais;Le Verger;
+BUS;2_4403;48070021;-1930255;Bouvrais;bouvrais;Le Verger;
+BUS;2_4408;48069997;-1932351;Le Verger Eglise;levergereglise;Le Verger;
+BUS;2_4451;48180863;-1850487;Parc Des Sports;parcdessports;Clayes;
+BUS;2_4452;48181380;-1853473;Croix Simon;croixsimon;Clayes;
+BUS;2_4453;48176018;-1852548;Clayes Centre;clayescentre;Clayes;
+BUS;2_4454;48180950;-1844860;Terseul;terseul;Clayes;
+BUS;2_4455;48180919;-1844965;Terseul;terseul;Clayes;
+BUS;2_4456;48174382;-1846508;La Tour;latour;Clayes;
+BUS;2_4502;48221049;-1788747;Gévezé Mairie;gevezemairie;Gévezé;
+BUS;2_4503;48218636;-1783995;Flume;flume;Gévezé;
+BUS;2_4504;48218305;-1783277;Flume;flume;Gévezé;
+BUS;2_4505;48220966;-1788118;Gévezé Mairie;gevezemairie;Gévezé;
+BUS;2_4507;48221783;-1802327;Cheval Blanc;chevalblanc;Gévezé;
+BUS;2_4508;48224482;-1800785;Coualeuc;coualeuc;Gévezé;
+BUS;2_4509;48224645;-1800449;Coualeuc;coualeuc;Gévezé;
+BUS;2_4510;48223615;-1793630;Prés Verts;presverts;Gévezé;
+BUS;2_4511;48223978;-1793771;Prés Verts;presverts;Gévezé;
+BUS;2_4551;48013418;-1590968;Saint Armel Eglise;saintarmeleglise;Saint-Armel;
+BUS;2_4552;48013967;-1594269;Saint Armel Gare;saintarmelgare;Saint-Armel;
+BUS;2_4553;48014669;-1598296;Lande Du Jardin;landedujardin;Saint-Armel;
+BUS;2_4554;48014732;-1598404;Lande Du Jardin;landedujardin;Saint-Armel;
+BUS;2_4555;48014025;-1594403;Saint Armel Gare;saintarmelgare;Saint-Armel;
+BUS;2_4601;48211718;-1630460;Chevaigné Mairie;chevaignemairie;Chevaigné;
+BUS;2_4602;48214314;-1629057;Fonderies;fonderies;Chevaigné;
+BUS;2_4603;48210954;-1626024;Pommiers;pommiers;Chevaigné;
+BUS;2_4604;48210088;-1625874;Pommiers;pommiers;Chevaigné;
+BUS;2_4605;48214424;-1628783;Fonderies;fonderies;Chevaigné;
+BUS;2_4606;48211933;-1630263;Chevaigné Mairie;chevaignemairie;Chevaigné;
+BUS;2_4607;48207648;-1630804;Chevaigné Gare;chevaignegare;Chevaigné;
+BUS;2_4608;48207870;-1630648;Chevaigné Gare;chevaignegare;Chevaigné;
+BUS;2_4609;48199176;-1627579;Chopinais;chopinais;Chevaigné;
+BUS;2_4610;48199182;-1627647;Chopinais;chopinais;Chevaigné;
+BUS;2_4652;48105083;-1872710;Chêne Vert;chenevert;Cintré;
+BUS;2_4653;48103429;-1869529;Saint Mélaine;saintmelaine;Cintré;
+BUS;2_4654;48103423;-1869448;Saint Mélaine;saintmelaine;Cintré;
+BIKE;75;48132100;-1635280;Zac Saint Sulpice;zacsaintsulpice;;
+BIKE;52;48121075;-1704122;Villejean-universite;villejeanuniversite;;
+BIKE;81;48122475;-1651089;Turmel;turmel;;
+BIKE;12;48107697;-1673695;Tnb;tnb;;
+BIKE;71;48094994;-1663705;Ste Therese;stetherese;;
+BIKE;5;48114510;-1680984;Sainte Anne;sainteanne;;
+BIKE;9;48112385;-1674417;Saint Georges;saintgeorges;;
+BIKE;23;48106663;-1686713;Rotonde;rotonde;;
+BIKE;1;48109990;-1678027;Republique;republique;;
+BIKE;8;48119396;-1674450;Rectorat;rectorat;;
+BIKE;55;48128407;-1693916;Prefecture;prefecture;;
+BIKE;39;48121490;-1692816;Pontchaillou (metro);pontchailloumetro;;
+BIKE;42;48109756;-1656451;Pont De Strasbourg;pontdestrasbourg;;
+BIKE;20;48102016;-1683961;Pont De Nantes;pontdenantes;;
+BIKE;35;48110310;-1663955;Pont De Chateaudun;pontdechateaudun;;
+BIKE;19;48105907;-1681306;Plelo Colombier;plelocolombier;;
+BIKE;4;48115074;-1677062;Place Hoche;placehoche;;
+BIKE;24;48109657;-1684020;Place De Bretagne;placedebretagne;;
+BIKE;59;48134563;-1651560;Piscine Gayeulles;piscinegayeulles;;
+BIKE;66;48089664;-1690234;Piscine Brequigny;piscinebrequigny;;
+BIKE;40;48103497;-1662321;Pierre Martin;pierremartin;;
+BIKE;36;48110115;-1670039;Paul Bert;paulbert;;
+BIKE;80;48123020;-1660502;Painleve;painleve;;
+BIKE;25;48110294;-1683107;Office De Tourisme;officedetourisme;;
+BIKE;22;48113510;-1661840;Oberthur;oberthur;;
+BIKE;10;48109573;-1674072;Musee Beaux Arts;museebeauxarts;;
+BIKE;46;48112038;-1645745;Moulin De Joue;moulindejoue;;
+BIKE;76;48136700;-1666673;Monts D'arree;montsdarree;;
+BIKE;44;48115967;-1658260;Metz Sevigne;metzsevigne;;
+BIKE;70;48097942;-1688113;Mermoz;mermoz;;
+BIKE;38;48111725;-1702033;Marbeuf;marbeuf;;
+BIKE;31;48105255;-1692976;Malakoff;malakoff;;
+BIKE;2;48111626;-1678745;Mairie;mairie;;
+BIKE;65;48084850;-1691921;Lycee Brequigny;lyceebrequigny;;
+BIKE;11;48107513;-1678163;Liberte;liberte;;
+BIKE;26;48112766;-1685036;Les Lices;leslices;;
+BIKE;21;48107660;-1680087;Les Halles;leshalles;;
+BIKE;14;48106850;-1665818;Laennec;laennec;;
+BIKE;32;48116608;-1690943;La Touche;latouche;;
+BIKE;58;48125570;-1710290;La Harpe;laharpe;;
+BIKE;29;48121384;-1671111;Jules Ferry;julesferry;;
+BIKE;53;48121530;-1711088;Jf Kennedy;jfkennedy;;
+BIKE;61;48097534;-1674305;Jacques Cartier;jacquescartier;;
+BIKE;64;48086770;-1667567;Italie;italie;;
+BIKE;77;48130510;-1663130;Houx Cite U;houxciteu;;
+BIKE;6;48117596;-1677851;Hotel Dieu;hoteldieu;;
+BIKE;27;48112060;-1688515;Horizons;horizons;;
+BIKE;63;48087296;-1674850;Henri Freville;henrifreville;;
+BIKE;78;48126823;-1665083;Gros Chene;groschene;;
+BIKE;73;48108936;-1709452;Geniaux;geniaux;;
+BIKE;79;48131290;-1656476;Gast;gast;;
+BIKE;45;48102257;-1673103;Gares (sud);garessud;;
+BIKE;15;48104088;-1672139;Gares (nord);garesnord;;
+BIKE;7;48118170;-1670735;Fac De Droit;facdedroit;;
+BIKE;30;48119530;-1667023;Guéhenno;guehenno;;
+BIKE;13;48117214;-1682698;Dinan;dinan;;
+BIKE;74;48100910;-1707072;De Lesseps;delesseps;;
+BIKE;18;48105118;-1678678;Dalle Du Colombier;dalleducolombier;;
+BIKE;60;48128803;-1698018;Cucille;cucille;;
+BIKE;72;48104210;-1712630;Cleunay;cleunay;;
+BIKE;62;48093285;-1674116;Clemenceau;clemenceau;;
+BIKE;43;48104816;-1684110;Cite Judiciaire;citejudiciaire;;
+BIKE;41;48104330;-1650099;Cimetiere Est;cimetiereest;;
+BIKE;28;48108880;-1693359;Cheques Postaux;chequespostaux;;
+BIKE;17;48105110;-1677122;Charles De Gaulle;charlesdegaulle;;
+BIKE;69;48091145;-1682269;Champs Manceaux;champsmanceaux;;
+BIKE;16;48105530;-1674394;Champs Libres;champslibres;;
+BIKE;3;48112804;-1680054;Champs Jacquet;champsjacquet;;
+BIKE;34;48113014;-1693273;Brest Verdun;brestverdun;;
+BIKE;51;48128730;-1635132;Bouzat;bouzat;;
+BIKE;67;48091568;-1667300;Binquenais;binquenais;;
+BIKE;56;48116290;-1705127;Berger;berger;;
+BIKE;48;48121950;-1638313;Beaulieu Restau U.;beaulieurestauu;;
+BIKE;50;48118954;-1635186;Beaulieu Insa;beaulieuinsa;;
+BIKE;47;48116455;-1633916;Beaulieu Chimie;beaulieuchimie;;
+BIKE;49;48117950;-1642867;Beaulieu Bois Perrin;beaulieuboisperrin;;
+BIKE;37;48120857;-1681836;Auberge De Jeunesse;aubergedejeunesse;;
+BIKE;57;48116070;-1713711;Atalante Champeaux;atalantechampeaux;;
+BIKE;33;48117985;-1686405;Anatole France;anatolefrance;;
+BIKE;68;48082397;-1677634;Alma;alma;;
+BIKE;83;48092785;-1640450;Ronceray;ronceray;;
+BIKE;82;48087320;-1644117;Poterie;poterie;;
+BIKE;54;48119316;-1691517;Pontchaillou (ter);pontchaillouter;;
+SUBWAY;ANF;48118120;-1687540;Anatole France;anatolefrance;;
+SUBWAY;BLO;48087740;-1654270;Le Blosne;leblosne;;
+SUBWAY;CDG;48105500;-1676990;Charles De Gaulle;charlesdegaulle;;
+SUBWAY;GAR;48103790;-1672190;Gares;gares;;
+SUBWAY;GCL;48093500;-1674390;Clemenceau;clemenceau;;
+SUBWAY;HFR;48087700;-1674830;Henri Fréville;henrifreville;;
+SUBWAY;ITA;48086560;-1667920;Italie;italie;;
+SUBWAY;JCA;48097660;-1675560;Jacques Cartier;jacquescartier;;
+SUBWAY;JFK;48121320;-1711460;J.f. Kennedy;jfkennedy;;
+SUBWAY;PON;48121540;-1693380;Pontchaillou;pontchaillou;;
+SUBWAY;POT;48087490;-1644570;La Poterie;lapoterie;;
+SUBWAY;REP;48109720;-1679180;République;republique;;
+SUBWAY;STA;48114430;-1680400;Sainte-anne;sainteanne;;
+SUBWAY;TRI;48086490;-1660470;Triangle;triangle;;
+SUBWAY;VU;48121250;-1703950;Villejean-université;villejeanuniversite;;

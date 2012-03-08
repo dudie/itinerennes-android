@@ -125,7 +125,7 @@ public final class CSVDataReader implements IDataReader {
     @Override
     public String[] next() {
 
-        final String[] next = nextLine.split(";");
+        final String[] next = nextLine.split(";", -1);
         try {
             nextLine = reader.readLine();
         } catch (final IOException e) {
@@ -157,10 +157,10 @@ public final class CSVDataReader implements IDataReader {
 
         // CSV file format:
         // BUS;2_1001;48.12903716;-1.632507902;Longs Champs;longschamps
-        // type;id;lat;lon;label;search_label
+        // type;id;lat;lon;label;search_label;city
         final String[] columns = new String[] { MarkersColumns.TYPE, MarkersColumns.ID,
                 MarkersColumns.LATITUDE, MarkersColumns.LONGITUDE, MarkersColumns.LABEL,
-                MarkersColumns.SEARCH_LABEL };
+                MarkersColumns.SEARCH_LABEL, MarkersColumns.CITY };
 
         return new CSVDataReader(context, R.raw.markers, MarkersColumns.MARKERS_TABLE_NAME, columns);
     }

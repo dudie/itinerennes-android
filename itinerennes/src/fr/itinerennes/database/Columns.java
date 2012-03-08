@@ -86,6 +86,14 @@ public final class Columns {
          * </P>
          */
         String IS_BOOKMARKED = "is_bookmarked";
+
+        /**
+         * The name of the city in which the marker is.
+         * <P>
+         * Type: TEXT (String)
+         * </P>
+         */
+        String CITY = "city";
     }
 
     /**

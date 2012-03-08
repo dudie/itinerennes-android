@@ -82,8 +82,10 @@ public final class SearchResultsActivity extends ItineRennesActivity {
         resultsList = (ListView) findViewById(R.id.search_results_list);
 
         // prepare adapter to show marker results
-        String[] from = new String[] { MarkersColumns.TYPE, MarkersColumns.LABEL };
-        int[] to = new int[] { R.id.search_result_marker_icon, R.id.search_result_marker_label };
+        String[] from = new String[] { MarkersColumns.TYPE, MarkersColumns.LABEL,
+                MarkersColumns.CITY };
+        int[] to = new int[] { R.id.search_result_marker_icon, R.id.search_result_marker_label,
+                R.id.search_result_marker_city };
         markersAdapter = new SimpleCursorAdapter(this, R.layout.li_search_result_marker, null,
                 from, to);
 

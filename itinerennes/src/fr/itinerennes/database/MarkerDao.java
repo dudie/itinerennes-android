@@ -270,17 +270,19 @@ public class MarkerDao implements MarkersColumns {
             LOGGER.debug("getMarkersWithSameLabel.start - id={}", id);
         }
 
-        final String[] selectionArgs = new String[] { id, id };
+        final String[] selectionArgs = new String[] { id, id, id };
 
         final Cursor c = dbHelper
                 .getReadableDatabase()
                 .rawQuery(
                         String.format(
-                                "SELECT * FROM %s WHERE label=(SELECT %s FROM %s where %s = ?) AND type=(SELECT %s FROM %s WHERE %s = ?)",
+                                "SELECT * FROM %s WHERE label=(SELECT %s FROM %s where %s = ?) AND type=(SELECT %s FROM %s WHERE %s = ?) AND city=(SELECT %s FROM %s WHERE %s = ?)",
                                 MarkersColumns.MARKERS_TABLE_NAME, MarkersColumns.LABEL,
                                 MarkersColumns.MARKERS_TABLE_NAME, MarkersColumns._ID,
                                 MarkersColumns.TYPE, MarkersColumns.MARKERS_TABLE_NAME,
-                                MarkersColumns._ID), selectionArgs);
+                                MarkersColumns._ID, MarkersColumns.CITY,
+                                MarkersColumns.MARKERS_TABLE_NAME, MarkersColumns._ID),
+                        selectionArgs);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getMarkersWithSameLabel.end - count={}", (c != null) ? c.getCount() : 0);
@@ -306,12 +308,13 @@ public class MarkerDao implements MarkersColumns {
                 MarkersColumns.SEARCH_LABEL);
         final String[] columns = new String[] { BaseColumns._ID, MarkersColumns.ID,
                 MarkersColumns.TYPE, MarkersColumns.LABEL, MarkersColumns.LONGITUDE,
-                MarkersColumns.LATITUDE };
+                MarkersColumns.LATITUDE, MarkersColumns.CITY };
 
         final String[] selectionArgs = new String[] { String.format("%%%s%%", query),
                 SearchUtils.canonicalize(query) };
 
-        final String groupBy = String.format("%s, %s", MarkersColumns.LABEL, MarkersColumns.TYPE);
+        final String groupBy = String.format("%s, %s, %s", MarkersColumns.LABEL,
+                MarkersColumns.CITY, MarkersColumns.TYPE);
 
         final Cursor c = query(MARKERS_TABLE_NAME, selection, selectionArgs, columns, groupBy, null);
 
@@ -395,7 +398,8 @@ public class MarkerDao implements MarkersColumns {
         sql.append(String.format(" OR m.%s LIKE ?", Columns.MarkersColumns.SEARCH_LABEL));
 
         // delete duplicates
-        sql.append(" GROUP BY suggest_text_1, m.type, suggest_icon_2");
+        sql.append(String.format(" GROUP BY suggest_text_1, m.type, %s, suggest_icon_2",
+                Columns.MarkersColumns.CITY));
 
         // union to add the "search address" line in results
         sql.append(String.format(
