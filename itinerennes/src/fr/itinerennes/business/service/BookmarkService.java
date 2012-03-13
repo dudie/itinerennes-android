@@ -14,6 +14,7 @@ import fr.itinerennes.business.event.IBookmarkModificationListener;
 import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.model.Bookmark;
+import fr.itinerennes.utils.IOUtils;
 
 /**
  * A service to manage user bookmarks.
@@ -195,6 +196,8 @@ public final class BookmarkService extends AbstractService implements BookmarksC
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("getBookmark.end - bookmark={}", bm);
         }
+
+        IOUtils.close(c);
 
         return bm;
     }
