@@ -5,15 +5,6 @@ import java.lang.reflect.Method;
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 import org.apache.http.client.HttpClient;
-import org.apache.http.conn.params.ConnManagerParams;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +24,7 @@ import fr.dudie.onebusaway.client.JsonOneBusAwayClient;
 import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.business.service.LineIconService;
+import fr.itinerennes.business.service.SimpleHttpClient;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
@@ -236,25 +228,16 @@ public class ItineRennesApplication extends Application {
     public final HttpClient getHttpClient() {
 
         if (httpClient == null) {
-            final SchemeRegistry registry = new SchemeRegistry();
-            registry.register(new Scheme("http", new PlainSocketFactory(), 80));
-            registry.register(new Scheme("https", new PlainSocketFactory(), 443));
-
-            final HttpParams cxParams = new BasicHttpParams();
-            ConnManagerParams.setMaxTotalConnections(cxParams, 5);
-            HttpConnectionParams.setConnectionTimeout(cxParams, 60000);
-            final ThreadSafeClientConnManager connexionManager = new ThreadSafeClientConnManager(
-                    cxParams, registry);
 
             final String appVersion = VersionUtils.getCurrent(this);
             final String userAgent = String.format("ItineRennes/%s (Android/%s; SDK %s; %s; %s)",
                     appVersion, android.os.Build.VERSION.RELEASE, android.os.Build.VERSION.SDK_INT,
                     android.os.Build.MODEL, android.os.Build.DEVICE);
 
-            final HttpParams clientParams = new BasicHttpParams();
-            clientParams.setParameter(HttpProtocolParams.USER_AGENT, userAgent);
+            final SimpleHttpClient c = new SimpleHttpClient();
+            c.addDefaultHeader(HttpProtocolParams.USER_AGENT, userAgent);
 
-            httpClient = new DefaultHttpClient(connexionManager, clientParams);
+            httpClient = c;
         }
 
         return httpClient;
