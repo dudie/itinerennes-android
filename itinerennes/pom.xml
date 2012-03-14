@@ -99,6 +99,28 @@
                     </execution>
                 </executions>
             </plugin>
+            
+            <!-- 
+              Generates a second jar file with classifier "with-assets" having assets/** attached to the root of the 
+              jar file 
+            -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>package-jar-with-assets</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>true</appendAssemblyId>
+                            <attach>true</attach>
+                            <descriptor>${basedir}/assembly-with-assets.xml</descriptor>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
