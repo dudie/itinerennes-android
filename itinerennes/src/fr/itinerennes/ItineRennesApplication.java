@@ -285,7 +285,7 @@ public class ItineRennesApplication extends Application {
             bounds.setNorthE6(Conf.MAP_RENNES_LAT + Conf.NOMINATIM_SEARCH_OFFSET);
             bounds.setSouthE6(Conf.MAP_RENNES_LAT - Conf.NOMINATIM_SEARCH_OFFSET);
             nominatimClient = new JsonNominatimClient(getHttpClient(), getResources().getString(
-                    R.string.contact_mail), bounds, true);
+                    R.string.contact_mail), bounds, true, false);
         }
         return nominatimClient;
     }
