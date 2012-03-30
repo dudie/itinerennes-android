@@ -1,6 +1,7 @@
 package fr.itinerennes;
 
 import java.lang.reflect.Method;
+import java.io.File;
 
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
@@ -87,6 +88,21 @@ public class ItineRennesApplication extends Application {
             ACRA.init(this);
         }
 
+        setupStrictMode();
+        setupHttpResponseCache();
+        
+        final Intent i = new Intent(this, LoadingActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        startActivity(i);
+
+        super.onCreate();
+    }
+    
+    /**
+     * Configure StrictMode.
+     */
+    private void setupStrictMode() {
+
         // trying to manage strict mode if the current api level supports it
         try {
             final Class<?> sMode = Class.forName("android.os.StrictMode");
@@ -98,12 +114,27 @@ public class ItineRennesApplication extends Application {
                 LOGGER.debug("StrictMode not supported...");
             }
         }
-
-        final Intent i = new Intent(this, LoadingActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-        startActivity(i);
-
-        super.onCreate();
+    }
+    
+    /**
+     * Setup HTTP response cache.
+     */
+    private void setupHttpResponseCache() {
+        
+        final long httpCacheSize = 10 * 1024 * 1024; // 10 MiB
+        final File httpCacheDir = new File(getCacheDir(), "http");
+        try {
+            Class.forName("android.net.http.HttpResponseCache")
+                .getMethod("install", File.class, long.class)
+                .invoke(null, httpCacheDir, httpCacheSize);
+        } catch (Exception httpResponseCacheNotAvailable) {
+            LOGGER.debug("android.net.http.HttpResponseCache not available, probably because we're running on a pre-ICS version of Android. Using com.integralblue.httpresponsecache.HttpHttpResponseCache.");
+            try{
+                com.integralblue.httpresponsecache.HttpResponseCache.install(httpCacheDir, httpCacheSize);
+            }catch(Exception e){
+                LOGGER.error("Failed to set up com.integralblue.httpresponsecache.HttpResponseCache", e);
+            }
+        }
     }
 
     /**

@@ -11,6 +11,7 @@
     <classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/onebusaway-api/${version.onebusaway-api}/onebusaway-api-${version.onebusaway-api}.jar"/>
     <classpathentry exported="true" kind="var" path="M2_REPO/org/slf4j/slf4j-api/${version.slf4j-api}/slf4j-api-${version.slf4j-api}.jar"/>
     <classpathentry exported="true" kind="var" path="M2_REPO/com/google/code/gson/gson/${version.gson}/gson-${version.gson}.jar"/>
+    <classpathentry exported="true" kind="var" path="M2_REPO/com/com/integralblue/httpresponsecache/${version.httpresponsecache}/httpresponsecache-${version.httpresponsecache}.jar"/>
     <classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
     <classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
     <classpathentry kind="output" path="bin/classes"/>

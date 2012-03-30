@@ -18,6 +18,7 @@
         <!-- dependencies versions -->
         <version.itinerennes-commons>${project.version}</version.itinerennes-commons>
         <version.itinerennes-android>${project.version}</version.itinerennes-android>
+        <version.httpresponsecache>1.0.0</version.httpresponsecache>
         <version.gson>2.1</version.gson>
         <version.acra>4.2.3</version.acra>
         <version.slf4j-api>1.6.1</version.slf4j-api>
@@ -189,6 +190,11 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>com.integralblue</groupId>
+                <artifactId>httpresponsecache</artifactId>
+                <version>${version.httpresponsecache}</version>
+            </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>

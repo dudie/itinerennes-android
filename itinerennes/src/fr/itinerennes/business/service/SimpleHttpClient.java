@@ -25,6 +25,8 @@ import org.apache.http.protocol.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.itinerennes.commons.utils.StringUtils;
+
 /**
  * An {@link HttpClient} delegating requests to {@link HttpURLConnection}.
  * 
@@ -106,7 +108,9 @@ public final class SimpleHttpClient implements HttpClient {
 
         for (final Entry<String, List<String>> header : cx.getHeaderFields().entrySet()) {
             for (final String headerValue : header.getValue()) {
-                response.addHeader(header.getKey(), headerValue);
+                if (!StringUtils.isBlank(header.getKey())) {
+                    response.addHeader(header.getKey(), headerValue);
+                }
             }
         }
         final InputStreamEntity entity = new InputStreamEntity(cx.getInputStream(),
