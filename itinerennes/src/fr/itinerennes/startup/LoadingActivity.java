@@ -127,6 +127,8 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
                     syncListenerRunner, CSVDataReader.markers(getBaseContext())));
             syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
                     syncListenerRunner, CSVDataReader.accessibility(getBaseContext())));
+            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                    syncListenerRunner, CSVDataReader.routesStops(getBaseContext())));
             syncListenerRunner.start();
         } else {
             finish();

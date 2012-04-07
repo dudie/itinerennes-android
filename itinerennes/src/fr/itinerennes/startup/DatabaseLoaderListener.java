@@ -26,9 +26,6 @@ public final class DatabaseLoaderListener extends AbstractStartupListener implem
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseLoaderListener.class);
 
-    /** The context. */
-    private final ItineRennesApplication context;
-
     /** Database instance. */
     private final SQLiteDatabase db;
 
@@ -49,7 +46,6 @@ public final class DatabaseLoaderListener extends AbstractStartupListener implem
             final ProgressObserver listener, final IDataReader reader) {
 
         super(listener);
-        this.context = context;
         this.db = context.getDatabaseHelper().getWritableDatabase();
         this.reader = reader;
     }

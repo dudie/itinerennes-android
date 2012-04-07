@@ -9,6 +9,7 @@ import android.content.Context;
 import fr.itinerennes.R;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
+import fr.itinerennes.database.Columns.RoutesStopsColumns;
 
 /**
  * Base class to implement a {@link IDataReader} based on a CSV file with the total line count on
@@ -181,5 +182,23 @@ public final class CSVDataReader implements IDataReader {
 
         return new CSVDataReader(context, R.raw.accessibility,
                 AccessibilityColumns.ACCESSIBILITY_TABLE_NAME, columns);
+    }
+
+    /**
+     * Get a reader for routes and stops relationships initial dataset.
+     * 
+     * @param context
+     *            the context
+     * @return a reader for routes and stops relationships
+     */
+    public static CSVDataReader routesStops(final Context context) {
+
+        // CSV file format:
+        // route_id;stop_id
+        final String[] columns = new String[] { RoutesStopsColumns.ROUTE_ID,
+                RoutesStopsColumns.STOP_ID };
+
+        return new CSVDataReader(context, R.raw.routes_stops,
+                RoutesStopsColumns.ROUTES_STOPS_TABLE_NAME, columns);
     }
 }

@@ -167,6 +167,34 @@ public final class Columns {
     }
 
     /**
+     * Columns for routes and stops relationships.
+     * 
+     * @author Jérémie Huchet
+     */
+    public interface RoutesStopsColumns extends BaseColumns {
+
+        /** The name of the table for routes and stops relationships. */
+        String ROUTES_STOPS_TABLE_NAME = "routesstops";
+
+        /**
+         * The route identifier.
+         * <P>
+         * Type: STRING
+         * </P>
+         */
+        String ROUTE_ID = "route_id";
+
+        /**
+         * The stop identifier.
+         * <P>
+         * Type: STRING
+         * </P>
+         */
+        String STOP_ID = "stop_id";
+
+    }
+
+    /**
      * Columns for nominatim address.
      * 
      * @author Jérémie Huchet
