@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Preference categories -->
+    <string name="prefs_cat_info">Informations</string>
+    
     <!-- About dialog preferences -->
     <string name="about">A propos</string>
     <string name="app_name_long">ItinéRennes pour Android™</string>
