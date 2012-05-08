@@ -33,10 +33,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.integralblue</groupId>
-            <artifactId>httpresponsecache</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
