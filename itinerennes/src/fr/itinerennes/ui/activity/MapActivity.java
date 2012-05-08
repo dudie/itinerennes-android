@@ -24,7 +24,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -35,25 +34,27 @@ import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.database.Columns;
 import fr.itinerennes.database.MarkerDao;
+import fr.itinerennes.ui.preferences.MainPreferenceActivity;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.ILayerSelector;
 import fr.itinerennes.ui.views.overlays.LayerDescriptor;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 import fr.itinerennes.utils.MapUtils;
-import fr.itinerennes.utils.VersionUtils;
 
 /**
- * This is the main activity. Uses the <code>main_map.xml</code> layout and displays a menu bar on
- * top and a map view at center of the screen.
+ * This is the main activity. Uses the <code>main_map.xml</code> layout and
+ * displays a menu bar on top and a map view at center of the screen.
  * 
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
-public class MapActivity extends ItineRennesActivity implements OverlayConstants {
+public class MapActivity extends ItineRennesActivity implements
+        OverlayConstants {
 
     /** The event logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MapActivity.class);
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(MapActivity.class);
 
     /** The map view. */
     private ItinerennesMapView map;
@@ -107,20 +108,23 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
             LOGGER.debug("onResume.start");
         }
 
-        final SharedPreferences sharedPreferences = getApplicationContext().getITRPreferences();
-        final int zoomToRestore = sharedPreferences.getInt(ITRPrefs.MAP_ZOOM_LEVEL,
-                Conf.MAP_DEFAULT_ZOOM);
+        final SharedPreferences sharedPreferences = getApplicationContext()
+                .getITRPreferences();
+        final int zoomToRestore = sharedPreferences.getInt(
+                ITRPrefs.MAP_ZOOM_LEVEL, Conf.MAP_DEFAULT_ZOOM);
         map.getController().setZoom(zoomToRestore);
-        final int latToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LAT,
-                Conf.MAP_RENNES_LAT);
-        final int lonToRestore = sharedPreferences.getInt(ITRPrefs.MAP_CENTER_LON,
-                Conf.MAP_RENNES_LON);
+        final int latToRestore = sharedPreferences.getInt(
+                ITRPrefs.MAP_CENTER_LAT, Conf.MAP_RENNES_LAT);
+        final int lonToRestore = sharedPreferences.getInt(
+                ITRPrefs.MAP_CENTER_LON, Conf.MAP_RENNES_LON);
         map.getController().setCenter(new GeoPoint(latToRestore, lonToRestore));
 
-        // if a location provider is enabled and follow location is activated in preferences, the
+        // if a location provider is enabled and follow location is activated in
+        // preferences, the
         // follow location feature is enabled
         if (sharedPreferences.getBoolean(ITRPrefs.MAP_SHOW_LOCATION, true)
-                && (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager
+                && (locationManager
+                        .isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager
                         .isProviderEnabled(LocationManager.NETWORK_PROVIDER))) {
             myLocation.enableFollowLocation();
         }
@@ -128,13 +132,16 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, true)) {
             map.getStopOverlay().hide(TypeConstants.TYPE_BUS);
         }
-        if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, true)) {
+        if (!sharedPreferences
+                .getBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, true)) {
             map.getStopOverlay().hide(TypeConstants.TYPE_BIKE);
         }
-        if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, true)) {
+        if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED,
+                true)) {
             map.getStopOverlay().hide(TypeConstants.TYPE_SUBWAY);
         }
-        if (!sharedPreferences.getBoolean(ITRPrefs.OVERLAY_PARK_ACTIVATED, true)) {
+        if (!sharedPreferences
+                .getBoolean(ITRPrefs.OVERLAY_PARK_ACTIVATED, true)) {
             map.getParkOverlay().hide(TypeConstants.TYPE_CAR_PARK);
         }
 
@@ -158,11 +165,13 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         }
         super.onPause();
 
-        final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences().edit();
+        final SharedPreferences.Editor edit = getApplicationContext()
+                .getITRPreferences().edit();
 
-        // saving in preferences the state of the map (center, follow location and zoom)
-        saveMapCenterInPreferences(edit, map.getMapCenter().getLatitudeE6(), map.getMapCenter()
-                .getLongitudeE6(), map.getZoomLevel());
+        // saving in preferences the state of the map (center, follow location
+        // and zoom)
+        saveMapCenterInPreferences(edit, map.getMapCenter().getLatitudeE6(),
+                map.getMapCenter().getLongitudeE6(), map.getZoomLevel());
 
         // save current displayed overlays
         saveVisibleOverlaysInPreferences(edit);
@@ -192,8 +201,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         case R.id.menu_bookmarks:
             startActivity(new Intent(this, BookmarksActivity.class));
             return true;
-        case R.id.menu_about:
-            showDialog(Dialogs.ABOUT);
+        case R.id.menu_preferences:
+            startActivity(new Intent(this, MainPreferenceActivity.class));
             return true;
         case R.id.menu_search:
             onSearchRequested();
@@ -221,7 +230,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     }
 
     /**
-     * Click method handler invoked when a click event is detected on the my location button.
+     * Click method handler invoked when a click event is detected on the my
+     * location button.
      * 
      * @param button
      *            the button view on which the event was detected
@@ -229,8 +239,10 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     public final void onMyLocationButtonClick(final View button) {
 
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            Toast.makeText(this, R.string.location_service_disabled, Conf.TOAST_DURATION).show();
+                && !locationManager
+                        .isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            Toast.makeText(this, R.string.location_service_disabled,
+                    Conf.TOAST_DURATION).show();
             ((ToggleButton) button).setChecked(false);
         } else {
             myLocation.toggleFollowLocation();
@@ -238,7 +250,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     }
 
     /**
-     * Click method handler invoked when a click event is detected on the layers button.
+     * Click method handler invoked when a click event is detected on the layers
+     * button.
      * 
      * @param button
      *            the button view on which the event was detected
@@ -249,7 +262,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     }
 
     /**
-     * Click method handler invoked when a click event is detected on the search button.
+     * Click method handler invoked when a click event is detected on the search
+     * button.
      * 
      * @param button
      *            the button view on which the event was detected
@@ -273,18 +287,21 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
             final List<LayerDescriptor> allLabels = new ArrayList<LayerDescriptor>();
 
-            final Iterator<Overlay> overlayIterator = map.getOverlayManager().iterator();
+            final Iterator<Overlay> overlayIterator = map.getOverlayManager()
+                    .iterator();
             while (overlayIterator.hasNext()) {
                 final Overlay overlay = overlayIterator.next();
                 if (overlay instanceof ILayerSelector) {
-                    allLabels.addAll(((ILayerSelector) overlay).getLayersDescriptors());
+                    allLabels.addAll(((ILayerSelector) overlay)
+                            .getLayersDescriptors());
                 }
             }
 
             final String[] options = new String[allLabels.size()];
             final boolean[] selections = new boolean[allLabels.size()];
 
-            final Iterator<LayerDescriptor> labelIterator = allLabels.iterator();
+            final Iterator<LayerDescriptor> labelIterator = allLabels
+                    .iterator();
             int i = 0;
             while (labelIterator.hasNext()) {
                 final LayerDescriptor entry = labelIterator.next();
@@ -301,8 +318,8 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                     new DialogInterface.OnMultiChoiceClickListener() {
 
                         @Override
-                        public void onClick(final DialogInterface dialog, final int which,
-                                final boolean isChecked) {
+                        public void onClick(final DialogInterface dialog,
+                                final int which, final boolean isChecked) {
 
                             if (isChecked) {
                                 allLabels.get(which).getOverlay()
@@ -315,29 +332,19 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
                         }
                     });
 
-            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
 
-                @Override
-                public void onClick(final DialogInterface dialog, final int which) {
+                        @Override
+                        public void onClick(final DialogInterface dialog,
+                                final int which) {
 
-                    map.postInvalidate();
-                }
+                            map.postInvalidate();
+                        }
 
-            });
+                    });
 
             dialog = builder.create();
-            break;
-        case Dialogs.ABOUT:
-            final AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
-            aboutBuilder.setTitle(R.string.menu_about).setCancelable(true);
-
-            final View aboutView = getLayoutInflater().inflate(R.layout.dial_about, null);
-            final TextView versionText = (TextView) aboutView.findViewById(R.id.about_version_name);
-            versionText.setText(getBaseContext().getString(R.string.version_dots,
-                    VersionUtils.getCurrent(this)));
-            aboutBuilder.setView(aboutView);
-            aboutBuilder.setIcon(R.drawable.ic_dialog_help);
-            dialog = aboutBuilder.create();
             break;
         default:
             dialog = null;
@@ -357,14 +364,18 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
      * @param zoom
      *            zoom level to write in preferences
      */
-    private void saveMapCenterInPreferences(final Editor edit, final int latitude,
-            final int longitude, final int zoom) {
+    private void saveMapCenterInPreferences(final Editor edit,
+            final int latitude, final int longitude, final int zoom) {
 
-        edit.putInt(ITRPrefs.MAP_CENTER_LAT, (latitude != 0) ? latitude : Conf.MAP_RENNES_LAT);
-        edit.putInt(ITRPrefs.MAP_CENTER_LON, (longitude != 0) ? longitude : Conf.MAP_RENNES_LAT);
-        edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, (zoom != 0) ? zoom : Conf.MAP_DEFAULT_ZOOM);
+        edit.putInt(ITRPrefs.MAP_CENTER_LAT, (latitude != 0) ? latitude
+                : Conf.MAP_RENNES_LAT);
+        edit.putInt(ITRPrefs.MAP_CENTER_LON, (longitude != 0) ? longitude
+                : Conf.MAP_RENNES_LAT);
+        edit.putInt(ITRPrefs.MAP_ZOOM_LEVEL, (zoom != 0) ? zoom
+                : Conf.MAP_DEFAULT_ZOOM);
 
-        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION, myLocation.isMyLocationEnabled());
+        edit.putBoolean(ITRPrefs.MAP_SHOW_LOCATION,
+                myLocation.isMyLocationEnabled());
     }
 
     /**
@@ -375,13 +386,14 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
      */
     private void saveVisibleOverlaysInPreferences(final Editor edit) {
 
-        edit.putBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED,
-                map.getStopOverlay().isVisible(TypeConstants.TYPE_BUS));
-        edit.putBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED,
-                map.getStopOverlay().isVisible(TypeConstants.TYPE_BIKE));
-        edit.putBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED,
-                map.getStopOverlay().isVisible(TypeConstants.TYPE_SUBWAY));
-        edit.putBoolean(ITRPrefs.OVERLAY_PARK_ACTIVATED, map.getParkOverlay().isVisible(null));
+        edit.putBoolean(ITRPrefs.OVERLAY_BUS_ACTIVATED, map.getStopOverlay()
+                .isVisible(TypeConstants.TYPE_BUS));
+        edit.putBoolean(ITRPrefs.OVERLAY_BIKE_ACTIVATED, map.getStopOverlay()
+                .isVisible(TypeConstants.TYPE_BIKE));
+        edit.putBoolean(ITRPrefs.OVERLAY_SUBWAY_ACTIVATED, map.getStopOverlay()
+                .isVisible(TypeConstants.TYPE_SUBWAY));
+        edit.putBoolean(ITRPrefs.OVERLAY_PARK_ACTIVATED, map.getParkOverlay()
+                .isVisible(null));
 
     }
 
@@ -391,35 +403,45 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
      * @param id
      *            id of the clicked result
      * @param intent
-     *            intent sent by the search framework when a user clicks on a suggestion
+     *            intent sent by the search framework when a user clicks on a
+     *            suggestion
      */
     private void onSearchResultClick(final String id, final Intent intent) {
 
-        // if the last path segment is "nominatim", so the user has clicked the link to
+        // if the last path segment is "nominatim", so the user has clicked the
+        // link to
         // search in nominatim
         if (id.equals(MarkerDao.NOMINATIM_INTENT_DATA_ID)) {
-            final Intent i = new Intent(getApplicationContext(), SearchResultsActivity.class);
-            i.putExtra(SearchManager.QUERY, intent.getStringExtra(SearchManager.QUERY));
+            final Intent i = new Intent(getApplicationContext(),
+                    SearchResultsActivity.class);
+            i.putExtra(SearchManager.QUERY,
+                    intent.getStringExtra(SearchManager.QUERY));
             startActivity(i);
         } else {
-            // we fetch from database all items having the same label than the item clicked
-            // because search suggestions show only one row when multiple stops have the
+            // we fetch from database all items having the same label than the
+            // item clicked
+            // because search suggestions show only one row when multiple stops
+            // have the
             // same label
 
-            final Cursor c = getApplicationContext().getMarkerDao().getMarkersWithSameLabel(id);
+            final Cursor c = getApplicationContext().getMarkerDao()
+                    .getMarkersWithSameLabel(id);
 
             // calculate the barycenter to center the map on it
             if (c != null && c.moveToFirst()) {
                 // check if marker type is visible, and add it if not visible
-                final String type = c.getString(c.getColumnIndex(Columns.MarkersColumns.TYPE));
+                final String type = c.getString(c
+                        .getColumnIndex(Columns.MarkersColumns.TYPE));
 
                 final GeoPoint barycentre = MapUtils.getBarycenter(c);
 
                 c.close();
 
                 if (barycentre != null) {
-                    onNewIntent(IntentFactory.getCenterOnLocationIntent(getApplicationContext(),
-                            barycentre.getLatitudeE6(), barycentre.getLongitudeE6(),
+                    onNewIntent(IntentFactory.getCenterOnLocationIntent(
+                            getApplicationContext(),
+                            barycentre.getLatitudeE6(),
+                            barycentre.getLongitudeE6(),
                             Conf.MAP_ZOOM_ON_LOCATION, type));
                 }
 
@@ -460,37 +482,42 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             // forward to SearchResultsActivity
-            intent.setClass(getApplicationContext(), SearchResultsActivity.class);
+            intent.setClass(getApplicationContext(),
+                    SearchResultsActivity.class);
             startActivity(intent);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             // center on the latitude and longitude sent in the intent
 
-            final SharedPreferences.Editor edit = getApplicationContext().getITRPreferences()
-                    .edit();
+            final SharedPreferences.Editor edit = getApplicationContext()
+                    .getITRPreferences().edit();
 
             if (intent.hasExtra(IntentFactory.INTENT_PARAM_SET_MAP_LAT)
                     && intent.hasExtra(IntentFactory.INTENT_PARAM_SET_MAP_LON)) {
                 // center coordinates are send in the intent
-                final int newZoom = intent.getIntExtra(IntentFactory.INTENT_PARAM_SET_MAP_ZOOM,
+                final int newZoom = intent.getIntExtra(
+                        IntentFactory.INTENT_PARAM_SET_MAP_ZOOM,
                         map.getZoomLevel());
-                final int newLat = intent.getIntExtra(IntentFactory.INTENT_PARAM_SET_MAP_LAT, map
-                        .getMapCenter().getLatitudeE6());
-                final int newLon = intent.getIntExtra(IntentFactory.INTENT_PARAM_SET_MAP_LON, map
-                        .getMapCenter().getLongitudeE6());
+                final int newLat = intent.getIntExtra(
+                        IntentFactory.INTENT_PARAM_SET_MAP_LAT, map
+                                .getMapCenter().getLatitudeE6());
+                final int newLon = intent.getIntExtra(
+                        IntentFactory.INTENT_PARAM_SET_MAP_LON, map
+                                .getMapCenter().getLongitudeE6());
 
                 saveMapCenterInPreferences(edit, newLat, newLon, newZoom);
 
                 if (intent.hasExtra(IntentFactory.INTENT_PARAM_MARKER)) {
 
-                    map.getMapBoxController().show(
-                            (StopOverlayItem) intent
+                    map.getMapBoxController()
+                            .show((StopOverlayItem) intent
                                     .getSerializableExtra(IntentFactory.INTENT_PARAM_MARKER));
                 }
 
             }
 
             if (intent.hasExtra(IntentFactory.INTENT_PARAM_MARKER_TYPE)) {
-                final String type = intent.getStringExtra(IntentFactory.INTENT_PARAM_MARKER_TYPE);
+                final String type = intent
+                        .getStringExtra(IntentFactory.INTENT_PARAM_MARKER_TYPE);
                 if (!map.getStopOverlay().isVisible(type)) {
                     map.getStopOverlay().show(type);
                     saveVisibleOverlaysInPreferences(edit);
@@ -499,11 +526,13 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
 
             edit.commit();
 
-        } else if (IntentFactory.INTENT_SEARCH_SUGGESTION.equals(intent.getAction())) {
+        } else if (IntentFactory.INTENT_SEARCH_SUGGESTION.equals(intent
+                .getAction())) {
             // intent sent by suggestion click
 
             if (intent.hasExtra(SearchManager.USER_QUERY)) {
-                onSearchResultClick(intent.getData().getLastPathSegment(), intent);
+                onSearchResultClick(intent.getData().getLastPathSegment(),
+                        intent);
             }
         }
 
@@ -521,28 +550,28 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
     public static class IntentFactory {
 
         /** Intent parameter name to pass the map zoom level to set. */
-        public static final String INTENT_PARAM_SET_MAP_ZOOM = String.format("%s.setMapZoom",
-                MapActivity.class.getName());
+        public static final String INTENT_PARAM_SET_MAP_ZOOM = String.format(
+                "%s.setMapZoom", MapActivity.class.getName());
 
         /** Intent parameter name to pass the map latitude to set. */
-        public static final String INTENT_PARAM_SET_MAP_LAT = String.format("%s.setMapLatitude",
-                MapActivity.class.getName());
+        public static final String INTENT_PARAM_SET_MAP_LAT = String.format(
+                "%s.setMapLatitude", MapActivity.class.getName());
 
         /** Intent parameter name to pass the map longitude to set. */
-        public static final String INTENT_PARAM_SET_MAP_LON = String.format("%s.setMapLongitude",
-                MapActivity.class.getName());
+        public static final String INTENT_PARAM_SET_MAP_LON = String.format(
+                "%s.setMapLongitude", MapActivity.class.getName());
 
         /** Intent parameter name to pass a marker type. */
-        public static final String INTENT_PARAM_MARKER_TYPE = String.format("%s.markerType",
-                MapActivity.class.getName());
+        public static final String INTENT_PARAM_MARKER_TYPE = String.format(
+                "%s.markerType", MapActivity.class.getName());
 
         /** Intent parameter name to use to pass a marker. */
-        public static final String INTENT_PARAM_MARKER = String.format("%s.marker",
-                MapActivity.class.getName());
+        public static final String INTENT_PARAM_MARKER = String.format(
+                "%s.marker", MapActivity.class.getName());
 
         /** Intent name to use to manage search suggestion. */
-        public static final String INTENT_SEARCH_SUGGESTION = String.format("%s.SEARCH_SUGGESTION",
-                MapActivity.class.getName());
+        public static final String INTENT_SEARCH_SUGGESTION = String.format(
+                "%s.SEARCH_SUGGESTION", MapActivity.class.getName());
 
         /**
          * Returns an intent to open the map centered on a location.
@@ -557,8 +586,9 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
          *            zoom level of the centered map
          * @return an intent
          */
-        public static Intent getCenterOnLocationIntent(final ItineRennesApplication context,
-                final int latitude, final int longitude, final int zoom) {
+        public static Intent getCenterOnLocationIntent(
+                final ItineRennesApplication context, final int latitude,
+                final int longitude, final int zoom) {
 
             final Intent i = new Intent(context, MapActivity.class);
             i.setAction(Intent.ACTION_VIEW);
@@ -571,9 +601,9 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
         }
 
         /**
-         * Returns an intent to open a mapbox and center the map on the mapbox location. The map is
-         * centered on the given location, so the mapbox could be invisible if the location is not
-         * the good one.
+         * Returns an intent to open a mapbox and center the map on the mapbox
+         * location. The map is centered on the given location, so the mapbox
+         * could be invisible if the location is not the good one.
          * 
          * @param context
          *            the context
@@ -583,19 +613,22 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
          *            zoom level of the centered map
          * @return an intent
          */
-        public static Intent getOpenMapBoxIntent(final ItineRennesApplication context,
+        public static Intent getOpenMapBoxIntent(
+                final ItineRennesApplication context,
                 final StopOverlayItem marker, final int zoom) {
 
-            final Intent i = getCenterOnLocationIntent(context, marker.getLocation()
-                    .getLatitudeE6(), marker.getLocation().getLongitudeE6(), zoom);
+            final Intent i = getCenterOnLocationIntent(context, marker
+                    .getLocation().getLatitudeE6(), marker.getLocation()
+                    .getLongitudeE6(), zoom);
 
             i.putExtra(INTENT_PARAM_MARKER, marker);
             return i;
         }
 
         /**
-         * Returns an intent to open the map centered on a location and activate a marker type if
-         * not already activated (useful for center the map on a marker after a search).
+         * Returns an intent to open the map centered on a location and activate
+         * a marker type if not already activated (useful for center the map on
+         * a marker after a search).
          * 
          * @param context
          *            the context
@@ -609,10 +642,12 @@ public class MapActivity extends ItineRennesActivity implements OverlayConstants
          *            a type of markers layer to activate on the map
          * @return an intent
          */
-        public static Intent getCenterOnLocationIntent(final ItineRennesApplication context,
-                final int latitude, final int longitude, final int zoom, final String markerType) {
+        public static Intent getCenterOnLocationIntent(
+                final ItineRennesApplication context, final int latitude,
+                final int longitude, final int zoom, final String markerType) {
 
-            final Intent i = getCenterOnLocationIntent(context, latitude, longitude, zoom);
+            final Intent i = getCenterOnLocationIntent(context, latitude,
+                    longitude, zoom);
 
             i.putExtra(INTENT_PARAM_MARKER_TYPE, markerType);
 

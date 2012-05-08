@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- About dialog preferences -->
+    <string name="about">A propos</string>
     <string name="app_name_long">ItinéRennes pour Android™</string>
     <string name="rennes_metropole_application">Application \"Rennes Métropole en accès libre\"</string>
     <string name="visit_our_website">Visitez notre page web www.itinerennes.fr</string>

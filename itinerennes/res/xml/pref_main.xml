@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="Informations">
+
+        <fr.itinerennes.ui.preferences.AboutDialogPreference
+            android:title="@string/about"
+            android:dialogIcon="@drawable/ic_dialog_help"
+            android:dialogTitle="@string/about"
+            android:dialogLayout="@layout/dial_about"
+            android:negativeButtonText="">
+        </fr.itinerennes.ui.preferences.AboutDialogPreference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

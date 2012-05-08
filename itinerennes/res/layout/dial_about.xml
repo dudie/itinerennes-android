@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/text_credit"
             android:linksClickable="true"
-            android:drawableTop="@drawable/ic_osm"/>
+            android:drawableLeft="@drawable/ic_osm"/>
         
         <TextView android:text="@string/visit_our_website"
             android:layout_marginTop="10dp"

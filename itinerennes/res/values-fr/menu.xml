@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="menu_about">À propos</string>
+    <string name="menu_preferences">Préférences</string>
     <string name="menu_bookmarks">Favoris</string>
     <string name="menu_network_alerts">Alertes</string>
     <string name="menu_layers">Calques</string>

@@ -12,7 +12,7 @@
     <item android:id="@+id/menu_layers"
           android:title="@string/menu_layers"
           android:icon="@drawable/ic_menu_layers" />
-    <item android:id="@+id/menu_about"
-          android:title="@string/menu_about"
-          android:icon="@android:drawable/ic_menu_help" />
+    <item android:id="@+id/menu_preferences"
+          android:title="@string/menu_preferences"
+          android:icon="@android:drawable/ic_menu_preferences" />
 </menu>
