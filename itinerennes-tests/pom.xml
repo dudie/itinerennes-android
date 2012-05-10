@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>itinerennes-parent</artifactId>
         <groupId>fr.itinerennes</groupId>
@@ -20,18 +21,11 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
+                <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <filesets>
-                        <fileSet>
-                            <directory>${basedir}</directory>
-                            <includes>
-                                <include>tmp/</include>
-                            </includes>
-                        </fileSet>
-                    </filesets>
+                    <systemPropertyVariables>
+                        <cached.roboelectric.classes.path>${project.build.directory}/roboelectric-cache</cached.roboelectric.classes.path>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
@@ -46,7 +40,7 @@
         <dependency>
             <groupId>com.pivotallabs</groupId>
             <artifactId>robolectric</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
             <scope>test</scope>
         </dependency>
 
