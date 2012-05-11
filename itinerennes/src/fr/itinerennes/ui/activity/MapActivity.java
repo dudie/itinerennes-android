@@ -459,9 +459,6 @@ public class MapActivity extends ItineRennesActivity implements
 
         /** Dialog identifier for layers selection. */
         private static final int SELECT_LAYERS = 0;
-
-        /** "About" dialog box. */
-        private static final int ABOUT = 1;
     }
 
     /**
