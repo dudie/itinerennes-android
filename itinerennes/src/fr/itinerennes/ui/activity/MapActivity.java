@@ -20,6 +20,7 @@ import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -118,6 +119,10 @@ public class MapActivity extends ItineRennesActivity implements
         final int lonToRestore = sharedPreferences.getInt(
                 ITRPrefs.MAP_CENTER_LON, Conf.MAP_RENNES_LON);
         map.getController().setCenter(new GeoPoint(latToRestore, lonToRestore));
+
+        final SharedPreferences defaultSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final String tileSource = defaultSharedPrefs.getString(ITRPrefs.MAP_TILE_PROVIDER, "Itinerennes");
+        map.getController().setTileSource(tileSource);
 
         // if a location provider is enabled and follow location is activated in
         // preferences, the
@@ -494,12 +499,10 @@ public class MapActivity extends ItineRennesActivity implements
                 final int newZoom = intent.getIntExtra(
                         IntentFactory.INTENT_PARAM_SET_MAP_ZOOM,
                         map.getZoomLevel());
-                final int newLat = intent.getIntExtra(
-                        IntentFactory.INTENT_PARAM_SET_MAP_LAT, map
-                                .getMapCenter().getLatitudeE6());
-                final int newLon = intent.getIntExtra(
-                        IntentFactory.INTENT_PARAM_SET_MAP_LON, map
-                                .getMapCenter().getLongitudeE6());
+                final int newLat = intent.getIntExtra(IntentFactory.INTENT_PARAM_SET_MAP_LAT, map
+                        .getMapCenter().getLatitudeE6());
+                final int newLon = intent.getIntExtra(IntentFactory.INTENT_PARAM_SET_MAP_LON, map
+                        .getMapCenter().getLongitudeE6());
 
                 saveMapCenterInPreferences(edit, newLat, newLon, newZoom);
 
@@ -639,9 +642,8 @@ public class MapActivity extends ItineRennesActivity implements
          *            a type of markers layer to activate on the map
          * @return an intent
          */
-        public static Intent getCenterOnLocationIntent(
-                final ItineRennesApplication context, final int latitude,
-                final int longitude, final int zoom, final String markerType) {
+        public static Intent getCenterOnLocationIntent(final ItineRennesApplication context,
+                final int latitude, final int longitude, final int zoom, final String markerType) {
 
             final Intent i = getCenterOnLocationIntent(context, latitude,
                     longitude, zoom);

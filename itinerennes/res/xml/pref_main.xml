@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/prefs_title">
 
+    <PreferenceCategory android:title="@string/prefs_cat_map">
+
+        <ListPreference android:key="fr.itinerennes.tileProvider"
+            android:title="@string/prefs_map_tile_provider"
+            android:summary="@string/prefs_map_tile_provider_desc"
+            android:dialogTitle="@string/prefs_map_tile_provider_dialog_title"
+            android:entries="@array/prefs_map_tile_provider_entries"
+            android:entryValues="@array/prefs_map_tile_provider_values"/>
+
+    </PreferenceCategory>
+    
+    
     <PreferenceCategory android:title="@string/prefs_cat_info">
 
         <fr.itinerennes.ui.preferences.AboutDialogPreference

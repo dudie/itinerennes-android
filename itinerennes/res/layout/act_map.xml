@@ -59,8 +59,8 @@
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:clickable="true"
-		android:layout_below="@+id/toolbar"
-		tilesource="Itinerennes"/>
+		android:layout_below="@+id/toolbar"/>
+		<!-- tilesource="Itinerennes"-->
 
     <fr.itinerennes.ui.views.ItinerennesZoomControls
         android:id="@+id/zoom_controls" 

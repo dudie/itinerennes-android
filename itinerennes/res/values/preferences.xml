@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="prefs_title">ItinéRennes preferences</string>
+    
     <!-- Preference categories -->
+    <string name="prefs_cat_map">Map</string>
     <string name="prefs_cat_info">Informations</string>
+    
+    <!-- Map tiles provider preferences -->
+    <string name="prefs_map_tile_provider">Tile provider</string>
+    <string name="prefs_map_tile_provider_desc">Defines the map appearance</string>
+    <string name="prefs_map_tile_provider_dialog_title">Choose tile provider</string>
+    <string-array name="prefs_map_tile_provider_entries">
+        <item name="itr">ItinéRennes</item>
+        <item name="mapnik">Mapnik</item>
+    </string-array>
+    <string-array name="prefs_map_tile_provider_values">
+        <item name="itr">Itinerennes</item>
+        <item name="mapnik">Mapnik</item>
+    </string-array>
     
     <!-- About dialog preferences -->
     <string name="about">About</string>

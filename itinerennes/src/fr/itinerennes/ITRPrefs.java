@@ -35,8 +35,10 @@ public final class ITRPrefs {
     public static final String MAP_ZOOM_LEVEL = String.format("%s.%s", PREFS_NAME, "zoomLevel");
 
     /** Preferences key for follow location feature. */
-    public static final String MAP_SHOW_LOCATION = String.format("%s.%s", PREFS_NAME,
-            "followLocation");
+    public static final String MAP_SHOW_LOCATION = String.format("%s.%s", PREFS_NAME, "followLocation");
+
+    /** Preference key holding the name of the user tile provider preference. */
+    public static final String MAP_TILE_PROVIDER = String.format("%s.%s", PREFS_NAME, "tileProvider");
 
     /** Preference attribute name defining if the bus overlay should be displayed on startup. */
     public static final String OVERLAY_BUS_ACTIVATED = String.format("%s.%s", PREFS_NAME,
