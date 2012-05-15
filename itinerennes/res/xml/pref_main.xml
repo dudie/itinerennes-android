@@ -12,8 +12,15 @@
             android:entryValues="@array/prefs_map_tile_provider_values"/>
 
     </PreferenceCategory>
-    
-    
+
+    <PreferenceCategory android:title="@string/prefs_cat_acra">
+
+         <EditTextPreference android:key="acra.user.email"
+             android:title="@string/prefs_acra_user_email"
+             android:summary="@string/prefs_acra_user_email_summary"/>
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/prefs_cat_info">
 
         <fr.itinerennes.ui.preferences.AboutDialogPreference

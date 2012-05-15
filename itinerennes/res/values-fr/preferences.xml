@@ -5,6 +5,7 @@
     <!-- Preference categories -->
     <string name="prefs_cat_map">Carte</string>
     <string name="prefs_cat_info">Informations</string>
+    <string name="prefs_cat_acra">Rapport d\'erreur</string>
     
     <!-- Map tiles provider preferences -->
     <string name="prefs_map_tile_provider">Fournisseur de tuiles</string>
@@ -14,6 +15,10 @@
         <item name="itr">ItinéRennes</item>
         <item name="mapnik">Mapnik</item>
     </string-array>
+    
+    <!-- ACRA preferences -->
+    <string name="prefs_acra_user_email">Adresse e-mail</string>
+    <string name="prefs_acra_user_email_summary">Nous permet de vous contacter si vous rencontrez des bugs</string>
     
     <!-- About dialog preferences -->
     <string name="about">A propos</string>
