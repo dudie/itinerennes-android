@@ -2,9 +2,6 @@
     <declare-styleable name="ClickableState">
         <attr name="state_clickable" format="boolean"/>
     </declare-styleable>
-    <declare-styleable name="HighZoomedState">
-        <attr name="state_high_zoom" format="boolean"/>
-    </declare-styleable>
     <declare-styleable name="BookmarkedState">
         <attr name="state_bookmarked" format="boolean"/>
     </declare-styleable>

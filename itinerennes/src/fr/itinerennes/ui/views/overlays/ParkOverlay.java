@@ -21,7 +21,6 @@ import android.view.MotionEvent;
 import fr.dudie.keolis.model.RelayPark;
 import fr.dudie.keolis.model.RelayParkState;
 
-import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -116,6 +115,10 @@ public class ParkOverlay extends LazyOverlay implements ILayerSelector {
         if (visible) {
             // on dessine les items seulement s'il ne s'agit pas du mode shadow
             if (!shadow && parks.size() > 0) {
+
+                // on applique le niveau du drawable en fonction du niveau de zoom de la carte
+                icon.setLevel(map.getZoomLevel());
+
                 final Projection pj = osmv.getProjection();
                 final Point point = new Point();
 
@@ -148,10 +151,6 @@ public class ParkOverlay extends LazyOverlay implements ILayerSelector {
 
         final int[] states = new int[2];
         int index = 0;
-
-        if (map.getZoomLevel() >= Conf.MAP_MINIMUM_ZOOM_ITEMS) {
-            states[index++] = R.attr.state_high_zoom;
-        }
 
         if (item.getAvailable() == 0 || item.getState().equals(RelayParkState.CLOSED)) {
             states[index++] = R.attr.state_park_red;

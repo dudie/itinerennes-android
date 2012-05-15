@@ -20,7 +20,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.MotionEvent;
 
-import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.business.event.IBookmarkModificationListener;
@@ -239,6 +238,12 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
 
         // on dessine les items seulement s'il ne s'agit pas du mode shadow
         if (!shadow && markers.size() > 0) {
+
+            // on applique le niveau des drawables en fonction du niveau de zoom de la carte
+            for (final Drawable icon : markerIcons.values()) {
+                icon.setLevel(map.getZoomLevel());
+            }
+
             final Projection pj = osmv.getProjection();
             final Point point = new Point();
 
@@ -292,10 +297,6 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
 
         final int[] states = new int[2];
         int index = 0;
-
-        if (map.getZoomLevel() >= Conf.MAP_MINIMUM_ZOOM_ITEMS) {
-            states[index++] = R.attr.state_high_zoom;
-        }
 
         if (item.isBookmarked()) {
             states[index++] = R.attr.state_bookmarked;

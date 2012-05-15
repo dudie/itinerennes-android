@@ -2,17 +2,22 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes">
     <item>
-        <selector>
-            <!-- HIGH ZOOMED -->
-            <item itr:state_high_zoom="true">
-                <bitmap android:gravity="center" android:src="@drawable/ic_marker_bus" />
+        <level-list>
+            <!-- ZOOM FAR AWAY zoom <= 14 -->
+            <item android:maxLevel="14">
+                <bitmap android:gravity="center" android:src="@drawable/ic_marker_bus_dot" />
             </item>
-   
-            <!--  default -->
-            <item>
+            
+            <!-- MEDIUM ZOOM 14 < zoom <= 17 -->
+            <item android:maxLevel="17">
                 <bitmap android:gravity="center" android:src="@drawable/ic_marker_bus_lite" />
             </item>
-        </selector>
+   
+            <!-- 17 < zoom  -->
+            <item android:maxLevel="99">
+                <bitmap android:gravity="center" android:src="@drawable/ic_marker_bus" />
+            </item>
+        </level-list>
     </item>
     <item
         android:bottom="15dp"

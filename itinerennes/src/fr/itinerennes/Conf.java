@@ -24,12 +24,6 @@ public final class Conf {
     public static final int MAP_RENNES_LON;
 
     /**
-     * Minimum zoom level displaying detailed overlay items. On higher zoom, a simple circle will be
-     * displayed.
-     */
-    public static final int MAP_MINIMUM_ZOOM_ITEMS;
-
-    /**
      * Zoom level for zooming on a precise marker or location.
      */
     public static final int MAP_ZOOM_ON_LOCATION;
@@ -99,7 +93,6 @@ public final class Conf {
             MAP_DEFAULT_ZOOM = getInteger(props, "map.default.zoom");
             MAP_RENNES_LAT = getInteger(props, "map.rennes.lat");
             MAP_RENNES_LON = getInteger(props, "map.rennes.lon");
-            MAP_MINIMUM_ZOOM_ITEMS = getInteger(props, "map.minimum.zoom.items");
             MAP_ZOOM_ON_LOCATION = getInteger(props, "map.zoom.on.location");
 
             ITINERENNES_VERSION_URL = getUrl(props, "itinerennes.version.url");
