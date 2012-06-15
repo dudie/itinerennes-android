@@ -54,19 +54,26 @@ public final class VersionCheckListener extends AsyncTask<Void, Void, Intent> {
 
         Intent i = null;
 
-        final UpdateInfo update = versionService.getUpdateInfo();
-        if (null != update && Boolean.TRUE.equals(update.isAvailable())) {
+        try {
+            final UpdateInfo update = versionService.getUpdateInfo();
+            if (null != update && Boolean.TRUE.equals(update.isAvailable())) {
 
-            final boolean mandatory = Boolean.valueOf(update.isMandatory());
+                final boolean mandatory = Boolean.valueOf(update.isMandatory());
 
-            LOGGER.info("An update is available (mandatory={})", mandatory);
+                LOGGER.info("An update is available (mandatory={})", mandatory);
 
-            i = new Intent();
-            i.setAction(NewVersionActivity.INTENT_UPGRADE);
-            i.putExtra(NewVersionActivity.INTENT_EXTRA_MANDATORY_UPGRADE, mandatory);
+                i = new Intent();
+                i.setAction(NewVersionActivity.INTENT_UPGRADE);
+                i.putExtra(NewVersionActivity.INTENT_EXTRA_MANDATORY_UPGRADE, mandatory);
 
-        } else if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("No update available");
+            } else if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("No update available");
+            }
+        } catch (final Exception e) {
+            // TJHU A network failure may happen here is the user isn't connected (see #688)
+            // TJHU we must implement a service to handle this case and retry periodically (see
+            // #688)
+            LOGGER.error("Unable to check if a new version is available");
         }
 
         return i;
