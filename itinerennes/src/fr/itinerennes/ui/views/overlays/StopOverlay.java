@@ -130,8 +130,11 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
             protected LinkedHashMap<String, StopOverlayItem> doInBackground(final Void... params) {
 
                 final MarkerDao markerDao = context.getApplicationContext().getMarkerDao();
-                final Cursor c = context.getApplicationContext().getMarkerDao()
-                        .getMarkers(source.getBoundingBox(), visibleMarkerTypes);
+                final Cursor c = context
+                        .getApplicationContext()
+                        .getMarkerDao()
+                        .getMarkers(source.getBoundingBox(),
+                                new ArrayList<String>(visibleMarkerTypes));
 
                 final LinkedHashMap<String, StopOverlayItem> markers = new LinkedHashMap<String, StopOverlayItem>();
                 if (c != null && c.moveToFirst()) {
