@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import fr.itinerennes.R;
+import fr.itinerennes.commons.utils.StringUtils;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.utils.ResourceResolver;
@@ -76,7 +77,10 @@ public class LineIconService extends AbstractService {
         if (0 == id) {
             final String msg = String.format("No icon found for line %s", line);
             LOGGER.warn(msg);
-            ErrorReporter.getInstance().handleSilentException(new Resources.NotFoundException(msg));
+            if (!StringUtils.isBlank(line)) {
+                // send error report only if the requested icon was not empty
+                ErrorReporter.getInstance().handleSilentException(new Resources.NotFoundException(msg));
+            }
             image = getDefaultIcon(context, line);
         } else {
             image = context.getResources().getDrawable(id);
