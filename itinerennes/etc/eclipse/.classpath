@@ -5,7 +5,7 @@
     <classpathentry exported="true" kind="var" path="M2_REPO/org/acra/acra/${version.acra}/acra-${version.acra}.jar"/>
     <classpathentry exported="true" kind="var" path="M2_REPO/org/slf4j/slf4j-itinerennes/${version.slf4j-itinerennes}/slf4j-itinerennes-${version.slf4j-itinerennes}.jar"/>
     <classpathentry exported="true" kind="var" path="M2_REPO/org/osmdroid/osmdroid-itinerennes/${version.osmdroid-itinerennes}/osmdroid-itinerennes-${version.osmdroid-itinerennes}.jar"/>
-    <classpathentry exported="true" kind="var" path="M2_REPO/fr/itinerennes/itinerennes-commons/${version.itinerennes-commons}/itinerennes-commons-${version.itinerennes-commons}.jar"/>
+    <classpathentry exported="true" kind="var" path="M2_REPO/fr/itinerennes/itinerennes-commons/${version.itinerennes-commons}/itinerennes-commons-${project.version}.jar"/>
     <classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/nominatim-api/${version.nominatim-api}/nominatim-api-${version.nominatim-api}.jar"/>
     <classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/rennes-data-api/${version.rennes-data-api}/rennes-data-api-${version.rennes-data-api}.jar"/>
     <classpathentry exported="true" kind="var" path="M2_REPO/fr/dudie/onebusaway-api/${version.onebusaway-api}/onebusaway-api-${version.onebusaway-api}.jar"/>

@@ -16,8 +16,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
         <!-- dependencies versions -->
-        <version.itinerennes-commons>${project.version}</version.itinerennes-commons>
-        <version.itinerennes-android>${project.version}</version.itinerennes-android>
         <version.gson>2.1</version.gson>
         <version.acra>4.2.3</version.acra>
         <version.slf4j-api>1.6.1</version.slf4j-api>
@@ -173,18 +171,15 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>itinerennes-commons</artifactId>
-                <version>${version.itinerennes-commons}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>itinerennes-android</artifactId>
-                <version>${version.itinerennes-android}</version>
                 <type>apk</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>itinerennes-android</artifactId>
-                <version>${version.itinerennes-android}</version>
                 <classifier>with-assets</classifier>
                 <scope>provided</scope>
             </dependency>
