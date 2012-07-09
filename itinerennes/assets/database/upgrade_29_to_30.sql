@@ -1,8 +1,6 @@
--- MARKERS AND ACCESSIBILITY REFERENCE DATA ARE UPDATED
 DELETE FROM markers;
 DELETE FROM accessibility;
 
--- UPDATE MARKERS SCHEMA DATA MODEL
 DROP TABLE IF EXISTS markers;
 CREATE TABLE "markers" (
     "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -19,7 +17,6 @@ CREATE INDEX "markers_type_idx" on markers (type ASC);
 CREATE INDEX "markers_search_label_idx" on markers (search_label);
 CREATE INDEX "markers_label_idx" on markers (label);
 
--- CREATE ROUTESSTOPS SCHEMA DATA MODEL
 DROP TABLE IF EXISTS routesstops;
 CREATE TABLE "routesstops" (
     "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
