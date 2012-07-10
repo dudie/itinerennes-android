@@ -34,9 +34,9 @@
     </modules>
 
     <scm>
-        <url>https://bugtracker.dudie.fr/itr-android/browse</url>
-        <connection>scm:svn:https://svn.itinerennes.fr/android/trunk</connection>
-        <developerConnection>scm:svn:https://svn.itinerennes.fr/android/trunk</developerConnection>
+        <url>https://bugtracker.dudie.fr/itr-android/browse/branches/api4</url>
+        <connection>scm:svn:https://svn.itinerennes.fr/android/branches/api4</connection>
+        <developerConnection>scm:svn:https://svn.itinerennes.fr/android/branches/api4</developerConnection>
     </scm>
 
     <ciManagement>
