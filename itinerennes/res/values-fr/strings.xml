@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_description">Tout ce qu\'il faut pour se déplacer à Rennes</string>
     <string name="version_dots">Version : %s</string>
     <string name="error_network">Certaines informations n\'ont pas pu être récupérées. Merci de vérifier votre réseau.</string>
@@ -16,7 +17,7 @@
     <string name="prev">Précédent</string>
     <string name="next">Suivant</string>
     <string name="finish">Terminer</string>
-    
+
     <!-- bookmarks -->
     <string name="activity_title_bookmarks">Favoris</string>
     <string name="added_to_bookmarks"><i>%s</i> ajouté aux favoris</string>
@@ -25,20 +26,24 @@
     <string name="bookmarks_dialog_title_add">Ajouter un favori</string>
     <string name="bookmarks_give_a_name">Nommez le favori :</string>
     <string name="bookmarks_button_add">Ajouter</string>
-    
+
     <!-- overlays -->
     <string name="overlay_unamed">Overlay sans nom</string>
     <string name="overlay_bus">Arrêts de bus</string>
     <string name="overlay_subway">Stations de métro</string>
     <string name="overlay_bike">Stations de vélo</string>
     <string name="overlay_park">Parcs relais</string>
-    
+
     <!-- Trip planner -->
     <string name="select_start_point_on_map">Cliquez sur la carte pour choisir un point de départ.</string>
     <string name="select_end_point_on_map">Cliquez sur la carte pour choisir un point de d\'arrivée.</string>
-    
+
     <!-- Activity search results -->
     <string name="activity_title_search_results">Résultats de recherche</string>
     <!-- Activity transport alerts -->
     <string name="activity_title_network_alerts">Alertes sur le réseau</string>
+
+    <!-- Activity fullscreen image preview -->
+    <string name="fullscreen_image_preview">Aperçu</string>
+
 </resources>

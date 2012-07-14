@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_description">Everything you need to move in Rennes, France</string>
     <string name="version_dots">Version: %s</string>
     <string name="error_network">Some informations can not be fetched. Please verify your network.</string>
@@ -16,7 +17,7 @@
     <string name="prev">Previous</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
-    
+
     <!-- bookmarks -->
     <string name="activity_title_bookmarks">Bookmarks</string>
     <string name="added_to_bookmarks"><i>%s</i> added to bookmarks</string>
@@ -25,20 +26,24 @@
     <string name="bookmarks_dialog_title_add">Add a bookmark</string>
     <string name="bookmarks_give_a_name">Name your bookmark:</string>
     <string name="bookmarks_button_add">Add</string>
-    
+
     <!-- overlays -->
     <string name="overlay_unamed">Unamed overlay</string>
     <string name="overlay_bus">Bus stops</string>
     <string name="overlay_subway">Subway stations</string>
     <string name="overlay_bike">Bike stations</string>
     <string name="overlay_park">Park and Ride</string>
-    
+
     <!-- Trip planner -->
     <string name="select_start_point_on_map">Click on the map to choose a start point.</string>
     <string name="select_end_point_on_map">Click on the map to choose an end point.</string>
-    
+
     <!-- Activity search results -->
     <string name="activity_title_search_results">Search results</string>
     <!-- Activity transport alerts -->
     <string name="activity_title_network_alerts">Network alerts</string>
+
+    <!-- Activity fullscreen image preview -->
+    <string name="fullscreen_image_preview">Preview</string>
+
 </resources>

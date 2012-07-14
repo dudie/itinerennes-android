@@ -148,6 +148,14 @@
 
         <!-- Service to perform web API queries for bike widget -->
         <service android:name=".ui.widget.BikeWidgetProvider$UpdateService" />
+
+        <activity
+            android:name=".ui.activity.FullScreenImageActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

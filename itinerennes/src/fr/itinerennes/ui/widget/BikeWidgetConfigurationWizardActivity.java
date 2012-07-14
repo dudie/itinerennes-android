@@ -17,13 +17,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RemoteViews;
 
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.ui.activity.FullScreenImageActivity;
 import fr.itinerennes.ui.activity.WizardActivity;
 
 /**
@@ -94,6 +97,19 @@ public final class BikeWidgetConfigurationWizardActivity extends WizardActivity 
 
             final View step = getLayoutInflater().inflate(R.layout.wzd_wgt_bike_1_instructions,
                     null);
+
+            final ImageView preview = (ImageView) step.findViewById(R.id.widget_preview);
+            preview.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(final View v) {
+
+                    final Intent imagePreview = FullScreenImageActivity.createIntent(
+                            BikeWidgetConfigurationWizardActivity.this, R.drawable.pv_widget_bike);
+                    startActivity(imagePreview);
+                }
+            });
+
             return step;
         }
     }
