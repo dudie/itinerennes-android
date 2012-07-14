@@ -105,7 +105,8 @@ public final class BikeWidgetConfigurationWizardActivity extends WizardActivity 
                 public void onClick(final View v) {
 
                     final Intent imagePreview = FullScreenImageActivity.createIntent(
-                            BikeWidgetConfigurationWizardActivity.this, R.drawable.pv_widget_bike);
+                            BikeWidgetConfigurationWizardActivity.this,
+                            R.drawable.pv_widget_bike_screenshot);
                     startActivity(imagePreview);
                 }
             });
