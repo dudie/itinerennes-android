@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import fr.dudie.onebusaway.model.TripStopTime;
@@ -141,7 +140,7 @@ public class BusTripTimeAdapter extends BaseAdapter {
         // If the current view is the view on which a marker is needed
         // sets a blue drawable on the left
         if (hasToBeHighlighted) {
-            ((LinearLayout) view).setBackgroundResource(R.drawable.bgx_li_emphasis);
+            view.setBackgroundResource(R.drawable.bgx_li_emphasis);
         }
 
         if (routeIsAccessible) {
