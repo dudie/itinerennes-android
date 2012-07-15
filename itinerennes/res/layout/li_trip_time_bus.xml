@@ -47,10 +47,4 @@
         android:src="@drawable/misc_handistar_icon"
         android:visibility="gone" />
 
-    <ProgressBar
-        android:id="@+trip_time/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
 </LinearLayout>
