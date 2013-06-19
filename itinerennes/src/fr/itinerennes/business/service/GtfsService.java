@@ -14,6 +14,7 @@ import fr.dudie.onebusaway.model.StopSchedule;
 import fr.dudie.onebusaway.model.TripSchedule;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.database.GtfsDao;
+import fr.itinerennes.database.exception.DatabaseAccessException;
 
 public class GtfsService implements IOneBusAwayClient {
 
@@ -42,7 +43,11 @@ public class GtfsService implements IOneBusAwayClient {
         final StopSchedule schedule = new StopSchedule();
         schedule.setDate(date);
         schedule.setStop(stop);
-        schedule.getStopTimes().addAll(dao.getStopTimes(stopId, date));
+        try {
+            schedule.getStopTimes().addAll(dao.getStopTimes(stopId, date));
+        } catch (final DatabaseAccessException e) {
+            new IOException("Unable to query database");
+        }
 
         return schedule;
     }
