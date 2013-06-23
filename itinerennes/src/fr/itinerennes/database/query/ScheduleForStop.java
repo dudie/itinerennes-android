@@ -11,19 +11,19 @@ import fr.dudie.onebusaway.model.ScheduleStopTime;
 
 public class ScheduleForStop extends ParameterizedQuery<List<ScheduleStopTime>> {
 
-    private static final int ARRIVAL_TIME = 1;
-    private static final int DEPARTURE_TIME = 2;
-    private static final int HEADSIGN = 3;
-    private static final int SERVICE_ID = 4;
-    private static final int TRIP_ID = 5;
-    private static final int ROUTE_ID = 6;
-    private static final int AGENCY_ID = 7;
-    private static final int ROUTE_SHORT_NAME = 8;
-    private static final int ROUTE_LONG_NAME = 9;
-    private static final int ROUTE_DESCRIPTION = 10;
-    private static final int ROUTE_TYPE = 11;
-    private static final int ROUTE_COLOR = 12;
-    private static final int ROUTE_TEXT_COLOR = 13;
+    private static final int ARRIVAL_TIME = 0;
+    private static final int DEPARTURE_TIME = 1;
+    private static final int HEADSIGN = 2;
+    private static final int SERVICE_ID = 3;
+    private static final int TRIP_ID = 4;
+    private static final int ROUTE_ID = 5;
+    private static final int AGENCY_ID = 6;
+    private static final int ROUTE_SHORT_NAME = 7;
+    private static final int ROUTE_LONG_NAME = 8;
+    private static final int ROUTE_DESCRIPTION = 9;
+    private static final int ROUTE_TYPE = 10;
+    private static final int ROUTE_COLOR = 11;
+    private static final int ROUTE_TEXT_COLOR = 12;
 
     public void setDate(final Date date) {
         setParam("date", new SimpleDateFormat("yyyyMMdd").format(date));
