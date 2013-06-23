@@ -19,7 +19,9 @@ import fr.dudie.onebusaway.model.ScheduleStopTime;
 import fr.dudie.onebusaway.model.Stop;
 import fr.itinerennes.database.Columns.RoutesStopsColumns;
 import fr.itinerennes.database.exception.DatabaseAccessException;
+import fr.itinerennes.database.exception.QueryTemplateLoadException;
 import fr.itinerennes.database.query.ScheduleForStop;
+import fr.itinerennes.database.query.StopById;
 
 /**
  * A DAO to access GTFS data loaded in database.
@@ -95,27 +97,10 @@ public final class GtfsDao implements RoutesStopsColumns {
         return c;
     }
     
-    public Stop getStop(final String stopId) {
-
-        final String[] columns = new String[] { "stop_id", "stop_code", "stop_name", "stop_lat", "stop_lon" };
-        final Cursor c = dbHelper.getReadableDatabase().query("stops", columns, "stop_id = ?", new String[] { stopId }, null, null, null);
-
-        final Stop stop;
-        if (c.moveToFirst()) {
-            stop = new Stop();
-            stop.setId(c.getString(0)); // stop_id
-            stop.setCode(c.getInt(1)); // stop_code
-            stop.setName(c.getString(2)); // stop_name
-            stop.setLat(c.getInt(3) / 1E6); // stop_lat
-            stop.setLon(c.getInt(4) / 1E6); // stop_lon
-            stop.setDirection(null); //
-        } else {
-            stop = null;
-        }
-        
-        c.close();
-
-        return stop;
+    public Stop getStop(final String stopId) throws DatabaseAccessException {
+        final StopById query = new StopById();
+        query.setStopId(stopId);
+        return query.execute(dbHelper.getReadableDatabase());
     }
 
     public List<ScheduleStopTime> getStopTimes(final String stopId, final Date date) throws DatabaseAccessException {

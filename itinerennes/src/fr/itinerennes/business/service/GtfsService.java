@@ -38,22 +38,25 @@ public class GtfsService implements IOneBusAwayClient {
     }
 
     public StopSchedule getScheduleForStop(String stopId, Date date) throws IOException {
-        final Stop stop = dao.getStop(stopId);
 
         final StopSchedule schedule = new StopSchedule();
         schedule.setDate(date);
-        schedule.setStop(stop);
         try {
+            schedule.setStop(dao.getStop(stopId));
             schedule.getStopTimes().addAll(dao.getStopTimes(stopId, date));
         } catch (final DatabaseAccessException e) {
-            new IOException("Unable to query database");
+            throw new IOException("Unable to query database");
         }
 
         return schedule;
     }
 
     public Stop getStop(String stopId) throws IOException {
-        return dao.getStop(stopId);
+        try {
+            return dao.getStop(stopId);
+        } catch (DatabaseAccessException e) {
+           throw new IOException("Unable to query database");
+        }
     }
 
 }
