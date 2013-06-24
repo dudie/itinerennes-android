@@ -1,11 +1,17 @@
 package fr.itinerennes.database;
 
+import java.util.Date;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.database.Cursor;
 
+import fr.dudie.onebusaway.model.Route;
+import fr.dudie.onebusaway.model.ScheduleStopTime;
+import fr.dudie.onebusaway.model.Stop;
 import fr.itinerennes.database.Columns.RoutesStopsColumns;
 
 /**
@@ -80,5 +86,63 @@ public final class GtfsDao implements RoutesStopsColumns {
 
         LOGGER.debug("getStopsForRoute.end");
         return c;
+    }
+    
+    public Stop getStop(final String stopId) {
+
+        final String[] columns = new String[] { "stop_id", "stop_code", "stop_name", "stop_lat", "stop_lon" };
+        final Cursor c = dbHelper.getReadableDatabase().query("stops", columns, "stop_id = ?", new String[] { stopId }, null, null, null);
+
+        final Stop stop;
+        if (c.moveToFirst()) {
+            stop = new Stop();
+            stop.setId(c.getString(0)); // stop_id
+            stop.setCode(c.getInt(1)); // stop_code
+            stop.setName(c.getString(2)); // stop_name
+            stop.setLat(c.getInt(3) / 1E6); // stop_lat
+            stop.setLon(c.getInt(4) / 1E6); // stop_lon
+            stop.setDirection(null); //
+        } else {
+            stop = null;
+        }
+        
+        c.close();
+
+        return stop;
+    }
+
+    public List<ScheduleStopTime> getStopTimes(final String stopId, final Date date) {
+
+//        final ScheduleStopTime st = new ScheduleStopTime();
+//        st.setArrivalTime(arrivalTime);
+//        st.setDepartureTime(departureTime);
+//        st.setHeadsign(headsign);
+//        st.setRoute(this.getRoute(routeId));
+//        st.setServiceId(serviceId);
+//        st.setTripId(tripId);
+        return null;
+    }
+
+    public Route getRoute(final String routeId) {
+        final String[] columns = new String[] { "agency_id", "route_id", "route_short_name", "route_long_name", "route_desc", "route_type", "route_color",
+                "route_text_color" };
+        final Cursor c = dbHelper.getReadableDatabase().query("routes", columns, "route_id = ?", new String[] { routeId }, null, null, null);
+
+        final Route r;
+        if (c.moveToFirst()) {
+            r = new Route();
+            r.setAgencyId(c.getString(0));
+            r.setId(c.getString(1));
+            r.setShortName(c.getString(2));
+            r.setLongName(c.getString(3));
+            r.setDescription(c.getString(4));
+            r.setType(c.getInt(5));
+            r.setColor(c.getString(6));
+            r.setTextColor(c.getString(7));
+        } else {
+            r = null;
+        }
+        c.close();
+        return r;
     }
 }

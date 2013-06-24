@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.R;
 import fr.itinerennes.database.CSVDataReader;
+import fr.itinerennes.database.GtfsDataReader;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -129,6 +130,25 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
                     syncListenerRunner, CSVDataReader.accessibility(getBaseContext())));
             syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
                     syncListenerRunner, CSVDataReader.routesStops(getBaseContext())));
+            
+            // GTFS data
+//            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+//                    syncListenerRunner, GtfsDataReader.agency(getBaseContext())));
+            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                    syncListenerRunner, GtfsDataReader.calendar(getBaseContext())));
+            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                    syncListenerRunner, GtfsDataReader.calendarDates(getBaseContext())));
+            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                    syncListenerRunner, GtfsDataReader.feedInfo(getBaseContext())));
+            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                    syncListenerRunner, GtfsDataReader.routes(getBaseContext())));
+            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                    syncListenerRunner, GtfsDataReader.stops(getBaseContext())));
+            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                    syncListenerRunner, GtfsDataReader.stopTimes(getBaseContext())));
+            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+                    syncListenerRunner, GtfsDataReader.trips(getBaseContext())));
+            
             syncListenerRunner.start();
         } else {
             finish();

@@ -1,0 +1,2 @@
+feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date,feed_version
+Keolis Rennes,http://data.keolis-rennes.com/fr/les-donnees/donnees-telechargeables.html,FR,20130513,20130616,Horaires d'hiver 2012 - Version 10.0 - Mi-Mai / Mi-Juin

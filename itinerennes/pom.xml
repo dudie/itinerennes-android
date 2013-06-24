@@ -47,6 +47,7 @@
             <groupId>org.osmdroid</groupId>
             <artifactId>osmdroid-android</artifactId>
         </dependency>
+            
         <dependency>
             <groupId>fr.dudie</groupId>
             <artifactId>rennes-data-api</artifactId>
