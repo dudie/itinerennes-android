@@ -119,7 +119,7 @@ public class ItineRennesApplication extends Application {
             // being logged.
             final Method enableDefaults = sMode.getMethod("enableDefaults");
             enableDefaults.invoke(null);
-        } catch (final Exception e) {
+        } catch (final Throwable t) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("StrictMode not supported...");
             }
