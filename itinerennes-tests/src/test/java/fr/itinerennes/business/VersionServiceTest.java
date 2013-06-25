@@ -20,19 +20,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.xtremelabs.robolectric.Robolectric;
-
 import fr.itinerennes.business.service.VersionService;
 import fr.itinerennes.startup.version.model.UpdateInfo;
-import fr.itinerennes.test.ItineRennesRobolelectricTestRunner;
 
 /**
  * @author Jérémie Huchet
  */
-@RunWith(ItineRennesRobolelectricTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public final class VersionServiceTest {
 
     /** The event logger. */
@@ -46,7 +45,7 @@ public final class VersionServiceTest {
     public void setup() throws ClientProtocolException, IOException {
 
         httpClient = mock(HttpClient.class);
-        when(httpClient.execute(any(HttpGet.class))).then(new Answer<HttpResponse>() {
+        when(httpClient.execute(any(HttpGet.class))).thenAnswer(new Answer<HttpResponse>() {
 
             public HttpResponse answer(final InvocationOnMock invocation) throws Throwable {
 

@@ -1,24 +1,24 @@
 package fr.itinerennes.utils;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.content.Context;
-
-import com.xtremelabs.robolectric.Robolectric;
-
-import fr.itinerennes.test.ItineRennesRobolelectricTestRunner;
 
 /**
  * {@link VersionUtils} unit tests.
  * 
  * @author Jérémie Huchet
  */
-@RunWith(ItineRennesRobolelectricTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public final class VersionUtilsTest {
 
     /** The event logger. */

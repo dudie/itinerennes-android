@@ -1,6 +1,7 @@
 package fr.itinerennes.business;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,22 +9,20 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.graphics.drawable.Drawable;
-
-import com.xtremelabs.robolectric.Robolectric;
-
 import fr.itinerennes.R;
 import fr.itinerennes.business.service.LineIconService;
 import fr.itinerennes.exceptions.GenericException;
-import fr.itinerennes.test.ItineRennesRobolelectricTestRunner;
 
 /**
  * @author Jérémie Huchet
  */
-@RunWith(ItineRennesRobolelectricTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class LineIconServiceTest {
 
     /** The event logger. */
@@ -55,8 +54,7 @@ public class LineIconServiceTest {
             final int resId = mapping.getKey();
             final String name = mapping.getValue();
 
-            final Drawable expectedDrawable = Robolectric.application.getResources().getDrawable(
-                    resId);
+            final Drawable expectedDrawable = Robolectric.application.getResources().getDrawable(resId);
 
             final String msg = String.format("check drawable for icon name '%s'", name);
             assertEquals(msg, expectedDrawable, iconService.getIcon(name));
