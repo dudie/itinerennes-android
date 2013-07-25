@@ -1,6 +1,7 @@
 package fr.itinerennes.database;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,7 +103,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     private String readScript(final String filename) {
 
         try {
-            return IOUtils.read(assets.open(filename, AssetManager.ACCESS_STREAMING));
+            return IOUtils.read(assets.open(filename));
         } catch (final IOException e) {
             final String msg = String
                     .format("Failed to read packaged database script: an error occured while accessing asset %s",
@@ -126,18 +127,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         final String[] statements = script.replaceAll("[\r\n]*", "").replaceAll("[\n\r]*\\s*$", "")
                 .split(";");
 
-        try {
-            db.beginTransaction();
-            for (final String statement : statements) {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("execute SQL : [{}]", statement);
-                }
-                db.execSQL(statement);
-
+        for (final String statement : statements) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("execute SQL : [{}]", statement);
             }
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
+            db.execSQL(statement);
         }
     }
 }
