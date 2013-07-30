@@ -1,4 +1,4 @@
-﻿CREATE TABLE "markers" (
+CREATE TABLE "markers" (
     "_id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     "id" TEXT NOT NULL,
     "type" TEXT NOT NULL,
