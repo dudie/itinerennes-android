@@ -7,12 +7,17 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import fr.itinerennes.database.exception.QueryTemplateLoadException;
 import fr.itinerennes.utils.IOUtils;
 
 public abstract class ParameterizedQuery<T> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ParameterizedQuery.class);
 
     private final List<Param> parameters = new ArrayList<Param>();
 
@@ -23,7 +28,11 @@ public abstract class ParameterizedQuery<T> {
     }
 
     public final T execute(final SQLiteDatabase db) throws QueryTemplateLoadException {
-        final Cursor results = db.rawQuery(getQuery(), null);
+        final String query = getQuery();
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("Executing query:\n{}", query);
+        }
+        final Cursor results = db.rawQuery(query, null);
         try {
             return handleResult(results);
         } finally {
@@ -52,15 +61,19 @@ public abstract class ParameterizedQuery<T> {
      *         identified by <code>rawResId</code>
      */
     private String loadQueryTemplate() throws QueryTemplateLoadException {
-        final String queryFileName = String.format("%s.sql", this.getClass().getName().replace('.', '/'));
-        final InputStream in = this.getClass().getResourceAsStream(queryFileName);
+        final String queryFileName = String.format("assets/%s.sql", this.getClass().getName().replace('.', '/'));
+        final InputStream in = this.getClass().getClassLoader().getResourceAsStream(queryFileName);
+        if (null == in) {
+            throw new IllegalStateException(String.format("Classpath resource %s not found. Classpath is %s", queryFileName,
+                    System.getProperty("java.class.path")));
+        }
         final BufferedReader r = new BufferedReader(new InputStreamReader(in));
 
         final StringBuilder queryBuf = new StringBuilder();
         String line;
         try {
             while ((line = r.readLine()) != null) {
-                queryBuf.append(line);
+                queryBuf.append(line).append(' ');
             }
             return queryBuf.toString();
         } catch (final IOException e) {
