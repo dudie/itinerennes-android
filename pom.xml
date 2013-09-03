@@ -20,7 +20,7 @@
         <version.slf4j-api>1.6.1</version.slf4j-api>
         <version.slf4j-log4j12>1.6.1</version.slf4j-log4j12>
         <version.slf4j-itinerennes>1.1</version.slf4j-itinerennes>
-        <version.osmdroid-itinerennes>1.0.1</version.osmdroid-itinerennes>
+        <version.osmdroid-itinerennes>1.1</version.osmdroid-itinerennes>
         <version.rennes-data-api>2.0</version.rennes-data-api>
         <version.nominatim-api>2.0</version.nominatim-api>
         <version.onebusaway-api>1.0</version.onebusaway-api>
