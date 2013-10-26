@@ -34,9 +34,9 @@
     </modules>
 
     <scm>
-        <url>https://bugtracker.dudie.fr/itr-android/browse</url>
-        <connection>scm:svn:https://svn.itinerennes.fr/android/trunk</connection>
-        <developerConnection>scm:svn:https://svn.itinerennes.fr/android/trunk</developerConnection>
+        <url>https://github.com/dudie/itinerennes-android/tree/master</url>
+        <connection>scm:git:git@github.com:dudie/itinerennes-android.git</connection>
+        <developerConnection>scm:git:git@github.com:dudie/itinerennes-android.git</developerConnection>
     </scm>
 
     <ciManagement>
