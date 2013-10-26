@@ -45,7 +45,7 @@
         </dependency>
         <dependency>
             <groupId>org.osmdroid</groupId>
-            <artifactId>osmdroid-itinerennes</artifactId>
+            <artifactId>osmdroid-android</artifactId>
         </dependency>
         <dependency>
             <groupId>fr.dudie</groupId>

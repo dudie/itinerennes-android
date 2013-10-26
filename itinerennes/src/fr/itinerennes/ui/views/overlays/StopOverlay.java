@@ -317,7 +317,7 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
         drawable.setBounds(bounds);
 
         // draw it
-        Overlay.drawAt(canvas, drawable, curScreenCoords.x, curScreenCoords.y, false);
+        Overlay.drawAt(canvas, drawable, curScreenCoords.x, curScreenCoords.y, false, 0f);
 
         if (originalState != null) {
             // restore original state

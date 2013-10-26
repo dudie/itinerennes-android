@@ -165,7 +165,7 @@ public class ParkOverlay extends LazyOverlay implements ILayerSelector {
         }
 
         // draw it
-        Overlay.drawAt(canvas, icon, curScreenCoords.x, curScreenCoords.y, false);
+        Overlay.drawAt(canvas, icon, curScreenCoords.x, curScreenCoords.y, false, 0f);
 
         if (originalState != null) {
             // restore original state
