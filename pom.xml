@@ -37,6 +37,7 @@
         <url>https://github.com/dudie/itinerennes-android/tree/master</url>
         <connection>scm:git:git@github.com:dudie/itinerennes-android.git</connection>
         <developerConnection>scm:git:git@github.com:dudie/itinerennes-android.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
 
     <ciManagement>
@@ -261,12 +262,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.2.1</version>
+                <version>2.4.2</version>
                 <configuration>
                     <!-- Forward the "versionCode" property value to the maven instance building the release -->
                     <arguments>-DversionCode=${versionCode}</arguments>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <tagNameFormat>itinerennes-@{version}</tagNameFormat>
+                    <tagNameFormat>@{version}</tagNameFormat>
                 </configuration>
             </plugin>
         </plugins>
