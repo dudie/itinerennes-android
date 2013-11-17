@@ -37,7 +37,7 @@
         <url>https://github.com/dudie/itinerennes-android/tree/master</url>
         <connection>scm:git:git@github.com:dudie/itinerennes-android.git</connection>
         <developerConnection>scm:git:git@github.com:dudie/itinerennes-android.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>api4</tag>
     </scm>
 
     <ciManagement>
