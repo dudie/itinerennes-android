@@ -1,1 +1,11 @@
+# java 
+*.class
+
+# maven
 target/
+
+# android
+bin/
+gen/
+proguard-project.txt
+project.properties
