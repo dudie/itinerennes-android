@@ -263,6 +263,9 @@
                             <manifestDebuggable>false</manifestDebuggable>
                             <manifestVersionCode>${versionCode}</manifestVersionCode>
                             <manifestVersionName>${project.version}</manifestVersionName>
+                            <zipalign>
+                                <skip>false</skip>
+                            </zipalign>
                         </configuration>
                         <executions>
                             <!-- update the manifest file -->
