@@ -2,6 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>fr.dudie</groupId>
+        <artifactId>dudie-github-parent</artifactId>
+        <version>1</version>
+    </parent>
+
     <groupId>fr.itinerennes</groupId>
     <artifactId>itinerennes-parent</artifactId>
     <version>0.7-SNAPSHOT</version>
@@ -17,9 +23,9 @@
         <!-- dependencies versions -->
         <version.gson>2.1</version.gson>
         <version.acra>4.2.3</version.acra>
-        <version.slf4j-api>1.6.1</version.slf4j-api>
-        <version.slf4j-log4j12>1.6.1</version.slf4j-log4j12>
-        <version.slf4j-itinerennes>1.1</version.slf4j-itinerennes>
+        <version.slf4j-api>1.7.5</version.slf4j-api>
+        <version.slf4j-log4j12>1.7.5</version.slf4j-log4j12>
+        <version.slf4j-android>1.7.5</version.slf4j-android>
         <version.osmdroid>4.0</version.osmdroid>
         <version.rennes-data-api>2.0</version.rennes-data-api>
         <version.nominatim-api>2.0</version.nominatim-api>
@@ -45,44 +51,18 @@
         <url>https://dudie.ci.cloudbees.com/job/itinerennes</url>
     </ciManagement>
 
-    <distributionManagement>
-        <repository>
-            <id>dudie-releases</id>
-            <name>Dudie releases by Cloudbees</name>
-            <url>dav:https://repository-dudie.forge.cloudbees.com/private/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>dudie-snapshots</id>
-            <name>Dudie snapshots by Cloudbees</name>
-            <url>dav:https://repository-dudie.forge.cloudbees.com/private/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <repositories>
-        <!-- Sonatype repositories to access fr.dudie snapshots and releases -->
         <repository>
-            <id>sonatype-nexus-releases</id>
-            <name>Sonatype Nexus Releases</name>
-            <url>https://oss.sonatype.org/content/repositories/releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>dudie-github-releases</id>
+            <name>Dudie releases hosted on Github</name>
+            <url>https://raw.github.com/dudie/maven-repository/releases</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
-        </repository>
-        <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
             <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
                 <enabled>false</enabled>
-            </releases>
+            </snapshots>
         </repository>
-	
         <!-- ACRA artifact releases repository hosted on project's GoogleCode -->
         <repository>
             <id>acra-releases</id>
@@ -95,45 +75,9 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
-	
-        <!-- Dudie private repositories hosted by Cloudbees -->
-        <repository>
-            <id>dudie-releases</id>
-            <name>Dudie releases by Cloudbees</name>
-            <url>https://repository-dudie.forge.cloudbees.com/private/releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>dudie-snapshots</id>
-            <name>Dudie snapshots by Cloudbees</name>
-            <url>https://repository-dudie.forge.cloudbees.com/private/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
     </repositories>
 
     <pluginRepositories>
-        <pluginRepository>
-            <!-- Dudie private repository hosts one custom plugin used at release time -->
-            <id>dudie-releases</id>
-            <name>Dudie releases by Cloudbees</name>
-            <url>https://repository-dudie.forge.cloudbees.com/private/releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
         <pluginRepository>
             <!-- Beardedgeeks repository hosts properties-merge plugin -->
             <id>beardedgeeks-googlecode</id>
@@ -210,8 +154,9 @@
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-itinerennes</artifactId>
-                <version>${version.slf4j-itinerennes}</version>
+                <artifactId>slf4j-android</artifactId>
+                <version>${version.slf4j-android}</version>
+                <classifier>itinerennes</classifier>
             </dependency>
             <dependency>
                 <groupId>org.osmdroid</groupId>
