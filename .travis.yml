@@ -4,6 +4,30 @@ env:
   matrix:
   # Eclair 2.1
   - ANDROID_SDKS=android-7            ANDROID_TARGET=android-7   ANDROID_ABI=armeabi
+  # Froyo 2.2 - 2.2.3
+  - ANDROID_SDKS=android-8            ANDROID_TARGET=android-8   ANDROID_ABI=armeabi
+  # Gingerbread 2.3 - 2.3.2
+  - ANDROID_SDKS=android-9            ANDROID_TARGET=android-9   ANDROID_ABI=armeabi
+  # Gingerbread 2.3.3 - 2.3.7
+  - ANDROID_SDKS=android-10           ANDROID_TARGET=android-10  ANDROID_ABI=armeabi
+  # Honeycomb 3.0
+  - ANDROID_SDKS=android-11           ANDROID_TARGET=android-11  ANDROID_ABI=armeabi
+  # Honeycomb 3.1
+  - ANDROID_SDKS=android-12           ANDROID_TARGET=android-12  ANDROID_ABI=armeabi
+  # Honeycomb 3.2
+  - ANDROID_SDKS=android-13           ANDROID_TARGET=android-13  ANDROID_ABI=armeabi
+  # Ice Cream Sandwich 4.0 - 4.0.2
+  - ANDROID_SDKS=android-14           ANDROID_TARGET=android-14  ANDROID_ABI=armeabi
+  # Ice Cream Sandwich 4.0.3 - 4.0.4
+  - ANDROID_SDKS=android-15           ANDROID_TARGET=android-15  ANDROID_ABI=armeabi
+  # Jelly Bean 4.1
+  - ANDROID_SDKS=android-16           ANDROID_TARGET=android-16  ANDROID_ABI=armeabi-v7a
+  # Jelly Bean 4.2
+  - ANDROID_SDKS=android-17           ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
+  # Jelly Bean 4.3
+  - ANDROID_SDKS=android-18           ANDROID_TARGET=android-18  ANDROID_ABI=armeabi-v7a
+  # Kit Kat 4.4
+  - ANDROID_SDKS=android-19           ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 
 before_install:
 # Install base Android SDK
