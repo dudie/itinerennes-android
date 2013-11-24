@@ -3,17 +3,17 @@ jdk: openjdk6
 env:
   matrix:
   - SDK=7  ABI=armeabi      # 2.1            Eclair
-  - SDK=8  ABI=armeabi      # 2.2   - 2.2.3  Froyo
-  - SDK=9  ABI=armeabi      # 2.3   - 2.3.2  Gingerbread
+# - SDK=8  ABI=armeabi      # 2.2   - 2.2.3  Froyo
+# - SDK=9  ABI=armeabi      # 2.3   - 2.3.2  Gingerbread
   - SDK=10 ABI=armeabi      # 2.3.3 - 2.3.7  Gingerbread
-  - SDK=11 ABI=armeabi      # 3.0            Honeycomb
-  - SDK=12 ABI=armeabi      # 3.1            Honeycomb
-  - SDK=13 ABI=armeabi      # 3.2            Honeycomd
-  - SDK=14 ABI=armeabi      # 4.0   - 4.0.2  Ice Cream Sandwich
-  - SDK=15 ABI=armeabi      # 4.0.3 - 4.0.4  Ice Cream Sandwich
-  - SDK=16 ABI=x86          # 4.1            Jelly Bean
-  - SDK=17 ABI=armeabi-v7a  # 4.2            Jelly Bean
-  - SDK=18 ABI=armeabi-v7a  # 4.2            Jelly Bean
+# - SDK=11 ABI=armeabi      # 3.0            Honeycomb
+# - SDK=12 ABI=armeabi      # 3.1            Honeycomb
+# - SDK=13 ABI=armeabi      # 3.2            Honeycomd
+# - SDK=14 ABI=armeabi      # 4.0   - 4.0.2  Ice Cream Sandwich
+# - SDK=15 ABI=armeabi      # 4.0.3 - 4.0.4  Ice Cream Sandwich
+  - SDK=16 ABI=armeabi-v7a  # 4.1            Jelly Bean
+# - SDK=17 ABI=armeabi-v7a  # 4.2            Jelly Bean
+# - SDK=18 ABI=armeabi-v7a  # 4.2            Jelly Bean
   - SDK=19 ABI=armeabi-v7a  # 4.4            Kit Kat
 
 before_install:
@@ -26,7 +26,7 @@ before_install:
 - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
 # Install required Android components.
-- export PKGS=android-$SDK,android-7,sysimg-14,sysimg-15,sysimg-16,sysimg-17,sysimg-18,sysimg-19
+- export PKGS=android-$SDK,android-7,sysimg-16,sysimg-19
 - echo y | android update sdk --filter build-tools-19.0.0,platform-tools,extra-android-support,$PKGS --no-ui --all --force
 
 # Create and start emulator
