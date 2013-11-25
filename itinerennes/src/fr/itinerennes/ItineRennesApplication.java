@@ -21,15 +21,13 @@ import org.slf4j.LoggerFactory;
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import fr.dudie.keolis.client.JsonKeolisClient;
 import fr.dudie.keolis.client.KeolisClient;
 import fr.dudie.nominatim.client.JsonNominatimClient;
 import fr.dudie.nominatim.client.NominatimClient;
 import fr.dudie.nominatim.model.BoundingBox;
-import fr.dudie.onebusaway.client.IOneBusAwayClient;
-import fr.dudie.onebusaway.client.JsonOneBusAwayClient;
-
+import fr.itinerennes.api.client.ItineRennesApiClient;
+import fr.itinerennes.api.client.JsonItineRennesApiClient;
 import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BookmarkService;
 import fr.itinerennes.business.service.LineIconService;
@@ -75,8 +73,8 @@ public class ItineRennesApplication extends Application {
     /** The keolis client. */
     private KeolisClient keolisClient;
 
-    /** The OneBusAway client. */
-    private IOneBusAwayClient oneBusAwayClient;
+    /** The ItineRennes API client. */
+    private ItineRennesApiClient itinerennesApiClient;
 
     /** The Nominatim client. */
     private NominatimClient nominatimClient;
@@ -291,17 +289,17 @@ public class ItineRennesApplication extends Application {
     }
 
     /**
-     * Gets a reference to the One Bus Away client.
+     * Gets a reference to the ItineRennes API client.
      * 
-     * @return a one bus away client
+     * @return the ItineRennes API client
      */
-    public final IOneBusAwayClient getOneBusAwayClient() {
+    public final ItineRennesApiClient getItineRennesApiClient() {
 
-        if (null == oneBusAwayClient) {
-            oneBusAwayClient = new JsonOneBusAwayClient(getHttpClient(),
+        if (null == itinerennesApiClient) {
+        	itinerennesApiClient = new JsonItineRennesApiClient(getHttpClient(),
                     Conf.ONEBUSAWAY_API_URL, Conf.ONEBUSAWAY_API_KEY);
         }
-        return oneBusAwayClient;
+        return itinerennesApiClient;
     }
 
     /**

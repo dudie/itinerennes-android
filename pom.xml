@@ -29,7 +29,7 @@
         <version.osmdroid>4.0</version.osmdroid>
         <version.rennes-data-api>2.0</version.rennes-data-api>
         <version.nominatim-api>2.0</version.nominatim-api>
-        <version.onebusaway-api>1.0</version.onebusaway-api>
+        <version.itinerennes-api>1.0-SNAPSHOT</version.itinerennes-api>
     </properties>
 
     <modules>
@@ -174,9 +174,9 @@
                 <version>${version.nominatim-api}</version>
             </dependency>
             <dependency>
-                <groupId>fr.dudie</groupId>
-                <artifactId>onebusaway-api</artifactId>
-                <version>${version.onebusaway-api}</version>
+                <groupId>fr.itinerennes</groupId>
+                <artifactId>itinerennes-api</artifactId>
+                <version>${version.itinerennes-api}</version>
             </dependency>
             
             <!-- test dependencies -->

@@ -10,13 +10,11 @@ import android.os.AsyncTask.Status;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
 import fr.dudie.keolis.model.BikeStation;
 import fr.dudie.keolis.model.RelayPark;
 import fr.dudie.keolis.model.SubwayStation;
-import fr.dudie.onebusaway.model.Stop;
-
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.api.client.model.StopWithRoutes;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.adapter.BikeStationBoxAdapter;
 import fr.itinerennes.ui.adapter.BusStationBoxAdapter;
@@ -57,7 +55,7 @@ public final class MapBoxController {
      * The task used to fill the map box view with additional information in background for a bus
      * station.
      */
-    private DisplayMapBoxTask<Stop> busMapBoxDisplayer = null;
+    private DisplayMapBoxTask<StopWithRoutes> busMapBoxDisplayer = null;
 
     /**
      * The task used to fill the map box view with additional information in background for a subway
@@ -103,7 +101,7 @@ public final class MapBoxController {
                     new BikeStationBoxAdapter(context), item);
             bikeMapBoxDisplayer.execute();
         } else if (item.getType().equals(TypeConstants.TYPE_BUS)) {
-            busMapBoxDisplayer = new DisplayMapBoxTask<Stop>(map,
+            busMapBoxDisplayer = new DisplayMapBoxTask<StopWithRoutes>(map,
                     new BusStationBoxAdapter(context), item);
             busMapBoxDisplayer.execute();
         } else if (item.getType().equals(TypeConstants.TYPE_SUBWAY)) {

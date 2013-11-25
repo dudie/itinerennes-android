@@ -27,15 +27,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
-import fr.dudie.onebusaway.client.IOneBusAwayClient;
-import fr.dudie.onebusaway.model.Route;
-import fr.dudie.onebusaway.model.ScheduleStopTime;
-import fr.dudie.onebusaway.model.StopSchedule;
-
 import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.api.client.ItineRennesApiClient;
+import fr.itinerennes.api.client.model.Route;
+import fr.itinerennes.api.client.model.ScheduleStopTime;
+import fr.itinerennes.api.client.model.StopSchedule;
 import fr.itinerennes.commons.utils.DateUtils;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
 import fr.itinerennes.ui.views.LineImageView;
@@ -85,7 +83,7 @@ public final class BusStopActivity extends ItineRennesActivity {
     private boolean isAccessible = false;
 
     /** The OneBusAway client. */
-    private IOneBusAwayClient obaClient;
+    private ItineRennesApiClient obaClient;
 
     /** Adapter for the departures list view. */
     private BusStopTimeAdapter adapter;
@@ -127,7 +125,7 @@ public final class BusStopActivity extends ItineRennesActivity {
 
         setContentView(R.layout.act_bus_stop);
 
-        obaClient = getApplicationContext().getOneBusAwayClient();
+        obaClient = getApplicationContext().getItineRennesApiClient();
 
         // retrieve intent parameters
         stopId = getIntent().getStringExtra(INTENT_STOP_ID);
@@ -358,7 +356,7 @@ public final class BusStopActivity extends ItineRennesActivity {
 
                         final ViewGroup lineList = (ViewGroup) findViewById(R.id.line_icon_container);
                         lineList.removeAllViews();
-                        for (final Route busRoute : schedule.getStop().getRoutes()) {
+                        for (final Route busRoute : schedule.getRoutes()) {
 
                             final LineImageView lineIcon = new LineImageView(BusStopActivity.this);
                             lineIcon.setLine(busRoute.getShortName());

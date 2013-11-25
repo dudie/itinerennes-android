@@ -11,13 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
-import fr.dudie.onebusaway.client.IOneBusAwayClient;
-import fr.dudie.onebusaway.model.Route;
-import fr.dudie.onebusaway.model.Stop;
-
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.api.client.ItineRennesApiClient;
+import fr.itinerennes.api.client.model.Route;
+import fr.itinerennes.api.client.model.StopWithRoutes;
 import fr.itinerennes.ui.activity.BusStopActivity;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.LineImageView;
@@ -28,7 +26,7 @@ import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 /**
  * @author Jérémie Huchet
  */
-public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
+public class BusStationBoxAdapter implements MapBoxAdapter<StopWithRoutes> {
 
     /** The itinerennes context. */
     private final ItineRennesActivity context;
@@ -106,13 +104,13 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
      *      java.lang.Object)
      */
     @Override
-    public final Stop doInBackground(final View view, final OverlayItem item) {
+    public final StopWithRoutes doInBackground(final View view, final OverlayItem item) {
 
-        Stop station = null;
+    	StopWithRoutes station = null;
         try {
 
-            final IOneBusAwayClient obaClient = context.getApplicationContext()
-                    .getOneBusAwayClient();
+            final ItineRennesApiClient obaClient = context.getApplicationContext()
+                    .getItineRennesApiClient();
 
             station = obaClient.getStop(((StopOverlayItem) item).getId());
 
@@ -129,7 +127,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<Stop> {
      * @see fr.itinerennes.ui.adapter.MapBoxAdapter#updateView(android.view.View, java.lang.Object)
      */
     @Override
-    public final void updateView(final View view, final Stop station) {
+    public final void updateView(final View view, final StopWithRoutes station) {
 
         if (station != null) {
             // updates the station name just to be sure

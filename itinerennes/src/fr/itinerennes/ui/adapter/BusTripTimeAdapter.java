@@ -10,11 +10,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import fr.dudie.onebusaway.model.TripStopTime;
-
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.api.client.model.TripStopTime;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 
 /**

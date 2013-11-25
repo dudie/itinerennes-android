@@ -21,13 +21,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import fr.dudie.onebusaway.client.IOneBusAwayClient;
-import fr.dudie.onebusaway.model.TripSchedule;
-import fr.dudie.onebusaway.model.TripStopTime;
-
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.api.client.ItineRennesApiClient;
+import fr.itinerennes.api.client.model.TripSchedule;
+import fr.itinerennes.api.client.model.TripStopTime;
 import fr.itinerennes.ui.adapter.BusTripTimeAdapter;
 
 /**
@@ -254,7 +252,7 @@ public final class BusTripActivity extends ItineRennesActivity {
 
             try {
 
-                final IOneBusAwayClient obaClient = getApplicationContext().getOneBusAwayClient();
+                final ItineRennesApiClient obaClient = getApplicationContext().getItineRennesApiClient();
 
                 return obaClient.getTripDetails(params[0]);
 
