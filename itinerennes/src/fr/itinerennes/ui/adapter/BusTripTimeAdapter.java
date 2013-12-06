@@ -1,5 +1,6 @@
 package fr.itinerennes.ui.adapter;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -109,16 +110,23 @@ public class BusTripTimeAdapter extends BaseAdapter {
         final TextView stopName = (TextView) view.findViewById(R.trip_time.stop_name);
         stopName.setText(stopTime.getStop().getName());
 
+        // TODO this shouldn't be done with "today" date but with the schedule date
+		final Calendar c = Calendar.getInstance();
+		for (final int field : new int[] { Calendar.MILLISECOND,
+				Calendar.SECOND, Calendar.MINUTE, Calendar.HOUR_OF_DAY }) {
+			c.set(field, 0);
+		}
+		final long today = c.getTimeInMillis();
         final TextView departureTime = (TextView) view.findViewById(R.trip_time.departure_time);
-        departureTime.setText(DateUtils.formatDateTime(context, stopTime.getDepartureTime()
-                .getTime(), DateUtils.FORMAT_24HOUR | DateUtils.FORMAT_SHOW_TIME));
+        departureTime.setText(DateUtils.formatDateTime(context, today + 
+        		stopTime.getDepartureTime() * 1000, DateUtils.FORMAT_24HOUR | DateUtils.FORMAT_SHOW_TIME));
 
         final TextView relativeTime = (TextView) view.findViewById(R.trip_time.relative_time);
-        relativeTime.setText(DateUtils.getRelativeTimeSpanString(stopTime.getDepartureTime()
-                .getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS,
+        relativeTime.setText(DateUtils.getRelativeTimeSpanString(today + stopTime
+        		.getDepartureTime() * 1000, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS,
                 DateUtils.FORMAT_ABBREV_RELATIVE));
 
-        final boolean isInPast = stopTime.getDepartureTime().before(new Date());
+        final boolean isInPast = today + stopTime.getDepartureTime() * 1000 < new Date().getTime();
         final boolean hasToBeHighlighted = initialStopId.equals(stopTime.getStop().getId());
 
         // if the current view represents a stop where the bus is already passed

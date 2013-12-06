@@ -9,6 +9,7 @@ import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
@@ -250,7 +251,7 @@ public class ItineRennesApplication extends Application {
         if (httpClient == null) {
             final SchemeRegistry registry = new SchemeRegistry();
             registry.register(new Scheme("http", new PlainSocketFactory(), 80));
-            registry.register(new Scheme("https", new PlainSocketFactory(), 443));
+            registry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
 
             final HttpParams cxParams = new BasicHttpParams();
             ConnManagerParams.setMaxTotalConnections(cxParams, 5);
@@ -297,7 +298,7 @@ public class ItineRennesApplication extends Application {
 
         if (null == itinerennesApiClient) {
         	itinerennesApiClient = new JsonItineRennesApiClient(getHttpClient(),
-                    Conf.ONEBUSAWAY_API_URL, Conf.ONEBUSAWAY_API_KEY);
+                    Conf.ITINERENNES_API_URL);
         }
         return itinerennesApiClient;
     }

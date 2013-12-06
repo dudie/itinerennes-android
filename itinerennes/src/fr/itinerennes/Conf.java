@@ -53,13 +53,10 @@ public final class Conf {
     public static final String KEOLIS_API_KEY;
 
     /*
-     * OneBusAway constants.
+     * ItineRennes API constants.
      */
-    /** OneBusAway API URL. */
-    public static final String ONEBUSAWAY_API_URL;
-
-    /** OneBusAway API version. */
-    public static final String ONEBUSAWAY_API_KEY;
+    /** ItineRennes API URL. */
+    public static final String ITINERENNES_API_URL;
 
     /*
      * Database constants.
@@ -103,8 +100,7 @@ public final class Conf {
             KEOLIS_API_URL = getUrl(props, "keolis.api.url");
             KEOLIS_API_KEY = getString(props, "keolis.api.key");
 
-            ONEBUSAWAY_API_URL = getUrl(props, "onebusaway.api.url");
-            ONEBUSAWAY_API_KEY = getString(props, "onebusaway.api.key");;
+            ITINERENNES_API_URL = getUrl(props, "itinerennes.api.url");
 
             DATABASE_SCHEMA_VERSION = getInteger(props, "database.schema.version");
 
