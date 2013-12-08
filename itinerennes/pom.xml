@@ -74,7 +74,20 @@
                       overriding and filtering them
                     -->
                     <assetsDirectory>${project.build.directory}/generated-resources/assets</assetsDirectory>
+                    <zipalign>
+                        <skip>false</skip>
+                    </zipalign>
                 </configuration>
+                <executions>
+                    <!-- zipalign the signed APK -->
+                    <execution>
+                        <id>alignApk</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>zipalign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             
             <!-- Eclipse environment : setup .classpath file -->
@@ -264,9 +277,6 @@
                             <manifestDebuggable>false</manifestDebuggable>
                             <manifestVersionCode>${versionCode}</manifestVersionCode>
                             <manifestVersionName>${project.version}</manifestVersionName>
-                            <zipalign>
-                                <skip>false</skip>
-                            </zipalign>
                         </configuration>
                         <executions>
                             <!-- update the manifest file -->
@@ -275,14 +285,6 @@
                                 <phase>process-resources</phase>
                                 <goals>
                                     <goal>manifest-update</goal>
-                                </goals>
-                            </execution>
-                            <!-- zipalign the signed APK -->
-                            <execution>
-                                <id>alignApk</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>zipalign</goal>
                                 </goals>
                             </execution>
                         </executions>
