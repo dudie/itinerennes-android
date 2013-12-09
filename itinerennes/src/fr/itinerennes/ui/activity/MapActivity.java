@@ -19,14 +19,18 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Click;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.OptionsItem;
+import com.googlecode.androidannotations.annotations.OptionsMenu;
+import com.googlecode.androidannotations.annotations.SystemService;
+import com.googlecode.androidannotations.annotations.ViewById;
 
 import fr.itinerennes.Conf;
 import fr.itinerennes.ITRPrefs;
@@ -50,6 +54,8 @@ import fr.itinerennes.utils.MapUtils;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
+@EActivity(R.layout.act_map)
+@OptionsMenu(R.menu.map_menu)
 public class MapActivity extends ItineRennesActivity implements
         OverlayConstants {
 
@@ -57,44 +63,21 @@ public class MapActivity extends ItineRennesActivity implements
     private static final Logger LOGGER = LoggerFactory
             .getLogger(MapActivity.class);
 
-    /** The map view. */
-    private ItinerennesMapView map;
-
     /** The my location overlay. */
     private LocationOverlay myLocation;
 
+    /** The map view. */
+    @ViewById(R.id.map)
+    ItinerennesMapView map;
+
     /** Location manager. */
-    private LocationManager locationManager;
+    @SystemService
+    LocationManager locationManager;
 
-    /**
-     * Called when activity starts. Displays the view.
-     * <p>
-     * {@inheritDoc}
-     * </p>
-     * 
-     * @see android.app.Activity#onCreate(android.os.Bundle)
-     */
-    @Override
-    protected final void onCreate(final Bundle savedInstanceState) {
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCreate.start");
-        }
-        super.onCreate(savedInstanceState);
-
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        setContentView(R.layout.act_map);
-
-        this.map = (ItinerennesMapView) findViewById(R.id.map);
-
+    @AfterViews
+    void initializeLocationOverlay() {
         this.myLocation = map.getMyLocationOverlay();
-
         map.setMultiTouchControls(true);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCreate.end");
-        }
     }
 
     /**
@@ -190,48 +173,31 @@ public class MapActivity extends ItineRennesActivity implements
         }
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-     */
-    @Override
-    public final boolean onOptionsItemSelected(final MenuItem item) {
-
-        // Handle item selection
-        switch (item.getItemId()) {
-        case R.id.menu_layers:
-            showDialog(Dialogs.SELECT_LAYERS);
-            return true;
-        case R.id.menu_bookmarks:
-            startActivity(new Intent(this, BookmarksActivity.class));
-            return true;
-        case R.id.menu_preferences:
-            startActivity(new Intent(this, MainPreferenceActivity.class));
-            return true;
-        case R.id.menu_search:
-            onSearchRequested();
-            return true;
-        case R.id.menu_network_alerts:
-            startActivity(new Intent(this, NetworkAlertsActivity.class));
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
+    @Click(R.id.map_btn_layers)
+    @OptionsItem(R.id.menu_layers)
+    void onSelectLayers() {
+        showDialog(Dialogs.SELECT_LAYERS);
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
-     */
-    @Override
-    public final boolean onCreateOptionsMenu(final Menu menu) {
+    @OptionsItem(R.id.menu_bookmarks)
+    void onSelectBookmarks() {
+        startActivity(new Intent(this, BookmarksActivity.class));
+    }
 
-        final MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.map_menu, menu);
+    @OptionsItem(R.id.menu_preferences)
+    void onSelectPreferences() {
+        startActivity(new Intent(this, MainPreferenceActivity.class));
+    }
 
-        return super.onCreateOptionsMenu(menu);
+    @Click(R.id.map_btn_search)
+    @OptionsItem(R.id.menu_search)
+    void onSelectSearch() {
+        onSearchRequested();
+    }
+
+    @OptionsItem(R.id.menu_network_alerts)
+    void onSelectNetworkAlerts() {
+        startActivity(new Intent(this, NetworkAlertsActivity.class));
     }
 
     /**
@@ -252,30 +218,6 @@ public class MapActivity extends ItineRennesActivity implements
         } else {
             myLocation.toggleFollowLocation();
         }
-    }
-
-    /**
-     * Click method handler invoked when a click event is detected on the layers
-     * button.
-     * 
-     * @param button
-     *            the button view on which the event was detected
-     */
-    public final void onLayersButtonClick(final View button) {
-
-        showDialog(Dialogs.SELECT_LAYERS);
-    }
-
-    /**
-     * Click method handler invoked when a click event is detected on the search
-     * button.
-     * 
-     * @param button
-     *            the button view on which the event was detected
-     */
-    public final void onSearchButtonClick(final View button) {
-
-        onSearchRequested();
     }
 
     /**

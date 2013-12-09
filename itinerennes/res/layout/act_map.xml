@@ -24,19 +24,17 @@
         
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         
-        <fr.itinerennes.ui.views.ToolbarButton
+        <fr.itinerennes.ui.views.ToolbarButton android:id="@+id/map_btn_search"
             itr:drawable="@drawable/btn_search"
             android:layout_width="@dimen/toolbar_button_width"
-            android:layout_height="fill_parent"
-            android:onClick="onSearchButtonClick"/>
+            android:layout_height="fill_parent"/>
             
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         
-        <fr.itinerennes.ui.views.ToolbarButton
+        <fr.itinerennes.ui.views.ToolbarButton android:id="@+id/map_btn_layers"
             itr:drawable="@drawable/btn_layers"
             android:layout_width="@dimen/toolbar_button_width"
-            android:layout_height="fill_parent"
-            android:onClick="onLayersButtonClick"/>
+            android:layout_height="fill_parent"/>
             
         <include layout="@layout/misc_toolbar_vertical_separator"/>
         
