@@ -63,6 +63,17 @@
             android:textAppearance="@style/text_credit"
             android:linksClickable="true"/>
 
+        <ProgressBar android:id="@+id/about_keolis_version_pbar"
+            android:layout_width="14sp"
+            android:layout_height="14sp"
+            android:layout_gravity="center"/>
+
+        <TextView android:id="@+id/about_keolis_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/text_credit"
+            android:visibility="gone"/>
+
         <TextView android:text="@string/about_openstreetmap_data"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
