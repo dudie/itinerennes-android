@@ -23,13 +23,12 @@
 
     <PreferenceCategory android:title="@string/prefs_cat_info">
 
-        <fr.itinerennes.ui.preferences.AboutDialogPreference
-            android:title="@string/about"
-            android:dialogIcon="@drawable/ic_dialog_help"
-            android:dialogTitle="@string/about"
-            android:dialogLayout="@layout/dial_about"
-            android:negativeButtonText="">
-        </fr.itinerennes.ui.preferences.AboutDialogPreference>
+        <PreferenceScreen android:title="@string/about" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="fr.itinerennes.ui.preferences.AboutDialogPreference_"
+                android:targetPackage="fr.itinerennes" />
+        </PreferenceScreen>
 
     </PreferenceCategory>
 
