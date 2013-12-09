@@ -26,6 +26,17 @@
         </dependency>
         <!-- END - PROVIDED DEPENDENCIES -->
 
+        <!-- Android Annotations -->
+        <dependency>
+            <groupId>com.googlecode.androidannotations</groupId>
+            <artifactId>androidannotations</artifactId>
+
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.androidannotations</groupId>
+            <artifactId>androidannotations-api</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>itinerennes-commons</artifactId>

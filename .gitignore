@@ -9,3 +9,6 @@ bin/
 gen/
 proguard-project.txt
 project.properties
+
+# androidannotations generated classes (eclipse)
+.apt_generated/
