@@ -93,6 +93,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.preferences.AboutDialogPreference_"
+            android:configChanges="orientation" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.activity.SearchResultsActivity"
             android:configChanges="orientation"
             android:launchMode="singleTop"
