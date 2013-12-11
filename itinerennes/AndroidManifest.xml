@@ -116,7 +116,7 @@
             android:name=".ui.activity.NewVersionActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".ui.activity.NetworkAlertsActivity"
+            android:name=".ui.activity.NetworkAlertsActivity_"
             android:configChanges="orientation"
             android:launchMode="singleTop" >
             <intent-filter>
