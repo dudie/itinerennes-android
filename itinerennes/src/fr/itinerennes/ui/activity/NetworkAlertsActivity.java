@@ -9,18 +9,20 @@ import org.slf4j.LoggerFactory;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import fr.dudie.keolis.model.LineAlert;
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Background;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.ItemClick;
+import com.googlecode.androidannotations.annotations.UiThread;
+import com.googlecode.androidannotations.annotations.ViewById;
 
+import fr.dudie.keolis.model.LineAlert;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.adapter.NetworkAlertsAdapter;
 import fr.itinerennes.ui.views.LineImageView;
@@ -30,7 +32,8 @@ import fr.itinerennes.ui.views.LineImageView;
  * 
  * @author Jérémie Huchet
  */
-public final class NetworkAlertsActivity extends ItineRennesActivity {
+@EActivity(R.layout.act_network_alerts)
+public class NetworkAlertsActivity extends ItineRennesActivity {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(NetworkAlertsActivity.class);
@@ -41,85 +44,57 @@ public final class NetworkAlertsActivity extends ItineRennesActivity {
     /** The adapter used to display line alerts. */
     private NetworkAlertsAdapter alertsAdapter;
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onCreate(android.os.Bundle)
-     */
-    @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    @ViewById(R.id.misc_view_is_loading)
+    View loader;
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCreate.start");
-        }
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_network_alerts);
+    @ViewById(R.id.alerts_list)
+    ListView listAlerts;
 
+    @AfterViews
+    void initializeAlertsAdapter() {
         alertsAdapter = new NetworkAlertsAdapter(this);
-
-        final ListView listAlerts = (ListView) findViewById(R.id.alerts_list);
         listAlerts.setAdapter(alertsAdapter);
-        listAlerts.setOnItemClickListener(new OnItemClickListener() {
+    }
 
-            @Override
-            public void onItemClick(final AdapterView<?> parent, final View view,
-                    final int position, final long id) {
+    @ItemClick(R.id.alerts_list)
+    void onAlertIemClick(final int itemId) {
+        showDialog(itemId);
+    }
 
-                showDialog(position);
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadAlerts();
+    }
 
-        final AsyncTask<Void, Void, List<LineAlert>> loadingTask = new AsyncTask<Void, Void, List<LineAlert>>() {
-
-            /**
-             * {@inheritDoc}
-             * 
-             * @see android.os.AsyncTask#doInBackground(Params[])
-             */
-            @Override
-            protected List<LineAlert> doInBackground(final Void... params) {
-
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("retrieving alerts");
-                }
-
-                List<LineAlert> alerts = null;
-                try {
-                    alerts = getApplicationContext().getKeolisClient().getAllLinesAlerts();
-                } catch (final IOException e) {
-                    // TJHU Gérer l'excepton proprement
-                    getApplicationContext().getExceptionHandler().handleException(e);
-                }
-
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("received {} alerts", alerts != null ? alerts.size() : 0);
-                }
-
-                return alerts;
-            }
-
-            /**
-             * {@inheritDoc}
-             * 
-             * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-             */
-            @Override
-            protected void onPostExecute(final List<LineAlert> alerts) {
-
-                // TJHU gérer le cas où il n'y a pas d'alerte pour le moment
-                alertsAdapter.setAlerts(alerts);
-                alertsAdapter.notifyDataSetChanged();
-                listAlerts.setVisibility(View.VISIBLE);
-                findViewById(R.id.misc_view_is_loading).setVisibility(View.GONE);
-
-            }
-
-        };
-        loadingTask.execute();
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCreate.end");
+    @Background
+    void loadAlerts() {
+        List<LineAlert> alerts = null;
+        try {
+            alerts = getApplicationContext().getKeolisClient()
+                    .getAllLinesAlerts();
+        } catch (final IOException e) {
+            // TJHU Gérer l'excepton proprement
+            getApplicationContext().getExceptionHandler().handleException(e);
         }
+
+        if (null != alerts) {
+            LOGGER.debug("received {} alerts", alerts != null ? alerts.size()
+                    : 0);
+            displayAlerts(alerts);
+        } else {
+            LOGGER.warn("can't retrieve line alerts");
+        }
+    }
+
+    @UiThread
+    void displayAlerts(final List<LineAlert> alerts) {
+        // TJHU gérer le cas où il n'y a pas d'alerte pour le moment
+        alertsAdapter.setAlerts(alerts);
+        alertsAdapter.notifyDataSetChanged();
+
+        listAlerts.setVisibility(View.VISIBLE);
+        loader.setVisibility(View.GONE);
     }
 
     /**

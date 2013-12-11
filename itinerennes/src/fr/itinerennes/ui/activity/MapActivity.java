@@ -197,7 +197,7 @@ public class MapActivity extends ItineRennesActivity implements
 
     @OptionsItem(R.id.menu_network_alerts)
     void onSelectNetworkAlerts() {
-        startActivity(new Intent(this, NetworkAlertsActivity.class));
+        startActivity(new Intent(this, NetworkAlertsActivity_.class));
     }
 
     /**
