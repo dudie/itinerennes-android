@@ -532,7 +532,7 @@ public class MapActivity extends ItineRennesActivity implements
                 final ItineRennesApplication context, final int latitude,
                 final int longitude, final int zoom) {
 
-            final Intent i = new Intent(context, MapActivity.class);
+            final Intent i = new Intent(context, MapActivity_.class);
             i.setAction(Intent.ACTION_VIEW);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra(INTENT_PARAM_SET_MAP_ZOOM, zoom);
