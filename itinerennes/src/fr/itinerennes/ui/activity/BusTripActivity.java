@@ -171,7 +171,7 @@ public final class BusTripActivity extends ItineRennesActivity {
                     final int position, final long id) {
 
                 final TripStopTime stopTime = (TripStopTime) parent.getItemAtPosition(position);
-                final Intent i = new Intent(view.getContext(), BusStopActivity.class);
+                final Intent i = new Intent(view.getContext(), BusStopActivity_.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.putExtra(BusStopActivity.INTENT_STOP_ID, stopTime.getStop().getId());
                 i.putExtra(BusStopActivity.INTENT_STOP_NAME, stopTime.getStop().getName());

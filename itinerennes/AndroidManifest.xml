@@ -68,7 +68,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".ui.activity.BusStopActivity"
+            android:name=".ui.activity.BusStopActivity_"
             android:configChanges="orientation" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

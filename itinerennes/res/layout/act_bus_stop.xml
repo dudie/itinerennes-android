@@ -32,7 +32,7 @@
                 android:background="@drawable/bg_toolbar_bugdroid_bus_station">
             </TextView>
             
-            <ImageView android:id="@+activity_bus_stop/wheelchair_icon"
+            <ImageView android:id="@+id/act_bus_stop_wheelchair_icon"
                 android:src="@drawable/misc_handistar_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             
             <include layout="@layout/misc_toolbar_vertical_separator"/>
             
-            <ToggleButton android:id="@+activity_bus_stop/toggle_bookmark"
+            <ToggleButton android:id="@+id/act_bus_stop_toggle_bookmark"
                 android:layout_width="@dimen/toolbar_button_width"
                 android:layout_height="fill_parent"
                 android:background="@drawable/btn_toggle_star"
@@ -50,11 +50,10 @@
                 
             <include layout="@layout/misc_toolbar_vertical_separator"/>
             
-            <fr.itinerennes.ui.views.ToolbarButton
+            <fr.itinerennes.ui.views.ToolbarButton android:id="@+id/act_bus_stop_map_button"
                 itr:drawable="@android:drawable/ic_dialog_map"
                 android:layout_width="@dimen/toolbar_button_width"
-                android:layout_height="fill_parent"
-                android:onClick="onMapButtonClick"/>
+                android:layout_height="fill_parent"/>
                 
         </LinearLayout>  
         
@@ -66,7 +65,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical">    
             
-            <TextView android:id="@+activity_bus_stop/name"
+            <TextView android:id="@+id/act_bus_stop_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -101,14 +100,14 @@
     <include layout="@layout/misc_view_is_loading"/>
     
 	<ListView 
-	    android:id="@+activity_bus_stop/list_bus" 
+	    android:id="@+id/act_bus_stop_list_bus" 
 	    android:layout_width="fill_parent"
 		android:layout_height="fill_parent" 
 		android:orientation="vertical">
 	</ListView>
 	
 	<TextView
-	    android:id="@+station/empty"
+	    android:id="@+id/act_bus_stop_no_departure"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:gravity="center"

@@ -1,7 +1,10 @@
 package fr.itinerennes.ui.activity;
 
-import static com.xtremelabs.robolectric.Robolectric.*;
+import static com.xtremelabs.robolectric.Robolectric.shadowOf;
 
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,17 +14,19 @@ import android.widget.ListView;
 import com.xtremelabs.robolectric.shadows.ShadowActivity;
 
 import fr.itinerennes.R;
+import fr.itinerennes.test.ItineRennesRobolelectricTestRunner;
 
-//@RunWith(RobolectricTestRunner.class)
+@RunWith(ItineRennesRobolelectricTestRunner.class)
 public class SampleRobolectricTest {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(SampleRobolectricTest.class);
 
-    private final NetworkAlertsActivity act = new NetworkAlertsActivity();
+    private final NetworkAlertsActivity_ act = new NetworkAlertsActivity_();
 
-    // @org.junit.Test
-    public void test() {
+    @Test
+    @Ignore
+    public void test() throws InterruptedException {
 
         act.onCreate(null);
 
