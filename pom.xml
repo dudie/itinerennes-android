@@ -76,6 +76,17 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
+        <repository>
+            <id>android-sdk</id>
+            <name>Android SDK local repository</name>
+            <url>file://${env.ANDROID_HOME}/extras/android/m2repository</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
     </repositories>
 
     <pluginRepositories>
