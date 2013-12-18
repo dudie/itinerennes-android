@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- main navigation menu -->
+    <string-array name="menu_main">
+        <item>Carte</item>
+        <item>Lignes de bus</item>
+        <item>Stations Le Vélo STAR</item>
+    </string-array>
+
     <string name="menu_preferences">Préférences</string>
     <string name="menu_bookmarks">Favoris</string>
     <string name="menu_network_alerts">Alertes</string>
@@ -8,4 +16,5 @@
     <string name="menu_previous_day">Jour précédent</string>
     <string name="menu_next_day">Jour suivant</string>
     <string name="menu_back_to_map">Carte</string>
+
 </resources>
