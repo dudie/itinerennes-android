@@ -7,10 +7,9 @@ import android.database.DatabaseUtils.InsertHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.provider.BaseColumns;
-
-import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.database.IDataReader;
 import fr.itinerennes.startup.LoadingActivity.ProgressObserver;
 
@@ -35,18 +34,18 @@ public final class DatabaseLoaderListener extends AbstractStartupListener implem
     /**
      * Constructor.
      * 
-     * @param context
-     *            the application context
+     * @param dbHelper
+     *            the database helper
      * @param listener
      *            the observer to notify about progression
      * @param reader
      *            the CSV data reader to use to get input data
      */
-    public DatabaseLoaderListener(final ItineRennesApplication context,
+    public DatabaseLoaderListener(final DatabaseHelper dbHelper,
             final ProgressObserver listener, final IDataReader reader) {
 
         super(listener);
-        this.db = context.getDatabaseHelper().getWritableDatabase();
+        this.db = dbHelper.getWritableDatabase();
         this.reader = reader;
     }
 

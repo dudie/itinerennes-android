@@ -20,7 +20,7 @@
         android:smallScreens="true" />
 
     <application
-        android:name=".ItineRennesApplication"
+        android:name=".ItineRennesApplication_"
         android:debuggable="true"
         android:description="@string/app_description"
         android:icon="@drawable/ic_itinerennes"
@@ -90,7 +90,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".startup.LoadingActivity"
+            android:name=".startup.LoadingActivity_"
             android:configChanges="orientation"
             android:launchMode="singleTop"
             android:noHistory="true"

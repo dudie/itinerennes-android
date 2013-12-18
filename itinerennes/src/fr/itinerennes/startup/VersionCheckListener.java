@@ -32,12 +32,14 @@ public final class VersionCheckListener extends AsyncTask<Void, Void, Intent> {
      * Constructor.
      * 
      * @param context
-     *            the application context.
+     *            the application context
+     * @param versionService
+     *            the version service
      */
-    public VersionCheckListener(final ItineRennesApplication context) {
+    public VersionCheckListener(final ItineRennesApplication context, final VersionService versionService) {
 
         this.context = context;
-        this.versionService = new VersionService(context, context.getHttpClient());
+        this.versionService = versionService;
     }
 
     /**

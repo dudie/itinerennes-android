@@ -6,10 +6,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.EBean;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import fr.itinerennes.business.event.IBookmarkModificationListener;
 import fr.itinerennes.database.Columns.BookmarksColumns;
 import fr.itinerennes.database.DatabaseHelper;
@@ -21,7 +23,8 @@ import fr.itinerennes.utils.IOUtils;
  * 
  * @author Jérémie Huchet
  */
-public final class BookmarkService extends AbstractService implements BookmarksColumns {
+@EBean
+public class BookmarkService implements BookmarksColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(BookmarkService.class);
@@ -29,16 +32,10 @@ public final class BookmarkService extends AbstractService implements BookmarksC
     /** A list of listeners on bookmarks modifications. */
     private ArrayList<IBookmarkModificationListener> listeners = null;
 
-    /**
-     * Creates the bookmark service.
-     * 
-     * @param dbHelper
-     *            a database helper
-     */
-    public BookmarkService(final DatabaseHelper dbHelper) {
+    /** The database helper. */
+    @Bean
+    DatabaseHelper dbHelper;
 
-        super(dbHelper);
-    }
 
     /**
      * Adds a listener for modifications make by this service.

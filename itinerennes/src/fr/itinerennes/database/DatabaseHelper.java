@@ -5,11 +5,12 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.androidannotations.annotations.EBean;
+
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import fr.itinerennes.Conf;
 import fr.itinerennes.utils.IOUtils;
 
@@ -18,7 +19,8 @@ import fr.itinerennes.utils.IOUtils;
  * 
  * @author Jérémie Huchet
  */
-public final class DatabaseHelper extends SQLiteOpenHelper {
+@EBean
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHelper.class);

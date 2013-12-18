@@ -6,18 +6,22 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.EActivity;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
-
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.R;
+import fr.itinerennes.business.service.VersionService;
 import fr.itinerennes.database.CSVDataReader;
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.Columns.MarkersColumns;
+import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.utils.VersionUtils;
 
@@ -25,6 +29,7 @@ import fr.itinerennes.utils.VersionUtils;
  * @author Jérémie Huchet
  * @author Olivier Boudet
  */
+@EActivity
 public class LoadingActivity extends ItineRennesActivity implements MarkersColumns,
         AccessibilityColumns {
 
@@ -90,13 +95,21 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
         };
     };
 
+    /** The database helper. */
+    @Bean
+    DatabaseHelper dbHelper;
+
+    /** The version service. */
+    @Bean
+    VersionService versionService;
+
     /**
      * {@inheritDoc}
      * 
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
     @Override
-    protected final void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onCreate.start");
@@ -108,7 +121,7 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
 
         /* initializes the listeners to trigger in background on application startup */
         final List<AsyncTask<Void, ?, ?>> asyncListeners = new ArrayList<AsyncTask<Void, ?, ?>>();
-        asyncListeners.add(new VersionCheckListener(getApplicationContext()));
+        asyncListeners.add(new VersionCheckListener(getApplicationContext(), versionService));
         // trigger them (execution is forked to background)
         for (final AsyncTask<Void, ?, ?> listener : asyncListeners) {
 
@@ -123,11 +136,11 @@ public class LoadingActivity extends ItineRennesActivity implements MarkersColum
             final List<AbstractStartupListener> syncListeners = new ArrayList<AbstractStartupListener>();
             final TaskRunner syncListenerRunner = new TaskRunner(syncListeners);
 
-            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+            syncListeners.add(new DatabaseLoaderListener(dbHelper,
                     syncListenerRunner, CSVDataReader.markers(getBaseContext())));
-            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+            syncListeners.add(new DatabaseLoaderListener(dbHelper,
                     syncListenerRunner, CSVDataReader.accessibility(getBaseContext())));
-            syncListeners.add(new DatabaseLoaderListener(this.getApplicationContext(),
+            syncListeners.add(new DatabaseLoaderListener(dbHelper,
                     syncListenerRunner, CSVDataReader.routesStops(getBaseContext())));
             syncListenerRunner.start();
         } else {

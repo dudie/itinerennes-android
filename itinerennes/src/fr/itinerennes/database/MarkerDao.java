@@ -9,12 +9,14 @@ import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.EBean;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
-
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.commons.utils.SearchUtils;
@@ -27,6 +29,7 @@ import fr.itinerennes.ui.views.overlays.StopOverlayItem;
  * 
  * @author Olivier Boudet
  */
+@EBean
 public class MarkerDao implements MarkersColumns {
 
     /** The event logger. */
@@ -36,7 +39,8 @@ public class MarkerDao implements MarkersColumns {
     private final Context context;
 
     /** The database helper. */
-    private final DatabaseHelper dbHelper;
+    @Bean
+    DatabaseHelper dbHelper;
 
     /** SQL query used to fetch suggestions from the database. */
     private String getSuggestionsStatement;
@@ -49,13 +53,10 @@ public class MarkerDao implements MarkersColumns {
      * 
      * @param context
      *            the context
-     * @param databaseHelper
-     *            the itinerennes context
      */
-    public MarkerDao(final Context context, final DatabaseHelper databaseHelper) {
+    public MarkerDao(final Context context) {
 
         this.context = context;
-        dbHelper = databaseHelper;
 
     }
 

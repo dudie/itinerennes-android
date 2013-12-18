@@ -22,6 +22,10 @@ import org.slf4j.LoggerFactory;
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.EApplication;
+
 import fr.dudie.keolis.client.JsonKeolisClient;
 import fr.dudie.keolis.client.KeolisClient;
 import fr.dudie.nominatim.client.JsonNominatimClient;
@@ -36,13 +40,14 @@ import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.database.MarkerDao;
 import fr.itinerennes.exceptions.DefaultExceptionHandler;
 import fr.itinerennes.exceptions.ExceptionHandler;
-import fr.itinerennes.startup.LoadingActivity;
+import fr.itinerennes.startup.LoadingActivity_;
 import fr.itinerennes.utils.VersionUtils;
 
 /**
  * @author Jérémie Huchet
  */
 @ReportsCrashes(formKey = "dDRaN2hHdUFrUDctQXc3Zl85ZjZOYWc6MQ")
+@EApplication
 public class ItineRennesApplication extends Application {
 
     /** The event logger. */
@@ -50,7 +55,8 @@ public class ItineRennesApplication extends Application {
             .getLogger(ItineRennesApplication.class);
 
     /** The database helper. */
-    private DatabaseHelper databaseHelper;
+    @Bean
+    DatabaseHelper databaseHelper;
 
     /** The itinerennes shared preferences. */
     private SharedPreferences sharedPreferences;
@@ -60,16 +66,20 @@ public class ItineRennesApplication extends Application {
             this);
 
     /** The marker DAO. */
-    private MarkerDao markerDao;
+    @Bean
+    MarkerDao markerDao;
 
     /** The line icon service. */
-    private LineIconService lineIconService;
+    @Bean
+    LineIconService lineIconService;
 
     /** The bookmarks service. */
-    private BookmarkService bookmarksService;
+    @Bean
+    BookmarkService bookmarksService;
 
     /** The accessibility service. */
-    private AccessibilityService accessibilityService;
+    @Bean
+    AccessibilityService accessibilityService;
 
     /** The keolis client. */
     private KeolisClient keolisClient;
@@ -89,7 +99,7 @@ public class ItineRennesApplication extends Application {
      * @see android.app.Application#onCreate()
      */
     @Override
-    public final void onCreate() {
+    public void onCreate() {
 
         if (Conf.ACRA_ENABLED) {
             // The following line triggers the initialization of ACRA
@@ -98,7 +108,7 @@ public class ItineRennesApplication extends Application {
 
         setupStrictMode();
 
-        final Intent i = new Intent(this, LoadingActivity.class);
+        final Intent i = new Intent(this, LoadingActivity_.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         startActivity(i);
@@ -149,22 +159,6 @@ public class ItineRennesApplication extends Application {
     }
 
     /**
-     * Gets a reference to the database helper.
-     * 
-     * @return a reference to the database helper
-     */
-    public final DatabaseHelper getDatabaseHelper() {
-
-        if (databaseHelper == null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("DBHELPER initializing a database helper");
-            }
-            databaseHelper = new DatabaseHelper(getBaseContext());
-        }
-        return databaseHelper;
-    }
-
-    /**
      * Gets the itinerennes shared preferences.
      * 
      * @return a shared preferences
@@ -195,9 +189,6 @@ public class ItineRennesApplication extends Application {
      */
     public final LineIconService getLineIconService() {
 
-        if (lineIconService == null) {
-            lineIconService = new LineIconService(this, getDatabaseHelper());
-        }
         return lineIconService;
     }
 
@@ -208,9 +199,6 @@ public class ItineRennesApplication extends Application {
      */
     public final BookmarkService getBookmarksService() {
 
-        if (bookmarksService == null) {
-            bookmarksService = new BookmarkService(getDatabaseHelper());
-        }
         return bookmarksService;
     }
 
@@ -221,9 +209,6 @@ public class ItineRennesApplication extends Application {
      */
     public final AccessibilityService getAccessibilityService() {
 
-        if (accessibilityService == null) {
-            accessibilityService = new AccessibilityService(getDatabaseHelper());
-        }
         return accessibilityService;
     }
 
@@ -234,10 +219,6 @@ public class ItineRennesApplication extends Application {
      */
     public final MarkerDao getMarkerDao() {
 
-        if (markerDao == null) {
-            markerDao = new MarkerDao(getApplicationContext(),
-                    getDatabaseHelper());
-        }
         return markerDao;
     }
 
