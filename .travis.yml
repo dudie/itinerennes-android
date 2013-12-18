@@ -27,7 +27,7 @@ before_install:
 
 # Install required Android components.
 - export PKGS=android-$SDK,android-7,sysimg-16,sysimg-19
-- echo y | android update sdk --filter build-tools-19.0.0,platform-tools,extra-android-support,$PKGS --no-ui --all --force
+- echo y | android update sdk --filter tools,platform-tools,extra-android-m2repository,$PKGS --no-ui --all --force
 
 # Create and start emulator
 - echo no | android create avd --force -n test -t android-$SDK --abi $ABI
