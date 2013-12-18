@@ -26,6 +26,8 @@ import org.acra.ErrorReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.androidannotations.annotations.EBean;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -37,10 +39,8 @@ import android.view.Gravity;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import fr.itinerennes.R;
 import fr.itinerennes.commons.utils.StringUtils;
-import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.exceptions.GenericException;
 import fr.itinerennes.utils.ResourceResolver;
 
@@ -49,7 +49,8 @@ import fr.itinerennes.utils.ResourceResolver;
  * 
  * @author Jérémie Huchet
  */
-public class LineIconService extends AbstractService {
+@EBean
+public class LineIconService {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(LineIconService.class);
@@ -62,12 +63,9 @@ public class LineIconService extends AbstractService {
      * 
      * @param context
      *            the context
-     * @param dbHelper
-     *            the database helper
      */
-    public LineIconService(final Context context, final DatabaseHelper dbHelper) {
+    public LineIconService(final Context context) {
 
-        super(dbHelper);
         this.context = context;
     }
 

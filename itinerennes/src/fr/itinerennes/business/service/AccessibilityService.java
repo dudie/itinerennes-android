@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.EBean;
+
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.DatabaseHelper;
 
@@ -36,21 +39,15 @@ import fr.itinerennes.database.DatabaseHelper;
  * 
  * @author Olivier Boudet
  */
-public class AccessibilityService extends AbstractService implements AccessibilityColumns {
+@EBean
+public class AccessibilityService implements AccessibilityColumns {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(AccessibilityService.class);
 
-    /**
-     * Creates the accessibility service.
-     * 
-     * @param dbHelper
-     *            a database helper
-     */
-    public AccessibilityService(final DatabaseHelper dbHelper) {
-
-        super(dbHelper);
-    }
+    /** The database helper. */
+    @Bean
+    DatabaseHelper dbHelper;
 
     /**
      * Returns whether or not a resource is accessible for wheelchairs.

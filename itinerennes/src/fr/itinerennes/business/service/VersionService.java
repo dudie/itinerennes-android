@@ -38,6 +38,8 @@ import org.slf4j.LoggerFactory;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.EBean;
 
 import fr.itinerennes.Conf;
 import fr.itinerennes.startup.version.model.PackageVersion;
@@ -49,7 +51,8 @@ import fr.itinerennes.utils.VersionUtils;
  * 
  * @author Jérémie Huchet
  */
-public final class VersionService {
+@EBean
+public class VersionService {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(VersionService.class);
@@ -58,20 +61,18 @@ public final class VersionService {
     private final Context context;
 
     /** The HTTP client. */
-    private final HttpClient httpClient;
+    @Bean(ItineRennesHttpClient.class)
+    HttpClient httpClient;
 
     /**
      * Constructor.
      * 
      * @param context
      *            the context.
-     * @param httpClient
-     *            the HTTP client
      */
-    public VersionService(final Context context, final HttpClient httpClient) {
+    public VersionService(final Context context) {
 
         this.context = context;
-        this.httpClient = httpClient;
     }
 
     /**
