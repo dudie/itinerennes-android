@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
+import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ItemClick;
 import com.googlecode.androidannotations.annotations.UiThread;
@@ -24,6 +25,7 @@ import com.googlecode.androidannotations.annotations.ViewById;
 
 import fr.dudie.keolis.model.LineAlert;
 import fr.itinerennes.R;
+import fr.itinerennes.business.service.KeolisApi;
 import fr.itinerennes.ui.adapter.NetworkAlertsAdapter;
 import fr.itinerennes.ui.views.LineImageView;
 
@@ -43,6 +45,9 @@ public class NetworkAlertsActivity extends ItineRennesActivity {
 
     /** The adapter used to display line alerts. */
     private NetworkAlertsAdapter alertsAdapter;
+
+    @Bean
+    KeolisApi keolis;
 
     @ViewById(R.id.misc_view_is_loading)
     View loader;
@@ -71,8 +76,7 @@ public class NetworkAlertsActivity extends ItineRennesActivity {
     void loadAlerts() {
         List<LineAlert> alerts = null;
         try {
-            alerts = getApplicationContext().getKeolisClient()
-                    .getAllLinesAlerts();
+            alerts = keolis.getAllLinesAlerts();
         } catch (final IOException e) {
             // TJHU Gérer l'excepton proprement
             getApplicationContext().getExceptionHandler().handleException(e);
