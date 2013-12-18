@@ -25,7 +25,21 @@
         android:description="@string/app_description"
         android:icon="@drawable/ic_itinerennes"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar" >
+        android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+        <activity
+            android:name=".ui.activity.HomeActivity_"
+            android:configChanges="orientation"
+            android:label="HomeActivity"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" >
+                </action>
+                <action android:name="android.intent.action.MAIN" >
+                </action>
+                <category android:name="android.intent.category.LAUNCHER" >
+                </category>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activity.MapActivity"
             android:configChanges="orientation"
