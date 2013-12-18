@@ -77,6 +77,7 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
         visibleMarkerTypes.add(TypeConstants.TYPE_BUS);
         visibleMarkerTypes.add(TypeConstants.TYPE_SUBWAY);
 
+        // FIXME this may produce a memory leak as the listener is never unregistered
         context.getApplicationContext().getBookmarksService()
                 .addListener(new IBookmarkModificationListener() {
 
