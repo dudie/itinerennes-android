@@ -45,6 +45,7 @@ import android.widget.ToggleButton;
 
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
+import com.googlecode.androidannotations.annotations.Bean;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
@@ -59,6 +60,7 @@ import fr.itinerennes.TypeConstants;
 import fr.itinerennes.api.client.model.Route;
 import fr.itinerennes.api.client.model.ScheduleStopTime;
 import fr.itinerennes.api.client.model.StopSchedule;
+import fr.itinerennes.business.service.ItineRennesApi;
 import fr.itinerennes.commons.utils.DateUtils;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
 import fr.itinerennes.ui.views.LineImageView;
@@ -100,6 +102,9 @@ public class BusStopActivity extends ItineRennesActivity {
 
     /** Duration of toast messages. */
     private static final int TOAST_DURATION = 5000;
+
+    @Bean
+    ItineRennesApi itrApi;
 
     /** The identifier of the displayed station. */
     @Extra
@@ -192,8 +197,7 @@ public class BusStopActivity extends ItineRennesActivity {
         try {
             /* Fetching stop informations for this station from the network. */
             scheduleDate = date;
-            updateScheduleDate(getApplicationContext()
-                    .getItineRennesApiClient().getScheduleForStop(stopId, date));
+            updateScheduleDate(itrApi.getScheduleForStop(stopId, date));
 
         } catch (final IOException e) {
             LOGGER.debug(String.format(
