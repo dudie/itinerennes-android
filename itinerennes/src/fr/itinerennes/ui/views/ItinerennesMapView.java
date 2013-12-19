@@ -55,10 +55,16 @@ public class ItinerennesMapView extends MapView {
     private final MapBoxController mapBoxController;
 
     static {
-        final ITileSource tileSource = new XYTileSource("Itinerennes", null, 0, 20, 256, ".png",
+        final ITileSource itr = new XYTileSource("Itinerennes", null, 0, 20, 256, ".png",
                 "http://tiles.itinerennes.fr/");
+        final ITileSource mq = new XYTileSource("MapquestITR", null, 0, 20,
+                256, ".png", "http://otile1.mqcdn.com/tiles/1.0.0/map/",
+                "http://otile2.mqcdn.com/tiles/1.0.0/map/",
+                "http://otile3.mqcdn.com/tiles/1.0.0/map/",
+                "http://otile4.mqcdn.com/tiles/1.0.0/map/");
 
-        TileSourceFactory.addTileSource(tileSource);
+        TileSourceFactory.addTileSource(itr);
+        TileSourceFactory.addTileSource(mq);
 
     }
 
