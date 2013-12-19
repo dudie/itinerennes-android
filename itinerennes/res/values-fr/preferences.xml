@@ -12,6 +12,7 @@
     <string name="prefs_map_tile_provider_desc">Définit l\'apparence de la carte</string>
     <string name="prefs_map_tile_provider_dialog_title">Choisissez le fournisseur de tuiles</string>
     <string-array name="prefs_map_tile_provider_entries">
+        <item name="mapquest">MapQuest</item>
         <item name="itr">ItinéRennes</item>
         <item name="mapnik">Mapnik</item>
     </string-array>

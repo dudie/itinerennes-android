@@ -12,10 +12,12 @@
     <string name="prefs_map_tile_provider_desc">Defines the map appearance</string>
     <string name="prefs_map_tile_provider_dialog_title">Choose tile provider</string>
     <string-array name="prefs_map_tile_provider_entries">
+        <item name="mapquest">MapQuest</item>
         <item name="itr">ItinéRennes</item>
         <item name="mapnik">Mapnik</item>
     </string-array>
     <string-array name="prefs_map_tile_provider_values">
+        <item name="mapquest">MapquestITR</item>
         <item name="itr">Itinerennes</item>
         <item name="mapnik">Mapnik</item>
     </string-array>

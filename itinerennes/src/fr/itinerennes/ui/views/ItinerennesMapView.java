@@ -84,7 +84,6 @@ public class ItinerennesMapView extends MapView {
                         "http://otile3.mqcdn.com/tiles/1.0.0/map/",
                         "http://otile4.mqcdn.com/tiles/1.0.0/map/" });
         TileSourceFactory.addTileSource(tileSource);
-
     }
 
     /**
