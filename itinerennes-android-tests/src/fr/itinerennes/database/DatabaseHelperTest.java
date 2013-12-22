@@ -21,7 +21,7 @@ public class DatabaseHelperTest extends AndroidTestCase {
     public final void testGetReadableDatabase() {
 
         LOGGER.info("testOpenDatabase.start");
-        final DatabaseHelper dbHlpr = new DatabaseHelper(this.getContext());
+        final DatabaseHelper dbHlpr = DatabaseHelper_.getInstance_(this.getContext());
         dbHlpr.getReadableDatabase();
         LOGGER.info("testOpenDatabase.end");
     }

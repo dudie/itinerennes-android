@@ -1,4 +1,4 @@
-package fr.itinerennes.business;
+package fr.itinerennes.business.service;
 
 import static org.junit.Assert.*;
 
@@ -44,7 +44,7 @@ public class LineIconServiceTest {
     @Before
     public void setup() {
 
-        iconService = new LineIconService(Robolectric.application, null);
+        iconService = new LineIconService(Robolectric.application);
     }
 
     @Test

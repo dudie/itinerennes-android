@@ -26,6 +26,9 @@ public class MarkerDaoTest extends AndroidTestCase {
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkerDaoTest.class);
 
+    /** The database helper. */
+    private DatabaseHelper dbHelper;
+
     /** The marker dao. */
     private MarkerDao markerDao;
 
@@ -42,12 +45,15 @@ public class MarkerDaoTest extends AndroidTestCase {
         final ItineRennesApplication appCtx = (ItineRennesApplication) getContext()
                 .getApplicationContext();
 
+        dbHelper = DatabaseHelper_.getInstance_(appCtx);
+
         // load data if necessary
-        final DatabaseLoaderListener loader = new DatabaseLoaderListener(appCtx, null,
+        final DatabaseLoaderListener loader = new DatabaseLoaderListener(dbHelper, null,
                 CSVDataReader.markers(appCtx));
         loader.execute();
 
-        markerDao = new MarkerDao(getContext(), appCtx.getDatabaseHelper());
+        markerDao = MarkerDao_.getInstance_(appCtx);
+        markerDao.dbHelper = dbHelper;
     }
 
     /**
@@ -60,7 +66,7 @@ public class MarkerDaoTest extends AndroidTestCase {
         // retrieve a marker from database (on 2012-01-28, 2_1024 means "Republique Nemours")
         final ItineRennesApplication appCtx = (ItineRennesApplication) getContext()
                 .getApplicationContext();
-        final SQLiteDatabase db = appCtx.getDatabaseHelper().getReadableDatabase();
+        final SQLiteDatabase db = dbHelper.getReadableDatabase();
         final Cursor expected = db.query(MarkersColumns.MARKERS_TABLE_NAME, new String[] {
                 MarkersColumns._ID, MarkersColumns.LABEL, MarkersColumns.LATITUDE,
                 MarkersColumns.LONGITUDE, MarkersColumns.TYPE },
