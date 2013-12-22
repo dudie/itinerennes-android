@@ -1,4 +1,4 @@
-package fr.itinerennes.business;
+package fr.itinerennes.business.service;
 
 /*
  * [license]
@@ -48,6 +48,7 @@ import org.slf4j.LoggerFactory;
 import com.xtremelabs.robolectric.Robolectric;
 
 import fr.itinerennes.business.service.VersionService;
+import fr.itinerennes.business.service.VersionService_;
 import fr.itinerennes.startup.version.model.UpdateInfo;
 import fr.itinerennes.test.ItineRennesRobolelectricTestRunner;
 
@@ -63,9 +64,13 @@ public final class VersionServiceTest {
     private HttpClient httpClient;
 
     private HttpResponse response = null;
+    
+    private VersionService versionService;
 
     @Before
     public void setup() throws ClientProtocolException, IOException {
+
+        response = mock(HttpResponse.class);
 
         httpClient = mock(HttpClient.class);
         when(httpClient.execute(any(HttpGet.class))).then(new Answer<HttpResponse>() {
@@ -75,16 +80,16 @@ public final class VersionServiceTest {
                 return response;
             }
         });
+
+        versionService = VersionService_.getInstance_(Robolectric.application);
+        versionService.httpClient = httpClient;
     }
 
     @Test
     public void test404NotFound() {
 
-        response = mock(HttpResponse.class);
         when(response.getStatusLine()).thenReturn(new MockStatusLine(HttpStatus.SC_NOT_FOUND));
 
-        final VersionService versionService = new VersionService(Robolectric.application,
-                httpClient);
         final UpdateInfo update = versionService.getUpdateInfo();
 
         assertNull(update);
@@ -93,12 +98,9 @@ public final class VersionServiceTest {
     @Test
     public void testEmptyFile() throws UnsupportedEncodingException {
 
-        response = mock(HttpResponse.class);
         when(response.getStatusLine()).thenReturn(new MockStatusLine(HttpStatus.SC_OK));
         when(response.getEntity()).thenReturn(new StringEntity(""));
 
-        final VersionService versionService = new VersionService(Robolectric.application,
-                httpClient);
         final UpdateInfo update = versionService.getUpdateInfo();
 
         assertNull(update);
@@ -107,12 +109,9 @@ public final class VersionServiceTest {
     @Test
     public void testNoUpdateElement() throws UnsupportedEncodingException {
 
-        response = mock(HttpResponse.class);
         when(response.getStatusLine()).thenReturn(new MockStatusLine(HttpStatus.SC_OK));
         when(response.getEntity()).thenReturn(new StringEntity("{ }"));
 
-        final VersionService versionService = new VersionService(Robolectric.application,
-                httpClient);
         final UpdateInfo update = versionService.getUpdateInfo();
 
         assertNull(update);
@@ -121,13 +120,10 @@ public final class VersionServiceTest {
     @Test
     public void testUpdateNotAvailable() throws UnsupportedEncodingException {
 
-        response = mock(HttpResponse.class);
         when(response.getStatusLine()).thenReturn(new MockStatusLine(HttpStatus.SC_OK));
         when(response.getEntity()).thenReturn(
                 new StringEntity("{ update : { available : false } }"));
 
-        final VersionService versionService = new VersionService(Robolectric.application,
-                httpClient);
         final UpdateInfo update = versionService.getUpdateInfo();
 
         assertNotNull(update);
@@ -138,13 +134,10 @@ public final class VersionServiceTest {
     @Test
     public void testUpdateAvailable() throws UnsupportedEncodingException {
 
-        response = mock(HttpResponse.class);
         when(response.getStatusLine()).thenReturn(new MockStatusLine(HttpStatus.SC_OK));
         when(response.getEntity())
                 .thenReturn(new StringEntity("{ update : { available : true } }"));
 
-        final VersionService versionService = new VersionService(Robolectric.application,
-                httpClient);
         final UpdateInfo update = versionService.getUpdateInfo();
 
         assertNotNull(update);
@@ -155,13 +148,10 @@ public final class VersionServiceTest {
     @Test
     public void testUpdateAvailableNotMandatory() throws UnsupportedEncodingException {
 
-        response = mock(HttpResponse.class);
         when(response.getStatusLine()).thenReturn(new MockStatusLine(HttpStatus.SC_OK));
         when(response.getEntity()).thenReturn(
                 new StringEntity("{ update : { available : true, mandatory : false } }"));
 
-        final VersionService versionService = new VersionService(Robolectric.application,
-                httpClient);
         final UpdateInfo update = versionService.getUpdateInfo();
 
         assertNotNull(update);
@@ -172,13 +162,10 @@ public final class VersionServiceTest {
     @Test
     public void testUpdateAvailableMandatory() throws UnsupportedEncodingException {
 
-        response = mock(HttpResponse.class);
         when(response.getStatusLine()).thenReturn(new MockStatusLine(HttpStatus.SC_OK));
         when(response.getEntity()).thenReturn(
                 new StringEntity("{ update : { available : true, mandatory : true } }"));
 
-        final VersionService versionService = new VersionService(Robolectric.application,
-                httpClient);
         final UpdateInfo update = versionService.getUpdateInfo();
 
         assertNotNull(update);

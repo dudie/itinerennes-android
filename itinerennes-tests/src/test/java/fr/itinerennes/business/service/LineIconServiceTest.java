@@ -1,4 +1,4 @@
-package fr.itinerennes.business;
+package fr.itinerennes.business.service;
 
 /*
  * [license]
@@ -66,7 +66,7 @@ public class LineIconServiceTest {
     @Before
     public void setup() {
 
-        iconService = new LineIconService(Robolectric.application, null);
+        iconService = new LineIconService(Robolectric.application);
     }
 
     @Test
