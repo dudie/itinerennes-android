@@ -11,7 +11,7 @@ env:
 # - SDK=13 ABI=armeabi      # 3.2            Honeycomd
 # - SDK=14 ABI=armeabi      # 4.0   - 4.0.2  Ice Cream Sandwich
 # - SDK=15 ABI=armeabi      # 4.0.3 - 4.0.4  Ice Cream Sandwich
-  - SDK=16 ABI=armeabi-v7a  # 4.1            Jelly Bean
+# - SDK=16 ABI=armeabi-v7a  # 4.1            Jelly Bean
 # - SDK=17 ABI=armeabi-v7a  # 4.2            Jelly Bean
 # - SDK=18 ABI=armeabi-v7a  # 4.2            Jelly Bean
   - SDK=19 ABI=armeabi-v7a  # 4.4            Kit Kat
