@@ -76,7 +76,7 @@ import fr.itinerennes.ui.views.overlays.StopOverlayItem;
  */
 @EActivity(R.layout.act_bus_stop)
 @OptionsMenu(R.menu.act_stop_menu)
-public class BusStopActivity extends ItineRennesActivity {
+class BusStopActivity extends ItineRennesActivity {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory

@@ -47,7 +47,7 @@ import fr.itinerennes.utils.VersionUtils;
  * @author Jérémie Huchet
  */
 @EActivity(R.layout.act_about)
-public class AboutDialogPreference extends ItineRennesActivity {
+class AboutDialogPreference extends ItineRennesActivity {
 
 	/** The event logger. */
 	private static final Logger LOGGER = LoggerFactory

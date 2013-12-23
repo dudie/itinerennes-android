@@ -57,7 +57,7 @@ import fr.itinerennes.ui.views.LineImageView;
  * @author Jérémie Huchet
  */
 @EActivity(R.layout.act_network_alerts)
-public class NetworkAlertsActivity extends ItineRennesActivity {
+class NetworkAlertsActivity extends ItineRennesActivity {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(NetworkAlertsActivity.class);
