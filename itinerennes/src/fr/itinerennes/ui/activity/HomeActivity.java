@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.AfterViews;
@@ -18,9 +17,10 @@ import com.googlecode.androidannotations.annotations.ViewById;
 import com.googlecode.androidannotations.annotations.res.StringArrayRes;
 
 import fr.itinerennes.R;
+import fr.itinerennes.ui.preferences.MapFragment_;
 
 @EActivity(R.layout.act_home)
-public class HomeActivity extends SherlockFragmentActivity {
+class HomeActivity extends ItineRennesActivity {
 
     @StringArrayRes(R.array.menu_main)
     String[] menuItems;
@@ -61,7 +61,7 @@ public class HomeActivity extends SherlockFragmentActivity {
 
         // Create a new fragment and specify the planet to show based on
         // position
-        Fragment fragment = new Fragment();
+        Fragment fragment = new MapFragment_();
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();

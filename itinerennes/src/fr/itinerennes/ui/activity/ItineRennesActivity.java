@@ -25,11 +25,12 @@ package fr.itinerennes.ui.activity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import fr.itinerennes.ItineRennesApplication;
 
@@ -38,7 +39,7 @@ import fr.itinerennes.ItineRennesApplication;
  * 
  * @author Jérémie Huchet
  */
-public abstract class ItineRennesActivity extends Activity {
+public abstract class ItineRennesActivity extends SherlockFragmentActivity {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ItineRennesActivity.class);
