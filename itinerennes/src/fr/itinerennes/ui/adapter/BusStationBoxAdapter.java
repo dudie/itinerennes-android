@@ -16,7 +16,6 @@ import fr.itinerennes.TypeConstants;
 import fr.itinerennes.api.client.ItineRennesApiClient;
 import fr.itinerennes.api.client.model.Route;
 import fr.itinerennes.api.client.model.StopWithRoutes;
-import fr.itinerennes.ui.activity.BusStopActivity;
 import fr.itinerennes.ui.activity.BusStopActivity_;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
 import fr.itinerennes.ui.views.LineImageView;
@@ -67,8 +66,8 @@ public class BusStationBoxAdapter implements MapBoxAdapter<StopWithRoutes> {
             public void onClick(final View v) {
 
                 final Intent i = new Intent(context, BusStopActivity_.class);
-                i.putExtra(BusStopActivity.INTENT_STOP_ID, busStation.getId());
-                i.putExtra(BusStopActivity.INTENT_STOP_NAME, busStation.getLabel());
+                i.putExtra(BusStopActivity_.INTENT_STOP_ID, busStation.getId());
+                i.putExtra(BusStopActivity_.INTENT_STOP_NAME, busStation.getLabel());
                 context.startActivity(i);
             }
         });

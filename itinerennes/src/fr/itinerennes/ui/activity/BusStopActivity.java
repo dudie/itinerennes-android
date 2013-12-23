@@ -307,40 +307,30 @@ class BusStopActivity extends ItineRennesActivity {
             Toast.makeText(
                     getApplicationContext(),
                     getString(R.string.error_loading_bus_station_position,
-                            stopName), TOAST_DURATION);
+                            stopName), TOAST_DURATION).show();;
         }
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-     */
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    @Click(R.id.menu_back_to_map)
+    void onClickMapButton(final View button) {
 
+        final Intent i = new Intent(getApplicationContext(), MapActivity.class);
+        i.setAction(Intent.ACTION_VIEW);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+    }
+
+    @Click(R.id.menu_previous_day)
+    void onClickPreviousDay(final View button) {
         final Calendar c = Calendar.getInstance();
+        c.setTime(scheduleDate);
+        prepareThenLoadSchedule(DateUtils.addDays(c.getTime(), -1));
+    }
 
-        // Handle item selection
-        switch (item.getItemId()) {
-        case R.id.menu_back_to_map:
-
-            final Intent i = new Intent(getApplicationContext(),
-                    MapActivity.class);
-            i.setAction(Intent.ACTION_VIEW);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-            return true;
-        case R.id.menu_previous_day:
-            c.setTime(scheduleDate);
-            prepareThenLoadSchedule(DateUtils.addDays(c.getTime(), -1));
-            return true;
-        case R.id.menu_next_day:
-            c.setTime(scheduleDate);
-            prepareThenLoadSchedule(DateUtils.addDays(c.getTime(), 1));
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
+    @Click(R.id.menu_next_day)
+    void onClickNextDay(final View button) {
+        final Calendar c = Calendar.getInstance();
+        c.setTime(scheduleDate);
+        prepareThenLoadSchedule(DateUtils.addDays(c.getTime(), 1));
     }
 }
