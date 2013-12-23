@@ -75,7 +75,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.BusTripActivity"
+            android:name=".ui.activity.BusTripActivity_"
             android:configChanges="orientation" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
