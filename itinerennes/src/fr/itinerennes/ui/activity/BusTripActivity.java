@@ -27,6 +27,10 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.androidannotations.annotations.Click;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.OptionsMenu;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -56,7 +60,9 @@ import fr.itinerennes.ui.adapter.BusTripTimeAdapter;
  * 
  * @author Jérémie Huchet
  */
-public final class BusTripActivity extends ItineRennesActivity {
+@EActivity
+@OptionsMenu(R.menu.act_trip_menu)
+class BusTripActivity extends ItineRennesActivity {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(BusTripActivity.class);
@@ -311,38 +317,11 @@ public final class BusTripActivity extends ItineRennesActivity {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
-     */
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
+    @Click(R.id.menu_back_to_map)
+    void onClickMapButton(final View button) {
 
-        final MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.act_trip_menu, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-     */
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-
-        // Handle item selection
-        switch (item.getItemId()) {
-        case R.id.menu_back_to_map:
-
-            final Intent i = new Intent(getApplicationContext(), MapActivity.class);
-            i.setAction(Intent.ACTION_VIEW);
-            startActivity(i);
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
+        final Intent i = new Intent(getApplicationContext(), MapActivity_.class);
+        i.setAction(Intent.ACTION_VIEW);
+        startActivity(i);
     }
 }
