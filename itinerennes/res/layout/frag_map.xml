@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fr.itinerennes.ui.views.ItinerennesMapView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes"
+    android:id="@+id/frag_map_mapview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_below="@+id/toolbar"
+    android:layout_centerInParent="true"
+    android:clickable="true" >
+
+    <fr.itinerennes.ui.views.ItinerennesZoomControls
+        android:id="@+id/zoom_controls"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        itr:mapview="@+id/map" />
+
+</fr.itinerennes.ui.views.ItinerennesMapView>
