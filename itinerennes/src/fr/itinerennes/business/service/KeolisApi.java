@@ -13,6 +13,7 @@ import fr.dudie.keolis.model.BikeStation;
 import fr.dudie.keolis.model.LineAlert;
 import fr.dudie.keolis.model.LineIcon;
 import fr.dudie.keolis.model.RelayPark;
+import fr.dudie.keolis.model.StopLine;
 import fr.dudie.keolis.model.SubwayStation;
 import fr.itinerennes.Conf;
 
@@ -87,5 +88,17 @@ public class KeolisApi implements KeolisClient {
     public List<LineAlert> getLinesAlertsForLine(String line)
             throws IOException {
         return keolis.getLinesAlertsForLine(line);
+    }
+
+    @Override
+    public List<StopLine> getBusNextDeparturesForLine(String routeName, int direction)
+            throws IOException {
+        return keolis.getBusNextDeparturesForLine(routeName, direction);
+    }
+
+    @Override
+    public List<StopLine> getBusNextDeparturesForStop(String... stopIdWithoudAgency)
+            throws IOException {
+        return keolis.getBusNextDeparturesForStop(stopIdWithoudAgency);
     }
 }
