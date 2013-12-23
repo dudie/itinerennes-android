@@ -56,7 +56,7 @@ import fr.itinerennes.utils.MapUtils;
  */
 @EActivity(R.layout.act_map)
 @OptionsMenu(R.menu.map_menu)
-public class MapActivity extends ItineRennesActivity implements
+class MapActivity extends ItineRennesActivity implements
         OverlayConstants {
 
     /** The event logger. */

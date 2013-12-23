@@ -30,7 +30,7 @@ import fr.itinerennes.utils.VersionUtils;
  * @author Olivier Boudet
  */
 @EActivity
-public class LoadingActivity extends ItineRennesActivity implements MarkersColumns,
+class LoadingActivity extends ItineRennesActivity implements MarkersColumns,
         AccessibilityColumns {
 
     /** The event logger. */

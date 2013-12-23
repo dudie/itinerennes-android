@@ -1,6 +1,5 @@
 package fr.itinerennes;
 
-import fr.itinerennes.startup.LoadingActivity;
 
 /**
  * Constants for preferences.
