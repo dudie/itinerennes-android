@@ -45,6 +45,27 @@
         </dependency>
 
         <dependency>
+            <groupId>com.actionbarsherlock</groupId>
+            <artifactId>actionbarsherlock</artifactId>
+            <type>apklib</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.androidannotations</groupId>
+            <artifactId>androidannotations-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.android.support</groupId>
+            <artifactId>support-v4</artifactId>
+            <scope>provided</scope>
+       </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.acra</groupId>
             <artifactId>acra</artifactId>
             <scope>provided</scope>
