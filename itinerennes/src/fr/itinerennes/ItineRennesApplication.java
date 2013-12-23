@@ -35,6 +35,8 @@ import fr.itinerennes.api.client.ItineRennesApiClient;
 import fr.itinerennes.api.client.JsonItineRennesApiClient;
 import fr.itinerennes.business.service.AccessibilityService;
 import fr.itinerennes.business.service.BookmarkService;
+import fr.itinerennes.business.service.ItineRennesApi;
+import fr.itinerennes.business.service.KeolisApi;
 import fr.itinerennes.business.service.LineIconService;
 import fr.itinerennes.database.DatabaseHelper;
 import fr.itinerennes.database.MarkerDao;
@@ -82,10 +84,12 @@ public class ItineRennesApplication extends Application {
     AccessibilityService accessibilityService;
 
     /** The keolis client. */
-    private KeolisClient keolisClient;
+    @Bean
+    KeolisApi keolisClient;
 
     /** The ItineRennes API client. */
-    private ItineRennesApiClient itinerennesApiClient;
+    @Bean
+    ItineRennesApi itinerennesApiClient;
 
     /** The Nominatim client. */
     private NominatimClient nominatimClient;
@@ -263,10 +267,6 @@ public class ItineRennesApplication extends Application {
      */
     public final KeolisClient getKeolisClient() {
 
-        if (null == keolisClient) {
-            keolisClient = new JsonKeolisClient(getHttpClient(),
-                    Conf.KEOLIS_API_URL, Conf.KEOLIS_API_KEY);
-        }
         return keolisClient;
     }
 
@@ -277,10 +277,6 @@ public class ItineRennesApplication extends Application {
      */
     public final ItineRennesApiClient getItineRennesApiClient() {
 
-        if (null == itinerennesApiClient) {
-        	itinerennesApiClient = new JsonItineRennesApiClient(getHttpClient(),
-                    Conf.ITINERENNES_API_URL);
-        }
         return itinerennesApiClient;
     }
 
