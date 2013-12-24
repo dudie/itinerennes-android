@@ -1,6 +1,11 @@
 package fr.itinerennes.ui.fragment;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.overlay.Overlay;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -20,6 +25,8 @@ import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.views.ItinerennesMapView;
+import fr.itinerennes.ui.views.overlays.ILayerSelector;
+import fr.itinerennes.ui.views.overlays.LayerDescriptor;
 import fr.itinerennes.ui.views.overlays.LocationOverlay;
 
 /**
@@ -30,7 +37,7 @@ public class MapFragment extends Fragment {
 
     /** The my location overlay. */
     private LocationOverlay locationOverlay;
-    
+
     @App
     ItineRennesApplication application;
 
@@ -62,8 +69,10 @@ public class MapFragment extends Fragment {
                 ITRPrefs.MAP_CENTER_LON, Conf.MAP_RENNES_LON);
         map.getController().setCenter(new GeoPoint(latToRestore, lonToRestore));
 
-        final SharedPreferences defaultSharedPrefs = PreferenceManager.getDefaultSharedPreferences(application);
-        final String tileSource = defaultSharedPrefs.getString(ITRPrefs.MAP_TILE_PROVIDER, "Itinerennes");
+        final SharedPreferences defaultSharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(application);
+        final String tileSource = defaultSharedPrefs.getString(
+                ITRPrefs.MAP_TILE_PROVIDER, "Itinerennes");
         map.getController().setTileSource(tileSource);
 
         // if a location provider is enabled and follow location is activated in
@@ -92,7 +101,7 @@ public class MapFragment extends Fragment {
             map.getParkOverlay().hide(TypeConstants.TYPE_CAR_PARK);
         }
     }
-    
+
     public void onPause() {
 
         super.onPause();
@@ -155,6 +164,33 @@ public class MapFragment extends Fragment {
                 .isVisible(TypeConstants.TYPE_SUBWAY));
         edit.putBoolean(ITRPrefs.OVERLAY_PARK_ACTIVATED, map.getParkOverlay()
                 .isVisible(null));
+    }
 
+    public boolean isVisible(final String type) {
+        return map.getStopOverlay().isVisible(type)
+                || TypeConstants.TYPE_CAR_PARK.equals(type)
+                && map.getParkOverlay().isVisible(type);
+    }
+
+    public void setVisibility(final String type, final boolean visible) {
+        final List<ILayerSelector> layers = new ArrayList<ILayerSelector>();
+        layers.add(map.getParkOverlay());
+        layers.add(map.getStopOverlay());
+        for (final ILayerSelector layer : layers) {
+            for (final LayerDescriptor descriptor : layer
+                    .getLayersDescriptors()) {
+                if (descriptor.getType().equals(type)) {
+                    if (visible) {
+                        layer.show(type);
+                    } else {
+                        layer.hide(type);
+                    }
+                }
+            }
+        }
+    }
+
+    public void toggleVisibility(final String type) {
+        setVisibility(type, !isVisible(type));
     }
 }

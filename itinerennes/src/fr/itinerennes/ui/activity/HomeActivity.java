@@ -21,6 +21,7 @@ import com.googlecode.androidannotations.annotations.ViewById;
 import com.googlecode.androidannotations.annotations.res.StringArrayRes;
 
 import fr.itinerennes.R;
+import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.fragment.MapFragment_;
 
 @EActivity(R.layout.act_home)
@@ -96,7 +97,23 @@ class HomeActivity extends ItineRennesActivity {
     }
 
     @ItemClick(R.id.act_home_left_drawer)
-    void onMainMenuItemClick(final MenuItem item) {
+    void onMainMenuItemClick(final int itemId) {
+        switch (itemId) {
+        case 0:
+            mapFragment.toggleVisibility(TypeConstants.TYPE_BUS);
+            break;
+        case 1:
+            mapFragment.toggleVisibility(TypeConstants.TYPE_BIKE);
+            break;
+        case 2:
+            mapFragment.toggleVisibility(TypeConstants.TYPE_SUBWAY);
+            break;
+        case 3:
+            mapFragment.toggleVisibility(TypeConstants.TYPE_CAR_PARK);
+            break;
+        default:
+            break;
+        }
         drawerLayout.closeDrawer(drawerList);
     }
 
