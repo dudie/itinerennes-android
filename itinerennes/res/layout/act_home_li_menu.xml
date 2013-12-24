@@ -3,6 +3,7 @@
     android:id="@android:id/text1"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:drawablePadding="5dp"
     android:gravity="center_vertical"
     android:padding="16dp"
     android:textColor="#fff"
