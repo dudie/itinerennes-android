@@ -2,6 +2,9 @@ package fr.itinerennes.ui.activity;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +21,7 @@ import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.FragmentById;
 import com.googlecode.androidannotations.annotations.ItemClick;
 import com.googlecode.androidannotations.annotations.ViewById;
+import com.googlecode.androidannotations.annotations.res.DrawableRes;
 import com.googlecode.androidannotations.annotations.res.StringArrayRes;
 
 import fr.itinerennes.R;
@@ -38,6 +42,18 @@ class HomeActivity extends ItineRennesActivity {
 
     @FragmentById(R.id.act_home_frag_map)
     MapFragment_ mapFragment;
+
+    @DrawableRes(R.drawable.ic_marker_bus)
+    Drawable iconBus;
+
+    @DrawableRes(R.drawable.ic_marker_bike)
+    Drawable iconBike;
+
+    @DrawableRes(R.drawable.ic_marker_subway)
+    Drawable iconSubway;
+
+    @DrawableRes(R.drawable.ic_marker_park)
+    Drawable iconPark;
 
     private ActionBarDrawerToggle drawerToggle;
 
@@ -114,10 +130,11 @@ class HomeActivity extends ItineRennesActivity {
         default:
             break;
         }
+        ((MenuAdapter) drawerList.getAdapter()).notifyDataSetChanged();
         drawerLayout.closeDrawer(drawerList);
     }
 
-    static class MenuAdapter extends ArrayAdapter<String> {
+    class MenuAdapter extends ArrayAdapter<String> {
 
         public MenuAdapter(final Context context, final int resource,
                 final String[] itemLabels) {
@@ -128,26 +145,41 @@ class HomeActivity extends ItineRennesActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             final TextView menuItem = (TextView) super.getView(position,
                     convertView, parent);
-            final int d;
+            final Drawable d;
             switch (position) {
             case 0:
-                d = R.drawable.ic_activity_title_bus;
+                d = toGreyScaleIfInvisible(TypeConstants.TYPE_BUS, iconBus);
                 break;
             case 1:
-                d = R.drawable.ic_activity_title_bike;
+                d = toGreyScaleIfInvisible(TypeConstants.TYPE_BIKE, iconBike);
                 break;
             case 2:
-                d = R.drawable.ic_activity_title_subway;
+                d = toGreyScaleIfInvisible(TypeConstants.TYPE_SUBWAY,
+                        iconSubway);
                 break;
             case 3:
-                d = R.drawable.ic_activity_title_bus;
+                d = toGreyScaleIfInvisible(TypeConstants.TYPE_CAR_PARK,
+                        iconPark);
                 break;
             default:
-                d = 0;
+                d = null;
                 break;
             }
-            menuItem.setCompoundDrawablesWithIntrinsicBounds(d, 0, 0, 0);
+            menuItem.setCompoundDrawablesWithIntrinsicBounds(d, null, null,
+                    null);
             return menuItem;
+        }
+
+        private Drawable toGreyScaleIfInvisible(final String type,
+                final Drawable icon) {
+            if (!mapFragment.isVisible(type)) {
+                final ColorMatrix matrix = new ColorMatrix();
+                matrix.setSaturation(0);
+                icon.setColorFilter(new ColorMatrixColorFilter(matrix));
+            } else {
+                icon.setColorFilter(null);
+            }
+            return icon;
         }
     }
 }
