@@ -3,9 +3,10 @@
 
     <!-- main navigation menu -->
     <string-array name="menu_main">
-        <item>Carte</item>
-        <item>Lignes de bus</item>
-        <item>Stations Le Vélo STAR</item>
+        <item>Bus</item>
+        <item>Vélo</item>
+        <item>Métro</item>
+        <item>Parcs relais</item>
     </string-array>
 
     <string name="menu_preferences">Préférences</string>

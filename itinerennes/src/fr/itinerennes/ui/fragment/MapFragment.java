@@ -1,4 +1,4 @@
-package fr.itinerennes.ui.preferences;
+package fr.itinerennes.ui.fragment;
 
 import org.osmdroid.util.GeoPoint;
 
