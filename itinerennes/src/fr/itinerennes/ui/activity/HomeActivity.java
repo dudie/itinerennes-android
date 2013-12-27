@@ -26,7 +26,7 @@ import com.googlecode.androidannotations.annotations.res.StringArrayRes;
 
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
-import fr.itinerennes.ui.fragment.MapFragment_;
+import fr.itinerennes.ui.fragment.MapFragment;
 
 @EActivity(R.layout.act_home)
 class HomeActivity extends ItineRennesActivity {
@@ -41,7 +41,7 @@ class HomeActivity extends ItineRennesActivity {
     ListView drawerList;
 
     @FragmentById(R.id.act_home_frag_map)
-    MapFragment_ mapFragment;
+    MapFragment mapFragment;
 
     @DrawableRes(R.drawable.ic_marker_bus)
     Drawable iconBus;
@@ -89,9 +89,12 @@ class HomeActivity extends ItineRennesActivity {
     public boolean onCreateOptionsMenu(final Menu menu) {
         // favoris
         // alertes
-        menu.add("Search").setShowAsAction(
-                MenuItem.SHOW_AS_ACTION_IF_ROOM
-                        | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        menu.add("Search")
+                .setIcon(com.actionbarsherlock.R.drawable.abs__ic_search)
+                .setActionView(R.layout.act_home_collapsible_search)
+                .setShowAsAction(
+                        MenuItem.SHOW_AS_ACTION_ALWAYS
+                                | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         menu.add("preferences").setShowAsAction(
                 MenuItem.SHOW_AS_ACTION_IF_ROOM
                         | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
@@ -134,7 +137,7 @@ class HomeActivity extends ItineRennesActivity {
         drawerLayout.closeDrawer(drawerList);
     }
 
-    class MenuAdapter extends ArrayAdapter<String> {
+    private class MenuAdapter extends ArrayAdapter<String> {
 
         public MenuAdapter(final Context context, final int resource,
                 final String[] itemLabels) {
