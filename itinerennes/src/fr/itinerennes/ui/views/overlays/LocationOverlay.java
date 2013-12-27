@@ -82,7 +82,6 @@ public final class LocationOverlay extends MyLocationOverlay {
 
         enableMyLocation();
         super.enableFollowLocation();
-        ((ToggleButton) this.context.findViewById(R.id.mylocation_button)).setChecked(true);
         map.getController().setZoom(Conf.MAP_DEFAULT_ZOOM);
 
     }
