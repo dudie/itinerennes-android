@@ -210,7 +210,7 @@
                 <version>2.4.2</version>
                 <configuration>
                     <!-- Forward the "versionCode" property value to the maven instance building the release -->
-                    <arguments>-DversionCode=${versionCode}</arguments>
+                    <arguments>-DversionCode=${versionCode} -e</arguments>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <tagNameFormat>@{version}</tagNameFormat>
                 </configuration>
