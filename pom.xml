@@ -26,7 +26,7 @@
         <version.slf4j-api>1.7.5</version.slf4j-api>
         <version.slf4j-log4j12>1.7.5</version.slf4j-log4j12>
         <version.slf4j-android>1.7.5</version.slf4j-android>
-        <version.osmdroid>4.0</version.osmdroid>
+        <version.osmdroid>1.0.1</version.osmdroid>
         <version.rennes-data-api>2.0</version.rennes-data-api>
         <version.nominatim-api>2.0</version.nominatim-api>
         <version.itinerennes-api>1.0</version.itinerennes-api>
@@ -160,7 +160,7 @@
             </dependency>
             <dependency>
                 <groupId>org.osmdroid</groupId>
-                <artifactId>osmdroid-android</artifactId>
+                <artifactId>osmdroid-itinerennes</artifactId>
                 <version>${version.osmdroid}</version>
             </dependency>
             <dependency>
