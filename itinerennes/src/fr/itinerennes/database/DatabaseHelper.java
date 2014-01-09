@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.googlecode.androidannotations.annotations.EBean;
+import com.googlecode.androidannotations.api.Scope;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -41,7 +42,7 @@ import fr.itinerennes.utils.IOUtils;
  * 
  * @author Jérémie Huchet
  */
-@EBean
+@EBean(scope = Scope.Singleton)
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     /** The event logger. */
