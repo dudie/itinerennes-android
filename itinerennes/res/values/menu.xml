@@ -7,6 +7,9 @@
         <item>Bike</item>
         <item>Subway</item>
         <item>Relay-parks</item>
+        <item>Bookmarks</item>
+        <item>Alerts</item>
+        <item>Preferences</item>
     </string-array>
 
     <string name="menu_preferences">Preferences</string>
