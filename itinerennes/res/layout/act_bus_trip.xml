@@ -1,66 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:orientation="vertical"
-	xmlns:android="http://schemas.android.com/apk/res/android" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <!-- START TITLE BAR -->
-    <LinearLayout android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/title_bar"
-        android:orientation="vertical">
-        
-        <LinearLayout android:layout_width="fill_parent"
-            android:layout_height="@dimen/toolbar_top_height"
-            android:gravity="center_vertical">
-        
-            <ImageView android:id="@+activity_bus_route/route_icon" 
-                android:layout_width="@dimen/ic_activity_title_size"
-                android:layout_height="@dimen/ic_activity_title_size">
-            </ImageView>
-            
-            <TextView android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/toolbar_text_size"
-                android:paddingLeft="5dp"
-                android:textColor="@color/white"
-                android:text="@string/activity_title_bus_trip"
-                android:background="@drawable/bg_toolbar_bugdroid_bus">
-            </TextView>
-            
-            <ImageView android:id="@+activity_bus_route/wheelchair_icon"
-                android:src="@drawable/misc_handistar_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-            </ImageView>
-
-        </LinearLayout>  
-        
-        <ImageView android:src="@drawable/misc_toolbar_horizontal_separator"
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"/>
-        
-        <LinearLayout android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">    
-            
-            <TextView android:id="@+activity_bus_route/route_name" 
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" 
-                android:layout_weight="1"
-                android:textSize="@dimen/toolbar_text_size"
-                android:paddingLeft="5dp"
-                android:textColor="@color/white">
-            </TextView>
-            
-        </LinearLayout>
-    </LinearLayout>
-    <!-- END TITLE BAR -->
-    
     <!--  Progress Bar -->
-    <LinearLayout android:id="@+activity_bus_route/progress_bar"
+    <LinearLayout android:id="@+id/act_bus_route_progress_bar"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
         android:orientation="vertical"
@@ -73,7 +18,7 @@
             android:text="@string/loading"/>
     </LinearLayout>
     
-	<ListView android:id="@+activity_bus_route/list_route_stops"
+	<ListView android:id="@+id/act_bus_route_list_route_stops"
         android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
         android:orientation="vertical">
