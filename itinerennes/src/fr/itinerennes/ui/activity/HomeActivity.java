@@ -87,17 +87,17 @@ class HomeActivity extends ItineRennesActivity {
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        // favoris
-        // alertes
         menu.add("Search")
                 .setIcon(com.actionbarsherlock.R.drawable.abs__ic_search)
-                .setActionView(R.layout.act_home_collapsible_search)
-                .setShowAsAction(
-                        MenuItem.SHOW_AS_ACTION_ALWAYS
-                                | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-        menu.add("preferences").setShowAsAction(
-                MenuItem.SHOW_AS_ACTION_IF_ROOM
-                        | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+                .setOnMenuItemClickListener(new OnMenuItemClickListener() {
+
+                    @Override
+                    public boolean onMenuItemClick(final MenuItem item) {
+                        HomeActivity.this.onSearchRequested();
+                        return true;
+                    }
+                })
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return super.onCreateOptionsMenu(menu);
     }
 
