@@ -7,6 +7,9 @@
         <item>Vélo</item>
         <item>Métro</item>
         <item>Parcs relais</item>
+        <item>Favoris</item>
+        <item>Alertes</item>
+        <item>Préférences</item>
     </string-array>
 
     <string name="menu_preferences">Préférences</string>
