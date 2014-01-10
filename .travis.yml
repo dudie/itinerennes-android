@@ -36,8 +36,10 @@ before_install:
 - emulator -avd test -no-skin -no-audio -no-window &
 
 # resolving dependencies and plugin dependencies in advance makes less output during the build
-- mvn dependency:resolve-plugins | grep Downloaded
-- mvn dependency:resolve | grep Downloaded
+# before we download a base bundle with plugin dependencies
+- wget --quiet https://downloads.sourceforge.net/project/dudie/maven-repository-plugins-bundle/m2-repo-plugins.tar.bz2 -O m2-repo.tar.bz2
+- tar jxf m2-repo.tar.bz2 -C ~/.m2/repository
+- mvn dependency:resolve-plugins
 
 before_script:
 # Make sure the emulator has started before running tests
