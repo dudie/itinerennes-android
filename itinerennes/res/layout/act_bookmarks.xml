@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:orientation="vertical"
-	xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <!-- START TITLE BAR -->
-    <LinearLayout android:id="@+id/toolbar"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/toolbar_top_height"
-        android:background="@android:drawable/title_bar"
-        android:gravity="center_vertical">
-        
-        <TextView android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:text="@string/activity_title_bookmarks"
-            android:textSize="@dimen/toolbar_text_size"
-            android:gravity="center_vertical"
-            android:textColor="@color/white"
-            android:background="@drawable/bg_toolbar_bugdroid_bookmarks"/>
-        
-    </LinearLayout>
-    <!-- END TITLE BAR -->
-
-	<ListView android:id="@+id/bookmark_list" 
-	    android:layout_width="fill_parent"
-		android:layout_height="fill_parent" 
-		android:orientation="vertical">
-	</ListView>
-
-</LinearLayout>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bookmark_list"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" />
