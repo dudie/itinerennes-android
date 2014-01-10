@@ -172,7 +172,7 @@ class BusStopActivity extends ItineRennesActivity {
     @ItemClick(R.id.act_bus_stop_list_bus)
     void onStopDepartureClick(final ScheduleStopTime departure) {
 
-        final Intent i = new Intent(getBaseContext(), BusTripActivity.class);
+        final Intent i = new Intent(getBaseContext(), BusTripActivity_.class);
         i.putExtra(BusTripActivity.INTENT_FROM_STOP_ID, stopId);
         i.putExtra(BusTripActivity.INTENT_ROUTE_HEADSIGN,
                 departure.getSimpleHeadsign());

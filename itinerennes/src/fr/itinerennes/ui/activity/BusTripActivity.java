@@ -27,6 +27,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.OptionsMenu;
@@ -93,12 +94,6 @@ class BusTripActivity extends ItineRennesActivity {
     /** Constant identifying the "failure" dialog. */
     private static final int DIALOG_FAILURE = 0;
 
-    /** The view where to display the route icon. */
-    private ImageView routeIcon;
-
-    /** The view where to display the route headsign. */
-    private TextView routeName;
-
     /** The list view where to display the trip schedule. */
     private ListView listRouteStops;
 
@@ -128,9 +123,7 @@ class BusTripActivity extends ItineRennesActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_bus_trip);
 
-        routeIcon = (ImageView) findViewById(R.activity_bus_route.route_icon);
-        routeName = (TextView) findViewById(R.activity_bus_route.route_name);
-        listRouteStops = (ListView) findViewById(R.activity_bus_route.list_route_stops);
+        listRouteStops = (ListView) findViewById(R.id.act_bus_route_list_route_stops);
 
         adapter = new BusTripTimeAdapter(this, isAccessible);
         listRouteStops.setAdapter(adapter);
@@ -180,17 +173,13 @@ class BusTripActivity extends ItineRennesActivity {
         final String tripId = getIntent().getExtras().getString(INTENT_TRIP_ID);
         final String routeId = getIntent().getExtras().getString(INTENT_ROUTE_ID);
 
-        routeIcon.setImageDrawable(getApplicationContext().getLineIconService().getIconOrDefault(
+        getSupportActionBar().setTitle(routeHeadsign);
+        getSupportActionBar().setIcon(getApplicationContext().getLineIconService().getIconOrDefault(
                 this, routeShortName));
-        routeName.setText(routeHeadsign);
 
         /* Display handistar icon if necessary. */
-        final ImageView handistar = (ImageView) findViewById(R.activity_bus_route.wheelchair_icon);
         isAccessible = getApplicationContext().getAccessibilityService().isAccessible(routeId,
                 TypeConstants.TYPE_BUS_ROUTE);
-        if (isAccessible) {
-            handistar.setVisibility(View.VISIBLE);
-        }
 
         listRouteStops.setOnItemClickListener(new OnItemClickListener() {
 
@@ -214,6 +203,14 @@ class BusTripActivity extends ItineRennesActivity {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("onResume.end");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final com.actionbarsherlock.view.Menu menu) {
+        menu.add("Search")
+                .setIcon(R.drawable.misc_handistar_icon)
+                .setShowAsAction(com.actionbarsherlock.view.MenuItem.SHOW_AS_ACTION_ALWAYS);
+        return super.onCreateOptionsMenu(menu);
     }
 
     /**
@@ -266,8 +263,8 @@ class BusTripActivity extends ItineRennesActivity {
         protected void onPreExecute() {
 
             /* Hide progress bar and show list view. */
-            findViewById(R.activity_bus_route.progress_bar).setVisibility(View.VISIBLE);
-            findViewById(R.activity_bus_route.list_route_stops).setVisibility(View.GONE);
+            findViewById(R.id.act_bus_route_progress_bar).setVisibility(View.VISIBLE);
+            findViewById(R.id.act_bus_route_list_route_stops).setVisibility(View.GONE);
         };
 
         /**
@@ -302,8 +299,8 @@ class BusTripActivity extends ItineRennesActivity {
             if (schedule != null) {
 
                 /* Hide progress bar and show list view. */
-                findViewById(R.activity_bus_route.progress_bar).setVisibility(View.GONE);
-                findViewById(R.activity_bus_route.list_route_stops).setVisibility(View.VISIBLE);
+                findViewById(R.id.act_bus_route_progress_bar).setVisibility(View.GONE);
+                findViewById(R.id.act_bus_route_list_route_stops).setVisibility(View.VISIBLE);
 
                 final String stopId = getIntent().getExtras().getString(INTENT_FROM_STOP_ID);
 
