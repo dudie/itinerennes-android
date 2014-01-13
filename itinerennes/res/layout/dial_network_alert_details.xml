@@ -11,10 +11,9 @@
     <TextView android:id="@+id/dial_network_alert_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:drawableLeft="@android:drawable/ic_dialog_alert"
+        android:drawableLeft="@drawable/ic_action_warning_dark"
         android:drawablePadding="10dp"/>
         
     
@@ -43,14 +42,12 @@
             <TextView android:id="@+id/dial_network_alert_start_time"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"/>
+                android:layout_height="wrap_content" />
                   
             <TextView android:id="@+id/dial_network_alert_end_time"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"/>
+                android:layout_height="wrap_content" />
                   
             <ImageView android:src="@android:drawable/divider_horizontal_dim_dark"
                 android:layout_width="fill_parent"
@@ -61,8 +58,7 @@
             <TextView android:id="@+id/dial_network_alert_details"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"/>
+                android:layout_height="wrap_content" />
     
         </LinearLayout>
     

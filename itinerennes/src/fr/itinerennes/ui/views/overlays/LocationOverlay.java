@@ -23,7 +23,7 @@ package fr.itinerennes.ui.views.overlays;
  */
 
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.MyLocationOverlay;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,6 @@ import android.content.Context;
 import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.widget.ToggleButton;
-
 import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -43,7 +42,7 @@ import fr.itinerennes.ui.views.ItinerennesMapView;
  * @author Olivier Boudet
  * @author Jérémie Huchet
  */
-public final class LocationOverlay extends MyLocationOverlay {
+public final class LocationOverlay extends MyLocationNewOverlay {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationOverlay.class);
@@ -92,8 +91,7 @@ public final class LocationOverlay extends MyLocationOverlay {
 
         super.disableFollowLocation();
         disableMyLocation();
-        ((ToggleButton) this.context.findViewById(R.id.mylocation_button)).setChecked(false);
-
+//        ((ToggleButton) this.context.findViewById(R.id.mylocation_button)).setChecked(false);
     }
 
     /**

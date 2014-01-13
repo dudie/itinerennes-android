@@ -29,7 +29,7 @@
         <activity
             android:name=".ui.activity.HomeActivity_"
             android:configChanges="orientation"
-            android:label="HomeActivity"
+            android:label="@string/app_name"
             android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" >
@@ -40,7 +40,7 @@
                 </category>
             </intent-filter>
             <intent-filter>
-                <action android:name="fr.itinerennes.ui.activity.MapActivity.SEARCH_SUGGESTION" />
+                <action android:name="fr.itinerennes.intent.SEARCH_SUGGESTION" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" >
@@ -49,21 +49,6 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-        </activity>
-        <activity
-            android:name=".ui.activity.MapActivity_"
-            android:configChanges="orientation"
-            android:label="@string/app_name"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" >
-                </action>
-                <action android:name="android.intent.action.MAIN" >
-                </action>
-
-                <category android:name="android.intent.category.LAUNCHER" >
-                </category>
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.BusStopActivity_"
@@ -125,6 +110,7 @@
         <activity
             android:name=".ui.activity.NewVersionActivity" />
         <activity
+            android:label="@string/activity_title_network_alerts"
             android:name=".ui.activity.NetworkAlertsActivity_"
             android:configChanges="orientation"
             android:launchMode="singleTop" >

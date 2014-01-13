@@ -84,7 +84,7 @@ public class BookmarksActivity extends ItineRennesActivity {
                 try {
                     final StopOverlayItem item = findBookmarkedMarkerItem(favType, favId);
 
-                    BookmarksActivity.this.startActivity(MapActivity.IntentFactory
+                    BookmarksActivity.this.startActivity(HomeActivity_.IntentFactory
                             .getOpenMapBoxIntent(getApplicationContext(), item,
                                     Conf.MAP_ZOOM_ON_LOCATION));
                 } catch (final GenericException e) {

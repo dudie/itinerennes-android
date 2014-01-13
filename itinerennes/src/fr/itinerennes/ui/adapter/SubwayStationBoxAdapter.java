@@ -24,10 +24,9 @@ package fr.itinerennes.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 import fr.dudie.keolis.model.SubwayStation;
-
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -71,7 +70,7 @@ public class SubwayStationBoxAdapter implements MapBoxAdapter<SubwayStation> {
         final View subwayView = inflater.inflate(R.layout.vw_mapbox_subway, null);
         ((TextView) subwayView.findViewById(R.id.map_box_title)).setText(subwayStation.getLabel());
 
-        final ToggleButton star = (ToggleButton) subwayView
+        final CheckBox star = (CheckBox) subwayView
                 .findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getApplicationContext().getBookmarksService()
                 .isStarred(TypeConstants.TYPE_SUBWAY, subwayStation.getId()));

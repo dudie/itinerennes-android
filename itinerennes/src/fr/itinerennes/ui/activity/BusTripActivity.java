@@ -27,11 +27,6 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
-import com.googlecode.androidannotations.annotations.Click;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.OptionsMenu;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -39,15 +34,15 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.googlecode.androidannotations.annotations.Click;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.OptionsMenu;
+
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.api.client.ItineRennesApiClient;
@@ -207,7 +202,8 @@ class BusTripActivity extends ItineRennesActivity {
 
     @Override
     public boolean onCreateOptionsMenu(final com.actionbarsherlock.view.Menu menu) {
-        menu.add("Search")
+        // TODO internationalize label
+        menu.add("Accessible")
                 .setIcon(R.drawable.misc_handistar_icon)
                 .setShowAsAction(com.actionbarsherlock.view.MenuItem.SHOW_AS_ACTION_ALWAYS);
         return super.onCreateOptionsMenu(menu);
@@ -317,7 +313,7 @@ class BusTripActivity extends ItineRennesActivity {
     @Click(R.id.menu_back_to_map)
     void onClickMapButton(final View button) {
 
-        final Intent i = new Intent(getApplicationContext(), MapActivity_.class);
+        final Intent i = new Intent(getApplicationContext(), HomeActivity_.class);
         i.setAction(Intent.ACTION_VIEW);
         startActivity(i);
     }

@@ -26,10 +26,12 @@ import com.googlecode.androidannotations.annotations.ViewById;
 import com.googlecode.androidannotations.annotations.res.DrawableRes;
 import com.googlecode.androidannotations.annotations.res.StringArrayRes;
 
+import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.fragment.MapFragment;
 import fr.itinerennes.ui.preferences.MainPreferenceActivity;
+import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 @EActivity(R.layout.act_home)
 class HomeActivity extends ItineRennesActivity {
@@ -58,7 +60,7 @@ class HomeActivity extends ItineRennesActivity {
     @DrawableRes(R.drawable.ic_marker_park)
     Drawable iconPark;
 
-    @DrawableRes(R.drawable.ic_action_favorite)
+    @DrawableRes(R.drawable.btn_star_on_normal_holo_dark)
     Drawable iconBookmark;
 
     @DrawableRes(R.drawable.ic_action_warning)
@@ -99,6 +101,7 @@ class HomeActivity extends ItineRennesActivity {
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+        // TODO localize "search" label
         menu.add("Search")
                 .setIcon(com.actionbarsherlock.R.drawable.abs__ic_search)
                 .setOnMenuItemClickListener(new OnMenuItemClickListener() {
@@ -223,5 +226,112 @@ class HomeActivity extends ItineRennesActivity {
             }
             return icon;
         }
+    }
+
+    /**
+     * Simple Factory to get intents to send to {@link MapActivity}.
+     * 
+     * @author Olivier Boudet
+     */
+    public static class IntentFactory {
+
+        /** Intent parameter name to pass the map zoom level to set. */
+        public static final String INTENT_PARAM_SET_MAP_ZOOM = "mapZoom";
+
+        /** Intent parameter name to pass the map latitude to set. */
+        public static final String INTENT_PARAM_SET_MAP_LAT = "mapLatitude";
+
+        /** Intent parameter name to pass the map longitude to set. */
+        public static final String INTENT_PARAM_SET_MAP_LON = "mapLongitude";
+
+        /** Intent parameter name to pass a marker type. */
+        public static final String INTENT_PARAM_MARKER_TYPE = "markerType";
+
+        /** Intent parameter name to use to pass a marker. */
+        public static final String INTENT_PARAM_MARKER = "marker";
+
+        /** Intent name to use to manage search suggestion. */
+        public static final String INTENT_SEARCH_SUGGESTION = "fr.itinerennes.intent.SEARCH_SUGGESTION";
+
+        /**
+         * Returns an intent to open the map centered on a location.
+         * 
+         * @param context
+         *            the contexxt
+         * @param latitude
+         *            latitude on which center the map
+         * @param longitude
+         *            longitude on which center the map
+         * @param zoom
+         *            zoom level of the centered map
+         * @return an intent
+         */
+        public static Intent getCenterOnLocationIntent(
+                final ItineRennesApplication context, final int latitude,
+                final int longitude, final int zoom) {
+
+            final Intent i = new Intent(context, HomeActivity_.class);
+            i.setAction(Intent.ACTION_VIEW);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra(INTENT_PARAM_SET_MAP_ZOOM, zoom);
+            i.putExtra(INTENT_PARAM_SET_MAP_LON, longitude);
+            i.putExtra(INTENT_PARAM_SET_MAP_LAT, latitude);
+
+            return i;
+        }
+
+        /**
+         * Returns an intent to open a mapbox and center the map on the mapbox
+         * location. The map is centered on the given location, so the mapbox
+         * could be invisible if the location is not the good one.
+         * 
+         * @param context
+         *            the context
+         * @param marker
+         *            the marker on which open the mapbox
+         * @param zoom
+         *            zoom level of the centered map
+         * @return an intent
+         */
+        public static Intent getOpenMapBoxIntent(
+                final ItineRennesApplication context,
+                final StopOverlayItem marker, final int zoom) {
+
+            final Intent i = getCenterOnLocationIntent(context, marker
+                    .getLocation().getLatitudeE6(), marker.getLocation()
+                    .getLongitudeE6(), zoom);
+
+            i.putExtra(INTENT_PARAM_MARKER, marker);
+            return i;
+        }
+
+        /**
+         * Returns an intent to open the map centered on a location and activate
+         * a marker type if not already activated (useful for center the map on
+         * a marker after a search).
+         * 
+         * @param context
+         *            the context
+         * @param latitude
+         *            latitude on which center the map
+         * @param longitude
+         *            longitude on which center the map
+         * @param zoom
+         *            zoom level of the centered map
+         * @param markerType
+         *            a type of markers layer to activate on the map
+         * @return an intent
+         */
+        public static Intent getCenterOnLocationIntent(final ItineRennesApplication context,
+                final int latitude, final int longitude, final int zoom, final String markerType) {
+
+            final Intent i = getCenterOnLocationIntent(context, latitude,
+                    longitude, zoom);
+
+            i.putExtra(INTENT_PARAM_MARKER_TYPE, markerType);
+
+            return i;
+        }
+
     }
 }

@@ -62,9 +62,6 @@ class NetworkAlertsActivity extends ItineRennesActivity {
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(NetworkAlertsActivity.class);
 
-    /** Identifier of the dialog displaying details about an alert. */
-    private static final int DIALOG_ALERT_DETAILS = 0;
-
     /** The adapter used to display line alerts. */
     private NetworkAlertsAdapter alertsAdapter;
 

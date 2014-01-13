@@ -26,14 +26,13 @@ import java.io.IOException;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import fr.dudie.keolis.client.KeolisClient;
 import fr.dudie.keolis.model.BikeStation;
-
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -77,7 +76,7 @@ public class BikeStationBoxAdapter implements MapBoxAdapter<BikeStation> {
         final View bikeView = inflater.inflate(R.layout.vw_mapbox_bike, null);
         ((TextView) bikeView.findViewById(R.id.map_box_title)).setText(bikeStation.getLabel());
 
-        final ToggleButton star = (ToggleButton) bikeView
+        final CheckBox star = (CheckBox) bikeView
                 .findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getApplicationContext().getBookmarksService()
                 .isStarred(TypeConstants.TYPE_BIKE, bikeStation.getId()));
