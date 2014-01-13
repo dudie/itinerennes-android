@@ -145,7 +145,7 @@ public final class SearchResultsActivity extends ItineRennesActivity {
 
                             c.close();
 
-                            startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(
+                            startActivity(HomeActivity_.IntentFactory.getCenterOnLocationIntent(
                                     getApplicationContext(), barycentre.getLatitudeE6(),
                                     barycentre.getLongitudeE6(), Conf.MAP_ZOOM_ON_LOCATION,
                                     markerType));
@@ -164,7 +164,7 @@ public final class SearchResultsActivity extends ItineRennesActivity {
                                     lonE6, latE6);
                         }
 
-                        startActivity(MapActivity.IntentFactory.getCenterOnLocationIntent(
+                        startActivity(HomeActivity_.IntentFactory.getCenterOnLocationIntent(
                                 getApplicationContext(), latE6, lonE6, Conf.MAP_ZOOM_ON_LOCATION));
                     }
 

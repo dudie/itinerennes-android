@@ -1,29 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" 
-        xmlns:itr="http://schemas.android.com/apk/res/fr.itinerennes">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_checked="true" android:state_focused="true" android:state_pressed="true">
-        <bitmap android:src="@drawable/btn_star_big_on_pressed" />
-    </item>
-    
-    <item android:state_checked="true" android:state_focused="true">
-        <bitmap android:src="@drawable/btn_star_big_on_focused" />
-    </item>
-    
     <item android:state_checked="true">
-        <bitmap android:src="@android:drawable/btn_star_big_on" />
-    </item>
-    
-    <item android:state_pressed="true">
-        <bitmap android:src="@drawable/btn_star_big_off_pressed" /> 
-    </item>
-    
-    <item android:state_focused="true">
-        <bitmap android:src="@drawable/btn_star_big_off_focused" />
+        <bitmap android:src="@drawable/btn_star_on_normal_holo_dark" />
     </item>
 
     <item>
-        <bitmap android:src="@android:drawable/btn_star_big_off" />
+        <bitmap android:src="@drawable/btn_star_off_normal_holo_dark" />
     </item>
 
 </selector>

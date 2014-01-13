@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.actionbarsherlock.view.Menu;
+import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.Bean;
@@ -101,15 +103,6 @@ class BusStopActivity extends ItineRennesActivity {
     /** Date used to fetch schedule. */
     private Date scheduleDate;
 
-    @ViewById(R.id.act_bus_stop_name)
-    TextView stopNameTextView;
-
-    @ViewById(R.id.act_bus_stop_wheelchair_icon)
-    ImageView handistarIcon;
-
-    @ViewById(R.id.act_bus_stop_toggle_bookmark)
-    ToggleButton bookmarkButton;
-
     /** The list view showing departures. */
     @ViewById(R.id.act_bus_stop_list_bus)
     ListView listTimes;
@@ -118,26 +111,23 @@ class BusStopActivity extends ItineRennesActivity {
     @ViewById(R.id.act_bus_stop_no_departure)
     TextView noDeparture;
 
-    @AfterViews
+    @AfterInject
     void setupStopName() {
-        stopNameTextView.setText(stopName);
+        getSupportActionBar().setTitle(stopName);
     }
 
-    @AfterViews
-    void setupToggleBookmarkButton() {
-        bookmarkButton.setChecked(getApplicationContext().getBookmarksService()
-                .isStarred(TypeConstants.TYPE_BUS, stopId));
-        bookmarkButton.setOnCheckedChangeListener(new ToggleStarListener(this,
-                TypeConstants.TYPE_BUS, stopId, stopName));
-    }
+//    @AfterViews
+//    void setupToggleBookmarkButton() {
+//        bookmarkButton.setChecked(getApplicationContext().getBookmarksService()
+//                .isStarred(TypeConstants.TYPE_BUS, stopId));
+//        bookmarkButton.setOnCheckedChangeListener(new ToggleStarListener(this,
+//                TypeConstants.TYPE_BUS, stopId, stopName));
+//    }
 
     @AfterViews
     void setupAccessibilityAndScheduleTimes() {
         isAccessible = getApplicationContext().getAccessibilityService()
                 .isAccessible(stopId, TypeConstants.TYPE_BUS);
-        if (isAccessible) {
-            handistarIcon.setVisibility(View.VISIBLE);
-        }
 
         // initialize the adapter
         adapter = new BusStopTimeAdapter(this, isAccessible);
@@ -145,6 +135,15 @@ class BusStopActivity extends ItineRennesActivity {
         listTimes.setAdapter(adapter);
 
         prepareThenLoadSchedule(new Date());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        // TODO internationalize labels
+        menu.add("Accessible")
+        .setIcon(R.drawable.misc_handistar_icon)
+        .setShowAsAction(com.actionbarsherlock.view.MenuItem.SHOW_AS_ACTION_ALWAYS);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @ItemClick(R.id.act_bus_stop_list_bus)
@@ -281,40 +280,10 @@ class BusStopActivity extends ItineRennesActivity {
         return d;
     }
 
-    /**
-     * Triggered when user clicks on the map button in the toolbar.
-     * 
-     * @param target
-     *            should be an image view.
-     */
-    @Click(R.id.act_bus_stop_map_button)
-    public void onMapButtonClick(final View target) {
-
-        final Cursor c = getApplicationContext().getMarkerDao().getMarker(
-                stopId, TypeConstants.TYPE_BUS);
-        if (c != null && c.moveToFirst()) {
-
-            final StopOverlayItem marker = getApplicationContext()
-                    .getMarkerDao().getMarkerOverlayItem(c);
-
-            c.close();
-
-            startActivity(MapActivity.IntentFactory.getOpenMapBoxIntent(
-                    getApplicationContext(), marker, Conf.MAP_ZOOM_ON_LOCATION));
-
-        } else {
-            // TJHU gestion erreur qui ne doit pas arriver dans un cas normal
-            Toast.makeText(
-                    getApplicationContext(),
-                    getString(R.string.error_loading_bus_station_position,
-                            stopName), TOAST_DURATION).show();;
-        }
-    }
-
     @Click(R.id.menu_back_to_map)
     void onClickMapButton(final View button) {
 
-        final Intent i = new Intent(getApplicationContext(), MapActivity.class);
+        final Intent i = new Intent(getApplicationContext(), HomeActivity_.class);
         i.setAction(Intent.ACTION_VIEW);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

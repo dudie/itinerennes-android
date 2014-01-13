@@ -37,7 +37,8 @@
                     </item>
                 </selector>
             </item>
-            <item android:drawable="@drawable/ic_marker_park">
+            <item>
+                <bitmap android:gravity="center" android:src="@drawable/ic_marker_park" />
             </item>
         </layer-list>
     </item>

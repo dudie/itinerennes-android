@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.api.client.ItineRennesApiClient;
@@ -72,7 +72,7 @@ public class BusStationBoxAdapter implements MapBoxAdapter<StopWithRoutes> {
             }
         });
 
-        final ToggleButton star = (ToggleButton) busView.findViewById(R.id.map_box_toggle_bookmark);
+        final CheckBox star = (CheckBox) busView.findViewById(R.id.map_box_toggle_bookmark);
         star.setChecked(context.getApplicationContext().getBookmarksService()
                 .isStarred(TypeConstants.TYPE_BUS, busStation.getId()));
         star.setOnCheckedChangeListener(new ToggleStarListener(context, TypeConstants.TYPE_BUS,
