@@ -3,24 +3,19 @@ package fr.itinerennes.ui.activity;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import android.annotation.TargetApi;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Build;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
-import com.actionbarsherlock.view.Menu;
+
 import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
@@ -29,10 +24,11 @@ import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
 import com.googlecode.androidannotations.annotations.ItemClick;
+import com.googlecode.androidannotations.annotations.OptionsItem;
 import com.googlecode.androidannotations.annotations.OptionsMenu;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
-import fr.itinerennes.Conf;
+
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.api.client.model.Route;
@@ -42,8 +38,6 @@ import fr.itinerennes.business.service.ItineRennesApi;
 import fr.itinerennes.commons.utils.DateUtils;
 import fr.itinerennes.ui.adapter.BusStopTimeAdapter;
 import fr.itinerennes.ui.views.LineImageView;
-import fr.itinerennes.ui.views.event.ToggleStarListener;
-import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 /**
  * This activity uses the <code>bus_station.xml</code> layout and displays a
@@ -114,8 +108,8 @@ class BusStopActivity extends ItineRennesActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Click({ R.id.abs__home, android.R.id.home })
-    void navigateUp() {
+    @OptionsItem
+    void home() {
         finish();
     }
 
@@ -124,6 +118,7 @@ class BusStopActivity extends ItineRennesActivity {
         getSupportActionBar().setTitle(stopName);
     }
 
+// TODO
 //    @AfterViews
 //    void setupToggleBookmarkButton() {
 //        bookmarkButton.setChecked(getApplicationContext().getBookmarksService()
@@ -143,15 +138,6 @@ class BusStopActivity extends ItineRennesActivity {
         listTimes.setAdapter(adapter);
 
         prepareThenLoadSchedule(new Date());
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        // TODO internationalize labels
-        menu.add("Accessible")
-        .setIcon(R.drawable.misc_handistar_icon)
-        .setShowAsAction(com.actionbarsherlock.view.MenuItem.SHOW_AS_ACTION_ALWAYS);
-        return super.onCreateOptionsMenu(menu);
     }
 
     @ItemClick(R.id.act_bus_stop_list_bus)
@@ -288,8 +274,8 @@ class BusStopActivity extends ItineRennesActivity {
         return d;
     }
 
-    @Click(R.id.menu_back_to_map)
-    void onClickMapButton(final View button) {
+    @OptionsItem(R.id.menu_back_to_map)
+    void onClickMapButton() {
 
         final Intent i = new Intent(getApplicationContext(), HomeActivity_.class);
         i.setAction(Intent.ACTION_VIEW);
@@ -297,15 +283,15 @@ class BusStopActivity extends ItineRennesActivity {
         startActivity(i);
     }
 
-    @Click(R.id.menu_previous_day)
-    void onClickPreviousDay(final View button) {
+    @OptionsItem(R.id.menu_previous_day)
+    void onClickPreviousDay() {
         final Calendar c = Calendar.getInstance();
         c.setTime(scheduleDate);
         prepareThenLoadSchedule(DateUtils.addDays(c.getTime(), -1));
     }
 
-    @Click(R.id.menu_next_day)
-    void onClickNextDay(final View button) {
+    @OptionsItem(R.id.menu_next_day)
+    void onClickNextDay() {
         final Calendar c = Calendar.getInstance();
         c.setTime(scheduleDate);
         prepareThenLoadSchedule(DateUtils.addDays(c.getTime(), 1));
