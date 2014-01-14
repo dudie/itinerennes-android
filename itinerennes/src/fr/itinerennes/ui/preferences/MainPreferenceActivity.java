@@ -34,6 +34,7 @@ import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.OptionsItem;
 
 import fr.itinerennes.R;
 
@@ -55,8 +56,8 @@ class MainPreferenceActivity extends SherlockPreferenceActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Click({ R.id.abs__home, android.R.id.home })
-    void navigateUp() {
+    @OptionsItem
+    void home() {
         finish();
     }
 

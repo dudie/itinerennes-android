@@ -41,9 +41,9 @@ import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ItemClick;
+import com.googlecode.androidannotations.annotations.OptionsItem;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
 
@@ -81,8 +81,8 @@ class NetworkAlertsActivity extends ItineRennesActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Click({R.id.abs__home, android.R.id.home})
-    void navigateUp() {
+    @OptionsItem
+    void home() {
         finish();
     }
 
