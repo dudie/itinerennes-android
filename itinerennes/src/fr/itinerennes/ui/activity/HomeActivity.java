@@ -30,7 +30,7 @@ import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.fragment.MapFragment;
-import fr.itinerennes.ui.preferences.MainPreferenceActivity;
+import fr.itinerennes.ui.preferences.MainPreferenceActivity_;
 import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 @EActivity(R.layout.act_home)
@@ -152,7 +152,7 @@ class HomeActivity extends ItineRennesActivity {
             startActivity(new Intent(this, NetworkAlertsActivity_.class));
             break;
         case MenuAdapter.MENU_ITEM_PREFERENCES:
-            startActivity(new Intent(this, MainPreferenceActivity.class));
+            startActivity(new Intent(this, MainPreferenceActivity_.class));
             break;
         default:
             break;

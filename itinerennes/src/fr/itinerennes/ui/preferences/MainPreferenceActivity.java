@@ -28,8 +28,12 @@ import org.slf4j.LoggerFactory;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.googlecode.androidannotations.annotations.AfterInject;
+import com.googlecode.androidannotations.annotations.Click;
+import com.googlecode.androidannotations.annotations.EActivity;
 
 import fr.itinerennes.R;
 
@@ -38,12 +42,23 @@ import fr.itinerennes.R;
  * 
  * @author Jérémie Huchet
  */
-public final class MainPreferenceActivity extends PreferenceActivity implements
+@EActivity
+class MainPreferenceActivity extends SherlockPreferenceActivity implements
         OnSharedPreferenceChangeListener {
 
     /** The event logger. */
     private static final Logger LOGGER = LoggerFactory
             .getLogger(MainPreferenceActivity.class);
+
+    @AfterInject
+    void actionBarDisplayHomeAsUp() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Click({ R.id.abs__home, android.R.id.home })
+    void navigateUp() {
+        finish();
+    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

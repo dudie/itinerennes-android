@@ -25,15 +25,15 @@ package fr.itinerennes.ui.activity;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +42,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import com.actionbarsherlock.view.Menu;
 import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.AfterViews;
@@ -55,7 +54,6 @@ import com.googlecode.androidannotations.annotations.ItemClick;
 import com.googlecode.androidannotations.annotations.OptionsMenu;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
-
 import fr.itinerennes.Conf;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
@@ -132,6 +130,16 @@ class BusStopActivity extends ItineRennesActivity {
     /** Empty departure view. */
     @ViewById(R.id.act_bus_stop_no_departure)
     TextView noDeparture;
+
+    @AfterInject
+    void actionBarDisplayHomeAsUp() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Click({ R.id.abs__home, android.R.id.home })
+    void navigateUp() {
+        finish();
+    }
 
     @AfterInject
     void setupStopName() {
