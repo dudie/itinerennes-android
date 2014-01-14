@@ -291,8 +291,22 @@
                             <platform>14</platform>
                         </sdk>
                         <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                        <lint>
+                            <skip>false</skip>
+                            <failOnError>false</failOnError>
+                        </lint>
                     </configuration>
                     <extensions>true</extensions>
+                    <executions>
+                        <execution>
+                            <id>lint</id>
+                            <inherited>true</inherited>
+                            <goals>
+                                <goal>lint</goal>
+                            </goals>
+                            <phase>install</phase>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
