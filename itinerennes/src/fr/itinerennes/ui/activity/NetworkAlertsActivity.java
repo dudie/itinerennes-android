@@ -15,9 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.Bean;
+import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ItemClick;
 import com.googlecode.androidannotations.annotations.UiThread;
@@ -51,6 +53,16 @@ class NetworkAlertsActivity extends ItineRennesActivity {
 
     @ViewById(R.id.alerts_list)
     ListView listAlerts;
+
+    @AfterInject
+    void actionBarDisplayHomeAsUp() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Click({R.id.abs__home, android.R.id.home})
+    void navigateUp() {
+        finish();
+    }
 
     @AfterViews
     void initializeAlertsAdapter() {

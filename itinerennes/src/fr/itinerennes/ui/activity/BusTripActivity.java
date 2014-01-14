@@ -11,15 +11,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.googlecode.androidannotations.annotations.AfterInject;
+import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.OptionsMenu;
+import com.googlecode.androidannotations.annotations.ViewById;
 
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
@@ -34,7 +36,7 @@ import fr.itinerennes.ui.adapter.BusTripTimeAdapter;
  * 
  * @author Jérémie Huchet
  */
-@EActivity
+@EActivity(R.layout.act_bus_trip)
 @OptionsMenu(R.menu.act_trip_menu)
 class BusTripActivity extends ItineRennesActivity {
 
@@ -68,7 +70,8 @@ class BusTripActivity extends ItineRennesActivity {
     private static final int DIALOG_FAILURE = 0;
 
     /** The list view where to display the trip schedule. */
-    private ListView listRouteStops;
+    @ViewById(R.id.act_bus_route_list_route_stops)
+    ListView listRouteStops;
 
     /** flag indicating if this route is accessible or not. */
     private boolean isAccessible;
@@ -82,28 +85,20 @@ class BusTripActivity extends ItineRennesActivity {
      */
     private AsyncTask<String, Void, TripSchedule> scheduleDownloaderTask;
 
-    /**
-     * Creates the main screen. {@inheritDoc}
-     * 
-     * @see android.app.Activity#onCreate(android.os.Bundle)
-     */
-    @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    @AfterInject
+    void actionBarDisplayHomeAsUp() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCreate.start");
-        }
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_bus_trip);
+    @Click({ R.id.abs__home, android.R.id.home })
+    void navigateUp() {
+        finish();
+    }
 
-        listRouteStops = (ListView) findViewById(R.id.act_bus_route_list_route_stops);
-
+    @AfterViews
+    void initializeStopTimeList() {
         adapter = new BusTripTimeAdapter(this, isAccessible);
         listRouteStops.setAdapter(adapter);
-
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("onCreate.end");
-        }
     }
 
     /**
