@@ -34,9 +34,8 @@
     <string name="overlay_bike">Bike stations</string>
     <string name="overlay_park">Park and Ride</string>
 
-    <!-- Trip planner -->
-    <string name="select_start_point_on_map">Click on the map to choose a start point.</string>
-    <string name="select_end_point_on_map">Click on the map to choose an end point.</string>
+    <!-- Activity Bus Stop -->
+    <string name="menu_toggle_bookmark">Toggle bookmark</string>
 
     <!-- Activity search results -->
     <string name="activity_title_search_results">Search results</string>
