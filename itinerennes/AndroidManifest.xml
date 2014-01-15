@@ -53,8 +53,7 @@
         <activity
             android:name=".ui.activity.BusStopActivity_"
             android:configChanges="orientation"
-            android:icon="@drawable/ic_activity_title_bus"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:icon="@drawable/ic_activity_title_bus" >
             <meta-data android:name="android.support.UI_OPTIONS"
                    android:value="splitActionBarWhenNarrow" />
         </activity>

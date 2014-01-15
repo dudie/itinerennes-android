@@ -20,7 +20,6 @@ import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
 import com.googlecode.androidannotations.annotations.ItemClick;
@@ -272,6 +271,11 @@ class BusStopActivity extends ItineRennesActivity {
             break;
         }
         return d;
+    }
+
+    @OptionsItem(R.id.menu_toggle_bookmark)
+    void toogleBookmark() {
+        // TODO implement
     }
 
     @OptionsItem(R.id.menu_back_to_map)
