@@ -34,6 +34,9 @@
     <string name="overlay_bike">Stations de vélo</string>
     <string name="overlay_park">Parcs relais</string>
 
+    <!-- Activity Home -->
+    <string name="toggle_my_location">Activer/désactiver le positionnement</string>
+
     <!-- Activity Bus Stop -->
     <string name="menu_toggle_bookmark">Ajouter/Supprimer des favoris</string>
 

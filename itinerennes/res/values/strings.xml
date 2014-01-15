@@ -34,6 +34,9 @@
     <string name="overlay_bike">Bike stations</string>
     <string name="overlay_park">Park and Ride</string>
 
+    <!-- Activity Home -->
+    <string name="toggle_my_location">Enable/disable location</string>
+
     <!-- Activity Bus Stop -->
     <string name="menu_toggle_bookmark">Toggle bookmark</string>
 
