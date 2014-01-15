@@ -28,8 +28,8 @@ import org.slf4j.LoggerFactory;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
 
 import fr.itinerennes.database.Columns.AccessibilityColumns;
 import fr.itinerennes.database.DatabaseHelper;

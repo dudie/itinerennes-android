@@ -22,6 +22,10 @@ package fr.itinerennes.ui.preferences;
  * [/license]
  */
 
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsItem;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,10 +35,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.Click;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.OptionsItem;
 
 import fr.itinerennes.R;
 

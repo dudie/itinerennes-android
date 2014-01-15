@@ -26,9 +26,8 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.api.Scope;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.EBean.Scope;
 
 import android.content.Context;
 import android.content.res.AssetManager;

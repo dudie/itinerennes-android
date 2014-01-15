@@ -31,7 +31,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import fr.itinerennes.Conf;
 import fr.itinerennes.ErrorCodeConstants;
 import fr.itinerennes.R;
