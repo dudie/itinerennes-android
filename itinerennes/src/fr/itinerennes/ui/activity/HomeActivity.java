@@ -1,5 +1,15 @@
 package fr.itinerennes.ui.activity;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.FragmentById;
+import org.androidannotations.annotations.ItemClick;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.DrawableRes;
+import org.androidannotations.annotations.res.StringArrayRes;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -14,18 +24,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.FragmentById;
-import org.androidannotations.annotations.ItemClick;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.res.DrawableRes;
-import org.androidannotations.annotations.res.StringArrayRes;
-
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
@@ -34,6 +32,7 @@ import fr.itinerennes.ui.preferences.MainPreferenceActivity_;
 import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 @EActivity(R.layout.act_home)
+@OptionsMenu(R.menu.map_menu)
 class HomeActivity extends ItineRennesActivity {
 
     @StringArrayRes(R.array.menu_main)
@@ -99,35 +98,18 @@ class HomeActivity extends ItineRennesActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        // TODO localize "search" label
-        menu.add("Search")
-                .setIcon(com.actionbarsherlock.R.drawable.abs__ic_search)
-                .setOnMenuItemClickListener(new OnMenuItemClickListener() {
-
-                    @Override
-                    public boolean onMenuItemClick(final MenuItem item) {
-                        HomeActivity.this.onSearchRequested();
-                        return true;
-                    }
-                })
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        return super.onCreateOptionsMenu(menu);
+    @OptionsItem
+    void homeSelected() {
+        if (drawerLayout.isDrawerOpen(drawerList)) {
+            drawerLayout.closeDrawer(drawerList);
+        } else {
+            drawerLayout.openDrawer(drawerList);
+        }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        if (android.R.id.home == item.getItemId()) {
-            if (drawerLayout.isDrawerOpen(drawerList)) {
-                drawerLayout.closeDrawer(drawerList);
-            } else {
-                drawerLayout.openDrawer(drawerList);
-            }
-            return true;
-        } else {
-            return false;
-        }
+    @OptionsItem(R.id.menu_my_location)
+    void myLocation() {
+        mapFragment.toggleLocationOverlay();
     }
 
     @ItemClick(R.id.act_home_left_drawer)

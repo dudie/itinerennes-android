@@ -189,4 +189,8 @@ public class MapFragment extends Fragment {
     public void toggleVisibility(final String type) {
         setVisibility(type, !isVisible(type));
     }
+
+    public void toggleLocationOverlay() {
+        locationOverlay.toggleFollowLocation();
+    }
 }
