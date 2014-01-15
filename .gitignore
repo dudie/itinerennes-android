@@ -12,3 +12,4 @@ project.properties
 
 # androidannotations generated classes (eclipse)
 .apt_generated/
+.factorypath

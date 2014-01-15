@@ -1,24 +1,20 @@
 package fr.itinerennes.ui.fragment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.ViewById;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.overlay.Overlay;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.App;
-import com.googlecode.androidannotations.annotations.EFragment;
-import com.googlecode.androidannotations.annotations.SystemService;
-import com.googlecode.androidannotations.annotations.ViewById;
-
 import fr.itinerennes.Conf;
 import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesApplication;

@@ -3,9 +3,9 @@ package fr.itinerennes.business.service;
 import java.io.IOException;
 import java.util.Date;
 
-import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
 
 import fr.itinerennes.Conf;
 import fr.itinerennes.api.client.ItineRennesApiClient;

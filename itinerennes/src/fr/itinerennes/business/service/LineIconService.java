@@ -4,7 +4,7 @@ import org.acra.ErrorReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.EBean;
 
 import android.content.Context;
 import android.content.res.Resources;

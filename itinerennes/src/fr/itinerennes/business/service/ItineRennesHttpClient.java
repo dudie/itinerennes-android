@@ -20,7 +20,7 @@ import org.apache.http.params.HttpProtocolParams;
 
 import android.content.Context;
 
-import com.googlecode.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.EBean;
 
 import fr.itinerennes.utils.VersionUtils;
 

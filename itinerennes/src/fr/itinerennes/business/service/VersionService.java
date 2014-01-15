@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
 
 import fr.itinerennes.Conf;
 import fr.itinerennes.startup.version.model.PackageVersion;

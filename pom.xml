@@ -30,7 +30,7 @@
         <version.rennes-data-api>2.1-SNAPSHOT</version.rennes-data-api>
         <version.nominatim-api>2.0</version.nominatim-api>
         <version.itinerennes-api>1.1-SNAPSHOT</version.itinerennes-api>
-        <version.androidannotations>2.7.1</version.androidannotations>
+        <version.androidannotations>3.0.1</version.androidannotations>
         <version.support-v4>19.0.0</version.support-v4>
         <version.actionbarsherlock>4.4.0</version.actionbarsherlock>
     </properties>
@@ -138,13 +138,13 @@
 
             <!-- Android Annotations -->
             <dependency>
-                <groupId>com.googlecode.androidannotations</groupId>
+                <groupId>org.androidannotations</groupId>
                 <artifactId>androidannotations</artifactId>
                 <version>${version.androidannotations}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>com.googlecode.androidannotations</groupId>
+                <groupId>org.androidannotations</groupId>
                 <artifactId>androidannotations-api</artifactId>
                 <version>${version.androidannotations}</version>
             </dependency>

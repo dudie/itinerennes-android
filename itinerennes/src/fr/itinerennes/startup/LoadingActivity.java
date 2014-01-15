@@ -6,8 +6,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

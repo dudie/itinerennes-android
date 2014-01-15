@@ -9,8 +9,8 @@ import org.osmdroid.util.GeoPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.androidannotations.annotations.Bean;
-import com.googlecode.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
 
 import android.app.SearchManager;
 import android.content.Context;
