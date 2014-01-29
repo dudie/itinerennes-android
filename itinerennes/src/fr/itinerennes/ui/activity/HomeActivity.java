@@ -2,6 +2,7 @@ package fr.itinerennes.ui.activity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.OptionsItem;
@@ -28,12 +29,30 @@ import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.fragment.MapFragment;
+import fr.itinerennes.ui.intent.MapFocus;
 import fr.itinerennes.ui.preferences.MainPreferenceActivity_;
 import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 
 @EActivity(R.layout.act_home)
 @OptionsMenu(R.menu.map_menu)
 class HomeActivity extends ItineRennesActivity {
+
+    @Extra
+    MapFocus mapFocus;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (null != mapFocus) {
+            mapFragment.setFocus(mapFocus);
+        }
+    }
 
     @StringArrayRes(R.array.menu_main)
     String[] menuItems;
@@ -255,9 +274,7 @@ class HomeActivity extends ItineRennesActivity {
             final Intent i = new Intent(context, HomeActivity_.class);
             i.setAction(Intent.ACTION_VIEW);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra(INTENT_PARAM_SET_MAP_ZOOM, zoom);
-            i.putExtra(INTENT_PARAM_SET_MAP_LON, longitude);
-            i.putExtra(INTENT_PARAM_SET_MAP_LAT, latitude);
+            i.putExtra(HomeActivity_.MAP_FOCUS_EXTRA, new MapFocus(zoom, longitude, latitude));
 
             return i;
         }

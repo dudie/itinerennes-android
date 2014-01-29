@@ -9,6 +9,8 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.ViewById;
 import org.osmdroid.util.GeoPoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -20,6 +22,7 @@ import fr.itinerennes.ITRPrefs;
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
+import fr.itinerennes.ui.intent.MapFocus;
 import fr.itinerennes.ui.views.ItinerennesMapView;
 import fr.itinerennes.ui.views.overlays.ILayerSelector;
 import fr.itinerennes.ui.views.overlays.LayerDescriptor;
@@ -30,6 +33,9 @@ import fr.itinerennes.ui.views.overlays.LocationOverlay;
  */
 @EFragment(R.layout.frag_map)
 public class MapFragment extends Fragment {
+
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(MapFragment.class);
 
     /** The my location overlay. */
     private LocationOverlay locationOverlay;
@@ -192,5 +198,9 @@ public class MapFragment extends Fragment {
 
     public void toggleLocationOverlay() {
         locationOverlay.toggleFollowLocation();
+    }
+
+    public void setFocus(final MapFocus location) {
+        location.setFocus(map.getController());
     }
 }
