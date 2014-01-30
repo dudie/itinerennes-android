@@ -10,7 +10,7 @@
 
     <groupId>fr.itinerennes</groupId>
     <artifactId>itinerennes-parent</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.6.5</version>
     <packaging>pom</packaging>
 
     <name>ItineRennes parent</name>
@@ -43,7 +43,7 @@
         <url>https://github.com/dudie/itinerennes-android/tree/master</url>
         <connection>scm:git:git@github.com:dudie/itinerennes-android.git</connection>
         <developerConnection>scm:git:git@github.com:dudie/itinerennes-android.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v0.6.5</tag>
     </scm>
 
     <ciManagement>
