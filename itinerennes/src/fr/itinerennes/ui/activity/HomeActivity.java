@@ -1,21 +1,27 @@
 package fr.itinerennes.ui.activity;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.FragmentById;
 import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
+import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.DrawableRes;
 import org.androidannotations.annotations.res.StringArrayRes;
 
+import android.annotation.TargetApi;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +30,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
+
 import fr.itinerennes.ItineRennesApplication;
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
@@ -34,6 +45,12 @@ import fr.itinerennes.ui.views.overlays.StopOverlayItem;
 @EActivity(R.layout.act_home)
 @OptionsMenu(R.menu.map_menu)
 class HomeActivity extends ItineRennesActivity {
+
+    @SystemService
+    SearchManager searchManager;
+
+    @OptionsMenuItem(R.id.menu_search)
+    MenuItem searchButton;
 
     @StringArrayRes(R.array.menu_main)
     String[] menuItems;
@@ -84,6 +101,21 @@ class HomeActivity extends ItineRennesActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        setupSearch();
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @TargetApi(Build.VERSION_CODES.FROYO)
+    void setupSearch() {
+        SearchView searchView = (SearchView) searchButton.getActionView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+            searchView.setSearchableInfo(searchManager
+                    .getSearchableInfo(getComponentName()));
+        }
     }
 
     @Override

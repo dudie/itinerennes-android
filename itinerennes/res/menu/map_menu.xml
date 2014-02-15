@@ -4,12 +4,13 @@
     <item
         android:id="@+id/menu_my_location"
         android:icon="@drawable/ic_action_location_found"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom|collapseActionView"
         android:title="@string/toggle_my_location"/>
     <item
         android:id="@+id/menu_search"
         android:icon="@drawable/abs__ic_search"
-        android:showAsAction="always"
-        android:title="@string/menu_search"/>
+        android:showAsAction="ifRoom|collapseActionView"
+        android:title="@string/menu_search"
+        android:actionViewClass="com.actionbarsherlock.widget.SearchView"/>
 
 </menu>
