@@ -29,7 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.MapView.Projection;
+import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.Overlay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.MotionEvent;
-
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.business.event.IBookmarkModificationListener;
@@ -274,7 +273,7 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
 
             // first draw markers
             for (final StopOverlayItem marker : markers.values()) {
-                pj.toMapPixels(marker.getLocation(), point);
+                pj.toPixels(marker.getLocation(), point);
 
                 drawItem(c, marker, point, osmv);
             }
@@ -284,7 +283,7 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
                     .getSelectedItem();
             if (null != selectedItem && selectedItem instanceof StopOverlayItem) {
                 if (markers.containsKey(((StopOverlayItem) selectedItem).getId())) {
-                    pj.toMapPixels(selectedItem.getLocation(), point);
+                    pj.toPixels(selectedItem.getLocation(), point);
                     drawItem(c, (StopOverlayItem) selectedItem, point, osmv);
                 }
             }
@@ -362,16 +361,14 @@ public class StopOverlay extends LazyOverlay implements ILayerSelector {
         final int eventX = (int) event.getX();
         final int eventY = (int) event.getY();
 
-        final Point touchPoint = pj.fromMapPixels(eventX, eventY, null);
-
         final Point itemPoint = new Point();
         for (final StopOverlayItem marker : markers.values()) {
             final Drawable drawable = markerIcons.get(marker.getType());
 
             pj.toPixels(marker.getLocation(), itemPoint);
 
-            if (drawable.getBounds().contains(touchPoint.x - itemPoint.x,
-                    touchPoint.y - itemPoint.y)) {
+            if (drawable.getBounds().contains(eventX - itemPoint.x,
+                    eventY - itemPoint.y)) {
                 return marker;
             }
 

@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.MapView.Projection;
+import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.Overlay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,10 +39,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.MotionEvent;
-
 import fr.dudie.keolis.model.RelayPark;
 import fr.dudie.keolis.model.RelayParkState;
-
 import fr.itinerennes.R;
 import fr.itinerennes.TypeConstants;
 import fr.itinerennes.ui.activity.ItineRennesActivity;
@@ -145,7 +143,7 @@ public class ParkOverlay extends LazyOverlay implements ILayerSelector {
                 final Point point = new Point();
 
                 for (final ParkOverlayItem park : parks) {
-                    pj.toMapPixels(park.getLocation(), point);
+                    pj.toPixels(park.getLocation(), point);
 
                     drawItem(c, park, point, osmv);
                 }
@@ -265,14 +263,12 @@ public class ParkOverlay extends LazyOverlay implements ILayerSelector {
         final int eventX = (int) event.getX();
         final int eventY = (int) event.getY();
 
-        final Point touchPoint = pj.fromMapPixels(eventX, eventY, null);
-
         final Point itemPoint = new Point();
         for (final ParkOverlayItem park : parks) {
 
             pj.toPixels(park.getLocation(), itemPoint);
 
-            if (icon.getBounds().contains(touchPoint.x - itemPoint.x, touchPoint.y - itemPoint.y)) {
+            if (icon.getBounds().contains(eventX - itemPoint.x, eventY - itemPoint.y)) {
                 return park;
             }
 
