@@ -7,9 +7,7 @@ target/
 # android
 bin/
 gen/
+.apt_generated/
 proguard-project.txt
 project.properties
-
-# androidannotations generated classes (eclipse)
-.apt_generated/
 .factorypath
