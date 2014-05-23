@@ -7,5 +7,7 @@ target/
 # android
 bin/
 gen/
+.apt_generated/
 proguard-project.txt
 project.properties
+.factorypath
