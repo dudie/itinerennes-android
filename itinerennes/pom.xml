@@ -69,7 +69,7 @@
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
                 <configuration>
-		            <!-- 
+	            <!-- 
                       default assets directory is set to "target/generated-resources/assets" to let maven profiles 
                       overriding and filtering them
                     -->
@@ -215,55 +215,6 @@
                                 <goals>
                                     <goal>merge</goal>
                                 </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- there is an issue with JDK7 and maven-jarsigner-plugin, so java version is enforced to 1.6 when releasing -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-enforcer-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>enforce-java-version</id>
-                                <goals>
-                                    <goal>enforce</goal>
-                                </goals>
-                                <configuration>
-                                    <rules>
-                                        <requireJavaVersion>
-                                            <version>[1.6,1.7)</version>
-                                        </requireJavaVersion>
-                                        <requireProperty>
-                                            <property>versionCode</property>
-                                            <regex>^\d+$</regex>
-                                            <regexMessage>Property versionCode must be an integer</regexMessage>
-                                        </requireProperty>
-                                    </rules>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jarsigner-plugin</artifactId>
-                        <configuration>
-                            <removeExistingSignatures>true</removeExistingSignatures>
-                            <archive>${project.build.directory}/${project.build.finalName}.apk</archive>
-                            <keystore>${itinerennes.keystore.path}</keystore>
-                            <storepass>${itinerennes.keystore.storepass}</storepass>
-                            <keypass>${itinerennes.keystore.keypass}</keypass>
-                            <alias>${itinerennes.keystore.alias}</alias>
-                            <sigfile>CERT</sigfile>
-                        </configuration>
-                        <executions>
-                            <!-- sign generated APK -->
-                            <execution>
-                                <id>signing</id>
-                                <goals>
-                                    <goal>sign</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                                <phase>package</phase>
                             </execution>
                         </executions>
                     </plugin>
