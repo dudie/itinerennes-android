@@ -10,10 +10,6 @@ env:
 before_install:
 # source release parameters
 - source params.sh
-- echo 'DRY_RUN:              $DRY_RUN'
-- echo 'RELEASE_VERSION_CODE: $RELEASE_VERSION_CODE'
-- echo 'RELEASE_VERSION:      $RELEASE_VERSION'
-- echo 'NEXT_DEV_VERSION:     $NEXT_DEV_VERSION'
 
 # Install base Android SDK
 - sudo apt-get update -qq
@@ -58,11 +54,7 @@ before_script:
 
 script:
 - cd itinerennes-android
-- mvn -B release:prepare release:perform \
-          -DdryRun=$DRY_RUN \
-          -DversionCode=$RELEASE_VERSION_CODE \
-          -DreleaseVersion=$RELEASE_VERSION \
-          -DdevelopmentVersion=$NEXT_DEV_VERSION
+- mvn -B release:prepare release:perform -DdryRun=$DRY_RUN -DversionCode=$RELEASE_VERSION_CODE -DreleaseVersion=$RELEASE_VERSION -DdevelopmentVersion=$NEXT_DEV_VERSION
 
 after_script:
 - if [ "Z$DRY_RUN" == "Ztrue" ] ; then find -name 'pom.xml*' -exec cat {} \; ; fi
