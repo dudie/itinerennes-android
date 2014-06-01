@@ -30,9 +30,8 @@ before_script:
 - ./.travis/wait_for_emulator.sh
 
 script:
-- ssh-add -D && ssh-add id_itinerennes-android_to_m2-repo
 - cd itinerennes-android
-- git checkout v0.6.6
-- mvn dependency:resolve-plugins
-- mvn deploy -DperformRelease=true
-#- mvn -B release:prepare release:perform -DdryRun=$DRY_RUN -DversionCode=$RELEASE_VERSION_CODE -DreleaseVersion=$RELEASE_VERSION -DdevelopmentVersion=$NEXT_DEV_VERSION
+- git checkout $RELEASE_BRANCH
+- mvn -B release:prepare -DdryRun=$DRY_RUN -DversionCode=$RELEASE_VERSION_CODE -DreleaseVersion=$RELEASE_VERSION -DdevelopmentVersion=$NEXT_DEV_VERSION
+- ssh-add -D && ssh-add id_itinerennes-android_to_m2-repo
+- mvn -B release:perform -DdryRun=$DRY_RUN
