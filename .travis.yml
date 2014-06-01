@@ -30,5 +30,7 @@ before_script:
 
 script:
 - cd itinerennes-android
+- git checkout v0.6.6
 - mvn dependency:resolve-plugins
-- mvn -B release:prepare release:perform -DdryRun=$DRY_RUN -DversionCode=$RELEASE_VERSION_CODE -DreleaseVersion=$RELEASE_VERSION -DdevelopmentVersion=$NEXT_DEV_VERSION
+- mvn deploy -DperformRelease=true
+#- mvn -B release:prepare release:perform -DdryRun=$DRY_RUN -DversionCode=$RELEASE_VERSION_CODE -DreleaseVersion=$RELEASE_VERSION -DdevelopmentVersion=$NEXT_DEV_VERSION
