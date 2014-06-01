@@ -4,58 +4,34 @@ env:
   global:
   # KEY
   - secure: "M654oc4KZIEVVmH96/41i4eVh0UxmmcqcXGgrcySbCQ9XKJDHBSTAU1nh8bs+G6frUXWnaTA5STZJI+6YBGnLOnyE49aRshFo9yt00v7joIDNesYk6gr67ol2BuO2BqCByTMBT0b4XjN4k8X/QzMDpgiaie8stnGFjfjjpjPELE="
+  - SSH_IDS: id_itinerennes-android id_itinerennes-android_to_m2-repo
   matrix:
   - SDK=7  ABI=armeabi      # 2.1            Eclair
 
 before_install:
-# source release parameters
-- source params.sh
-
-# Install base Android SDK
-- sudo apt-get update -qq
-- if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch; fi
-- wget http://dl.google.com/android/android-sdk_r22.3-linux.tgz -O android-sdk-linux.tgz
-- tar xzf android-sdk-linux.tgz
-- export ANDROID_HOME=$PWD/android-sdk-linux
-- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-
-# Install required Android components.
-- export PKGS=android-$SDK,android-7,sysimg-16,sysimg-19
-- echo y | android update sdk --filter build-tools-19.0.0,platform-tools,extra-android-support,$PKGS --no-ui --all --force
+- . 00_params.sh
+- . 20_install_android_sdk.sh
 
 # Create and start emulator
 - echo no | android create avd --force -n test -t android-$SDK --abi $ABI
 - emulator -avd test -no-skin -no-audio -no-window &
 
-install: echo "skip"
-
-before_script:
-# setup git
-- git config --global user.email "dudie.fr+travis+itinerennes+android@gmail.com"
-- git config --global user.name "Travis CI"
-
-# install Travis tools
-- git clone https://gist.github.com/7630453.git travis-tools
-
-# register Github identity
-- curl "https://raw.github.com/dudie/maven-repository/master/github_key.pub" >> ~/.ssh/known_hosts
-
-# setup private key for deployment
-- cat id_itinerennes-android.enc | ./travis-tools/decrypt.sh $KEY > id_itinerennes-android
-- cat id_itinerennes-android_to_m2-repo.enc | ./travis-tools/decrypt.sh $KEY > id_itinerennes-android_to_m2-repo
-- chmod 400 id_itinerennes-android*
-- eval $(ssh-agent)
-- ssh-add id_itinerennes-android id_itinerennes-android_to_m2-repo
-
 # get itinerennes-android sources
 - git clone git@github.com:dudie/itinerennes-android.git
 
-# Make sure the emulator has started before running tests
+install:
+- cd itinerennes-android
+- mvn dependency:resolve-plugins
+- mvn install -DskipTests
+- cd -
+
+before_script:
+- . 50_setup_git.sh
+- . 60_setup_ssh_keys.sh
+
+# Make sure the emulator has started
 - ./.travis/wait_for_emulator.sh
 
 script:
 - cd itinerennes-android
 - mvn -B release:prepare release:perform -DdryRun=$DRY_RUN -DversionCode=$RELEASE_VERSION_CODE -DreleaseVersion=$RELEASE_VERSION -DdevelopmentVersion=$NEXT_DEV_VERSION
-
-after_script:
-- if [ "Z$DRY_RUN" == "Ztrue" ] ; then find -name 'pom.xml*' -exec cat {} \; ; fi
