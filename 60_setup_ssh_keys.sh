@@ -8,5 +8,4 @@ eval $(ssh-agent)
 for id in $SSH_IDS ; do
   cat ${id}.enc | ./travis-tools/decrypt.sh $KEY > $id
   chmod 400 $id
-  ssh-add $id
 done

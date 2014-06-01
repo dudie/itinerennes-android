@@ -23,12 +23,14 @@ before_script:
 - . 60_setup_ssh_keys.sh
 
 # get itinerennes-android sources
+- ssh-add id_itinerennes-android
 - git clone git@github.com:dudie/itinerennes-android.git
 
 # Make sure the emulator has started
 - ./.travis/wait_for_emulator.sh
 
 script:
+- ssh-add -D && ssh-add id_itinerennes-android_to_m2-repo
 - cd itinerennes-android
 - git checkout v0.6.6
 - mvn dependency:resolve-plugins
