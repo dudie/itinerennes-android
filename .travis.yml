@@ -16,22 +16,19 @@ before_install:
 - echo no | android create avd --force -n test -t android-$SDK --abi $ABI
 - emulator -avd test -no-skin -no-audio -no-window &
 
-# get itinerennes-android sources
-- git clone git@github.com:dudie/itinerennes-android.git
-
-install:
-- cd itinerennes-android
-- mvn dependency:resolve-plugins
-- mvn install -DskipTests
-- cd -
+install: echo skip
 
 before_script:
 - . 50_setup_git.sh
 - . 60_setup_ssh_keys.sh
+
+# get itinerennes-android sources
+- git clone git@github.com:dudie/itinerennes-android.git
 
 # Make sure the emulator has started
 - ./.travis/wait_for_emulator.sh
 
 script:
 - cd itinerennes-android
+- mvn dependency:resolve-plugins
 - mvn -B release:prepare release:perform -DdryRun=$DRY_RUN -DversionCode=$RELEASE_VERSION_CODE -DreleaseVersion=$RELEASE_VERSION -DdevelopmentVersion=$NEXT_DEV_VERSION
