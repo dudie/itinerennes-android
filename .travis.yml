@@ -3,7 +3,7 @@ jdk: openjdk6
 env:
   global:
   # KEY
-  - secure: "IxFm1OolK5eb82lnIo6c1sosjkVW98bh0ot4gUwmEJu0jgDDBOm8P/ucDKJv0/UnZwQFMQJKkxoEXG6FMwmdJChCe2Jtl8emJiIdkuats681zz6JeZodkspkD9eNPmeGjlMDQqQ2/eaC1BV+bV79wPwCE9ptr9KXz2k6VbVX74E="
+  - secure: "M654oc4KZIEVVmH96/41i4eVh0UxmmcqcXGgrcySbCQ9XKJDHBSTAU1nh8bs+G6frUXWnaTA5STZJI+6YBGnLOnyE49aRshFo9yt00v7joIDNesYk6gr67ol2BuO2BqCByTMBT0b4XjN4k8X/QzMDpgiaie8stnGFjfjjpjPELE="
   matrix:
   - SDK=7  ABI=armeabi      # 2.1            Eclair
 
@@ -42,9 +42,10 @@ before_script:
 
 # setup private key for deployment
 - cat id_itinerennes-android.enc | ./travis-tools/decrypt.sh $KEY > id_itinerennes-android
-- chmod 400 id_itinerennes-android
+- cat id_itinerennes-android_to_m2-repo.enc | ./travis-tools/decrypt.sh $KEY > id_itinerennes-android_to_m2-repo
+- chmod 400 id_itinerennes-android*
 - eval $(ssh-agent)
-- ssh-add id_itinerennes-android
+- ssh-add id_itinerennes-android id_itinerennes-android_to_m2-repo
 
 # get itinerennes-android sources
 - git clone git@github.com:dudie/itinerennes-android.git
