@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DRY_RUN=true
+DRY_RUN=false
 
 RELEASE_VERSION_CODE=32
 RELEASE_VERSION=0.6.6
