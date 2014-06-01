@@ -4,7 +4,7 @@ env:
   global:
   # KEY
   - secure: "M654oc4KZIEVVmH96/41i4eVh0UxmmcqcXGgrcySbCQ9XKJDHBSTAU1nh8bs+G6frUXWnaTA5STZJI+6YBGnLOnyE49aRshFo9yt00v7joIDNesYk6gr67ol2BuO2BqCByTMBT0b4XjN4k8X/QzMDpgiaie8stnGFjfjjpjPELE="
-  - SSH_IDS: id_itinerennes-android id_itinerennes-android_to_m2-repo
+  - SSH_IDS="id_itinerennes-android id_itinerennes-android_to_m2-repo"
   matrix:
   - SDK=7  ABI=armeabi      # 2.1            Eclair
 
