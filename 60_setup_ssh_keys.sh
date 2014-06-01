@@ -12,4 +12,5 @@ for id in $SSH_IDS ; do
   cat ${id}.enc | ./travis-tools/decrypt.sh $KEY > $id
   chmod 400 $id
   ls -l ${id}.enc $id
+  ssh-add $id
 done

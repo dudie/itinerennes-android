@@ -4,7 +4,7 @@ env:
   global:
   # KEY
   - secure: "M654oc4KZIEVVmH96/41i4eVh0UxmmcqcXGgrcySbCQ9XKJDHBSTAU1nh8bs+G6frUXWnaTA5STZJI+6YBGnLOnyE49aRshFo9yt00v7joIDNesYk6gr67ol2BuO2BqCByTMBT0b4XjN4k8X/QzMDpgiaie8stnGFjfjjpjPELE="
-  - SSH_IDS="id_itinerennes-android id_itinerennes-android_to_m2-repo"
+  - SSH_IDS="id_itinerennes-android"
   matrix:
   - SDK=7  ABI=armeabi      # 2.1            Eclair
 
@@ -23,7 +23,6 @@ before_script:
 - . 60_setup_ssh_keys.sh
 
 # get itinerennes-android sources
-- ssh-add id_itinerennes-android
 - git clone git@github.com:dudie/itinerennes-android.git
 
 # Make sure the emulator has started
@@ -32,6 +31,4 @@ before_script:
 script:
 - cd itinerennes-android
 - git checkout $RELEASE_BRANCH
-- mvn -B release:prepare -DdryRun=$DRY_RUN -DversionCode=$RELEASE_VERSION_CODE -DreleaseVersion=$RELEASE_VERSION -DdevelopmentVersion=$NEXT_DEV_VERSION
-- ssh-add -D && ssh-add id_itinerennes-android_to_m2-repo
-- mvn -B release:perform -DdryRun=$DRY_RUN
+- mvn -B release:prepare release:perform -DdryRun=$DRY_RUN -DversionCode=$RELEASE_VERSION_CODE -DreleaseVersion=$RELEASE_VERSION -DdevelopmentVersion=$NEXT_DEV_VERSION
