@@ -27,7 +27,7 @@
         <version.slf4j-log4j12>1.7.5</version.slf4j-log4j12>
         <version.slf4j-android>1.7.5</version.slf4j-android>
         <version.osmdroid>4.2</version.osmdroid>
-        <version.rennes-data-api>2.0</version.rennes-data-api>
+        <version.rennes-data-api>2.1-SNAPSHOT</version.rennes-data-api>
         <version.nominatim-api>2.0</version.nominatim-api>
         <version.itinerennes-api>1.1-SNAPSHOT</version.itinerennes-api>
         <version.androidannotations>3.0.1</version.androidannotations>
