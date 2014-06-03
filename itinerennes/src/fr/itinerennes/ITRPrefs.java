@@ -22,8 +22,6 @@ package fr.itinerennes;
  * [/license]
  */
 
-import fr.itinerennes.startup.LoadingActivity;
-
 /**
  * Constants for preferences.
  * 
@@ -43,7 +41,7 @@ public final class ITRPrefs {
 
     /**
      * Preference key where the version code of the last execution of the application is stored.
-     * {@link LoadingActivity} is in charge to update this property.
+     * {@link fr.itinerennes.startup.LoadingActivity} is in charge to update this property.
      */
     public static final String PREV_EXEC_VERSION_CODE = "prev.exec.version.code";
 
