@@ -45,7 +45,7 @@ before_script:
 # Make sure the emulator has started before running tests
 - ./.travis/wait_for_emulator.sh
 
-script: mvn install -Dandroid.device=test
+script: mvn install -Dandroid.device=test -Dandroid.emulator.wait=10000
 
 after_script:
 # find and display surefire test reports
