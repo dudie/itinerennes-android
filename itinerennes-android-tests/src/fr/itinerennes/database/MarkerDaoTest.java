@@ -101,7 +101,7 @@ public class MarkerDaoTest extends AndroidTestCase {
         assertEquals("Check expected label", "République Nemours",
                 c.getString(c.getColumnIndex(MarkersColumns.LABEL)));
         assertEquals(-1680212, c.getInt(c.getColumnIndex(MarkersColumns.LONGITUDE)));
-        assertEquals(48109979, c.getInt(c.getColumnIndex(MarkersColumns.LATITUDE)));
+        assertEquals(48109978, c.getInt(c.getColumnIndex(MarkersColumns.LATITUDE)));
         assertEquals(TypeConstants.TYPE_BUS, c.getString(c.getColumnIndex(MarkersColumns.TYPE)));
 
         LOGGER.info("testGetMarkerByAndroidId.end");
@@ -121,7 +121,7 @@ public class MarkerDaoTest extends AndroidTestCase {
         assertEquals("République Nemours",
                 c.getString(c.getColumnIndex(Columns.MarkersColumns.LABEL)));
         assertEquals(-1680167, c.getInt(c.getColumnIndex(Columns.MarkersColumns.LONGITUDE)));
-        assertEquals(48110073, c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE)));
+        assertEquals(48110072, c.getInt(c.getColumnIndex(Columns.MarkersColumns.LATITUDE)));
         assertEquals(TypeConstants.TYPE_BUS,
                 c.getString(c.getColumnIndex(Columns.MarkersColumns.TYPE)));
 
@@ -146,14 +146,14 @@ public class MarkerDaoTest extends AndroidTestCase {
         Cursor c = markerDao.getMarkers(bbox, visibleLayers);
 
         assertNotNull("Cursor is null.", c);
-        assertEquals("bad number of fetched results.", 4, c.getCount());
+        assertEquals("bad number of fetched results.", 5, c.getCount());
 
         visibleLayers.add(TypeConstants.TYPE_BIKE);
 
         c = markerDao.getMarkers(bbox, visibleLayers);
 
         assertNotNull("Cursor is null.", c);
-        assertEquals("bad number of fetched results.", 5, c.getCount());
+        assertEquals("bad number of fetched results.", 6, c.getCount());
 
         c.close();
 
