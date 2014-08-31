@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DRY_RUN=true
+DRY_RUN=false
 
 RELEASE_BRANCH=master
 RELEASE_VERSION_CODE=33
