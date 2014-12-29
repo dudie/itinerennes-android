@@ -2,7 +2,7 @@
     <parent>
         <artifactId>itinerennes-parent</artifactId>
         <groupId>fr.itinerennes</groupId>
-        <version>0.7-SNAPSHOT</version>
+        <version>0.6.8</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
