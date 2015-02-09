@@ -1,4 +1,4 @@
-1570
+1571
 BIKE;10;48109600;-1674081;Musee Beaux Arts;museebeauxarts;
 BIKE;11;48107513;-1678163;Liberte;liberte;
 BIKE;12;48107746;-1673711;Tnb;tnb;
@@ -645,6 +645,7 @@ BUS;2_1643;48114811;-1715669;Chambre Agriculture;chambreagriculture;
 BUS;2_1644;48110701;-1673576;Place Pasteur;placepasteur;
 BUS;2_1645;48109735;-1706575;Marbeuf Lorient;marbeuflorient;
 BUS;2_1646;48086612;-1668736;Italie;italie;
+BUS;2_1647;48087442;-1674436;Henri Fréville;henrifreville;
 BUS;2_2002;48130194;-1627667;Cesson Hôpital Privé;cessonhopitalprive;
 BUS;2_2003;48130111;-1627871;Cesson Hôpital Privé;cessonhopitalprive;
 BUS;2_2005;48124497;-1594203;Grand Domaine;granddomaine;
